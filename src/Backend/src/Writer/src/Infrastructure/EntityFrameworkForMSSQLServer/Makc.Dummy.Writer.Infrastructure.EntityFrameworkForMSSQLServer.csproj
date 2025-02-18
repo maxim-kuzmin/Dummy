@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>    
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\EntityFramework\Makc.Dummy.Writer.Infrastructure.EntityFramework.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="App\Db\Migrations\" />
+  </ItemGroup>
+
+</Project>

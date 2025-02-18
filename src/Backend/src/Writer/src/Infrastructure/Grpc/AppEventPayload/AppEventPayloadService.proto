@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+option csharp_namespace = "Makc.Dummy.Writer.Infrastructure.Grpc.AppEventPayload";
+
+package Writer;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/wrappers.proto";
+
+service AppEventPayload {
+    rpc Create (AppEventPayloadCreateActionRequest) returns (AppEventPayloadGetActionReply);
+    rpc Delete (AppEventPayloadDeleteActionRequest) returns (google.protobuf.Empty);
+    rpc Get (AppEventPayloadGetActionRequest) returns (AppEventPayloadGetActionReply);
+    rpc GetList (AppEventPayloadGetListActionRequest) returns (AppEventPayloadGetListActionReply);
+    rpc Update (AppEventPayloadUpdateActionRequest) returns (AppEventPayloadGetActionReply);
+}
+
+message ActionRequestPage {
+    int32 number = 1;
+    int32 size = 2;
+}
+
+message AppEventPayloadCreateActionRequest {
+    int64 app_event_id = 1;
+    string data = 2;
+}
+
+message AppEventPayloadDeleteActionRequest {
+    int64 id = 1;
+}
+
+message AppEventPayloadGetActionRequest {
+    int64 id = 1;
+}
+
+message AppEventPayloadGetActionReply {
+    int64 id = 1;
+    int64 app_event_id = 2;
+    string data = 3;
+}
+
+message AppEventPayloadGetListActionRequestFilter {
+    google.protobuf.StringValue full_text_search_query = 1;
+}
+
+message AppEventPayloadGetListActionRequest {
+    ActionRequestPage page = 1;
+    AppEventPayloadGetListActionRequestFilter filter = 2;
+}
+
+message AppEventPayloadGetListActionReplyItem {
+    int64 id = 1;
+    int64 app_event_id = 2;
+    string data = 3;
+}
+
+message AppEventPayloadGetListActionReply {
+    int64 total_count = 1;
+    repeated AppEventPayloadGetListActionReplyItem items = 2;
+}
+
+message AppEventPayloadUpdateActionRequest {
+    int64 id = 1;
+    int64 app_event_id = 2;
+    string data = 3;
+}

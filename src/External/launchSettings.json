@@ -1,0 +1,14 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "serviceActions": {
+        "external-mssqlserver": "StartWithoutDebugging",
+        "external-pgadmin": "StartWithoutDebugging",
+        "external-postgres": "StartWithoutDebugging",
+        "external-rabbitmq": "StartWithoutDebugging"
+      }
+    }
+  }
+}

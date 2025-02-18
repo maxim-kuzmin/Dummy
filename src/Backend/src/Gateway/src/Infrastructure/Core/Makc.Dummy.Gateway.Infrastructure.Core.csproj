@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  
+  <ItemGroup>
+    <EmbeddedResource Include="**/*.en.json" />
+    <EmbeddedResource Include="**/*.ru.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Embedded.Json.Localization" />
+    <PackageReference Include="Serilog.Extensions.Hosting" />
+    <PackageReference Include="Serilog.Formatting.Compact" />
+    <PackageReference Include="Serilog.Settings.Configuration" />
+    <PackageReference Include="Serilog.Sinks.Console" />
+    <PackageReference Include="Serilog.Sinks.Debug" />
+    <PackageReference Include="Serilog.Sinks.File" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\DomainUseCases\Makc.Dummy.Gateway.DomainUseCases.csproj" />
+  </ItemGroup>
+  
+</Project>

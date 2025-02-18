@@ -1,0 +1,10 @@
+﻿global using System.Globalization;
+global using Ardalis.GuardClauses;
+global using Makc.Dummy.Reader.Apps.InboxConsumerApp.App;
+global using Makc.Dummy.Reader.Apps.InboxConsumerApp.App.Config;
+global using Makc.Dummy.Reader.Infrastructure.Core.App;
+global using Makc.Dummy.Shared.Core.App;
+global using Makc.Dummy.Shared.Core.App.Config.Options;
+global using Makc.Dummy.Shared.Core.App.Config.Options.Sections;
+global using Makc.Dummy.Shared.Core.App.Config.Options.Sections.Db.PostgreSQL;
+global using Microsoft.Extensions.Options;

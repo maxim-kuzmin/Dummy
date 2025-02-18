@@ -1,0 +1,69 @@
+syntax = "proto3";
+
+option csharp_namespace = "Makc.Dummy.Writer.Infrastructure.Grpc.AppEvent";
+
+package Writer;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+service AppEvent {
+    rpc Create (AppEventCreateActionRequest) returns (AppEventGetActionReply);
+    rpc Delete (AppEventDeleteActionRequest) returns (google.protobuf.Empty);
+    rpc Get (AppEventGetActionRequest) returns (AppEventGetActionReply);
+    rpc GetList (AppEventGetListActionRequest) returns (AppEventGetListActionReply);
+    rpc Update (AppEventUpdateActionRequest) returns (AppEventGetActionReply);
+}
+
+message ActionRequestPage {
+    int32 number = 1;
+    int32 size = 2;
+}
+
+message AppEventCreateActionRequest {
+    bool is_published = 1;
+    string name = 2;
+}
+
+message AppEventDeleteActionRequest {
+    int64 id = 1;
+}
+
+message AppEventGetActionRequest {
+    int64 id = 1;
+}
+
+message AppEventGetActionReply {
+    int64 id = 1;
+    google.protobuf.Timestamp created_at = 2;
+    bool is_published = 3;
+    string name = 4;
+}
+
+message AppEventGetListActionRequestFilter {
+    google.protobuf.StringValue full_text_search_query = 1;
+}
+
+message AppEventGetListActionRequest {
+    ActionRequestPage page = 1;
+    AppEventGetListActionRequestFilter filter = 2;
+}
+
+message AppEventGetListActionReplyItem {
+    int64 id = 1;
+    google.protobuf.Timestamp created_at = 2;
+    bool is_published = 3;
+    string name = 4;
+}
+
+message AppEventGetListActionReply {
+    int64 total_count = 1;
+    repeated AppEventGetListActionReplyItem items = 2;
+}
+
+message AppEventUpdateActionRequest {
+    int64 id = 1;
+    bool is_published = 2;
+    string name = 3;
+}

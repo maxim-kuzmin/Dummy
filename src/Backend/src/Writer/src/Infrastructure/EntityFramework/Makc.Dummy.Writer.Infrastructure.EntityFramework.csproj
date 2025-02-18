@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <PackageReference Include="Ardalis.Specification.EntityFrameworkCore" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Shared\src\Infrastructure\EntityFramework\Makc.Dummy.Shared.Infrastructure.EntityFramework.csproj" />
+    <ProjectReference Include="..\..\DomainUseCases\Makc.Dummy.Writer.DomainUseCases.csproj" />
+  </ItemGroup>
+
+</Project>

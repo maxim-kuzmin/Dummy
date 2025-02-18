@@ -1,0 +1,49 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <UserSecretsId>E259AA5C-4101-490D-A4EE-D0F71248FEDF</UserSecretsId>
+    <DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Infrastructure\Core\Makc.Dummy.Writer.Infrastructure.Core.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\DapperForMSSQLServer\Makc.Dummy.Writer.Infrastructure.DapperForMSSQLServer.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\DapperForPostgreSQL\Makc.Dummy.Writer.Infrastructure.DapperForPostgreSQL.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Dapper\Makc.Dummy.Writer.Infrastructure.Dapper.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\EntityFrameworkForMSSQLServer\Makc.Dummy.Writer.Infrastructure.EntityFrameworkForMSSQLServer.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\EntityFrameworkForPostgreSQL\Makc.Dummy.Writer.Infrastructure.EntityFrameworkForPostgreSQL.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\EntityFramework\Makc.Dummy.Writer.Infrastructure.EntityFramework.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\MSSQLServer\Makc.Dummy.Writer.Infrastructure.MSSQLServer.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\PostgreSQL\Makc.Dummy.Writer.Infrastructure.PostgreSQL.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\RabbitMQ\Makc.Dummy.Writer.Infrastructure.RabbitMQ.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="appsettings.Development.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="appsettings.Production.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="appsettings.Staging.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+  
+</Project>
