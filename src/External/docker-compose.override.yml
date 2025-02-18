@@ -1,3 +1,6 @@
+include:
+  - docker-compose.observability.override.yaml
+
 services:
   external-mssqlserver:
     volumes:

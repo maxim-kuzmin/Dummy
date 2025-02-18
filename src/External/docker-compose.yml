@@ -1,3 +1,6 @@
+include:
+  - docker-compose.observability.yaml
+
 services:
   external-mssqlserver:
     container_name: ${MY_SERVICE_EXTERNAL_MSSQLSERVER_CONTAINER_NAME}

@@ -5,6 +5,12 @@
       "commandVersion": "1.0",
       "serviceActions": {
         "external-mssqlserver": "StartWithoutDebugging",
+        "external-observability-grafana": "StartWithoutDebugging",
+        "external-observability-jaeger": "StartWithoutDebugging",
+        "external-observability-loki": "StartWithoutDebugging",
+        "external-observability-otel-collector": "StartWithoutDebugging",
+        "external-observability-prometheus": "StartWithoutDebugging",
+        "external-observability-zipkin": "StartWithoutDebugging",
         "external-pgadmin": "StartWithoutDebugging",
         "external-postgres": "StartWithoutDebugging",
         "external-rabbitmq": "StartWithoutDebugging"
