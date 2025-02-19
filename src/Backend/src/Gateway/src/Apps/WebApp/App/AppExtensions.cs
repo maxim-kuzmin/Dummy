@@ -29,13 +29,13 @@ public static class AppExtensions
 
     var writer = Guard.Against.Null(appConfigOptions.Writer);
 
-    switch (writer.API)
+    switch (writer.Protocol)
     {
-      case AppConfigOptionsAPIEnum.Http:
-        services.AddAppInfrastructureTiedToHttp(logger, writer.HttpAPIAddress);
+      case AppConfigOptionsProtocolEnum.Http:
+        services.AddAppInfrastructureTiedToHttp(logger, writer.HttpEndpoint);
         break;
-      case AppConfigOptionsAPIEnum.Grpc:      
-        services.AddAppInfrastructureTiedToGrpc(logger, writer.GrpcAPIAddress);
+      case AppConfigOptionsProtocolEnum.Grpc:      
+        services.AddAppInfrastructureTiedToGrpc(logger, writer.GrpcEndpoint);
         break;
       default:
         throw new NotImplementedException();

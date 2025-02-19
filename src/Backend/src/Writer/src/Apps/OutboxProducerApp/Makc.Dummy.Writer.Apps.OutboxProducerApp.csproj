@@ -11,6 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Shared\src\Infrastructure\CoreForOpenTelemetry\Makc.Dummy.Shared.Infrastructure.CoreForOpenTelemetry.csproj" />
+    <ProjectReference Include="..\..\..\..\Shared\src\Infrastructure\Core\Makc.Dummy.Shared.Infrastructure.Core.csproj" />
     <ProjectReference Include="..\..\Infrastructure\Core\Makc.Dummy.Writer.Infrastructure.Core.csproj" />
     <ProjectReference Include="..\..\Infrastructure\DapperForMSSQLServer\Makc.Dummy.Writer.Infrastructure.DapperForMSSQLServer.csproj" />
     <ProjectReference Include="..\..\Infrastructure\DapperForPostgreSQL\Makc.Dummy.Writer.Infrastructure.DapperForPostgreSQL.csproj" />

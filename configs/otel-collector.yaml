@@ -31,16 +31,16 @@ exporters:
     enable_open_metrics: true
 
   otlp/jaeger:
-    endpoint: jaeger:4317
+    endpoint: external-observability-jaeger:4317
     tls:
       insecure: true
 
   zipkin:
-    endpoint: "http://zipkin:9411/api/v2/spans"
+    endpoint: http://external-observability-zipkin:9411/api/v2/spans
     format: proto
 
   loki:
-    endpoint: http://loki:3100/loki/api/v1/push
+    endpoint: http://external-observability-loki:3100/loki/api/v1/push
     default_labels_enabled:
       exporter: false
       job: true

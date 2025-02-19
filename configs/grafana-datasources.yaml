@@ -5,7 +5,7 @@ datasources:
     type: prometheus
     access: proxy
     orgId: 1
-    url: http://prometheus:8080
+    url: http://external-observability-prometheus:8080
     basicAuth: false
     isDefault: false
     version: 1
@@ -15,7 +15,7 @@ datasources:
 
   - name: Zipkin
     type: zipkin
-    url: http://zipkin:9411
+    url: http://external-observability-zipkin:9411
     access: proxy
     orgId: 1
     version: 1
@@ -24,7 +24,7 @@ datasources:
 
   - name: Jaeger
     type: jaeger
-    url: http://jaeger:16686
+    url: http://external-observability-jaeger:16686
     access: proxy
     orgId: 1
     version: 1
@@ -35,7 +35,7 @@ datasources:
     type: loki
     access: proxy
     orgId: 1
-    url: http://loki:3100
+    url: http://external-observability-loki:3100
     basicAuth: false
     isDefault: true
     version: 1

@@ -13,7 +13,7 @@ scrape_configs:
     follow_redirects: true
     static_configs:
       - targets:
-          - collector:8889
-          - collector:8888
+          - external-observability-otel-collector:8889
+          - external-observability-otel-collector:8888
         labels:
           group: otel-collector

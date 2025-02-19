@@ -24,8 +24,29 @@ public static class AppExtensions
 
     var services = appBuilder.Services.Configure<AppConfigOptions>(appConfigSection)
       .AddAppDomainModel(logger)
-      .AddAppDomainUseCases(logger)
-      .AddAppInfrastructureTiedToCore(logger, appBuilder.Configuration)
+      .AddAppDomainUseCases(logger, appConfigAuthenticationSection: null);
+
+    List<AppLoggerFuncToConfigure> funcsToConfigureAppLogger = [];
+
+    if (appConfigOptions.Observability != null)
+    {
+      services
+        .AddAppSharedInfrastructureTiedToCoreForOpenTelemetry(
+          logger,
+          appConfigOptions.Observability,
+          funcToConfigureAppMetrics: null,
+          funcToConfigureAppTracing: null,
+          out var funcToConfigureAppLogger);
+
+      if (funcToConfigureAppLogger != null)
+      {
+        funcsToConfigureAppLogger.Add(funcToConfigureAppLogger);
+      }
+    }
+
+    services
+      .AddAppSharedInfrastructureTiedToCore(logger, appBuilder.Configuration, funcsToConfigureAppLogger)
+      .AddAppInfrastructureTiedToCore(logger)
       .AddAppInfrastructureTiedToDapper(logger, appConfigOptions.ActionQueryORM);
 
     AppDbSettings appDbSettings;

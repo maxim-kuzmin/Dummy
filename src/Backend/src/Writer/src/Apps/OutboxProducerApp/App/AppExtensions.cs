@@ -15,7 +15,7 @@ public static class AppExtensions
   {
     var appConfigSection = appBuilder.Configuration.GetSection("App");
 
-    var appConfigSectionRabbitMQ = appConfigSection.GetSection("RabbitMQ");
+    var appConfigRabbitMQSection = appConfigSection.GetSection("RabbitMQ");
 
     var appConfigOptions = new AppConfigOptions();
 
@@ -26,8 +26,29 @@ public static class AppExtensions
 
     var services = appBuilder.Services.Configure<AppConfigOptions>(appConfigSection)
       .AddAppDomainModel(logger)
-      .AddAppDomainUseCases(logger)
-      .AddAppInfrastructureTiedToCore(logger, appBuilder.Configuration)
+      .AddAppDomainUseCases(logger, appConfigAuthenticationSection: null);
+
+    List<AppLoggerFuncToConfigure> funcsToConfigureAppLogger = [];
+
+    if (appConfigOptions.Observability != null)
+    {
+      services
+        .AddAppSharedInfrastructureTiedToCoreForOpenTelemetry(
+          logger,
+          appConfigOptions.Observability,
+          funcToConfigureAppMetrics: null,
+          funcToConfigureAppTracing: null,
+          out var funcToConfigureAppLogger);
+
+      if (funcToConfigureAppLogger != null)
+      {
+        funcsToConfigureAppLogger.Add(funcToConfigureAppLogger);
+      }
+    }
+
+    services
+      .AddAppSharedInfrastructureTiedToCore(logger, appBuilder.Configuration, funcsToConfigureAppLogger)
+      .AddAppInfrastructureTiedToCore(logger)
       .AddAppInfrastructureTiedToDapper(logger, appConfigOptions.ActionQueryORM);
 
     AppDbSettings appDbSettings;
@@ -63,7 +84,7 @@ public static class AppExtensions
 
     services
       .AddAppInfrastructureTiedToEntityFramework(logger, appDbSettings, appConfigOptions.ActionQueryORM)
-      .AddAppInfrastructureTiedToRabbitMQ(logger, appConfigSectionRabbitMQ);
+      .AddAppInfrastructureTiedToRabbitMQ(logger, appConfigRabbitMQSection);
 
     services.AddHostedService<AppService>();
 

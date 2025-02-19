@@ -6,17 +6,17 @@
 public record AppConfigOptionsWriterSection
 {
   /// <summary>
-  /// API.
+  /// Протокол.
   /// </summary>
-  public AppConfigOptionsAPIEnum API { get; set; } = AppConfigOptionsAPIEnum.Grpc;
+  public AppConfigOptionsProtocolEnum Protocol { get; set; } = AppConfigOptionsProtocolEnum.Grpc;
 
   /// <summary>
-  /// Адрес gRPC API.
+  /// Конечная точка gRPC.
   /// </summary>
-  public string GrpcAPIAddress { get; set; } = string.Empty;
+  public string GrpcEndpoint { get; set; } = string.Empty;
 
   /// <summary>
-  /// Адрес HTTP REST API.
+  /// Конечная точка HTTP REST.
   /// </summary>
-  public string HttpAPIAddress { get; set; } = string.Empty;
+  public string HttpEndpoint { get; set; } = string.Empty;
 }

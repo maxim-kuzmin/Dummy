@@ -26,6 +26,11 @@ public record AppConfigOptions : AppConfigOptionsBase
   public AppConfigOptionsDbMSSQLServerSection? MSSQLServer { get; set; }
 
   /// <summary>
+  /// Наблюдаемость.
+  /// </summary>
+  public AppConfigOptionsObservabilitySection? Observability { get; set; }
+
+  /// <summary>
   /// База данных PostgreSQL.
   /// </summary>
   public AppConfigOptionsDbPostgreSQLSection? PostgreSQL { get; set; }

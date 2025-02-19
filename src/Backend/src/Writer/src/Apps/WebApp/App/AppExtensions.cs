@@ -15,9 +15,9 @@ public static class AppExtensions
   {
     var appConfigSection = appBuilder.Configuration.GetSection("App");
 
-    var appConfigSectionAuthentication = appConfigSection.GetSection("Authentication");
+    var appConfigAuthenticationSection = appConfigSection.GetSection("Authentication");
 
-    var appConfigSectionRabbitMQ = appConfigSection.GetSection("RabbitMQ");
+    var appConfigRabbitMQSection = appConfigSection.GetSection("RabbitMQ");
 
     var appConfigOptions = new AppConfigOptions();
 
@@ -28,8 +28,35 @@ public static class AppExtensions
 
     var services = appBuilder.Services.Configure<AppConfigOptions>(appConfigSection)
       .AddAppDomainModel(logger)
-      .AddAppDomainUseCases(logger)
-      .AddAppInfrastructureTiedToCore(logger, appBuilder.Configuration, appConfigSectionAuthentication)
+      .AddAppDomainUseCases(logger, appConfigAuthenticationSection);
+
+    List<AppLoggerFuncToConfigure> funcsToConfigureAppLogger = [];
+
+    if (appConfigOptions.Observability != null)
+    {
+      services
+        .AddAppSharedInfrastructureTiedToCoreForOpenTelemetryInWeb(
+          logger,
+          appConfigOptions.Observability,
+          out var funcToConfigureMetrics,
+          out var funcToConfigureTracing
+        )
+        .AddAppSharedInfrastructureTiedToCoreForOpenTelemetry(
+          logger,
+          appConfigOptions.Observability,
+          funcToConfigureMetrics,
+          funcToConfigureTracing,
+          out var funcToConfigureAppLogger);
+
+      if (funcToConfigureAppLogger != null)
+      {
+        funcsToConfigureAppLogger.Add(funcToConfigureAppLogger);
+      }
+    }
+
+    services
+      .AddAppSharedInfrastructureTiedToCore(logger, appBuilder.Configuration, funcsToConfigureAppLogger)
+      .AddAppInfrastructureTiedToCore(logger)
       .AddAppInfrastructureTiedToDapper(logger, appConfigOptions.ActionQueryORM);
 
     AppDbSettings appDbSettings;
@@ -66,7 +93,7 @@ public static class AppExtensions
     services
       .AddAppInfrastructureTiedToEntityFramework(logger, appDbSettings, appConfigOptions.ActionQueryORM)
       .AddAppInfrastructureTiedToGrpc(logger)
-      .AddAppInfrastructureTiedToRabbitMQ(logger, appConfigSectionRabbitMQ);
+      .AddAppInfrastructureTiedToRabbitMQ(logger, appConfigRabbitMQSection);
 
     services.Configure<CookiePolicyOptions>(options =>
     {

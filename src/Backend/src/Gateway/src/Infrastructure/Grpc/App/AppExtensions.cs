@@ -10,12 +10,12 @@ public static class AppExtensions
   /// </summary>
   /// <param name="services">Сервисы.</param>
   /// <param name="logger">Логгер.</param>
-  /// <param name="writerAPIAddress">Адрес API писателя.</param>
+  /// <param name="writerEndpoint">Конечная точка писателя.</param>
   /// <returns>Сервисы.</returns>
   public static IServiceCollection AddAppInfrastructureTiedToGrpc(
       this IServiceCollection services,
       ILogger logger,
-      string writerAPIAddress)
+      string writerEndpoint)
   {
     services.AddTransient<IAppActionCommandService, AppActionCommandService>();
     services.AddTransient<IDummyItemActionCommandService, DummyItemActionCommandService>();
@@ -25,7 +25,7 @@ public static class AppExtensions
       AppSettings.WriterAppClientName,
       grpcOptions =>
       {
-        grpcOptions.Address = new Uri(writerAPIAddress);
+        grpcOptions.Address = new Uri(writerEndpoint);
       })
       .AddCallCredentials((context, metadata, serviceProvider) => Task.CompletedTask)
       .ConfigureChannel(grpcChannelOptions =>
@@ -37,7 +37,7 @@ public static class AppExtensions
       AppSettings.WriterDummyItemClientName,
       grpcOptions =>
       {
-        grpcOptions.Address = new Uri(writerAPIAddress);
+        grpcOptions.Address = new Uri(writerEndpoint);
       })
       .AddCallCredentials((context, metadata, serviceProvider) => Task.CompletedTask)
       .ConfigureChannel(grpcChannelOptions =>

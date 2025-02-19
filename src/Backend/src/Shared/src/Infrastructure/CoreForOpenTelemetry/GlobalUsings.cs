@@ -1,0 +1,13 @@
+﻿global using Makc.Dummy.Shared.Core.App.Config.Options.Sections;
+global using Makc.Dummy.Shared.Infrastructure.Core.App.Logger.Funcs;
+global using Makc.Dummy.Shared.Infrastructure.CoreForOpenTelemetry.App.Metrics.Funcs;
+global using Makc.Dummy.Shared.Infrastructure.CoreForOpenTelemetry.App.Tracing.Funcs;
+global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.Extensions.Logging;
+global using OpenTelemetry;
+global using OpenTelemetry.Exporter;
+global using OpenTelemetry.Metrics;
+global using OpenTelemetry.Resources;
+global using OpenTelemetry.Trace;
+global using Serilog;
+global using Serilog.Sinks.OpenTelemetry;

@@ -1,9 +1,9 @@
 ﻿namespace Makc.Dummy.Shared.Core.App.Config.Options.Enums;
 
 /// <summary>
-/// Перечисление API в параметрах конфигурации приложения.
+/// Перечисление протоколов в параметрах конфигурации приложения.
 /// </summary>
-public enum AppConfigOptionsAPIEnum
+public enum AppConfigOptionsProtocolEnum
 {
   /// <summary>
   /// gRPC.

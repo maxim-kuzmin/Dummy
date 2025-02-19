@@ -1,4 +1,4 @@
-﻿namespace Makc.Dummy.Writer.Infrastructure.Core.App;
+﻿namespace Makc.Dummy.Shared.Infrastructure.Core.App;
 
 /// <summary>
 /// Логгер приложения.

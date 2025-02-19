@@ -28,6 +28,7 @@ global using Makc.Dummy.Writer.DomainUseCases.DummyItem.Actions.Get;
 global using Makc.Dummy.Writer.DomainUseCases.DummyItem.Actions.GetList.Query;
 global using Makc.Dummy.Writer.DomainUseCases.DummyItem.DTOs;
 global using MediatR;
+global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Logging;
 global using Microsoft.Extensions.Options;

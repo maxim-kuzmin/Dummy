@@ -4,12 +4,11 @@
     <PackageReference Include="OpenTelemetry" />
     <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" />
     <PackageReference Include="OpenTelemetry.Extensions.Hosting" />
-    <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" />
     <PackageReference Include="Serilog.Sinks.OpenTelemetry" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\DomainUseCases\Makc.Dummy.Writer.DomainUseCases.csproj" />
+    <ProjectReference Include="..\Core\Makc.Dummy.Shared.Infrastructure.Core.csproj" />
   </ItemGroup>
-
+  
 </Project>
