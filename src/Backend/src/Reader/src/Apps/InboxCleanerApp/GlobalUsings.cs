@@ -2,8 +2,14 @@
 global using Ardalis.GuardClauses;
 global using Makc.Dummy.Reader.Apps.InboxCleanerApp.App;
 global using Makc.Dummy.Reader.Apps.InboxCleanerApp.App.Config;
+global using Makc.Dummy.Reader.DomainModel.App;
+global using Makc.Dummy.Reader.DomainUseCases.App;
 global using Makc.Dummy.Reader.Infrastructure.Core.App;
 global using Makc.Dummy.Shared.Core.App;
 global using Makc.Dummy.Shared.Core.App.Config.Options;
+global using Makc.Dummy.Shared.Core.App.Config.Options.Sections;
 global using Makc.Dummy.Shared.Core.App.Config.Options.Sections.Db.PostgreSQL;
+global using Makc.Dummy.Shared.Infrastructure.Core.App;
+global using Makc.Dummy.Shared.Infrastructure.Core.App.Logger.Funcs;
+global using Makc.Dummy.Shared.Infrastructure.CoreForOpenTelemetry.App;
 global using Microsoft.Extensions.Options;

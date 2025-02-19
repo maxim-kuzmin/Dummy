@@ -23,7 +23,30 @@ public static class AppExtensions
       Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(appConfigOptions.DefaultLanguage);
 
     var services = appBuilder.Services.Configure<AppConfigOptions>(appConfigSection)
-      .AddAppInfrastructureTiedToCore(logger, appBuilder.Configuration);
+      .AddAppDomainModel(logger)
+      .AddAppDomainUseCases(logger);
+
+    List<AppLoggerFuncToConfigure> funcsToConfigureAppLogger = [];
+
+    if (appConfigOptions.Observability != null)
+    {
+      services
+        .AddAppSharedInfrastructureTiedToCoreForOpenTelemetry(
+          logger,
+          appConfigOptions.Observability,
+          funcToConfigureAppMetrics: null,
+          funcToConfigureAppTracing: null,
+          out var funcToConfigureAppLogger);
+
+      if (funcToConfigureAppLogger != null)
+      {
+        funcsToConfigureAppLogger.Add(funcToConfigureAppLogger);
+      }
+    }
+
+    services
+      .AddAppSharedInfrastructureTiedToCore(logger, appBuilder.Configuration, funcsToConfigureAppLogger)
+      .AddAppInfrastructureTiedToCore(logger);
 
     services.AddHostedService<AppService>();
 
