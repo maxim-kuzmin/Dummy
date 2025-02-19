@@ -11,6 +11,11 @@ public record AppConfigOptions : AppConfigOptionsBase
   public AppConfigOptionsAuthenticationSection? Authentication { get; set; }
 
   /// <summary>
+  /// Наблюдаемость.
+  /// </summary>
+  public AppConfigOptionsObservabilitySection? Observability { get; set; }
+
+  /// <summary>
   /// Писатель.
   /// </summary>
   public AppConfigOptionsWriterSection? Writer { get; set; }

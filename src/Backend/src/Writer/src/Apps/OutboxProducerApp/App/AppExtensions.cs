@@ -68,7 +68,6 @@ public static class AppExtensions
             appBuilder.Configuration);
         break;
       case AppConfigOptionsDbEnum.PostgreSQL:
-      default:
         services
           .AddAppInfrastructureTiedToPostgreSQL(logger, out appDbSettings)
           .AddAppInfrastructureTiedToEntityFrameworkForPostgreSQL(
@@ -80,6 +79,8 @@ public static class AppExtensions
             appConfigOptions.PostgreSQL,
             appBuilder.Configuration);
         break;
+      default:
+        throw new NotImplementedException();
     }
 
     services

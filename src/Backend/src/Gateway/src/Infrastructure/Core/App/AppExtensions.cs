@@ -10,19 +10,11 @@ public static class AppExtensions
   /// </summary>
   /// <param name="services">Сервисы.</param>
   /// <param name="logger">Логгер.</param>
-  /// <param name="configuration">Конфигурация.</param>
   /// <returns>Сервисы.</returns>
   public static IServiceCollection AddAppInfrastructureTiedToCore(
     this IServiceCollection services,
-    Microsoft.Extensions.Logging.ILogger logger,
-    IConfiguration configuration)
+    Microsoft.Extensions.Logging.ILogger logger)
   {
-    services.AddSerilog(config => config.ReadFrom.Configuration(configuration));
-
-    services.AddJsonLocalization();
-
-    services.AddScoped<AppSession>();
-
     logger.LogInformation("Added application infrastructure tied to Core");
 
     return services;

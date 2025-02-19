@@ -24,8 +24,35 @@ public static class AppExtensions
 
     var services = appBuilder.Services.Configure<AppConfigOptions>(appConfigSection)
       .AddAppDomainModel(logger)
-      .AddAppDomainUseCases(logger)
-      .AddAppInfrastructureTiedToCore(logger, appBuilder.Configuration);
+      .AddAppDomainUseCases(logger);
+
+    List<AppLoggerFuncToConfigure> funcsToConfigureAppLogger = [];
+
+    if (appConfigOptions.Observability != null)
+    {
+      services
+        .AddAppSharedInfrastructureTiedToCoreForOpenTelemetryInWeb(
+          logger,
+          appConfigOptions.Observability,
+          out var funcToConfigureMetrics,
+          out var funcToConfigureTracing
+        )
+        .AddAppSharedInfrastructureTiedToCoreForOpenTelemetry(
+          logger,
+          appConfigOptions.Observability,
+          funcToConfigureMetrics,
+          funcToConfigureTracing,
+          out var funcToConfigureAppLogger);
+
+      if (funcToConfigureAppLogger != null)
+      {
+        funcsToConfigureAppLogger.Add(funcToConfigureAppLogger);
+      }
+    }
+
+    services
+      .AddAppSharedInfrastructureTiedToCore(logger, appBuilder.Configuration, funcsToConfigureAppLogger)
+      .AddAppInfrastructureTiedToCore(logger);
 
     var writer = Guard.Against.Null(appConfigOptions.Writer);
 
@@ -34,7 +61,7 @@ public static class AppExtensions
       case AppConfigOptionsProtocolEnum.Http:
         services.AddAppInfrastructureTiedToHttp(logger, writer.HttpEndpoint);
         break;
-      case AppConfigOptionsProtocolEnum.Grpc:      
+      case AppConfigOptionsProtocolEnum.Grpc: 
         services.AddAppInfrastructureTiedToGrpc(logger, writer.GrpcEndpoint);
         break;
       default:
