@@ -4,6 +4,7 @@ global using System.Net.Http.Json;
 global using System.Security.Claims;
 global using System.Security.Cryptography;
 global using System.Text;
+global using System.Threading.Channels;
 global using Ardalis.Result;
 global using DotEnv.Core;
 global using Makc.Dummy.Shared.Core.App;

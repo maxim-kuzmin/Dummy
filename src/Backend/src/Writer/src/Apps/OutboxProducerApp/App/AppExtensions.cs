@@ -1,4 +1,6 @@
-﻿namespace Makc.Dummy.Writer.Apps.OutboxProducerApp.App;
+﻿using Makc.Dummy.Writer.Infrastructure.RabbitMQ.App;
+
+namespace Makc.Dummy.Writer.Apps.OutboxProducerApp.App;
 
 /// <summary>
 /// Расширения приложения.
@@ -14,8 +16,6 @@ public static class AppExtensions
   public static IHost BuildApp(this HostApplicationBuilder appBuilder, ILogger logger)
   {
     var appConfigSection = appBuilder.Configuration.GetSection("App");
-
-    var appConfigRabbitMQSection = appConfigSection.GetSection("RabbitMQ");
 
     var appConfigOptions = new AppConfigOptions();
 
@@ -85,7 +85,7 @@ public static class AppExtensions
 
     services
       .AddAppInfrastructureTiedToEntityFramework(logger, appDbSettings, appConfigOptions.ActionQueryORM)
-      .AddAppInfrastructureTiedToRabbitMQ(logger, appConfigRabbitMQSection);
+      .AddAppInfrastructureTiedToRabbitMQ(logger, appConfigOptions.RabbitMQ);
 
     services.AddHostedService<AppService>();
 

@@ -15,9 +15,14 @@ public static class AppExtensions
   public static IServiceCollection AddAppInfrastructureTiedToRabbitMQ(
     this IServiceCollection services,
     ILogger logger,
-    IConfigurationSection appConfigSectionRabbitMQ)
+    AppConfigOptionsRabbitMQSection? appConfigOptionsRabbitMQSection)
   {
-    services.Configure<AppConfigOptionsRabbitMQSection>(appConfigSectionRabbitMQ);
+    if (appConfigOptionsRabbitMQSection != null)
+    {
+      var appMessageBusFactory = new AppMessageBusFactory(appConfigOptionsRabbitMQSection);
+
+      services.AddSingleton<IAppMessageBusFactory>(x => appMessageBusFactory);
+    }
 
     logger.LogInformation("Added application infrastructure tied to RabbitMQ");
 

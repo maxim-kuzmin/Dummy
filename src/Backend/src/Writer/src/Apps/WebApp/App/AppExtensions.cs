@@ -17,8 +17,6 @@ public static class AppExtensions
 
     var appConfigAuthenticationSection = appConfigSection.GetSection("Authentication");
 
-    var appConfigRabbitMQSection = appConfigSection.GetSection("RabbitMQ");
-
     var appConfigOptions = new AppConfigOptions();
 
     appConfigSection.Bind(appConfigOptions);
@@ -94,7 +92,7 @@ public static class AppExtensions
     services
       .AddAppInfrastructureTiedToEntityFramework(logger, appDbSettings, appConfigOptions.ActionQueryORM)
       .AddAppInfrastructureTiedToGrpc(logger)
-      .AddAppInfrastructureTiedToRabbitMQ(logger, appConfigRabbitMQSection);
+      .AddAppInfrastructureTiedToRabbitMQ(logger, appConfigOptions.RabbitMQ);
 
     services.Configure<CookiePolicyOptions>(options =>
     {
@@ -174,7 +172,7 @@ public static class AppExtensions
 
     app.UseRequestLocalization(requestLocalizationOptions);
 
-    //app.UseHttpsRedirection(); // //qwer//Не нужно для внутреннего сервиса//
+    //app.UseHttpsRedirection(); // //makc//Не нужно для внутреннего сервиса//
 
     app
       .UseAuthentication()

@@ -1,9 +1,9 @@
-﻿namespace Makc.Dummy.Shared.DomainUseCases.App;
+﻿namespace Makc.Dummy.Shared.Core.Message;
 
 /// <summary>
-/// Интерфейс шины приложения.
+/// Интерфейс шины сообщений.
 /// </summary>
-public interface IAppBus
+public interface IMessageBus
 {
   /// <summary>
   /// Опубликовать.

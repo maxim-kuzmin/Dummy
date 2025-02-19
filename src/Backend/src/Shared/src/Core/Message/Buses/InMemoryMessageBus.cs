@@ -1,9 +1,9 @@
-﻿namespace Makc.Dummy.Shared.DomainUseCases.App.Buses;
+﻿namespace Makc.Dummy.Shared.Core.Message.Buses;
 
 /// <summary>
-/// Шина приложения для обмена сообщениями в памяти.
+/// Шина сообщений в памяти.
 /// </summary>
-public class AppInMemoryBus : IAppBus
+public class InMemoryMessageBus : IMessageBus
 {
   private readonly Dictionary<Type, Dictionary<string, object>> _channelsLookup = [];
 
