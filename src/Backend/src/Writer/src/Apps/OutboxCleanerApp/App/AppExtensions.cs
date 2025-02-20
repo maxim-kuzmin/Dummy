@@ -47,7 +47,7 @@ public static class AppExtensions
     services
       .AddAppSharedInfrastructureTiedToCore(logger, appBuilder.Configuration, funcsToConfigureAppLogger)
       .AddAppInfrastructureTiedToCore(logger)
-      .AddAppInfrastructureTiedToDapper(logger, appConfigOptions.ActionQueryORM);
+      .AddAppInfrastructureTiedToDapper(logger, appConfigOptions.DbQueryORM);
 
     AppDbSettings appDbSettings;
 
@@ -82,7 +82,7 @@ public static class AppExtensions
     }
 
     services
-      .AddAppInfrastructureTiedToEntityFramework(logger, appDbSettings, appConfigOptions.ActionQueryORM);
+      .AddAppInfrastructureTiedToEntityFramework(logger, appDbSettings, appConfigOptions.DbQueryORM);
 
     services.AddHostedService<AppService>();
 

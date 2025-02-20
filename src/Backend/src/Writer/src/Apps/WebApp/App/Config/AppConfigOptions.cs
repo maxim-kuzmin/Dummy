@@ -6,11 +6,6 @@
 public record AppConfigOptions : AppConfigOptionsBase
 {
   /// <summary>
-  /// ORM запроса действия.
-  /// </summary>
-  public AppConfigOptionsORMEnum ActionQueryORM { get; set; } = AppConfigOptionsORMEnum.EntityFramework;
-
-  /// <summary>
   /// Аутентификация.
   /// </summary>
   public AppConfigOptionsAuthenticationSection? Authentication { get; set; }
@@ -19,6 +14,11 @@ public record AppConfigOptions : AppConfigOptionsBase
   /// База данных.
   /// </summary>
   public AppConfigOptionsDbEnum Db { get; set; } = AppConfigOptionsDbEnum.PostgreSQL;
+
+  /// <summary>
+  /// ORM запросов базы данных.
+  /// </summary>
+  public AppConfigOptionsORMEnum DbQueryORM { get; set; } = AppConfigOptionsORMEnum.EntityFramework;
 
   /// <summary>
   /// База данных MS SQL Server.
