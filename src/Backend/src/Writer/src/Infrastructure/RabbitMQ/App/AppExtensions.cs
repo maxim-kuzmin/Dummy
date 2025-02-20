@@ -19,9 +19,7 @@ public static class AppExtensions
   {
     if (appConfigOptionsRabbitMQSection != null)
     {
-      var appMessageBusFactory = new AppMessageBusFactory(appConfigOptionsRabbitMQSection);
-
-      services.AddSingleton<IAppMessageBusFactory>(x => appMessageBusFactory);
+      services.AddSingleton<IAppMessageBus>(x => new AppMessageBus(appConfigOptionsRabbitMQSection));
     }
 
     logger.LogInformation("Added application infrastructure tied to RabbitMQ");

@@ -3,13 +3,50 @@
 /// <summary>
 /// Шина сообщений приложения.
 /// </summary>
-/// <param name="_connection">Соединение.</param>
-public class AppMessageBus(IConnection _connection) : IMessageBus
+public class AppMessageBus : IAppMessageBus
 {
+  private readonly ConnectionFactory _connectionFactory;
+  private readonly Lock _locker = new();
+
+  private IConnection? _connection = null;
+  private bool _disposedValue;
+
+  /// <summary>
+  /// Конструктор.
+  /// </summary>
+  /// <param name="options">Параметры.</param>
+  public AppMessageBus(AppConfigOptionsRabbitMQSection options)
+  {
+    _connectionFactory = new()
+    {
+      HostName = options.HostName,
+      Password = options.Password,
+      Port = options.Port,
+      UserName = options.UserName,
+    };
+  }
+
+  // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
+  // ~AppMessageBus()
+  // {
+  //     // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+  //     Dispose(disposing: false);
+  // }
+
+  /// <inheritdoc/>
+  public void Dispose()
+  {
+    // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+    Dispose(disposing: true);
+    GC.SuppressFinalize(this);
+  }
+
   /// <inheritdoc/>
   public async Task Publish<TMessage>(string subscriberId, TMessage message, CancellationToken cancellationToken)
   {
-    using var channel = await _connection.CreateChannelAsync(null, cancellationToken);
+    var connection = GetConnection(cancellationToken);
+
+    using var channel = await connection.CreateChannelAsync(null, cancellationToken);
   }
 
   /// <inheritdoc/>
@@ -18,6 +55,41 @@ public class AppMessageBus(IConnection _connection) : IMessageBus
     Func<TMessage, CancellationToken, Task> onMessage,
     CancellationToken cancellationToken)
   {
-    using var channel = await _connection.CreateChannelAsync(null, cancellationToken);
+    var connection = GetConnection(cancellationToken);
+
+    using var channel = await connection.CreateChannelAsync(null, cancellationToken);
+  }
+
+  /// <inheritdoc/>
+  protected virtual void Dispose(bool disposing)
+  {
+    if (!_disposedValue)
+    {
+      if (disposing)
+      {
+        _connection?.Dispose();
+      }
+
+      // TODO: free unmanaged resources (unmanaged objects) and override finalizer
+      // TODO: set large fields to null
+      _disposedValue = true;
+    }
+  }
+
+  private IConnection GetConnection(CancellationToken cancellationToken)
+  {
+    lock (_locker)
+    {
+      if (_connection != null && !_connection.IsOpen)
+      {
+        _connection.Dispose();
+
+        _connection = null;
+      }
+
+      _connection ??= _connectionFactory.CreateConnectionAsync(cancellationToken).Result;
+
+      return _connection;
+    }
   }
 }
