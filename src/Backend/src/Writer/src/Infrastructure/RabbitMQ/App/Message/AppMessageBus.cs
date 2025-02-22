@@ -5,8 +5,9 @@
 /// </summary>
 public class AppMessageBus : IAppMessageBus
 {
+  private readonly ConcurrentDictionary<string, IChannel> _channelLookup = [];
   private readonly ConnectionFactory _connectionFactory;
-  private readonly Lock _locker = new();
+  private readonly Lock _connectionLocker = new();
 
   private IConnection? _connection = null;
   private bool _disposedValue;
@@ -67,7 +68,15 @@ public class AppMessageBus : IAppMessageBus
     {
       if (disposing)
       {
-        _connection?.Dispose();
+        lock (_connectionLocker)
+        {
+          foreach (var channel in _channelLookup.Values)
+          {
+            channel.Dispose();
+          }
+
+          _connection?.Dispose();
+        }
       }
 
       // TODO: free unmanaged resources (unmanaged objects) and override finalizer
@@ -78,7 +87,7 @@ public class AppMessageBus : IAppMessageBus
 
   private IConnection GetConnection(CancellationToken cancellationToken)
   {
-    lock (_locker)
+    lock (_connectionLocker)
     {
       if (_connection != null && !_connection.IsOpen)
       {
