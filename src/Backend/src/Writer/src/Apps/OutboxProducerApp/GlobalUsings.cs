@@ -1,5 +1,4 @@
 ﻿global using System.Globalization;
-global using Ardalis.GuardClauses;
 global using Makc.Dummy.Shared.Core.App;
 global using Makc.Dummy.Shared.Core.App.Config.Options;
 global using Makc.Dummy.Shared.Core.App.Config.Options.Enums;
@@ -24,4 +23,4 @@ global using Makc.Dummy.Writer.Infrastructure.EntityFrameworkForPostgreSQL.App;
 global using Makc.Dummy.Writer.Infrastructure.MSSQLServer.App;
 global using Makc.Dummy.Writer.Infrastructure.PostgreSQL.App;
 global using Makc.Dummy.Writer.Infrastructure.RabbitMQ.App;
-global using Microsoft.Extensions.Options;
+global using Makc.Dummy.Writer.Infrastructure.RabbitMQ.App.Message;
