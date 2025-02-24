@@ -46,7 +46,7 @@ public class AppMessageConsumer(
 
         foreach (var receiving in receivings)
         {
-          await Subscribe(channel, receiving.Receiver, receiving.Handler, cancellationToken);
+          await Subscribe(channel, receiving.Sender, receiving.Handler, cancellationToken);
         }
 
         await shutdownCompletion.Task;
@@ -62,11 +62,13 @@ public class AppMessageConsumer(
 
   private static async Task Subscribe(
     IChannel channel,
-    string exchange,
+    string sender,
     Func<string, CancellationToken, Task> onMessageReceived,
     CancellationToken cancellationToken)
   {    
     const string queue = "Makc.Dummy.Reader";
+
+    string exchange = $"Makc.Dummy.{sender}";
 
     await channel.ExchangeDeclareAsync(
       exchange: exchange,

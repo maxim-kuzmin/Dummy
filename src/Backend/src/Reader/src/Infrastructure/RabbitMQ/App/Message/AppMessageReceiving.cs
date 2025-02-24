@@ -3,8 +3,8 @@
 /// <summary>
 /// Получение сообщения приложения.
 /// </summary>
-/// <param name="Receiver">Получатель.</param>
+/// <param name="Sender">Отправитель.</param>
 /// <param name="Handler">Обработчик.</param>
-public record AppMessageReceiving(string Receiver, Func<string, CancellationToken, Task> Handler)
+public record AppMessageReceiving(string Sender, Func<string, CancellationToken, Task> Handler)
 {
 }

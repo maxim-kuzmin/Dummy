@@ -100,8 +100,10 @@ public class AppMessageProducer(
     }
   }
 
-  private async Task Publish(IChannel channel, string exchange, string message, CancellationToken cancellationToken)
+  private async Task Publish(IChannel channel, string receiver, string message, CancellationToken cancellationToken)
   {
+    string exchange = $"Makc.Dummy.{receiver}";
+
     await channel.ExchangeDeclareAsync(
       exchange: exchange,
       type: ExchangeType.Fanout,
