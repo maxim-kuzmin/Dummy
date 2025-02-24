@@ -30,7 +30,7 @@ public class AppService(
 
           await _appMessageProducer.Publish(sending, stoppingToken);
 
-          await sending.TaskToComplete;
+          await sending.CompletionTask;
         }
         catch (Exception ex)
         {

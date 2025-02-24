@@ -28,13 +28,16 @@ public class AppMessageConsumer(
 
         _logger.LogInformation("MAKC:Connected");
 
-        var tcs = new TaskCompletionSource();
+        TaskCompletionSource shutdownCompletion = new();
 
         connection.ConnectionShutdownAsync += (e, a) =>
         {
           _logger.LogInformation("MAKC:Shutdown");
 
-          tcs.SetResult();
+          if (!shutdownCompletion.Task.IsCompleted)
+          {
+            shutdownCompletion.SetResult();
+          }
 
           return Task.CompletedTask;
         };
@@ -46,7 +49,7 @@ public class AppMessageConsumer(
           await Subscribe(channel, receiving.Receiver, receiving.Handler, cancellationToken);
         }
 
-        await tcs.Task;
+        await shutdownCompletion.Task;
       }
       catch (Exception ex)
       {

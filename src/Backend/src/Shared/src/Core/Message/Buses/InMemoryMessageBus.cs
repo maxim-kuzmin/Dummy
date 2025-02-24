@@ -23,22 +23,25 @@ public class InMemoryMessageBus : IMessageBus
     Func<TMessage, CancellationToken, Task> onMessage,
     CancellationToken cancellationToken)
   {
-    TaskCompletionSource tcs = new();
+    TaskCompletionSource completion = new();
 
-    Task.Run(() => Consume(tcs, subscriberId, onMessage, cancellationToken), cancellationToken);
+    Task.Run(() => Consume(completion, subscriberId, onMessage, cancellationToken), cancellationToken);
 
-    return tcs.Task;
+    return completion.Task;
   }
 
   private async Task Consume<TMessage>(
-    TaskCompletionSource tcs,
+    TaskCompletionSource completion,
     string subscriberId,
     Func<TMessage, CancellationToken, Task> onMessage,
     CancellationToken cancellationToken)
   {
     var channel = GetChannel<TMessage>(subscriberId);
 
-    tcs.SetResult();
+    if (!completion.Task.IsCompleted)
+    {
+      completion.SetResult();
+    }
 
     await foreach (var message in channel.Reader.ReadAllAsync(cancellationToken).ConfigureAwait(false))
     {

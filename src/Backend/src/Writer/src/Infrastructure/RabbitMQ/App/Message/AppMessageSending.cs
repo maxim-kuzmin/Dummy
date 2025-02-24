@@ -7,12 +7,12 @@
 /// <param name="Message">Сообщение.</param>
 public record AppMessageSending(string Receiver, string Message)
 {  
-  private readonly TaskCompletionSource _tcs = new();
+  private readonly TaskCompletionSource _completion = new();
   
   /// <summary>
-  /// Задача для завершения.
+  /// Задача завершения.
   /// </summary>
-  public Task TaskToComplete => _tcs.Task;
+  public Task CompletionTask => _completion.Task;
 
   /// <summary>
   /// Отменить.
@@ -20,7 +20,10 @@ public record AppMessageSending(string Receiver, string Message)
   /// <param name="cancellationToken">Токен отмены.</param>
   public void Cancel(CancellationToken cancellationToken)
   {
-    _tcs.SetCanceled(cancellationToken);
+    if (!_completion.Task.IsCanceled)
+    {
+      _completion.SetCanceled(cancellationToken);
+    }
   }
 
   /// <summary>
@@ -28,6 +31,9 @@ public record AppMessageSending(string Receiver, string Message)
   /// </summary>
   public void Complete()
   {
-    _tcs.SetResult();
+    if (!_completion.Task.IsCompleted)
+    {
+      _completion.SetResult();
+    }
   }
 }

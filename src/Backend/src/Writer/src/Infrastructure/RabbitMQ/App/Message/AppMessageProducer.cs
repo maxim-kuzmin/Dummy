@@ -33,14 +33,14 @@ public class AppMessageProducer(
   /// <inheritdoc/>
   public Task Start(CancellationToken cancellationToken)
   {
-    TaskCompletionSource tcs = new();
+    TaskCompletionSource completion = new();
 
-    Task.Run(() => Produce(tcs, cancellationToken), cancellationToken);
+    Task.Run(() => Produce(completion, cancellationToken), cancellationToken);
 
-    return tcs.Task;
+    return completion.Task;
   }
 
-  private async Task Produce(TaskCompletionSource tcs, CancellationToken cancellationToken)
+  private async Task Produce(TaskCompletionSource completion, CancellationToken cancellationToken)
   {
     while (!cancellationToken.IsCancellationRequested)
     {
@@ -52,17 +52,15 @@ public class AppMessageProducer(
 
         _logger.LogInformation("MAKC:Connected");
 
-        var onShutdown = new TaskCompletionSource();
+        TaskCompletionSource shutdownCompletion = new();
 
         connection.ConnectionShutdownAsync += (e, a) =>
         {
           _logger.LogInformation("MAKC:Shutdown");
 
-          if (!onShutdown.Task.IsCompleted)
+          if (!shutdownCompletion.Task.IsCompleted)
           {
-            _logger.LogInformation("MAKC:Shutdown:SetResult");
-
-            onShutdown.SetResult();
+            shutdownCompletion.SetResult();
           }
 
           return Task.CompletedTask;
@@ -70,15 +68,18 @@ public class AppMessageProducer(
 
         using var channel = await connection.CreateChannelAsync(null, cancellationToken);
 
-        tcs.SetResult();
+        if (!completion.Task.IsCompleted)
+        {
+          completion.SetResult();
+        }
 
         await foreach (var sending in _sendings.Reader.ReadAllAsync(cancellationToken).ConfigureAwait(false))
         {
-          var taskToPublish = Publish(channel, sending.Receiver, sending.Message, cancellationToken);
+          var publishingTask = Publish(channel, sending.Receiver, sending.Message, cancellationToken);
 
-          var taskToComplete = await Task.WhenAny(taskToPublish, onShutdown.Task);
+          var completionTask = await Task.WhenAny(publishingTask, shutdownCompletion.Task);
 
-          if (taskToComplete == onShutdown.Task)
+          if (completionTask == shutdownCompletion.Task)
           {
             sending.Cancel(cancellationToken);
 
@@ -108,9 +109,16 @@ public class AppMessageProducer(
 
     var body = Encoding.UTF8.GetBytes(message);
 
+    var properties = new BasicProperties
+    {
+      Persistent = true
+    };
+
     await channel.BasicPublishAsync(
       exchange: exchange,
       routingKey: string.Empty,
+      mandatory: true,      
+      basicProperties: properties,
       body: body,
       cancellationToken: cancellationToken);
 
