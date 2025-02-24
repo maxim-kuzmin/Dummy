@@ -17,7 +17,7 @@ public class AppMessageProducer(
     UserName = options.UserName
   };
 
-  private readonly Channel<AppMessageSource> _sources = Channel.CreateUnbounded<AppMessageSource>(new()
+  private readonly Channel<AppMessageSending> _sendings = Channel.CreateUnbounded<AppMessageSending>(new()
   {
     SingleWriter = false,
     SingleReader = false,
@@ -25,17 +25,26 @@ public class AppMessageProducer(
   });
 
   /// <inheritdoc/>
-  public ValueTask Publish(AppMessageSource source, CancellationToken cancellationToken)
+  public ValueTask Publish(AppMessageSending sending, CancellationToken cancellationToken)
   {
-    return _sources.Writer.WriteAsync(source, cancellationToken);
+    return _sendings.Writer.WriteAsync(sending, cancellationToken);
   }
 
   /// <inheritdoc/>
-  public async Task Start(CancellationToken cancellationToken)
+  public Task Start(CancellationToken cancellationToken)
+  {
+    TaskCompletionSource tcs = new();
+
+    Task.Run(() => Produce(tcs, cancellationToken), cancellationToken);
+
+    return tcs.Task;
+  }
+
+  private async Task Produce(TaskCompletionSource tcs, CancellationToken cancellationToken)
   {
     while (!cancellationToken.IsCancellationRequested)
     {
-      const int timeoutToRetry = 3000;      
+      const int timeoutToRetry = 3000;
 
       try
       {
@@ -49,50 +58,49 @@ public class AppMessageProducer(
         {
           _logger.LogInformation("MAKC:Shutdown");
 
-          onShutdown.SetResult();
+          if (!onShutdown.Task.IsCompleted)
+          {
+            _logger.LogInformation("MAKC:Shutdown:SetResult");
+
+            onShutdown.SetResult();
+          }
 
           return Task.CompletedTask;
         };
 
         using var channel = await connection.CreateChannelAsync(null, cancellationToken);
 
-        await foreach (var source in _sources.Reader.ReadAllAsync(cancellationToken).ConfigureAwait(false))
+        tcs.SetResult();
+
+        await foreach (var sending in _sendings.Reader.ReadAllAsync(cancellationToken).ConfigureAwait(false))
         {
-          var taskToPublish = Publish(channel, source.Message, cancellationToken);
+          var taskToPublish = Publish(channel, sending.Receiver, sending.Message, cancellationToken);
 
           var taskToComplete = await Task.WhenAny(taskToPublish, onShutdown.Task);
 
           if (taskToComplete == onShutdown.Task)
           {
-            source.OnCompleted.SetCanceled(cancellationToken);
+            sending.Cancel(cancellationToken);
 
             break;
           }
           else
           {
-            source.OnCompleted.SetResult();
+            sending.Complete();
           }
         }
       }
-      catch (TaskCanceledException ex)
-      {
-        _logger.LogError(ex, "MAKC: Canceled");
-
-        break;
-      }
       catch (Exception ex)
       {
-        _logger.LogError(ex, "MAKC: Unknown");
+        _logger.LogError(ex, "MAKC:Unknown");
       }
 
       await Task.Delay(timeoutToRetry, cancellationToken);
     }
   }
 
-  private async Task Publish(IChannel channel, string message, CancellationToken cancellationToken)
+  private async Task Publish(IChannel channel, string exchange, string message, CancellationToken cancellationToken)
   {
-    const string exchange = "DummyItemChanged";
-
     await channel.ExchangeDeclareAsync(
       exchange: exchange,
       type: ExchangeType.Fanout,
@@ -109,5 +117,3 @@ public class AppMessageProducer(
     _logger.LogInformation("MAKC:Published: {message}", message);
   }
 }
-
-public record AppMessageSource(TaskCompletionSource OnCompleted, string Message);

@@ -14,9 +14,11 @@ public class AppService(
   /// <inheritdoc/>
   protected override async Task ExecuteAsync(CancellationToken stoppingToken)
   {
+    const int timeoutToRepeat = 3000;
+
     while (!stoppingToken.IsCancellationRequested)
     {
-      await Task.Run(() => _appMessageProducer.Start(stoppingToken), stoppingToken);
+      await _appMessageProducer.Start(stoppingToken);
 
       using IServiceScope scope = _serviceScopeFactory.CreateScope();
 
@@ -24,20 +26,18 @@ public class AppService(
       {
         try
         {
-          var onCompleted = new TaskCompletionSource();
+          AppMessageSending sending = new(AppEventNameEnum.DummyItemChanged.ToString(), DateTimeOffset.Now.ToString());
 
-          AppMessageSource source = new(onCompleted, DateTimeOffset.Now.ToString());
+          await _appMessageProducer.Publish(sending, stoppingToken);
 
-          await _appMessageProducer.Publish(source, stoppingToken);
-
-          await onCompleted.Task;
+          await sending.TaskToComplete;
         }
         catch (Exception ex)
         {
-          _logger.LogError(ex, "MAKC: Source");
+          _logger.LogError(ex, "MAKC:Sending");
         }
 
-        await Task.Delay(1000, stoppingToken);
+        await Task.Delay(timeoutToRepeat, stoppingToken);
       }
     }
   }

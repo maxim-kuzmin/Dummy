@@ -1,4 +1,4 @@
-﻿namespace Makc.Dummy.Writer.DomainUseCases.App.Enums;
+﻿namespace Makc.Dummy.Shared.Core.App.Enums;
 
 /// <summary>
 /// Перечисление имён событий приложения.

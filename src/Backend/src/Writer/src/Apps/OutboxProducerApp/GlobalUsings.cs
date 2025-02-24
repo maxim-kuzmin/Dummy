@@ -5,6 +5,7 @@ global using Makc.Dummy.Shared.Core.App.Config.Options.Enums;
 global using Makc.Dummy.Shared.Core.App.Config.Options.Sections;
 global using Makc.Dummy.Shared.Core.App.Config.Options.Sections.Db.MSSQLServer;
 global using Makc.Dummy.Shared.Core.App.Config.Options.Sections.Db.PostgreSQL;
+global using Makc.Dummy.Shared.Core.App.Enums;
 global using Makc.Dummy.Shared.Infrastructure.Core.App;
 global using Makc.Dummy.Shared.Infrastructure.Core.App.Logger.Funcs;
 global using Makc.Dummy.Shared.Infrastructure.CoreForOpenTelemetry.App;

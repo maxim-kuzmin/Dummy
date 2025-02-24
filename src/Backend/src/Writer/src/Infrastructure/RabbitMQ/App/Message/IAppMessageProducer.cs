@@ -11,7 +11,7 @@ public interface IAppMessageProducer
   /// <param name="source">Источник.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Задача.</returns>
-  ValueTask Publish(AppMessageSource source, CancellationToken cancellationToken);
+  ValueTask Publish(AppMessageSending source, CancellationToken cancellationToken);
 
   /// <summary>
   /// Начать.
