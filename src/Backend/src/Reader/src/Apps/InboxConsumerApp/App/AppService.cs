@@ -8,26 +8,28 @@
 /// <param name="_serviceScopeFactory">Фабрика области видимости сервисов.</param>
 public class AppService(
   IAppMessageConsumer _appMessageConsumer,
-  ILogger<AppService> _logger,
   IServiceScopeFactory _serviceScopeFactory) : BackgroundService
 {
+  private IMediator? _mediator;
+
   /// <inheritdoc/>
   protected override async Task ExecuteAsync(CancellationToken stoppingToken)
   {
-    while (!stoppingToken.IsCancellationRequested)
-    {
-      AppMessageReceiving[] receivings = [new(AppEventNameEnum.DummyItemChanged.ToString(), OnDummyItemChanged)];
+    using IServiceScope scope = _serviceScopeFactory.CreateScope();
 
-      await _appMessageConsumer.Start(receivings, stoppingToken);
+    _mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
 
-      using IServiceScope scope = _serviceScopeFactory.CreateScope();
-    }
+    MessageReceiving[] receivings = [new(AppEventNameEnum.DummyItemChanged.ToString(), OnMessageReceived)];
+
+    await _appMessageConsumer.Start(receivings, stoppingToken);
   }
 
-  private Task OnDummyItemChanged(string message, CancellationToken cancellationToken)
+  private async Task OnMessageReceived(string sender, string message, CancellationToken cancellationToken)
   {
-    _logger.LogInformation("MAKC:Received: {message}", message);
+    Guard.Against.Null(_mediator);
 
-    return Task.CompletedTask;
+    AppInboxConsumeActionCommand command = new(sender, message);
+
+    await _mediator.Send(command, cancellationToken);
   }
 }

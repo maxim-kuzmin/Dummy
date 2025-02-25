@@ -4,41 +4,22 @@
 /// Сервис приложения.
 /// </summary>
 /// <param name="_appMessageProducer">Поставщик сообщений приложения.</param>
-/// <param name="_logger">Логгер.</param>
 /// <param name="_serviceScopeFactory">Фабрика области видимости сервисов.</param>
 public class AppService(
   IAppMessageProducer _appMessageProducer,
-  ILogger<AppService> _logger,
   IServiceScopeFactory _serviceScopeFactory) : BackgroundService
 {
   /// <inheritdoc/>
   protected override async Task ExecuteAsync(CancellationToken stoppingToken)
   {
-    const int timeoutToRepeat = 3000;
+    await _appMessageProducer.Start(stoppingToken);
 
-    while (!stoppingToken.IsCancellationRequested)
-    {
-      await _appMessageProducer.Start(stoppingToken);
+    using IServiceScope scope = _serviceScopeFactory.CreateScope();
 
-      using IServiceScope scope = _serviceScopeFactory.CreateScope();
+    var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
 
-      while (true)
-      {
-        try
-        {
-          AppMessageSending sending = new(AppEventNameEnum.DummyItemChanged.ToString(), DateTimeOffset.Now.ToString());
+    AppOutboxProduceActionCommand command = new();
 
-          await _appMessageProducer.Publish(sending, stoppingToken);
-
-          await sending.CompletionTask;
-        }
-        catch (Exception ex)
-        {
-          _logger.LogError(ex, "MAKC:Sending");
-        }
-
-        await Task.Delay(timeoutToRepeat, stoppingToken);
-      }
-    }
+    await mediator.Send(command, stoppingToken);
   }
 }

@@ -1,6 +1,4 @@
-﻿using Makc.Dummy.Writer.Infrastructure.RabbitMQ.App;
-
-namespace Makc.Dummy.Writer.Apps.OutboxProducerApp.App;
+﻿namespace Makc.Dummy.Writer.Apps.OutboxProducerApp.App;
 
 /// <summary>
 /// Расширения приложения.

@@ -1,9 +1,9 @@
-﻿namespace Makc.Dummy.Writer.Infrastructure.RabbitMQ.App.Message;
+﻿namespace Makc.Dummy.Shared.Core.Message;
 
 /// <summary>
-/// Интерфейс поставщика сообщений приложения.
+/// Интерфейс поставщика сообщений.
 /// </summary>
-public interface IAppMessageProducer
+public interface IMessageProducer
 {
   /// <summary>
   /// Опубликовать.
@@ -11,7 +11,7 @@ public interface IAppMessageProducer
   /// <param name="source">Источник.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Задача.</returns>
-  ValueTask Publish(AppMessageSending source, CancellationToken cancellationToken);
+  ValueTask Publish(MessageSending source, CancellationToken cancellationToken);
 
   /// <summary>
   /// Начать.

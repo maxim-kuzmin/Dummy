@@ -9,4 +9,5 @@ global using Ardalis.Result;
 global using DotEnv.Core;
 global using Makc.Dummy.Shared.Core.App;
 global using Makc.Dummy.Shared.Core.App.Config.Options.Enums;
+global using Makc.Dummy.Shared.Core.Message.Funcs;
 global using Microsoft.IdentityModel.Tokens;

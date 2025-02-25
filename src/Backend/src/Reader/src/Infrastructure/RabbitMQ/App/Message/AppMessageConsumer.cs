@@ -16,7 +16,7 @@ public class AppMessageConsumer(
   };
 
   /// <inheritdoc/>
-  public async Task Start(IEnumerable<AppMessageReceiving> receivings, CancellationToken cancellationToken)
+  public async Task Start(IEnumerable<MessageReceiving> receivings, CancellationToken cancellationToken)
   {
     while (!cancellationToken.IsCancellationRequested)
     {
@@ -46,7 +46,7 @@ public class AppMessageConsumer(
 
         foreach (var receiving in receivings)
         {
-          await Subscribe(channel, receiving.Sender, receiving.Handler, cancellationToken);
+          await Subscribe(channel, receiving.Sender, receiving.FuncToHandleMessage, cancellationToken);
         }
 
         await shutdownCompletion.Task;
@@ -63,7 +63,7 @@ public class AppMessageConsumer(
   private static async Task Subscribe(
     IChannel channel,
     string sender,
-    Func<string, CancellationToken, Task> onMessageReceived,
+    MessageFuncToHandle funcToHandleMessage,
     CancellationToken cancellationToken)
   {    
     const string queue = "Makc.Dummy.Reader";
@@ -103,7 +103,7 @@ public class AppMessageConsumer(
 
       var message = Encoding.UTF8.GetString(body);
 
-      await onMessageReceived.Invoke(message, cancellationToken);      
+      await funcToHandleMessage.Invoke(sender, message, cancellationToken);      
 
       // here channel could also be accessed as ((AsyncEventingBasicConsumer)sender).Channel
       await channel.BasicAckAsync(deliveryTag: ea.DeliveryTag, multiple: false);

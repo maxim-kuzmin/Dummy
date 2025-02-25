@@ -1,11 +1,11 @@
-﻿namespace Makc.Dummy.Writer.Infrastructure.RabbitMQ.App.Message;
+﻿namespace Makc.Dummy.Shared.Core.Message;
 
 /// <summary>
-/// Отправка сообщений приложения.
+/// Отправка сообщений.
 /// </summary>
 /// <param name="Receiver">Получатель.</param>
 /// <param name="Message">Сообщение.</param>
-public record AppMessageSending(string Receiver, string Message)
+public record MessageSending(string Receiver, string Message)
 {  
   private readonly TaskCompletionSource _completion = new();
   

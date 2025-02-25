@@ -17,7 +17,7 @@ public class AppMessageProducer(
     UserName = options.UserName
   };
 
-  private readonly Channel<AppMessageSending> _sendings = Channel.CreateUnbounded<AppMessageSending>(new()
+  private readonly Channel<MessageSending> _sendings = Channel.CreateUnbounded<MessageSending>(new()
   {
     SingleWriter = false,
     SingleReader = false,
@@ -25,7 +25,7 @@ public class AppMessageProducer(
   });
 
   /// <inheritdoc/>
-  public ValueTask Publish(AppMessageSending sending, CancellationToken cancellationToken)
+  public ValueTask Publish(MessageSending sending, CancellationToken cancellationToken)
   {
     return _sendings.Writer.WriteAsync(sending, cancellationToken);
   }
