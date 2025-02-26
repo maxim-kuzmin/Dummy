@@ -11,9 +11,5 @@
   <ItemGroup>
     <ProjectReference Include="..\EntityFramework\Makc.Dummy.Writer.Infrastructure.EntityFramework.csproj" />
   </ItemGroup>
-  
-  <ItemGroup>
-    <Folder Include="App\Db\Migrations\" />
-  </ItemGroup>
 
 </Project>
