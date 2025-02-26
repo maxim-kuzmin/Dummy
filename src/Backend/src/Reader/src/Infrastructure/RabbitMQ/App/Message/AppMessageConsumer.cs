@@ -16,7 +16,15 @@ public class AppMessageConsumer(
   };
 
   /// <inheritdoc/>
-  public async Task Start(IEnumerable<MessageReceiving> receivings, CancellationToken cancellationToken)
+  public Task Start(IEnumerable<MessageReceiving> receivings, CancellationToken cancellationToken)
+  {
+    Task.Run(() => Consume(receivings, cancellationToken), cancellationToken);
+
+    return Task.CompletedTask;
+  }
+
+  /// <inheritdoc/>
+  public async Task Consume(IEnumerable<MessageReceiving> receivings, CancellationToken cancellationToken)
   {
     while (!cancellationToken.IsCancellationRequested)
     {

@@ -4,7 +4,6 @@
 /// Сервис приложения.
 /// </summary>
 /// <param name="_appMessageConsumer">Потребитель сообщений приложения.</param>
-/// <param name="_logger">Логгер.</param>
 /// <param name="_serviceScopeFactory">Фабрика области видимости сервисов.</param>
 public class AppService(
   IAppMessageConsumer _appMessageConsumer,
@@ -22,6 +21,8 @@ public class AppService(
     MessageReceiving[] receivings = [new(AppEventNameEnum.DummyItemChanged.ToString(), OnMessageReceived)];
 
     await _appMessageConsumer.Start(receivings, stoppingToken);
+
+    await Task.Delay(Timeout.Infinite, stoppingToken);
   }
 
   private async Task OnMessageReceived(string sender, string message, CancellationToken cancellationToken)

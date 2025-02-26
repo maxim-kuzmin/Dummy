@@ -2,6 +2,16 @@ include:
   - docker-compose.observability.override.yaml
 
 services:
+  external-mongo:
+    volumes:
+      - ${MY_SERVICE_EXTERNAL_MONGO_HOST_FOLDER}:${MY_SERVICE_EXTERNAL_MONGO_CONTAINER_FOLDER}
+    ports:
+      - ${MY_SERVICE_EXTERNAL_MONGO_HOST_PORT}:${MY_SERVICE_EXTERNAL_MONGO_CONTAINER_PORT}
+
+  external-mongo-express:
+    ports:
+      - ${MY_SERVICE_EXTERNAL_MONGO_EXPRESS_HOST_PORT}:${MY_SERVICE_EXTERNAL_MONGO_EXPRESS_CONTAINER_PORT}
+
   external-mssqlserver:
     volumes:
       - ${MY_SERVICE_EXTERNAL_MSSQLSERVER_HOST_FOLDER_BACKUP}:${MY_SERVICE_EXTERNAL_MSSQLSERVER_CONTAINER_FOLDER_BACKUP}

@@ -2,6 +2,28 @@ include:
   - docker-compose.observability.yaml
 
 services:
+  external-mongo:
+    container_name: ${MY_SERVICE_EXTERNAL_MONGO_CONTAINER_NAME}
+    image: ${MY_SERVICE_EXTERNAL_MONGO_IMAGE}
+    environment:
+      - MONGO_INITDB_ROOT_PASSWORD
+      - MONGO_INITDB_ROOT_USERNAME
+    networks:
+      - network-backend
+
+  external-mongo-express:
+    container_name: ${MY_SERVICE_EXTERNAL_MONGO_EXPRESS_CONTAINER_NAME}
+    image: ${MY_SERVICE_EXTERNAL_MONGO_EXPRESS_IMAGE}
+    environment:
+      - ME_CONFIG_BASICAUTH_ENABLED
+      - ME_CONFIG_MONGODB_URL
+    networks:
+      - network-backend
+    depends_on:
+      external-mongo:
+        condition: service_started
+    restart: unless-stopped
+
   external-mssqlserver:
     container_name: ${MY_SERVICE_EXTERNAL_MSSQLSERVER_CONTAINER_NAME}
     image: ${MY_SERVICE_EXTERNAL_MSSQLSERVER_IMAGE}
@@ -11,7 +33,7 @@ services:
       - MSSQL_COLLATION
       - MSSQL_DATA_DIR
       - MSSQL_DUMP_DIR
-      - MSSQL_LOG_DIR      
+      - MSSQL_LOG_DIR
       - MSSQL_PID
       - MSSQL_SA_PASSWORD
     networks:
@@ -45,7 +67,6 @@ services:
       - RABBITMQ_DEFAULT_USER
       - RABBITMQ_DEFAULT_PASS
       - RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS
-    #restart: unless-stopped
     networks:
       - network-backend
 
