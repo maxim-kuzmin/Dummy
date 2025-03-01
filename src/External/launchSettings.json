@@ -4,6 +4,10 @@
       "commandName": "DockerCompose",
       "commandVersion": "1.0",
       "serviceActions": {
+        "external-keycloak": "StartWithoutDebugging",
+        "external-keycloak-postgres": "StartWithoutDebugging",
+        "external-mongo": "StartWithoutDebugging",
+        "external-mongo-express": "StartWithoutDebugging",
         "external-mssqlserver": "StartWithoutDebugging",
         "external-observability-grafana": "StartWithoutDebugging",
         "external-observability-jaeger": "StartWithoutDebugging",
