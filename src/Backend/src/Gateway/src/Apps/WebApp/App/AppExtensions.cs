@@ -1,4 +1,6 @@
-﻿namespace Makc.Dummy.Gateway.Apps.WebApp.App;
+﻿using Microsoft.Extensions.Hosting;
+
+namespace Makc.Dummy.Gateway.Apps.WebApp.App;
 
 /// <summary>
 /// Расширения приложения.
@@ -15,6 +17,10 @@ public static class AppExtensions
   {
     var appConfigSection = appBuilder.Configuration.GetSection("App");
 
+    var appConfigAuthenticationSection = appConfigSection.GetSection("Authentication");
+
+    var appConfigKeycloakSection = appConfigSection.GetSection("Keycloak");
+
     var appConfigOptions = new AppConfigOptions();
 
     appConfigSection.Bind(appConfigOptions);
@@ -24,7 +30,11 @@ public static class AppExtensions
 
     var services = appBuilder.Services.Configure<AppConfigOptions>(appConfigSection)
       .AddAppDomainModel(logger)
-      .AddAppDomainUseCases(logger);
+      .AddAppDomainUseCases(
+        logger,
+        appConfigAuthenticationSection,
+        appConfigKeycloakSection,
+        appConfigOptions.Keycloak?.BaseUrl);
 
     List<AppLoggerFuncToConfigure> funcsToConfigureAppLogger = [];
 
@@ -61,7 +71,7 @@ public static class AppExtensions
       case AppConfigOptionsProtocolEnum.Http:
         services.AddAppInfrastructureTiedToHttp(logger, writer.HttpEndpoint);
         break;
-      case AppConfigOptionsProtocolEnum.Grpc: 
+      case AppConfigOptionsProtocolEnum.Grpc:
         services.AddAppInfrastructureTiedToGrpc(logger, writer.GrpcEndpoint);
         break;
       default:
@@ -74,30 +84,82 @@ public static class AppExtensions
       options.MinimumSameSitePolicy = SameSiteMode.None;
     });
 
-    services.AddFastEndpoints();
+    services
+      .AddFastEndpoints()
+      .AddAuthorization();
 
     var authentication = Guard.Against.Null(appConfigOptions.Authentication);
 
-    services
-      .AddAuthorization()
-      .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-      .AddJwtBearer(options =>
-      {
-        byte[] keyBytes = Encoding.UTF8.GetBytes(authentication.Key);
+    switch (authentication.Type)
+    {
+      case AppConfigOptionsAuthenticationEnum.JWT:
+        services
+          .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+          .AddJwtBearer(options =>
+          {
+            var authentication = Guard.Against.Null(appConfigOptions.Authentication);
 
-        var issuerSigningKey = authentication.GetSymmetricSecurityKey();
+            byte[] keyBytes = Encoding.UTF8.GetBytes(authentication.Key);
 
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-          ValidateIssuer = true,
-          ValidIssuer = authentication.Issuer,
-          ValidateAudience = true,
-          ValidAudience = authentication.Audience,
-          ValidateLifetime = true,
-          IssuerSigningKey = issuerSigningKey,
-          ValidateIssuerSigningKey = true
-        };
-      });
+            var issuerSigningKey = authentication.GetSymmetricSecurityKey();
+
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+              ValidateIssuer = true,
+              ValidIssuer = authentication.Issuer,
+              ValidateAudience = true,
+              ValidAudience = authentication.Audience,
+              ValidateLifetime = true,
+              IssuerSigningKey = issuerSigningKey,
+              ValidateIssuerSigningKey = true
+            };
+          });
+        break;
+      case AppConfigOptionsAuthenticationEnum.Keycloak:
+        services
+          .AddAuthentication(options =>
+          {
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+          })
+          .AddJwtBearer(options =>
+          {
+            var keycloak = Guard.Against.Null(appConfigOptions.Keycloak);
+
+            string rootUrl = $"{keycloak.BaseUrl}/realms/{keycloak.Realm}";
+
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+              ValidateIssuer = true,
+              ValidIssuer = rootUrl.Replace("host.docker.internal", "localhost"),
+
+              ValidateAudience = true,
+              ValidAudience = "account",
+
+              ValidateIssuerSigningKey = true,
+              ValidateLifetime = false,
+
+              IssuerSigningKeyResolver = (token, securityToken, kid, parameters) =>
+              {
+                var client = new HttpClient();
+                var keyUri = $"{rootUrl}/protocol/openid-connect/certs";
+                var response = client.GetAsync(keyUri).Result;
+                var keys = new JsonWebKeySet(response.Content.ReadAsStringAsync().Result);
+
+                return keys.GetSigningKeys();
+              },
+
+              NameClaimType = "preferred_username",
+              RoleClaimType = "roles"
+            };
+
+            options.RequireHttpsMetadata = false; // Only in develop environment
+            options.SaveToken = true;
+          });
+        break;
+      default:
+        throw new NotImplementedException();
+    }
 
     services.SwaggerDocument(options =>
     {

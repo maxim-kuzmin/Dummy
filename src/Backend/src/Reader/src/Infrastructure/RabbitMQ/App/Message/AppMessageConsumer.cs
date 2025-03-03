@@ -3,17 +3,33 @@
 /// <summary>
 /// Потребитель сообщений приложения.
 /// </summary>
-public class AppMessageConsumer(
-  AppConfigOptionsRabbitMQSection options,
-  ILogger<AppMessageConsumer> _logger) : IAppMessageConsumer
+public class AppMessageConsumer : IAppMessageConsumer
 {
-  private readonly ConnectionFactory _connectionFactory = new()
+  private readonly ConnectionFactory _connectionFactory;
+
+  private readonly ILogger<AppMessageConsumer> _logger;
+
+  /// <summary>
+  /// Конструктор.
+  /// </summary>
+  /// <param name="options">Параметры.</param>
+  /// <param name="_logger">Логгер.</param>
+  public AppMessageConsumer(
+    AppConfigOptionsRabbitMQSection? options,
+    ILogger<AppMessageConsumer> logger)
   {
-    HostName = options.HostName,
-    Password = options.Password,
-    Port = options.Port,
-    UserName = options.UserName
-  };
+    _logger = logger;
+
+    Guard.Against.Null(options);
+
+    _connectionFactory = new()
+    {
+      HostName = options.HostName,
+      Password = options.Password,
+      Port = options.Port,
+      UserName = options.UserName
+    };
+  }
 
   /// <inheritdoc/>
   public Task Start(IEnumerable<MessageReceiving> receivings, CancellationToken cancellationToken)

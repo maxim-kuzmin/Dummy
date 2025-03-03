@@ -3,19 +3,11 @@
 /// <summary>
 /// Поставщик сообщений приложения.
 /// </summary>
-/// <param name="options">Параметры.</param>
-/// <param name="_logger">Логгер.</param>
-public class AppMessageProducer(
-  AppConfigOptionsRabbitMQSection options,
-  ILogger<AppMessageProducer> _logger) : IAppMessageProducer
+public class AppMessageProducer : IAppMessageProducer
 {
-  private readonly ConnectionFactory _connectionFactory = new()
-  {
-    HostName = options.HostName,
-    Password = options.Password,
-    Port = options.Port,
-    UserName = options.UserName
-  };
+  private readonly ConnectionFactory _connectionFactory;
+
+  private readonly ILogger<AppMessageProducer> _logger;
 
   private readonly Channel<MessageSending> _sendings = Channel.CreateUnbounded<MessageSending>(new()
   {
@@ -23,6 +15,26 @@ public class AppMessageProducer(
     SingleReader = false,
     AllowSynchronousContinuations = true
   });
+
+  /// <summary>
+  /// Конструктор.
+  /// </summary>
+  /// <param name="options">Параметры.</param>
+  /// <param name="_logger">Логгер.</param>
+  public AppMessageProducer(AppConfigOptionsRabbitMQSection? options, ILogger<AppMessageProducer> logger)
+  {
+    _logger = logger;
+
+    Guard.Against.Null(options);
+
+    _connectionFactory = new()
+    {
+      HostName = options.HostName,
+      Password = options.Password,
+      Port = options.Port,
+      UserName = options.UserName
+    };
+  }
 
   /// <inheritdoc/>
   public ValueTask Publish(MessageSending sending, CancellationToken cancellationToken)

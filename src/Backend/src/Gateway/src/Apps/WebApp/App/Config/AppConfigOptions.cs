@@ -11,6 +11,11 @@ public record AppConfigOptions : AppConfigOptionsBase
   public AppConfigOptionsAuthenticationSection? Authentication { get; set; }
 
   /// <summary>
+  /// Поставщик OpenID Keycloak.
+  /// </summary>
+  public AppConfigOptionsKeycloakSection? Keycloak { get; set; }
+
+  /// <summary>
   /// Наблюдаемость.
   /// </summary>
   public AppConfigOptionsObservabilitySection? Observability { get; set; }

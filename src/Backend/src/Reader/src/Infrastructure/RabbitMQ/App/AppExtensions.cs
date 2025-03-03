@@ -17,12 +17,9 @@ public static class AppExtensions
     ILogger logger,
     AppConfigOptionsRabbitMQSection? appConfigOptionsRabbitMQSection)
   {
-    if (appConfigOptionsRabbitMQSection != null)
-    {
-      services.AddSingleton<IAppMessageConsumer>(x => new AppMessageConsumer(
-        appConfigOptionsRabbitMQSection,
-        x.GetRequiredService<ILogger<AppMessageConsumer>>()));
-    }
+    services.AddSingleton<IAppMessageConsumer>(x => new AppMessageConsumer(
+      appConfigOptionsRabbitMQSection,
+      x.GetRequiredService<ILogger<AppMessageConsumer>>()));
 
     logger.LogInformation("Added application infrastructure tied to RabbitMQ");
 
