@@ -3,9 +3,9 @@
 /// <summary>
 /// Основа сущности.
 /// </summary>
-/// <typeparam name="TId">Тип идентификатора.</typeparam>
-public abstract class EntityBase<TId> : IEntityBase<TId>
-  where TId : struct, IEquatable<TId>
+/// <typeparam name="TPrimaryKey">Тип первичного ключа.</typeparam>
+public abstract class EntityBase<TPrimaryKey> : IEntityBase<TPrimaryKey>
+  where TPrimaryKey : IEquatable<TPrimaryKey>
 {
   /// <inheritdoc/>
   public virtual object DeepCopy()
@@ -14,8 +14,8 @@ public abstract class EntityBase<TId> : IEntityBase<TId>
   }
 
   /// <inheritdoc/>
-  public abstract TId GetId();
+  public abstract TPrimaryKey GetDefaultPrimaryKey();
 
   /// <inheritdoc/>
-  public abstract void SetId(TId id);
+  public abstract TPrimaryKey GetPrimaryKey();
 }

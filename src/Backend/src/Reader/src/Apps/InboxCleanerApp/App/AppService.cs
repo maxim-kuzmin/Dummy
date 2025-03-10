@@ -16,7 +16,7 @@ public class AppService(ILogger<AppService> _logger, IServiceScopeFactory _servi
 
       var appConfigOptionsSnapshot = scope.ServiceProvider.GetRequiredService<IOptionsSnapshot<AppConfigOptions>>();
 
-      var appConfigOptionsPostgreSQLSection = Guard.Against.Null(appConfigOptionsSnapshot.Value.PostgreSQL);
+      var appConfigOptionsPostgreSQLSection = Guard.Against.Null(appConfigOptionsSnapshot.Value.MongoDB);
 
       _logger.LogInformation("PostgreSQL: {appConfigOptionsPostgreSQLSection}", appConfigOptionsPostgreSQLSection);
 

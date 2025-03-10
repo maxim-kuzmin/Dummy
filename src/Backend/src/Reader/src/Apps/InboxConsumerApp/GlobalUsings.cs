@@ -11,7 +11,7 @@ global using Makc.Dummy.Reader.Infrastructure.RabbitMQ.App;
 global using Makc.Dummy.Shared.Core.App;
 global using Makc.Dummy.Shared.Core.App.Config.Options;
 global using Makc.Dummy.Shared.Core.App.Config.Options.Sections;
-global using Makc.Dummy.Shared.Core.App.Config.Options.Sections.Db.PostgreSQL;
+global using Makc.Dummy.Shared.Core.App.Config.Options.Sections.Db.MongoDB;
 global using Makc.Dummy.Shared.Core.App.Enums;
 global using Makc.Dummy.Shared.Core.Message;
 global using Makc.Dummy.Shared.Infrastructure.Core.App;

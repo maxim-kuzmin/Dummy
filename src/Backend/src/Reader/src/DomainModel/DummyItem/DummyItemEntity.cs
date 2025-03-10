@@ -1,14 +1,19 @@
-﻿namespace Makc.Dummy.Writer.DomainModel.DummyItem;
+﻿namespace Makc.Dummy.Reader.DomainModel.DummyItem;
 
 /// <summary>
 /// Сущность фиктивного предмета.
 /// </summary>
-public class DummyItemEntity : EntityBaseWithIdAsStructPrimaryKey<long>, IAggregateRoot
+public class DummyItemEntity : EntityBaseWithObjectIdAsStringPrimaryKey, IAggregateRoot
 {
   /// <summary>
   /// Токен конкуренции.
   /// </summary>
   public Guid ConcurrencyToken { get; set; }
+
+  /// <summary>
+  /// Идентификатор.
+  /// </summary>
+  public long Id { get; set; }
 
   /// <summary>
   /// Имя.

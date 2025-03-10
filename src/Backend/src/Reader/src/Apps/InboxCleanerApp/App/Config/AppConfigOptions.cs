@@ -6,12 +6,12 @@
 public record AppConfigOptions : AppConfigOptionsBase
 {
   /// <summary>
+  /// База данных MongoDB.
+  /// </summary>
+  public AppConfigOptionsDbMongoDBSection? MongoDB { get; set; }
+
+  /// <summary>
   /// Наблюдаемость.
   /// </summary>
   public AppConfigOptionsObservabilitySection? Observability { get; set; }
-
-  /// <summary>
-  /// База данных PostgreSQL.
-  /// </summary>
-  public AppConfigOptionsDbPostgreSQLSection? PostgreSQL { get; set; }
 }

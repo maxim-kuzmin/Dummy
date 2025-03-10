@@ -4,14 +4,14 @@
 /// Основа агрегата.
 /// </summary>
 /// <typeparam name="TEntity">Тип сущности.</typeparam>
-/// <typeparam name="TEntityId">Тип идентификатора сущности.</typeparam>
+/// <typeparam name="TPrimaryKey">Тип первичного ключа.</typeparam>
 /// <remarks>
 /// Конструктор.
 /// </remarks>
 /// <param name="_entityToChange">Сущность для изменения.</param>
-public class AggregateBase<TEntity, TEntityId>(TEntity? _entityToChange = null)
-  where TEntity : class, IEntityBase<TEntityId>, new()
-  where TEntityId : struct, IEquatable<TEntityId>
+public class AggregateBase<TEntity, TPrimaryKey>(TEntity? _entityToChange = null)
+  where TEntity : class, IEntityBase<TPrimaryKey>, new()
+  where TPrimaryKey : IEquatable<TPrimaryKey>
 {
   private readonly HashSet<string> _changedProperties = [];
 
@@ -44,7 +44,7 @@ public class AggregateBase<TEntity, TEntityId>(TEntity? _entityToChange = null)
   /// <returns>Результат для удаления.</returns>
   public virtual AggregateResult<EntityChange<TEntity>> GetResultToDelete()
   {
-    if (_entityToChange == null || _entityToChange.GetId().Equals(default))
+    if (_entityToChange == null || _entityToChange.GetPrimaryKey().Equals(_entityToChange.GetDefaultPrimaryKey()))
     {
       return new AggregateResult<EntityChange<TEntity>>(null);
     }
@@ -60,7 +60,7 @@ public class AggregateBase<TEntity, TEntityId>(TEntity? _entityToChange = null)
   /// <returns>Результат для обновления.</returns>
   public virtual AggregateResult<EntityChange<TEntity>> GetResultToUpdate()
   {
-    if (_entityToChange == null || _entityToChange.GetId().Equals(default))
+    if (_entityToChange == null || _entityToChange.GetPrimaryKey().Equals(_entityToChange.GetDefaultPrimaryKey()))
     {
       return new AggregateResult<EntityChange<TEntity>>(null);
     }

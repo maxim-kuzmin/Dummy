@@ -3,7 +3,7 @@
 /// <summary>
 /// Сущность полезной нагрузки события приложения.
 /// </summary>
-public class AppEventPayloadEntity : EntityBaseWithIdProperty<long>, IAggregateRoot
+public class AppEventPayloadEntity : EntityBaseWithIdAsStructPrimaryKey<long>, IAggregateRoot
 {
   /// <summary>
   /// Идентификатор события приложения.
@@ -18,7 +18,7 @@ public class AppEventPayloadEntity : EntityBaseWithIdProperty<long>, IAggregateR
   /// <summary>
   /// Данные.
   /// </summary>
-  public string Data { get; set; } = null!;
+  public string Data { get; set; } = string.Empty;
 
   /// <summary>
   /// Событие.

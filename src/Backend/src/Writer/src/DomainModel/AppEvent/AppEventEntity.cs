@@ -3,7 +3,7 @@
 /// <summary>
 /// Сущность события приложения.
 /// </summary>
-public class AppEventEntity : EntityBaseWithIdProperty<long>, IAggregateRoot
+public class AppEventEntity : EntityBaseWithIdAsStructPrimaryKey<long>, IAggregateRoot
 {
   /// <summary>
   /// Токен конкуренции.
@@ -23,7 +23,7 @@ public class AppEventEntity : EntityBaseWithIdProperty<long>, IAggregateRoot
   /// <summary>
   /// Имя.
   /// </summary>
-  public string Name { get; set; } = null!;
+  public string Name { get; set; } = string.Empty;
 
   /// <summary>
   /// Полезные нагрузки.

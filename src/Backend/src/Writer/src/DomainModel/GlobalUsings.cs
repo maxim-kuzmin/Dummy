@@ -2,6 +2,7 @@
 global using Makc.Dummy.Shared.Core.App;
 global using Makc.Dummy.Shared.DomainModel.Aggregate;
 global using Makc.Dummy.Shared.DomainModel.Entity;
+global using Makc.Dummy.Shared.DomainModel.Entity.EntityBases;
 global using Makc.Dummy.Writer.DomainModel.App.Db.Settings;
 global using Makc.Dummy.Writer.DomainModel.AppEvent;
 global using Makc.Dummy.Writer.DomainModel.AppEvent.Entity;

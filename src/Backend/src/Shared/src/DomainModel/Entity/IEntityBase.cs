@@ -3,19 +3,19 @@
 /// <summary>
 /// Интерфейс основы сущности.
 /// </summary>
-/// <typeparam name="TId">Тип идентификатора.</typeparam>
-public interface IEntityBase<TId> : IDeepCopyable
-  where TId : struct, IEquatable<TId>
+/// <typeparam name="TPrimaryKey">Тип первичного ключа.</typeparam>
+public interface IEntityBase<TPrimaryKey> : IDeepCopyable
+  where TPrimaryKey : IEquatable<TPrimaryKey>
 {
   /// <summary>
-  /// Получить идентификатор.
+  /// Получить первичный ключ по умолчанию.
   /// </summary>
-  /// <returns>Идентификатор.</returns>
-  TId GetId();
+  /// <returns>Первичный ключ по умолчанию.</returns>
+  TPrimaryKey GetDefaultPrimaryKey();
 
   /// <summary>
-  /// Установить идентификатор.
+  /// Получить первичный ключ.
   /// </summary>
-  /// <param name="id">Идентификатор.</param>
-  void SetId(TId id);
+  /// <returns>Первичный ключ.</returns>
+  TPrimaryKey GetPrimaryKey();
 }
