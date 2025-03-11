@@ -1,7 +1,0 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\DomainUseCases\Makc.Dummy.Reader.DomainUseCases.csproj" />
-  </ItemGroup>
-
-</Project>
