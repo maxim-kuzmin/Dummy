@@ -3,7 +3,7 @@
 /// <summary>
 /// Конфигурация сущности.
 /// </summary>
-public class EntityConfiguration<T> where T : EntityBaseWithObjectIdAsStringPrimaryKey
+public class EntityConfiguration<T> : IEntityConfiguration where T : EntityBaseWithObjectIdAsStringPrimaryKey
 {
   /// <inheritdoc/>
   public void Configure()

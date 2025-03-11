@@ -31,7 +31,7 @@ public static class AppExtensions
     services.AddSingleton<IMongoClient>(x =>
     {
       IEnumerable<IEntityConfiguration> entityConfigurations = [
-        (IEntityConfiguration)new DummyItemEntityConfiguration()
+        new DummyItemEntityConfiguration()
       ];
 
       entityConfigurations.Configure();
