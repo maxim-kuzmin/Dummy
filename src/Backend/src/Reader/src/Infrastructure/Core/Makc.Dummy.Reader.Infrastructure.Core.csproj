@@ -6,6 +6,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Remove="DummyItem\DummyItemResources.en.json" />
+    <EmbeddedResource Remove="DummyItem\DummyItemResources.ru.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Embedded.Json.Localization" />
     <PackageReference Include="Serilog.Extensions.Hosting" />
     <PackageReference Include="Serilog.Formatting.Compact" />

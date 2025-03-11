@@ -1,4 +1,4 @@
-﻿namespace Makc.Dummy.Reader.Infrastructure.EntityFramework.DummyItem.Entity;
+﻿namespace Makc.Dummy.Reader.Infrastructure.MongoDB.DummyItem.Entity;
 
 /// <summary>
 /// Конфигурация сущности фиктивного предмета.

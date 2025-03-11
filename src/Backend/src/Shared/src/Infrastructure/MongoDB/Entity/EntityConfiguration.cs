@@ -12,7 +12,7 @@ public class EntityConfiguration<T> : IEntityConfiguration where T : EntityBaseW
     {
       classMap.AutoMap();
 
-      classMap.MapIdMember(с => с.ObjectId).SetIdGenerator(StringObjectIdGenerator.Instance);
+      classMap.MapIdMember(x => x.ObjectId).SetIdGenerator(StringObjectIdGenerator.Instance);
 
       Map(classMap);
     });

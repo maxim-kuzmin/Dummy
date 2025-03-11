@@ -1,4 +1,9 @@
 ﻿global using Ardalis.SharedKernel;
+global using Makc.Dummy.Reader.DomainModel.DummyItem;
+global using Makc.Dummy.Reader.DomainModel.DummyItem.Enums;
+global using Makc.Dummy.Shared.Core.App;
+global using Makc.Dummy.Shared.DomainModel.Aggregate;
+global using Makc.Dummy.Shared.DomainModel.Entity;
 global using Makc.Dummy.Shared.DomainModel.Entity.EntityBases;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Logging;

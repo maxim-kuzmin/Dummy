@@ -1,6 +1,5 @@
-﻿global using Makc.Dummy.Shared.Core.App;
-global using Microsoft.Extensions.Configuration;
+﻿global using Makc.Dummy.Reader.DomainModel.DummyItem;
+global using Makc.Dummy.Reader.Infrastructure.Core.DummyItem;
 global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.Extensions.Localization;
 global using Microsoft.Extensions.Logging;
-global using Serilog;
-global using Serilog.Extensions.Logging;

@@ -13,6 +13,8 @@ public static class AppExtensions
   /// <returns>Сервисы.</returns>
   public static IServiceCollection AddAppDomainModel(this IServiceCollection services, ILogger logger)
   {
+    services.AddSingleton<IDummyItemFactory, DummyItemFactory>();
+
     logger.LogInformation("Added application domain model");
 
     return services;
