@@ -15,7 +15,7 @@ public static class DummyItemGetListEndpointExtensions
     DummyItemCountQuery countQuery = new()
     {
       Page = new QueryPageSection(request.CurrentPage, request.ItemsPerPage),
-      Filter = new DummyItemGetListActionQueryFilter(request.Query)
+      Filter = new DummyItemQueryFilterSection(request.Query)
     };
 
     return new(countQuery)

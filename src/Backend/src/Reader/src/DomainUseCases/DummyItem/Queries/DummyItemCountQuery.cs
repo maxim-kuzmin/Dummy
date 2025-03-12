@@ -8,5 +8,5 @@ public record DummyItemCountQuery : CountQuery
   /// <summary>
   /// Фильтр.
   /// </summary>
-  public DummyItemGetListActionQueryFilter? Filter { get; set; }
+  public DummyItemQueryFilterSection? Filter { get; set; }
 }

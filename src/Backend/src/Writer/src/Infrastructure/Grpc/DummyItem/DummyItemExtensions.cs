@@ -40,7 +40,7 @@ public static class DummyItemExtensions
     DummyItemCountQuery countQuery = new()
     {
       Page = new QueryPageSection(request.Page.Number, request.Page.Size),
-      Filter = new DummyItemGetListActionQueryFilter(request.Filter.FullTextSearchQuery)
+      Filter = new DummyItemQueryFilterSection(request.Filter.FullTextSearchQuery)
     };
 
     return new(countQuery)
