@@ -1,10 +1,10 @@
-﻿namespace Makc.Dummy.Gateway.Infrastructure.Grpc.App.Action.Command;
+﻿namespace Makc.Dummy.Gateway.Infrastructure.Grpc.App.Services;
 
 /// <summary>
-/// Сервис команд действия приложения.
+/// Сервис команд приложения.
 /// </summary>
 /// <param name="_grpcClient">Клиент gRPC.</param>
-public class AppActionCommandService(WriterAppGrpcClient _grpcClient) : IAppActionCommandService
+public class AppCommandService(WriterAppGrpcClient _grpcClient) : IAppCommandService
 {
   /// <inheritdoc/>
   public async Task<Result<AppLoginActionDTO>> Login(

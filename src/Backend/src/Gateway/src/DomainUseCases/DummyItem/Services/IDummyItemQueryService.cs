@@ -1,9 +1,9 @@
-﻿namespace Makc.Dummy.Gateway.DomainUseCases.DummyItem.Action.Query;
+﻿namespace Makc.Dummy.Gateway.DomainUseCases.DummyItem.Services;
 
 /// <summary>
-/// Интерфейс сервиса запросов действия с фиктивным предметом.
+/// Интерфейс сервиса запросов фиктивного предмета.
 /// </summary>
-public interface IDummyItemActionQueryService
+public interface IDummyItemQueryService
 {
   /// <summary>
   /// Получить.

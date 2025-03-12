@@ -4,7 +4,7 @@
 /// Обработчик действия по обновлению фиктивного предмета.
 /// </summary>
 /// <param name="_service">Сервис.</param>
-public class DummyItemUpdateActionHandler(IDummyItemActionCommandService _service) :
+public class DummyItemUpdateActionHandler(IDummyItemCommandService _service) :
   ICommandHandler<DummyItemUpdateActionCommand, Result<DummyItemSingleDTO>>
 {
   /// <inheritdoc/>

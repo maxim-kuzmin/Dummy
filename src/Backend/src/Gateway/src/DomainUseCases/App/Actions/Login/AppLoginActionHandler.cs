@@ -15,7 +15,7 @@ public class AppLoginActionHandler(
   IOptionsSnapshot<AppConfigOptionsAuthenticationSection> _appConfigOptionsAuthenticationSectionSnapshot,
   IOptionsSnapshot<AppConfigOptionsKeycloakSection> _appConfigOptionsKeycloakSectionSnapshot,
   IHttpClientFactory _httpClientFactory,
-  IAppActionCommandService _service) :
+  IAppCommandService _service) :
   ICommandHandler<AppLoginActionCommand, Result<AppLoginActionDTO>>
 {
   /// <inheritdoc/>

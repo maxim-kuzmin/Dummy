@@ -17,9 +17,9 @@ public static class AppExtensions
       ILogger logger,
       string writerEndpoint)
   {
-    services.AddTransient<IAppActionCommandService, AppActionCommandService>();
-    services.AddTransient<IDummyItemActionCommandService, DummyItemActionCommandService>();
-    services.AddTransient<IDummyItemActionQueryService, DummyItemActionQueryService>();
+    services.AddTransient<IAppCommandService, AppCommandService>();
+    services.AddTransient<IDummyItemCommandService, DummyItemCommandService>();
+    services.AddTransient<IDummyItemQueryService, DummyItemQueryService>();
 
     services.AddGrpcClient<WriterAppGrpcClient>(
       AppSettings.WriterAppClientName,

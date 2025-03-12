@@ -1,13 +1,13 @@
-﻿namespace Makc.Dummy.Gateway.Infrastructure.Grpc.DummyItem.Action.Query;
+﻿namespace Makc.Dummy.Gateway.Infrastructure.Grpc.DummyItem.Services;
 
 /// <summary>
-/// Сервис запросов действия с фиктивным предметом для gRPC.
+/// Сервис запросов фиктивного предмета.
 /// </summary>
 /// <param name="_appSession">Сессия приложения.</param>
 /// <param name="_grpcClient">Клиент gRPC.</param>
-public class DummyItemActionQueryService(
+public class DummyItemQueryService(
   AppSession _appSession,
-  WriterDummyItemGrpcClient _grpcClient) : IDummyItemActionQueryService
+  WriterDummyItemGrpcClient _grpcClient) : IDummyItemQueryService
 {
   /// <inheritdoc/>
   public async Task<Result<DummyItemSingleDTO>> Get(
@@ -49,7 +49,7 @@ public class DummyItemActionQueryService(
 
       var reply = await replyTask.ConfigureAwait(false);
 
-      return Result.Success(reply.ToDummyItemGetListActionDTO());
+      return Result.Success(reply.ToDummyItemListDTO());
     }
     catch (RpcException ex)
     {

@@ -1,11 +1,11 @@
-﻿namespace Makc.Dummy.Gateway.Infrastructure.Grpc.DummyItem.Action.Command;
+﻿namespace Makc.Dummy.Gateway.Infrastructure.Grpc.DummyItem.Services;
 
 /// <summary>
-/// Сервис команд действия с фиктивным предметом.
+/// Сервис команд фиктивного предмета.
 /// </summary>
 /// <param name="_grpcClient">Клиент gRPC.</param>
-public class DummyItemActionCommandService(
-  WriterDummyItemGrpcClient _grpcClient) : IDummyItemActionCommandService
+public class DummyItemCommandService(
+  WriterDummyItemGrpcClient _grpcClient) : IDummyItemCommandService
 {
   /// <inheritdoc/>
   public async Task<Result<DummyItemSingleDTO>> Create(
@@ -15,7 +15,7 @@ public class DummyItemActionCommandService(
     try
     {
       var replyTask = _grpcClient.CreateAsync(
-        command.ToDummyItemCreateActionGrpcRequest(),
+        command.ToDummyItemCreateActionRequest(),
         cancellationToken: cancellationToken);
 
       var reply = await replyTask.ConfigureAwait(false);

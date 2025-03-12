@@ -1,9 +1,9 @@
-﻿namespace Makc.Dummy.Gateway.DomainUseCases.App.Action.Command;
+﻿namespace Makc.Dummy.Gateway.DomainUseCases.App.Services;
 
 /// <summary>
-/// Интерфейс сервиса команд действия приложения.
+/// Интерфейс сервиса команд приложения.
 /// </summary>
-public interface IAppActionCommandService
+public interface IAppCommandService
 {
   /// <summary>
   /// Вход.

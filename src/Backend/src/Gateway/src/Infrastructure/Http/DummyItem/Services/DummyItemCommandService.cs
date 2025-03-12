@@ -1,11 +1,11 @@
-﻿namespace Makc.Dummy.Gateway.Infrastructure.Http.DummyItem.Action.Command;
+﻿namespace Makc.Dummy.Gateway.Infrastructure.Http.DummyItem.Services;
 
 /// <summary>
-/// Сервис команд действия с фиктивным предметом.
+/// Сервис команд фиктивного предмета.
 /// </summary>
 /// <param name="_httpClientFactory">Фабрика клиентов HTTP.</param>
-public class DummyItemActionCommandService(
-  IHttpClientFactory _httpClientFactory) : IDummyItemActionCommandService
+public class DummyItemCommandService(
+  IHttpClientFactory _httpClientFactory) : IDummyItemCommandService
 {
   /// <inheritdoc/>
   public async Task<Result<DummyItemSingleDTO>> Create(

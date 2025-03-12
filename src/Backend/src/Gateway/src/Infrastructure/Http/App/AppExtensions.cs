@@ -17,9 +17,9 @@ public static class AppExtensions
       ILogger logger,
       string writerEndpoint)
   {
-    services.AddTransient<IAppActionCommandService, AppActionCommandService>();
-    services.AddTransient<IDummyItemActionCommandService, DummyItemActionCommandService>();
-    services.AddTransient<IDummyItemActionQueryService, DummyItemActionQueryService>();
+    services.AddTransient<IAppCommandService, AppCommandService>();
+    services.AddTransient<IDummyItemCommandService, DummyItemCommandService>();
+    services.AddTransient<IDummyItemQueryService, DummyItemQueryService>();
 
     const string userAgent = nameof(Dummy);
 
@@ -39,5 +39,15 @@ public static class AppExtensions
     logger.LogInformation("Added application infrastructure tied to Http");
 
     return services;
+  }
+
+  /// <summary>
+  /// Преобразовать к содержимому запроса HTTP.
+  /// </summary>
+  /// <param name="command">Команда.</param>
+  /// <returns>Содержимое запроса HTTP.</returns>
+  public static JsonContent ToHttpRequestContent(this AppLoginActionCommand command)
+  {
+    return JsonContent.Create(command);
   }
 }

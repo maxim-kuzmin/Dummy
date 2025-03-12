@@ -1,13 +1,13 @@
-﻿namespace Makc.Dummy.Gateway.Infrastructure.Http.DummyItem.Action.Query;
+﻿namespace Makc.Dummy.Gateway.Infrastructure.Http.DummyItem.Services;
 
 /// <summary>
-/// Сервис запросов действия с фиктивным предметом.
+/// Сервис запросов фиктивного предмета.
 /// </summary>
 /// <param name="_appSession">Сессия приложения.</param>
 /// <param name="_httpClientFactory">Фабрика клиентов HTTP.</param>
-public class DummyItemActionQueryService(
+public class DummyItemQueryService(
   AppSession _appSession,
-  IHttpClientFactory _httpClientFactory) : IDummyItemActionQueryService
+  IHttpClientFactory _httpClientFactory) : IDummyItemQueryService
 {
   /// <inheritdoc/>
   public async Task<Result<DummyItemSingleDTO>> Get(

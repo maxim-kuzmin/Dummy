@@ -1,10 +1,10 @@
-﻿namespace Makc.Dummy.Gateway.Infrastructure.Http.App.Action.Command;
+﻿namespace Makc.Dummy.Gateway.Infrastructure.Http.App.Services;
 
 /// <summary>
-/// Сервис команд действия приложения.
+/// Сервис команд приложения.
 /// </summary>
 /// <param name="_httpClientFactory">Фабрика клиентов HTTP.</param>
-public class AppActionCommandService(IHttpClientFactory _httpClientFactory) : IAppActionCommandService
+public class AppCommandService(IHttpClientFactory _httpClientFactory) : IAppCommandService
 {
   /// <inheritdoc/>
   public async Task<Result<AppLoginActionDTO>> Login(
