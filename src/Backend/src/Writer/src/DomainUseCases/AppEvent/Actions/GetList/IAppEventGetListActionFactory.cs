@@ -10,7 +10,7 @@ public interface IAppEventGetListActionFactory
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <returns>Команда базы данных для фильтра.</returns>
-  DbCommand CreateDbCommandForFilter(AppEventGetListActionQuery query);
+  DbSQLCommand CreateDbCommandForFilter(AppEventGetListActionQuery query);
 
   /// <summary>
   /// Создать базы данных для элементов.
@@ -18,12 +18,12 @@ public interface IAppEventGetListActionFactory
   /// <param name="dbCommandForFilter">Команда базы данных для фильтра.</param>
   /// <param name="page">Страница.</param>
   /// <returns>Команда базы данных для элементов.</returns>
-  DbCommand CreateDbCommandForItems(DbCommand dbCommandForFilter, QueryPage? page);
+  DbSQLCommand CreateDbCommandForItems(DbSQLCommand dbCommandForFilter, QueryPageSection? page);
 
   /// <summary>
   /// Создать базы данных для общего количества.
   /// </summary>
   /// <param name="dbCommandForFilter">Команда базы данных для фильтра.</param>
   /// <returns>Команда базы данных для общего количества.</returns>
-  DbCommand CreateDbCommandForTotalCount(DbCommand dbCommandForFilter);
+  DbSQLCommand CreateDbCommandForTotalCount(DbSQLCommand dbCommandForFilter);
 }

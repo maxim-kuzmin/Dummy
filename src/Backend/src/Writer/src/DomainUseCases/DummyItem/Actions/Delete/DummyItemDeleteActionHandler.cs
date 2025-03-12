@@ -9,9 +9,9 @@
 /// <param name="_service">Сервис.</param>
 public class DummyItemDeleteActionHandler(
   IAppDbExecutionContext _appDbExecutionContext,
-  IDummyItemFactory _factory,
+  DomainModel.DummyItem.IDummyItemFactory _factory,
   IDummyItemRepository _repository,
-  IDummyItemService _service) : ICommandHandler<DummyItemDeleteActionCommand, Result>
+  IDummyItemCommandService _service) : ICommandHandler<DummyItemDeleteActionCommand, Result>
 {
   /// <inheritdoc/>
   public async Task<Result> Handle(DummyItemDeleteActionCommand request, CancellationToken cancellationToken)

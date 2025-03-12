@@ -3,7 +3,7 @@ global using Ardalis.GuardClauses;
 global using Ardalis.SharedKernel;
 global using Ardalis.Specification.EntityFrameworkCore;
 global using Makc.Dummy.Shared.Core.App.Config.Options.Enums;
-global using Makc.Dummy.Shared.Infrastructure.EntityFramework.Db.Contexts;
+global using Makc.Dummy.Shared.Infrastructure.EntityFramework.Db.SQL.Contexts;
 global using Makc.Dummy.Writer.DomainModel.App.Db;
 global using Makc.Dummy.Writer.DomainModel.AppEvent;
 global using Makc.Dummy.Writer.DomainModel.AppEventPayload;

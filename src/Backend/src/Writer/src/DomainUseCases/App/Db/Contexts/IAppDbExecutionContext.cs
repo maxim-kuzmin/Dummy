@@ -3,6 +3,6 @@
 /// <summary>
 /// Интерфейс контекста выполнения базы данных приложения.
 /// </summary>
-public interface IAppDbExecutionContext : IDbExecutionContext
+public interface IAppDbExecutionContext : IDbSQLExecutionContext
 {
 }

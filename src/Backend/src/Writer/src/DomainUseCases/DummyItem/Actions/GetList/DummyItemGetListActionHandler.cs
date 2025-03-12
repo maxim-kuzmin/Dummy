@@ -3,15 +3,13 @@
 /// <summary>
 /// Обработчик действия по получению списка фиктивных предметов.
 /// </summary>
-/// <param name="_appDbQueryContext">Контекст запроса базы данных приложения.</param>
 /// <param name="_appSession">Сессия приложения.</param>
 /// <param name="_logger">Логгер.</param>
-/// <param name="_factory">Фабрика.</param>
+/// <param name="_service">Сервис.</param>
 public class DummyItemGetListActionHandler(
-  IAppDbQueryContext _appDbQueryContext,
   AppSession _appSession,
   ILogger<DummyItemGetActionHandler> _logger,
-  IDummyItemGetListActionFactory _factory) : IQueryHandler<DummyItemGetListActionQuery, Result<DummyItemListDTO>>
+  IDummyItemQueryService _service) : IQueryHandler<DummyItemGetListActionQuery, Result<DummyItemListDTO>>
 {
   /// <inheritdoc/>
   public async Task<Result<DummyItemListDTO>> Handle(
@@ -22,25 +20,13 @@ public class DummyItemGetListActionHandler(
 
     _logger.LogDebug("User name: {userName}", userName);
 
-    var dbCommandForFilter = _factory.CreateDbCommandForFilter(request);
-
-    var dbCommandForTotalCount = _factory.CreateDbCommandForTotalCount(dbCommandForFilter);
-
-    var taskForTotalCount = _appDbQueryContext.GetListAsync<long>(dbCommandForTotalCount, cancellationToken);
-
-    var dataForTotalCount = await taskForTotalCount.ConfigureAwait(false);
-
-    var totalCount = dataForTotalCount[0];
+    var totalCount = await _service.CountAsync(request.CountQuery, cancellationToken).ConfigureAwait(false);
 
     List<DummyItemSingleDTO> items;
 
     if (totalCount > 0)
     {
-      var dbCommandForItems = _factory.CreateDbCommandForItems(dbCommandForFilter, request.Page);
-
-      var taskForItems = _appDbQueryContext.GetListAsync<DummyItemSingleDTO>(dbCommandForItems, cancellationToken);
-
-      items = await taskForItems.ConfigureAwait(false);
+      items = await _service.ListAsync(request, cancellationToken).ConfigureAwait(false);
     }
     else
     {

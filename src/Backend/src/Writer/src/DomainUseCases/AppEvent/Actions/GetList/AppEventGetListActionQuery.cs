@@ -6,5 +6,5 @@
 /// <param name="Page">Страница.</param>
 /// <param name="Filter">Фильтр.</param>
 public record AppEventGetListActionQuery(
-  QueryPage? Page,
+  QueryPageSection? Page,
   AppEventGetListActionQueryFilter? Filter) : IQuery<Result<AppEventListDTO>>;

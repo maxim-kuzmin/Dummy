@@ -7,9 +7,9 @@
 public class AppEventPayloadGetListActionFactory(AppDbSettings _appDbSettings) : IAppEventPayloadGetListActionFactory
 {
   /// <inheritdoc/>
-  public DbCommand CreateDbCommandForFilter(AppEventPayloadGetListActionQuery query)
+  public DbSQLCommand CreateDbCommandForFilter(AppEventPayloadGetListActionQuery query)
   {
-    DbCommand result = new();
+    DbSQLCommand result = new();
 
     var sAppEventPayload = _appDbSettings.Entities.AppEventPayload;
 
@@ -29,9 +29,9 @@ where
   }
 
   /// <inheritdoc/>
-  public DbCommand CreateDbCommandForItems(DbCommand dbCommandForFilter, QueryPage? page)
+  public DbSQLCommand CreateDbCommandForItems(DbSQLCommand dbCommandForFilter, QueryPageSection? page)
   {
-    DbCommand result = new();
+    DbSQLCommand result = new();
 
     dbCommandForFilter.CopyParametersTo(result);
 
@@ -81,9 +81,9 @@ fetch next @PageSize rows only
 
 
   /// <inheritdoc/>
-  public DbCommand CreateDbCommandForTotalCount(DbCommand dbCommandForFilter)
+  public DbSQLCommand CreateDbCommandForTotalCount(DbSQLCommand dbCommandForFilter)
   {
-    DbCommand result = new();
+    DbSQLCommand result = new();
 
     dbCommandForFilter.CopyParametersTo(result);
 

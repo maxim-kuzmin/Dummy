@@ -7,9 +7,9 @@
 public class AppEventPayloadGetActionFactory(AppDbSettings _appDbSettings) : IAppEventPayloadGetActionFactory
 {  
   /// <inheritdoc/>
-  public DbCommand CreateDbCommand(AppEventPayloadGetActionQuery query)
+  public DbSQLCommand CreateDbCommand(AppEventPayloadGetActionQuery query)
   {
-    DbCommand result = new();
+    DbSQLCommand result = new();
 
     var sAppEventPayload = _appDbSettings.Entities.AppEventPayload;
 

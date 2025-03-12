@@ -13,7 +13,7 @@ public static class AppEventGetListEndpointExtensions
   public static AppEventGetListActionQuery ToAppEventGetListActionQuery(this AppEventGetListEndpointRequest request)
   {
     return new(
-      new QueryPage(request.CurrentPage, request.ItemsPerPage),
+      new QueryPageSection(request.CurrentPage, request.ItemsPerPage),
       new AppEventGetListActionQueryFilter(request.Query));
   }
 }

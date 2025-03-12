@@ -10,5 +10,5 @@ public interface IAppEventGetActionFactory
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <returns>SQL.</returns>
-  DbCommand CreateDbCommand(AppEventGetActionQuery query);
+  DbSQLCommand CreateDbCommand(AppEventGetActionQuery query);
 }

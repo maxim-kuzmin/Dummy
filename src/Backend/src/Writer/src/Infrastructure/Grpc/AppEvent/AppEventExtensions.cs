@@ -36,7 +36,7 @@ public static class AppEventExtensions
   public static AppEventGetListActionQuery ToAppEventGetListActionQuery(
     this AppEventGetListActionRequest request)
   {
-    return new(new QueryPage(request.Page.Number, request.Page.Size), new(request.Filter.FullTextSearchQuery));
+    return new(new QueryPageSection(request.Page.Number, request.Page.Size), new(request.Filter.FullTextSearchQuery));
   }
 
   public static AppEventGetListActionReply ToAppEventGetListActionGrpcReply(this AppEventListDTO dto)

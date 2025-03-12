@@ -5,11 +5,11 @@
 /// </summary>
 /// <typeparam name="TDbContext">Тип контекста базы данных.</typeparam>
 /// <param name="_dbContext">Контекст базы данных.</param>
-public abstract class DbQueryContext<TDbContext>(TDbContext _dbContext) : IDbQueryContext
+public abstract class DbQueryContext<TDbContext>(TDbContext _dbContext) : IDbSQLQueryContext
   where TDbContext : IDbContext
 {
   /// <inheritdoc/>
-  public async Task<T?> GetFirstOrDefaultAsync<T>(DbCommand dbCommand, CancellationToken cancellationToken)
+  public async Task<T?> GetFirstOrDefaultAsync<T>(DbSQLCommand dbCommand, CancellationToken cancellationToken)
   {
     var query = await CreateQuery<T>(dbCommand).ConfigureAwait(false);
 
@@ -17,14 +17,14 @@ public abstract class DbQueryContext<TDbContext>(TDbContext _dbContext) : IDbQue
   }
 
   /// <inheritdoc/>
-  public async Task<List<T>> GetListAsync<T>(DbCommand dbCommand, CancellationToken cancellationToken)
+  public async Task<List<T>> GetListAsync<T>(DbSQLCommand dbCommand, CancellationToken cancellationToken)
   {
     var query = await CreateQuery<T>(dbCommand).ConfigureAwait(false);
 
     return [.. query];
   }
 
-  private Task<IEnumerable<T>> CreateQuery<T>(DbCommand dbCommand)
+  private Task<IEnumerable<T>> CreateQuery<T>(DbSQLCommand dbCommand)
   {
     DynamicParameters parameters = new();
 

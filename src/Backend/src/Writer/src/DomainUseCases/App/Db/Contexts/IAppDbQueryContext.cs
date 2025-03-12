@@ -3,6 +3,6 @@
 /// <summary>
 /// Интерфейс контекста запроса базы данных приложения.
 /// </summary>
-public interface IAppDbQueryContext : IDbQueryContext
+public interface IAppDbQueryContext : IDbSQLQueryContext
 {
 }

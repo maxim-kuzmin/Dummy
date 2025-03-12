@@ -6,5 +6,5 @@
 /// <param name="Page">Страница.</param>
 /// <param name="Filter">Фильтр.</param>
 public record DummyItemGetListActionQuery(
-  QueryPage Page,
+  QueryPageSection Page,
   DummyItemGetListActionQueryFilter Filter) : IQuery<Result<DummyItemListDTO>>;

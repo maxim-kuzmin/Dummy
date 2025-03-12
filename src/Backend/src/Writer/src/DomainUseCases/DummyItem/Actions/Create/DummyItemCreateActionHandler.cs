@@ -9,9 +9,9 @@
 /// <param name="_service">Сервис.</param>
 public class DummyItemCreateActionHandler(
   IAppDbExecutionContext _appDbExecutionContext,
-  IDummyItemFactory _factory,
+  DomainModel.DummyItem.IDummyItemFactory _factory,
   IDummyItemRepository _repository,
-  IDummyItemService _service) : ICommandHandler<DummyItemCreateActionCommand, Result<DummyItemSingleDTO>>
+  IDummyItemCommandService _service) : ICommandHandler<DummyItemCreateActionCommand, Result<DummyItemSingleDTO>>
 {
   /// <inheritdoc/>
   public async Task<Result<DummyItemSingleDTO>> Handle(

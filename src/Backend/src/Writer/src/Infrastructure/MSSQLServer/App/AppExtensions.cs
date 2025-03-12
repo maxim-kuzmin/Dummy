@@ -1,4 +1,7 @@
-﻿namespace Makc.Dummy.Writer.Infrastructure.MSSQLServer.App;
+﻿using Makc.Dummy.Writer.DomainUseCases.DummyItem;
+using Makc.Dummy.Writer.Infrastructure.MSSQLServer.DummyItem;
+
+namespace Makc.Dummy.Writer.Infrastructure.MSSQLServer.App;
 
 /// <summary>
 /// Расширения приложения.
@@ -33,8 +36,7 @@ public static class AppExtensions
 
     services.AddSingleton(appDbSettings.Entities.DummyItem);
     services.AddSingleton<DummyItemEntitySettings>(appDbSettings.Entities.DummyItem);
-    services.AddSingleton<IDummyItemGetActionFactory, DummyItemGetActionFactory>();
-    services.AddSingleton<IDummyItemGetListActionFactory, DummyItemGetListActionFactory>();
+    services.AddSingleton<IDummyItemFactory, DummyItemFactory>();
 
     logger.LogInformation("Added application infrastructure tied to MS SQL Server");
 

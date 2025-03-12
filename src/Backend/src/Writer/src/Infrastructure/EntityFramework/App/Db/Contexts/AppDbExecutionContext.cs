@@ -4,6 +4,6 @@
 /// Контекст выполнения базы данных приложения.
 /// </summary>
 /// <param name="dbContext">Контекст базы данных.</param>
-public class AppDbExecutionContext(AppDbContext dbContext) : DbExecutionContext(dbContext), IAppDbExecutionContext
+public class AppDbExecutionContext(AppDbContext dbContext) : DbSQLExecutionContext(dbContext), IAppDbExecutionContext
 {
 }

@@ -24,7 +24,7 @@ global using Makc.Dummy.Shared.Core.App;
 global using Makc.Dummy.Shared.Core.App.Config.Options;
 global using Makc.Dummy.Shared.Core.App.Config.Options.Enums;
 global using Makc.Dummy.Shared.Core.App.Config.Options.Sections;
-global using Makc.Dummy.Shared.DomainUseCases.Query;
+global using Makc.Dummy.Shared.DomainUseCases.Query.Sections;
 global using Makc.Dummy.Shared.Infrastructure.Core.App;
 global using Makc.Dummy.Shared.Infrastructure.Core.App.Logger.Funcs;
 global using Makc.Dummy.Shared.Infrastructure.CoreForOpenTelemetry.App;

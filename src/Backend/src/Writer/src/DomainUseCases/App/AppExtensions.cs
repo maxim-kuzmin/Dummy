@@ -26,7 +26,9 @@ public static class AppExtensions
       services.Configure<AppConfigOptionsAuthenticationSection>(appConfigAuthenticationSection);
     }
 
-    services.AddScoped<IDummyItemService, DummyItemService>();
+    services.AddScoped<IDummyItemCommandService, DummyItemCommandService>();
+
+    services.AddTransient<IDummyItemQueryService, DummyItemQueryService>();
 
     logger.LogInformation("Added application domain use cases");
 

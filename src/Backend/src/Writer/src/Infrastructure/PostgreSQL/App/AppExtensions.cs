@@ -33,8 +33,7 @@ public static class AppExtensions
 
     services.AddSingleton(appDbSettings.Entities.DummyItem);
     services.AddSingleton<DummyItemEntitySettings>(appDbSettings.Entities.DummyItem);
-    services.AddSingleton<IDummyItemGetActionFactory, DummyItemGetActionFactory>();
-    services.AddSingleton<IDummyItemGetListActionFactory, DummyItemGetListActionFactory>();
+    services.AddSingleton<IDummyItemFactory, DummyItemFactory>();
 
     logger.LogInformation("Added application infrastructure tied to PostgreSQL");
 

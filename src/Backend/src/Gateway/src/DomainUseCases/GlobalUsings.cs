@@ -18,7 +18,7 @@ global using Makc.Dummy.Shared.Core.App.Config.Options.Enums;
 global using Makc.Dummy.Shared.Core.App.Config.Options.Sections;
 global using Makc.Dummy.Shared.Core.Http;
 global using Makc.Dummy.Shared.DomainUseCases.DTOs;
-global using Makc.Dummy.Shared.DomainUseCases.Query;
+global using Makc.Dummy.Shared.DomainUseCases.Query.Sections;
 global using MediatR;
 global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.DependencyInjection;

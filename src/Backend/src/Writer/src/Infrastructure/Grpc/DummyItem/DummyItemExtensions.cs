@@ -19,7 +19,10 @@ public static class DummyItemExtensions
 
   public static DummyItemGetActionQuery ToDummyItemGetActionQuery(this DummyItemGetActionRequest request)
   {
-    return new(request.Id);
+    return new()
+    {
+      Id = request.Id
+    };
   }
 
   public static DummyItemGetActionReply ToDummyItemGetActionReply(this DummyItemSingleDTO dto)
@@ -34,7 +37,16 @@ public static class DummyItemExtensions
   public static DummyItemGetListActionQuery ToDummyItemGetListActionQuery(
     this DummyItemGetListActionRequest request)
   {
-    return new(new QueryPage(request.Page.Number, request.Page.Size), new(request.Filter.FullTextSearchQuery));
+    DummyItemCountQuery countQuery = new()
+    {
+      Page = new QueryPageSection(request.Page.Number, request.Page.Size),
+      Filter = new DummyItemGetListActionQueryFilter(request.Filter.FullTextSearchQuery)
+    };
+
+    return new(countQuery)
+    {
+      Order = new QueryOrderSection(nameof(DummyItemEntity.Id), false)
+    };
   }
 
   public static DummyItemGetListActionReply ToDummyItemGetListActionGrpcReply(this DummyItemListDTO dto)

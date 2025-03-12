@@ -18,7 +18,7 @@ public class DummyItemGetListEndpointHandler(IMediator _mediator) :
   public override async Task HandleAsync(DummyItemGetListEndpointRequest request, CancellationToken cancellationToken)
   {
     DummyItemGetListActionQuery query = new(
-      new QueryPage(request.CurrentPage, request.ItemsPerPage),
+      new QueryPageSection(request.CurrentPage, request.ItemsPerPage),
       new DummyItemGetListActionQueryFilter(request.Query));
 
     var result = await _mediator.Send(query, cancellationToken);

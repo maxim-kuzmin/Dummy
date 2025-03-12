@@ -7,9 +7,9 @@
 public class AppEventGetActionFactory(AppDbSettings _appDbSettings) : IAppEventGetActionFactory
 {  
   /// <inheritdoc/>
-  public DbCommand CreateDbCommand(AppEventGetActionQuery query)
+  public DbSQLCommand CreateDbCommand(AppEventGetActionQuery query)
   {
-    DbCommand result = new();
+    DbSQLCommand result = new();
 
     var sAppEvent = _appDbSettings.Entities.AppEvent;
 

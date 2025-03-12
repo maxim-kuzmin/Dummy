@@ -35,7 +35,7 @@ public static class AppEventPayloadExtensions
   public static AppEventPayloadGetListActionQuery ToAppEventPayloadGetListActionQuery(
     this AppEventPayloadGetListActionRequest request)
   {
-    return new(new QueryPage(request.Page.Number, request.Page.Size), new(request.Filter.FullTextSearchQuery));
+    return new(new QueryPageSection(request.Page.Number, request.Page.Size), new(request.Filter.FullTextSearchQuery));
   }
 
   public static AppEventPayloadGetListActionReply ToAppEventPayloadGetListActionGrpcReply(this AppEventPayloadListDTO dto)

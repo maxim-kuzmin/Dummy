@@ -10,5 +10,5 @@ public interface IAppEventPayloadGetActionFactory
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <returns>Команда базы данных.</returns>
-  DbCommand CreateDbCommand(AppEventPayloadGetActionQuery query);
+  DbSQLCommand CreateDbCommand(AppEventPayloadGetActionQuery query);
 }

@@ -5,7 +5,7 @@
 /// </summary>
 /// <param name="dbContext">Контекст базы данных.</param>
 public class AppDbQueryContext(AppDbContext dbContext) :
-  DbQueryContext<AppDbContext>(dbContext),
+  DbSQLQueryContext<AppDbContext>(dbContext),
   IAppDbQueryContext
 {
 }
