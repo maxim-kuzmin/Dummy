@@ -14,6 +14,7 @@ global using Makc.Dummy.Shared.DomainModel.Entity;
 global using Makc.Dummy.Shared.DomainUseCases.Db.NoSQL.Contexts;
 global using Makc.Dummy.Shared.DomainUseCases.DTOs;
 global using Makc.Dummy.Shared.DomainUseCases.Queries;
+global using Makc.Dummy.Shared.DomainUseCases.Query.Sections;
 global using MediatR;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Logging;

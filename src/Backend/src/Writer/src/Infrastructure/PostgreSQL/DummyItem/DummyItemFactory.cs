@@ -66,17 +66,25 @@ where
 
     if (order == null)
     {
-      order = new QueryOrderSection(nameof(DummyItemEntity.Id), true);
+      order = DummyItemSettings.DefaultQueryOrderSection;
     }
 
     string orderByDirection = order.IsDesc ? "desc" : "asc";
 
-    string orderByField = order.Field switch
+    string orderByField;
+
+    if (order.Field.EqualsToOrderField(DummyItemSettings.OrderFieldForId))
     {
-      nameof(DummyItemEntity.Id) => $""" di."{sDummyItem.ColumnForId}" """,
-      nameof(DummyItemEntity.Name) => $""" di."{sDummyItem.ColumnForName}" """,
-      _ => throw new NotImplementedException(),
-    };
+      orderByField = $""" di."{sDummyItem.ColumnForId}" """;
+    }
+    else if (order.Field.EqualsToOrderField(DummyItemSettings.OrderFieldForName))
+    {
+      orderByField = $""" di."{sDummyItem.ColumnForName}" """;
+    }
+    else
+    {
+      throw new NotImplementedException();
+    }
 
     result.TextBuilder.AppendLine($$"""
 select

@@ -9,6 +9,7 @@ global using Makc.Dummy.Gateway.Apps.WebApp.App.Config;
 global using Makc.Dummy.Gateway.DomainModel.App;
 global using Makc.Dummy.Gateway.DomainUseCases.App;
 global using Makc.Dummy.Gateway.DomainUseCases.App.Actions.Login;
+global using Makc.Dummy.Gateway.DomainUseCases.DummyItem;
 global using Makc.Dummy.Gateway.DomainUseCases.DummyItem.Actions.Create;
 global using Makc.Dummy.Gateway.DomainUseCases.DummyItem.Actions.Delete;
 global using Makc.Dummy.Gateway.DomainUseCases.DummyItem.Actions.Get;

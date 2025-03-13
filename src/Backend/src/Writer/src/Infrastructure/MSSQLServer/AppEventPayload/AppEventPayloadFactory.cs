@@ -72,13 +72,24 @@ where
 
     string orderByDirection = order.IsDesc ? "desc" : "asc";
 
-    string orderByField = order.Field switch
-    {           
-      nameof(AppEventPayloadEntity.AppEventId) => $""" aep."{sAppEventPayload.ColumnForAppEventId}" """,
-      nameof(AppEventPayloadEntity.Data) => $""" aep."{sAppEventPayload.ColumnForData}" """,
-      nameof(AppEventPayloadEntity.Id) => $""" aep."{sAppEventPayload.ColumnForId}" """,
-      _ => throw new NotImplementedException(),
-    };
+    string orderByField;
+
+    if (order.Field.EqualsToOrderField(AppEventPayloadSettings.OrderFieldForAppEventId))
+    {
+      orderByField = $""" aep."{sAppEventPayload.ColumnForAppEventId}" """;
+    }
+    else if (order.Field.EqualsToOrderField(AppEventPayloadSettings.OrderFieldForData))
+    {
+      orderByField = $""" aep."{sAppEventPayload.ColumnForData}" """;
+    }
+    else if (order.Field.EqualsToOrderField(AppEventPayloadSettings.OrderFieldForId))
+    {
+      orderByField = $""" aep."{sAppEventPayload.ColumnForId}" """;
+    }
+    else
+    {
+      throw new NotImplementedException();
+    }
 
     result.TextBuilder.AppendLine($$"""
 select
@@ -114,14 +125,12 @@ fetch next @PageSize rows only
           result.AddParameter("@PageSize", page.Size);
         }
 
-
         result.AddParameter("@PageNumber", (page.Number - 1) * page.Size);
       }
     }
 
     return result;
   }
-
 
   /// <inheritdoc/>
   public DbSQLCommand CreateDbCommandForTotalCount(DbSQLCommand dbCommandForFilter)

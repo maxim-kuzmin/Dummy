@@ -56,12 +56,17 @@ public static class DummyItemExtensions
   {
     return new()
     {
-      Page = new ActionRequestPage()
+      Page = new()
       {
         Number = query.Page.Number,
-        Size = query.Page.Size,
+        Size = query.Page.Size
       },
-      Filter = new DummyItemGetListActionRequestFilter()
+      Order = new()
+      {
+        Field = query.Order.Field,        
+        IsDesc = query.Order.IsDesc
+      },
+      Filter = new()
       {
         FullTextSearchQuery = query.Filter.FullTextSearchQuery
       }

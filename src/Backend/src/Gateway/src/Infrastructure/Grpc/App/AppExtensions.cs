@@ -55,7 +55,7 @@ public static class AppExtensions
   /// </summary>
   /// <param name="command">Команда.</param>
   /// <returns>Запрос действия по входу в приложение.</returns>
-  public static AppLoginActionRequest ToAppLoginActionRequestForGrpc(this AppLoginActionCommand command)
+  public static AppLoginActionRequest ToAppLoginActionRequest(this AppLoginActionCommand command)
   {
     return new()
     {

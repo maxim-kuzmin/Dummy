@@ -1,6 +1,4 @@
-﻿using MediatR;
-
-namespace Makc.Dummy.Writer.DomainUseCases.DummyItem;
+﻿namespace Makc.Dummy.Writer.DomainUseCases.DummyItem;
 
 /// <summary>
 /// Расширения фиктивного предмета.

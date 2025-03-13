@@ -67,18 +67,29 @@ where
 
     if (order == null)
     {
-      order = new QueryOrderSection(nameof(AppEventPayloadEntity.Id), true);
+      order = AppEventPayloadSettings.DefaultQueryOrderSection;
     }
 
     string orderByDirection = order.IsDesc ? "desc" : "asc";
 
-    string orderByField = order.Field switch
+    string orderByField;
+
+    if (order.Field.EqualsToOrderField(AppEventPayloadSettings.OrderFieldForAppEventId))
     {
-      nameof(AppEventPayloadEntity.AppEventId) => $""" aep."{sAppEventPayload.ColumnForAppEventId}" """,
-      nameof(AppEventPayloadEntity.Data) => $""" aep."{sAppEventPayload.ColumnForData}" """,
-      nameof(AppEventPayloadEntity.Id) => $""" aep."{sAppEventPayload.ColumnForId}" """,
-      _ => throw new NotImplementedException(),
-    };
+      orderByField = $""" aep."{sAppEventPayload.ColumnForAppEventId}" """;
+    }
+    else if (order.Field.EqualsToOrderField(AppEventPayloadSettings.OrderFieldForData))
+    {
+      orderByField = $""" aep."{sAppEventPayload.ColumnForData}" """;
+    }
+    else if (order.Field.EqualsToOrderField(AppEventPayloadSettings.OrderFieldForId))
+    {
+      orderByField = $""" aep."{sAppEventPayload.ColumnForId}" """;
+    }
+    else
+    {
+      throw new NotImplementedException();
+    }
 
     result.TextBuilder.AppendLine($$"""
 select
@@ -119,7 +130,6 @@ offset @PageNumber
 
     return result;
   }
-
 
   /// <inheritdoc/>
   public DbSQLCommand CreateDbCommandForTotalCount(DbSQLCommand dbCommandForFilter)

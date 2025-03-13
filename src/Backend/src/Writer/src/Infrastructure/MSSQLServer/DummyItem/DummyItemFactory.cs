@@ -71,12 +71,20 @@ where
 
     string orderByDirection = order.IsDesc ? "desc" : "asc";
 
-    string orderByField = order.Field switch
-    {      
-      nameof(DummyItemEntity.Id) => $""" di."{sDummyItem.ColumnForId}" """,
-      nameof(DummyItemEntity.Name) => $""" di."{sDummyItem.ColumnForName}" """,
-      _ => throw new NotImplementedException(),
-    };
+    string orderByField;
+
+    if (order.Field.EqualsToOrderField(DummyItemSettings.OrderFieldForId))
+    {
+      orderByField = $""" di."{sDummyItem.ColumnForId}" """;
+    }
+    else if (order.Field.EqualsToOrderField(DummyItemSettings.OrderFieldForName))
+    {
+      orderByField = $""" di."{sDummyItem.ColumnForName}" """;
+    }
+    else
+    {
+      throw new NotImplementedException();
+    }
 
     result.TextBuilder.AppendLine($$"""
 select
@@ -111,14 +119,12 @@ fetch next @PageSize rows only
         result.AddParameter("@PageSize", page.Size);
       }
 
-
         result.AddParameter("@PageNumber", (page.Number - 1) * page.Size);
       }
     }
 
     return result;
   }
-
 
   /// <inheritdoc/>
   public DbSQLCommand CreateDbCommandForTotalCount(DbSQLCommand dbCommandForFilter)

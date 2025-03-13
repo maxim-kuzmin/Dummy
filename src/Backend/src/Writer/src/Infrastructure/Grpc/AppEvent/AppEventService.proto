@@ -16,6 +16,11 @@ service AppEvent {
     rpc Update (AppEventUpdateActionRequest) returns (AppEventGetActionReply);
 }
 
+message ActionRequestOrder {
+    string field = 1;
+    bool is_desc = 2;
+}
+
 message ActionRequestPage {
     int32 number = 1;
     int32 size = 2;
@@ -47,7 +52,8 @@ message AppEventGetListActionRequestFilter {
 
 message AppEventGetListActionRequest {
     ActionRequestPage page = 1;
-    AppEventGetListActionRequestFilter filter = 2;
+    ActionRequestOrder order = 2;
+    AppEventGetListActionRequestFilter filter = 3;
 }
 
 message AppEventGetListActionReplyItem {

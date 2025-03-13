@@ -1,19 +1,14 @@
-﻿namespace Makc.Dummy.Writer.DomainUseCases.AppEvent;
+﻿namespace Makc.Dummy.Reader.DomainUseCases.DummyItem;
 
 /// <summary>
-/// Настройки события приложения.
+/// Настройки фиктивного предмета.
 /// </summary>
-public class AppEventSettings
+public class DummyItemSettings
 {
   /// <summary>
   /// Поле сортировки для идентификатора.
   /// </summary>
   public const string OrderFieldForId = "Id";
-
-  /// <summary>
-  /// Поле сортировки для имени.
-  /// </summary>
-  public const string OrderFieldForName = "Name";
 
   /// <summary>
   /// Раздел порядка сортировки по умолчанию в запросе.
@@ -23,7 +18,7 @@ public class AppEventSettings
   /// <summary>
   /// Конструктор.
   /// </summary>
-  static AppEventSettings()
+  static DummyItemSettings()
   {
     DefaultQueryOrderSection = new(OrderFieldForId, true);
   }

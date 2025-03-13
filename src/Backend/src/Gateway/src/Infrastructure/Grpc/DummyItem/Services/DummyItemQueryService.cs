@@ -42,9 +42,11 @@ public class DummyItemQueryService(
 
       headers.AddAuthorizationHeader(_appSession);
 
+      var request = query.ToDummyItemGetListActionRequest();
+
       var replyTask = _grpcClient.GetListAsync(
-        query.ToDummyItemGetListActionRequest(),
-        headers,
+        request,
+        headers: headers,
         cancellationToken: cancellationToken);
 
       var reply = await replyTask.ConfigureAwait(false);

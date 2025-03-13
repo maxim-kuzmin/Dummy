@@ -1,6 +1,6 @@
 ﻿global using Makc.Dummy.Shared.DomainUseCases.Db.SQL;
+global using Makc.Dummy.Shared.DomainUseCases.Query;
 global using Makc.Dummy.Shared.DomainUseCases.Query.Sections;
-global using Makc.Dummy.Writer.DomainModel.AppEvent;
 global using Makc.Dummy.Writer.DomainModel.AppEvent.Entity;
 global using Makc.Dummy.Writer.DomainModel.AppEventPayload;
 global using Makc.Dummy.Writer.DomainModel.AppEventPayload.Entity;

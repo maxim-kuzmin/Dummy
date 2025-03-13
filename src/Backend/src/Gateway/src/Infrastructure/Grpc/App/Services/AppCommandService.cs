@@ -13,8 +13,10 @@ public class AppCommandService(WriterAppGrpcClient _grpcClient) : IAppCommandSer
   {
     try
     {
+      var request = command.ToAppLoginActionRequest();
+
       var replyTask = _grpcClient.LoginAsync(
-        command.ToAppLoginActionRequestForGrpc(),
+        request,
         cancellationToken: cancellationToken);
 
       var reply = await replyTask.ConfigureAwait(false);

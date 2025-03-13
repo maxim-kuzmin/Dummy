@@ -68,17 +68,25 @@ where
 
     if (order == null)
     {
-      order = new QueryOrderSection(nameof(AppEventEntity.Id), true);
+      order = AppEventSettings.DefaultQueryOrderSection;
     }
 
     string orderByDirection = order.IsDesc ? "desc" : "asc";
 
-    string orderByField = order.Field switch
+    string orderByField;
+
+    if (order.Field.EqualsToOrderField(AppEventSettings.OrderFieldForId))
     {
-      nameof(AppEventEntity.Id) => $""" ae."{sAppEvent.ColumnForId}" """,
-      nameof(AppEventEntity.Name) => $""" ae."{sAppEvent.ColumnForName}" """,
-      _ => throw new NotImplementedException(),
-    };
+      orderByField = $""" ae."{sAppEvent.ColumnForId}" """;
+    }
+    else if (order.Field.EqualsToOrderField(AppEventSettings.OrderFieldForName))
+    {
+      orderByField = $""" ae."{sAppEvent.ColumnForName}" """;
+    }
+    else
+    {
+      throw new NotImplementedException();
+    }
 
     result.TextBuilder.AppendLine($$"""
 select
@@ -120,7 +128,6 @@ offset @PageNumber
 
     return result;
   }
-
 
   /// <inheritdoc/>
   public DbSQLCommand CreateDbCommandForTotalCount(DbSQLCommand dbCommandForFilter)
