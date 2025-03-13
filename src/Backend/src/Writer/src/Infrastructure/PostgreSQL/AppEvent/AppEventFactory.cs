@@ -4,7 +4,7 @@
 /// Фабрика события приложения.
 /// </summary>
 /// <param name="_appDbSettings">Настройки базы данных приложения.</param>
-public class AppEventFactory(AppDbSettings _appDbSettings) : IAppEventFactory
+public class AppEventFactory(AppDbSettings _appDbSettings) : IAppEventUseCasesFactory
 {
   /// <inheritdoc/>
   public DbSQLCommand CreateDbCommand(AppEventSingleQuery query)
@@ -55,13 +55,30 @@ where
   }
 
   /// <inheritdoc/>
-  public DbSQLCommand CreateDbCommandForItems(DbSQLCommand dbCommandForFilter, QueryPageSection? page)
+  public DbSQLCommand CreateDbCommandForItems(
+    DbSQLCommand dbCommandForFilter,
+    QueryPageSection? page,
+    QueryOrderSection? order)
   {
     DbSQLCommand result = new();
 
     dbCommandForFilter.CopyParametersTo(result);
 
     var sAppEvent = _appDbSettings.Entities.AppEvent;
+
+    if (order == null)
+    {
+      order = new QueryOrderSection(nameof(AppEventEntity.Id), true);
+    }
+
+    string orderByDirection = order.IsDesc ? "desc" : "asc";
+
+    string orderByField = order.Field switch
+    {
+      nameof(AppEventEntity.Id) => $""" ae."{sAppEvent.ColumnForId}" """,
+      nameof(AppEventEntity.Name) => $""" ae."{sAppEvent.ColumnForName}" """,
+      _ => throw new NotImplementedException(),
+    };
 
     result.TextBuilder.AppendLine($$"""
 select
@@ -77,7 +94,7 @@ from
 
     result.TextBuilder.AppendLine($$"""
 order by
-  ae."{{sAppEvent.ColumnForId}}" desc    
+  {{orderByField}} {{orderByDirection}}
 """);
 
     if (page != null)

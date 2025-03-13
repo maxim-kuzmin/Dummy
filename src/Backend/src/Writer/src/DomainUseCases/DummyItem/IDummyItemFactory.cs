@@ -24,8 +24,12 @@ public interface IDummyItemFactory
   /// </summary>
   /// <param name="dbCommandForFilter">Команда базы данных для фильтра.</param>
   /// <param name="page">Страница.</param>
+  /// <param name="order">Порядок сортировки.</param>
   /// <returns>Команда базы данных для элементов.</returns>
-  DbSQLCommand CreateDbCommandForItems(DbSQLCommand dbCommandForFilter, QueryPageSection? page);
+  DbSQLCommand CreateDbCommandForItems(
+    DbSQLCommand dbCommandForFilter,
+    QueryPageSection? page,
+    QueryOrderSection? order);
 
   /// <summary>
   /// Создать базы данных для общего количества.

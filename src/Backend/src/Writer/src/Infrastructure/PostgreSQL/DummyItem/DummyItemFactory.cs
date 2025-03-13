@@ -4,7 +4,7 @@
 /// Фабрика фиктивного предмета.
 /// </summary>
 /// <param name="_appDbSettings">Настройки базы данных приложения.</param>
-public class DummyItemFactory(AppDbSettings _appDbSettings) : IDummyItemFactory
+public class DummyItemFactory(AppDbSettings _appDbSettings) : IDummyItemUseCasesFactory
 {
   /// <inheritdoc/>
   public DbSQLCommand CreateDbCommand(DummyItemSingleQuery query)
@@ -53,13 +53,30 @@ where
   }
 
   /// <inheritdoc/>
-  public DbSQLCommand CreateDbCommandForItems(DbSQLCommand dbCommandForFilter, QueryPageSection? page)
+  public DbSQLCommand CreateDbCommandForItems(
+    DbSQLCommand dbCommandForFilter,
+    QueryPageSection? page,
+    QueryOrderSection? order)
   {
     DbSQLCommand result = new();
 
     dbCommandForFilter.CopyParametersTo(result);
 
     var sDummyItem = _appDbSettings.Entities.DummyItem;
+
+    if (order == null)
+    {
+      order = new QueryOrderSection(nameof(DummyItemEntity.Id), true);
+    }
+
+    string orderByDirection = order.IsDesc ? "desc" : "asc";
+
+    string orderByField = order.Field switch
+    {
+      nameof(DummyItemEntity.Id) => $""" di."{sDummyItem.ColumnForId}" """,
+      nameof(DummyItemEntity.Name) => $""" di."{sDummyItem.ColumnForName}" """,
+      _ => throw new NotImplementedException(),
+    };
 
     result.TextBuilder.AppendLine($$"""
 select
@@ -73,7 +90,7 @@ from
 
     result.TextBuilder.AppendLine($$"""
 order by
-  di."{{sDummyItem.ColumnForId}}" desc
+  {{orderByField}} {{orderByDirection}}
 """);
 
     if (page != null)

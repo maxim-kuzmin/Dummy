@@ -1,7 +1,10 @@
 ﻿global using Makc.Dummy.Shared.DomainUseCases.Db.SQL;
 global using Makc.Dummy.Shared.DomainUseCases.Query.Sections;
+global using Makc.Dummy.Writer.DomainModel.AppEvent;
 global using Makc.Dummy.Writer.DomainModel.AppEvent.Entity;
+global using Makc.Dummy.Writer.DomainModel.AppEventPayload;
 global using Makc.Dummy.Writer.DomainModel.AppEventPayload.Entity;
+global using Makc.Dummy.Writer.DomainModel.DummyItem;
 global using Makc.Dummy.Writer.DomainModel.DummyItem.Entity;
 global using Makc.Dummy.Writer.DomainUseCases.AppEvent;
 global using Makc.Dummy.Writer.DomainUseCases.AppEvent.Queries;
@@ -23,4 +26,10 @@ global using AppDbSettingsBase = Makc.Dummy.Writer.DomainModel.App.Db.AppDbSetti
 global using AppDbSettingsEntitiesBase = Makc.Dummy.Writer.DomainModel.App.Db.Settings.AppDbSettingsEntities;
 global using AppEventEntityDbSettingsBase = Makc.Dummy.Writer.DomainModel.AppEvent.Entity.Db.AppEventEntityDbSettings;
 global using AppEventPayloadEntityDbSettingsBase = Makc.Dummy.Writer.DomainModel.AppEventPayload.Entity.Db.AppEventPayloadEntityDbSettings;
+global using AppEventPayloadUseCasesFactory = Makc.Dummy.Writer.Infrastructure.PostgreSQL.AppEventPayload.AppEventPayloadFactory;
+global using AppEventUseCasesFactory = Makc.Dummy.Writer.Infrastructure.PostgreSQL.AppEvent.AppEventFactory;
 global using DummyItemEntityDbSettingsBase = Makc.Dummy.Writer.DomainModel.DummyItem.Entity.Db.DummyItemEntityDbSettings;
+global using DummyItemUseCasesFactory = Makc.Dummy.Writer.Infrastructure.PostgreSQL.DummyItem.DummyItemFactory;
+global using IAppEventPayloadUseCasesFactory = Makc.Dummy.Writer.DomainUseCases.AppEventPayload.IAppEventPayloadFactory;
+global using IAppEventUseCasesFactory = Makc.Dummy.Writer.DomainUseCases.AppEvent.IAppEventFactory;
+global using IDummyItemUseCasesFactory = Makc.Dummy.Writer.DomainUseCases.DummyItem.IDummyItemFactory;

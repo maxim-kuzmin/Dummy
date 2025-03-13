@@ -20,7 +20,7 @@ public static class AppEventGetListEndpointExtensions
 
     return new(pageQuery)
     {
-      Order = new QueryOrderSection(nameof(AppEventEntity.Id), false)
+      Order = new QueryOrderSection(nameof(AppEventEntity.Id), true)
     };
   }
 }

@@ -23,15 +23,15 @@ public static class AppExtensions
 
     services.AddSingleton(appDbSettings.Entities.AppEvent);
     services.AddSingleton<AppEventEntitySettings>(appDbSettings.Entities.AppEvent);
-    services.AddSingleton<IAppEventFactory, AppEventFactory>();
+    services.AddSingleton<IAppEventUseCasesFactory, AppEventUseCasesFactory>();
 
     services.AddSingleton(appDbSettings.Entities.AppEventPayload);
     services.AddSingleton<AppEventPayloadEntitySettings>(appDbSettings.Entities.AppEventPayload);
-    services.AddSingleton<IAppEventPayloadFactory, AppEventPayloadFactory>();
+    services.AddSingleton<IAppEventPayloadUseCasesFactory, AppEventPayloadUseCasesFactory>();
 
     services.AddSingleton(appDbSettings.Entities.DummyItem);
     services.AddSingleton<DummyItemEntitySettings>(appDbSettings.Entities.DummyItem);
-    services.AddSingleton<IDummyItemFactory, DummyItemFactory>();
+    services.AddSingleton<IDummyItemUseCasesFactory, DummyItemUseCasesFactory>();
 
     logger.LogInformation("Added application infrastructure tied to MS SQL Server");
 
