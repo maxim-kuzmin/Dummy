@@ -9,7 +9,7 @@
 /// <param name="_service">Сервис.</param>
 public class DummyItemUpdateActionHandler(
   IAppDbExecutionContext _appDbExecutionContext,
-  DomainModel.DummyItem.IDummyItemFactory _factory,
+  IDummyItemModelFactory _factory,
   IDummyItemRepository _repository,
   IDummyItemCommandService _service) : ICommandHandler<DummyItemUpdateActionCommand, Result<DummyItemSingleDTO>>
 {

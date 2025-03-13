@@ -1,4 +1,6 @@
-﻿namespace Makc.Dummy.Writer.DomainUseCases.AppEvent.Actions.GetList;
+﻿using Makc.Dummy.Writer.DomainUseCases.AppEvent.Query.Sections;
+
+namespace Makc.Dummy.Writer.DomainUseCases.AppEvent.Actions.GetList;
 
 /// <summary>
 /// Запрос действия по получению списка событий приложения.
@@ -7,4 +9,4 @@
 /// <param name="Filter">Фильтр.</param>
 public record AppEventGetListActionQuery(
   QueryPageSection? Page,
-  AppEventGetListActionQueryFilter? Filter) : IQuery<Result<AppEventListDTO>>;
+  AppEventQueryFilterSection? Filter) : IQuery<Result<AppEventListDTO>>;

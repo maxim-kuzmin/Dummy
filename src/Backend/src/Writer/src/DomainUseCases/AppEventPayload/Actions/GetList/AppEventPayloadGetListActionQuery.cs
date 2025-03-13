@@ -1,4 +1,6 @@
-﻿namespace Makc.Dummy.Writer.DomainUseCases.AppEventPayload.Actions.GetList;
+﻿using Makc.Dummy.Writer.DomainUseCases.AppEventPayload.Query.Sections;
+
+namespace Makc.Dummy.Writer.DomainUseCases.AppEventPayload.Actions.GetList;
 
 /// <summary>
 /// Запрос действия по получению списка полезных нагрузок события приложения.
@@ -7,4 +9,4 @@
 /// <param name="Filter">Фильтр.</param>
 public record AppEventPayloadGetListActionQuery(
   QueryPageSection? Page,
-  AppEventPayloadGetListActionQueryFilter? Filter) : IQuery<Result<AppEventPayloadListDTO>>;
+  AppEventPayloadQueryFilterSection? Filter) : IQuery<Result<AppEventPayloadListDTO>>;

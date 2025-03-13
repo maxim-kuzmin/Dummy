@@ -8,7 +8,7 @@
 /// <param name="_repository">Репозиторий.</param>
 public class AppEventPayloadDeleteActionHandler(
   IAppDbExecutionContext _appDbExecutionContext,
-  IAppEventPayloadFactory _factory,
+  IAppEventPayloadModelFactory _factory,
   IAppEventPayloadRepository _repository) :
   ICommandHandler<AppEventPayloadDeleteActionCommand, Result>
 {

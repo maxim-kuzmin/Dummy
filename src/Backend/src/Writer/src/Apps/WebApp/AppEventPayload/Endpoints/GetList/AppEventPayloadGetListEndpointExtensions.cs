@@ -15,6 +15,6 @@ public static class AppEventPayloadGetListEndpointExtensions
   {
     return new(
       new QueryPageSection(request.CurrentPage, request.ItemsPerPage),
-      new AppEventPayloadGetListActionQueryFilter(request.Query));
+      new AppEventPayloadQueryFilterSection(request.Query));
   }
 }
