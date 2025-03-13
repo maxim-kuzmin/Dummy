@@ -1,4 +1,6 @@
-﻿namespace Makc.Dummy.Writer.DomainUseCases.DummyItem;
+﻿using MediatR;
+
+namespace Makc.Dummy.Writer.DomainUseCases.DummyItem;
 
 /// <summary>
 /// Расширения фиктивного предмета.
@@ -24,5 +26,23 @@ public static class DummyItemExtensions
   public static DummyItemListDTO ToDummyItemListDTO(this List<DummyItemSingleDTO> items, long totalCount)
   {
     return new(items, totalCount);
+  }
+
+  /// <summary>
+  /// Преобразовать к разделу порядка сортировки в запросе фиктивных предметов.
+  /// </summary>
+  /// <param name="field">Поле сортировки.</param>
+  /// <param name="isDesc">Сортировать по убыванию?</param>
+  /// <returns>Pаздел порядка сортировки в запросе.</returns>
+  public static QueryOrderSection ToDummyItemQueryOrderSection(this string? field, bool? isDesc)
+  {
+    field = (field ?? string.Empty).Trim();
+
+    if (field == string.Empty)
+    {
+      field = nameof(DummyItemEntity.Id);
+    }
+
+    return new(field, isDesc ?? true);
   }
 }

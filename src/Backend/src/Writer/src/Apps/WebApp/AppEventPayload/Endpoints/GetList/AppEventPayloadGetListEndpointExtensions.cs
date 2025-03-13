@@ -21,7 +21,7 @@ public static class AppEventPayloadGetListEndpointExtensions
 
     return new(pageQuery)
     {
-      Order = new QueryOrderSection(nameof(AppEventPayloadEntity.Id), true)
+      Order = request.OrderField.ToAppEventPayloadQueryOrderSection(request.OrderIsDesc)
     };
   }
 }

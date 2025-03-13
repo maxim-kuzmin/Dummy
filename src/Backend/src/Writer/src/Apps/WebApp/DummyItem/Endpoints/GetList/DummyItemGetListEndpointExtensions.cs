@@ -14,13 +14,13 @@ public static class DummyItemGetListEndpointExtensions
   {
     DummyItemPageQuery pageQuery = new()
     {
-      Page = new QueryPageSection(request.CurrentPage, request.ItemsPerPage),
-      Filter = new DummyItemQueryFilterSection(request.Query)
+      Page = new(request.CurrentPage, request.ItemsPerPage),
+      Filter = new(request.Query)
     };
 
     return new(pageQuery)
     {
-      Order = new QueryOrderSection(nameof(DummyItemEntity.Id), true)
+      Order = request.OrderField.ToDummyItemQueryOrderSection(request.OrderIsDesc)
     };
   }
 }
