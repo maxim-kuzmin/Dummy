@@ -15,7 +15,7 @@ service AppEventPayload {
     rpc Update (AppEventPayloadUpdateActionRequest) returns (AppEventPayloadGetActionReply);
 }
 
-message ActionRequestOrder {
+message ActionRequestSort {
     string field = 1;
     bool is_desc = 2;
 }
@@ -50,7 +50,7 @@ message AppEventPayloadGetListActionRequestFilter {
 
 message AppEventPayloadGetListActionRequest {
     ActionRequestPage page = 1;
-    ActionRequestOrder order = 2;
+    ActionRequestSort sort = 2;
     AppEventPayloadGetListActionRequestFilter filter = 3;
 }
 

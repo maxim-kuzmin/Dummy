@@ -57,7 +57,7 @@ where
   public DbSQLCommand CreateDbCommandForItems(
     DbSQLCommand dbCommandForFilter,
     QueryPageSection? page,
-    QueryOrderSection? order)
+    QuerySortSection? sort)
   {
     DbSQLCommand result = new();
 
@@ -65,24 +65,24 @@ where
 
     var sAppEventPayload = _appDbSettings.Entities.AppEventPayload;
 
-    if (order == null)
+    if (sort == null)
     {
-      order = AppEventPayloadSettings.DefaultQueryOrderSection;
+      sort = AppEventPayloadSettings.DefaultQuerySortSection;
     }
 
-    string orderByDirection = order.IsDesc ? "desc" : "asc";
+    string orderByDirection = sort.IsDesc ? "desc" : "asc";
 
     string orderByField;
 
-    if (order.Field.EqualsToOrderField(AppEventPayloadSettings.OrderFieldForAppEventId))
+    if (sort.Field.EqualsToSortField(AppEventPayloadSettings.SortFieldForAppEventId))
     {
       orderByField = $""" aep."{sAppEventPayload.ColumnForAppEventId}" """;
     }
-    else if (order.Field.EqualsToOrderField(AppEventPayloadSettings.OrderFieldForData))
+    else if (sort.Field.EqualsToSortField(AppEventPayloadSettings.SortFieldForData))
     {
       orderByField = $""" aep."{sAppEventPayload.ColumnForData}" """;
     }
-    else if (order.Field.EqualsToOrderField(AppEventPayloadSettings.OrderFieldForId))
+    else if (sort.Field.EqualsToSortField(AppEventPayloadSettings.SortFieldForId))
     {
       orderByField = $""" aep."{sAppEventPayload.ColumnForId}" """;
     }

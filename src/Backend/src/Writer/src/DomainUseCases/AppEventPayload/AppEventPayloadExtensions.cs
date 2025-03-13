@@ -29,20 +29,20 @@ public static class AppEventPayloadExtensions
   }
 
   /// <summary>
-  /// Преобразовать к разделу порядка сортировки в запросе полезных нагрузок события приложения.
+  /// Преобразовать к разделу сортировки в запросе полезных нагрузок события приложения.
   /// </summary>
   /// <param name="field">Поле сортировки.</param>
   /// <param name="isDesc">Сортировать по убыванию?</param>
-  /// <returns>Pаздел порядка сортировки в запросе.</returns>
-  public static QueryOrderSection ToAppEventPayloadQueryOrderSection(this string? field, bool? isDesc)
+  /// <returns>Pаздел сортировки в запросе.</returns>
+  public static QuerySortSection ToAppEventPayloadQuerySortSection(this string? field, bool? isDesc)
   {
     field = (field ?? string.Empty).Trim();
 
     if (field == string.Empty)
     {
-      field = AppEventPayloadSettings.DefaultQueryOrderSection.Field;
+      field = AppEventPayloadSettings.DefaultQuerySortSection.Field;
     }
 
-    return new(field, isDesc ?? AppEventPayloadSettings.DefaultQueryOrderSection.IsDesc);
+    return new(field, isDesc ?? AppEventPayloadSettings.DefaultQuerySortSection.IsDesc);
   }
 }

@@ -4,9 +4,9 @@
 /// Запрос действия по получению списка фиктивных предметов.
 /// </summary>
 /// <param name="Page">Страница.</param>
-/// <param name="Order">Порядок сортировки.</param>
+/// <param name="Sort">Сортировка.</param>
 /// <param name="Filter">Фильтр.</param>
 public record DummyItemGetListActionQuery(
   QueryPageSection Page,
-  QueryOrderSection Order,
+  QuerySortSection Sort,
   DummyItemGetListActionQueryFilter Filter) : IQuery<Result<DummyItemListDTO>>;

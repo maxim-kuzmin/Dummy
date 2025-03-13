@@ -45,8 +45,8 @@ public static class DummyItemExtensions
     IEnumerable<KeyValuePair<string, string?>> parameters = [
       new("CurrentPage", query.Page.Number.ToString()),
       new("ItemsPerPage", query.Page.Size.ToString()),
-      new("OrderField", query.Order.Field),
-      new("OrderIsDesc", query.Order.IsDesc.ToString()),
+      new("SortField", query.Sort.Field),
+      new("SortIsDesc", query.Sort.IsDesc.ToString()),
       new("Query", query.Filter.FullTextSearchQuery)
     ];
 

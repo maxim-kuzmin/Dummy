@@ -46,7 +46,7 @@ public static class AppEventPayloadExtensions
 
     return new(pageQuery)
     {
-      Order = new QueryOrderSection(nameof(AppEventPayloadEntity.Id), true)
+      Sort = new QuerySortSection(nameof(AppEventPayloadEntity.Id), true)
     };
   }
 

@@ -8,18 +8,18 @@ public class DummyItemSettings
   /// <summary>
   /// Поле сортировки для идентификатора.
   /// </summary>
-  public const string OrderFieldForId = "Id";
+  public const string SortFieldForId = "Id";
 
   /// <summary>
-  /// Раздел порядка сортировки по умолчанию в запросе.
+  /// Раздел сортировки по умолчанию в запросе.
   /// </summary>
-  public static readonly QueryOrderSection DefaultQueryOrderSection;
+  public static readonly QuerySortSection DefaultQuerySortSection;
 
   /// <summary>
   /// Конструктор.
   /// </summary>
   static DummyItemSettings()
   {
-    DefaultQueryOrderSection = new(OrderFieldForId, true);
+    DefaultQuerySortSection = new(SortFieldForId, true);
   }
 }

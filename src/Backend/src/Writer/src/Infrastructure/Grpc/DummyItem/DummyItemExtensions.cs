@@ -45,7 +45,7 @@ public static class DummyItemExtensions
 
     return new(pageQuery)
     {
-      Order = new QueryOrderSection(nameof(DummyItemEntity.Id), true)
+      Sort = new QuerySortSection(nameof(DummyItemEntity.Id), true)
     };
   }
 

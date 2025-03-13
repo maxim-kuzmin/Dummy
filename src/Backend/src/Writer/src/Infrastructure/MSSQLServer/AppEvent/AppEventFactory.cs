@@ -58,7 +58,7 @@ where
   public DbSQLCommand CreateDbCommandForItems(
     DbSQLCommand dbCommandForFilter,
     QueryPageSection? page,
-    QueryOrderSection? order)
+    QuerySortSection? sort)
   {
     DbSQLCommand result = new();
 
@@ -66,20 +66,20 @@ where
 
     var sAppEvent = _appDbSettings.Entities.AppEvent;
 
-    if (order == null)
+    if (sort == null)
     {
-      order = AppEventSettings.DefaultQueryOrderSection;
+      sort = AppEventSettings.DefaultQuerySortSection;
     }
 
-    string orderByDirection = order.IsDesc ? "desc" : "asc";
+    string orderByDirection = sort.IsDesc ? "desc" : "asc";
 
     string orderByField;
 
-    if (order.Field.EqualsToOrderField(AppEventSettings.OrderFieldForId))
+    if (sort.Field.EqualsToSortField(AppEventSettings.SortFieldForId))
     {
       orderByField = $""" ae."{sAppEvent.ColumnForId}" """;
     }
-    else if (order.Field.EqualsToOrderField(AppEventSettings.OrderFieldForName))
+    else if (sort.Field.EqualsToSortField(AppEventSettings.SortFieldForName))
     {
       orderByField = $""" ae."{sAppEvent.ColumnForName}" """;
     }

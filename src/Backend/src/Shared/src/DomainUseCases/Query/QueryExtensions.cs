@@ -11,7 +11,7 @@ public static class QueryExtensions
   /// <param name="left">Поле сортировки, которое сравнивается.</param>
   /// <param name="right">Поле сортировки, с которым идёт сранение.</param>
   /// <returns>Если равно, то true, иначе - false. </returns>
-  public static bool EqualsToOrderField(this string left, string right)
+  public static bool EqualsToSortField(this string left, string right)
   {
     return left.Equals(right, StringComparison.InvariantCultureIgnoreCase);
   }

@@ -20,7 +20,7 @@ public static class DummyItemGetListEndpointExtensions
 
     return new(pageQuery)
     {
-      Order = request.OrderField.ToDummyItemQueryOrderSection(request.OrderIsDesc)
+      Sort = request.SortField.ToDummyItemQuerySortSection(request.SortIsDesc)
     };
   }
 }

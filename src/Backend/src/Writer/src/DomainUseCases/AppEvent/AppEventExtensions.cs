@@ -27,20 +27,20 @@ public static class AppEventExtensions
   }
 
   /// <summary>
-  /// Преобразовать к разделу порядка сортировки в запросе событий приложения.
+  /// Преобразовать к разделу сортировки в запросе событий приложения.
   /// </summary>
   /// <param name="field">Поле сортировки.</param>
   /// <param name="isDesc">Сортировать по убыванию?</param>
-  /// <returns>Pаздел порядка сортировки в запросе.</returns>
-  public static QueryOrderSection ToAppEventQueryOrderSection(this string? field, bool? isDesc)
+  /// <returns>Pаздел сортировки в запросе.</returns>
+  public static QuerySortSection ToAppEventQuerySortSection(this string? field, bool? isDesc)
   {
     field = (field ?? string.Empty).Trim();
 
     if (field == string.Empty)
     {
-      field = AppEventSettings.DefaultQueryOrderSection.Field;
+      field = AppEventSettings.DefaultQuerySortSection.Field;
     }
 
-    return new(field, isDesc ?? AppEventSettings.DefaultQueryOrderSection.IsDesc);
+    return new(field, isDesc ?? AppEventSettings.DefaultQuerySortSection.IsDesc);
   }
 }

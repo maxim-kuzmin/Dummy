@@ -61,10 +61,10 @@ public static class DummyItemExtensions
         Number = query.Page.Number,
         Size = query.Page.Size
       },
-      Order = new()
+      Sort = new()
       {
-        Field = query.Order.Field,        
-        IsDesc = query.Order.IsDesc
+        Field = query.Sort.Field,        
+        IsDesc = query.Sort.IsDesc
       },
       Filter = new()
       {

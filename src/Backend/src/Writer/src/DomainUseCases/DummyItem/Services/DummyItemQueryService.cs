@@ -34,7 +34,7 @@ public class DummyItemQueryService(
   {
     var dbCommandForFilter = _factory.CreateDbCommandForFilter(query.PageQuery);
 
-    var dbCommandForItems = _factory.CreateDbCommandForItems(dbCommandForFilter, query.PageQuery.Page, query.Order);
+    var dbCommandForItems = _factory.CreateDbCommandForItems(dbCommandForFilter, query.PageQuery.Page, query.Sort);
 
     return _appDbQueryContext.GetListAsync<DummyItemSingleDTO>(dbCommandForItems, cancellationToken);
   }

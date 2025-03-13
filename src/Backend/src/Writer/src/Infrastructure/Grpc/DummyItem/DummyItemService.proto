@@ -15,7 +15,7 @@ service DummyItem {
     rpc Update (DummyItemUpdateActionRequest) returns (DummyItemGetActionReply);
 }
 
-message ActionRequestOrder {
+message ActionRequestSort {
     string field = 1;
     bool is_desc = 2;
 }
@@ -48,7 +48,7 @@ message DummyItemGetListActionRequestFilter {
 
 message DummyItemGetListActionRequest {
     ActionRequestPage page = 1;
-    ActionRequestOrder order = 2;
+    ActionRequestSort sort = 2;
     DummyItemGetListActionRequestFilter filter = 3;
 }
 

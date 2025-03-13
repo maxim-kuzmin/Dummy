@@ -8,28 +8,28 @@ public class AppEventPayloadSettings
   /// <summary>
   /// Поле сортировки для идентификатора события приложения.
   /// </summary>
-  public const string OrderFieldForAppEventId = "AppEventId";
+  public const string SortFieldForAppEventId = "AppEventId";
 
   /// <summary>
   /// Поле сортировки для данных.
   /// </summary>
-  public const string OrderFieldForData = "Data";
+  public const string SortFieldForData = "Data";
 
   /// <summary>
   /// Поле сортировки для идентификатора.
   /// </summary>
-  public const string OrderFieldForId = "Id";
+  public const string SortFieldForId = "Id";
 
   /// <summary>
-  /// Раздел порядка сортировки по умолчанию в запросе.
+  /// Раздел сортировки по умолчанию в запросе.
   /// </summary>
-  public static readonly QueryOrderSection DefaultQueryOrderSection;
+  public static readonly QuerySortSection DefaultQuerySortSection;
 
   /// <summary>
   /// Конструктор.
   /// </summary>
   static AppEventPayloadSettings()
   {
-    DefaultQueryOrderSection = new(OrderFieldForId, true);
+    DefaultQuerySortSection = new(SortFieldForId, true);
   }
 }

@@ -19,7 +19,7 @@ public class DummyItemGetListEndpointHandler(IMediator _mediator) :
   {
     DummyItemGetListActionQuery query = new(
       new QueryPageSection(request.CurrentPage, request.ItemsPerPage),
-      request.OrderField.ToDummyItemQueryOrderSection(request.OrderIsDesc),
+      request.SortField.ToDummyItemQuerySortSection(request.SortIsDesc),
       new DummyItemGetListActionQueryFilter(request.Query));
 
     var result = await _mediator.Send(query, cancellationToken);

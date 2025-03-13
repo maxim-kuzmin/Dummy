@@ -56,7 +56,7 @@ where
   public DbSQLCommand CreateDbCommandForItems(
     DbSQLCommand dbCommandForFilter,
     QueryPageSection? page,
-    QueryOrderSection? order)
+    QuerySortSection? sort)
   {
     DbSQLCommand result = new();
 
@@ -64,20 +64,20 @@ where
 
     var sDummyItem = _appDbSettings.Entities.DummyItem;
 
-    if (order == null)
+    if (sort == null)
     {
-      order = DummyItemSettings.DefaultQueryOrderSection;
+      sort = DummyItemSettings.DefaultQuerySortSection;
     }
 
-    string orderByDirection = order.IsDesc ? "desc" : "asc";
+    string orderByDirection = sort.IsDesc ? "desc" : "asc";
 
     string orderByField;
 
-    if (order.Field.EqualsToOrderField(DummyItemSettings.OrderFieldForId))
+    if (sort.Field.EqualsToSortField(DummyItemSettings.SortFieldForId))
     {
       orderByField = $""" di."{sDummyItem.ColumnForId}" """;
     }
-    else if (order.Field.EqualsToOrderField(DummyItemSettings.OrderFieldForName))
+    else if (sort.Field.EqualsToSortField(DummyItemSettings.SortFieldForName))
     {
       orderByField = $""" di."{sDummyItem.ColumnForName}" """;
     }

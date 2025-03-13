@@ -24,12 +24,12 @@ public interface IAppEventFactory
   /// </summary>
   /// <param name="dbCommandForFilter">Команда базы данных для фильтра.</param>
   /// <param name="page">Страница.</param>
-  /// <param name="order">Порядок сортировки.</param>
+  /// <param name="sort">Сортировка.</param>
   /// <returns>Команда базы данных для элементов.</returns>
   DbSQLCommand CreateDbCommandForItems(
     DbSQLCommand dbCommandForFilter,
     QueryPageSection? page,
-    QueryOrderSection? order);
+    QuerySortSection? sort);
 
   /// <summary>
   /// Создать базы данных для общего количества.

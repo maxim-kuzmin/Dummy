@@ -6,7 +6,7 @@
 public record ListQuery
 {
   /// <summary>
-  /// Порядок.
+  /// Сортировка.
   /// </summary>
-  public QueryOrderSection? Order { get; set; }
+  public QuerySortSection? Sort { get; set; }
 }
