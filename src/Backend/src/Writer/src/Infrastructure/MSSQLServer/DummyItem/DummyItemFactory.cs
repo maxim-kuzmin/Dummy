@@ -29,7 +29,7 @@ where
   }
 
   /// <inheritdoc/>
-  public DbSQLCommand CreateDbCommandForFilter(DummyItemCountQuery query)
+  public DbSQLCommand CreateDbCommandForFilter(DummyItemPageQuery query)
   {
     DbSQLCommand result = new();
 

@@ -1,9 +1,9 @@
 ﻿namespace Makc.Dummy.Writer.DomainUseCases.AppEventPayload.Queries;
 
 /// <summary>
-/// Запрос количества полезных нагрузок события приложения.
+/// Запрос страницы полезных нагрузок события приложения.
 /// </summary>
-public record AppEventPayloadCountQuery : CountQuery
+public record AppEventPayloadPageQuery : PageQuery
 {
   /// <summary>
   /// Фильтр.

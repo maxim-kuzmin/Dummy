@@ -17,7 +17,7 @@ public interface IDummyItemFactory
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <returns>Команда базы данных для фильтра.</returns>
-  DbSQLCommand CreateDbCommandForFilter(DummyItemCountQuery query);
+  DbSQLCommand CreateDbCommandForFilter(DummyItemPageQuery query);
 
   /// <summary>
   /// Создать базы данных для элементов.

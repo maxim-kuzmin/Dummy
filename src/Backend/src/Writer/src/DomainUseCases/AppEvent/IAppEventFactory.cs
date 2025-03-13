@@ -17,7 +17,7 @@ public interface IAppEventFactory
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <returns>Команда базы данных для фильтра.</returns>
-  DbSQLCommand CreateDbCommandForFilter(AppEventCountQuery query);
+  DbSQLCommand CreateDbCommandForFilter(AppEventPageQuery query);
 
   /// <summary>
   /// Создать базы данных для элементов.

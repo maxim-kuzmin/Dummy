@@ -1,9 +1,9 @@
 ﻿namespace Makc.Dummy.Writer.DomainUseCases.AppEvent.Queries;
 
 /// <summary>
-/// Запрос количества событий приложения.
+/// Запрос страницы событий приложения.
 /// </summary>
-public record AppEventCountQuery : CountQuery
+public record AppEventPageQuery : PageQuery
 {
   /// <summary>
   /// Фильтр.

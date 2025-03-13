@@ -17,6 +17,8 @@ public static class AppExtensions
 
     services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
 
+    services.AddScoped<IDummyItemCommandService, DummyItemCommandService>();
+
     logger.LogInformation("Added application domain use cases");
 
     return services;

@@ -38,13 +38,13 @@ public static class AppEventPayloadExtensions
   public static AppEventPayloadGetListActionQuery ToAppEventPayloadGetListActionQuery(
     this AppEventPayloadGetListActionRequest request)
   {
-    AppEventPayloadCountQuery countQuery = new()
+    AppEventPayloadPageQuery pageQuery = new()
     {
       Page = new QueryPageSection(request.Page.Number, request.Page.Size),
       Filter = new AppEventPayloadQueryFilterSection(request.Filter.FullTextSearchQuery)
     };
 
-    return new(countQuery)
+    return new(pageQuery)
     {
       Order = new QueryOrderSection(nameof(AppEventPayloadEntity.Id), false)
     };

@@ -12,7 +12,7 @@ public class AppEventPayloadGetListActionHandler(IAppEventPayloadQueryService _s
     AppEventPayloadGetListActionQuery request,
     CancellationToken cancellationToken)
   {
-    var totalCount = await _service.CountAsync(request.CountQuery, cancellationToken).ConfigureAwait(false);
+    var totalCount = await _service.CountAsync(request.PageQuery, cancellationToken).ConfigureAwait(false);
 
     List<AppEventPayloadSingleDTO> items;
 

@@ -44,6 +44,8 @@ public static class AppExtensions
 
     services.AddScoped(x => x.GetRequiredService<IMongoClient>().StartSession());
 
+    services.AddTransient<IDummyItemQueryService, DummyItemQueryService>();
+
     logger.LogInformation("Added application infrastructure tied to MongoDB");
 
     return services;

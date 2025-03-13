@@ -8,7 +8,7 @@ public class AppEventQueryService(
   IAppEventFactory _factory) : IAppEventQueryService
 {
   /// <inheritdoc/>
-  public async Task<long> CountAsync(AppEventCountQuery query, CancellationToken cancellationToken)
+  public async Task<long> CountAsync(AppEventPageQuery query, CancellationToken cancellationToken)
   {
     var dbCommandForFilter = _factory.CreateDbCommandForFilter(query);
 
@@ -32,9 +32,9 @@ public class AppEventQueryService(
   /// <inheritdoc/>
   public Task<List<AppEventSingleDTO>> ListAsync(AppEventListQuery query, CancellationToken cancellationToken)
   {
-    var dbCommandForFilter = _factory.CreateDbCommandForFilter(query.CountQuery);
+    var dbCommandForFilter = _factory.CreateDbCommandForFilter(query.PageQuery);
 
-    var dbCommandForItems = _factory.CreateDbCommandForItems(dbCommandForFilter, query.Page);
+    var dbCommandForItems = _factory.CreateDbCommandForItems(dbCommandForFilter, query.PageQuery.Page);
 
     return _appDbQueryContext.GetListAsync<AppEventSingleDTO>(dbCommandForItems, cancellationToken);
   }

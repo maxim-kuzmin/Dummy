@@ -8,7 +8,7 @@ public class DummyItemQueryService(
   IDummyItemFactory _factory) : IDummyItemQueryService
 {
   /// <inheritdoc/>
-  public async Task<long> CountAsync(DummyItemCountQuery query, CancellationToken cancellationToken)
+  public async Task<long> CountAsync(DummyItemPageQuery query, CancellationToken cancellationToken)
   {
     var dbCommandForFilter = _factory.CreateDbCommandForFilter(query);
 
@@ -32,9 +32,9 @@ public class DummyItemQueryService(
   /// <inheritdoc/>
   public Task<List<DummyItemSingleDTO>> ListAsync(DummyItemListQuery query, CancellationToken cancellationToken)
   {
-    var dbCommandForFilter = _factory.CreateDbCommandForFilter(query.CountQuery);
+    var dbCommandForFilter = _factory.CreateDbCommandForFilter(query.PageQuery);
 
-    var dbCommandForItems = _factory.CreateDbCommandForItems(dbCommandForFilter, query.Page);
+    var dbCommandForItems = _factory.CreateDbCommandForItems(dbCommandForFilter, query.PageQuery.Page);
 
     return _appDbQueryContext.GetListAsync<DummyItemSingleDTO>(dbCommandForItems, cancellationToken);
   }

@@ -12,13 +12,13 @@ public static class AppEventGetListEndpointExtensions
   /// <returns>Запрос действия по получению списка событий приложения.</returns>
   public static AppEventGetListActionQuery ToAppEventGetListActionQuery(this AppEventGetListEndpointRequest request)
   {
-    AppEventCountQuery countQuery = new()
+    AppEventPageQuery pageQuery = new()
     {
       Page = new QueryPageSection(request.CurrentPage, request.ItemsPerPage),
       Filter = new AppEventQueryFilterSection(request.Query)
     };
 
-    return new(countQuery)
+    return new(pageQuery)
     {
       Order = new QueryOrderSection(nameof(AppEventEntity.Id), false)
     };

@@ -1,9 +1,9 @@
 ﻿namespace Makc.Dummy.Shared.DomainUseCases.Queries;
 
 /// <summary>
-/// Запрос количества.
+/// Запрос страницы.
 /// </summary>
-public record CountQuery
+public record PageQuery
 {
   /// <summary>
   /// Страница.

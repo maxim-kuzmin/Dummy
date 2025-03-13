@@ -31,7 +31,7 @@ where
   }
 
   /// <inheritdoc/>
-  public DbSQLCommand CreateDbCommandForFilter(AppEventCountQuery query)
+  public DbSQLCommand CreateDbCommandForFilter(AppEventPageQuery query)
   {
     DbSQLCommand result = new();
 

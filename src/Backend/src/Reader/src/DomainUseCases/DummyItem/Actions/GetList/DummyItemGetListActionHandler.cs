@@ -20,7 +20,7 @@ public class DummyItemGetListActionHandler(
 
     _logger.LogDebug("User name: {userName}", userName);
 
-    var totalCount = await _service.CountAsync(request.CountQuery, cancellationToken).ConfigureAwait(false);
+    var totalCount = await _service.CountAsync(request.PageQuery, cancellationToken).ConfigureAwait(false);
 
     List<DummyItemSingleDTO> items;
 

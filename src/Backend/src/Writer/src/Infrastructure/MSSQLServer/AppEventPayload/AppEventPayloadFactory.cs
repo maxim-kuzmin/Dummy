@@ -30,7 +30,7 @@ where
   }
 
   /// <inheritdoc/>
-  public DbSQLCommand CreateDbCommandForFilter(AppEventPayloadCountQuery query)
+  public DbSQLCommand CreateDbCommandForFilter(AppEventPayloadPageQuery query)
   {
     DbSQLCommand result = new();
 

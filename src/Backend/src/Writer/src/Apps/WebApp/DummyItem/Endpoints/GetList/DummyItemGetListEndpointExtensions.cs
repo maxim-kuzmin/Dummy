@@ -12,13 +12,13 @@ public static class DummyItemGetListEndpointExtensions
   /// <returns>Запрос действия по получению списка фиктивных предметов.</returns>
   public static DummyItemGetListActionQuery ToDummyItemGetListActionQuery(this DummyItemGetListEndpointRequest request)
   {
-    DummyItemCountQuery countQuery = new()
+    DummyItemPageQuery pageQuery = new()
     {
       Page = new QueryPageSection(request.CurrentPage, request.ItemsPerPage),
       Filter = new DummyItemQueryFilterSection(request.Query)
     };
 
-    return new(countQuery)
+    return new(pageQuery)
     {
       Order = new QueryOrderSection(nameof(DummyItemEntity.Id), false)
     };

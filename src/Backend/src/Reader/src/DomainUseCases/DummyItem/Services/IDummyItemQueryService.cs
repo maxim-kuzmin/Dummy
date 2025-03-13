@@ -11,7 +11,7 @@ public interface IDummyItemQueryService
   /// <param name="query">Запрос.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Количество сущностей.</returns>
-  Task<long> CountAsync(DummyItemCountQuery query, CancellationToken cancellationToken);
+  Task<long> CountAsync(DummyItemPageQuery query, CancellationToken cancellationToken);
 
   /// <summary>
   /// Получить асинхронно.

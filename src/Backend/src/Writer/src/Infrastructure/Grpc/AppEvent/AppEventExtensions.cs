@@ -39,13 +39,13 @@ public static class AppEventExtensions
   public static AppEventGetListActionQuery ToAppEventGetListActionQuery(
     this AppEventGetListActionRequest request)
   {
-    AppEventCountQuery countQuery = new()
+    AppEventPageQuery pageQuery = new()
     {
       Page = new QueryPageSection(request.Page.Number, request.Page.Size),
       Filter = new AppEventQueryFilterSection(request.Filter.FullTextSearchQuery)
     };
 
-    return new(countQuery)
+    return new(pageQuery)
     {
       Order = new QueryOrderSection(nameof(AppEventEntity.Id), false)
     };

@@ -37,13 +37,13 @@ public static class DummyItemExtensions
   public static DummyItemGetListActionQuery ToDummyItemGetListActionQuery(
     this DummyItemGetListActionRequest request)
   {
-    DummyItemCountQuery countQuery = new()
+    DummyItemPageQuery pageQuery = new()
     {
       Page = new QueryPageSection(request.Page.Number, request.Page.Size),
       Filter = new DummyItemQueryFilterSection(request.Filter.FullTextSearchQuery)
     };
 
-    return new(countQuery)
+    return new(pageQuery)
     {
       Order = new QueryOrderSection(nameof(DummyItemEntity.Id), false)
     };

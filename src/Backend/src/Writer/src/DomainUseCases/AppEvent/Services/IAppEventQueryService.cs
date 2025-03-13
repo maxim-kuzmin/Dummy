@@ -11,7 +11,7 @@ public interface IAppEventQueryService
   /// <param name="query">Запрос.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Количество сущностей.</returns>
-  Task<long> CountAsync(AppEventCountQuery query, CancellationToken cancellationToken);
+  Task<long> CountAsync(AppEventPageQuery query, CancellationToken cancellationToken);
 
   /// <summary>
   /// Получить асинхронно.

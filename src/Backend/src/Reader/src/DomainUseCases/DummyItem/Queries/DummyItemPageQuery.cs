@@ -1,9 +1,9 @@
 ﻿namespace Makc.Dummy.Reader.DomainUseCases.DummyItem.Queries;
 
 /// <summary>
-/// Запрос количества фиктивных предметов.
+/// Запрос страницы фиктивных предметов.
 /// </summary>
-public record DummyItemCountQuery : CountQuery
+public record DummyItemPageQuery : PageQuery
 {
   /// <summary>
   /// Фильтр.

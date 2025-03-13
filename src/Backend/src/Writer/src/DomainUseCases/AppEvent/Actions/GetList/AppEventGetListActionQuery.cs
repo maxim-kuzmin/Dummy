@@ -4,6 +4,6 @@
 /// Запрос действия по получению списка событий приложения.
 /// </summary>
 /// <param name="CountQuery">Запрос количества.</param>
-public record AppEventGetListActionQuery(AppEventCountQuery CountQuery) :
+public record AppEventGetListActionQuery(AppEventPageQuery CountQuery) :
   AppEventListQuery(CountQuery),
   IQuery<Result<AppEventListDTO>>;

@@ -8,7 +8,7 @@ public class AppEventPayloadQueryService(
   IAppEventPayloadFactory _factory) : IAppEventPayloadQueryService
 {
   /// <inheritdoc/>
-  public async Task<long> CountAsync(AppEventPayloadCountQuery query, CancellationToken cancellationToken)
+  public async Task<long> CountAsync(AppEventPayloadPageQuery query, CancellationToken cancellationToken)
   {
     var dbCommandForFilter = _factory.CreateDbCommandForFilter(query);
 
@@ -32,9 +32,9 @@ public class AppEventPayloadQueryService(
   /// <inheritdoc/>
   public Task<List<AppEventPayloadSingleDTO>> ListAsync(AppEventPayloadListQuery query, CancellationToken cancellationToken)
   {
-    var dbCommandForFilter = _factory.CreateDbCommandForFilter(query.CountQuery);
+    var dbCommandForFilter = _factory.CreateDbCommandForFilter(query.PageQuery);
 
-    var dbCommandForItems = _factory.CreateDbCommandForItems(dbCommandForFilter, query.Page);
+    var dbCommandForItems = _factory.CreateDbCommandForItems(dbCommandForFilter, query.PageQuery.Page);
 
     return _appDbQueryContext.GetListAsync<AppEventPayloadSingleDTO>(dbCommandForItems, cancellationToken);
   }

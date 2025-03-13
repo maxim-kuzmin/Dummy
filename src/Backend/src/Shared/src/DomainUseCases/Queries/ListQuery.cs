@@ -3,7 +3,7 @@
 /// <summary>
 /// Запрос списка.
 /// </summary>
-public record ListQuery : CountQuery
+public record ListQuery
 {
   /// <summary>
   /// Порядок.
