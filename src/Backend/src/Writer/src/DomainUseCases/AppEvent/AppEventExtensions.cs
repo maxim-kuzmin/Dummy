@@ -38,9 +38,9 @@ public static class AppEventExtensions
 
     if (field == string.Empty)
     {
-      field = nameof(AppEventEntity.Id);
+      field = AppEventSettings.DefaultQueryOrderSection.Field;
     }
 
-    return new(field, isDesc ?? true);
+    return new(field, isDesc ?? AppEventSettings.DefaultQueryOrderSection.IsDesc);
   }
 }

@@ -40,9 +40,9 @@ public static class DummyItemExtensions
 
     if (field == string.Empty)
     {
-      field = nameof(DummyItemEntity.Id);
+      field = DummyItemSettings.DefaultQueryOrderSection.Field;
     }
 
-    return new(field, isDesc ?? true);
+    return new(field, isDesc ?? DummyItemSettings.DefaultQueryOrderSection.IsDesc);
   }
 }

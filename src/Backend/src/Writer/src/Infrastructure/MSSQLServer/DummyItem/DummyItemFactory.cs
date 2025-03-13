@@ -66,7 +66,7 @@ where
 
     if (order == null)
     {
-      order = new QueryOrderSection(nameof(DummyItemEntity.Id), true);
+      order = DummyItemSettings.DefaultQueryOrderSection;
     }
 
     string orderByDirection = order.IsDesc ? "desc" : "asc";

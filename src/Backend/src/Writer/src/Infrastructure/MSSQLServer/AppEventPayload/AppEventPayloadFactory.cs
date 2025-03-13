@@ -67,7 +67,7 @@ where
 
     if (order == null)
     {
-      order = new QueryOrderSection(nameof(AppEventPayloadEntity.Id), true);
+      order = AppEventPayloadSettings.DefaultQueryOrderSection;
     }
 
     string orderByDirection = order.IsDesc ? "desc" : "asc";

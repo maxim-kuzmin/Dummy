@@ -3,7 +3,7 @@
 /// <summary>
 /// Запрос действия по получению списка полезных нагрузок события приложения.
 /// </summary>
-/// <param name="CountQuery">Запрос количества.</param>
-public record AppEventPayloadGetListActionQuery(AppEventPayloadPageQuery CountQuery) :
-  AppEventPayloadListQuery(CountQuery),
+/// <param name="PageQuery">Запрос страницы.</param>
+public record AppEventPayloadGetListActionQuery(AppEventPayloadPageQuery PageQuery) :
+  AppEventPayloadListQuery(PageQuery),
   IQuery<Result<AppEventPayloadListDTO>>;

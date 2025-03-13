@@ -40,9 +40,9 @@ public static class AppEventPayloadExtensions
 
     if (field == string.Empty)
     {
-      field = nameof(AppEventPayloadEntity.Id);
+      field = AppEventPayloadSettings.DefaultQueryOrderSection.Field;
     }
 
-    return new(field, isDesc ?? true);
+    return new(field, isDesc ?? AppEventPayloadSettings.DefaultQueryOrderSection.IsDesc);
   }
 }
