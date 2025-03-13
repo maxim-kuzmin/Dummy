@@ -6,16 +6,6 @@
 public static class AppEventExtensions
 {
   /// <summary>
-  /// Преобразовать к объекту передачи данных одиночного события приложения.
-  /// </summary>
-  /// <param name="entity">Сущность.</param>
-  /// <returns>Объект передачи данных одиночного события приложения.</returns>
-  public static AppEventSingleDTO ToAppEventSingleDTO(this AppEventEntity entity)
-  {
-    return new(entity.Id, entity.CreatedAt, entity.IsPublished, entity.Name);
-  }
-
-  /// <summary>
   /// Преобразовать к объекту передачи данных списка событий приложения.
   /// </summary>
   /// <param name="items">Элементы.</param>
@@ -42,5 +32,15 @@ public static class AppEventExtensions
     }
 
     return new(field, isDesc ?? AppEventSettings.DefaultQuerySortSection.IsDesc);
+  }
+
+  /// <summary>
+  /// Преобразовать к объекту передачи данных одиночного события приложения.
+  /// </summary>
+  /// <param name="entity">Сущность.</param>
+  /// <returns>Объект передачи данных одиночного события приложения.</returns>
+  public static AppEventSingleDTO ToAppEventSingleDTO(this AppEventEntity entity)
+  {
+    return new(entity.Id, entity.CreatedAt, entity.IsPublished, entity.Name);
   }
 }

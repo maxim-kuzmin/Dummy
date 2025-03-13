@@ -6,16 +6,6 @@
 public static class AppEventPayloadExtensions
 {
   /// <summary>
-  /// Преобразовать к объекту передачи данных одиночной полезной нагрузки события приложения.
-  /// </summary>
-  /// <param name="entity">Сущность.</param>
-  /// <returns>Объект передачи данных одиночной полезной нагрузки события приложения.</returns>
-  public static AppEventPayloadSingleDTO ToAppEventPayloadSingleDTO(this AppEventPayloadEntity entity)
-  {
-    return new(entity.Id, entity.AppEventId, entity.Data);
-  }
-
-  /// <summary>
   /// Преобразовать к объекту передачи данных списка полезных нагрузок события приложения.
   /// </summary>
   /// <param name="items">Элементы.</param>
@@ -44,5 +34,15 @@ public static class AppEventPayloadExtensions
     }
 
     return new(field, isDesc ?? AppEventPayloadSettings.DefaultQuerySortSection.IsDesc);
+  }
+
+  /// <summary>
+  /// Преобразовать к объекту передачи данных одиночной полезной нагрузки события приложения.
+  /// </summary>
+  /// <param name="entity">Сущность.</param>
+  /// <returns>Объект передачи данных одиночной полезной нагрузки события приложения.</returns>
+  public static AppEventPayloadSingleDTO ToAppEventPayloadSingleDTO(this AppEventPayloadEntity entity)
+  {
+    return new(entity.Id, entity.AppEventId, entity.Data);
   }
 }
