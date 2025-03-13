@@ -11,7 +11,8 @@ public class DummyItemDeleteActionHandler(
   IAppDbExecutionContext _appDbExecutionContext,
   IDummyItemModelFactory _factory,
   IDummyItemRepository _repository,
-  IDummyItemCommandService _service) : ICommandHandler<DummyItemDeleteActionCommand, Result>
+  IDummyItemCommandService _service) :
+  ICommandHandler<DummyItemDeleteActionCommand, Result>
 {
   /// <inheritdoc/>
   public async Task<Result> Handle(DummyItemDeleteActionCommand request, CancellationToken cancellationToken)

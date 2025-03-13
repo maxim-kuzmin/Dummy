@@ -3,5 +3,4 @@
 /// <summary>
 /// Запрос действия по получению полезной нагрузки события приложения.
 /// </summary>
-/// <param name="Id"></param>
-public record AppEventPayloadGetActionQuery(long Id) : IQuery<Result<AppEventPayloadSingleDTO>>;
+public record AppEventPayloadGetActionQuery : AppEventPayloadSingleQuery, IQuery<Result<AppEventPayloadSingleDTO>>;

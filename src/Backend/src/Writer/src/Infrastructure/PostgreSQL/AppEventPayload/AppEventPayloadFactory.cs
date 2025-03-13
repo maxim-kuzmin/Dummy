@@ -1,20 +1,45 @@
-﻿namespace Makc.Dummy.Writer.Infrastructure.PostgreSQL.AppEventPayload.Actions.GetList;
+﻿namespace Makc.Dummy.Writer.Infrastructure.PostgreSQL.AppEventPayload;
 
 /// <summary>
-/// Фабрика действия по получению списка фиктивных предметов.
+/// Фабрика полезной нагрузки события приложения.
 /// </summary>
 /// <param name="_appDbSettings">Настройки базы данных приложения.</param>
-public class AppEventPayloadGetListActionFactory(AppDbSettings _appDbSettings) : IAppEventPayloadGetListActionFactory
+public class AppEventPayloadFactory(AppDbSettings _appDbSettings) : IAppEventPayloadFactory
 {
   /// <inheritdoc/>
-  public DbSQLCommand CreateDbCommandForFilter(AppEventPayloadGetListActionQuery query)
+  public DbSQLCommand CreateDbCommand(AppEventPayloadSingleQuery query)
   {
     DbSQLCommand result = new();
 
     var sAppEventPayload = _appDbSettings.Entities.AppEventPayload;
 
-    if (!string.IsNullOrEmpty(query.Filter?.FullTextSearchQuery))
+    result.TextBuilder.Append($$"""
+select
+  "{{sAppEventPayload.ColumnForId}}" "Id",
+  "{{sAppEventPayload.ColumnForAppEventId}}" "AppEventId",
+  "{{sAppEventPayload.ColumnForData}}" "Data"
+from
+  "{{sAppEventPayload.Schema}}"."{{sAppEventPayload.Table}}"
+where
+  "{{sAppEventPayload.ColumnForId}}" = @Id
+""");
+
+    result.AddParameter("@Id", query.Id);
+
+    return result;
+  }
+
+  /// <inheritdoc/>
+  public DbSQLCommand CreateDbCommandForFilter(AppEventPayloadCountQuery query)
+  {
+    DbSQLCommand result = new();
+
+    var filter = query.Filter;
+
+    if (!string.IsNullOrEmpty(filter?.FullTextSearchQuery))
     {
+      var sAppEventPayload = _appDbSettings.Entities.AppEventPayload;
+
       result.TextBuilder.AppendLine($$"""
 where
   aep."{{sAppEventPayload.ColumnForId}}"::text ilike @FullTextSearchQuery
@@ -22,7 +47,7 @@ where
   aep."{{sAppEventPayload.ColumnForData}}" ilike @FullTextSearchQuery
 """);
 
-      result.AddParameter("@FullTextSearchQuery", $"%{query.Filter.FullTextSearchQuery}%");
+      result.AddParameter("@FullTextSearchQuery", $"%{filter.FullTextSearchQuery}%");
     }
 
     return result;
@@ -91,7 +116,7 @@ offset @PageNumber
 select
   count(*)
 from
-  "{{sAppEventPayload.Schema}}"."{{sAppEventPayload.Table}}" aep
+  "{{sAppEventPayload.Schema}}"."{{sAppEventPayload.Table}}"
 """);
 
     result.TextBuilder.AppendLine(dbCommandForFilter.ToString());

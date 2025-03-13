@@ -3,5 +3,4 @@
 /// <summary>
 /// Запрос действия по получению события приложения.
 /// </summary>
-/// <param name="Id"></param>
-public record AppEventGetActionQuery(long Id) : IQuery<Result<AppEventSingleDTO>>;
+public record AppEventGetActionQuery : AppEventSingleQuery, IQuery<Result<AppEventSingleDTO>>;

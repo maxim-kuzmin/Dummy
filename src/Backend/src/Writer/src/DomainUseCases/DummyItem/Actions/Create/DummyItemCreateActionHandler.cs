@@ -11,7 +11,8 @@ public class DummyItemCreateActionHandler(
   IAppDbExecutionContext _appDbExecutionContext,
   IDummyItemModelFactory _factory,
   IDummyItemRepository _repository,
-  IDummyItemCommandService _service) : ICommandHandler<DummyItemCreateActionCommand, Result<DummyItemSingleDTO>>
+  IDummyItemCommandService _service) :
+  ICommandHandler<DummyItemCreateActionCommand, Result<DummyItemSingleDTO>>
 {
   /// <inheritdoc/>
   public async Task<Result<DummyItemSingleDTO>> Handle(

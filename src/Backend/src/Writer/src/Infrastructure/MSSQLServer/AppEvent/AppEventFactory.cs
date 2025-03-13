@@ -1,28 +1,54 @@
-﻿namespace Makc.Dummy.Writer.Infrastructure.PostgreSQL.AppEvent.Actions.GetList;
+﻿namespace Makc.Dummy.Writer.Infrastructure.MSSQLServer.AppEvent;
 
 /// <summary>
-/// Фабрика действия по получению списка фиктивных предметов.
+/// Фабрика полезной нагрузки события приложения.
 /// </summary>
 /// <param name="_appDbSettings">Настройки базы данных приложения.</param>
-public class AppEventGetListActionFactory(AppDbSettings _appDbSettings) : IAppEventGetListActionFactory
+public class AppEventFactory(AppDbSettings _appDbSettings) : IAppEventFactory
 {
   /// <inheritdoc/>
-  public DbSQLCommand CreateDbCommandForFilter(AppEventGetListActionQuery query)
+  public DbSQLCommand CreateDbCommand(AppEventSingleQuery query)
   {
     DbSQLCommand result = new();
 
     var sAppEvent = _appDbSettings.Entities.AppEvent;
 
-    if (!string.IsNullOrEmpty(query.Filter?.FullTextSearchQuery))
-    {
-      result.TextBuilder.AppendLine($$"""
+    result.TextBuilder.Append($$"""
+select
+  "{{sAppEvent.ColumnForId}}" "Id",
+  "{{sAppEvent.ColumnForCreatedAt}}" "CreatedAt",
+  "{{sAppEvent.ColumnForIsPublished}}" "IsPublished",
+  "{{sAppEvent.ColumnForName}}" "Name"
+from
+  "{{sAppEvent.Schema}}"."{{sAppEvent.Table}}"
 where
-  ae."{{sAppEvent.ColumnForId}}"::text ilike @FullTextSearchQuery
-  or
-  ae."{{sAppEvent.ColumnForName}}" ilike @FullTextSearchQuery
+  "{{sAppEvent.ColumnForId}}" = @Id
 """);
 
-      result.AddParameter("@FullTextSearchQuery", $"%{query.Filter.FullTextSearchQuery}%");
+    result.AddParameter("@Id", query.Id);
+
+    return result;
+  }
+
+  /// <inheritdoc/>
+  public DbSQLCommand CreateDbCommandForFilter(AppEventCountQuery query)
+  {
+    DbSQLCommand result = new();
+
+    var filter = query.Filter;
+
+    if (!string.IsNullOrEmpty(filter?.FullTextSearchQuery))
+    {
+      var sAppEvent = _appDbSettings.Entities.AppEvent;
+
+      result.TextBuilder.AppendLine($$"""
+where
+  ae."{{sAppEvent.ColumnForId}}" like @FullTextSearchQuery
+  or
+  ae."{{sAppEvent.ColumnForName}}" like @FullTextSearchQuery
+""");
+
+      result.AddParameter("@FullTextSearchQuery", $"%{filter.FullTextSearchQuery}%");
     }
 
     return result;
@@ -56,20 +82,22 @@ order by
 
     if (page != null)
     {
-      if (page.Size > 0)
-      {
-        result.TextBuilder.AppendLine($$"""        
-limit @PageSize        
-""");
-
-        result.AddParameter("@PageSize", page.Size);
-      }
 
       if (page.Number > 0)
       {
         result.TextBuilder.AppendLine($$"""        
-offset @PageNumber
+offset @PageNumber rows
 """);
+
+        if (page.Size > 0)
+        {
+          result.TextBuilder.AppendLine($$"""        
+fetch next @PageSize rows only        
+""");
+
+          result.AddParameter("@PageSize", page.Size);
+        }
+
 
         result.AddParameter("@PageNumber", (page.Number - 1) * page.Size);
       }
@@ -90,9 +118,9 @@ offset @PageNumber
 
     result.TextBuilder.AppendLine($$"""
 select
-  count(*)
+  count_big(*)
 from
-  "{{sAppEvent.Schema}}"."{{sAppEvent.Table}}" ae
+  "{{sAppEvent.Schema}}"."{{sAppEvent.Table}}"
 """);
 
     result.TextBuilder.AppendLine(dbCommandForFilter.ToString());

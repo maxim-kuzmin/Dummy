@@ -9,7 +9,8 @@
 public class DummyItemGetActionHandler(  
   AppSession _appSession,
   ILogger<DummyItemGetActionHandler> _logger,
-  IDummyItemQueryService _service) : IQueryHandler<DummyItemGetActionQuery, Result<DummyItemSingleDTO>>
+  IDummyItemQueryService _service) :
+  IQueryHandler<DummyItemGetActionQuery, Result<DummyItemSingleDTO>>
 {
   /// <inheritdoc/>
   public async Task<Result<DummyItemSingleDTO>> Handle(

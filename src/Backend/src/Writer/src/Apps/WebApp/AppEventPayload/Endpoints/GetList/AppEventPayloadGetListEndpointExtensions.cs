@@ -13,8 +13,15 @@ public static class AppEventPayloadGetListEndpointExtensions
   public static AppEventPayloadGetListActionQuery ToAppEventPayloadGetListActionQuery(
     this AppEventPayloadGetListEndpointRequest request)
   {
-    return new(
-      new QueryPageSection(request.CurrentPage, request.ItemsPerPage),
-      new AppEventPayloadQueryFilterSection(request.Query));
+    AppEventPayloadCountQuery countQuery = new()
+    {
+      Page = new QueryPageSection(request.CurrentPage, request.ItemsPerPage),
+      Filter = new AppEventPayloadQueryFilterSection(request.Query)
+    };
+
+    return new(countQuery)
+    {
+      Order = new QueryOrderSection(nameof(AppEventPayloadEntity.Id), false)
+    };
   }
 }

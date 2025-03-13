@@ -3,36 +3,22 @@
 /// <summary>
 /// Обработчик действия по получению списка событий приложения.
 /// </summary>
-/// <param name="_appDbQueryContext">Контекст запроса базы данных приложения.</param>
-/// <param name="_factory">Фабрика.</param>
-public class AppEventGetListActionHandler(
-  IAppDbQueryContext _appDbQueryContext,
-  IAppEventGetListActionFactory _factory) : IQueryHandler<AppEventGetListActionQuery, Result<AppEventListDTO>>
+/// <param name="_service">Сервис.</param>
+public class AppEventGetListActionHandler(IAppEventQueryService _service) :
+  IQueryHandler<AppEventGetListActionQuery, Result<AppEventListDTO>>
 {
   /// <inheritdoc/>
   public async Task<Result<AppEventListDTO>> Handle(
     AppEventGetListActionQuery request,
     CancellationToken cancellationToken)
   {
-    var dbCommandForFilter = _factory.CreateDbCommandForFilter(request);
-
-    var dbCommandForTotalCount = _factory.CreateDbCommandForTotalCount(dbCommandForFilter);
-
-    var taskForTotalCount = _appDbQueryContext.GetListAsync<long>(dbCommandForTotalCount, cancellationToken);
-
-    var dataForTotalCount = await taskForTotalCount.ConfigureAwait(false);
-
-    var totalCount = dataForTotalCount[0];
+    var totalCount = await _service.CountAsync(request.CountQuery, cancellationToken).ConfigureAwait(false);
 
     List<AppEventSingleDTO> items;
 
     if (totalCount > 0)
     {
-      var dbCommandForItems = _factory.CreateDbCommandForItems(dbCommandForFilter, request.Page);
-
-      var taskForItems = _appDbQueryContext.GetListAsync<AppEventSingleDTO>(dbCommandForItems, cancellationToken);
-
-      items = await taskForItems.ConfigureAwait(false);
+      items = await _service.ListAsync(request, cancellationToken).ConfigureAwait(false);
     }
     else
     {

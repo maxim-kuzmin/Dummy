@@ -113,7 +113,7 @@ offset @PageNumber
 select
   count(*)
 from
-  "{{sDummyItem.Schema}}"."{{sDummyItem.Table}}" di
+  "{{sDummyItem.Schema}}"."{{sDummyItem.Table}}"
 """);
 
     result.TextBuilder.AppendLine(dbCommandForFilter.ToString());

@@ -19,7 +19,10 @@ public static class AppEventExtensions
 
   public static AppEventGetActionQuery ToAppEventGetActionQuery(this AppEventGetActionRequest request)
   {
-    return new(request.Id);
+    return new()
+    {
+      Id = request.Id
+    };
   }
 
   public static AppEventGetActionReply ToAppEventGetActionReply(this AppEventSingleDTO dto)
@@ -36,7 +39,16 @@ public static class AppEventExtensions
   public static AppEventGetListActionQuery ToAppEventGetListActionQuery(
     this AppEventGetListActionRequest request)
   {
-    return new(new QueryPageSection(request.Page.Number, request.Page.Size), new(request.Filter.FullTextSearchQuery));
+    AppEventCountQuery countQuery = new()
+    {
+      Page = new QueryPageSection(request.Page.Number, request.Page.Size),
+      Filter = new AppEventQueryFilterSection(request.Filter.FullTextSearchQuery)
+    };
+
+    return new(countQuery)
+    {
+      Order = new QueryOrderSection(nameof(AppEventEntity.Id), false)
+    };
   }
 
   public static AppEventGetListActionReply ToAppEventGetListActionGrpcReply(this AppEventListDTO dto)
