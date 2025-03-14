@@ -1,9 +1,10 @@
-﻿namespace Makc.Dummy.Reader.DomainUseCases.DummyItem;
+﻿namespace Makc.Dummy.Shared.DomainUseCases.Entity;
 
 /// <summary>
-/// Интерфейс репозитория фиктивного предмета.
+/// Интерфейс репозитория сущности.
 /// </summary>
-public interface IDummyItemRepository
+/// <typeparam name="TEntity">Тип сущности.</typeparam>
+public interface IEntityRepository<TEntity>
 {
   /// <summary>
   /// Добавить асинхронно.
@@ -11,7 +12,7 @@ public interface IDummyItemRepository
   /// <param name="entity">Сущность.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Добавленная сущность.</returns>
-  Task<DummyItemEntity> AddAsync(DummyItemEntity entity, CancellationToken cancellationToken);
+  Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken);
 
   /// <summary>
   /// Удалить асинхронно.
@@ -19,7 +20,7 @@ public interface IDummyItemRepository
   /// <param name="entity">Удаляемая сущность.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Задача.</returns>
-  Task DeleteAsync(DummyItemEntity entity, CancellationToken cancellationToken);
+  Task DeleteAsync(TEntity entity, CancellationToken cancellationToken);
 
   /// <summary>
   /// Получить по идентификатору объекта асинхронно.
@@ -27,7 +28,7 @@ public interface IDummyItemRepository
   /// <param name="objectId">Идентификатор объекта.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Запрошенная сущность.</returns>
-  Task<DummyItemEntity> GetByObjectIdAsync(string objectId, CancellationToken cancellationToken);
+  Task<TEntity?> GetByObjectIdAsync(string objectId, CancellationToken cancellationToken);
 
   /// <summary>
   /// Обновить асинхронно.
@@ -35,5 +36,5 @@ public interface IDummyItemRepository
   /// <param name="entity">Сущность.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Задача.</returns>
-  Task UpdateAsync(DummyItemEntity entity, CancellationToken cancellationToken);
+  Task UpdateAsync(TEntity entity, CancellationToken cancellationToken);
 }

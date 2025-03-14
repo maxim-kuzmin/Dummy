@@ -10,7 +10,7 @@
 public class DummyItemUpdateActionHandler(
   IAppDbExecutionContext _appDbExecutionContext,
   IDummyItemFactory _factory,
-  IDummyItemRepository _repository,
+  IDummyItemEntityRepository _repository,
   IDummyItemCommandService _service) : ICommandHandler<DummyItemUpdateActionCommand, Result<DummyItemSingleDTO>>
 {
   /// <inheritdoc/>

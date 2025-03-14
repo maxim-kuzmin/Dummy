@@ -1,7 +1,7 @@
 ﻿global using Ardalis.GuardClauses;
 global using Makc.Dummy.Reader.DomainModel.DummyItem;
-global using Makc.Dummy.Reader.DomainUseCases.DummyItem;
 global using Makc.Dummy.Reader.DomainUseCases.DummyItem.DTOs;
+global using Makc.Dummy.Reader.DomainUseCases.DummyItem.Entity;
 global using Makc.Dummy.Reader.DomainUseCases.DummyItem.Queries;
 global using Makc.Dummy.Reader.DomainUseCases.DummyItem.Services;
 global using Makc.Dummy.Reader.Infrastructure.MongoDB.DummyItem.Entity;
