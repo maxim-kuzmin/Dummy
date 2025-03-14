@@ -3,7 +3,7 @@
 /// <summary>
 /// Настройки базы данных сущности полезной нагрузки события приложения.
 /// </summary>
-public record AppEventPayloadEntityDbSettings : AppEventPayloadEntityDbSettingsBase
+public record AppEventPayloadEntityDbSettings : AppEventPayloadEntityDbSQLSettings
 {
   /// <summary>
   /// Конструктор.

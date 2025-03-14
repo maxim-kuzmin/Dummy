@@ -1,4 +1,4 @@
-﻿namespace Makc.Dummy.Writer.Infrastructure.MSSQLServer.App.Db;
+﻿namespace Makc.Dummy.Reader.Infrastructure.MongoDB.App.Db;
 
 /// <summary>
 /// Настройки базы данных приложения.
@@ -10,7 +10,6 @@ public record AppDbSettings : AppDbSQLSettings
   /// </summary>
   public AppDbSettings()
   {
-    Schema = "writer";
-    Entities = new AppDbSettingsEntities(Schema);    
+    Entities = new AppDbSettingsEntities();    
   }
 }

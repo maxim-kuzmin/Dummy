@@ -3,7 +3,7 @@
 /// <summary>
 /// Настройки базы данных сущности фиктивного предмета.
 /// </summary>
-public record DummyItemEntityDbSettings : DummyItemEntityDbSettingsBase
+public record DummyItemEntityDbSettings : DummyItemEntityDbSQLSettings
 {
   /// <summary>
   /// Конструктор.

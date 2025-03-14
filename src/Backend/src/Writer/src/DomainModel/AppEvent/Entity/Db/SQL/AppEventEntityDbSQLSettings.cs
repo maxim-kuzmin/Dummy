@@ -1,9 +1,9 @@
-﻿namespace Makc.Dummy.Writer.DomainModel.DummyItem.Entity.Db;
+﻿namespace Makc.Dummy.Writer.DomainModel.AppEvent.Entity.Db.SQL;
 
 /// <summary>
-/// Настройки базы данных сущности фиктивного предмета.
+/// Настройки базы данных SQL сущности события приложения.
 /// </summary>
-public abstract record DummyItemEntityDbSettings : DummyItemEntitySettings
+public abstract record AppEventEntityDbSQLSettings : AppEventEntitySettings
 {
   /// <summary>
   /// Столбец для токена конкуренции.
@@ -11,9 +11,19 @@ public abstract record DummyItemEntityDbSettings : DummyItemEntitySettings
   public string ColumnForConcurrencyToken { get; protected set; } = string.Empty;
 
   /// <summary>
+  /// Столбец для даты создания.
+  /// </summary>
+  public string ColumnForCreatedAt { get; protected set; } = string.Empty;
+
+  /// <summary>
   /// Столбец для идентификатора.
   /// </summary>
   public string ColumnForId { get; protected set; } = string.Empty;
+
+  /// <summary>
+  /// Столбец для признака опубликованности.
+  /// </summary>
+  public string ColumnForIsPublished { get; protected set; } = string.Empty;
 
   /// <summary>
   /// Столбец для имени.
@@ -34,9 +44,4 @@ public abstract record DummyItemEntityDbSettings : DummyItemEntitySettings
   /// Таблица.
   /// </summary>
   public string Table { get; protected set; } = string.Empty;
-  
-  /// <summary>
-  /// Уникальный индекс для имени.
-  /// </summary>
-  public string UniqueIndexForName { get; protected set; } = string.Empty;
 }

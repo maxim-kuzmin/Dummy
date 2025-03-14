@@ -19,6 +19,8 @@ public static class AppExtensions
     AppConfigOptionsDbMongoDBSection? appConfigOptionsMongoDBSection,
     IConfiguration configuration)
   {
+    services.AddSingleton(x => new AppDbSettings());
+
     Guard.Against.Null(appConfigOptionsMongoDBSection, nameof(appConfigOptionsMongoDBSection));
 
     var connectionStringTemplate = configuration.GetConnectionString(

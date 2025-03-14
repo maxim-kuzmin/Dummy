@@ -1,16 +1,21 @@
-﻿namespace Makc.Dummy.Reader.Infrastructure.MongoDB.DummyItem.Entity;
+﻿using System.Linq.Expressions;
+using Makc.Dummy.Shared.DomainUseCases.Query;
+
+namespace Makc.Dummy.Reader.Infrastructure.MongoDB.DummyItem.Entity;
 
 /// <summary>
 /// Репозиторий сущности фиктивного предмета.
 /// </summary>
+/// <param name="appDbSettings">Настройки базы данных приложения.</param>
 /// <param name="clientSessionHandle">Описатель сессии клиента.</param>
 /// <param name="database">База данных.</param>
 public class DummyItemEntityRepository(
+  AppDbSettings appDbSettings,
   IClientSessionHandle clientSessionHandle,
   IMongoDatabase database) :
   EntityRepository<DummyItemEntity>(
     clientSessionHandle,
-    database.GetCollection<DummyItemEntity>(DummyItemSettings.CollectionName)),
+    database.GetCollection<DummyItemEntity>(appDbSettings.Entities.DummyItem.Collection)),
   IDummyItemEntityRepository
 {
   /// <inheritdoc/>
@@ -43,9 +48,24 @@ public class DummyItemEntityRepository(
   {
     var filter = Builders<DummyItemEntity>.Filter.Empty;
 
-    var task = Collection.Find(ClientSessionHandle, filter).ToListAsync(cancellationToken);
+    var found = Collection.Find(ClientSessionHandle, filter);
 
-    var result = await task.ConfigureAwait(false);
+    var sort = query.Sort ?? DummyItemSettings.DefaultQuerySortSection;
+
+    Expression<Func<DummyItemEntity, object>> field;
+
+    if (sort.Field.EqualsToSortField(DummyItemSettings.SortFieldForId))
+    {
+      field = x => x.Id;
+    }
+    else
+    {
+      throw new NotImplementedException();
+    }
+
+    found = sort.IsDesc ? found.SortByDescending(field) : found.SortBy(field);
+
+    var result = await found.ToListAsync(cancellationToken).ConfigureAwait(false);
 
     return result;
   }

@@ -1,9 +1,9 @@
-﻿namespace Makc.Dummy.Writer.DomainModel.AppEventPayload.Entity.Db;
+﻿namespace Makc.Dummy.Writer.DomainModel.AppEventPayload.Entity.Db.SQL;
 
 /// <summary>
-/// Настройки базы данных сущности полезной нагрузки события приложения.
+/// Настройки базы данных SQL сущности полезной нагрузки события приложения.
 /// </summary>
-public abstract record AppEventPayloadEntityDbSettings : AppEventPayloadEntitySettings
+public abstract record AppEventPayloadEntityDbSQLSettings : AppEventPayloadEntitySettings
 {
   /// <summary>
   /// Столбец для токена конкуренции.

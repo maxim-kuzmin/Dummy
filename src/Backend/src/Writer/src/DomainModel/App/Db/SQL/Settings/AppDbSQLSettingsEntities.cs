@@ -1,22 +1,22 @@
-﻿namespace Makc.Dummy.Writer.DomainModel.App.Db.Settings;
+﻿namespace Makc.Dummy.Writer.DomainModel.App.Db.SQL.Settings;
 
 /// <summary>
 /// Сущности в настройках базы данных приложения.
 /// </summary>
-public abstract record AppDbSettingsEntities
+public abstract record AppDbSQLSettingsEntities
 {
   /// <summary>
   /// Событие приложения.
   /// </summary>
-  public AppEventEntityDbSettings AppEvent { get; protected set; } = null!;
+  public AppEventEntityDbSQLSettings AppEvent { get; protected set; } = null!;
 
   /// <summary>
   /// Полезная нагрузка события приложения.
   /// </summary>
-  public AppEventPayloadEntityDbSettings AppEventPayload { get; protected set; } = null!;
+  public AppEventPayloadEntityDbSQLSettings AppEventPayload { get; protected set; } = null!;
 
   /// <summary>
   /// Фиктивный предмет.
   /// </summary>
-  public DummyItemEntityDbSettings DummyItem { get; protected set; } = null!;
+  public DummyItemEntityDbSQLSettings DummyItem { get; protected set; } = null!;
 }

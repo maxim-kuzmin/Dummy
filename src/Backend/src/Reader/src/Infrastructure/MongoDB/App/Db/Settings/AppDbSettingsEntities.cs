@@ -1,4 +1,4 @@
-﻿namespace Makc.Dummy.Writer.Infrastructure.MSSQLServer.App.Db.Settings;
+﻿namespace Makc.Dummy.Reader.Infrastructure.MongoDB.App.Db.Settings;
 
 /// <summary>
 /// Сущности в настройках базы данных приложения.
@@ -9,10 +9,8 @@ public record AppDbSettingsEntities : AppDbSQLSettingsEntities
   /// Конструктор.
   /// </summary>
   /// <param name="schema">Схема.</param>
-  public AppDbSettingsEntities(string schema)
+  public AppDbSettingsEntities()
   {
-    AppEvent = new AppEventEntityDbSettings(schema);
-    AppEventPayload = new AppEventPayloadEntityDbSettings(schema, AppEvent.Table);
-    DummyItem = new DummyItemEntityDbSettings(schema);
+    DummyItem = new DummyItemEntityDbSettings();
   }
 }

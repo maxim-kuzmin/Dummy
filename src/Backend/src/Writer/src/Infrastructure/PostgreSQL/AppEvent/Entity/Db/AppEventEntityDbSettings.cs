@@ -3,7 +3,7 @@
 /// <summary>
 /// Настройки базы данных сущности события приложения.
 /// </summary>
-public record AppEventEntityDbSettings : AppEventEntityDbSettingsBase
+public record AppEventEntityDbSettings : AppEventEntityDbSQLSettings
 {
   /// <summary>
   /// Конструктор.

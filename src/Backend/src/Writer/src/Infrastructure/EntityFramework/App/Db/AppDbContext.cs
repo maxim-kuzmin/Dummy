@@ -1,4 +1,6 @@
-﻿namespace Makc.Dummy.Writer.Infrastructure.EntityFramework.App.Db;
+﻿using Makc.Dummy.Writer.DomainModel.App.Db.SQL;
+
+namespace Makc.Dummy.Writer.Infrastructure.EntityFramework.App.Db;
 
 /// <summary>
 /// Контекст базы данных приложения. При старте приложения перед регистрацией класса в контейнере DI нужно обязательно
@@ -9,7 +11,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 {
   private static readonly Lock _initLock = new();
 
-  private static AppDbSettings? _appDbSettings = null; 
+  private static AppDbSQLSettings? _appDbSettings = null; 
 
   /// <summary>
   /// Событие приложения.
@@ -30,7 +32,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
   /// Получить настройки базы данных приложения.
   /// </summary>
   /// <returns>Настройки базы данных приложения.</returns>
-  public static AppDbSettings GetAppDbSettings()
+  public static AppDbSQLSettings GetAppDbSettings()
   {
     return Guard.Against.Null(_appDbSettings, parameterName: nameof(_appDbSettings));
   }
@@ -40,7 +42,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
   /// Необходимо вызвать этот метод один раз при старте приложения перед регистрацией класса в контейнере DI.
   /// </summary>
   /// <param name="appDbSettings">Настройки базы данных приложения.</param>
-  public static void Init(AppDbSettings appDbSettings)
+  public static void Init(AppDbSQLSettings appDbSettings)
   {
     lock (_initLock)
     {

@@ -1,4 +1,6 @@
-﻿namespace Makc.Dummy.Writer.Infrastructure.EntityFramework.App;
+﻿using Makc.Dummy.Writer.DomainModel.App.Db.SQL;
+
+namespace Makc.Dummy.Writer.Infrastructure.EntityFramework.App;
 
 /// <summary>
 /// Расширения приложения.
@@ -10,16 +12,16 @@ public static class AppExtensions
   /// </summary>
   /// <param name="services">Сервисы.</param>
   /// <param name="logger">Логгер.</param>
-  /// <param name="appDbSettings">Настройки базы данных приложения.</param>
+  /// <param name="appDbSQLSettings">Настройки базы данных SQL приложения.</param>
   /// <param name="appConfigOptionsORM">ORM в параметрах конфигурации приложения.</param>
   /// <returns>Сервисы.</returns>
   public static IServiceCollection AddAppInfrastructureTiedToEntityFramework(
     this IServiceCollection services,
     ILogger logger,
-    AppDbSettings appDbSettings,
+    AppDbSQLSettings appDbSQLSettings,
     AppConfigOptionsORMEnum appConfigOptionsORM)
   {
-    AppDbContext.Init(appDbSettings);
+    AppDbContext.Init(appDbSQLSettings);
 
     services.AddScoped<IAppDbExecutionContext, AppDbExecutionContext>();
 

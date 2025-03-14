@@ -1,9 +1,15 @@
 ﻿global using Ardalis.GuardClauses;
+global using Makc.Dummy.Reader.DomainModel.App.Db.NoSQL;
+global using Makc.Dummy.Reader.DomainModel.App.Db.NoSQL.Settings;
 global using Makc.Dummy.Reader.DomainModel.DummyItem;
+global using Makc.Dummy.Reader.DomainModel.DummyItem.Entity.Db.NoSQL;
+global using Makc.Dummy.Reader.DomainUseCases.DummyItem;
 global using Makc.Dummy.Reader.DomainUseCases.DummyItem.Entity;
 global using Makc.Dummy.Reader.DomainUseCases.DummyItem.Queries;
-global using Makc.Dummy.Reader.DomainUseCases.DummyItem.Services;
+global using Makc.Dummy.Reader.Infrastructure.MongoDB.App.Db;
+global using Makc.Dummy.Reader.Infrastructure.MongoDB.App.Db.Settings;
 global using Makc.Dummy.Reader.Infrastructure.MongoDB.DummyItem.Entity;
+global using Makc.Dummy.Reader.Infrastructure.MongoDB.DummyItem.Entity.Db;
 global using Makc.Dummy.Shared.Core.App.Config.Options.Sections.Db.MongoDB;
 global using Makc.Dummy.Shared.Infrastructure.MongoDB;
 global using Makc.Dummy.Shared.Infrastructure.MongoDB.Entity;

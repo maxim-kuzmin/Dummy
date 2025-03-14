@@ -1,4 +1,6 @@
-﻿namespace Makc.Dummy.Writer.Apps.OutboxCleanerApp.App;
+﻿using Makc.Dummy.Writer.DomainModel.App.Db.SQL;
+
+namespace Makc.Dummy.Writer.Apps.OutboxCleanerApp.App;
 
 /// <summary>
 /// Расширения приложения.
@@ -49,13 +51,13 @@ public static class AppExtensions
       .AddAppInfrastructureTiedToCore(logger)
       .AddAppInfrastructureTiedToDapper(logger, appConfigOptions.DbQueryORM);
 
-    AppDbSettings appDbSettings;
+    AppDbSQLSettings appDbSQLSettings;
 
     switch (appConfigOptions.Db)
     {
       case AppConfigOptionsDbEnum.MSSQLServer:
         services
-          .AddAppInfrastructureTiedToMSSQLServer(logger, out appDbSettings)
+          .AddAppInfrastructureTiedToMSSQLServer(logger, out appDbSQLSettings)
           .AddAppInfrastructureTiedToEntityFrameworkForMSSQLServer(
             logger,
             appConfigOptions.MSSQLServer,
@@ -67,7 +69,7 @@ public static class AppExtensions
         break;
       case AppConfigOptionsDbEnum.PostgreSQL:
         services
-          .AddAppInfrastructureTiedToPostgreSQL(logger, out appDbSettings)
+          .AddAppInfrastructureTiedToPostgreSQL(logger, out appDbSQLSettings)
           .AddAppInfrastructureTiedToEntityFrameworkForPostgreSQL(
             logger,
             appConfigOptions.PostgreSQL,
@@ -82,7 +84,7 @@ public static class AppExtensions
     }
 
     services
-      .AddAppInfrastructureTiedToEntityFramework(logger, appDbSettings, appConfigOptions.DbQueryORM);
+      .AddAppInfrastructureTiedToEntityFramework(logger, appDbSQLSettings, appConfigOptions.DbQueryORM);
 
     services.AddHostedService<AppService>();
 

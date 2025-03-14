@@ -1,5 +1,7 @@
 ﻿global using Ardalis.SharedKernel;
+global using Makc.Dummy.Reader.DomainModel.App.Db.NoSQL.Settings;
 global using Makc.Dummy.Reader.DomainModel.DummyItem;
+global using Makc.Dummy.Reader.DomainModel.DummyItem.Entity.Db.NoSQL;
 global using Makc.Dummy.Reader.DomainModel.DummyItem.Enums;
 global using Makc.Dummy.Shared.Core.App;
 global using Makc.Dummy.Shared.DomainModel.Aggregate;
