@@ -1,7 +1,4 @@
-﻿using System.Linq.Expressions;
-using Makc.Dummy.Shared.DomainUseCases.Query;
-
-namespace Makc.Dummy.Reader.Infrastructure.MongoDB.DummyItem.Entity;
+﻿namespace Makc.Dummy.Reader.Infrastructure.MongoDB.DummyItem.Entity;
 
 /// <summary>
 /// Репозиторий сущности фиктивного предмета.
@@ -21,7 +18,7 @@ public class DummyItemEntityRepository(
   /// <inheritdoc/>
   public Task<long> CountAsync(DummyItemPageQuery query, CancellationToken cancellationToken)
   {
-    var filter = Builders<DummyItemEntity>.Filter.Empty;
+    var filter = CreateFilter(query.Filter);
 
     return Collection.CountDocumentsAsync(ClientSessionHandle, filter, cancellationToken: cancellationToken);
   }
@@ -46,8 +43,8 @@ public class DummyItemEntityRepository(
   /// <inheritdoc/>
   public async Task<List<DummyItemEntity>> ListAsync(DummyItemListQuery query, CancellationToken cancellationToken)
   {
-    var filter = Builders<DummyItemEntity>.Filter.Empty;
-
+    var filter = CreateFilter(query.PageQuery.Filter);
+    
     var found = Collection.Find(ClientSessionHandle, filter);
 
     var sort = query.Sort ?? DummyItemSettings.DefaultQuerySortSection;
@@ -63,9 +60,40 @@ public class DummyItemEntityRepository(
       throw new NotImplementedException();
     }
 
+    var page = query.PageQuery.Page;
+
+    if (page != null)
+    {
+      if (page.Number > 0)
+      {
+        found = found.Skip((page.Number - 1) * page.Size);
+      }
+
+      if (page.Size > 0)
+      {
+        found = found.Limit(page.Size);
+      }
+    }
+
     found = sort.IsDesc ? found.SortByDescending(field) : found.SortBy(field);
 
     var result = await found.ToListAsync(cancellationToken).ConfigureAwait(false);
+
+    return result;
+  }
+
+  private static FilterDefinition<DummyItemEntity> CreateFilter(DummyItemQueryFilterSection? filterSection)
+  {
+    var builder = Builders<DummyItemEntity>.Filter;
+
+    var result = Builders<DummyItemEntity>.Filter.Empty;
+
+    if (!string.IsNullOrEmpty(filterSection?.FullTextSearchQuery))
+    {
+      Regex re = new($".*{filterSection.FullTextSearchQuery}.*", RegexOptions.IgnoreCase);
+
+      result = builder.Or(builder.Regex(x => x.Id.ToString(), re), builder.Regex(x => x.Name, re));
+    }
 
     return result;
   }
