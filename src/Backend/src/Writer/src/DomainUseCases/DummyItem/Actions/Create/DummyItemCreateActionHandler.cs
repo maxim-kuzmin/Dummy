@@ -10,7 +10,7 @@
 public class DummyItemCreateActionHandler(
   IAppDbExecutionContext _appDbExecutionContext,
   IDummyItemModelFactory _factory,
-  IDummyItemRepository _repository,
+  IDummyItemEntityRepository _repository,
   IDummyItemCommandService _service) :
   ICommandHandler<DummyItemCreateActionCommand, Result<DummyItemSingleDTO>>
 {

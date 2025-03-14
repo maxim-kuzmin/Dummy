@@ -9,7 +9,7 @@
 public class AppEventPayloadDeleteActionHandler(
   IAppDbExecutionContext _appDbExecutionContext,
   IAppEventPayloadModelFactory _factory,
-  IAppEventPayloadRepository _repository) :
+  IAppEventPayloadEntityRepository _repository) :
   ICommandHandler<AppEventPayloadDeleteActionCommand, Result>
 {
   /// <inheritdoc/>

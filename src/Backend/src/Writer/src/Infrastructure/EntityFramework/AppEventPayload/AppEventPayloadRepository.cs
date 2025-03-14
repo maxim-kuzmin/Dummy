@@ -5,6 +5,6 @@
 /// </summary>
 public class AppEventPayloadRepository(AppDbContext dbContext) :
   AppRepositoryBase<AppEventPayloadEntity>(dbContext),
-  IAppEventPayloadRepository
+  IAppEventPayloadEntityRepository
 {
 }

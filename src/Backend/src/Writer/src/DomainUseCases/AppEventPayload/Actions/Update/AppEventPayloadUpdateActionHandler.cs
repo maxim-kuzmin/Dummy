@@ -9,7 +9,7 @@
 public class AppEventPayloadUpdateActionHandler(
   IAppDbExecutionContext _appDbExecutionContext,
   IAppEventPayloadModelFactory _factory,
-  IAppEventPayloadRepository _repository) :
+  IAppEventPayloadEntityRepository _repository) :
   ICommandHandler<AppEventPayloadUpdateActionCommand, Result<AppEventPayloadSingleDTO>>
 {
   /// <inheritdoc/>

@@ -9,7 +9,7 @@
 public class AppEventCreateActionHandler(
   IAppDbExecutionContext _appDbExecutionContext,
   IAppEventModelFactory _factory,
-  IAppEventRepository _repository) :
+  IAppEventEntityRepository _repository) :
   ICommandHandler<AppEventCreateActionCommand, Result<AppEventSingleDTO>>
 {
   /// <inheritdoc/>
