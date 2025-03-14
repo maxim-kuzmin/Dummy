@@ -4,22 +4,28 @@
 /// Репозиторий сущности.
 /// </summary>
 /// <typeparam name="TEntity">Тип сущности.</typeparam>
-/// <param name="_clientSessionHandle">Описатель сессии клиента.</param>
-/// <param name="_collection">Коллекция.</param>
+/// <param name="clientSessionHandle">Описатель сессии клиента.</param>
+/// <param name="collection">Коллекция.</param>
 public class EntityRepository<TEntity>(
-  IClientSessionHandle _clientSessionHandle,
-  IMongoCollection<TEntity> _collection
-  ) : IEntityRepository<TEntity> where TEntity: EntityBaseWithObjectIdAsStringPrimaryKey
+  IClientSessionHandle clientSessionHandle,
+  IMongoCollection<TEntity> collection) :
+  IEntityRepository<TEntity>
+  where TEntity : EntityBaseWithObjectIdAsStringPrimaryKey
 {
+  /// <summary>
+  /// Описатель сессии клиента.
+  /// </summary>
+  protected IClientSessionHandle ClientSessionHandle { get; } = clientSessionHandle;
+
   /// <summary>
   /// Коллекция.
   /// </summary>
-  protected virtual IMongoCollection<TEntity> Collection => _collection;
+  protected IMongoCollection<TEntity> Collection { get; } = collection;
 
   /// <inheritdoc/>
   public async Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken)
   {
-    var task = Collection.InsertOneAsync(_clientSessionHandle, entity, cancellationToken: cancellationToken);
+    var task = Collection.InsertOneAsync(ClientSessionHandle, entity, cancellationToken: cancellationToken);
 
     await task.ConfigureAwait(false);
 
@@ -30,7 +36,7 @@ public class EntityRepository<TEntity>(
   public async Task DeleteAsync(TEntity entity, CancellationToken cancellationToken)
   {
     var task = Collection.DeleteOneAsync(
-      _clientSessionHandle,
+      ClientSessionHandle,
       x => x.ObjectId == entity.ObjectId,
       cancellationToken: cancellationToken);
 
@@ -40,7 +46,7 @@ public class EntityRepository<TEntity>(
   /// <inheritdoc/>
   public async Task<TEntity?> GetByObjectIdAsync(string objectId, CancellationToken cancellationToken)
   {
-    var task = Collection.Find(_clientSessionHandle, x => x.ObjectId == objectId)
+    var task = Collection.Find(ClientSessionHandle, x => x.ObjectId == objectId)
       .FirstOrDefaultAsync(cancellationToken);
 
     var result = await task.ConfigureAwait(false);
@@ -52,7 +58,7 @@ public class EntityRepository<TEntity>(
   public async Task UpdateAsync(TEntity entity, CancellationToken cancellationToken)
   {
     var task = Collection.ReplaceOneAsync(
-      _clientSessionHandle,
+      ClientSessionHandle,
       x => x.ObjectId == entity.ObjectId,
       entity,
       cancellationToken: cancellationToken);
