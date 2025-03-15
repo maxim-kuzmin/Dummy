@@ -4,7 +4,10 @@
 /// Фабрика команд базы данных полезной нагрузки события приложения.
 /// </summary>
 /// <param name="_appDbSettings">Настройки базы данных приложения.</param>
-public class AppEventPayloadDbCommandFactory(AppDbSettings _appDbSettings) : IAppEventPayloadDbSQLCommandFactory
+/// <param name="_dbHelper">Помощник базы данных.</param>
+public class AppEventPayloadDbCommandFactory(
+  AppDbSettings _appDbSettings,
+  IDbSQLHelper _dbHelper) : IAppEventPayloadDbSQLCommandFactory
 {
   /// <inheritdoc/>
   public DbSQLCommand CreateDbCommand(AppEventPayloadSingleQuery query)
@@ -65,32 +68,6 @@ where
 
     var sAppEventPayload = _appDbSettings.Entities.AppEventPayload;
 
-    if (sort == null)
-    {
-      sort = AppEventPayloadSettings.DefaultQuerySortSection;
-    }
-
-    var orderByDirection = sort.IsDesc ? "desc" : "asc";
-
-    string orderByField;
-
-    if (sort.Field.EqualsToSortField(AppEventPayloadSettings.SortFieldForAppEventId))
-    {
-      orderByField = $""" aep."{sAppEventPayload.ColumnForAppEventId}" """;
-    }
-    else if (sort.Field.EqualsToSortField(AppEventPayloadSettings.SortFieldForData))
-    {
-      orderByField = $""" aep."{sAppEventPayload.ColumnForData}" """;
-    }
-    else if (sort.Field.EqualsToSortField(AppEventPayloadSettings.SortFieldForId))
-    {
-      orderByField = $""" aep."{sAppEventPayload.ColumnForId}" """;
-    }
-    else
-    {
-      throw new NotImplementedException();
-    }
-
     result.TextBuilder.AppendLine($$"""
 select
   aep."{{sAppEventPayload.ColumnForId}}" "Id",
@@ -102,32 +79,9 @@ from
 
     result.TextBuilder.AppendLine(dbCommandForFilter.ToString());
 
-    result.TextBuilder.AppendLine($$"""
-order by
-  {{orderByField}} {{orderByDirection}}
-""");
+    _dbHelper.AddSorting(result, sort, DummyItemSettings.DefaultQuerySortSection, CreateOrderByField);
 
-    if (page != null)
-    {
-
-      if (page.Number > 0)
-      {
-        result.TextBuilder.AppendLine($$"""        
-offset @PageNumber rows
-""");
-
-        if (page.Size > 0)
-        {
-          result.TextBuilder.AppendLine($$"""        
-fetch next @PageSize rows only        
-""");
-
-          result.AddParameter("@PageSize", page.Size);
-        }
-
-        result.AddParameter("@PageNumber", (page.Number - 1) * page.Size);
-      }
-    }
+    _dbHelper.AddPagination(result, page);
 
     return result;
   }
@@ -149,6 +103,32 @@ from
 """);
 
     result.TextBuilder.AppendLine(dbCommandForFilter.ToString());
+
+    return result;
+  }
+
+  private string CreateOrderByField(string field)
+  {
+    string result;
+
+    var sAppEventPayload = _appDbSettings.Entities.AppEventPayload;
+
+    if (field.EqualsToSortField(AppEventPayloadSettings.SortFieldForAppEventId))
+    {
+      result = $""" aep."{sAppEventPayload.ColumnForAppEventId}" """;
+    }
+    else if (field.EqualsToSortField(AppEventPayloadSettings.SortFieldForData))
+    {
+      result = $""" aep."{sAppEventPayload.ColumnForData}" """;
+    }
+    else if (field.EqualsToSortField(AppEventPayloadSettings.SortFieldForId))
+    {
+      result = $""" aep."{sAppEventPayload.ColumnForId}" """;
+    }
+    else
+    {
+      throw new NotImplementedException();
+    }
 
     return result;
   }

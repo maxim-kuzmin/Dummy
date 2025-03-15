@@ -4,7 +4,10 @@
 /// Фабрика команд базы данных фиктивного предмета.
 /// </summary>
 /// <param name="_appDbSettings">Настройки базы данных приложения.</param>
-public class DummyItemDbCommandFactory(AppDbSettings _appDbSettings) : IDummyItemDbSQLCommandFactory
+/// <param name="_dbHelper">Помощник базы данных.</param>
+public class DummyItemDbCommandFactory(
+  AppDbSettings _appDbSettings,
+  IDbSQLHelper _dbHelper) : IDummyItemDbSQLCommandFactory
 {
   /// <inheritdoc/>
   public DbSQLCommand CreateDbCommand(DummyItemSingleQuery query)
@@ -64,28 +67,6 @@ where
 
     var sDummyItem = _appDbSettings.Entities.DummyItem;
 
-    if (sort == null)
-    {
-      sort = DummyItemSettings.DefaultQuerySortSection;
-    }
-
-    var orderByDirection = sort.IsDesc ? "desc" : "asc";
-
-    string orderByField;
-
-    if (sort.Field.EqualsToSortField(DummyItemSettings.SortFieldForId))
-    {
-      orderByField = $""" di."{sDummyItem.ColumnForId}" """;
-    }
-    else if (sort.Field.EqualsToSortField(DummyItemSettings.SortFieldForName))
-    {
-      orderByField = $""" di."{sDummyItem.ColumnForName}" """;
-    }
-    else
-    {
-      throw new NotImplementedException();
-    }
-
     result.TextBuilder.AppendLine($$"""
 select
   di."{{sDummyItem.ColumnForId}}" "Id",
@@ -96,32 +77,9 @@ from
 
     result.TextBuilder.AppendLine(dbCommandForFilter.ToString());
 
-    result.TextBuilder.AppendLine($$"""
-order by
-  {{orderByField}} {{orderByDirection}}
-""");
+    _dbHelper.AddSorting(result, sort, DummyItemSettings.DefaultQuerySortSection, CreateOrderByField);
 
-    if (page != null)
-    {
-
-      if (page.Number > 0)
-      {
-        result.TextBuilder.AppendLine($$"""        
-offset @PageNumber rows
-""");
-
-        if (page.Size > 0)
-      {
-        result.TextBuilder.AppendLine($$"""        
-fetch next @PageSize rows only        
-""");
-
-        result.AddParameter("@PageSize", page.Size);
-      }
-
-        result.AddParameter("@PageNumber", (page.Number - 1) * page.Size);
-      }
-    }
+    _dbHelper.AddPagination(result, page);
 
     return result;
   }
@@ -143,6 +101,28 @@ from
 """);
 
     result.TextBuilder.AppendLine(dbCommandForFilter.ToString());
+
+    return result;
+  }
+
+  private string CreateOrderByField(string field)
+  {
+    string result;
+
+    var sDummyItem = _appDbSettings.Entities.DummyItem;
+
+    if (field.EqualsToSortField(DummyItemSettings.SortFieldForId))
+    {
+      result = $""" di."{sDummyItem.ColumnForId}" """;
+    }
+    else if (field.EqualsToSortField(DummyItemSettings.SortFieldForName))
+    {
+      result = $""" di."{sDummyItem.ColumnForName}" """;
+    }
+    else
+    {
+      throw new NotImplementedException();
+    }
 
     return result;
   }

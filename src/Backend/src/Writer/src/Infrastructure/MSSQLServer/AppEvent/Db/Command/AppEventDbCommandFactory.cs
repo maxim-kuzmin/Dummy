@@ -4,7 +4,10 @@
 /// Фабрика команд базы данных полезной нагрузки события приложения.
 /// </summary>
 /// <param name="_appDbSettings">Настройки базы данных приложения.</param>
-public class AppEventDbCommandFactory(AppDbSettings _appDbSettings) : IAppEventDbSQLCommandFactory
+/// <param name="_dbHelper">Помощник базы данных.</param>
+public class AppEventDbCommandFactory(
+  AppDbSettings _appDbSettings,
+  IDbSQLHelper _dbHelper) : IAppEventDbSQLCommandFactory
 {
   /// <inheritdoc/>
   public DbSQLCommand CreateDbCommand(AppEventSingleQuery query)
@@ -100,32 +103,9 @@ from
 
     result.TextBuilder.AppendLine(dbCommandForFilter.ToString());
 
-    result.TextBuilder.AppendLine($$"""
-order by
-  {{orderByField}} {{orderByDirection}}
-""");
+    _dbHelper.AddSorting(result, sort, DummyItemSettings.DefaultQuerySortSection, CreateOrderByField);
 
-    if (page != null)
-    {
-
-      if (page.Number > 0)
-      {
-        result.TextBuilder.AppendLine($$"""        
-offset @PageNumber rows
-""");
-
-        if (page.Size > 0)
-        {
-          result.TextBuilder.AppendLine($$"""        
-fetch next @PageSize rows only        
-""");
-
-          result.AddParameter("@PageSize", page.Size);
-        }
-
-        result.AddParameter("@PageNumber", (page.Number - 1) * page.Size);
-      }
-    }
+    _dbHelper.AddPagination(result, page);
 
     return result;
   }
@@ -147,6 +127,28 @@ from
 """);
 
     result.TextBuilder.AppendLine(dbCommandForFilter.ToString());
+
+    return result;
+  }
+
+  private string CreateOrderByField(string field)
+  {
+    string result;
+
+    var sAppEvent = _appDbSettings.Entities.AppEvent;
+
+    if (field.EqualsToSortField(AppEventSettings.SortFieldForId))
+    {
+      result = $""" ae."{sAppEvent.ColumnForId}" """;
+    }
+    else if (field.EqualsToSortField(AppEventSettings.SortFieldForName))
+    {
+      result = $""" ae."{sAppEvent.ColumnForName}" """;
+    }
+    else
+    {
+      throw new NotImplementedException();
+    }
 
     return result;
   }

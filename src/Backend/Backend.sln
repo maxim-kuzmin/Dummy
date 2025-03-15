@@ -82,6 +82,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.Shared.Infrastru
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.Shared.Infrastructure.MongoDB", "src\Shared\src\Infrastructure\MongoDB\Makc.Dummy.Shared.Infrastructure.MongoDB.csproj", "{254A0172-D17A-421E-90B9-3E693D512613}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.Shared.Infrastructure.MSSQLServer", "src\Shared\src\Infrastructure\MSSQLServer\Makc.Dummy.Shared.Infrastructure.MSSQLServer.csproj", "{2B03D07E-AE1D-4C7C-8E0D-7CA6F4DEB0B7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.Shared.Infrastructure.PostgreSQL", "src\Shared\src\Infrastructure\PostgreSQL\Makc.Dummy.Shared.Infrastructure.PostgreSQL.csproj", "{AE74EC85-9249-497F-999B-328128485691}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Makc.Dummy.Shared.Core", "src\Shared\src\Core\Makc.Dummy.Shared.Core.csproj", "{E27F84C2-9589-401B-87FB-F05BC4535A6F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.Shared.DomainModel", "src\Shared\src\DomainModel\Makc.Dummy.Shared.DomainModel.csproj", "{57192CE6-11BF-4587-94A2-CE24005A9EEB}"
@@ -304,6 +308,14 @@ Global
 		{43031B59-296A-46B7-B778-AF0066EB77B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43031B59-296A-46B7-B778-AF0066EB77B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{43031B59-296A-46B7-B778-AF0066EB77B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B03D07E-AE1D-4C7C-8E0D-7CA6F4DEB0B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B03D07E-AE1D-4C7C-8E0D-7CA6F4DEB0B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B03D07E-AE1D-4C7C-8E0D-7CA6F4DEB0B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B03D07E-AE1D-4C7C-8E0D-7CA6F4DEB0B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE74EC85-9249-497F-999B-328128485691}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE74EC85-9249-497F-999B-328128485691}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE74EC85-9249-497F-999B-328128485691}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE74EC85-9249-497F-999B-328128485691}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -364,6 +376,8 @@ Global
 		{24B21428-536B-4ED5-BF13-6BAC6A06FB80} = {ACCAAED2-3AF2-4CF0-BF6B-AF420E9841B5}
 		{2F81EAA0-6B77-4304-8E38-FE3C28CE79E0} = {79303FD3-E3EE-4B57-BBDC-AFF7EBC56AFD}
 		{43031B59-296A-46B7-B778-AF0066EB77B7} = {79303FD3-E3EE-4B57-BBDC-AFF7EBC56AFD}
+		{2B03D07E-AE1D-4C7C-8E0D-7CA6F4DEB0B7} = {41A955CE-E424-4940-AD9C-AB4FC08EA4D4}
+		{AE74EC85-9249-497F-999B-328128485691} = {41A955CE-E424-4940-AD9C-AB4FC08EA4D4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {15FE02FB-BDBA-4016-B958-EB31A71E7634}

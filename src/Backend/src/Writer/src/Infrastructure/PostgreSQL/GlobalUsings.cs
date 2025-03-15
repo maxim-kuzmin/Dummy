@@ -1,6 +1,7 @@
 ﻿global using Makc.Dummy.Shared.DomainUseCases.Db.SQL;
 global using Makc.Dummy.Shared.DomainUseCases.Query;
 global using Makc.Dummy.Shared.DomainUseCases.Query.Sections;
+global using Makc.Dummy.Shared.Infrastructure.PostgreSQL.Db;
 global using Makc.Dummy.Writer.DomainModel.App.Db.SQL;
 global using Makc.Dummy.Writer.DomainModel.App.Db.SQL.Settings;
 global using Makc.Dummy.Writer.DomainModel.AppEvent.Entity;
