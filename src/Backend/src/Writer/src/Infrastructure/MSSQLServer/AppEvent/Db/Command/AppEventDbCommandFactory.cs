@@ -1,10 +1,10 @@
-﻿namespace Makc.Dummy.Writer.Infrastructure.PostgreSQL.AppEvent;
+﻿namespace Makc.Dummy.Writer.Infrastructure.MSSQLServer.AppEvent.Db.Command;
 
 /// <summary>
-/// Фабрика события приложения.
+/// Фабрика команд базы данных полезной нагрузки события приложения.
 /// </summary>
 /// <param name="_appDbSettings">Настройки базы данных приложения.</param>
-public class AppEventFactory(AppDbSettings _appDbSettings) : IAppEventUseCasesFactory
+public class AppEventDbCommandFactory(AppDbSettings _appDbSettings) : IAppEventDbSQLCommandFactory
 {
   /// <inheritdoc/>
   public DbSQLCommand CreateDbCommand(AppEventSingleQuery query)
@@ -43,9 +43,9 @@ where
 
       result.TextBuilder.AppendLine($$"""
 where
-  ae."{{sAppEvent.ColumnForId}}"::text ilike @FullTextSearchQuery
+  ae."{{sAppEvent.ColumnForId}}" like @FullTextSearchQuery
   or
-  ae."{{sAppEvent.ColumnForName}}" ilike @FullTextSearchQuery
+  ae."{{sAppEvent.ColumnForName}}" like @FullTextSearchQuery
 """);
 
       result.AddParameter("@FullTextSearchQuery", $"%{filter.FullTextSearchQuery}%");
@@ -71,7 +71,7 @@ where
       sort = AppEventSettings.DefaultQuerySortSection;
     }
 
-    string orderByDirection = sort.IsDesc ? "desc" : "asc";
+    var orderByDirection = sort.IsDesc ? "desc" : "asc";
 
     string orderByField;
 
@@ -107,20 +107,21 @@ order by
 
     if (page != null)
     {
-      if (page.Size > 0)
-      {
-        result.TextBuilder.AppendLine($$"""        
-limit @PageSize        
-""");
-
-        result.AddParameter("@PageSize", page.Size);
-      }
 
       if (page.Number > 0)
       {
         result.TextBuilder.AppendLine($$"""        
-offset @PageNumber
+offset @PageNumber rows
 """);
+
+        if (page.Size > 0)
+        {
+          result.TextBuilder.AppendLine($$"""        
+fetch next @PageSize rows only        
+""");
+
+          result.AddParameter("@PageSize", page.Size);
+        }
 
         result.AddParameter("@PageNumber", (page.Number - 1) * page.Size);
       }
@@ -140,7 +141,7 @@ offset @PageNumber
 
     result.TextBuilder.AppendLine($$"""
 select
-  count(*)
+  count_big(*)
 from
   "{{sAppEvent.Schema}}"."{{sAppEvent.Table}}"
 """);

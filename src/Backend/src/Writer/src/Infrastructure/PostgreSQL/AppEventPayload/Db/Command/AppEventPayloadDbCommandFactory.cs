@@ -1,10 +1,10 @@
-﻿namespace Makc.Dummy.Writer.Infrastructure.MSSQLServer.AppEventPayload;
+﻿namespace Makc.Dummy.Writer.Infrastructure.PostgreSQL.AppEventPayload.Db.Command;
 
 /// <summary>
-/// Фабрика полезной нагрузки события приложения.
+/// Фабрика команд базы данных полезной нагрузки события приложения.
 /// </summary>
 /// <param name="_appDbSettings">Настройки базы данных приложения.</param>
-public class AppEventPayloadFactory(AppDbSettings _appDbSettings) : IAppEventPayloadUseCasesFactory
+public class AppEventPayloadDbCommandFactory(AppDbSettings _appDbSettings) : IAppEventPayloadDbSQLCommandFactory
 {
   /// <inheritdoc/>
   public DbSQLCommand CreateDbCommand(AppEventPayloadSingleQuery query)
@@ -42,9 +42,9 @@ where
 
       result.TextBuilder.AppendLine($$"""
 where
-  aep."{{sAppEventPayload.ColumnForId}}" like @FullTextSearchQuery
+  aep."{{sAppEventPayload.ColumnForId}}"::text ilike @FullTextSearchQuery
   or
-  aep."{{sAppEventPayload.ColumnForData}}" like @FullTextSearchQuery
+  aep."{{sAppEventPayload.ColumnForData}}" ilike @FullTextSearchQuery
 """);
 
       result.AddParameter("@FullTextSearchQuery", $"%{filter.FullTextSearchQuery}%");
@@ -70,7 +70,7 @@ where
       sort = AppEventPayloadSettings.DefaultQuerySortSection;
     }
 
-    string orderByDirection = sort.IsDesc ? "desc" : "asc";
+    var orderByDirection = sort.IsDesc ? "desc" : "asc";
 
     string orderByField;
 
@@ -104,26 +104,25 @@ from
 
     result.TextBuilder.AppendLine($$"""
 order by
-  {{orderByField}} {{orderByDirection}}
+  {{orderByField}} {{orderByDirection}}  
 """);
 
     if (page != null)
     {
+      if (page.Size > 0)
+      {
+        result.TextBuilder.AppendLine($$"""        
+limit @PageSize        
+""");
+
+        result.AddParameter("@PageSize", page.Size);
+      }
 
       if (page.Number > 0)
       {
         result.TextBuilder.AppendLine($$"""        
-offset @PageNumber rows
+offset @PageNumber
 """);
-
-        if (page.Size > 0)
-        {
-          result.TextBuilder.AppendLine($$"""        
-fetch next @PageSize rows only        
-""");
-
-          result.AddParameter("@PageSize", page.Size);
-        }
 
         result.AddParameter("@PageNumber", (page.Number - 1) * page.Size);
       }
@@ -141,9 +140,9 @@ fetch next @PageSize rows only
 
     var sAppEventPayload = _appDbSettings.Entities.AppEventPayload;
 
-    result.TextBuilder.AppendLine($$""" 
+    result.TextBuilder.AppendLine($$"""
 select
-  count_big(*)
+  count(*)
 from
   "{{sAppEventPayload.Schema}}"."{{sAppEventPayload.Table}}"
 """);

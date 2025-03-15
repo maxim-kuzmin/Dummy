@@ -1,26 +1,28 @@
-﻿namespace Makc.Dummy.Writer.Infrastructure.MSSQLServer.DummyItem;
+﻿namespace Makc.Dummy.Writer.Infrastructure.PostgreSQL.AppEvent.Db.Command;
 
 /// <summary>
-/// Фабрика фиктивного предмета.
+/// Фабрика команд базы данных события приложения.
 /// </summary>
 /// <param name="_appDbSettings">Настройки базы данных приложения.</param>
-public class DummyItemFactory(AppDbSettings _appDbSettings) : IDummyItemUseCasesFactory
+public class AppEventDbCommandFactory(AppDbSettings _appDbSettings) : IAppEventDbSQLCommandFactory
 {
   /// <inheritdoc/>
-  public DbSQLCommand CreateDbCommand(DummyItemSingleQuery query)
+  public DbSQLCommand CreateDbCommand(AppEventSingleQuery query)
   {
     DbSQLCommand result = new();
 
-    var sDummyItem = _appDbSettings.Entities.DummyItem;
+    var sAppEvent = _appDbSettings.Entities.AppEvent;
 
     result.TextBuilder.Append($$"""
 select
-  "{{sDummyItem.ColumnForId}}" "Id",
-  "{{sDummyItem.ColumnForName}}" "Name"
+  "{{sAppEvent.ColumnForId}}" "Id",
+  "{{sAppEvent.ColumnForCreatedAt}}" "CreatedAt",
+  "{{sAppEvent.ColumnForIsPublished}}" "IsPublished",
+  "{{sAppEvent.ColumnForName}}" "Name"
 from
-  "{{sDummyItem.Schema}}"."{{sDummyItem.Table}}"
+  "{{sAppEvent.Schema}}"."{{sAppEvent.Table}}"
 where
-  "{{sDummyItem.ColumnForId}}" = @Id
+  "{{sAppEvent.ColumnForId}}" = @Id
 """);
 
     result.AddParameter("@Id", query.Id);
@@ -29,7 +31,7 @@ where
   }
 
   /// <inheritdoc/>
-  public DbSQLCommand CreateDbCommandForFilter(DummyItemPageQuery query)
+  public DbSQLCommand CreateDbCommandForFilter(AppEventPageQuery query)
   {
     DbSQLCommand result = new();
 
@@ -37,13 +39,13 @@ where
 
     if (!string.IsNullOrEmpty(filter?.FullTextSearchQuery))
     {
-      var sDummyItem = _appDbSettings.Entities.DummyItem;
+      var sAppEvent = _appDbSettings.Entities.AppEvent;
 
       result.TextBuilder.AppendLine($$"""
 where
-  di."{{sDummyItem.ColumnForId}}" like @FullTextSearchQuery
+  ae."{{sAppEvent.ColumnForId}}"::text ilike @FullTextSearchQuery
   or
-  di."{{sDummyItem.ColumnForName}}" like @FullTextSearchQuery
+  ae."{{sAppEvent.ColumnForName}}" ilike @FullTextSearchQuery
 """);
 
       result.AddParameter("@FullTextSearchQuery", $"%{filter.FullTextSearchQuery}%");
@@ -62,24 +64,24 @@ where
 
     dbCommandForFilter.CopyParametersTo(result);
 
-    var sDummyItem = _appDbSettings.Entities.DummyItem;
+    var sAppEvent = _appDbSettings.Entities.AppEvent;
 
     if (sort == null)
     {
-      sort = DummyItemSettings.DefaultQuerySortSection;
+      sort = AppEventSettings.DefaultQuerySortSection;
     }
 
-    string orderByDirection = sort.IsDesc ? "desc" : "asc";
+    var orderByDirection = sort.IsDesc ? "desc" : "asc";
 
     string orderByField;
 
-    if (sort.Field.EqualsToSortField(DummyItemSettings.SortFieldForId))
+    if (sort.Field.EqualsToSortField(AppEventSettings.SortFieldForId))
     {
-      orderByField = $""" di."{sDummyItem.ColumnForId}" """;
+      orderByField = $""" ae."{sAppEvent.ColumnForId}" """;
     }
-    else if (sort.Field.EqualsToSortField(DummyItemSettings.SortFieldForName))
+    else if (sort.Field.EqualsToSortField(AppEventSettings.SortFieldForName))
     {
-      orderByField = $""" di."{sDummyItem.ColumnForName}" """;
+      orderByField = $""" ae."{sAppEvent.ColumnForName}" """;
     }
     else
     {
@@ -88,10 +90,12 @@ where
 
     result.TextBuilder.AppendLine($$"""
 select
-  di."{{sDummyItem.ColumnForId}}" "Id",
-  di."{{sDummyItem.ColumnForName}}" "Name"
+  ae."{{sAppEvent.ColumnForId}}" "Id",
+  ae."{{sAppEvent.ColumnForCreatedAt}}" "CreatedAt",
+  ae."{{sAppEvent.ColumnForIsPublished}}" "IsPublished",
+  ae."{{sAppEvent.ColumnForName}}" "Name"
 from
-  "{{sDummyItem.Schema}}"."{{sDummyItem.Table}}" di
+  "{{sAppEvent.Schema}}"."{{sAppEvent.Table}}" ae
 """);
 
     result.TextBuilder.AppendLine(dbCommandForFilter.ToString());
@@ -103,21 +107,20 @@ order by
 
     if (page != null)
     {
-
-      if (page.Number > 0)
+      if (page.Size > 0)
       {
         result.TextBuilder.AppendLine($$"""        
-offset @PageNumber rows
-""");
-
-        if (page.Size > 0)
-      {
-        result.TextBuilder.AppendLine($$"""        
-fetch next @PageSize rows only        
+limit @PageSize        
 """);
 
         result.AddParameter("@PageSize", page.Size);
       }
+
+      if (page.Number > 0)
+      {
+        result.TextBuilder.AppendLine($$"""        
+offset @PageNumber
+""");
 
         result.AddParameter("@PageNumber", (page.Number - 1) * page.Size);
       }
@@ -133,13 +136,13 @@ fetch next @PageSize rows only
 
     dbCommandForFilter.CopyParametersTo(result);
 
-    var sDummyItem = _appDbSettings.Entities.DummyItem;
+    var sAppEvent = _appDbSettings.Entities.AppEvent;
 
-    result.TextBuilder.AppendLine($$""" 
+    result.TextBuilder.AppendLine($$"""
 select
-  count_big(*)
+  count(*)
 from
-  "{{sDummyItem.Schema}}"."{{sDummyItem.Table}}"
+  "{{sAppEvent.Schema}}"."{{sAppEvent.Table}}"
 """);
 
     result.TextBuilder.AppendLine(dbCommandForFilter.ToString());

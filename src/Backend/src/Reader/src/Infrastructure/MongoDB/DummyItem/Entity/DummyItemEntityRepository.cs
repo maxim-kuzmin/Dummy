@@ -44,38 +44,10 @@ public class DummyItemEntityRepository(
   public async Task<List<DummyItemEntity>> ListAsync(DummyItemListQuery query, CancellationToken cancellationToken)
   {
     var filter = CreateFilter(query.PageQuery.Filter);
-    
-    var found = Collection.Find(ClientSessionHandle, filter);
 
-    var sort = query.Sort ?? DummyItemSettings.DefaultQuerySortSection;
-
-    Expression<Func<DummyItemEntity, object>> field;
-
-    if (sort.Field.EqualsToSortField(DummyItemSettings.SortFieldForId))
-    {
-      field = x => x.Id;
-    }
-    else
-    {
-      throw new NotImplementedException();
-    }
-
-    var page = query.PageQuery.Page;
-
-    if (page != null)
-    {
-      if (page.Number > 0)
-      {
-        found = found.Skip((page.Number - 1) * page.Size);
-      }
-
-      if (page.Size > 0)
-      {
-        found = found.Limit(page.Size);
-      }
-    }
-
-    found = sort.IsDesc ? found.SortByDescending(field) : found.SortBy(field);
+    var found = Collection.Find(ClientSessionHandle, filter)
+      .TakePage(query.PageQuery.Page)
+      .Sort(query.Sort, DummyItemSettings.DefaultQuerySortSection, CreateSortFieldExpression);
 
     var result = await found.ToListAsync(cancellationToken).ConfigureAwait(false);
 
@@ -93,6 +65,22 @@ public class DummyItemEntityRepository(
       Regex re = new($".*{filterSection.FullTextSearchQuery}.*", RegexOptions.IgnoreCase);
 
       result = builder.Or(builder.Regex(x => x.Id.ToString(), re), builder.Regex(x => x.Name, re));
+    }
+
+    return result;
+  }
+  
+  private static Expression<Func<DummyItemEntity, object>> CreateSortFieldExpression(string field)
+  {
+    Expression<Func<DummyItemEntity, object>> result;
+
+    if (field.EqualsToSortField(DummyItemSettings.SortFieldForId))
+    {
+      result = x => x.Id;
+    }
+    else
+    {
+      throw new NotImplementedException();
     }
 
     return result;

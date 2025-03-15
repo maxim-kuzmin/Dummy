@@ -1,23 +1,23 @@
-﻿namespace Makc.Dummy.Writer.DomainUseCases.DummyItem;
+﻿namespace Makc.Dummy.Writer.DomainUseCases.AppEvent.Db.SQL.Command;
 
 /// <summary>
-/// Интерфейс фабрики фиктивного предмета.
+/// Интерфейс фабрики команд базы данных SQL события приложения.
 /// </summary>
-public interface IDummyItemFactory
+public interface IAppEventDbSQLCommandFactory
 {
   /// <summary>
   /// Создать команду базы данных.
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <returns>Команда базы данных.</returns>
-  DbSQLCommand CreateDbCommand(DummyItemSingleQuery query);
+  DbSQLCommand CreateDbCommand(AppEventSingleQuery query);
 
   /// <summary>
   /// Создать команду базы данных для фильтра.
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <returns>Команда базы данных для фильтра.</returns>
-  DbSQLCommand CreateDbCommandForFilter(DummyItemPageQuery query);
+  DbSQLCommand CreateDbCommandForFilter(AppEventPageQuery query);
 
   /// <summary>
   /// Создать базы данных для элементов.

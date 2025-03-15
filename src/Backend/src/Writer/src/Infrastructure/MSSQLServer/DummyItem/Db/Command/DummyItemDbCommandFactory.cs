@@ -1,28 +1,26 @@
-﻿namespace Makc.Dummy.Writer.Infrastructure.MSSQLServer.AppEvent;
+﻿namespace Makc.Dummy.Writer.Infrastructure.MSSQLServer.DummyItem.Db.Command;
 
 /// <summary>
-/// Фабрика полезной нагрузки события приложения.
+/// Фабрика команд базы данных фиктивного предмета.
 /// </summary>
 /// <param name="_appDbSettings">Настройки базы данных приложения.</param>
-public class AppEventFactory(AppDbSettings _appDbSettings) : IAppEventUseCasesFactory
+public class DummyItemDbCommandFactory(AppDbSettings _appDbSettings) : IDummyItemDbSQLCommandFactory
 {
   /// <inheritdoc/>
-  public DbSQLCommand CreateDbCommand(AppEventSingleQuery query)
+  public DbSQLCommand CreateDbCommand(DummyItemSingleQuery query)
   {
     DbSQLCommand result = new();
 
-    var sAppEvent = _appDbSettings.Entities.AppEvent;
+    var sDummyItem = _appDbSettings.Entities.DummyItem;
 
     result.TextBuilder.Append($$"""
 select
-  "{{sAppEvent.ColumnForId}}" "Id",
-  "{{sAppEvent.ColumnForCreatedAt}}" "CreatedAt",
-  "{{sAppEvent.ColumnForIsPublished}}" "IsPublished",
-  "{{sAppEvent.ColumnForName}}" "Name"
+  "{{sDummyItem.ColumnForId}}" "Id",
+  "{{sDummyItem.ColumnForName}}" "Name"
 from
-  "{{sAppEvent.Schema}}"."{{sAppEvent.Table}}"
+  "{{sDummyItem.Schema}}"."{{sDummyItem.Table}}"
 where
-  "{{sAppEvent.ColumnForId}}" = @Id
+  "{{sDummyItem.ColumnForId}}" = @Id
 """);
 
     result.AddParameter("@Id", query.Id);
@@ -31,7 +29,7 @@ where
   }
 
   /// <inheritdoc/>
-  public DbSQLCommand CreateDbCommandForFilter(AppEventPageQuery query)
+  public DbSQLCommand CreateDbCommandForFilter(DummyItemPageQuery query)
   {
     DbSQLCommand result = new();
 
@@ -39,13 +37,13 @@ where
 
     if (!string.IsNullOrEmpty(filter?.FullTextSearchQuery))
     {
-      var sAppEvent = _appDbSettings.Entities.AppEvent;
+      var sDummyItem = _appDbSettings.Entities.DummyItem;
 
       result.TextBuilder.AppendLine($$"""
 where
-  ae."{{sAppEvent.ColumnForId}}" like @FullTextSearchQuery
+  di."{{sDummyItem.ColumnForId}}" like @FullTextSearchQuery
   or
-  ae."{{sAppEvent.ColumnForName}}" like @FullTextSearchQuery
+  di."{{sDummyItem.ColumnForName}}" like @FullTextSearchQuery
 """);
 
       result.AddParameter("@FullTextSearchQuery", $"%{filter.FullTextSearchQuery}%");
@@ -64,24 +62,24 @@ where
 
     dbCommandForFilter.CopyParametersTo(result);
 
-    var sAppEvent = _appDbSettings.Entities.AppEvent;
+    var sDummyItem = _appDbSettings.Entities.DummyItem;
 
     if (sort == null)
     {
-      sort = AppEventSettings.DefaultQuerySortSection;
+      sort = DummyItemSettings.DefaultQuerySortSection;
     }
 
-    string orderByDirection = sort.IsDesc ? "desc" : "asc";
+    var orderByDirection = sort.IsDesc ? "desc" : "asc";
 
     string orderByField;
 
-    if (sort.Field.EqualsToSortField(AppEventSettings.SortFieldForId))
+    if (sort.Field.EqualsToSortField(DummyItemSettings.SortFieldForId))
     {
-      orderByField = $""" ae."{sAppEvent.ColumnForId}" """;
+      orderByField = $""" di."{sDummyItem.ColumnForId}" """;
     }
-    else if (sort.Field.EqualsToSortField(AppEventSettings.SortFieldForName))
+    else if (sort.Field.EqualsToSortField(DummyItemSettings.SortFieldForName))
     {
-      orderByField = $""" ae."{sAppEvent.ColumnForName}" """;
+      orderByField = $""" di."{sDummyItem.ColumnForName}" """;
     }
     else
     {
@@ -90,12 +88,10 @@ where
 
     result.TextBuilder.AppendLine($$"""
 select
-  ae."{{sAppEvent.ColumnForId}}" "Id",
-  ae."{{sAppEvent.ColumnForCreatedAt}}" "CreatedAt",
-  ae."{{sAppEvent.ColumnForIsPublished}}" "IsPublished",
-  ae."{{sAppEvent.ColumnForName}}" "Name"
+  di."{{sDummyItem.ColumnForId}}" "Id",
+  di."{{sDummyItem.ColumnForName}}" "Name"
 from
-  "{{sAppEvent.Schema}}"."{{sAppEvent.Table}}" ae
+  "{{sDummyItem.Schema}}"."{{sDummyItem.Table}}" di
 """);
 
     result.TextBuilder.AppendLine(dbCommandForFilter.ToString());
@@ -115,13 +111,13 @@ offset @PageNumber rows
 """);
 
         if (page.Size > 0)
-        {
-          result.TextBuilder.AppendLine($$"""        
+      {
+        result.TextBuilder.AppendLine($$"""        
 fetch next @PageSize rows only        
 """);
 
-          result.AddParameter("@PageSize", page.Size);
-        }
+        result.AddParameter("@PageSize", page.Size);
+      }
 
         result.AddParameter("@PageNumber", (page.Number - 1) * page.Size);
       }
@@ -137,13 +133,13 @@ fetch next @PageSize rows only
 
     dbCommandForFilter.CopyParametersTo(result);
 
-    var sAppEvent = _appDbSettings.Entities.AppEvent;
+    var sDummyItem = _appDbSettings.Entities.DummyItem;
 
-    result.TextBuilder.AppendLine($$"""
+    result.TextBuilder.AppendLine($$""" 
 select
   count_big(*)
 from
-  "{{sAppEvent.Schema}}"."{{sAppEvent.Table}}"
+  "{{sDummyItem.Schema}}"."{{sDummyItem.Table}}"
 """);
 
     result.TextBuilder.AppendLine(dbCommandForFilter.ToString());

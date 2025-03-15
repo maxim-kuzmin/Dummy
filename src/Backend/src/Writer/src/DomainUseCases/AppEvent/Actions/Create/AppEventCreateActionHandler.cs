@@ -8,7 +8,7 @@
 /// <param name="_repository">Репозиторий.</param>
 public class AppEventCreateActionHandler(
   IAppDbExecutionContext _appDbExecutionContext,
-  IAppEventModelFactory _factory,
+  IAppEventFactory _factory,
   IAppEventEntityRepository _repository) :
   ICommandHandler<AppEventCreateActionCommand, Result<AppEventSingleDTO>>
 {

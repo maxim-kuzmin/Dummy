@@ -3,20 +3,20 @@
 /// <summary>
 /// Сервис запросов фиктивного предмета.
 /// </summary>
+/// <param name="_appDbQueryContext">Контекст запросов базы данных приложения.</param>
+/// <param name="_dbCommandFactory">Фабрика команд базы данных.</param>
 public class DummyItemQueryService(
   IAppDbQueryContext _appDbQueryContext,
-  IDummyItemFactory _factory) : IDummyItemQueryService
+  IDummyItemDbSQLCommandFactory _dbCommandFactory) : IDummyItemQueryService
 {
   /// <inheritdoc/>
   public async Task<long> CountAsync(DummyItemPageQuery query, CancellationToken cancellationToken)
   {
-    var dbCommandForFilter = _factory.CreateDbCommandForFilter(query);
+    var dbCommandForFilter = _dbCommandFactory.CreateDbCommandForFilter(query);
 
-    var dbCommand = _factory.CreateDbCommandForTotalCount(dbCommandForFilter);
+    var dbCommand = _dbCommandFactory.CreateDbCommandForTotalCount(dbCommandForFilter);
 
-    var task = _appDbQueryContext.GetListAsync<long>(dbCommand, cancellationToken);
-
-    var data = await task.ConfigureAwait(false);
+    var data = await _appDbQueryContext.GetListAsync<long>(dbCommand, cancellationToken).ConfigureAwait(false);
 
     return data[0];
   }
@@ -24,7 +24,7 @@ public class DummyItemQueryService(
   /// <inheritdoc/>
   public Task<DummyItemSingleDTO?> GetAsync(DummyItemSingleQuery query, CancellationToken cancellationToken)
   {
-    var dbCommand = _factory.CreateDbCommand(query);
+    var dbCommand = _dbCommandFactory.CreateDbCommand(query);
 
     return _appDbQueryContext.GetFirstOrDefaultAsync<DummyItemSingleDTO>(dbCommand, cancellationToken);
   }
@@ -32,9 +32,9 @@ public class DummyItemQueryService(
   /// <inheritdoc/>
   public Task<List<DummyItemSingleDTO>> ListAsync(DummyItemListQuery query, CancellationToken cancellationToken)
   {
-    var dbCommandForFilter = _factory.CreateDbCommandForFilter(query.PageQuery);
+    var dbCommandForFilter = _dbCommandFactory.CreateDbCommandForFilter(query.PageQuery);
 
-    var dbCommandForItems = _factory.CreateDbCommandForItems(dbCommandForFilter, query.PageQuery.Page, query.Sort);
+    var dbCommandForItems = _dbCommandFactory.CreateDbCommandForItems(dbCommandForFilter, query.PageQuery.Page, query.Sort);
 
     return _appDbQueryContext.GetListAsync<DummyItemSingleDTO>(dbCommandForItems, cancellationToken);
   }

@@ -1,6 +1,4 @@
-﻿using Makc.Dummy.Writer.DomainModel.App.Db.SQL;
-
-namespace Makc.Dummy.Writer.Infrastructure.MSSQLServer.App;
+﻿namespace Makc.Dummy.Writer.Infrastructure.MSSQLServer.App;
 
 /// <summary>
 /// Расширения приложения.
@@ -25,15 +23,15 @@ public static class AppExtensions
 
     services.AddSingleton(appDbSQLSettings.Entities.AppEvent);
     services.AddSingleton<AppEventEntitySettings>(appDbSQLSettings.Entities.AppEvent);
-    services.AddSingleton<IAppEventUseCasesFactory, AppEventUseCasesFactory>();
+    services.AddSingleton<IAppEventDbSQLCommandFactory, AppEventDbCommandFactory>();
 
     services.AddSingleton(appDbSQLSettings.Entities.AppEventPayload);
     services.AddSingleton<AppEventPayloadEntitySettings>(appDbSQLSettings.Entities.AppEventPayload);
-    services.AddSingleton<IAppEventPayloadUseCasesFactory, AppEventPayloadUseCasesFactory>();
+    services.AddSingleton<IAppEventPayloadDbSQLCommandFactory, AppEventPayloadDbCommandFactory>();
 
     services.AddSingleton(appDbSQLSettings.Entities.DummyItem);
     services.AddSingleton<DummyItemEntitySettings>(appDbSQLSettings.Entities.DummyItem);
-    services.AddSingleton<IDummyItemUseCasesFactory, DummyItemUseCasesFactory>();
+    services.AddSingleton<IDummyItemDbSQLCommandFactory, DummyItemDbCommandFactory>();
 
     logger.LogInformation("Added application infrastructure tied to MS SQL Server");
 

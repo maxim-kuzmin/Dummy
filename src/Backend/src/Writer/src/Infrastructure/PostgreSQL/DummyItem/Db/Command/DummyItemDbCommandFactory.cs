@@ -1,10 +1,10 @@
-﻿namespace Makc.Dummy.Writer.Infrastructure.PostgreSQL.DummyItem;
+﻿namespace Makc.Dummy.Writer.Infrastructure.PostgreSQL.DummyItem.Db.Command;
 
 /// <summary>
-/// Фабрика фиктивного предмета.
+/// Фабрика команд базы данных фиктивного предмета.
 /// </summary>
 /// <param name="_appDbSettings">Настройки базы данных приложения.</param>
-public class DummyItemFactory(AppDbSettings _appDbSettings) : IDummyItemUseCasesFactory
+public class DummyItemDbCommandFactory(AppDbSettings _appDbSettings) : IDummyItemDbSQLCommandFactory
 {
   /// <inheritdoc/>
   public DbSQLCommand CreateDbCommand(DummyItemSingleQuery query)
@@ -69,7 +69,7 @@ where
       sort = DummyItemSettings.DefaultQuerySortSection;
     }
 
-    string orderByDirection = sort.IsDesc ? "desc" : "asc";
+    var orderByDirection = sort.IsDesc ? "desc" : "asc";
 
     string orderByField;
 
