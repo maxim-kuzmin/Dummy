@@ -21,7 +21,7 @@ public static class AppExtensions
 
     services.AddSingleton((AppDbSettings)appDbSQLSettings);
 
-    services.AddSingleton<IDbSQLHelper, DbHelper>();
+    services.AddSingleton<IAppDbSQLCommandHelper, AppDbCommandHelper>();
 
     services.AddSingleton(appDbSQLSettings.Entities.AppEvent);
     services.AddSingleton<AppEventEntitySettings>(appDbSQLSettings.Entities.AppEvent);

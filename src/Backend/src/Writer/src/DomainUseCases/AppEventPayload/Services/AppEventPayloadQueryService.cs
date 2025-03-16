@@ -6,7 +6,7 @@
 /// <param name="_appDbQueryContext">Контекст запросов базы данных приложения.</param>
 /// <param name="_dbCommandFactory">Фабрика команд базы данных.</param>
 public class AppEventPayloadQueryService(
-  IAppDbQueryContext _appDbQueryContext,
+  IAppDbSQLQueryContext _appDbQueryContext,
   IAppEventPayloadDbSQLCommandFactory _dbCommandFactory) : IAppEventPayloadQueryService
 {
   /// <inheritdoc/>

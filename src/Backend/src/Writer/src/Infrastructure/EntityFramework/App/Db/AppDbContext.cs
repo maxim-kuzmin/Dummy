@@ -1,6 +1,4 @@
-﻿using Makc.Dummy.Writer.DomainModel.App.Db.SQL;
-
-namespace Makc.Dummy.Writer.Infrastructure.EntityFramework.App.Db;
+﻿namespace Makc.Dummy.Writer.Infrastructure.EntityFramework.App.Db;
 
 /// <summary>
 /// Контекст базы данных приложения. При старте приложения перед регистрацией класса в контейнере DI нужно обязательно

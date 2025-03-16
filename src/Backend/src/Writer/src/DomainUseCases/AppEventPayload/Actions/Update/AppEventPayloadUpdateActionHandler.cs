@@ -7,7 +7,7 @@
 /// <param name="_factory">Фабрика.</param>
 /// <param name="_repository">Репозиторий.</param>
 public class AppEventPayloadUpdateActionHandler(
-  IAppDbExecutionContext _appDbExecutionContext,
+  IAppDbSQLExecutionContext _appDbExecutionContext,
   IAppEventPayloadFactory _factory,
   IAppEventPayloadEntityRepository _repository) :
   ICommandHandler<AppEventPayloadUpdateActionCommand, Result<AppEventPayloadSingleDTO>>

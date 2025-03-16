@@ -19,7 +19,7 @@ global using Makc.Dummy.Shared.Infrastructure.CoreForOpenTelemetryInWeb.App;
 global using Makc.Dummy.Writer.Apps.WebApp.App;
 global using Makc.Dummy.Writer.Apps.WebApp.App.Config;
 global using Makc.Dummy.Writer.DomainModel.App;
-global using Makc.Dummy.Writer.DomainModel.App.Db;
+global using Makc.Dummy.Writer.DomainModel.App.Db.SQL;
 global using Makc.Dummy.Writer.DomainUseCases.App;
 global using Makc.Dummy.Writer.DomainUseCases.App.Actions.Login;
 global using Makc.Dummy.Writer.DomainUseCases.AppEvent;

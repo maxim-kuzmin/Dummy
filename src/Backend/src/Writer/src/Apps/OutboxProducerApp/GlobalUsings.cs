@@ -11,7 +11,7 @@ global using Makc.Dummy.Shared.Infrastructure.CoreForOpenTelemetry.App;
 global using Makc.Dummy.Writer.Apps.OutboxProducerApp.App;
 global using Makc.Dummy.Writer.Apps.OutboxProducerApp.App.Config;
 global using Makc.Dummy.Writer.DomainModel.App;
-global using Makc.Dummy.Writer.DomainModel.App.Db;
+global using Makc.Dummy.Writer.DomainModel.App.Db.SQL;
 global using Makc.Dummy.Writer.DomainUseCases.App;
 global using Makc.Dummy.Writer.DomainUseCases.App.Message;
 global using Makc.Dummy.Writer.DomainUseCases.AppOutbox.Actions.Produce;

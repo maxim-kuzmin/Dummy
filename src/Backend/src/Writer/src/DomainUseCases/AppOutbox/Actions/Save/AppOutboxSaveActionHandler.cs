@@ -6,7 +6,7 @@
 /// <param name="_appDbExecutionContext">Контекст выполнения базы данных приложения.</param>
 /// <param name="_mediator">Медиатор.</param>
 public class AppOutboxSaveActionHandler(
-  IAppDbExecutionContext _appDbExecutionContext,
+  IAppDbSQLExecutionContext _appDbExecutionContext,
   IMediator _mediator) :
   ICommandHandler<AppOutboxSaveActionCommand, Result>
 {

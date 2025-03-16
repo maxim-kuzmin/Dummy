@@ -6,6 +6,6 @@
 /// <param name="dbContext">Контекст базы данных.</param>
 public class AppDbQueryContext(IAppDbContext dbContext) :
   DbQueryContext<IAppDbContext>(dbContext),
-  IAppDbQueryContext
+  IAppDbSQLQueryContext
 {
 }

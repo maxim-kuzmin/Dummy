@@ -12,7 +12,7 @@ global using Makc.Dummy.Shared.Infrastructure.CoreForOpenTelemetry.App;
 global using Makc.Dummy.Writer.Apps.OutboxCleanerApp.App;
 global using Makc.Dummy.Writer.Apps.OutboxCleanerApp.App.Config;
 global using Makc.Dummy.Writer.DomainModel.App;
-global using Makc.Dummy.Writer.DomainModel.App.Db;
+global using Makc.Dummy.Writer.DomainModel.App.Db.SQL;
 global using Makc.Dummy.Writer.DomainUseCases.App;
 global using Makc.Dummy.Writer.Infrastructure.Core.App;
 global using Makc.Dummy.Writer.Infrastructure.Dapper.App;

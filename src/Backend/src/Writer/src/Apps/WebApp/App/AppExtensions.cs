@@ -1,6 +1,4 @@
-﻿using Makc.Dummy.Writer.DomainModel.App.Db.SQL;
-
-namespace Makc.Dummy.Writer.Apps.WebApp.App;
+﻿namespace Makc.Dummy.Writer.Apps.WebApp.App;
 
 /// <summary>
 /// Расширения приложения.

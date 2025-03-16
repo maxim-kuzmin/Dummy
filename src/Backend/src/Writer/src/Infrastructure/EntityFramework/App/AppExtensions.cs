@@ -1,6 +1,4 @@
-﻿using Makc.Dummy.Writer.DomainModel.App.Db.SQL;
-
-namespace Makc.Dummy.Writer.Infrastructure.EntityFramework.App;
+﻿namespace Makc.Dummy.Writer.Infrastructure.EntityFramework.App;
 
 /// <summary>
 /// Расширения приложения.
@@ -23,11 +21,11 @@ public static class AppExtensions
   {
     AppDbContext.Init(appDbSQLSettings);
 
-    services.AddScoped<IAppDbExecutionContext, AppDbExecutionContext>();
+    services.AddScoped<IAppDbSQLExecutionContext, AppDbSQLExecutionContext>();
 
     if (appConfigOptionsORM == AppConfigOptionsORMEnum.EntityFramework)
     {
-      services.AddScoped<IAppDbQueryContext, AppDbQueryContext>();
+      services.AddScoped<IAppDbSQLQueryContext, AppDbSQLQueryContext>();
     }
 
     services.AddScoped(typeof(IRepository<>), typeof(AppRepositoryBase<>));

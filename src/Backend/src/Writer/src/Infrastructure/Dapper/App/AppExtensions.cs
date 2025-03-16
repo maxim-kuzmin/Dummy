@@ -19,7 +19,7 @@ public static class AppExtensions
   {
     if (appConfigOptionsORM == AppConfigOptionsORMEnum.Dapper)
     {
-      services.AddScoped<IAppDbQueryContext, AppDbQueryContext>();
+      services.AddScoped<IAppDbSQLQueryContext, AppDbQueryContext>();
     }
 
     logger.LogInformation("Added application infrastructure tied to Dapper");

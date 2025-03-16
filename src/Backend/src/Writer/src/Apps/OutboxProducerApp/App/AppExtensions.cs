@@ -1,6 +1,4 @@
-﻿using Makc.Dummy.Writer.DomainModel.App.Db.SQL;
-
-namespace Makc.Dummy.Writer.Apps.OutboxProducerApp.App;
+﻿namespace Makc.Dummy.Writer.Apps.OutboxProducerApp.App;
 
 /// <summary>
 /// Расширения приложения.
