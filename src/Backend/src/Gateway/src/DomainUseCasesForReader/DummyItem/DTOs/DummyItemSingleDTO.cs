@@ -3,6 +3,7 @@
 /// <summary>
 /// Объект передачи данных действия по получению фиктивного предмета.
 /// </summary>
+/// <param name="ObjectId">Идентификатор объекта.</param>
 /// <param name="Id">Идентификатор.</param>
 /// <param name="Name">Имя.</param>
-public record DummyItemSingleDTO(long Id, string Name);
+public record DummyItemSingleDTO(string? ObjectId, long Id, string Name);

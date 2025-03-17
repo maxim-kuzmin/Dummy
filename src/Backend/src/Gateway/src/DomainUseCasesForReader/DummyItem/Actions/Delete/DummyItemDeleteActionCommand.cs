@@ -3,5 +3,5 @@
 /// <summary>
 /// Команда действия по удалению фиктивного предмета.
 /// </summary>
-/// <param name="Id">Идентификатор.</param>
-public record DummyItemDeleteActionCommand(long Id) : ICommand<Result>;
+/// <param name="ObjectId">Идентификатор объекта.</param>
+public record DummyItemDeleteActionCommand(string ObjectId) : ICommand<Result>;

@@ -8,10 +8,10 @@ global using Makc.Dummy.Gateway.DomainUseCasesForReader.DummyItem.Actions.Update
 global using Makc.Dummy.Gateway.DomainUseCasesForReader.DummyItem.DTOs;
 global using Makc.Dummy.Gateway.DomainUseCasesForReader.DummyItem.Services;
 global using Makc.Dummy.Gateway.Infrastructure.GrpcForReader.DummyItem.Services;
+global using Makc.Dummy.Reader.Infrastructure.Grpc.DummyItem;
 global using Makc.Dummy.Shared.Core.App;
 global using Makc.Dummy.Shared.Core.Http;
 global using Makc.Dummy.Shared.Infrastructure.Grpc;
-global using Makc.Dummy.Writer.Infrastructure.Grpc.DummyItem;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Logging;
-global using WriterDummyItemGrpcClient = Makc.Dummy.Writer.Infrastructure.Grpc.DummyItem.DummyItem.DummyItemClient;
+global using DummyItemGrpcClient = Makc.Dummy.Reader.Infrastructure.Grpc.DummyItem.DummyItem.DummyItemClient;

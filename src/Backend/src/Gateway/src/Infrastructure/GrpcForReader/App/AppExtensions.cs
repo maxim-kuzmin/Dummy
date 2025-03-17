@@ -20,7 +20,7 @@ public static class AppExtensions
     services.AddTransient<IDummyItemCommandService, DummyItemCommandService>();
     services.AddTransient<IDummyItemQueryService, DummyItemQueryService>();
 
-    services.AddGrpcClient<WriterDummyItemGrpcClient>(
+    services.AddGrpcClient<DummyItemGrpcClient>(
       AppSettings.DummyItemClientName,
       grpcOptions =>
       {

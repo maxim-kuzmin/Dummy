@@ -18,5 +18,5 @@ global using Makc.Dummy.Writer.Infrastructure.Grpc.App;
 global using Makc.Dummy.Writer.Infrastructure.Grpc.DummyItem;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Logging;
-global using WriterAppGrpcClient = Makc.Dummy.Writer.Infrastructure.Grpc.App.App.AppClient;
-global using WriterDummyItemGrpcClient = Makc.Dummy.Writer.Infrastructure.Grpc.DummyItem.DummyItem.DummyItemClient;
+global using AppGrpcClient = Makc.Dummy.Writer.Infrastructure.Grpc.App.App.AppClient;
+global using DummyItemGrpcClient = Makc.Dummy.Writer.Infrastructure.Grpc.DummyItem.DummyItem.DummyItemClient;

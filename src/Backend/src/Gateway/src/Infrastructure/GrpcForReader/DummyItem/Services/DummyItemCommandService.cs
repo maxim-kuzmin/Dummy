@@ -5,7 +5,7 @@
 /// </summary>
 /// <param name="_grpcClient">Клиент gRPC.</param>
 public class DummyItemCommandService(
-  WriterDummyItemGrpcClient _grpcClient) : IDummyItemCommandService
+  DummyItemGrpcClient _grpcClient) : IDummyItemCommandService
 {
   /// <inheritdoc/>
   public async Task<Result<DummyItemSingleDTO>> Create(

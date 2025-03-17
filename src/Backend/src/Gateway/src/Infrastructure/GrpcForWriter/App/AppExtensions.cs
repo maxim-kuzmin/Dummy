@@ -21,7 +21,7 @@ public static class AppExtensions
     services.AddTransient<IDummyItemCommandService, DummyItemCommandService>();
     services.AddTransient<IDummyItemQueryService, DummyItemQueryService>();
 
-    services.AddGrpcClient<WriterAppGrpcClient>(
+    services.AddGrpcClient<AppGrpcClient>(
       AppSettings.AppClientName,
       grpcOptions =>
       {
@@ -33,7 +33,7 @@ public static class AppExtensions
         grpcChannelOptions.UnsafeUseInsecureChannelCallCredentials = true;
       });
 
-    services.AddGrpcClient<WriterDummyItemGrpcClient>(
+    services.AddGrpcClient<DummyItemGrpcClient>(
       AppSettings.DummyItemClientName,
       grpcOptions =>
       {

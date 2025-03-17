@@ -15,6 +15,7 @@ public static class DummyItemExtensions
   {
     return new DummyItemCreateActionRequest
     {
+      Id = command.Id,
       Name = command.Name,
     };
   }
@@ -29,7 +30,7 @@ public static class DummyItemExtensions
   {
     return new DummyItemDeleteActionRequest
     {
-      Id = command.Id,
+      ObjectId = command.ObjectId,
     };
   }
 
@@ -42,7 +43,7 @@ public static class DummyItemExtensions
   {
     return new DummyItemGetActionRequest
     {
-      Id = query.Id,
+      ObjectId = query.ObjectId,
     };
   }
 
@@ -84,7 +85,7 @@ public static class DummyItemExtensions
 
     foreach (var itemReply in reply.Items)
     {
-      DummyItemSingleDTO item = new(itemReply.Id, itemReply.Name);
+      DummyItemSingleDTO item = new(itemReply.ObjectId, itemReply.Id, itemReply.Name);
 
       items.Add(item);
     }
@@ -99,7 +100,7 @@ public static class DummyItemExtensions
   /// <returns>Объект передачи данных действия по получению фиктивного предмета.</returns>
   public static DummyItemSingleDTO ToDummyItemSingleDTO(this DummyItemGetActionReply reply)
   {
-    return new(reply.Id, reply.Name);
+    return new(reply.ObjectId, reply.Id, reply.Name);
   }
 
   /// <summary>
@@ -112,6 +113,7 @@ public static class DummyItemExtensions
   {
     return new DummyItemUpdateActionRequest
     {
+      ObjectId = command.ObjectId,
       Id = command.Id,
       Name = command.Name,
     };

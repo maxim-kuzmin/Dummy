@@ -7,7 +7,7 @@
 /// <param name="_grpcClient">Клиент gRPC.</param>
 public class DummyItemQueryService(
   AppSession _appSession,
-  WriterDummyItemGrpcClient _grpcClient) : IDummyItemQueryService
+  DummyItemGrpcClient _grpcClient) : IDummyItemQueryService
 {
   /// <inheritdoc/>
   public async Task<Result<DummyItemSingleDTO>> Get(

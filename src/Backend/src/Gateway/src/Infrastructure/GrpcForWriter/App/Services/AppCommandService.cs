@@ -4,7 +4,7 @@
 /// Сервис команд приложения.
 /// </summary>
 /// <param name="_grpcClient">Клиент gRPC.</param>
-public class AppCommandService(WriterAppGrpcClient _grpcClient) : IAppCommandService
+public class AppCommandService(AppGrpcClient _grpcClient) : IAppCommandService
 {
   /// <inheritdoc/>
   public async Task<Result<AppLoginActionDTO>> Login(

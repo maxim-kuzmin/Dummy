@@ -32,7 +32,7 @@ public static class DummyItemExtensions
   /// <returns>URL запроса HTTP.</returns>
   public static string ToHttpRequestUrl(this DummyItemGetActionQuery query)
   {
-    return $"{DummyItemSettings.Root}/{query.Id}";
+    return $"{DummyItemSettings.Root}/{query.ObjectId}";
   }
 
   /// <summary>
@@ -62,7 +62,7 @@ public static class DummyItemExtensions
   /// <returns>URL запроса HTTP.</returns>
   public static string ToHttpRequestUrl(this DummyItemDeleteActionCommand command)
   {
-    return $"{DummyItemSettings.Root}/{command.Id}";
+    return $"{DummyItemSettings.Root}/{command.ObjectId}";
   }
 
   /// <summary>
@@ -72,6 +72,6 @@ public static class DummyItemExtensions
   /// <returns>URL запроса HTTP.</returns>
   public static string ToHttpRequestUrl(this DummyItemUpdateActionCommand command)
   {
-    return $"{DummyItemSettings.Root}/{command.Id}";
+    return $"{DummyItemSettings.Root}/{command.ObjectId}";
   }
 }

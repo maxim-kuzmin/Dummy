@@ -26,7 +26,8 @@ message ActionRequestPage {
 }
 
 message DummyItemCreateActionRequest {
-    string name = 1;
+    int64 id = 1;
+    string name = 2;
 }
 
 message DummyItemDeleteActionRequest {
@@ -39,7 +40,8 @@ message DummyItemGetActionRequest {
 
 message DummyItemGetActionReply {
     string object_id = 1;
-    string name = 2;
+    int64 id = 2;
+    string name = 3;
 }
 
 message DummyItemGetListActionRequestFilter {
@@ -54,7 +56,8 @@ message DummyItemGetListActionRequest {
 
 message DummyItemGetListActionReplyItem {
     string object_id = 1;
-    string name = 2;
+    int64 id = 2;
+    string name = 3;
 }
 
 message DummyItemGetListActionReply {
@@ -64,5 +67,6 @@ message DummyItemGetListActionReply {
 
 message DummyItemUpdateActionRequest {
     string object_id = 1;
-    string name = 2;
+    int64 id = 2;
+    string name = 3;
 }
