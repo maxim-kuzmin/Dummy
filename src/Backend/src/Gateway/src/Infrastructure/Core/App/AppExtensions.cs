@@ -13,7 +13,7 @@ public static class AppExtensions
   /// <returns>Сервисы.</returns>
   public static IServiceCollection AddAppInfrastructureTiedToCore(
     this IServiceCollection services,
-    Microsoft.Extensions.Logging.ILogger logger)
+    ILogger logger)
   {
     logger.LogInformation("Added application infrastructure tied to Core");
 
