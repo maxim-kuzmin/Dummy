@@ -1,4 +1,4 @@
-﻿namespace Makc.Dummy.Gateway.Apps.WebApp.DummyItem.Endpoints.GetList;
+﻿namespace Makc.Dummy.Gateway.Apps.WebApp.DummyItem.EndpointsForReader.GetList;
 
 /// <summary>
 /// Настройки конечной точки получения списка фиктивных предметов.

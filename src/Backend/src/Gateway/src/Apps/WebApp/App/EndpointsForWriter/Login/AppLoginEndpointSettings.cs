@@ -1,4 +1,4 @@
-﻿namespace Makc.Dummy.Gateway.Apps.WebApp.App.Endpoints.Login;
+﻿namespace Makc.Dummy.Gateway.Apps.WebApp.App.EndpointsForWriter.Login;
 
 /// <summary>
 /// Настройки конечной точки входа в приложение.

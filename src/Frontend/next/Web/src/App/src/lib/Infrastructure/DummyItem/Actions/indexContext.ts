@@ -1,6 +1,6 @@
 const actions = {
   settings: {
-    rootPath: 'dummy-items',
+    rootPath: 'writer/dummy-items',
   },
 };
 

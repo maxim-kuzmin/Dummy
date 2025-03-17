@@ -1,4 +1,4 @@
-﻿namespace Makc.Dummy.Gateway.Apps.WebApp.DummyItem.Endpoints;
+﻿namespace Makc.Dummy.Gateway.Apps.WebApp.DummyItem.EndpointsForReader;
 
 /// <summary>
 /// Настройки конечных точек фиктивного предмета.
@@ -8,5 +8,5 @@ public class DummyItemEndpointsSettings
   /// <summary>
   /// Корень.
   /// </summary>
-  public const string Root = "/dummy-items";
+  public const string Root = "/reader/dummy-items";
 }

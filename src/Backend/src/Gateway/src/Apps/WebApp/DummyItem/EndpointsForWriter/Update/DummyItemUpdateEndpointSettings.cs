@@ -1,4 +1,4 @@
-﻿namespace Makc.Dummy.Gateway.Apps.WebApp.DummyItem.Endpoints.Update;
+﻿namespace Makc.Dummy.Gateway.Apps.WebApp.DummyItem.EndpointsForWriter.Update;
 
 /// <summary>
 /// Настройки конечной точки обновления фиктивного предмета.

@@ -1,4 +1,4 @@
-﻿namespace Makc.Dummy.Gateway.Apps.WebApp.App.Endpoints;
+﻿namespace Makc.Dummy.Gateway.Apps.WebApp.App.EndpointsForWriter;
 
 /// <summary>
 /// Настройки конечной точки приложения.
@@ -8,5 +8,5 @@ public class AppEndpointsSettings
   /// <summary>
   /// Корень.
   /// </summary>
-  public const string Root = "/app";
+  public const string Root = "/writer/app";
 }

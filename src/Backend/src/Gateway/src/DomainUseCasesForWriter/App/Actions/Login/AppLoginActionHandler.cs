@@ -16,12 +16,12 @@ public class AppLoginActionHandler(
   IOptionsSnapshot<AppConfigOptionsKeycloakSection> _appConfigOptionsKeycloakSectionSnapshot,
   IHttpClientFactory _httpClientFactory,
   IAppCommandService _service) :
-  ICommandHandler<AppLoginActionCommand, Result<AppLoginActionDTO>>
+  ICommandHandler<AppLoginActionCommand, Result<AppLoginDTO>>
 {
   /// <inheritdoc/>
-  public async Task<Result<AppLoginActionDTO>> Handle(AppLoginActionCommand request, CancellationToken cancellationToken)
+  public async Task<Result<AppLoginDTO>> Handle(AppLoginActionCommand request, CancellationToken cancellationToken)
   {
-    Result<AppLoginActionDTO> result;
+    Result<AppLoginDTO> result;
 
     var appConfigOptionsAuthenticationSection = _appConfigOptionsAuthenticationSectionSnapshot.Value;
 
@@ -49,8 +49,8 @@ public class AppLoginActionHandler(
 
       using var httpResponse = await httpResponseTask.ConfigureAwait(false);
 
-      var resultTask = httpResponse.ToResultFromJsonAsync<AppLoginActionDTO, TokenResponse>(
-        content => new AppLoginActionDTO(request.UserName, content.AccessToken ?? string.Empty),
+      var resultTask = httpResponse.ToResultFromJsonAsync<AppLoginDTO, TokenResponse>(
+        content => new AppLoginDTO(request.UserName, content.AccessToken ?? string.Empty),
         cancellationToken);
 
       result = await resultTask.ConfigureAwait(false);

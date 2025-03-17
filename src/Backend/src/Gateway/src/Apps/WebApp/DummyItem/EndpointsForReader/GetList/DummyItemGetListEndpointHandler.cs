@@ -1,11 +1,11 @@
-﻿namespace Makc.Dummy.Gateway.Apps.WebApp.DummyItem.Endpoints.GetList;
+﻿namespace Makc.Dummy.Gateway.Apps.WebApp.DummyItem.EndpointsForReader.GetList;
 
 /// <summary>
 /// Обработчик конечной точки получения списка фиктивных предметов.
 /// </summary>
 /// <param name="_mediator">Медиатор.</param>
 public class DummyItemGetListEndpointHandler(IMediator _mediator) :
-  Endpoint<DummyItemGetListEndpointRequest, IEnumerable<DummyItemSingleDTO>>
+  Endpoint<DummyItemGetListEndpointRequest, Result<DummyItemListDTOForReader>>
 {
   /// <inheritdoc/>
   public override void Configure()
@@ -15,12 +15,14 @@ public class DummyItemGetListEndpointHandler(IMediator _mediator) :
   }
 
   /// <inheritdoc/>
-  public override async Task HandleAsync(DummyItemGetListEndpointRequest request, CancellationToken cancellationToken)
+  public override async Task HandleAsync(
+    DummyItemGetListEndpointRequest request,
+    CancellationToken cancellationToken)
   {
-    DummyItemGetListActionQuery query = new(
+    DummyItemGetListActionQueryForReader query = new(
       new QueryPageSection(request.CurrentPage, request.ItemsPerPage),
-      request.SortField.ToDummyItemQuerySortSection(request.SortIsDesc),
-      new DummyItemGetListActionQueryFilter(request.Query));
+      request.SortField.ToDummyItemQuerySortSectionForReader(request.SortIsDesc),
+      new DummyItemGetListActionQueryFilterForReader(request.Query));
 
     var result = await _mediator.Send(query, cancellationToken);
 

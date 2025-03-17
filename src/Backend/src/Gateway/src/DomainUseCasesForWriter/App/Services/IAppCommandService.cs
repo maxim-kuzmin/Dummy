@@ -11,5 +11,5 @@ public interface IAppCommandService
   /// <param name="command">Команда.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Результат.</returns>
-  Task<Result<AppLoginActionDTO>> Login(AppLoginActionCommand command, CancellationToken cancellationToken);
+  Task<Result<AppLoginDTO>> Login(AppLoginActionCommand command, CancellationToken cancellationToken);
 }

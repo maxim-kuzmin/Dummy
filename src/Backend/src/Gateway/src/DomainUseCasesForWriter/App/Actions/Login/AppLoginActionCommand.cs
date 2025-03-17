@@ -7,4 +7,4 @@
 /// <param name="Password">Пароль.</param>
 public record AppLoginActionCommand(
   string UserName,
-  string Password) : ICommand<Result<AppLoginActionDTO>>;
+  string Password) : ICommand<Result<AppLoginDTO>>;

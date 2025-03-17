@@ -7,7 +7,7 @@
 public class AppCommandService(IHttpClientFactory _httpClientFactory) : IAppCommandService
 {
   /// <inheritdoc/>
-  public async Task<Result<AppLoginActionDTO>> Login(
+  public async Task<Result<AppLoginDTO>> Login(
     AppLoginActionCommand request,
     CancellationToken cancellationToken)
   {
@@ -22,7 +22,7 @@ public class AppCommandService(IHttpClientFactory _httpClientFactory) : IAppComm
 
     using var httpResponse = await httpResponseTask.ConfigureAwait(false);
 
-    var resultTask = httpResponse.ToResultFromJsonAsync<AppLoginActionDTO>(cancellationToken);
+    var resultTask = httpResponse.ToResultFromJsonAsync<AppLoginDTO>(cancellationToken);
 
     var result = await resultTask.ConfigureAwait(false);
 

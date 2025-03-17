@@ -1,6 +1,6 @@
 const actions = {
   settings: {
-    rootPath: 'app',
+    rootPath: 'writer/app',
   },
 };
 

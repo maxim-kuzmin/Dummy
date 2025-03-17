@@ -1,6 +1,7 @@
 ﻿global using Ardalis.Result;
 global using Grpc.Core;
 global using Makc.Dummy.Gateway.DomainUseCasesForWriter.App.Actions.Login;
+global using Makc.Dummy.Gateway.DomainUseCasesForWriter.App.DTOs;
 global using Makc.Dummy.Gateway.DomainUseCasesForWriter.App.Services;
 global using Makc.Dummy.Gateway.DomainUseCasesForWriter.DummyItem.Actions.Create;
 global using Makc.Dummy.Gateway.DomainUseCasesForWriter.DummyItem.Actions.Delete;

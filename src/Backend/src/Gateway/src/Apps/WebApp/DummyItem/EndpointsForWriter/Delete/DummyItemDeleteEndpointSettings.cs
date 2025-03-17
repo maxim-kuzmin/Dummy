@@ -1,4 +1,4 @@
-﻿namespace Makc.Dummy.Gateway.Apps.WebApp.DummyItem.Endpoints.Delete;
+﻿namespace Makc.Dummy.Gateway.Apps.WebApp.DummyItem.EndpointsForWriter.Delete;
 
 /// <summary>
 /// Настройки конечной точки удаления фиктивного предмета.

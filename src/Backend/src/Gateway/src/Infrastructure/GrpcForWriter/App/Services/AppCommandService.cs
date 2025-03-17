@@ -7,7 +7,7 @@
 public class AppCommandService(AppGrpcClient _grpcClient) : IAppCommandService
 {
   /// <inheritdoc/>
-  public async Task<Result<AppLoginActionDTO>> Login(
+  public async Task<Result<AppLoginDTO>> Login(
     AppLoginActionCommand command,
     CancellationToken cancellationToken)
   {

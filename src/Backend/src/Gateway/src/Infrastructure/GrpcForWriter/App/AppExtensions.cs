@@ -69,7 +69,7 @@ public static class AppExtensions
   /// </summary>
   /// <param name="reply">Ответ.</param>
   /// <returns>Объект передачи данных действия по входу в приложение.</returns>
-  public static AppLoginActionDTO ToAppLoginActionDTO(this AppLoginActionReply reply)
+  public static AppLoginDTO ToAppLoginActionDTO(this AppLoginActionReply reply)
   {
     return new(reply.UserName, reply.AccessToken);
   }

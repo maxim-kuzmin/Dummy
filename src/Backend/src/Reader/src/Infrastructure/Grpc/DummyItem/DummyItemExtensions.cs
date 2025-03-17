@@ -8,7 +8,7 @@ public static class DummyItemExtensions
   public static DummyItemCreateActionCommand ToDummyItemCreateActionCommand(
     this DummyItemCreateActionRequest request)
   {
-    return new(request.Name);
+    return new(request.Id, request.Name);
   }
 
   public static DummyItemDeleteActionCommand ToDummyItemDeleteActionCommand(
@@ -30,6 +30,7 @@ public static class DummyItemExtensions
     return new()
     {
       ObjectId = dto.ObjectId,
+      Id = dto.Id,
       Name = dto.Name,
     };
   }
@@ -61,6 +62,7 @@ public static class DummyItemExtensions
       DummyItemGetListActionReplyItem item = new()
       {
         ObjectId = itemDTO.ObjectId,
+        Id = itemDTO.Id,
         Name = itemDTO.Name,
       };
 
@@ -73,6 +75,6 @@ public static class DummyItemExtensions
   public static DummyItemUpdateActionCommand ToDummyItemUpdateActionCommand(
     this DummyItemUpdateActionRequest request)
   {
-    return new(request.ObjectId, request.Name);
+    return new(request.ObjectId, request.Id, request.Name);
   }
 }
