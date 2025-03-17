@@ -11,7 +11,7 @@ public class AppCommandService(IHttpClientFactory _httpClientFactory) : IAppComm
     AppLoginActionCommand request,
     CancellationToken cancellationToken)
   {
-    using var httpClient = _httpClientFactory.CreateClient(AppSettings.WriterDummyItemClientName);
+    using var httpClient = _httpClientFactory.CreateClient(AppSettings.DummyItemClientName);
 
     using var httpRequestContent = request.ToHttpRequestContent();
 

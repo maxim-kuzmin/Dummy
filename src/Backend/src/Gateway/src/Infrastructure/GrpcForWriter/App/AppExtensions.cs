@@ -6,13 +6,13 @@
 public static class AppExtensions
 {
   /// <summary>
-  /// Добавить инфраструктуру приложения, привязанную к Grpc.
+  /// Добавить инфраструктуру приложения, привязанную к Grpc для микросервиса Писатель.
   /// </summary>
   /// <param name="services">Сервисы.</param>
   /// <param name="logger">Логгер.</param>
-  /// <param name="writerEndpoint">Конечная точка писателя.</param>
+  /// <param name="writerEndpoint">Конечная точка микросервиса Писатель.</param>
   /// <returns>Сервисы.</returns>
-  public static IServiceCollection AddAppInfrastructureTiedToGrpc(
+  public static IServiceCollection AddAppInfrastructureTiedToGrpcForWriter(
       this IServiceCollection services,
       ILogger logger,
       string writerEndpoint)
@@ -22,7 +22,7 @@ public static class AppExtensions
     services.AddTransient<IDummyItemQueryService, DummyItemQueryService>();
 
     services.AddGrpcClient<WriterAppGrpcClient>(
-      AppSettings.WriterAppClientName,
+      AppSettings.AppClientName,
       grpcOptions =>
       {
         grpcOptions.Address = new Uri(writerEndpoint);
@@ -34,7 +34,7 @@ public static class AppExtensions
       });
 
     services.AddGrpcClient<WriterDummyItemGrpcClient>(
-      AppSettings.WriterDummyItemClientName,
+      AppSettings.DummyItemClientName,
       grpcOptions =>
       {
         grpcOptions.Address = new Uri(writerEndpoint);
@@ -45,7 +45,7 @@ public static class AppExtensions
         grpcChannelOptions.UnsafeUseInsecureChannelCallCredentials = true;
       });
 
-    logger.LogInformation("Added application infrastructure tied to Grpc");
+    logger.LogInformation("Added application infrastructure tied to Grpc for Writer");
 
     return services;
   }

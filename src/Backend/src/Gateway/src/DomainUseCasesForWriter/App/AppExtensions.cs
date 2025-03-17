@@ -6,7 +6,7 @@
 public static class AppExtensions
 {
   /// <summary>
-  /// Добавить варианты использования домена приложения.
+  /// Добавить варианты использования домена приложения для микросервиса Писатель.
   /// </summary>
   /// <param name="services">Сервисы.</param>
   /// <param name="logger">Логгер.</param>
@@ -14,7 +14,7 @@ public static class AppExtensions
   /// <param name="appConfigKeycloakSection">Раздел поставщика OpenID Keycloak в конфигурации приложения.</param>
   /// <param name="keycloakEndpoint">Конечная точка поставщика OpenID Keycloak.</param>
   /// <returns>Сервисы.</returns>
-  public static IServiceCollection AddAppDomainUseCases(
+  public static IServiceCollection AddAppDomainUseCasesForWriter(
     this IServiceCollection services,
     ILogger logger,
     IConfigurationSection? appConfigAuthenticationSection,
@@ -52,7 +52,7 @@ public static class AppExtensions
         });
     }
 
-    logger.LogInformation("Added application domain use cases");
+    logger.LogInformation("Added application domain use cases for Writer");
 
     return services;
   }

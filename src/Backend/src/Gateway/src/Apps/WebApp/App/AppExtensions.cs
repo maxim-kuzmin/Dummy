@@ -28,7 +28,7 @@ public static class AppExtensions
 
     var services = appBuilder.Services.Configure<AppConfigOptions>(appConfigSection)
       .AddAppDomainModel(logger)
-      .AddAppDomainUseCases(
+      .AddAppDomainUseCasesForWriter(
         logger,
         appConfigAuthenticationSection,
         appConfigKeycloakSection,
@@ -67,10 +67,10 @@ public static class AppExtensions
     switch (writer.Protocol)
     {
       case AppConfigOptionsProtocolEnum.Http:
-        services.AddAppInfrastructureTiedToHttp(logger, writer.HttpEndpoint);
+        services.AddAppInfrastructureTiedToHttpForWriter(logger, writer.HttpEndpoint);
         break;
       case AppConfigOptionsProtocolEnum.Grpc:
-        services.AddAppInfrastructureTiedToGrpc(logger, writer.GrpcEndpoint);
+        services.AddAppInfrastructureTiedToGrpcForWriter(logger, writer.GrpcEndpoint);
         break;
       default:
         throw new NotImplementedException();

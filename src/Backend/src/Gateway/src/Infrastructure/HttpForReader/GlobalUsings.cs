@@ -1,7 +1,5 @@
 ﻿global using System.Net.Http.Json;
 global using Ardalis.Result;
-global using Makc.Dummy.Gateway.DomainUseCasesForReader.App.Actions.Login;
-global using Makc.Dummy.Gateway.DomainUseCasesForReader.App.Services;
 global using Makc.Dummy.Gateway.DomainUseCasesForReader.DummyItem.Actions.Create;
 global using Makc.Dummy.Gateway.DomainUseCasesForReader.DummyItem.Actions.Delete;
 global using Makc.Dummy.Gateway.DomainUseCasesForReader.DummyItem.Actions.Get;
@@ -10,7 +8,6 @@ global using Makc.Dummy.Gateway.DomainUseCasesForReader.DummyItem.Actions.Update
 global using Makc.Dummy.Gateway.DomainUseCasesForReader.DummyItem.DTOs;
 global using Makc.Dummy.Gateway.DomainUseCasesForReader.DummyItem.Services;
 global using Makc.Dummy.Gateway.Infrastructure.HttpForReader.App;
-global using Makc.Dummy.Gateway.Infrastructure.HttpForReader.App.Services;
 global using Makc.Dummy.Gateway.Infrastructure.HttpForReader.DummyItem.Services;
 global using Makc.Dummy.Shared.Core.App;
 global using Makc.Dummy.Shared.Core.Http;

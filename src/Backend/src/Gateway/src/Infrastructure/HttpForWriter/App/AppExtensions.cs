@@ -6,13 +6,13 @@
 public static class AppExtensions
 {
   /// <summary>
-  /// Добавить инфраструктуру приложения, привязанную к Http.
+  /// Добавить инфраструктуру приложения, привязанную к Http для микросервиса Писатель.
   /// </summary>
   /// <param name="services">Сервисы.</param>
   /// <param name="logger">Логгер.</param>
-  /// <param name="writerEndpoint">Конечная точка писателя.</param>
+  /// <param name="writerEndpoint">Конечная точка микросервиса Писатель.</param>
   /// <returns>Сервисы.</returns>
-  public static IServiceCollection AddAppInfrastructureTiedToHttp(
+  public static IServiceCollection AddAppInfrastructureTiedToHttpForWriter(
       this IServiceCollection services,
       ILogger logger,
       string writerEndpoint)
@@ -24,7 +24,7 @@ public static class AppExtensions
     const string userAgent = nameof(Dummy);
 
     services.AddHttpClient(
-      AppSettings.WriterDummyItemClientName,
+      AppSettings.DummyItemClientName,
       httpClient =>
       {
         httpClient.BaseAddress = new Uri(writerEndpoint);
@@ -36,7 +36,7 @@ public static class AppExtensions
         ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
       });
 
-    logger.LogInformation("Added application infrastructure tied to Http");
+    logger.LogInformation("Added application infrastructure tied to Http for Writer");
 
     return services;
   }

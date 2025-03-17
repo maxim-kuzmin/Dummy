@@ -16,7 +16,7 @@ public class AppSettings
   public const string LoginActionUrl = $"{Root}/login";
 
   /// <summary>
-  /// Имя клиента фиктивного предмета писателя.
+  /// Имя клиента фиктивного предмета.
   /// </summary>
-  public const string WriterDummyItemClientName = "WriterDummyItem";
+  public const string DummyItemClientName = "ReaderDummyItem";
 }

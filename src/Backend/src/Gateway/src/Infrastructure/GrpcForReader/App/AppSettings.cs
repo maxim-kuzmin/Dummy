@@ -6,12 +6,7 @@
 public class AppSettings
 {
   /// <summary>
-  /// Имя клиента приложения писателя.
+  /// Имя клиента фиктивного предмета.
   /// </summary>
-  public const string WriterAppClientName = "WriterApp";
-
-  /// <summary>
-  /// Имя клиента фиктивного предмета писателя.
-  /// </summary>
-  public const string WriterDummyItemClientName = "WriterDummyItem";
+  public const string DummyItemClientName = "ReaderDummyItem";
 }

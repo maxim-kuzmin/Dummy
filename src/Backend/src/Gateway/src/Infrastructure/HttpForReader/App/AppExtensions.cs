@@ -6,28 +6,27 @@
 public static class AppExtensions
 {
   /// <summary>
-  /// Добавить инфраструктуру приложения, привязанную к Http.
+  /// Добавить инфраструктуру приложения, привязанную к Http для микросервиса Читатель.
   /// </summary>
   /// <param name="services">Сервисы.</param>
   /// <param name="logger">Логгер.</param>
-  /// <param name="writerEndpoint">Конечная точка писателя.</param>
+  /// <param name="readerEndpoint">Конечная точка микросервиса Читатель.</param>
   /// <returns>Сервисы.</returns>
-  public static IServiceCollection AddAppInfrastructureTiedToHttp(
+  public static IServiceCollection AddAppInfrastructureTiedToHttpForReader(
       this IServiceCollection services,
       ILogger logger,
-      string writerEndpoint)
+      string readerEndpoint)
   {
-    services.AddTransient<IAppCommandService, AppCommandService>();
     services.AddTransient<IDummyItemCommandService, DummyItemCommandService>();
     services.AddTransient<IDummyItemQueryService, DummyItemQueryService>();
 
     const string userAgent = nameof(Dummy);
 
     services.AddHttpClient(
-      AppSettings.WriterDummyItemClientName,
+      AppSettings.DummyItemClientName,
       httpClient =>
       {
-        httpClient.BaseAddress = new Uri(writerEndpoint);
+        httpClient.BaseAddress = new Uri(readerEndpoint);
 
         httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(userAgent);
       })
@@ -36,18 +35,8 @@ public static class AppExtensions
         ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
       });
 
-    logger.LogInformation("Added application infrastructure tied to Http");
+    logger.LogInformation("Added application infrastructure tied to Http for Reader");
 
     return services;
-  }
-
-  /// <summary>
-  /// Преобразовать к содержимому запроса HTTP.
-  /// </summary>
-  /// <param name="command">Команда.</param>
-  /// <returns>Содержимое запроса HTTP.</returns>
-  public static JsonContent ToHttpRequestContent(this AppLoginActionCommand command)
-  {
-    return JsonContent.Create(command);
   }
 }
