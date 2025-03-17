@@ -39,13 +39,13 @@ public static class DummyItemExtensions
   {
     DummyItemPageQuery pageQuery = new()
     {
-      Page = new QueryPageSection(request.Page.Number, request.Page.Size),
-      Filter = new DummyItemQueryFilterSection(request.Filter.FullTextSearchQuery)
+      Page = new(request.Page.Number, request.Page.Size),
+      Filter = new(request.Filter.FullTextSearchQuery)
     };
 
     return new(pageQuery)
     {
-      Sort = new QuerySortSection(nameof(DummyItemEntity.Id), true)
+      Sort = DummyItemSettings.DefaultQuerySortSection
     };
   }
 

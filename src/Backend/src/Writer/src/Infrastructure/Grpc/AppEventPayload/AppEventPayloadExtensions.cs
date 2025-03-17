@@ -40,13 +40,13 @@ public static class AppEventPayloadExtensions
   {
     AppEventPayloadPageQuery pageQuery = new()
     {
-      Page = new QueryPageSection(request.Page.Number, request.Page.Size),
-      Filter = new AppEventPayloadQueryFilterSection(request.Filter.FullTextSearchQuery)
+      Page = new(request.Page.Number, request.Page.Size),
+      Filter = new(request.Filter.FullTextSearchQuery)
     };
 
     return new(pageQuery)
     {
-      Sort = new QuerySortSection(nameof(AppEventPayloadEntity.Id), true)
+      Sort = AppEventPayloadSettings.DefaultQuerySortSection
     };
   }
 

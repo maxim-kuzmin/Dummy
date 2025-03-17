@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" />
+    <PackageReference Include="Microsoft.Extensions.Http" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\src\DomainUseCases\Makc.Dummy.Shared.DomainUseCases.csproj" />
+    <ProjectReference Include="..\DomainModel\Makc.Dummy.Gateway.DomainModel.csproj" />
+  </ItemGroup>
+
+</Project>

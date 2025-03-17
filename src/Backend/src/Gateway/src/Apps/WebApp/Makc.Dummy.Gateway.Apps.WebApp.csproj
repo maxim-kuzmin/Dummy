@@ -24,7 +24,7 @@
     <ProjectReference Include="..\..\..\..\Shared\src\Infrastructure\CoreForOpenTelemetry\Makc.Dummy.Shared.Infrastructure.CoreForOpenTelemetry.csproj" />
     <ProjectReference Include="..\..\..\..\Shared\src\Infrastructure\CoreForOpenTelemetryInWeb\Makc.Dummy.Shared.Infrastructure.CoreForOpenTelemetryInWeb.csproj" />    
     <ProjectReference Include="..\..\Infrastructure\Core\Makc.Dummy.Gateway.Infrastructure.Core.csproj" />
-    <ProjectReference Include="..\..\Infrastructure\Grpc\Makc.Dummy.Gateway.Infrastructure.Grpc.csproj" />
-    <ProjectReference Include="..\..\Infrastructure\Http\Makc.Dummy.Gateway.Infrastructure.Http.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\GrpcForWriter\Makc.Dummy.Gateway.Infrastructure.GrpcForWriter.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\HttpForWriter\Makc.Dummy.Gateway.Infrastructure.HttpForWriter.csproj" />
   </ItemGroup>
 </Project>

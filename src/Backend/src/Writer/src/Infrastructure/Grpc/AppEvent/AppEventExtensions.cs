@@ -41,13 +41,13 @@ public static class AppEventExtensions
   {
     AppEventPageQuery pageQuery = new()
     {
-      Page = new QueryPageSection(request.Page.Number, request.Page.Size),
-      Filter = new AppEventQueryFilterSection(request.Filter.FullTextSearchQuery)
+      Page = new(request.Page.Number, request.Page.Size),
+      Filter = new(request.Filter.FullTextSearchQuery)
     };
 
     return new(pageQuery)
     {
-      Sort = new QuerySortSection(nameof(AppEventEntity.Id), true)
+      Sort = AppEventSettings.DefaultQuerySortSection
     };
   }
 

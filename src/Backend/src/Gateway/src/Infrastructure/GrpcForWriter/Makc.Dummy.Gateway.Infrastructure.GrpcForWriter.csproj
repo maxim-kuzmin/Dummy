@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <PackageReference Include="Grpc.AspNetCore" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Shared\src\Infrastructure\Grpc\Makc.Dummy.Shared.Infrastructure.Grpc.csproj" />
+    <ProjectReference Include="..\..\DomainUseCasesForWriter\Makc.Dummy.Gateway.DomainUseCasesForWriter.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf Include="App\AppService.proto" GrpcServices="Client" />
+    <Protobuf Include="DummyItem\DummyItemService.proto" GrpcServices="Client" />
+  </ItemGroup>
+
+</Project>

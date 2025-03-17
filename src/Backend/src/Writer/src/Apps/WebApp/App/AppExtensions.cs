@@ -92,7 +92,7 @@ public static class AppExtensions
     services
       .AddAppInfrastructureTiedToEntityFramework(logger, appDbSQLSettings, appConfigOptions.DbQueryORM)
       .AddAppInfrastructureTiedToGrpc(logger)
-      .AddAppInfrastructureTiedToRabbitMQ(logger, appConfigOptions.RabbitMQ);
+      .AddAppInfrastructureTiedToRabbitMQ(logger, appConfigOptionsRabbitMQSection: null);
 
     services.Configure<CookiePolicyOptions>(options =>
     {

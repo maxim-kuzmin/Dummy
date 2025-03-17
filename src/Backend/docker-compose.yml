@@ -44,6 +44,20 @@ services:
     networks:
       - network-backend
 
+  backend-reader-inbox-web-app:
+    container_name: ${MY_SERVICE_BACKEND_READER_WEB_APP_CONTAINER_NAME}
+    image: ${MY_SERVICE_BACKEND_READER_WEB_APP_IMAGE_NAME}
+    environment:
+      - App__Authentication__Key=${MY_SERVICE_BACKEND_READER_WEB_APP_CONFIG_AUTHENTICATION_KEY}
+      - App__MongoDB__Password=${MY_SERVICE_BACKEND_READER_WEB_APP_CONFIG_MONGODB_PASSWORD}
+      - App__MongoDB__Port=${MY_SERVICE_BACKEND_READER_WEB_APP_CONFIG_MONGODB_PORT}
+      - App__MongoDB__Server=${MY_SERVICE_BACKEND_READER_WEB_APP_CONFIG_MONGODB_SERVER}
+      - App__MongoDB__UserId=${MY_SERVICE_BACKEND_READER_WEB_APP_CONFIG_MONGODB_USERID}
+      - App__Observability__CollectorGrpcEndpoint=${MY_SERVICE_BACKEND_READER_WEB_APP_CONFIG_OBSERVABILITY_COLLECTOR_GRPC_ENDPOINT}
+      - App__Observability__CollectorHttpEndpoint=${MY_SERVICE_BACKEND_READER_WEB_APP_CONFIG_OBSERVABILITY_COLLECTOR_HTTP_ENDPOINT}
+    networks:
+      - network-backend
+
   backend-writer-outbox-cleaner-app:
     container_name: ${MY_SERVICE_BACKEND_WRITER_OUTBOX_CLEANER_APP_CONTAINER_NAME}
     image: ${MY_SERVICE_BACKEND_WRITER_OUTBOX_CLEANER_APP_IMAGE_NAME}

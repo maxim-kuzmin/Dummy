@@ -34,9 +34,4 @@ public record AppConfigOptions : AppConfigOptionsBase
   /// База данных PostgreSQL.
   /// </summary>
   public AppConfigOptionsDbPostgreSQLSection? PostgreSQL { get; set; }
-
-  /// <summary>
-  /// Брокер сообщений RabbitMQ.
-  /// </summary>
-  public AppConfigOptionsRabbitMQSection? RabbitMQ { get; set; }
 }
