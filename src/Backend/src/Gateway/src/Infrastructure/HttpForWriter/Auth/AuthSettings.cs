@@ -1,7 +1,7 @@
 ﻿namespace Makc.Dummy.Gateway.Infrastructure.HttpForWriter.Auth;
 
 /// <summary>
-/// Настройки приложения.
+/// Настройки аутентификации.
 /// </summary>
 public class AuthSettings
 {

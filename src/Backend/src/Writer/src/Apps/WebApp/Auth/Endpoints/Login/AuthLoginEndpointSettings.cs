@@ -1,9 +1,7 @@
-﻿using Makc.Dummy.Writer.Apps.WebApp.Auth.Endpoints;
-
-namespace Makc.Dummy.Writer.Apps.WebApp.Auth.Endpoints.Login;
+﻿namespace Makc.Dummy.Writer.Apps.WebApp.Auth.Endpoints.Login;
 
 /// <summary>
-/// Настройки конечной точки входа в приложение.
+/// Настройки конечной точки входа для аутентификации.
 /// </summary>
 public class AuthLoginEndpointSettings
 {

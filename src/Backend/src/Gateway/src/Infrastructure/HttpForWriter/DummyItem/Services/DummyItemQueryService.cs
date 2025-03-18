@@ -1,6 +1,4 @@
-﻿using Makc.Dummy.Gateway.Infrastructure.HttpForWriter.Auth;
-
-namespace Makc.Dummy.Gateway.Infrastructure.HttpForWriter.DummyItem.Services;
+﻿namespace Makc.Dummy.Gateway.Infrastructure.HttpForWriter.DummyItem.Services;
 
 /// <summary>
 /// Сервис запросов фиктивного предмета.

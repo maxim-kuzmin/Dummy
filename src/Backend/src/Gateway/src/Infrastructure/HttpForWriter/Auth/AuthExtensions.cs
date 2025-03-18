@@ -1,7 +1,7 @@
 ﻿namespace Makc.Dummy.Gateway.Infrastructure.HttpForWriter.Auth;
 
 /// <summary>
-/// Расширения приложения.
+/// Расширения аутентификации.
 /// </summary>
 public static class AuthExtensions
 {

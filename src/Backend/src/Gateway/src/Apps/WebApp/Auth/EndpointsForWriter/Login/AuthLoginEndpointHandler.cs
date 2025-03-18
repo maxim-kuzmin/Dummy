@@ -1,7 +1,4 @@
-﻿using Makc.Dummy.Gateway.DomainUseCases.Auth.Actions.Login;
-using Makc.Dummy.Gateway.DomainUseCases.Auth.DTOs;
-
-namespace Makc.Dummy.Gateway.Apps.WebApp.Auth.EndpointsForWriter.Login;
+﻿namespace Makc.Dummy.Gateway.Apps.WebApp.Auth.EndpointsForWriter.Login;
 
 /// <summary>
 /// Обработчик конечной точки входа для аутентификации.

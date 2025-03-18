@@ -1,8 +1,4 @@
-﻿using Makc.Dummy.Gateway.DomainUseCases.Auth.Actions.Login;
-using Makc.Dummy.Gateway.DomainUseCases.Auth.DTOs;
-using Makc.Dummy.Gateway.DomainUseCases.Auth.Services;
-
-namespace Makc.Dummy.Gateway.Infrastructure.HttpForKeycloak.App.Services;
+﻿namespace Makc.Dummy.Gateway.Infrastructure.HttpForKeycloak.App.Services;
 
 /// <summary>
 /// Сервис команд приложения.

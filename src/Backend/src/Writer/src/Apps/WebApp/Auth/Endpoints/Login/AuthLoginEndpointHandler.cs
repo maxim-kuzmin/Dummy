@@ -1,7 +1,7 @@
 ﻿namespace Makc.Dummy.Writer.Apps.WebApp.Auth.Endpoints.Login;
 
 /// <summary>
-/// Обработчик конечной точки входа в приложение.
+/// Обработчик конечной точки входа для аутентификации.
 /// </summary>
 /// <param name="_mediator">Медиатор.</param>
 public class AuthLoginEndpointHandler(IMediator _mediator) :

@@ -1,7 +1,7 @@
 ﻿namespace Makc.Dummy.Gateway.Infrastructure.HttpForWriter.Auth.Services;
 
 /// <summary>
-/// Сервис команд приложения.
+/// Сервис команд аутентификации.
 /// </summary>
 /// <param name="_httpClientFactory">Фабрика клиентов HTTP.</param>
 public class AuthCommandService(IHttpClientFactory _httpClientFactory) : IAuthCommandService
