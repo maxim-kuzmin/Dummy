@@ -3,7 +3,7 @@
 /// <summary>
 /// Сущность события приложения.
 /// </summary>
-public class AppEventEntity : EntityBaseWithIdAsStructPrimaryKey<long>, IAggregateRoot
+public class AppEventEntity : EntityBaseWithStructPrimaryKey<long>, IAggregateRoot
 {
   /// <summary>
   /// Токен конкуренции.
@@ -14,6 +14,11 @@ public class AppEventEntity : EntityBaseWithIdAsStructPrimaryKey<long>, IAggrega
   /// Когда создано.
   /// </summary>
   public DateTimeOffset CreatedAt { get; set; }
+
+  /// <summary>
+  /// Идентификатор.
+  /// </summary>
+  public long Id { get; set; }
 
   /// <summary>
   /// Опубликовано ли?
@@ -29,4 +34,10 @@ public class AppEventEntity : EntityBaseWithIdAsStructPrimaryKey<long>, IAggrega
   /// Полезные нагрузки.
   /// </summary>
   public IEnumerable<AppEventPayloadEntity>? Payloads { get; }
+
+  /// <inheritdoc/>
+  public sealed override long GetPrimaryKey()
+  {
+    return Id;
+  }
 }

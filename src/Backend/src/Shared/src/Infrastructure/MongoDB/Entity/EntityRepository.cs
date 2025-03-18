@@ -10,7 +10,7 @@ public class EntityRepository<TEntity>(
   IClientSessionHandle clientSessionHandle,
   IMongoCollection<TEntity> collection) :
   IEntityRepository<TEntity>
-  where TEntity : EntityBaseWithObjectIdAsStringPrimaryKey
+  where TEntity : EntityBaseWithStringPrimaryKey
 {
   /// <summary>
   /// Описатель сессии клиента.
@@ -37,7 +37,7 @@ public class EntityRepository<TEntity>(
   {
     var task = Collection.DeleteOneAsync(
       ClientSessionHandle,
-      x => x.GetObjectId() == entity.GetObjectId(),
+      x => x.GetPrimaryKey() == entity.GetPrimaryKey(),
       cancellationToken: cancellationToken);
 
     await task.ConfigureAwait(false);
@@ -46,7 +46,7 @@ public class EntityRepository<TEntity>(
   /// <inheritdoc/>
   public async Task<TEntity?> GetByObjectIdAsync(string objectId, CancellationToken cancellationToken)
   {
-    var task = Collection.Find(ClientSessionHandle, x => x.GetObjectId() == objectId)
+    var task = Collection.Find(ClientSessionHandle, x => x.GetPrimaryKey() == objectId)
       .FirstOrDefaultAsync(cancellationToken);
 
     var result = await task.ConfigureAwait(false);
@@ -59,7 +59,7 @@ public class EntityRepository<TEntity>(
   {
     var task = Collection.ReplaceOneAsync(
       ClientSessionHandle,
-      x => x.GetObjectId() == entity.GetObjectId(),
+      x => x.GetPrimaryKey() == entity.GetPrimaryKey(),
       entity,
       cancellationToken: cancellationToken);
 

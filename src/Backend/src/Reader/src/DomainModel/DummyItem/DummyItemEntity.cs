@@ -3,7 +3,7 @@
 /// <summary>
 /// Сущность фиктивного предмета.
 /// </summary>
-public class DummyItemEntity : EntityBaseWithObjectIdAsStringPrimaryKey, IAggregateRoot
+public class DummyItemEntity : EntityBaseWithStringPrimaryKey, IAggregateRoot
 {
   /// <summary>
   /// Токен конкуренции.
@@ -26,7 +26,7 @@ public class DummyItemEntity : EntityBaseWithObjectIdAsStringPrimaryKey, IAggreg
   public string? ObjectId { get; set; }
 
   /// <inheritdoc/>
-  public sealed override string? GetObjectId()
+  public sealed override string? GetPrimaryKey()
   {
     return ObjectId;
   }

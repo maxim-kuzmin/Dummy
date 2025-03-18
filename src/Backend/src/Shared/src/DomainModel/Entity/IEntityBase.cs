@@ -14,8 +14,8 @@ public interface IEntityBase<TPrimaryKey> : IDeepCopyable
   TPrimaryKey GetDefaultPrimaryKey();
 
   /// <summary>
-  /// Получить первичный ключ.
+  /// Получить первичный ключ или значение по умолчанию, если первичный ключ равен null.
   /// </summary>
   /// <returns>Первичный ключ.</returns>
-  TPrimaryKey GetPrimaryKey();
+  TPrimaryKey GetPrimaryKeyOrDefault();
 }

@@ -3,7 +3,7 @@
 /// <summary>
 /// Сущность фиктивного предмета.
 /// </summary>
-public class DummyItemEntity : EntityBaseWithIdAsStructPrimaryKey<long>, IAggregateRoot
+public class DummyItemEntity : EntityBaseWithStructPrimaryKey<long>, IAggregateRoot
 {
   /// <summary>
   /// Токен конкуренции.
@@ -11,7 +11,18 @@ public class DummyItemEntity : EntityBaseWithIdAsStructPrimaryKey<long>, IAggreg
   public Guid ConcurrencyToken { get; set; }
 
   /// <summary>
+  /// Идентификатор.
+  /// </summary>
+  public long Id { get; set; }
+
+  /// <summary>
   /// Имя.
   /// </summary>
   public string Name { get; set; } = string.Empty;
+
+  /// <inheritdoc/>
+  public sealed override long GetPrimaryKey()
+  {
+    return Id;
+  }
 }

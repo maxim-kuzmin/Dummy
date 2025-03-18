@@ -3,7 +3,7 @@
 /// <summary>
 /// Сущность полезной нагрузки события приложения.
 /// </summary>
-public class AppEventPayloadEntity : EntityBaseWithIdAsStructPrimaryKey<long>, IAggregateRoot
+public class AppEventPayloadEntity : EntityBaseWithStructPrimaryKey<long>, IAggregateRoot
 {
   /// <summary>
   /// Идентификатор события приложения.
@@ -24,4 +24,15 @@ public class AppEventPayloadEntity : EntityBaseWithIdAsStructPrimaryKey<long>, I
   /// Событие.
   /// </summary>
   public AppEventEntity? Event { get; private set; }
+
+  /// <summary>
+  /// Идентификатор.
+  /// </summary>
+  public long Id { get; set; }
+
+  /// <inheritdoc/>
+  public sealed override long GetPrimaryKey()
+  {
+    return Id;
+  }
 }

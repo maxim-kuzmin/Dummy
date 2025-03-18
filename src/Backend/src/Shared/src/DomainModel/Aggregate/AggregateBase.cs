@@ -44,7 +44,7 @@ public class AggregateBase<TEntity, TPrimaryKey>(TEntity? _entityToChange = null
   /// <returns>Результат для удаления.</returns>
   public virtual AggregateResult<EntityChange<TEntity>> GetResultToDelete()
   {
-    if (_entityToChange == null || _entityToChange.GetPrimaryKey().Equals(_entityToChange.GetDefaultPrimaryKey()))
+    if (_entityToChange == null || _entityToChange.GetPrimaryKeyOrDefault().Equals(_entityToChange.GetDefaultPrimaryKey()))
     {
       return new AggregateResult<EntityChange<TEntity>>(null);
     }
@@ -60,7 +60,7 @@ public class AggregateBase<TEntity, TPrimaryKey>(TEntity? _entityToChange = null
   /// <returns>Результат для обновления.</returns>
   public virtual AggregateResult<EntityChange<TEntity>> GetResultToUpdate()
   {
-    if (_entityToChange == null || _entityToChange.GetPrimaryKey().Equals(_entityToChange.GetDefaultPrimaryKey()))
+    if (_entityToChange == null || _entityToChange.GetPrimaryKeyOrDefault().Equals(_entityToChange.GetDefaultPrimaryKey()))
     {
       return new AggregateResult<EntityChange<TEntity>>(null);
     }

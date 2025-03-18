@@ -17,5 +17,5 @@ public abstract class EntityBase<TPrimaryKey> : IEntityBase<TPrimaryKey>
   public abstract TPrimaryKey GetDefaultPrimaryKey();
 
   /// <inheritdoc/>
-  public abstract TPrimaryKey GetPrimaryKey();
+  public abstract TPrimaryKey GetPrimaryKeyOrDefault();
 }
