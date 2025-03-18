@@ -25,15 +25,18 @@ public static class AppExtensions
   {
     if (appConfigOptionsAuthenticationSection?.Type == AppConfigOptionsAuthenticationEnum.Keycloak)
     {
-      Guard.Against.Null(appConfigKeycloakSection);
-      Guard.Against.Null(keycloakEndpoint);
+      services.AddTransient<IAuthCommandService, AuthCommandService>();
+
+      Guard.Against.Null(appConfigKeycloakSection);      
 
       services.Configure<AppConfigOptionsKeycloakSection>(appConfigKeycloakSection);
+
+      Guard.Against.Null(keycloakEndpoint);
 
       const string userAgent = nameof(Dummy);
 
       services.AddHttpClient(
-        AppSettings.HttpClientName,
+        AuthSettings.HttpClientName,
         httpClient =>
         {
           httpClient.BaseAddress = new Uri(keycloakEndpoint);

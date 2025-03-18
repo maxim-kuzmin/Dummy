@@ -1,13 +1,13 @@
-﻿namespace Makc.Dummy.Gateway.Infrastructure.HttpForKeycloak.App.Services;
+﻿namespace Makc.Dummy.Gateway.Infrastructure.HttpForKeycloak.Auth.Services;
 
 /// <summary>
-/// Сервис команд приложения.
+/// Сервис команд аутентификации.
 /// </summary>
 /// <param name="_appConfigOptionsKeycloakSectionSnapshot">
 /// Снимок раздела поставщика OpenID Keycloak в параметрах конфигурации приложения.
 /// </param>
 /// <param name="_httpClientFactory">Фабрика клиентов HTTP.</param>
-public class AppCommandService(
+public class AuthCommandService(
   IOptionsSnapshot<AppConfigOptionsKeycloakSection> _appConfigOptionsKeycloakSectionSnapshot,
   IHttpClientFactory _httpClientFactory) : IAuthCommandService
 {
@@ -18,7 +18,7 @@ public class AppCommandService(
   {
     var appConfigOptionsKeycloakSection = _appConfigOptionsKeycloakSectionSnapshot.Value;
 
-    using var httpClient = _httpClientFactory.CreateClient(AppSettings.HttpClientName);
+    using var httpClient = _httpClientFactory.CreateClient(AuthSettings.HttpClientName);
 
     Dictionary<string, string> httpRequestBody = new()
     {

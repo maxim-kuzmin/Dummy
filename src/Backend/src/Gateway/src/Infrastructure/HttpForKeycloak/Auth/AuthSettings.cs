@@ -1,9 +1,9 @@
-﻿namespace Makc.Dummy.Gateway.Infrastructure.HttpForKeycloak.App;
+﻿namespace Makc.Dummy.Gateway.Infrastructure.HttpForKeycloak.Auth;
 
 /// <summary>
-/// Настройки приложения.
+/// Настройки аутентификации.
 /// </summary>
-public class AppSettings
+public class AuthSettings
 {
   /// <summary>
   /// Имя клиента HTTP.
