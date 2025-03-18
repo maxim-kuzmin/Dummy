@@ -2,7 +2,7 @@
 global using Ardalis.Result;
 global using Ardalis.SharedKernel;
 global using Makc.Dummy.Reader.DomainModel.DummyItem;
-global using Makc.Dummy.Reader.DomainUseCases.App.Db.Contexts;
+global using Makc.Dummy.Reader.DomainUseCases.App.Db.NoSQL.Contexts;
 global using Makc.Dummy.Reader.DomainUseCases.DummyItem.Actions.Get;
 global using Makc.Dummy.Reader.DomainUseCases.DummyItem.DTOs;
 global using Makc.Dummy.Reader.DomainUseCases.DummyItem.Entity;

@@ -48,7 +48,7 @@ services:
     networks:
       - network-backend
 
-  backend-reader-inbox-web-app:
+  backend-reader-web-app:
     container_name: ${MY_SERVICE_BACKEND_READER_WEB_APP_CONTAINER_NAME}
     image: ${MY_SERVICE_BACKEND_READER_WEB_APP_IMAGE_NAME}
     environment:

@@ -5,7 +5,7 @@
 /// </summary>
 /// <param name="_mediator">Медиатор.</param>
 public class AuthLoginEndpointHandler(IMediator _mediator) :
-  Endpoint<AuthLoginActionCommand, Result<AuthLoginDTO>>
+  Endpoint<AuthLoginActionCommand, AuthLoginDTO>
 {
   /// <inheritdoc/>
   public override void Configure()

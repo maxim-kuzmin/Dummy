@@ -99,7 +99,7 @@ from
 select
   count(*)
 from
-  "{{sAppEventPayload.Schema}}"."{{sAppEventPayload.Table}}"
+  "{{sAppEventPayload.Schema}}"."{{sAppEventPayload.Table}}" aep
 """);
 
     result.TextBuilder.AppendLine(dbCommandForFilter.ToString());

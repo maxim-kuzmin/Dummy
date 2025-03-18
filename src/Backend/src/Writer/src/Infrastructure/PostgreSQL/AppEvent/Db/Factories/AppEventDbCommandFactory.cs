@@ -100,7 +100,7 @@ from
 select
   count(*)
 from
-  "{{sAppEvent.Schema}}"."{{sAppEvent.Table}}"
+  "{{sAppEvent.Schema}}"."{{sAppEvent.Table}}" ae
 """);
 
     result.TextBuilder.AppendLine(dbCommandForFilter.ToString());

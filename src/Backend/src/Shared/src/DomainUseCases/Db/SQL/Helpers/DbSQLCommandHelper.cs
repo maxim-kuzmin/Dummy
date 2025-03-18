@@ -24,6 +24,6 @@ public abstract class DbSQLCommandHelper : IDbSQLCommandHelper
 
     var orderByField = funcToCreateOrderByField.Invoke(sort.Field);
 
-    dbCommand.TextBuilder.AppendLine($" order by {orderByField} {orderByDirection}");
+    dbCommand.TextBuilder.AppendLine($"order by {orderByField} {orderByDirection}");
   }
 }

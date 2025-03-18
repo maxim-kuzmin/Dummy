@@ -97,7 +97,7 @@ from
 select
   count_big(*)
 from
-  "{{sDummyItem.Schema}}"."{{sDummyItem.Table}}"
+  "{{sDummyItem.Schema}}"."{{sDummyItem.Table}}" di
 """);
 
     result.TextBuilder.AppendLine(dbCommandForFilter.ToString());

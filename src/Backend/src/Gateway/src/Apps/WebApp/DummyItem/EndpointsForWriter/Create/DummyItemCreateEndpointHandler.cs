@@ -5,7 +5,7 @@
 /// </summary>
 /// <param name="_mediator">Медиатор.</param>
 public class DummyItemCreateEndpointHandler(IMediator _mediator) :
-  Endpoint<DummyItemCreateActionCommandForWriter, Result<DummyItemSingleDTOForWriter>>
+  Endpoint<DummyItemCreateActionCommandForWriter, DummyItemSingleDTOForWriter>
 {
   /// <inheritdoc/>
   public override void Configure()

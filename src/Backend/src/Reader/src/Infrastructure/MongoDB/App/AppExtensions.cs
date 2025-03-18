@@ -46,6 +46,8 @@ public static class AppExtensions
 
     services.AddScoped(x => x.GetRequiredService<IMongoClient>().StartSession());
 
+    services.AddScoped<IAppDbNoSQLExecutionContext, AppDbExecutionContext>();
+
     services.AddTransient<IDummyItemEntityRepository, DummyItemEntityRepository>();    
 
     logger.LogInformation("Added application infrastructure tied to MongoDB");

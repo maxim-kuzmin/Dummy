@@ -15,14 +15,14 @@ public class DbCommandHelper : DbSQLCommandHelper
 
     if (page.Size > 0)
     {
-      dbCommand.TextBuilder.AppendLine(" limit @PageSize ");
+      dbCommand.TextBuilder.AppendLine("limit @PageSize");
 
       dbCommand.AddParameter("@PageSize", page.Size);
     }
 
     if (page.Number > 0)
     {
-      dbCommand.TextBuilder.AppendLine(" offset @PageNumber ");
+      dbCommand.TextBuilder.AppendLine("offset @PageNumber");
 
       dbCommand.AddParameter("@PageNumber", (page.Number - 1) * page.Size);
     }

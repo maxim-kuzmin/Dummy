@@ -8,5 +8,5 @@ public class DummyItemGetEndpointSettings
   /// <summary>
   /// Маршрут.
   /// </summary>
-  public const string Route = $"{DummyItemEndpointsSettings.Root}/{{objectId:string}}";
+  public const string Route = $"{DummyItemEndpointsSettings.Root}/{{objectId}}";
 }

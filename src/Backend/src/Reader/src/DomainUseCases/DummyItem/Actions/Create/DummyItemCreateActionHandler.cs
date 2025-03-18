@@ -8,7 +8,7 @@
 /// <param name="_repository">Репозиторий.</param>
 /// <param name="_service">Сервис.</param>
 public class DummyItemCreateActionHandler(
-  IAppDbExecutionContext _appDbExecutionContext,
+  IAppDbNoSQLExecutionContext _appDbExecutionContext,
   IDummyItemFactory _factory,
   IDummyItemEntityRepository _repository,
   IDummyItemCommandService _service) : ICommandHandler<DummyItemCreateActionCommand, Result<DummyItemSingleDTO>>
