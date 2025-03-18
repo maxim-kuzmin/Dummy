@@ -21,7 +21,7 @@ public static class AppExtensions
     services.AddTransient<IDummyItemQueryService, DummyItemQueryService>();
 
     services.AddGrpcClient<DummyItemGrpcClient>(
-      AppSettings.DummyItemClientName,
+      AppSettings.DummyItemGrpcClientName,
       grpcOptions =>
       {
         grpcOptions.Address = new Uri(readerEndpoint);

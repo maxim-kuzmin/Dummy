@@ -1,4 +1,4 @@
-﻿namespace Makc.Dummy.Gateway.DomainUseCasesForWriter.App.Actions.Login;
+﻿namespace Makc.Dummy.Gateway.DomainUseCases.App.Actions.Login;
 
 /// <summary>
 /// Команда действия по входу в приложение.

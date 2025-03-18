@@ -1,4 +1,4 @@
-﻿namespace Makc.Dummy.Gateway.DomainUseCasesForWriter.App.DTOs;
+﻿namespace Makc.Dummy.Gateway.DomainUseCases.App.DTOs;
 
 /// <summary>
 /// Объект передачи данных входа в приложение.

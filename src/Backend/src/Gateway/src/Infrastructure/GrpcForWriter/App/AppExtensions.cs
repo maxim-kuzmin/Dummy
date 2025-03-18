@@ -10,19 +10,27 @@ public static class AppExtensions
   /// </summary>
   /// <param name="services">Сервисы.</param>
   /// <param name="logger">Логгер.</param>
+  /// <param name="appConfigOptionsAuthenticationSection">
+  /// Раздел аутентификации в параметрах конфигурации приложения.
+  /// </param>
   /// <param name="writerEndpoint">Конечная точка микросервиса Писатель.</param>
   /// <returns>Сервисы.</returns>
   public static IServiceCollection AddAppInfrastructureTiedToGrpcForWriter(
       this IServiceCollection services,
       ILogger logger,
+      AppConfigOptionsAuthenticationSection? appConfigOptionsAuthenticationSection,
       string writerEndpoint)
   {
-    services.AddTransient<IAppCommandService, AppCommandService>();
+    if (appConfigOptionsAuthenticationSection?.Type == AppConfigOptionsAuthenticationEnum.JWT)
+    {
+      services.AddTransient<IAppCommandService, AppCommandService>();
+    }
+
     services.AddTransient<IDummyItemCommandService, DummyItemCommandService>();
     services.AddTransient<IDummyItemQueryService, DummyItemQueryService>();
 
     services.AddGrpcClient<AppGrpcClient>(
-      AppSettings.AppClientName,
+      AppSettings.AppGrpcClientName,
       grpcOptions =>
       {
         grpcOptions.Address = new Uri(writerEndpoint);
@@ -34,7 +42,7 @@ public static class AppExtensions
       });
 
     services.AddGrpcClient<DummyItemGrpcClient>(
-      AppSettings.DummyItemClientName,
+      AppSettings.DummyItemGrpcClientName,
       grpcOptions =>
       {
         grpcOptions.Address = new Uri(writerEndpoint);

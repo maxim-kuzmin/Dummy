@@ -23,7 +23,7 @@ public static class AppExtensions
     const string userAgent = nameof(Dummy);
 
     services.AddHttpClient(
-      AppSettings.DummyItemClientName,
+      AppSettings.HttpClientName,
       httpClient =>
       {
         httpClient.BaseAddress = new Uri(readerEndpoint);

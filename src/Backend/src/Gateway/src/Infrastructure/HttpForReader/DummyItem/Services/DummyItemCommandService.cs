@@ -12,7 +12,7 @@ public class DummyItemCommandService(
     DummyItemCreateActionCommand command,
     CancellationToken cancellationToken)
   {
-    using var httpClient = _httpClientFactory.CreateClient(AppSettings.DummyItemClientName);
+    using var httpClient = _httpClientFactory.CreateClient(AppSettings.HttpClientName);
 
     using var httpRequestContent = command.ToHttpRequestContent();
 
@@ -35,7 +35,7 @@ public class DummyItemCommandService(
     DummyItemDeleteActionCommand command,
     CancellationToken cancellationToken)
   {
-    using var httpClient = _httpClientFactory.CreateClient(AppSettings.DummyItemClientName);
+    using var httpClient = _httpClientFactory.CreateClient(AppSettings.HttpClientName);
 
     var httpResponseTask = httpClient.DeleteAsync(command.ToHttpRequestUrl(), cancellationToken);
 
@@ -49,7 +49,7 @@ public class DummyItemCommandService(
       DummyItemUpdateActionCommand command,
       CancellationToken cancellationToken)
   {
-    using var httpClient = _httpClientFactory.CreateClient(AppSettings.DummyItemClientName);
+    using var httpClient = _httpClientFactory.CreateClient(AppSettings.HttpClientName);
 
     using var httpRequestContent = command.ToHttpRequestContent();
 

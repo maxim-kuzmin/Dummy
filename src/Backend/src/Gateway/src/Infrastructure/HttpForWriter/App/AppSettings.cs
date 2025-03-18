@@ -16,7 +16,7 @@ public class AppSettings
   public const string LoginActionUrl = $"{Root}/login";
 
   /// <summary>
-  /// Имя клиента фиктивного предмета.
+  /// Имя клиента HTTP.
   /// </summary>
-  public const string DummyItemClientName = "WriterDummyItem";
+  public const string HttpClientName = "Writer";
 }

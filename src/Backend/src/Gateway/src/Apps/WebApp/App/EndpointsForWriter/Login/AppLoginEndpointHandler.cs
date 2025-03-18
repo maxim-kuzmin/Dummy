@@ -5,7 +5,7 @@
 /// </summary>
 /// <param name="_mediator">Медиатор.</param>
 public class AppLoginEndpointHandler(IMediator _mediator) :
-  Endpoint<AppLoginActionCommandForWriter, Result<AppLoginDTOForWriter>>
+  Endpoint<AppLoginActionCommand, Result<AppLoginDTO>>
 {
   /// <inheritdoc/>
   public override void Configure()
@@ -15,7 +15,7 @@ public class AppLoginEndpointHandler(IMediator _mediator) :
   }
 
   /// <inheritdoc/>
-  public override async Task HandleAsync(AppLoginActionCommandForWriter request, CancellationToken cancellationToken)
+  public override async Task HandleAsync(AppLoginActionCommand request, CancellationToken cancellationToken)
   {
     var result = await _mediator.Send(request, cancellationToken);
 

@@ -6,7 +6,7 @@
 public class AppSettings
 {
   /// <summary>
-  /// Имя клиента фиктивного предмета.
+  /// Имя клиента gRPC фиктивного предмета.
   /// </summary>
-  public const string DummyItemClientName = "ReaderDummyItem";
+  public const string DummyItemGrpcClientName = "ReaderDummyItem";
 }

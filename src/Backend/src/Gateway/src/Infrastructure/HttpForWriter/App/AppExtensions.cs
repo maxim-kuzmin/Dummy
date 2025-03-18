@@ -10,21 +10,29 @@ public static class AppExtensions
   /// </summary>
   /// <param name="services">Сервисы.</param>
   /// <param name="logger">Логгер.</param>
+  /// <param name="appConfigOptionsAuthenticationSection">
+  /// Раздел аутентификации в параметрах конфигурации приложения.
+  /// </param>
   /// <param name="writerEndpoint">Конечная точка микросервиса Писатель.</param>
   /// <returns>Сервисы.</returns>
   public static IServiceCollection AddAppInfrastructureTiedToHttpForWriter(
       this IServiceCollection services,
       ILogger logger,
+      AppConfigOptionsAuthenticationSection? appConfigOptionsAuthenticationSection,
       string writerEndpoint)
   {
-    services.AddTransient<IAppCommandService, AppCommandService>();
+    if (appConfigOptionsAuthenticationSection?.Type == AppConfigOptionsAuthenticationEnum.JWT)
+    {
+      services.AddTransient<IAppCommandService, AppCommandService>();
+    }
+
     services.AddTransient<IDummyItemCommandService, DummyItemCommandService>();
     services.AddTransient<IDummyItemQueryService, DummyItemQueryService>();
 
     const string userAgent = nameof(Dummy);
 
     services.AddHttpClient(
-      AppSettings.DummyItemClientName,
+      AppSettings.HttpClientName,
       httpClient =>
       {
         httpClient.BaseAddress = new Uri(writerEndpoint);

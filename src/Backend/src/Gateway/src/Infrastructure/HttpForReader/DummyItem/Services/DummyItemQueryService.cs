@@ -14,7 +14,7 @@ public class DummyItemQueryService(
       DummyItemGetActionQuery query,
       CancellationToken cancellationToken)
   {
-    using var httpClient = _httpClientFactory.CreateClient(AppSettings.DummyItemClientName);
+    using var httpClient = _httpClientFactory.CreateClient(AppSettings.HttpClientName);
 
     var httpResponseTask = httpClient.GetAsync(query.ToHttpRequestUrl(), cancellationToken);
 
@@ -32,7 +32,7 @@ public class DummyItemQueryService(
       DummyItemGetListActionQuery query,
       CancellationToken cancellationToken)
   {
-    using var httpClient = _httpClientFactory.CreateClient(AppSettings.DummyItemClientName);
+    using var httpClient = _httpClientFactory.CreateClient(AppSettings.HttpClientName);
 
     using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, query.ToHttpRequestUrl());
 

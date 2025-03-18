@@ -1,4 +1,4 @@
-﻿namespace Makc.Dummy.Gateway.DomainUseCasesForWriter.App;
+﻿namespace Makc.Dummy.Gateway.DomainUseCases.App;
 
 /// <summary>
 /// Расширения приложения.
@@ -6,12 +6,12 @@
 public static class AppExtensions
 {
   /// <summary>
-  /// Добавить варианты использования домена приложения для микросервиса Писатель.
+  /// Добавить варианты использования домена приложения.
   /// </summary>
   /// <param name="services">Сервисы.</param>
   /// <param name="logger">Логгер.</param>
   /// <returns>Сервисы.</returns>
-  public static IServiceCollection AddAppDomainUseCasesForWriter(
+  public static IServiceCollection AddAppDomainUseCases(
     this IServiceCollection services,
     ILogger logger)
   {
@@ -19,7 +19,7 @@ public static class AppExtensions
 
     services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
 
-    logger.LogInformation("Added application domain use cases for Writer");
+    logger.LogInformation("Added application domain use cases");
 
     return services;
   }

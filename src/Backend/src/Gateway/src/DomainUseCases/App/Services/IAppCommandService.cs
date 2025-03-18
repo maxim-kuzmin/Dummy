@@ -1,4 +1,4 @@
-﻿namespace Makc.Dummy.Gateway.DomainUseCasesForWriter.App.Services;
+﻿namespace Makc.Dummy.Gateway.DomainUseCases.App.Services;
 
 /// <summary>
 /// Интерфейс сервиса команд приложения.

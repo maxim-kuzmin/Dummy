@@ -1,0 +1,13 @@
+﻿global using System.Text.Json.Serialization;
+global using Ardalis.GuardClauses;
+global using Ardalis.Result;
+global using Makc.Dummy.Gateway.DomainUseCases.App.Actions.Login;
+global using Makc.Dummy.Gateway.DomainUseCases.App.DTOs;
+global using Makc.Dummy.Gateway.DomainUseCases.App.Services;
+global using Makc.Dummy.Shared.Core.App.Config.Options.Enums;
+global using Makc.Dummy.Shared.Core.App.Config.Options.Sections;
+global using Makc.Dummy.Shared.Core.Http;
+global using Microsoft.Extensions.Configuration;
+global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.Extensions.Logging;
+global using Microsoft.Extensions.Options;

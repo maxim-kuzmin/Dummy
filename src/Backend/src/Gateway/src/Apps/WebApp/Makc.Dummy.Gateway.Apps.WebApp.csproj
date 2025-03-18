@@ -26,6 +26,7 @@
     <ProjectReference Include="..\..\Infrastructure\Core\Makc.Dummy.Gateway.Infrastructure.Core.csproj" />
     <ProjectReference Include="..\..\Infrastructure\GrpcForReader\Makc.Dummy.Gateway.Infrastructure.GrpcForReader.csproj" />
     <ProjectReference Include="..\..\Infrastructure\GrpcForWriter\Makc.Dummy.Gateway.Infrastructure.GrpcForWriter.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\HttpForKeycloak\Makc.Dummy.Gateway.Infrastructure.HttpForKeycloak.csproj" />
     <ProjectReference Include="..\..\Infrastructure\HttpForReader\Makc.Dummy.Gateway.Infrastructure.HttpForReader.csproj" />
     <ProjectReference Include="..\..\Infrastructure\HttpForWriter\Makc.Dummy.Gateway.Infrastructure.HttpForWriter.csproj" />
   </ItemGroup>

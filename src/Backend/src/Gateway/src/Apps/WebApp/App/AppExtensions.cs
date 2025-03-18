@@ -15,8 +15,6 @@ public static class AppExtensions
   {
     var appConfigSection = appBuilder.Configuration.GetSection("App");
 
-    var appConfigAuthenticationSection = appConfigSection.GetSection("Authentication");
-
     var appConfigKeycloakSection = appConfigSection.GetSection("Keycloak");
 
     var appConfigOptions = new AppConfigOptions();
@@ -28,11 +26,8 @@ public static class AppExtensions
 
     var services = appBuilder.Services.Configure<AppConfigOptions>(appConfigSection)
       .AddAppDomainModel(logger)
-      .AddAppDomainUseCasesForWriter(
-        logger,
-        appConfigAuthenticationSection,
-        appConfigKeycloakSection,
-        appConfigOptions.Keycloak?.BaseUrl);
+      .AddAppDomainUseCases(logger)
+      .AddAppDomainUseCasesForWriter(logger);
 
     List<AppLoggerFuncToConfigure> funcsToConfigureAppLogger = [];
 
@@ -67,14 +62,26 @@ public static class AppExtensions
     switch (writer.Protocol)
     {
       case AppConfigOptionsProtocolEnum.Http:
-        services.AddAppInfrastructureTiedToHttpForWriter(logger, writer.HttpEndpoint);
+        services.AddAppInfrastructureTiedToHttpForWriter(
+          logger,
+          appConfigOptions.Authentication,
+          writer.HttpEndpoint);
         break;
       case AppConfigOptionsProtocolEnum.Grpc:
-        services.AddAppInfrastructureTiedToGrpcForWriter(logger, writer.GrpcEndpoint);
+        services.AddAppInfrastructureTiedToGrpcForWriter(
+          logger,
+          appConfigOptions.Authentication,
+          writer.GrpcEndpoint);
         break;
       default:
         throw new NotImplementedException();
     }
+
+    services.AddAppInfrastructureTiedToHttpForKeycloak(
+      logger,
+      appConfigOptions.Authentication,
+      appConfigKeycloakSection,
+      appConfigOptions.Keycloak?.BaseUrl);
 
     services.Configure<CookiePolicyOptions>(options =>
     {

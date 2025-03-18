@@ -1,11 +1,6 @@
 ﻿global using System.Reflection;
-global using System.Text.Json.Serialization;
-global using Ardalis.GuardClauses;
 global using Ardalis.Result;
 global using Ardalis.SharedKernel;
-global using Makc.Dummy.Gateway.DomainUseCasesForWriter.App.Actions.Login;
-global using Makc.Dummy.Gateway.DomainUseCasesForWriter.App.DTOs;
-global using Makc.Dummy.Gateway.DomainUseCasesForWriter.App.Services;
 global using Makc.Dummy.Gateway.DomainUseCasesForWriter.DummyItem.Actions.Create;
 global using Makc.Dummy.Gateway.DomainUseCasesForWriter.DummyItem.Actions.Delete;
 global using Makc.Dummy.Gateway.DomainUseCasesForWriter.DummyItem.Actions.Get;
@@ -14,13 +9,8 @@ global using Makc.Dummy.Gateway.DomainUseCasesForWriter.DummyItem.Actions.GetLis
 global using Makc.Dummy.Gateway.DomainUseCasesForWriter.DummyItem.Actions.Update;
 global using Makc.Dummy.Gateway.DomainUseCasesForWriter.DummyItem.DTOs;
 global using Makc.Dummy.Gateway.DomainUseCasesForWriter.DummyItem.Services;
-global using Makc.Dummy.Shared.Core.App.Config.Options.Enums;
-global using Makc.Dummy.Shared.Core.App.Config.Options.Sections;
-global using Makc.Dummy.Shared.Core.Http;
 global using Makc.Dummy.Shared.DomainUseCases.DTOs;
 global using Makc.Dummy.Shared.DomainUseCases.Query.Sections;
 global using MediatR;
-global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Logging;
-global using Microsoft.Extensions.Options;

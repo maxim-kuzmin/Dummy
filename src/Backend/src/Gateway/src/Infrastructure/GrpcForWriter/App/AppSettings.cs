@@ -6,12 +6,12 @@
 public class AppSettings
 {
   /// <summary>
-  /// Имя клиента приложения.
+  /// Имя клиента gRPC приложения.
   /// </summary>
-  public const string AppClientName = "WriterApp";
+  public const string AppGrpcClientName = "WriterApp";
 
   /// <summary>
-  /// Имя клиента фиктивного предмета.
+  /// Имя клиента gRPC фиктивного предмета.
   /// </summary>
-  public const string DummyItemClientName = "WriterDummyItem";
+  public const string DummyItemGrpcClientName = "WriterDummyItem";
 }
