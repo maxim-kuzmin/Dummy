@@ -37,7 +37,7 @@ public class EntityRepository<TEntity>(
   {
     var task = Collection.DeleteOneAsync(
       ClientSessionHandle,
-      x => x.ObjectId == entity.ObjectId,
+      x => x.GetObjectId() == entity.GetObjectId(),
       cancellationToken: cancellationToken);
 
     await task.ConfigureAwait(false);
@@ -46,7 +46,7 @@ public class EntityRepository<TEntity>(
   /// <inheritdoc/>
   public async Task<TEntity?> GetByObjectIdAsync(string objectId, CancellationToken cancellationToken)
   {
-    var task = Collection.Find(ClientSessionHandle, x => x.ObjectId == objectId)
+    var task = Collection.Find(ClientSessionHandle, x => x.GetObjectId() == objectId)
       .FirstOrDefaultAsync(cancellationToken);
 
     var result = await task.ConfigureAwait(false);
@@ -59,7 +59,7 @@ public class EntityRepository<TEntity>(
   {
     var task = Collection.ReplaceOneAsync(
       ClientSessionHandle,
-      x => x.ObjectId == entity.ObjectId,
+      x => x.GetObjectId() == entity.GetObjectId(),
       entity,
       cancellationToken: cancellationToken);
 

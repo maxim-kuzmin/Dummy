@@ -5,20 +5,21 @@
 /// </summary>
 public abstract class EntityBaseWithObjectIdAsStringPrimaryKey : EntityBase<string>  
 {
-  /// <summary>
-  /// Идентификатор.
-  /// </summary>
-  public string? ObjectId { get; set; }
-
   /// <inheritdoc/>
   public sealed override string GetDefaultPrimaryKey()
   {
     return string.Empty;
   }
 
+  /// <summary>
+  /// Получить идентификатор объекта.
+  /// </summary>
+  /// <returns>Идентификатор объекта.</returns>
+  public abstract string? GetObjectId();
+
   /// <inheritdoc/>
   public sealed override string GetPrimaryKey()
   {
-    return ObjectId ?? GetDefaultPrimaryKey();
+    return GetObjectId() ?? GetDefaultPrimaryKey();
   }
 }

@@ -46,7 +46,7 @@ public static class AppEventPayloadExtensions
 
     return new(pageQuery)
     {
-      Sort = AppEventPayloadSettings.DefaultQuerySortSection
+      Sort = new(request.Sort.Field, request.Sort.IsDesc)
     };
   }
 

@@ -11,7 +11,7 @@ public class AppEventPayloadGetListEndpointHandler(IMediator _mediator) :
   public override void Configure()
   {
     Get(AppEventPayloadGetListEndpointSettings.Route);
-    //AllowAnonymous();
+    AllowAnonymous();// //makc//!!!//AllowAnonymous();
   }
 
   /// <inheritdoc/>

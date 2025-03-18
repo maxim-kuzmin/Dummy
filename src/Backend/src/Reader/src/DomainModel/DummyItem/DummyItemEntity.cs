@@ -19,4 +19,15 @@ public class DummyItemEntity : EntityBaseWithObjectIdAsStringPrimaryKey, IAggreg
   /// Имя.
   /// </summary>
   public string Name { get; set; } = string.Empty;
+
+  /// <summary>
+  /// Идентификатор объекта.
+  /// </summary>
+  public string? ObjectId { get; set; }
+
+  /// <inheritdoc/>
+  public sealed override string? GetObjectId()
+  {
+    return ObjectId;
+  }
 }

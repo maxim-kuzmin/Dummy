@@ -45,7 +45,7 @@ public static class DummyItemExtensions
 
     return new(pageQuery)
     {
-      Sort = DummyItemSettings.DefaultQuerySortSection
+      Sort = new(request.Sort.Field, request.Sort.IsDesc)
     };
   }
 

@@ -11,7 +11,7 @@ public class DummyItemGetListEndpointHandler(IMediator _mediator) :
   public override void Configure()
   {
     Get(DummyItemGetListEndpointSettings.Route);
-    //AllowAnonymous();
+    AllowAnonymous();// //makc//!!!//AllowAnonymous();
   }
 
   /// <inheritdoc/>
