@@ -1,4 +1,6 @@
-﻿namespace Makc.Dummy.Gateway.Infrastructure.HttpForWriter.DummyItem.Services;
+﻿using Makc.Dummy.Gateway.Infrastructure.HttpForWriter.Auth;
+
+namespace Makc.Dummy.Gateway.Infrastructure.HttpForWriter.DummyItem.Services;
 
 /// <summary>
 /// Сервис запросов фиктивного предмета.
@@ -14,7 +16,7 @@ public class DummyItemQueryService(
       DummyItemGetActionQuery query,
       CancellationToken cancellationToken)
   {
-    using var httpClient = _httpClientFactory.CreateClient(AppSettings.HttpClientName);
+    using var httpClient = _httpClientFactory.CreateClient(AuthSettings.HttpClientName);
 
     var httpResponseTask = httpClient.GetAsync(query.ToHttpRequestUrl(), cancellationToken);
 
@@ -32,7 +34,7 @@ public class DummyItemQueryService(
       DummyItemGetListActionQuery query,
       CancellationToken cancellationToken)
   {
-    using var httpClient = _httpClientFactory.CreateClient(AppSettings.HttpClientName);
+    using var httpClient = _httpClientFactory.CreateClient(AuthSettings.HttpClientName);
 
     using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, query.ToHttpRequestUrl());
 

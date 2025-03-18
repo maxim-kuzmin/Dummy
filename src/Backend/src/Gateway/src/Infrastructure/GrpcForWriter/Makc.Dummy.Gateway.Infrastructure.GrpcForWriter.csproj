@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Protobuf Include="App\AppService.proto" GrpcServices="Client" />
+    <Protobuf Include="Auth\AuthService.proto" GrpcServices="Client" />
     <Protobuf Include="DummyItem\DummyItemService.proto" GrpcServices="Client" />
   </ItemGroup>
 

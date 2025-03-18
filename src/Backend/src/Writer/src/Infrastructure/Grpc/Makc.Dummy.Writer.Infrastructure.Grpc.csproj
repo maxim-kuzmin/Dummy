@@ -9,10 +9,10 @@
     <ProjectReference Include="..\..\DomainUseCases\Makc.Dummy.Writer.DomainUseCases.csproj" />
   </ItemGroup>
 
-  <ItemGroup>        
-    <Protobuf Include="App\AppService.proto" GrpcServices="Server" />
+  <ItemGroup>            
     <Protobuf Include="AppEvent\AppEventService.proto" GrpcServices="Server" />
     <Protobuf Include="AppEventPayload\AppEventPayloadService.proto" GrpcServices="Server" />
+    <Protobuf Include="Auth\AuthService.proto" GrpcServices="Server" />
     <Protobuf Include="DummyItem\DummyItemService.proto" GrpcServices="Server" />
   </ItemGroup>
 </Project>

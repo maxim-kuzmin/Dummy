@@ -33,6 +33,7 @@ global using Makc.Dummy.Writer.DomainUseCases.AppEventPayload.Queries;
 global using Makc.Dummy.Writer.DomainUseCases.AppEventPayload.Query.Sections;
 global using Makc.Dummy.Writer.DomainUseCases.AppEventPayload.Services;
 global using Makc.Dummy.Writer.DomainUseCases.AppOutbox.Actions.Save;
+global using Makc.Dummy.Writer.DomainUseCases.Auth.DTOs;
 global using Makc.Dummy.Writer.DomainUseCases.DummyItem.Db.SQL.Factories;
 global using Makc.Dummy.Writer.DomainUseCases.DummyItem.DTOs;
 global using Makc.Dummy.Writer.DomainUseCases.DummyItem.Entity;

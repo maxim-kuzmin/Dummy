@@ -1,4 +1,8 @@
-﻿namespace Makc.Dummy.Gateway.Infrastructure.HttpForKeycloak.App.Services;
+﻿using Makc.Dummy.Gateway.DomainUseCases.Auth.Actions.Login;
+using Makc.Dummy.Gateway.DomainUseCases.Auth.DTOs;
+using Makc.Dummy.Gateway.DomainUseCases.Auth.Services;
+
+namespace Makc.Dummy.Gateway.Infrastructure.HttpForKeycloak.App.Services;
 
 /// <summary>
 /// Сервис команд приложения.
@@ -9,11 +13,11 @@
 /// <param name="_httpClientFactory">Фабрика клиентов HTTP.</param>
 public class AppCommandService(
   IOptionsSnapshot<AppConfigOptionsKeycloakSection> _appConfigOptionsKeycloakSectionSnapshot,
-  IHttpClientFactory _httpClientFactory) : IAppCommandService
+  IHttpClientFactory _httpClientFactory) : IAuthCommandService
 {
   /// <inheritdoc/>
-  public async Task<Result<AppLoginDTO>> Login(
-    AppLoginActionCommand request,
+  public async Task<Result<AuthLoginDTO>> Login(
+    AuthLoginActionCommand request,
     CancellationToken cancellationToken)
   {
     var appConfigOptionsKeycloakSection = _appConfigOptionsKeycloakSectionSnapshot.Value;
@@ -38,8 +42,8 @@ public class AppCommandService(
 
     using var httpResponse = await httpResponseTask.ConfigureAwait(false);
 
-    var resultTask = httpResponse.ToResultFromJsonAsync<AppLoginDTO, TokenResponse>(
-      content => new AppLoginDTO(request.UserName, content.AccessToken ?? string.Empty),
+    var resultTask = httpResponse.ToResultFromJsonAsync<AuthLoginDTO, TokenResponse>(
+      content => new AuthLoginDTO(request.UserName, content.AccessToken ?? string.Empty),
       cancellationToken);
 
     var result = await resultTask.ConfigureAwait(false);

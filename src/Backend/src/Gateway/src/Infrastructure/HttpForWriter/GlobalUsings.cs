@@ -1,8 +1,8 @@
 ﻿global using System.Net.Http.Json;
 global using Ardalis.Result;
-global using Makc.Dummy.Gateway.DomainUseCases.App.Actions.Login;
-global using Makc.Dummy.Gateway.DomainUseCases.App.DTOs;
-global using Makc.Dummy.Gateway.DomainUseCases.App.Services;
+global using Makc.Dummy.Gateway.DomainUseCases.Auth.Actions.Login;
+global using Makc.Dummy.Gateway.DomainUseCases.Auth.DTOs;
+global using Makc.Dummy.Gateway.DomainUseCases.Auth.Services;
 global using Makc.Dummy.Gateway.DomainUseCasesForWriter.DummyItem.Actions.Create;
 global using Makc.Dummy.Gateway.DomainUseCasesForWriter.DummyItem.Actions.Delete;
 global using Makc.Dummy.Gateway.DomainUseCasesForWriter.DummyItem.Actions.Get;
@@ -10,8 +10,8 @@ global using Makc.Dummy.Gateway.DomainUseCasesForWriter.DummyItem.Actions.GetLis
 global using Makc.Dummy.Gateway.DomainUseCasesForWriter.DummyItem.Actions.Update;
 global using Makc.Dummy.Gateway.DomainUseCasesForWriter.DummyItem.DTOs;
 global using Makc.Dummy.Gateway.DomainUseCasesForWriter.DummyItem.Services;
-global using Makc.Dummy.Gateway.Infrastructure.HttpForWriter.App;
-global using Makc.Dummy.Gateway.Infrastructure.HttpForWriter.App.Services;
+global using Makc.Dummy.Gateway.Infrastructure.HttpForWriter.Auth;
+global using Makc.Dummy.Gateway.Infrastructure.HttpForWriter.Auth.Services;
 global using Makc.Dummy.Gateway.Infrastructure.HttpForWriter.DummyItem.Services;
 global using Makc.Dummy.Shared.Core.App;
 global using Makc.Dummy.Shared.Core.App.Config.Options.Enums;

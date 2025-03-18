@@ -23,7 +23,7 @@ public static class AppExtensions
   {
     if (appConfigOptionsAuthenticationSection?.Type == AppConfigOptionsAuthenticationEnum.JWT)
     {
-      services.AddTransient<IAppCommandService, AppCommandService>();
+      services.AddTransient<IAuthCommandService, AuthCommandService>();
     }
 
     services.AddTransient<IDummyItemCommandService, DummyItemCommandService>();
@@ -32,7 +32,7 @@ public static class AppExtensions
     const string userAgent = nameof(Dummy);
 
     services.AddHttpClient(
-      AppSettings.HttpClientName,
+      AuthSettings.HttpClientName,
       httpClient =>
       {
         httpClient.BaseAddress = new Uri(writerEndpoint);
@@ -47,15 +47,5 @@ public static class AppExtensions
     logger.LogInformation("Added application infrastructure tied to Http for Writer");
 
     return services;
-  }
-
-  /// <summary>
-  /// Преобразовать к содержимому запроса HTTP.
-  /// </summary>
-  /// <param name="command">Команда.</param>
-  /// <returns>Содержимое запроса HTTP.</returns>
-  public static JsonContent ToHttpRequestContent(this AppLoginActionCommand command)
-  {
-    return JsonContent.Create(command);
   }
 }

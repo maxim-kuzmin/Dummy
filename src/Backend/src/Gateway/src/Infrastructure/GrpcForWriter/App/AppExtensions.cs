@@ -23,14 +23,14 @@ public static class AppExtensions
   {
     if (appConfigOptionsAuthenticationSection?.Type == AppConfigOptionsAuthenticationEnum.JWT)
     {
-      services.AddTransient<IAppCommandService, AppCommandService>();
+      services.AddTransient<IAuthCommandService, AuthCommandService>();
     }
 
     services.AddTransient<IDummyItemCommandService, DummyItemCommandService>();
     services.AddTransient<IDummyItemQueryService, DummyItemQueryService>();
 
-    services.AddGrpcClient<AppGrpcClient>(
-      AppSettings.AppGrpcClientName,
+    services.AddGrpcClient<AuthGrpcClient>(
+      AuthSettings.AuthGrpcClientName,
       grpcOptions =>
       {
         grpcOptions.Address = new Uri(writerEndpoint);
@@ -42,7 +42,7 @@ public static class AppExtensions
       });
 
     services.AddGrpcClient<DummyItemGrpcClient>(
-      AppSettings.DummyItemGrpcClientName,
+      AuthSettings.DummyItemGrpcClientName,
       grpcOptions =>
       {
         grpcOptions.Address = new Uri(writerEndpoint);
@@ -56,29 +56,5 @@ public static class AppExtensions
     logger.LogInformation("Added application infrastructure tied to Grpc for Writer");
 
     return services;
-  }
-
-  /// <summary>
-  /// Преобразовать к запросу действия по входу в приложение.
-  /// </summary>
-  /// <param name="command">Команда.</param>
-  /// <returns>Запрос действия по входу в приложение.</returns>
-  public static AppLoginActionRequest ToAppLoginActionRequest(this AppLoginActionCommand command)
-  {
-    return new()
-    {
-      UserName = command.UserName,
-      Password = command.Password,
-    };
-  }
-
-  /// <summary>
-  /// Преобразовать к объекту передачи данных действия по входу в приложение.
-  /// </summary>
-  /// <param name="reply">Ответ.</param>
-  /// <returns>Объект передачи данных действия по входу в приложение.</returns>
-  public static AppLoginDTO ToAppLoginActionDTO(this AppLoginActionReply reply)
-  {
-    return new(reply.UserName, reply.AccessToken);
   }
 }
