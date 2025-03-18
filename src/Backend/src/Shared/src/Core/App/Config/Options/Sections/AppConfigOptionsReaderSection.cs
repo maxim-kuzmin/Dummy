@@ -1,9 +1,9 @@
 ﻿namespace Makc.Dummy.Shared.Core.App.Config.Options.Sections;
 
 /// <summary>
-/// Раздел микросервиса Писатель в параметрах конфигурации приложения.
+/// Раздел микросервиса Читатель в параметрах конфигурации приложения.
 /// </summary>
-public record AppConfigOptionsWriterSection
+public record AppConfigOptionsReaderSection
 {
   /// <summary>
   /// Протокол.

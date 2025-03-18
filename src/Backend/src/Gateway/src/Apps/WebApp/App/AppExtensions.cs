@@ -27,6 +27,7 @@ public static class AppExtensions
     var services = appBuilder.Services.Configure<AppConfigOptions>(appConfigSection)
       .AddAppDomainModel(logger)
       .AddAppDomainUseCases(logger)
+      .AddAppDomainUseCasesForReader(logger)
       .AddAppDomainUseCasesForWriter(logger);
 
     List<AppLoggerFuncToConfigure> funcsToConfigureAppLogger = [];
@@ -57,21 +58,19 @@ public static class AppExtensions
       .AddAppSharedInfrastructureTiedToCore(logger, appBuilder.Configuration, funcsToConfigureAppLogger)
       .AddAppInfrastructureTiedToCore(logger);
 
+    var authentication = Guard.Against.Null(appConfigOptions.Authentication);
+    var reader = Guard.Against.Null(appConfigOptions.Reader);
     var writer = Guard.Against.Null(appConfigOptions.Writer);
 
     switch (writer.Protocol)
     {
       case AppConfigOptionsProtocolEnum.Http:
-        services.AddAppInfrastructureTiedToHttpForWriter(
-          logger,
-          appConfigOptions.Authentication,
-          writer.HttpEndpoint);
+        services.AddAppInfrastructureTiedToHttpForReader(logger, reader.HttpEndpoint);
+        services.AddAppInfrastructureTiedToHttpForWriter(logger, authentication, writer.HttpEndpoint);
         break;
       case AppConfigOptionsProtocolEnum.Grpc:
-        services.AddAppInfrastructureTiedToGrpcForWriter(
-          logger,
-          appConfigOptions.Authentication,
-          writer.GrpcEndpoint);
+        services.AddAppInfrastructureTiedToGrpcForReader(logger, reader.GrpcEndpoint);
+        services.AddAppInfrastructureTiedToGrpcForWriter(logger, authentication, writer.GrpcEndpoint);
         break;
       default:
         throw new NotImplementedException();
@@ -79,7 +78,7 @@ public static class AppExtensions
 
     services.AddAppInfrastructureTiedToHttpForKeycloak(
       logger,
-      appConfigOptions.Authentication,
+      authentication,
       appConfigKeycloakSection,
       appConfigOptions.Keycloak?.BaseUrl);
 
@@ -91,9 +90,7 @@ public static class AppExtensions
 
     services
       .AddFastEndpoints()
-      .AddAuthorization();
-
-    var authentication = Guard.Against.Null(appConfigOptions.Authentication);
+      .AddAuthorization();    
 
     switch (authentication.Type)
     {
@@ -102,8 +99,6 @@ public static class AppExtensions
           .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
           .AddJwtBearer(options =>
           {
-            var authentication = Guard.Against.Null(appConfigOptions.Authentication);
-
             byte[] keyBytes = Encoding.UTF8.GetBytes(authentication.Key);
 
             var issuerSigningKey = authentication.GetSymmetricSecurityKey();

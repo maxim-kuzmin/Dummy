@@ -21,7 +21,12 @@ public record AppConfigOptions : AppConfigOptionsBase
   public AppConfigOptionsObservabilitySection? Observability { get; set; }
 
   /// <summary>
-  /// Писатель.
+  /// Микросервис Читатель.
+  /// </summary>
+  public AppConfigOptionsReaderSection? Reader { get; set; }
+
+  /// <summary>
+  /// Микросервис Писатель.
   /// </summary>
   public AppConfigOptionsWriterSection? Writer { get; set; }
 }
