@@ -28,6 +28,7 @@ message ActionRequestPage {
 message DummyItemCreateActionRequest {
     int64 id = 1;
     string name = 2;
+    string concurrency_token = 3;
 }
 
 message DummyItemDeleteActionRequest {
@@ -42,6 +43,7 @@ message DummyItemGetActionReply {
     string object_id = 1;
     int64 id = 2;
     string name = 3;
+    string concurrency_token = 4;
 }
 
 message DummyItemGetListActionRequestFilter {
@@ -58,6 +60,7 @@ message DummyItemGetListActionReplyItem {
     string object_id = 1;
     int64 id = 2;
     string name = 3;
+    string concurrency_token = 4;
 }
 
 message DummyItemGetListActionReply {
@@ -69,4 +72,5 @@ message DummyItemUpdateActionRequest {
     string object_id = 1;
     int64 id = 2;
     string name = 3;
+    string concurrency_token = 4;
 }

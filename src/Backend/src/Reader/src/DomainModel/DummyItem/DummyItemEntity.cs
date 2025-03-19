@@ -16,6 +16,11 @@ public class DummyItemEntity : EntityBaseWithStringPrimaryKey, IAggregateRoot
   public long Id { get; set; }
 
   /// <summary>
+  /// Идентификатор в виде строки.
+  /// </summary>
+  public string IdAsString { get; set; } = string.Empty;
+
+  /// <summary>
   /// Имя.
   /// </summary>
   public string Name { get; set; } = string.Empty;

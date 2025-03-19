@@ -44,6 +44,51 @@ public class DummyItemAggregate(
   }
 
   /// <summary>
+  /// Обновить токен конкуренции.
+  /// </summary>
+  /// <param name="value">Значение.</param>
+  public void UpdateConcurrencyToken(Guid value)
+  {
+    if (value == default)
+    {
+      string errorMessage = _resources.GetIdIsInvalidErrorMessage();
+
+      var appError = DummyItemErrorEnum.ConcurrencyTokenIsInvalid.ToAppError(errorMessage);
+
+      UpdateErrors.Add(appError);
+    }
+
+    var entity = GetEntityToUpdate();
+
+    entity.ConcurrencyToken = value;
+
+    MarkPropertyAsChanged(nameof(entity.ConcurrencyToken));
+  }
+
+  /// <summary>
+  /// Обновить идентификатор.
+  /// </summary>
+  /// <param name="value">Значение.</param>
+  public void UpdateId(long value)
+  {
+    if (value < 0)
+    {
+      string errorMessage = _resources.GetIdIsInvalidErrorMessage();
+
+      var appError = DummyItemErrorEnum.IdIsInvalid.ToAppError(errorMessage);
+
+      UpdateErrors.Add(appError);
+    }
+
+    var entity = GetEntityToUpdate();
+
+    entity.Id = value;
+    entity.IdAsString = value.ToString();
+
+    MarkPropertyAsChanged(nameof(entity.Id));
+  }
+
+  /// <summary>
   /// Обновить имя.
   /// </summary>
   /// <param name="value">Значение.</param>
@@ -63,22 +108,5 @@ public class DummyItemAggregate(
     entity.Name = value;
 
     MarkPropertyAsChanged(nameof(entity.Name));
-  }
-
-  /// <inheritdoc/>
-  protected sealed override void OnGetResultToCreate(DummyItemEntity entity)
-  {
-    RefreshConcurrencyToken(entity);
-  }
-
-  /// <inheritdoc/>
-  protected sealed override void OnGetResultToUpdate(DummyItemEntity entity)
-  {
-    RefreshConcurrencyToken(entity);
-  }
-
-  private static void RefreshConcurrencyToken(DummyItemEntity entity)
-  {
-    entity.ConcurrencyToken = Guid.NewGuid();
   }
 }

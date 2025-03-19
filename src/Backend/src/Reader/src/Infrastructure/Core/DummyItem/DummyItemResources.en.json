@@ -1,3 +1,5 @@
 ﻿{
+  "Error:ConcurrencyTokenIsInvalid": "Concurrency token is invalid",
+  "Error:IdIsInvalid": "Identifier is invalid",
   "Error:NameIsEmpty": "Name is empty"
 }

@@ -54,6 +54,12 @@ public class DummyItemEntityRepository(
     return result;
   }
 
+  /// <inheritdoc/>
+  protected sealed override Expression<Func<DummyItemEntity, bool>> CreateFilterByPrimaryKey(string? primaryKey)
+  {
+    return x => x.ObjectId == primaryKey;
+  }
+
   private static FilterDefinition<DummyItemEntity> CreateFilter(DummyItemQueryFilterSection? filterSection)
   {
     var builder = Builders<DummyItemEntity>.Filter;
@@ -64,7 +70,7 @@ public class DummyItemEntityRepository(
     {
       Regex re = new($".*{filterSection.FullTextSearchQuery}.*", RegexOptions.IgnoreCase);
 
-      result = builder.Or(builder.Regex(x => x.Id.ToString(), re), builder.Regex(x => x.Name, re));
+      result = builder.Or(builder.Regex(x => x.IdAsString, re), builder.Regex(x => x.Name, re));
     }
 
     return result;
@@ -77,6 +83,10 @@ public class DummyItemEntityRepository(
     if (field.EqualsToSortField(DummyItemSettings.SortFieldForId))
     {
       result = x => x.Id;
+    }
+    else if (field.EqualsToSortField(DummyItemSettings.SortFieldForName))
+    {
+      result = x => x.Name;
     }
     else
     {

@@ -1,4 +1,8 @@
-﻿namespace Makc.Dummy.Reader.Infrastructure.MongoDB.App;
+﻿using MongoDB.Bson.Serialization.Serializers;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Conventions;
+
+namespace Makc.Dummy.Reader.Infrastructure.MongoDB.App;
 
 /// <summary>
 /// Расширения приложения.
@@ -32,6 +36,8 @@ public static class AppExtensions
 
     services.AddSingleton<IMongoClient>(x =>
     {
+      BsonSerializer.RegisterSerializer(new GuidSerializer(GuidRepresentation.Standard));
+
       IEnumerable<IEntityConfiguration> entityConfigurations = [
         new DummyItemEntityConfiguration()
       ];

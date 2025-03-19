@@ -6,7 +6,7 @@
 /// <typeparam name="TEntity">Тип сущности.</typeparam>
 /// <param name="clientSessionHandle">Описатель сессии клиента.</param>
 /// <param name="collection">Коллекция.</param>
-public class EntityRepository<TEntity>(
+public abstract class EntityRepository<TEntity>(
   IClientSessionHandle clientSessionHandle,
   IMongoCollection<TEntity> collection) :
   IEntityRepository<TEntity>
@@ -35,10 +35,9 @@ public class EntityRepository<TEntity>(
   /// <inheritdoc/>
   public async Task DeleteAsync(TEntity entity, CancellationToken cancellationToken)
   {
-    var task = Collection.DeleteOneAsync(
-      ClientSessionHandle,
-      x => x.GetPrimaryKey() == entity.GetPrimaryKey(),
-      cancellationToken: cancellationToken);
+    Expression<Func<TEntity, bool>> filter = CreateFilterByPrimaryKey(entity.GetPrimaryKey());
+
+    var task = Collection.DeleteOneAsync(ClientSessionHandle, filter, cancellationToken: cancellationToken);
 
     await task.ConfigureAwait(false);
   }
@@ -46,8 +45,9 @@ public class EntityRepository<TEntity>(
   /// <inheritdoc/>
   public async Task<TEntity?> GetByObjectIdAsync(string objectId, CancellationToken cancellationToken)
   {
-    var task = Collection.Find(ClientSessionHandle, x => x.GetPrimaryKey() == objectId)
-      .FirstOrDefaultAsync(cancellationToken);
+    Expression<Func<TEntity, bool>> filter = CreateFilterByPrimaryKey(objectId);
+
+    var task = Collection.Find(ClientSessionHandle, filter).FirstOrDefaultAsync(cancellationToken);
 
     var result = await task.ConfigureAwait(false);
 
@@ -57,12 +57,12 @@ public class EntityRepository<TEntity>(
   /// <inheritdoc/>
   public async Task UpdateAsync(TEntity entity, CancellationToken cancellationToken)
   {
-    var task = Collection.ReplaceOneAsync(
-      ClientSessionHandle,
-      x => x.GetPrimaryKey() == entity.GetPrimaryKey(),
-      entity,
-      cancellationToken: cancellationToken);
+    Expression<Func<TEntity, bool>> filter = CreateFilterByPrimaryKey(entity.GetPrimaryKey());
+
+    var task = Collection.ReplaceOneAsync(ClientSessionHandle, filter, entity, cancellationToken: cancellationToken);
 
     await task.ConfigureAwait(false);
   }
+
+  protected abstract Expression<Func<TEntity, bool>> CreateFilterByPrimaryKey(string? primaryKey);
 }

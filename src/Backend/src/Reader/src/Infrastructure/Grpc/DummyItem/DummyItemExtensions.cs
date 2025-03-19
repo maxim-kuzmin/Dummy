@@ -8,7 +8,7 @@ public static class DummyItemExtensions
   public static DummyItemCreateActionCommand ToDummyItemCreateActionCommand(
     this DummyItemCreateActionRequest request)
   {
-    return new(request.Id, request.Name);
+    return new(request.Id, request.Name, Guid.Parse(request.ConcurrencyToken));
   }
 
   public static DummyItemDeleteActionCommand ToDummyItemDeleteActionCommand(
@@ -32,6 +32,7 @@ public static class DummyItemExtensions
       ObjectId = dto.ObjectId,
       Id = dto.Id,
       Name = dto.Name,
+      ConcurrencyToken = dto.ConcurrencyToken.ToString()
     };
   }
 
@@ -64,6 +65,7 @@ public static class DummyItemExtensions
         ObjectId = itemDTO.ObjectId,
         Id = itemDTO.Id,
         Name = itemDTO.Name,
+        ConcurrencyToken = itemDTO.ConcurrencyToken.ToString()
       };
 
       result.Items.Add(item);
@@ -75,6 +77,6 @@ public static class DummyItemExtensions
   public static DummyItemUpdateActionCommand ToDummyItemUpdateActionCommand(
     this DummyItemUpdateActionRequest request)
   {
-    return new(request.ObjectId, request.Id, request.Name);
+    return new(request.ObjectId, request.Id, request.Name, Guid.Parse(request.ConcurrencyToken));
   }
 }

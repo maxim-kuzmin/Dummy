@@ -1,3 +1,5 @@
 ﻿{
+  "Error:ConcurrencyTokenIsInvalid": "Токен конкуренции недействителен",
+  "Error:IdIsInvalid": "Идентификатор недействителен",
   "Error:NameIsEmpty": "Имя содержит пустое значение"
 }

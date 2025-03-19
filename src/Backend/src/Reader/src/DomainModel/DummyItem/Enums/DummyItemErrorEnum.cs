@@ -6,6 +6,14 @@
 public enum DummyItemErrorEnum
 {
   /// <summary>
+  /// Токен конкуренции недействителен.
+  /// </summary>
+  ConcurrencyTokenIsInvalid,
+  /// <summary>
+  /// Идентификатор недействителен.
+  /// </summary>
+  IdIsInvalid,
+  /// <summary>
   /// Имя пустое.
   /// </summary>
   NameIsEmpty

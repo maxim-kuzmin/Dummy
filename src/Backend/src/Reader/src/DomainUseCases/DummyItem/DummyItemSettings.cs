@@ -9,6 +9,11 @@ public class DummyItemSettings
   /// Поле сортировки для идентификатора.
   /// </summary>
   public const string SortFieldForId = "Id";
+  
+  /// <summary>
+  /// Поле сортировки для имени.
+  /// </summary>
+  public const string SortFieldForName = "Name";
 
   /// <summary>
   /// Раздел сортировки по умолчанию в запросе.

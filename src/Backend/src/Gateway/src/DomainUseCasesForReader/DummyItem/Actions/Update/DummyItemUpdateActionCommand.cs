@@ -6,7 +6,9 @@
 /// <param name="ObjectId">Идентификатор объекта.</param>
 /// <param name="Id">Идентификатор.</param>
 /// <param name="Name">Имя.</param>
+/// <param name="ConcurrencyToken">Токен конкуренции.</param>
 public record DummyItemUpdateActionCommand(
   string ObjectId,
   long Id,
-  string Name) : ICommand<Result<DummyItemSingleDTO>>;
+  string Name,
+  Guid ConcurrencyToken) : ICommand<Result<DummyItemSingleDTO>>;

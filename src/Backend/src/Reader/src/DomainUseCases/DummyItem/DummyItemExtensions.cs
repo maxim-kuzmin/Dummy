@@ -41,6 +41,6 @@ public static class DummyItemExtensions
   /// <returns>Объект передачи данных одиночного фиктивного предмета.</returns>
   public static DummyItemSingleDTO ToDummyItemSingleDTO(this DummyItemEntity entity)
   {
-    return new(entity.ObjectId, entity.Id, entity.Name);
+    return new(entity.ObjectId, entity.Id, entity.Name, entity.ConcurrencyToken);
   }
 }

@@ -5,6 +5,8 @@
 /// </summary>
 /// <param name="Id">Идентификатор.</param>
 /// <param name="Name">Имя.</param>
+/// <param name="ConcurrencyToken">Токен конкуренции.</param>
 public record DummyItemCreateActionCommand(
   long Id,
-  string Name) : ICommand<Result<DummyItemSingleDTO>>;
+  string Name,
+  Guid ConcurrencyToken) : ICommand<Result<DummyItemSingleDTO>>;
