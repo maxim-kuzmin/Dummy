@@ -5,4 +5,5 @@
 /// </summary>
 /// <param name="Id">Идентификатор.</param>
 /// <param name="Name">Имя.</param>
-public record DummyItemSingleDTO(long Id, string Name);
+/// <param name="ConcurrencyToken">Токен конкуренции.</param>
+public record DummyItemSingleDTO(long Id, string Name, Guid ConcurrencyToken);

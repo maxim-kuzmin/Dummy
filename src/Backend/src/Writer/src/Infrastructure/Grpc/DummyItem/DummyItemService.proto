@@ -40,6 +40,7 @@ message DummyItemGetActionRequest {
 message DummyItemGetActionReply {
     int64 id = 1;
     string name = 2;
+    string concurrency_token = 3;
 }
 
 message DummyItemGetListActionRequestFilter {
@@ -55,6 +56,7 @@ message DummyItemGetListActionRequest {
 message DummyItemGetListActionReplyItem {
     int64 id = 1;
     string name = 2;
+    string concurrency_token = 3;
 }
 
 message DummyItemGetListActionReply {

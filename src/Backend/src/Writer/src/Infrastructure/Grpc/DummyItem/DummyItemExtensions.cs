@@ -31,6 +31,7 @@ public static class DummyItemExtensions
     {
       Id = dto.Id,
       Name = dto.Name,
+      ConcurrencyToken = dto.ConcurrencyToken.ToString()
     };
   }
 
@@ -62,6 +63,7 @@ public static class DummyItemExtensions
       {
         Id = itemDTO.Id,
         Name = itemDTO.Name,
+        ConcurrencyToken = itemDTO.ConcurrencyToken.ToString()
       };
 
       result.Items.Add(item);
