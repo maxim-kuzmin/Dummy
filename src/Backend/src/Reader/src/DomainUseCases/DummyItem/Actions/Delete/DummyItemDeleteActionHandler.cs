@@ -53,7 +53,8 @@ public class DummyItemDeleteActionHandler(
       await _service.OnEntityChanged(aggregateResult.Data, cancellationToken).ConfigureAwait(false);
     }
 
-    await _appDbExecutionContext.Execute(FuncToExecute, cancellationToken).ConfigureAwait(false);// //makc//!!!//System.NotSupportedException: Standalone servers do not support transactions.//await _appDbExecutionContext.ExecuteInTransaction(FuncToExecute, cancellationToken).ConfigureAwait(false);
+    await _appDbExecutionContext.Execute(FuncToExecute, cancellationToken).ConfigureAwait(false);
+    // //makc//!!!//System.NotSupportedException: Standalone servers do not support transactions.//await _appDbExecutionContext.ExecuteInTransaction(FuncToExecute, cancellationToken).ConfigureAwait(false);
 
     return Result.Success();
   }
