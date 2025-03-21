@@ -1,4 +1,7 @@
+ARG APP_KEYFILE
+
 FROM mongo:latest
-RUN openssl rand -base64 756 > /etc/mongo-keyfile 
-RUN chmod 400 /etc/mongo-keyfile 
-RUN chown mongodb:mongodb /etc/mongo-keyfile
+ARG APP_KEYFILE
+RUN openssl rand -base64 756 > $APP_KEYFILE
+RUN chmod 400 $APP_KEYFILE
+RUN chown mongodb:mongodb $APP_KEYFILE

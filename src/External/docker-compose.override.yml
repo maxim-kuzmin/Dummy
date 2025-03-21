@@ -18,18 +18,19 @@ services:
     build:
       context: src/mongo
       dockerfile: Dockerfile
-    command: --keyFile /etc/mongo-keyfile --bind_ip_all
-    # command: --replSet rs0 --keyFile /etc/mongo-keyfile --bind_ip_all
-    # healthcheck:
-    #   test: echo "try { rs.status() } catch (err) { rs.initiate({_id:'rs0', members:[{_id:0, host:'${MY_LOCALHOST}:${MY_SERVICE_EXTERNAL_MONGO_HOST_PORT}'}]}) }"  | mongosh --port ${MY_SERVICE_EXTERNAL_MONGO_CONTAINER_PORT} -u ${MONGO_INITDB_ROOT_USERNAME} -p ${MONGO_INITDB_ROOT_PASSWORD} --authenticationDatabase admin --quiet
-    #   interval: 5s
-    #   timeout: 15s
-    #   start_period: 15s
-    #   retries: 10
+      args:
+        - APP_KEYFILE=${MY_SERVICE_EXTERNAL_MONGO_CONTAINER_KEYFILE}
+    command: --replSet rs0 --keyFile ${MY_SERVICE_EXTERNAL_MONGO_CONTAINER_KEYFILE} --bind_ip_all
+    healthcheck:
+      test: echo "try { rs.status() } catch (err) { rs.initiate({_id:'rs0', members:[{_id:0, host:'${MY_LOCALHOST}:${MY_SERVICE_EXTERNAL_MONGO_HOST_PORT}'}]}) }"  | mongosh --port ${MY_SERVICE_EXTERNAL_MONGO_CONTAINER_PORT} -u ${MONGO_INITDB_ROOT_USERNAME} -p ${MONGO_INITDB_ROOT_PASSWORD} --authenticationDatabase admin --quiet
+      interval: 5s
+      timeout: 15s
+      start_period: 15s
+      retries: 10
     volumes:
-      - ${MY_SERVICE_EXTERNAL_MONGO_HOST_FOLDER_DATA_CONFIGDB}:${MY_SERVICE_EXTERNAL_MONGO_CONTAINER_FOLDER_DATA_CONFIGDB}
-      - ${MY_SERVICE_EXTERNAL_MONGO_HOST_FOLDER_DATA_DB}:${MY_SERVICE_EXTERNAL_MONGO_CONTAINER_FOLDER_DATA_DB}
-      # - ${MY_SERVICE_EXTERNAL_MONGO_HOST_KEYFILE}:${MY_SERVICE_EXTERNAL_MONGO_CONTAINER_KEYFILE}
+      - _mongo_config:${MY_SERVICE_EXTERNAL_MONGO_CONTAINER_FOLDER_CONFIG}
+      - _mongo_data-configdb:${MY_SERVICE_EXTERNAL_MONGO_CONTAINER_FOLDER_DATA_CONFIGDB}
+      - _mongo_data-db:${MY_SERVICE_EXTERNAL_MONGO_CONTAINER_FOLDER_DATA_DB}
     ports:
       - ${MY_SERVICE_EXTERNAL_MONGO_HOST_PORT}:${MY_SERVICE_EXTERNAL_MONGO_CONTAINER_PORT}
 
@@ -64,3 +65,8 @@ services:
     ports:
       - ${MY_SERVICE_EXTERNAL_RABBITMQ_HOST_PORT}:${MY_SERVICE_EXTERNAL_RABBITMQ_CONTAINER_PORT}
       - ${MY_SERVICE_EXTERNAL_RABBITMQ_MANAGEMENT_HOST_PORT}:${MY_SERVICE_EXTERNAL_RABBITMQ_MANAGEMENT_CONTAINER_PORT}
+
+volumes:
+  _mongo_config:
+  _mongo_data-configdb:
+  _mongo_data-db:
