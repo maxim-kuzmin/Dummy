@@ -1,0 +1,21 @@
+services:
+  external-mongo:
+    container_name: ${MY_SERVICE_EXTERNAL_MONGO_CONTAINER_NAME}
+    environment:
+      - MONGO_INITDB_ROOT_PASSWORD
+      - MONGO_INITDB_ROOT_USERNAME
+    networks:
+      - network-backend
+
+  external-mongo-express:
+    container_name: ${MY_SERVICE_EXTERNAL_MONGO_EXPRESS_CONTAINER_NAME}
+    image: ${MY_SERVICE_EXTERNAL_MONGO_EXPRESS_IMAGE}
+    environment:
+      - ME_CONFIG_BASICAUTH_ENABLED
+      - ME_CONFIG_MONGODB_URL
+    networks:
+      - network-backend
+    depends_on:
+      external-mongo:
+        condition: service_started
+    restart: unless-stopped

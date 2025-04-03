@@ -1,0 +1,11 @@
+services:
+  external-rabbitmq:
+    container_name: ${MY_SERVICE_EXTERNAL_RABBITMQ_CONTAINER_NAME}
+    image: ${MY_SERVICE_EXTERNAL_RABBITMQ_IMAGE}
+    environment:
+      - RABBITMQ_DEFAULT_USER
+      - RABBITMQ_DEFAULT_PASS
+      - RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS
+    networks:
+      - network-backend
+

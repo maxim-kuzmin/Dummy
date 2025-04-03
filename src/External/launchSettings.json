@@ -4,6 +4,8 @@
       "commandName": "DockerCompose",
       "commandVersion": "1.0",
       "serviceActions": {
+        "external-kafka-broker": "StartWithoutDebugging",
+        "external-kafka-ui": "StartWithoutDebugging",
         "external-keycloak": "StartWithoutDebugging",
         "external-keycloak-postgres": "StartWithoutDebugging",
         "external-mongo": "StartWithoutDebugging",

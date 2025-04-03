@@ -1,0 +1,34 @@
+services:
+  external-keycloak:
+    container_name: ${MY_SERVICE_EXTERNAL_KEYCLOAK_CONTAINER_NAME}
+    image: ${MY_SERVICE_EXTERNAL_KEYCLOAK_IMAGE}
+    command: ${MY_SERVICE_EXTERNAL_KEYCLOAK_CONTAINER_COMMAND}
+    environment:
+      - KC_DB
+      - KC_DB_PASSWORD
+      - KC_DB_URL
+      - KC_DB_USERNAME
+      - KC_HEALTH_ENABLED
+      - KC_HOSTNAME
+      - KC_HOSTNAME_PORT
+      - KC_HOSTNAME_STRICT_BACKCHANNEL
+      - KC_HOSTNAME_STRICT_HTTPS
+      - KC_HTTP_ENABLED
+      - KEYCLOAK_ADMIN
+      - KEYCLOAK_ADMIN_PASSWORD
+    restart: unless-stopped
+    depends_on:
+      - external-postgres
+    networks:
+      - network-backend
+
+  external-keycloak-postgres:
+    container_name: ${MY_SERVICE_EXTERNAL_KEYCLOAK_POSTGRES_CONTAINER_NAME}
+    image: ${MY_SERVICE_EXTERNAL_KEYCLOAK_POSTGRES_IMAGE}
+    environment:
+      - PGDATA=${MY_SERVICE_EXTERNAL_KEYCLOAK_POSTGRES_CONTAINER_FOLDER_DATA}
+      - POSTGRES_DB=${MY_SERVICE_EXTERNAL_KEYCLOAK_POSTGRES_DB}
+      - POSTGRES_PASSWORD
+      - POSTGRES_USER
+    networks:
+      - network-backend

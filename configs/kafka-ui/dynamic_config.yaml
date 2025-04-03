@@ -1,0 +1,11 @@
+auth:
+  type: DISABLED
+kafka:
+  clusters:
+  - bootstrapServers: external-kafka-broker:9094
+    name: localhost
+    properties: {}
+    readOnly: false
+rbac:
+  roles: []
+webclient: {}

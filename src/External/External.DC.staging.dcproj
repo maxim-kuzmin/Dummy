@@ -11,12 +11,34 @@
 	<ItemGroup>
 		<None Include=".dockerignore" />
 		<None Include=".env.staging" />
-		<None Include="docker-compose.observability.override.yaml">
-			<DependentUpon>docker-compose.observability.yaml</DependentUpon>
+		<None Include="docker-compose-kafka.override.yml">
+			<DependentUpon>docker-compose-kafka.yml</DependentUpon>
 		</None>
-		<None Include="docker-compose.observability.yaml">
-			<DependentUpon>docker-compose.yml</DependentUpon>
+		<None Include="docker-compose-kafka.yml"/>
+		<None Include="docker-compose-keycloak.override.yml">
+			<DependentUpon>docker-compose-keycloak.yml</DependentUpon>
 		</None>
+		<None Include="docker-compose-keycloak.yml"/>
+		<None Include="docker-compose-mssqlserver.override.yml">
+			<DependentUpon>docker-compose-mssqlserver.yml</DependentUpon>
+		</None>
+		<None Include="docker-compose-mssqlserver.yml"/>
+		<None Include="docker-compose-mongo.override.yml">
+			<DependentUpon>docker-compose-mongo.yml</DependentUpon>
+		</None>
+		<None Include="docker-compose-mongo.yml"/>
+		<None Include="docker-compose-observability.override.yml">
+			<DependentUpon>docker-compose-observability.yml</DependentUpon>
+		</None>
+		<None Include="docker-compose-observability.yml"/>
+		<None Include="docker-compose-postgres.override.yml">
+			<DependentUpon>docker-compose-postgres.yml</DependentUpon>
+		</None>
+		<None Include="docker-compose-postgres.yml"/>
+		<None Include="docker-compose-rabbitmq.override.yml">
+			<DependentUpon>docker-compose-rabbitmq.yml</DependentUpon>
+		</None>
+		<None Include="docker-compose-rabbitmq.yml"/>
 		<None Include="docker-compose.override.yml">
 			<DependentUpon>docker-compose.yml</DependentUpon>
 		</None>

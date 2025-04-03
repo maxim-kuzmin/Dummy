@@ -1,107 +1,11 @@
 include:
-  - docker-compose.observability.yaml
-
-services:
-  external-keycloak:
-    container_name: ${MY_SERVICE_EXTERNAL_KEYCLOAK_CONTAINER_NAME}
-    image: ${MY_SERVICE_EXTERNAL_KEYCLOAK_IMAGE}
-    command: ${MY_SERVICE_EXTERNAL_KEYCLOAK_CONTAINER_COMMAND}
-    environment:
-      - KC_DB
-      - KC_DB_PASSWORD
-      - KC_DB_URL
-      - KC_DB_USERNAME
-      - KC_HEALTH_ENABLED
-      - KC_HOSTNAME
-      - KC_HOSTNAME_PORT
-      - KC_HOSTNAME_STRICT_BACKCHANNEL
-      - KC_HOSTNAME_STRICT_HTTPS
-      - KC_HTTP_ENABLED
-      - KEYCLOAK_ADMIN
-      - KEYCLOAK_ADMIN_PASSWORD
-    restart: unless-stopped
-    depends_on:
-      - external-postgres
-    networks:
-      - network-backend
-
-  external-keycloak-postgres:
-    container_name: ${MY_SERVICE_EXTERNAL_KEYCLOAK_POSTGRES_CONTAINER_NAME}
-    image: ${MY_SERVICE_EXTERNAL_KEYCLOAK_POSTGRES_IMAGE}
-    environment:
-      - PGDATA=${MY_SERVICE_EXTERNAL_KEYCLOAK_POSTGRES_CONTAINER_FOLDER_DATA}
-      - POSTGRES_DB=${MY_SERVICE_EXTERNAL_KEYCLOAK_POSTGRES_DB}
-      - POSTGRES_PASSWORD
-      - POSTGRES_USER
-    networks:
-      - network-backend
-
-  external-mongo:
-    container_name: ${MY_SERVICE_EXTERNAL_MONGO_CONTAINER_NAME}
-    environment:
-      - MONGO_INITDB_ROOT_PASSWORD
-      - MONGO_INITDB_ROOT_USERNAME
-    networks:
-      - network-backend
-
-  external-mongo-express:
-    container_name: ${MY_SERVICE_EXTERNAL_MONGO_EXPRESS_CONTAINER_NAME}
-    image: ${MY_SERVICE_EXTERNAL_MONGO_EXPRESS_IMAGE}
-    environment:
-      - ME_CONFIG_BASICAUTH_ENABLED
-      - ME_CONFIG_MONGODB_URL
-    networks:
-      - network-backend
-    depends_on:
-      external-mongo:
-        condition: service_started
-    restart: unless-stopped
-
-  external-mssqlserver:
-    container_name: ${MY_SERVICE_EXTERNAL_MSSQLSERVER_CONTAINER_NAME}
-    image: ${MY_SERVICE_EXTERNAL_MSSQLSERVER_IMAGE}
-    environment:
-      - ACCEPT_EULA
-      - MSSQL_BACKUP_DIR
-      - MSSQL_COLLATION
-      - MSSQL_DATA_DIR
-      - MSSQL_DUMP_DIR
-      - MSSQL_LOG_DIR
-      - MSSQL_PID
-      - MSSQL_SA_PASSWORD
-    networks:
-      - network-backend
-
-  external-pgadmin:
-    container_name: ${MY_SERVICE_EXTERNAL_PGADMIN_CONTAINER_NAME}
-    image: ${MY_SERVICE_EXTERNAL_PGADMIN_IMAGE}
-    environment:
-      - PGADMIN_CONFIG_SERVER_MODE
-      - PGADMIN_DEFAULT_EMAIL
-      - PGADMIN_DEFAULT_PASSWORD
-    networks:
-      - network-backend
-
-  external-postgres:
-    container_name: ${MY_SERVICE_EXTERNAL_POSTGRES_CONTAINER_NAME}
-    image: ${MY_SERVICE_EXTERNAL_POSTGRES_IMAGE}
-    environment:
-      - PGDATA=${MY_SERVICE_EXTERNAL_POSTGRES_CONTAINER_FOLDER_DATA}
-      - POSTGRES_DB=${MY_SERVICE_EXTERNAL_POSTGRES_DB}
-      - POSTGRES_PASSWORD
-      - POSTGRES_USER
-    networks:
-      - network-backend
-
-  external-rabbitmq:
-    container_name: ${MY_SERVICE_EXTERNAL_RABBITMQ_CONTAINER_NAME}
-    image: ${MY_SERVICE_EXTERNAL_RABBITMQ_IMAGE}
-    environment:
-      - RABBITMQ_DEFAULT_USER
-      - RABBITMQ_DEFAULT_PASS
-      - RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS
-    networks:
-      - network-backend
+  - docker-compose-kafka.yml
+  - docker-compose-keycloak.yml
+  - docker-compose-mssqlserver.yml
+  - docker-compose-mongo.yml
+  - docker-compose-observability.yml
+  - docker-compose-postgres.yml
+  - docker-compose-rabbitmq.yml
 
 networks:
   network-backend:

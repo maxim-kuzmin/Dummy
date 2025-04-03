@@ -1,72 +1,8 @@
 include:
-  - docker-compose.observability.override.yaml
-
-services:
-  external-keycloak:
-    volumes:
-      - ${MY_SERVICE_EXTERNAL_KEYCLOAK_HOST_FOLDER_IMPORT}:${MY_SERVICE_EXTERNAL_KEYCLOAK_CONTAINER_FOLDER_IMPORT}
-    ports:
-      - ${MY_SERVICE_EXTERNAL_KEYCLOAK_HOST_PORT}:${MY_SERVICE_EXTERNAL_KEYCLOAK_CONTAINER_PORT}
-
-  external-keycloak-postgres:
-    volumes:
-      - ${MY_SERVICE_EXTERNAL_KEYCLOAK_POSTGRES_HOST_FOLDER_DATA}:${MY_SERVICE_EXTERNAL_KEYCLOAK_POSTGRES_CONTAINER_FOLDER_DATA}
-    ports:
-      - ${MY_SERVICE_EXTERNAL_KEYCLOAK_POSTGRES_HOST_PORT}:${MY_SERVICE_EXTERNAL_KEYCLOAK_POSTGRES_CONTAINER_PORT}
-
-  external-mongo:
-    build:
-      context: src/mongo
-      dockerfile: Dockerfile
-      args:
-        - APP_KEYFILE=${MY_SERVICE_EXTERNAL_MONGO_CONTAINER_KEYFILE}
-    command: --replSet rs0 --keyFile ${MY_SERVICE_EXTERNAL_MONGO_CONTAINER_KEYFILE} --bind_ip_all
-    healthcheck:
-      test: echo "try { rs.status() } catch (err) { rs.initiate({_id:'rs0', members:[{_id:0, host:'${MY_LOCALHOST}:${MY_SERVICE_EXTERNAL_MONGO_HOST_PORT}'}]}) }"  | mongosh --port ${MY_SERVICE_EXTERNAL_MONGO_CONTAINER_PORT} -u ${MONGO_INITDB_ROOT_USERNAME} -p ${MONGO_INITDB_ROOT_PASSWORD} --authenticationDatabase admin --quiet
-      interval: 5s
-      timeout: 15s
-      start_period: 15s
-      retries: 10
-    volumes:
-      - _mongo_config:${MY_SERVICE_EXTERNAL_MONGO_CONTAINER_FOLDER_CONFIG}
-      - _mongo_data-configdb:${MY_SERVICE_EXTERNAL_MONGO_CONTAINER_FOLDER_DATA_CONFIGDB}
-      - _mongo_data-db:${MY_SERVICE_EXTERNAL_MONGO_CONTAINER_FOLDER_DATA_DB}
-    ports:
-      - ${MY_SERVICE_EXTERNAL_MONGO_HOST_PORT}:${MY_SERVICE_EXTERNAL_MONGO_CONTAINER_PORT}
-
-  external-mongo-express:
-    ports:
-      - ${MY_SERVICE_EXTERNAL_MONGO_EXPRESS_HOST_PORT}:${MY_SERVICE_EXTERNAL_MONGO_EXPRESS_CONTAINER_PORT}
-
-  external-mssqlserver:
-    volumes:
-      - ${MY_SERVICE_EXTERNAL_MSSQLSERVER_HOST_FOLDER_BACKUP}:${MY_SERVICE_EXTERNAL_MSSQLSERVER_CONTAINER_FOLDER_BACKUP}
-      - ${MY_SERVICE_EXTERNAL_MSSQLSERVER_HOST_FOLDER_DATA}:${MY_SERVICE_EXTERNAL_MSSQLSERVER_CONTAINER_FOLDER_DATA}
-      - ${MY_SERVICE_EXTERNAL_MSSQLSERVER_HOST_FOLDER_DUMP}:${MY_SERVICE_EXTERNAL_MSSQLSERVER_CONTAINER_FOLDER_DUMP}
-      - ${MY_SERVICE_EXTERNAL_MSSQLSERVER_HOST_FOLDER_LOG}:${MY_SERVICE_EXTERNAL_MSSQLSERVER_CONTAINER_FOLDER_LOG}
-    ports:
-      - ${MY_SERVICE_EXTERNAL_MSSQLSERVER_HOST_PORT}:${MY_SERVICE_EXTERNAL_MSSQLSERVER_CONTAINER_PORT}
-
-  external-pgadmin:
-    volumes:
-      - ${MY_SERVICE_EXTERNAL_PGADMIN_HOST_FOLDER}:${MY_SERVICE_EXTERNAL_PGADMIN_CONTAINER_FOLDER}
-    ports:
-      - ${MY_SERVICE_EXTERNAL_PGADMIN_HOST_PORT}:${MY_SERVICE_EXTERNAL_PGADMIN_CONTAINER_PORT}
-
-  external-postgres:
-    volumes:
-      - ${MY_SERVICE_EXTERNAL_POSTGRES_HOST_FOLDER_DATA}:${MY_SERVICE_EXTERNAL_POSTGRES_CONTAINER_FOLDER_DATA}
-    ports:
-      - ${MY_SERVICE_EXTERNAL_POSTGRES_HOST_PORT}:${MY_SERVICE_EXTERNAL_POSTGRES_CONTAINER_PORT}
-
-  external-rabbitmq:
-    volumes:
-      - ${MY_SERVICE_EXTERNAL_RABBITMQ_HOST_FOLDER}:${MY_SERVICE_EXTERNAL_RABBITMQ_CONTAINER_FOLDER}
-    ports:
-      - ${MY_SERVICE_EXTERNAL_RABBITMQ_HOST_PORT}:${MY_SERVICE_EXTERNAL_RABBITMQ_CONTAINER_PORT}
-      - ${MY_SERVICE_EXTERNAL_RABBITMQ_MANAGEMENT_HOST_PORT}:${MY_SERVICE_EXTERNAL_RABBITMQ_MANAGEMENT_CONTAINER_PORT}
-
-volumes:
-  _mongo_config:
-  _mongo_data-configdb:
-  _mongo_data-db:
+  - docker-compose-kafka.override.yml
+  - docker-compose-keycloak.override.yml
+  - docker-compose-mssqlserver.override.yml
+  - docker-compose-mongo.override.yml
+  - docker-compose-observability.override.yml
+  - docker-compose-postgres.override.yml
+  - docker-compose-rabbitmq.override.yml
