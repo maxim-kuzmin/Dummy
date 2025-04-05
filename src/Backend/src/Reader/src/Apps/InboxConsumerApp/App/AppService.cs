@@ -3,10 +3,10 @@
 /// <summary>
 /// Сервис приложения.
 /// </summary>
-/// <param name="_appMessageConsumer">Потребитель сообщений приложения.</param>
+/// <param name="_appMessageBus">Шина сообщений приложения.</param>
 /// <param name="_serviceScopeFactory">Фабрика области видимости сервисов.</param>
 public class AppService(
-  IAppMessageConsumer _appMessageConsumer,
+  IAppMessageBus _appMessageBus,
   IServiceScopeFactory _serviceScopeFactory) : BackgroundService
 {
   private IMediator? _mediator;
@@ -18,9 +18,11 @@ public class AppService(
 
     _mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
 
-    MessageReceiving[] receivings = [new(AppEventNameEnum.DummyItemChanged.ToString(), OnMessageReceived)];
+    await _appMessageBus.Connect(stoppingToken);
 
-    await _appMessageConsumer.Start(receivings, stoppingToken);
+    MessageReceiving receiving = new(AppEventNameEnum.DummyItemChanged.ToString(), OnMessageReceived);
+
+    await _appMessageBus.Subscribe(receiving, stoppingToken);
 
     await Task.Delay(Timeout.Infinite, stoppingToken);
   }

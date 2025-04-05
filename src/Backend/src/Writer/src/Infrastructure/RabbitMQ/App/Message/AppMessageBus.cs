@@ -1,13 +1,13 @@
 ﻿namespace Makc.Dummy.Writer.Infrastructure.RabbitMQ.App.Message;
 
 /// <summary>
-/// Поставщик сообщений приложения.
+/// Шина сообщений приложения.
 /// </summary>
 /// <param name="options">Параметры.</param>
 /// <param name="_logger">Логгер.</param>
-public class AppMessageProducer(
+public class AppMessageBus(
   AppConfigOptionsRabbitMQSection? options,
-  ILogger<AppMessageProducer> _logger) : MessageProducer(options, _logger), IAppMessageProducer
+  ILogger<AppMessageBus> _logger) : MessageBus(options, _logger), IAppMessageBus
 {
   /// <inheritdoc/>
   protected sealed override async Task Publish(
@@ -18,10 +18,12 @@ public class AppMessageProducer(
   {
     string exchange = $"Makc.Dummy.{receiver}";
 
-    await channel.ExchangeDeclareAsync(
+    var exchangeTask = channel.ExchangeDeclareAsync(
       exchange: exchange,
       type: ExchangeType.Fanout,
       cancellationToken: cancellationToken);
+
+    await exchangeTask.ConfigureAwait(false);
 
     var body = Encoding.UTF8.GetBytes(message);
 
@@ -30,14 +32,26 @@ public class AppMessageProducer(
       Persistent = true
     };
 
-    await channel.BasicPublishAsync(
+    var publishTask = channel.BasicPublishAsync(
       exchange: exchange,
       routingKey: string.Empty,
-      mandatory: true,      
+      mandatory: true,
       basicProperties: properties,
       body: body,
       cancellationToken: cancellationToken);
 
+    await publishTask.ConfigureAwait(false);
+
     _logger.LogInformation("MAKC:Published: {message}", message);
+  }
+
+  /// <inheritdoc/>
+  protected override Task Subscribe(
+    IChannel channel,
+    string sender,
+    MessageFuncToHandle funcToHandleMessage,
+    CancellationToken cancellationToken)
+  {
+    throw new NotImplementedException();
   }
 }

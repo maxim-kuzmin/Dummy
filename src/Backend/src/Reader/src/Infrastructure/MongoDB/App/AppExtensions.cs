@@ -1,8 +1,4 @@
-﻿using MongoDB.Bson.Serialization.Serializers;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Conventions;
-
-namespace Makc.Dummy.Reader.Infrastructure.MongoDB.App;
+﻿namespace Makc.Dummy.Reader.Infrastructure.MongoDB.App;
 
 /// <summary>
 /// Расширения приложения.

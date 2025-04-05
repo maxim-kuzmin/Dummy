@@ -21,6 +21,11 @@ public record AppConfigOptionsRabbitMQSection
   public int Port { get; set; }
 
   /// <summary>
+  /// Таймаут в миллисекундах для повторного подключения к брокеру сообщений в случае неудачи.
+  /// </summary>
+  public int TimeoutInMillisecondsToRetry { get; set; }
+
+  /// <summary>
   /// Имя пользователя.
   /// </summary>
   public string UserName { get; set; } = string.Empty;

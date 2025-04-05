@@ -1,14 +1,24 @@
 ﻿namespace Makc.Dummy.Reader.Infrastructure.RabbitMQ.App.Message;
 
 /// <summary>
-/// Потребитель сообщений приложения.
+/// Шина сообщений приложения.
 /// </summary>
 /// <param name="options">Параметры.</param>
 /// <param name="_logger">Логгер.</param>
-public class AppMessageConsumer(
+public class AppMessageBus(
   AppConfigOptionsRabbitMQSection? options,
-  ILogger<AppMessageConsumer> _logger) : MessageConsumer(options, _logger), IAppMessageConsumer
+  ILogger<AppMessageBus> _logger) : MessageBus(options, _logger), IAppMessageBus
 {
+  /// <inheritdoc/>
+  protected override Task Publish(
+    IChannel channel,
+    string receiver,
+    string message,
+    CancellationToken cancellationToken)
+  {
+    throw new NotImplementedException();
+  }
+
   /// <inheritdoc/>
   protected sealed override async Task Subscribe(
     IChannel channel,
@@ -20,12 +30,14 @@ public class AppMessageConsumer(
 
     string exchange = $"Makc.Dummy.{sender}";
 
-    await channel.ExchangeDeclareAsync(
+    var exchangeTask = channel.ExchangeDeclareAsync(
       exchange: exchange,
       type: ExchangeType.Fanout,
       cancellationToken: cancellationToken);
 
-    await channel.QueueDeclareAsync(
+    await exchangeTask.ConfigureAwait(false);
+
+    var queueTask = channel.QueueDeclareAsync(
       queue: queue,
       durable: true,
       exclusive: false,
@@ -33,17 +45,23 @@ public class AppMessageConsumer(
       arguments: null,
       cancellationToken: cancellationToken);
 
-    await channel.QueueBindAsync(
+    await queueTask.ConfigureAwait(false);
+
+    var bindingTask = channel.QueueBindAsync(
       queue: queue,
       exchange: exchange,
       routingKey: string.Empty,
       cancellationToken: cancellationToken);
 
-    await channel.BasicQosAsync(
+    await bindingTask.ConfigureAwait(false);
+
+    var qosTask = channel.BasicQosAsync(
       prefetchSize: 0,
       prefetchCount: 1,
       global: false,
       cancellationToken: cancellationToken);
+
+    await qosTask.ConfigureAwait(false);
 
     var consumer = new AsyncEventingBasicConsumer(channel);
 
@@ -53,16 +71,18 @@ public class AppMessageConsumer(
 
       var message = Encoding.UTF8.GetString(body);
 
-      await funcToHandleMessage.Invoke(sender, message, cancellationToken);      
+      await funcToHandleMessage.Invoke(sender, message, cancellationToken).ConfigureAwait(false);      
 
       // here channel could also be accessed as ((AsyncEventingBasicConsumer)sender).Channel
-      await channel.BasicAckAsync(deliveryTag: ea.DeliveryTag, multiple: false);
+      await channel.BasicAckAsync(deliveryTag: ea.DeliveryTag, multiple: false).ConfigureAwait(false);
     };
 
-    await channel.BasicConsumeAsync(
+    var consumingTask = channel.BasicConsumeAsync(
       queue: queue,
       autoAck: false,
       consumer: consumer,
       cancellationToken: cancellationToken);
+
+    await consumingTask.ConfigureAwait(false);
   }
 }

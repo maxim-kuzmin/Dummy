@@ -47,6 +47,7 @@ public static class AppExtensions
     services
       .AddAppSharedInfrastructureTiedToCore(logger, appBuilder.Configuration, funcsToConfigureAppLogger)
       .AddAppInfrastructureTiedToCore(logger)
+      .AddAppInfrastructureTiedToMongoDB(logger, appConfigOptions.MongoDB, appBuilder.Configuration)
       .AddAppInfrastructureTiedToRabbitMQ(logger, appConfigOptions.RabbitMQ);
 
     services.AddHostedService<AppService>();

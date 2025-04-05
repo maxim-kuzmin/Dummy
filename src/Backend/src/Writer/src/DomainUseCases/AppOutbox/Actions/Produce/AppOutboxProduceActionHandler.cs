@@ -3,8 +3,10 @@
 /// <summary>
 /// Обработчик действия по по отправке в очередь сообщений о неопубликованных событиях и пометки их как опубликованные.
 /// </summary>
+/// <param name="_appMessageBus">Шина сообщений приложения.</param>
+/// <param name="_logger">Логгер.</param>
 public class AppOutboxProduceActionHandler(
-  IAppMessageProducer _appMessageProducer,
+  IAppMessageBus _appMessageBus,
   ILogger<AppOutboxProduceActionHandler> _logger) : ICommandHandler<AppOutboxProduceActionCommand, Result>
 {
   /// <inheritdoc/>
@@ -18,7 +20,7 @@ public class AppOutboxProduceActionHandler(
       {
         MessageSending sending = new(AppEventNameEnum.DummyItemChanged.ToString(), DateTimeOffset.Now.ToString());
 
-        await _appMessageProducer.Publish(sending, cancellationToken);
+        await _appMessageBus.Publish(sending, cancellationToken);
 
         await sending.CompletionTask;
       }

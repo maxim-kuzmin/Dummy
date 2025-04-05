@@ -3,16 +3,16 @@
 /// <summary>
 /// Сервис приложения.
 /// </summary>
-/// <param name="_appMessageProducer">Поставщик сообщений приложения.</param>
+/// <param name="_appMessageBus">Шина сообщений приложения.</param>
 /// <param name="_serviceScopeFactory">Фабрика области видимости сервисов.</param>
 public class AppService(
-  IAppMessageProducer _appMessageProducer,
+  IAppMessageBus _appMessageBus,
   IServiceScopeFactory _serviceScopeFactory) : BackgroundService
 {
   /// <inheritdoc/>
   protected override async Task ExecuteAsync(CancellationToken stoppingToken)
   {
-    await _appMessageProducer.Start(stoppingToken);
+    await _appMessageBus.Connect(stoppingToken);
 
     using IServiceScope scope = _serviceScopeFactory.CreateScope();
 
