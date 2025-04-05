@@ -9,8 +9,8 @@
 		<DockerComposeEnvFilePath>.env.staging</DockerComposeEnvFilePath>
 	</PropertyGroup>
 	<ItemGroup>
-		<None Include=".dockerignore" />
 		<None Include=".env.staging" />
+		<None Include=".dockerignore" />
 		<None Include="docker-compose-kafka.override.yml">
 			<DependentUpon>docker-compose-kafka.yml</DependentUpon>
 		</None>

@@ -9,8 +9,8 @@
 		<DockerComposeEnvFilePath>.env.development</DockerComposeEnvFilePath>
 	</PropertyGroup>
 	<ItemGroup>
-		<None Include=".dockerignore" />
 		<None Include=".env.development" />
+		<None Include=".dockerignore" />
 		<None Include="docker-compose-kafka.override.yml">
 			<DependentUpon>docker-compose-kafka.yml</DependentUpon>
 		</None>
@@ -42,6 +42,6 @@
 		<None Include="docker-compose.override.yml">
 			<DependentUpon>docker-compose.yml</DependentUpon>
 		</None>
-		<None Include="docker-compose.yml" />		
+		<None Include="docker-compose.yml" />
 	</ItemGroup>
 </Project>

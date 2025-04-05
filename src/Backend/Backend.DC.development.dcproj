@@ -13,10 +13,22 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include=".env.development" />
+    <None Include=".dockerignore" />
+    <None Include="docker-compose-gateway.override.yml">
+      <DependentUpon>docker-compose-gateway.yml</DependentUpon>
+    </None>
+    <None Include="docker-compose-gateway.yml" />
+    <None Include="docker-compose-reader.override.yml">
+      <DependentUpon>docker-compose-reader.yml</DependentUpon>
+    </None>
+    <None Include="docker-compose-reader.yml" />
+    <None Include="docker-compose-writer.override.yml">
+      <DependentUpon>docker-compose-writer.yml</DependentUpon>
+    </None>
+    <None Include="docker-compose-writer.yml" />
     <None Include="docker-compose.override.yml">
       <DependentUpon>docker-compose.yml</DependentUpon>
     </None>
     <None Include="docker-compose.yml" />
-    <None Include=".dockerignore" />
   </ItemGroup>
 </Project>

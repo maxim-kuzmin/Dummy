@@ -9,8 +9,8 @@
 		<DockerComposeEnvFilePath>.env.production</DockerComposeEnvFilePath>
 	</PropertyGroup>
 	<ItemGroup>
-		<None Include=".dockerignore" />
 		<None Include=".env.production" />
+		<None Include=".dockerignore" />
 		<None Include="docker-compose-kafka.override.yml">
 			<DependentUpon>docker-compose-kafka.yml</DependentUpon>
 		</None>
