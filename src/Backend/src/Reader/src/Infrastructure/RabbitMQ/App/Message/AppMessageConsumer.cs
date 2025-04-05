@@ -3,88 +3,14 @@
 /// <summary>
 /// Потребитель сообщений приложения.
 /// </summary>
-public class AppMessageConsumer : IAppMessageConsumer
+/// <param name="options">Параметры.</param>
+/// <param name="_logger">Логгер.</param>
+public class AppMessageConsumer(
+  AppConfigOptionsRabbitMQSection? options,
+  ILogger<AppMessageConsumer> _logger) : MessageConsumer(options, _logger), IAppMessageConsumer
 {
-  private readonly ConnectionFactory _connectionFactory;
-
-  private readonly ILogger<AppMessageConsumer> _logger;
-
-  /// <summary>
-  /// Конструктор.
-  /// </summary>
-  /// <param name="options">Параметры.</param>
-  /// <param name="_logger">Логгер.</param>
-  public AppMessageConsumer(
-    AppConfigOptionsRabbitMQSection? options,
-    ILogger<AppMessageConsumer> logger)
-  {
-    _logger = logger;
-
-    Guard.Against.Null(options);
-
-    _connectionFactory = new()
-    {
-      HostName = options.HostName,
-      Password = options.Password,
-      Port = options.Port,
-      UserName = options.UserName
-    };
-  }
-
   /// <inheritdoc/>
-  public Task Start(IEnumerable<MessageReceiving> receivings, CancellationToken cancellationToken)
-  {
-    Task.Run(() => Consume(receivings, cancellationToken), cancellationToken);
-
-    return Task.CompletedTask;
-  }
-
-  /// <inheritdoc/>
-  public async Task Consume(IEnumerable<MessageReceiving> receivings, CancellationToken cancellationToken)
-  {
-    while (!cancellationToken.IsCancellationRequested)
-    {
-      const int timeoutToRetry = 3000;
-
-      try
-      {
-        using var connection = await _connectionFactory.CreateConnectionAsync(cancellationToken);
-
-        _logger.LogInformation("MAKC:Connected");
-
-        TaskCompletionSource shutdownCompletion = new();
-
-        connection.ConnectionShutdownAsync += (e, a) =>
-        {
-          _logger.LogInformation("MAKC:Shutdown");
-
-          if (!shutdownCompletion.Task.IsCompleted)
-          {
-            shutdownCompletion.SetResult();
-          }
-
-          return Task.CompletedTask;
-        };
-
-        using var channel = await connection.CreateChannelAsync(null, cancellationToken);
-
-        foreach (var receiving in receivings)
-        {
-          await Subscribe(channel, receiving.Sender, receiving.FuncToHandleMessage, cancellationToken);
-        }
-
-        await shutdownCompletion.Task;
-      }
-      catch (Exception ex)
-      {
-        _logger.LogError(ex, "MAKC:Unknown");
-      }
-
-      await Task.Delay(timeoutToRetry, cancellationToken);
-    }
-  }
-
-  private static async Task Subscribe(
+  protected sealed override async Task Subscribe(
     IChannel channel,
     string sender,
     MessageFuncToHandle funcToHandleMessage,

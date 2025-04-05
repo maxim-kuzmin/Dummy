@@ -1,10 +1,9 @@
 ﻿global using System.Text;
-global using Ardalis.GuardClauses;
 global using Makc.Dummy.Reader.DomainUseCases.App.Message;
 global using Makc.Dummy.Reader.Infrastructure.RabbitMQ.App.Message;
 global using Makc.Dummy.Shared.Core.App.Config.Options.Sections;
-global using Makc.Dummy.Shared.Core.Message;
 global using Makc.Dummy.Shared.Core.Message.Funcs;
+global using Makc.Dummy.Shared.Infrastructure.RabbitMQ.Message;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Logging;
 global using RabbitMQ.Client;
