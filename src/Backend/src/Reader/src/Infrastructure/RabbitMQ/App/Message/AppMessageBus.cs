@@ -10,10 +10,9 @@ public class AppMessageBus(
   ILogger<AppMessageBus> _logger) : MessageBus(options, _logger), IAppMessageBus
 {
   /// <inheritdoc/>
-  protected override Task Publish(
+  protected sealed override Task Publish(
     IChannel channel,
-    string receiver,
-    string message,
+    MessageSending sending,
     CancellationToken cancellationToken)
   {
     throw new NotImplementedException();
@@ -22,13 +21,12 @@ public class AppMessageBus(
   /// <inheritdoc/>
   protected sealed override async Task Subscribe(
     IChannel channel,
-    string sender,
-    MessageFuncToHandle funcToHandleMessage,
+    MessageReceiving receiving,
     CancellationToken cancellationToken)
   {    
     const string queue = "Makc.Dummy.Reader";
 
-    string exchange = $"Makc.Dummy.{sender}";
+    string exchange = $"Makc.Dummy.{receiving.Sender}";
 
     var exchangeTask = channel.ExchangeDeclareAsync(
       exchange: exchange,
@@ -71,7 +69,7 @@ public class AppMessageBus(
 
       var message = Encoding.UTF8.GetString(body);
 
-      await funcToHandleMessage.Invoke(sender, message, cancellationToken).ConfigureAwait(false);      
+      await receiving.FuncToHandleMessage.Invoke(receiving.Sender, message, cancellationToken).ConfigureAwait(false);
 
       // here channel could also be accessed as ((AsyncEventingBasicConsumer)sender).Channel
       await channel.BasicAckAsync(deliveryTag: ea.DeliveryTag, multiple: false).ConfigureAwait(false);

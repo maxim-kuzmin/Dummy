@@ -12,11 +12,10 @@ public class AppMessageBus(
   /// <inheritdoc/>
   protected sealed override async Task Publish(
     IChannel channel,
-    string receiver,
-    string message,
+    MessageSending sending,
     CancellationToken cancellationToken)
   {
-    string exchange = $"Makc.Dummy.{receiver}";
+    string exchange = $"Makc.Dummy.{sending.Receiver}";
 
     var exchangeTask = channel.ExchangeDeclareAsync(
       exchange: exchange,
@@ -25,7 +24,7 @@ public class AppMessageBus(
 
     await exchangeTask.ConfigureAwait(false);
 
-    var body = Encoding.UTF8.GetBytes(message);
+    var body = Encoding.UTF8.GetBytes(sending.Message);
 
     var properties = new BasicProperties
     {
@@ -42,14 +41,13 @@ public class AppMessageBus(
 
     await publishTask.ConfigureAwait(false);
 
-    _logger.LogInformation("MAKC:Published: {message}", message);
+    _logger.LogInformation("MAKC:Published: {sending}", sending);
   }
 
   /// <inheritdoc/>
-  protected override Task Subscribe(
+  protected sealed override Task Subscribe(
     IChannel channel,
-    string sender,
-    MessageFuncToHandle funcToHandleMessage,
+    MessageReceiving receiving,
     CancellationToken cancellationToken)
   {
     throw new NotImplementedException();

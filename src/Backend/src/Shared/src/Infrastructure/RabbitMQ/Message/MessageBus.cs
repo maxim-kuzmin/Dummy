@@ -63,29 +63,19 @@ public abstract class MessageBus : MessageBusBase
   /// Опубликовать.
   /// </summary>
   /// <param name="channel">Канал.</param>
-  /// <param name="receiver">Получатель.</param>
-  /// <param name="message">Сообщение.</param>
+  /// <param name="sending">Отправка.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Задача.</returns>
-  protected abstract Task Publish(
-    IChannel channel,
-    string receiver,
-    string message,
-    CancellationToken cancellationToken);
+  protected abstract Task Publish(IChannel channel, MessageSending sending, CancellationToken cancellationToken);
 
   /// <summary>
   /// Подписаться.
   /// </summary>
   /// <param name="channel">Канал.</param>
-  /// <param name="sender">Отправитель.</param>
-  /// <param name="funcToHandleMessage">Функция для обработки сообщения.</param>
+  /// <param name="receiving">Получение.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Задача.</returns>
-  protected abstract Task Subscribe(
-    IChannel channel,
-    string sender,
-    MessageFuncToHandle funcToHandleMessage,
-    CancellationToken cancellationToken);
+  protected abstract Task Subscribe(IChannel channel, MessageReceiving receiving, CancellationToken cancellationToken);
 
   private async Task Connect(
     TaskCompletionSource connectionCompletion,
@@ -143,7 +133,7 @@ public abstract class MessageBus : MessageBusBase
 
     await foreach (var receiving in Receivings.Reader.ReadAllAsync(cancellationToken).ConfigureAwait(false))
     {
-      var task = Subscribe(channel, receiving.Sender, receiving.FuncToHandleMessage, cancellationToken);
+      var task = Subscribe(channel, receiving, cancellationToken);
 
       await task.ConfigureAwait(false);
     }
@@ -162,7 +152,7 @@ public abstract class MessageBus : MessageBusBase
 
     await foreach (var sending in Sendings.Reader.ReadAllAsync(cancellationToken).ConfigureAwait(false))
     {
-      var publishingTask = Publish(channel, sending.Receiver, sending.Message, cancellationToken);
+      var publishingTask = Publish(channel, sending, cancellationToken);
 
       var completionTask = await Task.WhenAny(publishingTask, shutdownCompletion.Task).ConfigureAwait(false);
 
