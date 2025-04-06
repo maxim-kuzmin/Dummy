@@ -10,31 +10,49 @@ public class MemoryMessageBus : MessageBusBase
   /// <inheritdoc/>
   public sealed override Task Connect(CancellationToken cancellationToken)
   {
+    if (!Init(AppConfigOptionsMessageDirectionEnum.Both))
+    {
+      return Task.CompletedTask;
+    }
+
     TaskCompletionSource consumingCompletion = new();
 
-    Task.Run(() => Consume(consumingCompletion, cancellationToken), cancellationToken);
+    if (Receivings != null)
+    {
+      Task.Run(() => Consume(Receivings, consumingCompletion, cancellationToken), cancellationToken);
+    }
+    else
+    {
+      consumingCompletion.SetResult();
+    }
 
     TaskCompletionSource producingCompletion = new();
 
-    Task.Run(() => Produce(producingCompletion, cancellationToken), cancellationToken);
+    if (Sendings != null)
+    {
+      Task.Run(() => Produce(Sendings, producingCompletion, cancellationToken), cancellationToken);
+    }
+    else
+    {
+      producingCompletion.SetResult();
+    }
 
     return Task.WhenAll(consumingCompletion.Task, producingCompletion.Task);
   }
 
-  private async Task Consume(TaskCompletionSource consumingCompletion, CancellationToken cancellationToken)
+  private async Task Consume(
+    Channel<MessageReceiving> receivings,
+    TaskCompletionSource consumingCompletion,
+    CancellationToken cancellationToken)
   {
     if (!consumingCompletion.Task.IsCompleted)
     {
       consumingCompletion.SetResult();
     }
 
-    await foreach (var receiving in Receivings.Reader.ReadAllAsync(cancellationToken).ConfigureAwait(false))
+    await foreach (var receiving in receivings.Reader.ReadAllAsync(cancellationToken).ConfigureAwait(false))
     {
-      var channel = GetChannel(receiving.Sender);
-
-      var subscribingTask = Subscribe(channel, receiving, cancellationToken);
-
-      await subscribingTask.ConfigureAwait(false);
+      await Receive(receiving, cancellationToken).ConfigureAwait(false);
     }
   }
 
@@ -58,52 +76,56 @@ public class MemoryMessageBus : MessageBusBase
     }
   }
 
-  private async Task Produce(TaskCompletionSource producingCompletion, CancellationToken cancellationToken)
+  private async Task Produce(
+    Channel<MessageSending> sendings,
+    TaskCompletionSource producingCompletion,
+    CancellationToken cancellationToken)
   {
     if (!producingCompletion.Task.IsCompleted)
     {
       producingCompletion.SetResult();
     }
 
-    await foreach (var sending in Sendings.Reader.ReadAllAsync(cancellationToken).ConfigureAwait(false))
+    await foreach (var sending in sendings.Reader.ReadAllAsync(cancellationToken).ConfigureAwait(false))
     {
-      var channel = GetChannel(sending.Receiver);
-
-      var publishingTask = channel.Writer.WriteAsync(sending.Message, cancellationToken);
-
-      await publishingTask.ConfigureAwait(false);
+      await Send(sending, cancellationToken).ConfigureAwait(false);
 
       sending.Complete();
     }
   }
 
-  private static Task Subscribe(
-    Channel<string> channel,
-    MessageReceiving receiving,
-    CancellationToken cancellationToken)
+  private Task Receive(MessageReceiving receiving, CancellationToken cancellationToken)
   {
-    TaskCompletionSource completion = new();
+    TaskCompletionSource receivingCompletion = new();    
 
-    Task.Run(() => Subscribe(completion, channel, receiving, cancellationToken), cancellationToken);
+    Task.Run(() => Receive(receiving, receivingCompletion, cancellationToken), cancellationToken);
 
-    return completion.Task;
+    return receivingCompletion.Task;
   }
 
-  private static async Task Subscribe(
-    TaskCompletionSource completion,
-    Channel<string> channel,
+  private async Task Receive(    
     MessageReceiving receiving,
+    TaskCompletionSource receivingCompletion,
     CancellationToken cancellationToken)
   {
-    if (!completion.Task.IsCompleted)
+    var channel = GetChannel(receiving.Sender);
+
+    if (!receivingCompletion.Task.IsCompleted)
     {
-      completion.SetResult();
+      receivingCompletion.SetResult();
     }
 
     await foreach (var message in channel.Reader.ReadAllAsync(cancellationToken).ConfigureAwait(false))
     {
       await receiving.FuncToHandleMessage.Invoke(receiving.Sender, message, cancellationToken).ConfigureAwait(false);
     }
+  }
+
+  private ValueTask Send(MessageSending sending, CancellationToken cancellationToken)
+  {
+    var channel = GetChannel(sending.Receiver);
+
+    return channel.Writer.WriteAsync(sending.Message, cancellationToken);
   }
 }
 

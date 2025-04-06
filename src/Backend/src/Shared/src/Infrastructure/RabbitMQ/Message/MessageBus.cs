@@ -7,6 +7,8 @@ public abstract class MessageBus : MessageBusBase
 {
   private readonly ConnectionFactory _connectionFactory;
 
+  private readonly AppConfigOptionsMessageDirectionEnum _direction;
+
   private readonly ILogger _logger;
 
   private readonly int _timeoutToRetry;
@@ -30,12 +32,19 @@ public abstract class MessageBus : MessageBusBase
       UserName = options.UserName
     };
 
+    _direction = options.Direction;
+
     _timeoutToRetry = options.TimeoutInMillisecondsToRetry;
   }
 
   /// <inheritdoc/>
   public sealed override Task Connect(CancellationToken cancellationToken)
   {
+    if (!Init(_direction))
+    {
+      return Task.CompletedTask;
+    }
+
     TaskCompletionSource connectionCompletion = new();
 
     Task FuncToExecute(
@@ -45,11 +54,29 @@ public abstract class MessageBus : MessageBusBase
     {
       TaskCompletionSource consumingCompletion = new();
 
-      Task.Run(() => Consume(channel, consumingCompletion, cancellationToken), cancellationToken);
+      if (Receivings != null)
+      {
+        Task.Run(
+          () => Consume(Receivings, channel, consumingCompletion, cancellationToken),
+          cancellationToken);
+      }
+      else
+      {
+        consumingCompletion.SetResult();
+      }
 
       TaskCompletionSource producingCompletion = new();
 
-      Task.Run(() => Produce(channel, producingCompletion, shutdownCompletion, cancellationToken), cancellationToken);
+      if (Sendings != null)
+      {
+        Task.Run(
+          () => Produce(Sendings, channel, producingCompletion, shutdownCompletion, cancellationToken),
+          cancellationToken);
+      }
+      else
+      {
+        producingCompletion.SetResult();
+      }
 
       return Task.WhenAll(consumingCompletion.Task, producingCompletion.Task);
     }
@@ -60,22 +87,22 @@ public abstract class MessageBus : MessageBusBase
   }
 
   /// <summary>
-  /// Опубликовать.
-  /// </summary>
+  /// Получить.
+  /// </summary>  
+  /// <param name="receiving">Получение.</param>
   /// <param name="channel">Канал.</param>
-  /// <param name="sending">Отправка.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Задача.</returns>
-  protected abstract Task Publish(IChannel channel, MessageSending sending, CancellationToken cancellationToken);
+  protected abstract Task Receive(MessageReceiving receiving, IChannel channel, CancellationToken cancellationToken);
 
   /// <summary>
-  /// Подписаться.
-  /// </summary>
+  /// Отправить.
+  /// </summary>  
+  /// <param name="sending">Отправка.</param>
   /// <param name="channel">Канал.</param>
-  /// <param name="receiving">Получение.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Задача.</returns>
-  protected abstract Task Subscribe(IChannel channel, MessageReceiving receiving, CancellationToken cancellationToken);
+  protected abstract Task Send(MessageSending sending, IChannel channel, CancellationToken cancellationToken);
 
   private async Task Connect(
     TaskCompletionSource connectionCompletion,
@@ -121,7 +148,8 @@ public abstract class MessageBus : MessageBusBase
     }
   }
 
-  private async Task Consume(
+  private async Task Consume(    
+    Channel<MessageReceiving> receivings,
     IChannel channel,
     TaskCompletionSource consumingCompletion,
     CancellationToken cancellationToken)
@@ -130,16 +158,15 @@ public abstract class MessageBus : MessageBusBase
     {
       consumingCompletion.SetResult();
     }
-
-    await foreach (var receiving in Receivings.Reader.ReadAllAsync(cancellationToken).ConfigureAwait(false))
+    
+    await foreach (var receiving in receivings.Reader.ReadAllAsync(cancellationToken).ConfigureAwait(false))
     {
-      var task = Subscribe(channel, receiving, cancellationToken);
-
-      await task.ConfigureAwait(false);
+      await Receive(receiving, channel, cancellationToken).ConfigureAwait(false);
     }
   }
 
-  private async Task Produce(
+  private async Task Produce(    
+    Channel<MessageSending> sendings,
     IChannel channel,
     TaskCompletionSource producingCompletion,
     TaskCompletionSource shutdownCompletion,
@@ -150,11 +177,11 @@ public abstract class MessageBus : MessageBusBase
       producingCompletion.SetResult();
     }
 
-    await foreach (var sending in Sendings.Reader.ReadAllAsync(cancellationToken).ConfigureAwait(false))
+    await foreach (var sending in sendings.Reader.ReadAllAsync(cancellationToken).ConfigureAwait(false))
     {
-      var publishingTask = Publish(channel, sending, cancellationToken);
+      var sendingTask = Send(sending, channel, cancellationToken);
 
-      var completionTask = await Task.WhenAny(publishingTask, shutdownCompletion.Task).ConfigureAwait(false);
+      var completionTask = await Task.WhenAny(sendingTask, shutdownCompletion.Task).ConfigureAwait(false);
 
       if (completionTask == shutdownCompletion.Task)
       {

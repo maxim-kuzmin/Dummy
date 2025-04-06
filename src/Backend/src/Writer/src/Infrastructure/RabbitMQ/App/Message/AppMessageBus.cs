@@ -10,9 +10,9 @@ public class AppMessageBus(
   ILogger<AppMessageBus> _logger) : MessageBus(options, _logger), IAppMessageBus
 {
   /// <inheritdoc/>
-  protected sealed override async Task Publish(
-    IChannel channel,
+  protected sealed override async Task Send(
     MessageSending sending,
+    IChannel channel,    
     CancellationToken cancellationToken)
   {
     string exchange = $"Makc.Dummy.{sending.Receiver}";
@@ -45,9 +45,9 @@ public class AppMessageBus(
   }
 
   /// <inheritdoc/>
-  protected sealed override Task Subscribe(
-    IChannel channel,
+  protected sealed override Task Receive(
     MessageReceiving receiving,
+    IChannel channel,    
     CancellationToken cancellationToken)
   {
     throw new NotImplementedException();
