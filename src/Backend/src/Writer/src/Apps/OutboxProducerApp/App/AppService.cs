@@ -3,23 +3,18 @@
 /// <summary>
 /// Сервис приложения.
 /// </summary>
-/// <param name="_appMessageBus">Шина сообщений приложения.</param>
+/// <param name="_appMessageBroker">Брокер сообщений приложения.</param>
 /// <param name="_serviceScopeFactory">Фабрика области видимости сервисов.</param>
 public class AppService(
-  IAppMessageBus _appMessageBus,
+  IAppMessageBroker _appMessageBroker,
   IServiceScopeFactory _serviceScopeFactory) : BackgroundService
 {
   /// <inheritdoc/>
   protected override async Task ExecuteAsync(CancellationToken stoppingToken)
   {
-    var connectionTask = _appMessageBus.Connect(stoppingToken);
+    var connectionTask = _appMessageBroker.Connect(stoppingToken);
 
     await connectionTask.ConfigureAwait(false);
-
-    if (!connectionTask.IsCompletedSuccessfully)
-    {
-      return;
-    }
 
     using IServiceScope scope = _serviceScopeFactory.CreateScope();
 

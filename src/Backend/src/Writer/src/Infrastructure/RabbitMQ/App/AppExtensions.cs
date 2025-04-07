@@ -10,16 +10,20 @@ public static class AppExtensions
   /// </summary>
   /// <param name="services">Сервисы.</param>
   /// <param name="logger">Логгер.</param>
-  /// <param name="appConfigSectionRabbitMQ">Раздел RabbitMQ в конфигурации приложения.</param>
+  /// <param name="appConfigOptionsRabbitMQSection">
+  /// Раздел брокера сообщений RabbitMQ в параметрах конфигурации приложения.
+  /// </param>
   /// <returns>Сервисы.</returns>
   public static IServiceCollection AddAppInfrastructureTiedToRabbitMQ(
     this IServiceCollection services,
     ILogger logger,
     AppConfigOptionsRabbitMQSection? appConfigOptionsRabbitMQSection)
   {
-    services.AddSingleton<IAppMessageBus>(x => new AppMessageBus(
+    services.AddSingleton<IAppMessageBroker>(x => new AppMessageBroker(
       appConfigOptionsRabbitMQSection,
-      x.GetRequiredService<ILogger<AppMessageBus>>()));
+      x.GetRequiredService<ILogger<AppMessageBroker>>()));
+
+    services.AddSingleton<IAppMessageProducer>(x => x.GetRequiredService<IAppMessageBroker>());
 
     logger.LogInformation("Added application infrastructure tied to RabbitMQ");
 

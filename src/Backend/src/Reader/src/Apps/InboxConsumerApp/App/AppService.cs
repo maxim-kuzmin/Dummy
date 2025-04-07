@@ -3,10 +3,12 @@
 /// <summary>
 /// Сервис приложения.
 /// </summary>
-/// <param name="_appMessageBus">Шина сообщений приложения.</param>
+/// <param name="_appMessageBroker">Брокер сообщений приложения.</param>
+/// <param name="_appMessageConsumer">Потребитель сообщений приложения.</param>
 /// <param name="_serviceScopeFactory">Фабрика области видимости сервисов.</param>
 public class AppService(
-  IAppMessageBus _appMessageBus,
+  IAppMessageBroker _appMessageBroker,
+  IAppMessageConsumer _appMessageConsumer,
   IServiceScopeFactory _serviceScopeFactory) : BackgroundService
 {
   private IMediator? _mediator;
@@ -14,7 +16,7 @@ public class AppService(
   /// <inheritdoc/>
   protected override async Task ExecuteAsync(CancellationToken stoppingToken)
   {
-    var connectionTask = _appMessageBus.Connect(stoppingToken);
+    var connectionTask = _appMessageBroker.Connect(stoppingToken);
 
     await connectionTask.ConfigureAwait(false);
 
@@ -29,7 +31,7 @@ public class AppService(
 
     MessageReceiving receiving = new(AppEventNameEnum.DummyItemChanged.ToString(), OnMessageReceived);
 
-    var subscribtionTask = _appMessageBus.Subscribe(receiving, stoppingToken);
+    var subscribtionTask = _appMessageConsumer.Subscribe(receiving, stoppingToken);
 
     await subscribtionTask.ConfigureAwait(false);
 

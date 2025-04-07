@@ -1,4 +1,4 @@
-﻿namespace Makc.Dummy.Shared.Core.App.Config.Options.Enums;
+﻿namespace Makc.Dummy.Shared.Core.App.Config.Options.Enums.Message;
 
 /// <summary>
 /// Перечисление направлений сообщений в параметрах конфигурации приложения.

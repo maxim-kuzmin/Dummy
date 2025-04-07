@@ -1,43 +1,29 @@
 ﻿namespace Makc.Dummy.Reader.Infrastructure.RabbitMQ.App.Message;
 
 /// <summary>
-/// Шина сообщений приложения.
+/// Поставщик сообщений приложения.
 /// </summary>
-/// <param name="options">Параметры.</param>
+/// <param name="_channel">Канал.</param>
 /// <param name="_logger">Логгер.</param>
-public class AppMessageBus(
-  AppConfigOptionsRabbitMQSection? options,
-  ILogger<AppMessageBus> _logger) : MessageBus(options, _logger), IAppMessageBus
+public class AppMessageConsumer(IChannel _channel, ILogger _logger) : IAppMessageConsumer
 {
   /// <inheritdoc/>
-  protected sealed override Task Send(    
-    MessageSending sending,
-    IChannel channel,
-    CancellationToken cancellationToken)
+  public async ValueTask Subscribe(MessageReceiving receiving, CancellationToken cancellationToken)
   {
-    throw new NotImplementedException();
-  }
-
-  /// <inheritdoc/>
-  protected sealed override async Task Receive(    
-    MessageReceiving receiving,
-    TaskCompletionSource receivingCompletion,
-    IChannel channel,
-    TaskCompletionSource shutdownCompletion,
-    CancellationToken cancellationToken)
-  {    
     const string queue = "Makc.Dummy.Reader";
 
     string exchange = $"Makc.Dummy.{receiving.Sender}";
 
-    var exchangeTask = channel.ExchangeDeclareAsync(
+    var exchangeTask = _channel.ExchangeDeclareAsync(
       exchange: exchange,
       type: ExchangeType.Fanout,
       cancellationToken: cancellationToken);
 
     await exchangeTask.ConfigureAwait(false);
 
-    var queueTask = channel.QueueDeclareAsync(
+    _logger.LogDebug("MAKC:AppMessageConsumer:Subscribe:Exchange declared");
+
+    var queueTask = _channel.QueueDeclareAsync(
       queue: queue,
       durable: true,
       exclusive: false,
@@ -47,7 +33,9 @@ public class AppMessageBus(
 
     await queueTask.ConfigureAwait(false);
 
-    var bindingTask = channel.QueueBindAsync(
+    _logger.LogDebug("MAKC:AppMessageConsumer:Subscribe:Queue declared");
+
+    var bindingTask = _channel.QueueBindAsync(
       queue: queue,
       exchange: exchange,
       routingKey: string.Empty,
@@ -55,7 +43,9 @@ public class AppMessageBus(
 
     await bindingTask.ConfigureAwait(false);
 
-    var qosTask = channel.BasicQosAsync(
+    _logger.LogDebug("MAKC:AppMessageConsumer:Subscribe:Queue bound to exchange");
+
+    var qosTask = _channel.BasicQosAsync(
       prefetchSize: 0,
       prefetchCount: 1,
       global: false,
@@ -63,7 +53,9 @@ public class AppMessageBus(
 
     await qosTask.ConfigureAwait(false);
 
-    var consumer = new AsyncEventingBasicConsumer(channel);
+    var consumer = new AsyncEventingBasicConsumer(_channel);
+
+    _logger.LogDebug("MAKC:AppMessageConsumer:Subscribe:Consumer created");
 
     consumer.ReceivedAsync += async (model, ea) =>
     {
@@ -74,21 +66,19 @@ public class AppMessageBus(
       await receiving.FuncToHandleMessage.Invoke(receiving.Sender, message, cancellationToken).ConfigureAwait(false);
 
       // here channel could also be accessed as ((AsyncEventingBasicConsumer)sender).Channel
-      await channel.BasicAckAsync(deliveryTag: ea.DeliveryTag, multiple: false).ConfigureAwait(false);
+      await _channel.BasicAckAsync(deliveryTag: ea.DeliveryTag, multiple: false).ConfigureAwait(false);
     };
 
-    var consumingTask = channel.BasicConsumeAsync(
+    var consumingTask = _channel.BasicConsumeAsync(
       queue: queue,
       autoAck: false,
       consumer: consumer,
       cancellationToken: cancellationToken);
 
-    receivingCompletion.SetResult();
+    _logger.LogDebug("MAKC:AppMessageConsumer:Subscribe:Consuming start");
 
-    _logger.LogDebug("MAKC:Receiving:Start");
+    await consumingTask.ConfigureAwait(false);
 
-    await Task.WhenAll(shutdownCompletion.Task, consumingTask).ConfigureAwait(false);
-
-    _logger.LogDebug("MAKC:Receiving:End");
+    _logger.LogDebug("MAKC:AppMessageConsumer:Subscribe:Consuming end");
   }
 }

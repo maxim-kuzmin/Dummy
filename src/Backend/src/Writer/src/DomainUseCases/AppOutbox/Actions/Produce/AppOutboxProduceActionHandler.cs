@@ -3,10 +3,10 @@
 /// <summary>
 /// Обработчик действия по по отправке в очередь сообщений о неопубликованных событиях и пометки их как опубликованные.
 /// </summary>
-/// <param name="_appMessageBus">Шина сообщений приложения.</param>
+/// <param name="_appMessageProducer">Поставщик сообщений приложения.</param>
 /// <param name="_logger">Логгер.</param>
 public class AppOutboxProduceActionHandler(
-  IAppMessageBus _appMessageBus,
+  IAppMessageProducer _appMessageProducer,
   ILogger<AppOutboxProduceActionHandler> _logger) : ICommandHandler<AppOutboxProduceActionCommand, Result>
 {
   /// <inheritdoc/>
@@ -20,23 +20,19 @@ public class AppOutboxProduceActionHandler(
 
       try
       {        
-        _logger.LogDebug("MAKC:Sending:Publish:Start");
+        _logger.LogDebug("MAKC:AppOutboxProduceActionHandler:Handle:Publish start");
 
-        await _appMessageBus.Publish(sending, cancellationToken);
+        await _appMessageProducer.Publish(sending, cancellationToken);
 
-        _logger.LogDebug("MAKC:Sending:Publish:End");
-
-        await sending.CompletionTask;
-
-        _logger.LogDebug("MAKC:Sending:{message} to {receiver}:Completed:{status}", sending.Message, sending.Receiver, sending.CompletionTask.Status);
+        _logger.LogDebug("MAKC:AppOutboxProduceActionHandler:Handle:Publish completed:{message} to {receiver}:", sending.Message, sending.Receiver);
       }
       catch (OperationCanceledException)
       {
-        _logger.LogDebug("MAKC:Sending:{message} to {receiver}:Canceled", sending.Message, sending.Receiver);
+        _logger.LogDebug("MAKC:AppOutboxProduceActionHandler:Handle:Publish canceled:{message} to {receiver}", sending.Message, sending.Receiver);
       }
       catch (Exception ex)
       {
-        _logger.LogError(ex, "MAKC:Sending:Unknown");
+        _logger.LogError(ex, "MAKC:AppOutboxProduceActionHandler:Handle:Exception");
       }
 
       await Task.Delay(timeoutToRepeat, cancellationToken);
