@@ -3,16 +3,18 @@
 /// <summary>
 /// Поставщик сообщений приложения.
 /// </summary>
-/// <param name="_channel">Канал.</param>
+/// <param name="_funcToGetChannel">Функция получения канала.</param>
 /// <param name="_logger">Логгер.</param>
-public class AppMessageProducer(IChannel _channel, ILogger _logger) : IAppMessageProducer
+public class AppMessageProducer(Func<IChannel> _funcToGetChannel, ILogger _logger) : IAppMessageProducer
 {
   /// <inheritdoc/>
   public async ValueTask Publish(MessageSending sending, CancellationToken cancellationToken)
   {
     string exchange = $"Makc.Dummy.{sending.Receiver}";
 
-    var exchangeTask = _channel.ExchangeDeclareAsync(
+    var channel = _funcToGetChannel.Invoke();
+
+    var exchangeTask = channel.ExchangeDeclareAsync(
       exchange: exchange,
       type: ExchangeType.Fanout,
       cancellationToken: cancellationToken);
@@ -28,7 +30,7 @@ public class AppMessageProducer(IChannel _channel, ILogger _logger) : IAppMessag
       Persistent = true
     };
 
-    var publishTask = _channel.BasicPublishAsync(
+    var publishTask = channel.BasicPublishAsync(
       exchange: exchange,
       routingKey: string.Empty,
       mandatory: true,

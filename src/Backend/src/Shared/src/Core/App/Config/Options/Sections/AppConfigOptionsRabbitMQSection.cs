@@ -6,11 +6,6 @@
 public record AppConfigOptionsRabbitMQSection
 {
   /// <summary>
-  /// Направление.
-  /// </summary>
-  public AppConfigOptionsMessageDirectionEnum Direction { get; set; } = AppConfigOptionsMessageDirectionEnum.Both;
-
-  /// <summary>
   /// Имя хоста.
   /// </summary>
   public string HostName { get; set; } = string.Empty;

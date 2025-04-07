@@ -3,6 +3,11 @@
 /// <summary>
 /// Интерфейс брокера сообщений приложения.
 /// </summary>
-public interface IAppMessageBroker : IMessageBroker, IAppMessageProducer
+public interface IAppMessageBroker : IMessageBroker
 {
+  /// <summary>
+  /// Создать поставщика сообщений.
+  /// </summary>
+  /// <returns>Поставщик сообщений.</returns>
+  IAppMessageProducer CreateMessageProducer();
 }

@@ -3,7 +3,7 @@
 /// <summary>
 /// Интерфейс брокера сообщений.
 /// </summary>
-public interface IMessageBroker : IMessageConsumer, IMessageProducer
+public interface IMessageBroker
 {
   /// <summary>
   /// Соединиться.

@@ -11,11 +11,6 @@ public record AppConfigOptionsKafkaSection
   public string BootstrapServers { get; set; } = string.Empty;
 
   /// <summary>
-  /// Направление.
-  /// </summary>
-  public AppConfigOptionsMessageDirectionEnum Direction { get; set; } = AppConfigOptionsMessageDirectionEnum.Both;
-
-  /// <summary>
   /// Таймаут в миллисекундах для повторного подключения к брокеру сообщений в случае неудачи.
   /// </summary>
   public int TimeoutInMillisecondsToRetry { get; set; }

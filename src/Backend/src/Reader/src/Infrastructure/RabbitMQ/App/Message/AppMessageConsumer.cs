@@ -3,9 +3,9 @@
 /// <summary>
 /// Поставщик сообщений приложения.
 /// </summary>
-/// <param name="_channel">Канал.</param>
+/// <param name="_funcToGetChannel">Функция получения канала.</param>
 /// <param name="_logger">Логгер.</param>
-public class AppMessageConsumer(IChannel _channel, ILogger _logger) : IAppMessageConsumer
+public class AppMessageConsumer(Func<IChannel> _funcToGetChannel, ILogger _logger) : IAppMessageConsumer
 {
   /// <inheritdoc/>
   public async ValueTask Subscribe(MessageReceiving receiving, CancellationToken cancellationToken)
@@ -14,7 +14,9 @@ public class AppMessageConsumer(IChannel _channel, ILogger _logger) : IAppMessag
 
     string exchange = $"Makc.Dummy.{receiving.Sender}";
 
-    var exchangeTask = _channel.ExchangeDeclareAsync(
+    var channel = _funcToGetChannel.Invoke();
+
+    var exchangeTask = channel.ExchangeDeclareAsync(
       exchange: exchange,
       type: ExchangeType.Fanout,
       cancellationToken: cancellationToken);
@@ -23,7 +25,7 @@ public class AppMessageConsumer(IChannel _channel, ILogger _logger) : IAppMessag
 
     _logger.LogDebug("MAKC:AppMessageConsumer:Subscribe:Exchange declared");
 
-    var queueTask = _channel.QueueDeclareAsync(
+    var queueTask = channel.QueueDeclareAsync(
       queue: queue,
       durable: true,
       exclusive: false,
@@ -35,7 +37,7 @@ public class AppMessageConsumer(IChannel _channel, ILogger _logger) : IAppMessag
 
     _logger.LogDebug("MAKC:AppMessageConsumer:Subscribe:Queue declared");
 
-    var bindingTask = _channel.QueueBindAsync(
+    var bindingTask = channel.QueueBindAsync(
       queue: queue,
       exchange: exchange,
       routingKey: string.Empty,
@@ -45,7 +47,7 @@ public class AppMessageConsumer(IChannel _channel, ILogger _logger) : IAppMessag
 
     _logger.LogDebug("MAKC:AppMessageConsumer:Subscribe:Queue bound to exchange");
 
-    var qosTask = _channel.BasicQosAsync(
+    var qosTask = channel.BasicQosAsync(
       prefetchSize: 0,
       prefetchCount: 1,
       global: false,
@@ -53,7 +55,7 @@ public class AppMessageConsumer(IChannel _channel, ILogger _logger) : IAppMessag
 
     await qosTask.ConfigureAwait(false);
 
-    var consumer = new AsyncEventingBasicConsumer(_channel);
+    var consumer = new AsyncEventingBasicConsumer(channel);
 
     _logger.LogDebug("MAKC:AppMessageConsumer:Subscribe:Consumer created");
 
@@ -66,10 +68,10 @@ public class AppMessageConsumer(IChannel _channel, ILogger _logger) : IAppMessag
       await receiving.FuncToHandleMessage.Invoke(receiving.Sender, message, cancellationToken).ConfigureAwait(false);
 
       // here channel could also be accessed as ((AsyncEventingBasicConsumer)sender).Channel
-      await _channel.BasicAckAsync(deliveryTag: ea.DeliveryTag, multiple: false).ConfigureAwait(false);
+      await channel.BasicAckAsync(deliveryTag: ea.DeliveryTag, multiple: false).ConfigureAwait(false);
     };
 
-    var consumingTask = _channel.BasicConsumeAsync(
+    var consumingTask = channel.BasicConsumeAsync(
       queue: queue,
       autoAck: false,
       consumer: consumer,

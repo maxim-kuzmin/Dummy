@@ -23,7 +23,7 @@ public static class AppExtensions
       appConfigOptionsRabbitMQSection,
       x.GetRequiredService<ILogger<AppMessageBroker>>()));
 
-    services.AddSingleton<IAppMessageConsumer>(x => x .GetRequiredService<IAppMessageBroker>());
+    services.AddTransient(x => x .GetRequiredService<IAppMessageBroker>().CreateMessageConsumer());
 
     logger.LogInformation("Added application infrastructure tied to RabbitMQ");
 

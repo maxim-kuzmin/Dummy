@@ -7,19 +7,11 @@
 /// <param name="_logger">Логгер.</param>
 public class AppMessageBroker(
   AppConfigOptionsRabbitMQSection? options,
-  ILogger<AppMessageBroker> _logger) :
-  MessageBroker<IMessageConsumer, IAppMessageProducer>(options, _logger),
-  IAppMessageBroker
+  ILogger<AppMessageBroker> _logger) : MessageBroker(options, _logger), IAppMessageBroker
 {
   /// <inheritdoc/>
-  protected override IMessageConsumer? CreateMessageConsumer(IChannel channel)
+  public IAppMessageProducer CreateMessageProducer()
   {
-    return null;
-  }
-
-  /// <inheritdoc/>
-  protected override IAppMessageProducer? CreateMessageProducer(IChannel channel)
-  {
-    return new AppMessageProducer(channel, _logger);
+    return new AppMessageProducer(GetChannel, _logger);
   }
 }

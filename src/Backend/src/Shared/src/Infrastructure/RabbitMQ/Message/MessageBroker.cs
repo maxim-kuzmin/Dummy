@@ -3,15 +3,9 @@
 /// <summary>
 /// Брокер сообщений.
 /// </summary>
-/// <typeparam name="TMessageConsumer">Тип потребителя сообщений.</typeparam>
-/// <typeparam name="TMessageProducer">Тип поставщика сообщений.</typeparam>
-public abstract class MessageBroker<TMessageConsumer, TMessageProducer> : IMessageBroker, IDisposable
-  where TMessageConsumer : IMessageConsumer
-  where TMessageProducer : IMessageProducer  
+public abstract class MessageBroker : IMessageBroker, IDisposable
 {
   private readonly ConnectionFactory _connectionFactory;
-
-  private readonly AppConfigOptionsMessageDirectionEnum _direction;
 
   private readonly ILogger _logger;
 
@@ -22,10 +16,6 @@ public abstract class MessageBroker<TMessageConsumer, TMessageProducer> : IMessa
   private IConnection? _connection;
 
   private bool _disposedValue;
-
-  private TMessageConsumer? _messageConsumer;
-
-  private TMessageProducer? _messageProducer;
 
   /// <summary>
   /// Конструктор.
@@ -46,8 +36,6 @@ public abstract class MessageBroker<TMessageConsumer, TMessageProducer> : IMessa
       UserName = options.UserName
     };
 
-    _direction = options.Direction;
-
     _timeoutToRetry = options.TimeoutInMillisecondsToRetry;
   }
 
@@ -66,28 +54,6 @@ public abstract class MessageBroker<TMessageConsumer, TMessageProducer> : IMessa
 
         _logger.LogDebug("MAKC:MessageBroker:Connect:Channel created");
 
-        bool shouldBeMessageConsumerCreated = _direction == AppConfigOptionsMessageDirectionEnum.Consumer
-          ||
-          _direction == AppConfigOptionsMessageDirectionEnum.Both;
-
-        if (shouldBeMessageConsumerCreated)
-        {
-          _messageConsumer = CreateMessageConsumer(_channel);
-
-          _logger.LogDebug("MAKC:MessageBroker:Connect:Message consumer created");
-        }
-
-        bool shouldBeMessageProducerCreated = _direction == AppConfigOptionsMessageDirectionEnum.Producer
-          ||
-          _direction == AppConfigOptionsMessageDirectionEnum.Both;
-
-        if (shouldBeMessageProducerCreated)
-        {
-          _messageProducer = CreateMessageProducer(_channel);
-
-          _logger.LogDebug("MAKC:MessageBroker:Connect:Message producer created");
-        }
-
         break;
       }
       catch (Exception ex)
@@ -101,41 +67,14 @@ public abstract class MessageBroker<TMessageConsumer, TMessageProducer> : IMessa
     }
   }
 
-  /// <inheritdoc/>
-  public ValueTask Publish(MessageSending sending, CancellationToken cancellationToken)
-  {
-    if (_messageProducer == null)
-    {
-      throw new NotImplementedException();
-    }
-
-    return _messageProducer.Publish(sending, cancellationToken);
-  }
-
-  /// <inheritdoc/>
-  public ValueTask Subscribe(MessageReceiving receiving, CancellationToken cancellationToken)
-  {
-    if (_messageConsumer == null)
-    {
-      throw new NotImplementedException();
-    }
-    
-    return _messageConsumer.Subscribe(receiving, cancellationToken);
-  }
-
   /// <summary>
-  /// Создать потребителя сообщений.
+  /// Получить канал.
   /// </summary>
-  /// <param name="channel">Канал.</param>
-  /// <returns>Потребитель сообщений.</returns>
-  protected abstract TMessageConsumer? CreateMessageConsumer(IChannel channel);
-
-  /// <summary>
-  /// Создать поставщика сообщений.
-  /// </summary>
-  /// <param name="channel">Канал.</param>
-  /// <returns>Поставщик сообщений.</returns>
-  protected abstract TMessageProducer? CreateMessageProducer(IChannel channel);
+  /// <returns>Канал.</returns>
+  protected IChannel GetChannel()
+  {
+    return Guard.Against.Null(_channel);
+  }
 
   private void DisposeManagedResources()
   {
