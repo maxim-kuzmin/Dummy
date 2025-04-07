@@ -12,7 +12,14 @@ public class AppService(
   /// <inheritdoc/>
   protected override async Task ExecuteAsync(CancellationToken stoppingToken)
   {
-    await _appMessageBus.Connect(stoppingToken);
+    var connectionTask = _appMessageBus.Connect(stoppingToken);
+
+    await connectionTask.ConfigureAwait(false);
+
+    if (!connectionTask.IsCompletedSuccessfully)
+    {
+      return;
+    }
 
     using IServiceScope scope = _serviceScopeFactory.CreateScope();
 
@@ -20,6 +27,6 @@ public class AppService(
 
     AppOutboxProduceActionCommand command = new();
 
-    await mediator.Send(command, stoppingToken);
+    await mediator.Send(command, stoppingToken).ConfigureAwait(false);
   }
 }

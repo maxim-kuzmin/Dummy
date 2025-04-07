@@ -14,17 +14,31 @@ public class AppService(
   /// <inheritdoc/>
   protected override async Task ExecuteAsync(CancellationToken stoppingToken)
   {
+    var connectionTask = _appMessageBus.Connect(stoppingToken);
+
+    await connectionTask.ConfigureAwait(false);
+
+    if (!connectionTask.IsCompletedSuccessfully)
+    {
+      return;
+    }
+
     using IServiceScope scope = _serviceScopeFactory.CreateScope();
 
     _mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
 
-    await _appMessageBus.Connect(stoppingToken);
-
     MessageReceiving receiving = new(AppEventNameEnum.DummyItemChanged.ToString(), OnMessageReceived);
 
-    await _appMessageBus.Subscribe(receiving, stoppingToken);
+    var subscribtionTask = _appMessageBus.Subscribe(receiving, stoppingToken);
 
-    await Task.Delay(Timeout.Infinite, stoppingToken);
+    await subscribtionTask.ConfigureAwait(false);
+
+    if (!subscribtionTask.IsCompletedSuccessfully)
+    {
+      return;
+    }
+
+    await Task.Delay(Timeout.Infinite, stoppingToken).ConfigureAwait(false);
   }
 
   private async Task OnMessageReceived(string sender, string message, CancellationToken cancellationToken)
@@ -33,6 +47,6 @@ public class AppService(
 
     AppInboxConsumeActionCommand command = new(sender, message);
 
-    await _mediator.Send(command, cancellationToken);
+    await _mediator.Send(command, cancellationToken).ConfigureAwait(false);
   }
 }

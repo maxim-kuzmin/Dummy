@@ -3,46 +3,108 @@
 /// <summary>
 /// Шина сообщений, хранящихся в памяти.
 /// </summary>
-public class MemoryMessageBus : MessageBusBase
+/// <param name="_logger">Логгер.</param>
+public class MemoryMessageBus(ILogger<MemoryMessageBus> _logger) : MessageBusBase(_logger)
 {
   private readonly Dictionary<string, Channel<string>> _channelLookup = [];
 
   /// <inheritdoc/>
   public sealed override Task Connect(CancellationToken cancellationToken)
   {
+    if (cancellationToken.IsCancellationRequested)
+    {
+      return Task.FromCanceled(cancellationToken);
+    }
+
     if (!Init(AppConfigOptionsMessageDirectionEnum.Both))
     {
       return Task.CompletedTask;
     }
 
-    TaskCompletionSource consumingCompletion = new();
+    TaskCompletionSource connectionCompletion = new();
 
-    if (Receivings != null)
+    Task FuncToExecute(TaskCompletionSource shutdownCompletion, CancellationToken cancellationToken)
     {
-      Task.Run(() => Consume(Receivings, consumingCompletion, cancellationToken), cancellationToken);
-    }
-    else
-    {
-      consumingCompletion.SetResult();
+      TaskCompletionSource consumingCompletion = new();
+
+      if (ReceivingChannel != null)
+      {
+        var consumingTask = Task.Run(
+          () => Consume(ReceivingChannel, consumingCompletion, shutdownCompletion, cancellationToken),
+          cancellationToken);
+
+        if (consumingTask.IsCanceled)
+        {
+          return consumingTask;
+        }
+      }
+      else
+      {
+        consumingCompletion.SetResult();
+      }
+
+      TaskCompletionSource producingCompletion = new();
+
+      if (SendingChannel != null)
+      {
+        var producingTask = Task.Run(
+          () => Produce(SendingChannel, producingCompletion, shutdownCompletion, cancellationToken),
+          cancellationToken);
+
+        if (producingTask.IsCanceled)
+        {
+          return producingTask;
+        }
+      }
+      else
+      {
+        producingCompletion.SetResult();
+      }
+
+      return Task.WhenAll(consumingCompletion.Task, producingCompletion.Task);
     }
 
-    TaskCompletionSource producingCompletion = new();
+    var connectionTask = Task.Run(
+      () => Connect(connectionCompletion, FuncToExecute, cancellationToken),
+      cancellationToken);
 
-    if (Sendings != null)
+    if (connectionTask.IsCanceled)
     {
-      Task.Run(() => Produce(Sendings, producingCompletion, cancellationToken), cancellationToken);
-    }
-    else
-    {
-      producingCompletion.SetResult();
+      return connectionTask;
     }
 
-    return Task.WhenAll(consumingCompletion.Task, producingCompletion.Task);
+    return connectionCompletion.Task;
+  }
+
+  private async Task Connect(
+    TaskCompletionSource connectionCompletion,
+    Func<TaskCompletionSource, CancellationToken, Task> funcToExecute,
+    CancellationToken cancellationToken)
+  {
+    try
+    {
+      TaskCompletionSource shutdownCompletion = new();
+
+      await funcToExecute.Invoke(shutdownCompletion, cancellationToken).ConfigureAwait(false);
+
+      connectionCompletion.SetResult();
+
+      _logger.LogDebug("MAKC:Connected");
+
+      await shutdownCompletion.Task.ConfigureAwait(false);
+
+      _logger.LogDebug("MAKC:Shutdown");
+    }
+    catch (Exception ex)
+    {
+      _logger.LogError(ex, "MAKC:Unknown");
+    }
   }
 
   private async Task Consume(
-    Channel<MessageReceiving> receivings,
+    Channel<MessageReceiving> receivingChannel,
     TaskCompletionSource consumingCompletion,
+    TaskCompletionSource shutdownCompletion,
     CancellationToken cancellationToken)
   {
     if (!consumingCompletion.Task.IsCompleted)
@@ -50,13 +112,23 @@ public class MemoryMessageBus : MessageBusBase
       consumingCompletion.SetResult();
     }
 
-    await foreach (var receiving in receivings.Reader.ReadAllAsync(cancellationToken).ConfigureAwait(false))
+    await foreach (var receiving in receivingChannel.Reader.ReadAllAsync(cancellationToken).ConfigureAwait(false))
     {
-      await Receive(receiving, cancellationToken).ConfigureAwait(false);
+      if (CheckShutdown(shutdownCompletion, cancellationToken))
+      {
+        break;
+      }
+      
+      await Receive(receiving, shutdownCompletion, cancellationToken).ConfigureAwait(false);
+
+      if (CheckShutdown(shutdownCompletion, cancellationToken))
+      {
+        break;
+      }
     }
   }
 
-  private Channel<string> GetChannel(string key)
+  private Channel<string> GetMessageChannel(string key)
   {
     lock (_channelLookup)
     {
@@ -77,8 +149,9 @@ public class MemoryMessageBus : MessageBusBase
   }
 
   private async Task Produce(
-    Channel<MessageSending> sendings,
+    Channel<MessageSending> sendingChannel,
     TaskCompletionSource producingCompletion,
+    TaskCompletionSource shutdownCompletion,
     CancellationToken cancellationToken)
   {
     if (!producingCompletion.Task.IsCompleted)
@@ -86,46 +159,81 @@ public class MemoryMessageBus : MessageBusBase
       producingCompletion.SetResult();
     }
 
-    await foreach (var sending in sendings.Reader.ReadAllAsync(cancellationToken).ConfigureAwait(false))
+    await foreach (var sending in sendingChannel.Reader.ReadAllAsync(cancellationToken).ConfigureAwait(false))
     {
+      if (CheckShutdown(shutdownCompletion, cancellationToken))
+      {
+        sending.Cancel(cancellationToken);
+
+        break;
+      }
+
       await Send(sending, cancellationToken).ConfigureAwait(false);
+
+      if (CheckShutdown(shutdownCompletion, cancellationToken))
+      {
+        sending.Cancel(cancellationToken);
+
+        break;
+      }
 
       sending.Complete();
     }
   }
 
-  private Task Receive(MessageReceiving receiving, CancellationToken cancellationToken)
+  private Task Receive(
+    MessageReceiving receiving,
+    TaskCompletionSource shutdownCompletion,
+    CancellationToken cancellationToken)
   {
-    TaskCompletionSource receivingCompletion = new();    
+    TaskCompletionSource receivingCompletion = new();
 
-    Task.Run(() => Receive(receiving, receivingCompletion, cancellationToken), cancellationToken);
+    var receivingTask = Task.Run(
+      () => Receive(receiving, receivingCompletion, shutdownCompletion, cancellationToken),
+      cancellationToken);
+
+    if (receivingTask.IsCanceled)
+    {
+      return receivingTask;
+    }
 
     return receivingCompletion.Task;
   }
 
-  private async Task Receive(    
+  private async Task Receive(
     MessageReceiving receiving,
     TaskCompletionSource receivingCompletion,
+    TaskCompletionSource shutdownCompletion,
     CancellationToken cancellationToken)
   {
-    var channel = GetChannel(receiving.Sender);
+    var messageChannel = GetMessageChannel(receiving.Sender);
 
     if (!receivingCompletion.Task.IsCompleted)
     {
       receivingCompletion.SetResult();
     }
 
-    await foreach (var message in channel.Reader.ReadAllAsync(cancellationToken).ConfigureAwait(false))
+    await foreach (var message in messageChannel.Reader.ReadAllAsync(cancellationToken).ConfigureAwait(false))
     {
+      if (CheckShutdown(shutdownCompletion, cancellationToken))
+      {
+        break;
+      }
+
       await receiving.FuncToHandleMessage.Invoke(receiving.Sender, message, cancellationToken).ConfigureAwait(false);
+
+      if (CheckShutdown(shutdownCompletion, cancellationToken))
+      {
+        break;
+      }
     }
   }
 
   private ValueTask Send(MessageSending sending, CancellationToken cancellationToken)
   {
-    var channel = GetChannel(sending.Receiver);
+    var messageChannel = GetMessageChannel(sending.Receiver);
 
-    return channel.Writer.WriteAsync(sending.Message, cancellationToken);
+    return messageChannel.Writer.WriteAsync(sending.Message, cancellationToken);
   }
 }
 

@@ -41,13 +41,15 @@ public class AppMessageBus(
 
     await publishTask.ConfigureAwait(false);
 
-    _logger.LogInformation("MAKC:Published: {sending}", sending);
+    _logger.LogDebug("MAKC:Published: {message} to {receiver}", sending.Message, sending.Receiver);
   }
 
   /// <inheritdoc/>
   protected sealed override Task Receive(
     MessageReceiving receiving,
-    IChannel channel,    
+    TaskCompletionSource receivingCompletion,
+    IChannel channel,
+    TaskCompletionSource shutdownCompletion,
     CancellationToken cancellationToken)
   {
     throw new NotImplementedException();

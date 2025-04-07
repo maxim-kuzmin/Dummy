@@ -21,7 +21,9 @@ public class AppMessageBus(
   /// <inheritdoc/>
   protected sealed override async Task Receive(    
     MessageReceiving receiving,
+    TaskCompletionSource receivingCompletion,
     IChannel channel,
+    TaskCompletionSource shutdownCompletion,
     CancellationToken cancellationToken)
   {    
     const string queue = "Makc.Dummy.Reader";
@@ -81,6 +83,12 @@ public class AppMessageBus(
       consumer: consumer,
       cancellationToken: cancellationToken);
 
-    await consumingTask.ConfigureAwait(false);
+    receivingCompletion.SetResult();
+
+    _logger.LogDebug("MAKC:Receiving:Start");
+
+    await Task.WhenAll(shutdownCompletion.Task, consumingTask).ConfigureAwait(false);
+
+    _logger.LogDebug("MAKC:Receiving:End");
   }
 }

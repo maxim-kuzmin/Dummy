@@ -9,7 +9,7 @@ public class AppInboxConsumeActionHandler(
   /// <inheritdoc/>
   public Task<Result> Handle(AppInboxConsumeActionCommand request, CancellationToken cancellationToken)
   {
-    _logger.LogInformation("MAKC:Received: {message} from {sender}", request.Message, request.Sender);
+    _logger.LogDebug("MAKC:Received: {message} from {sender}", request.Message, request.Sender);
 
     return Task.FromResult(Result.NoContent());
   }

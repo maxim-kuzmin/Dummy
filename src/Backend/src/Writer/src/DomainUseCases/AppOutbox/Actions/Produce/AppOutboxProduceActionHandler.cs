@@ -16,17 +16,27 @@ public class AppOutboxProduceActionHandler(
 
     while (!cancellationToken.IsCancellationRequested)
     {
+      MessageSending sending = new(AppEventNameEnum.DummyItemChanged.ToString(), DateTimeOffset.Now.ToString());
+
       try
-      {
-        MessageSending sending = new(AppEventNameEnum.DummyItemChanged.ToString(), DateTimeOffset.Now.ToString());
+      {        
+        _logger.LogDebug("MAKC:Sending:Publish:Start");
 
         await _appMessageBus.Publish(sending, cancellationToken);
 
+        _logger.LogDebug("MAKC:Sending:Publish:End");
+
         await sending.CompletionTask;
+
+        _logger.LogDebug("MAKC:Sending:{message} to {receiver}:Completed:{status}", sending.Message, sending.Receiver, sending.CompletionTask.Status);
+      }
+      catch (OperationCanceledException)
+      {
+        _logger.LogDebug("MAKC:Sending:{message} to {receiver}:Canceled", sending.Message, sending.Receiver);
       }
       catch (Exception ex)
       {
-        _logger.LogError(ex, "MAKC:Sending");
+        _logger.LogError(ex, "MAKC:Sending:Unknown");
       }
 
       await Task.Delay(timeoutToRepeat, cancellationToken);

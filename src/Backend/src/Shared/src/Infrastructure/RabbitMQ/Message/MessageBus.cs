@@ -18,7 +18,7 @@ public abstract class MessageBus : MessageBusBase
   /// </summary>
   /// <param name="options">Параметры.</param>
   /// <param name="logger">Логгер.</param>
-  public MessageBus(AppConfigOptionsRabbitMQSection? options, ILogger logger)
+  public MessageBus(AppConfigOptionsRabbitMQSection? options, ILogger logger) : base(logger)
   {
     _logger = logger;
 
@@ -40,6 +40,11 @@ public abstract class MessageBus : MessageBusBase
   /// <inheritdoc/>
   public sealed override Task Connect(CancellationToken cancellationToken)
   {
+    if (cancellationToken.IsCancellationRequested)
+    {
+      return Task.FromCanceled(cancellationToken);
+    }
+
     if (!Init(_direction))
     {
       return Task.CompletedTask;
@@ -47,18 +52,20 @@ public abstract class MessageBus : MessageBusBase
 
     TaskCompletionSource connectionCompletion = new();
 
-    Task FuncToExecute(
-      IChannel channel,
-      TaskCompletionSource shutdownCompletion,
-      CancellationToken cancellationToken)
+    Task FuncToExecute(IChannel channel, TaskCompletionSource shutdownCompletion, CancellationToken cancellationToken)
     {
       TaskCompletionSource consumingCompletion = new();
 
-      if (Receivings != null)
+      if (ReceivingChannel != null)
       {
-        Task.Run(
-          () => Consume(Receivings, channel, consumingCompletion, cancellationToken),
+        var consumingTask = Task.Run(
+          () => Consume(ReceivingChannel, channel, consumingCompletion, shutdownCompletion, cancellationToken),
           cancellationToken);
+
+        if (consumingTask.IsCanceled)
+        {
+          return consumingTask;
+        }
       }
       else
       {
@@ -67,11 +74,16 @@ public abstract class MessageBus : MessageBusBase
 
       TaskCompletionSource producingCompletion = new();
 
-      if (Sendings != null)
+      if (SendingChannel != null)
       {
-        Task.Run(
-          () => Produce(Sendings, channel, producingCompletion, shutdownCompletion, cancellationToken),
+        var producingTask = Task.Run(
+          () => Produce(SendingChannel, channel, producingCompletion, shutdownCompletion, cancellationToken),
           cancellationToken);
+
+        if (producingTask.IsCanceled)
+        {
+          return producingTask;
+        }
       }
       else
       {
@@ -81,7 +93,14 @@ public abstract class MessageBus : MessageBusBase
       return Task.WhenAll(consumingCompletion.Task, producingCompletion.Task);
     }
 
-    Task.Run(() => Connect(connectionCompletion, FuncToExecute, cancellationToken), cancellationToken);
+    var connectionTask = Task.Run(
+      () => Connect(connectionCompletion, FuncToExecute, cancellationToken),
+      cancellationToken);
+
+    if (connectionTask.IsCanceled)
+    {
+      return connectionTask;
+    }
 
     return connectionCompletion.Task;
   }
@@ -90,10 +109,17 @@ public abstract class MessageBus : MessageBusBase
   /// Получить.
   /// </summary>  
   /// <param name="receiving">Получение.</param>
+  /// <param name="receivingCompletion">Завершение получения.</param>
   /// <param name="channel">Канал.</param>
+  /// <param name="shutdownCompletion">Завершение отключения.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Задача.</returns>
-  protected abstract Task Receive(MessageReceiving receiving, IChannel channel, CancellationToken cancellationToken);
+  protected abstract Task Receive(
+    MessageReceiving receiving,
+    TaskCompletionSource receivingCompletion,
+    IChannel channel,
+    TaskCompletionSource shutdownCompletion,
+    CancellationToken cancellationToken);
 
   /// <summary>
   /// Отправить.
@@ -113,60 +139,91 @@ public abstract class MessageBus : MessageBusBase
     {
       try
       {
-        using var connection = await _connectionFactory.CreateConnectionAsync(cancellationToken);
+        using var connection = await _connectionFactory.CreateConnectionAsync(cancellationToken).ConfigureAwait(false);
 
-        _logger.LogInformation("MAKC:Connected");
+        _logger.LogDebug("MAKC:Connecting:Connection created");
 
         TaskCompletionSource shutdownCompletion = new();
 
         connection.ConnectionShutdownAsync += (e, a) =>
         {
-          _logger.LogInformation("MAKC:Shutdown");
+          _logger.LogDebug("MAKC:Connecting:ConnectionShutdown");
 
-          if (!shutdownCompletion.Task.IsCompleted)
-          {
-            shutdownCompletion.SetResult();
-          }
+          Shutdown(shutdownCompletion);
 
           return Task.CompletedTask;
         };
 
         using var channel = await connection.CreateChannelAsync(null, cancellationToken).ConfigureAwait(false);
 
+        _logger.LogDebug("MAKC:Connecting:Channel created");
+
         await funcToExecute.Invoke(channel, shutdownCompletion, cancellationToken).ConfigureAwait(false);
 
-        connectionCompletion.SetResult();
+        if (!connectionCompletion.Task.IsCompleted)
+        {
+          connectionCompletion.SetResult();
+        }
+        else
+        {
+          ResetShutdown();
+        }
+
+        _logger.LogDebug("MAKC:Connecting:Connected");
 
         await shutdownCompletion.Task.ConfigureAwait(false);
+
+        _logger.LogDebug("MAKC:Connecting:Shutdown");
       }
       catch (Exception ex)
       {
-        _logger.LogError(ex, "MAKC:Unknown");
+        _logger.LogError(ex, "MAKC:Connecting:Unknown");
       }
 
       await Task.Delay(_timeoutToRetry, cancellationToken).ConfigureAwait(false);
     }
   }
 
-  private async Task Consume(    
-    Channel<MessageReceiving> receivings,
+  private async Task Consume(
+    Channel<MessageReceiving> receivingChannel,
     IChannel channel,
     TaskCompletionSource consumingCompletion,
+    TaskCompletionSource shutdownCompletion,
     CancellationToken cancellationToken)
   {
     if (!consumingCompletion.Task.IsCompleted)
     {
       consumingCompletion.SetResult();
     }
-    
-    await foreach (var receiving in receivings.Reader.ReadAllAsync(cancellationToken).ConfigureAwait(false))
+
+    _logger.LogDebug("MAKC:Consuming:Start");
+
+    await foreach (var receiving in receivingChannel.Reader.ReadAllAsync(cancellationToken).ConfigureAwait(false))
     {
-      await Receive(receiving, channel, cancellationToken).ConfigureAwait(false);
+      if (CheckShutdown(shutdownCompletion, cancellationToken))
+      {
+        break;
+      }
+
+      try
+      {
+        await Receive(receiving, channel, shutdownCompletion, cancellationToken).ConfigureAwait(false);
+      }
+      catch (Exception ex)
+      {
+        _logger.LogError(ex, "MAKC:Consuming:Receive:Unknown");
+
+        Shutdown(shutdownCompletion);
+
+        break;
+      }
     }
+
+    _logger.LogDebug("MAKC:Consuming:End");
   }
 
-  private async Task Produce(    
-    Channel<MessageSending> sendings,
+  private async Task Produce(
+    Channel<MessageSending> sendingChannel,
     IChannel channel,
     TaskCompletionSource producingCompletion,
     TaskCompletionSource shutdownCompletion,
@@ -177,22 +234,53 @@ public abstract class MessageBus : MessageBusBase
       producingCompletion.SetResult();
     }
 
-    await foreach (var sending in sendings.Reader.ReadAllAsync(cancellationToken).ConfigureAwait(false))
+    _logger.LogDebug("MAKC:Producing:Start");
+
+    await foreach (var sending in sendingChannel.Reader.ReadAllAsync(cancellationToken).ConfigureAwait(false))
     {
-      var sendingTask = Send(sending, channel, cancellationToken);
-
-      var completionTask = await Task.WhenAny(sendingTask, shutdownCompletion.Task).ConfigureAwait(false);
-
-      if (completionTask == shutdownCompletion.Task)
+      if (CheckShutdown(shutdownCompletion, cancellationToken))
       {
         sending.Cancel(cancellationToken);
 
         break;
       }
-      else
+
+      try
       {
+        await Send(sending, channel, cancellationToken).ConfigureAwait(false);
+
         sending.Complete();
       }
+      catch (Exception ex)
+      {
+        _logger.LogError(ex, "MAKC:Producing:Send:Unknown");
+
+        Shutdown(shutdownCompletion);
+
+        break;
+      }
     }
+
+    _logger.LogDebug("MAKC:Producing:End");
+  }
+
+  private Task Receive(
+    MessageReceiving receiving,
+    IChannel channel,
+    TaskCompletionSource shutdownCompletion,
+    CancellationToken cancellationToken)
+  {
+    TaskCompletionSource receivingCompletion = new();
+
+    var receivingTask = Task.Run(
+      () => Receive(receiving, receivingCompletion, channel, shutdownCompletion, cancellationToken),
+      cancellationToken);
+
+    if (receivingTask.IsCanceled)
+    {
+      return receivingTask;
+    }
+
+    return receivingCompletion.Task;
   }
 }
