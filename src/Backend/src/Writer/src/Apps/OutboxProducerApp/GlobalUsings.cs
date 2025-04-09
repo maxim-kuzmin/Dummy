@@ -2,6 +2,7 @@
 global using Makc.Dummy.Shared.Core.App;
 global using Makc.Dummy.Shared.Core.App.Config.Options;
 global using Makc.Dummy.Shared.Core.App.Config.Options.Enums;
+global using Makc.Dummy.Shared.Core.App.Config.Options.Enums.Message;
 global using Makc.Dummy.Shared.Core.App.Config.Options.Sections;
 global using Makc.Dummy.Shared.Core.App.Config.Options.Sections.Db.MSSQLServer;
 global using Makc.Dummy.Shared.Core.App.Config.Options.Sections.Db.PostgreSQL;
@@ -22,6 +23,7 @@ global using Makc.Dummy.Writer.Infrastructure.DapperForPostgreSQL.App;
 global using Makc.Dummy.Writer.Infrastructure.EntityFramework.App;
 global using Makc.Dummy.Writer.Infrastructure.EntityFrameworkForMSSQLServer.App;
 global using Makc.Dummy.Writer.Infrastructure.EntityFrameworkForPostgreSQL.App;
+global using Makc.Dummy.Writer.Infrastructure.Kafka.App;
 global using Makc.Dummy.Writer.Infrastructure.MSSQLServer.App;
 global using Makc.Dummy.Writer.Infrastructure.PostgreSQL.App;
 global using Makc.Dummy.Writer.Infrastructure.RabbitMQ.App;

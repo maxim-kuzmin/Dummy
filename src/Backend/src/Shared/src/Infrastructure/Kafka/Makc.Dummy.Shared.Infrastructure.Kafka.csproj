@@ -8,8 +8,4 @@
     <ProjectReference Include="..\..\DomainUseCases\Makc.Dummy.Shared.DomainUseCases.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Message\" />
-  </ItemGroup>
-
 </Project>

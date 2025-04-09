@@ -20,6 +20,7 @@
     <ProjectReference Include="..\..\Infrastructure\EntityFrameworkForMSSQLServer\Makc.Dummy.Writer.Infrastructure.EntityFrameworkForMSSQLServer.csproj" />
     <ProjectReference Include="..\..\Infrastructure\EntityFrameworkForPostgreSQL\Makc.Dummy.Writer.Infrastructure.EntityFrameworkForPostgreSQL.csproj" />
     <ProjectReference Include="..\..\Infrastructure\EntityFramework\Makc.Dummy.Writer.Infrastructure.EntityFramework.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Kafka\Makc.Dummy.Writer.Infrastructure.Kafka.csproj" />
     <ProjectReference Include="..\..\Infrastructure\MSSQLServer\Makc.Dummy.Writer.Infrastructure.MSSQLServer.csproj" />
     <ProjectReference Include="..\..\Infrastructure\PostgreSQL\Makc.Dummy.Writer.Infrastructure.PostgreSQL.csproj" />
     <ProjectReference Include="..\..\Infrastructure\RabbitMQ\Makc.Dummy.Writer.Infrastructure.RabbitMQ.csproj" />

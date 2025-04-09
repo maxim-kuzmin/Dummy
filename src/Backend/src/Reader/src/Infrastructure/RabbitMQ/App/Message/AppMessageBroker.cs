@@ -12,6 +12,6 @@ public class AppMessageBroker(
   /// <inheritdoc/>
   public IAppMessageConsumer CreateMessageConsumer()
   {
-    return new AppMessageConsumer(GetChannel, _logger);
+    return new AppMessageConsumer(GetCreatedChannel, _logger);
   }
 }

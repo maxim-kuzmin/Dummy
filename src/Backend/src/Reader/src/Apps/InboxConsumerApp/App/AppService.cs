@@ -20,7 +20,7 @@ public class AppService(
 
     await connectionTask.ConfigureAwait(false);
 
-    if (!connectionTask.IsCompletedSuccessfully)
+    if (stoppingToken.IsCancellationRequested)
     {
       return;
     }
@@ -34,11 +34,6 @@ public class AppService(
     var subscribtionTask = _appMessageConsumer.Subscribe(receiving, stoppingToken);
 
     await subscribtionTask.ConfigureAwait(false);
-
-    if (!subscribtionTask.IsCompletedSuccessfully)
-    {
-      return;
-    }
 
     await Task.Delay(Timeout.Infinite, stoppingToken).ConfigureAwait(false);
   }

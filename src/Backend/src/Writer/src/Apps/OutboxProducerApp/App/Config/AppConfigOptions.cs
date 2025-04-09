@@ -16,6 +16,16 @@ public record AppConfigOptions : AppConfigOptionsBase
   public AppConfigOptionsORMEnum DbQueryORM { get; set; } = AppConfigOptionsORMEnum.EntityFramework;
 
   /// <summary>
+  /// Брокер сообщений Kafka.
+  /// </summary>
+  public AppConfigOptionsKafkaSection? Kafka { get; set; }
+
+  /// <summary>
+  /// Брокер сообщений.
+  /// </summary>
+  public AppConfigOptionsMessageBrokerEnum MessageBroker { get; set; } = AppConfigOptionsMessageBrokerEnum.Kafka;
+
+  /// <summary>
   /// База данных MS SQL Server.
   /// </summary>
   public AppConfigOptionsDbMSSQLServerSection? MSSQLServer { get; set; }

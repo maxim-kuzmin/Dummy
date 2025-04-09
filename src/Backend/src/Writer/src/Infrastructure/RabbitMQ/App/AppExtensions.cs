@@ -6,7 +6,7 @@
 public static class AppExtensions
 {
   /// <summary>
-  /// Добавить инфраструктуру приложения, привязанную к RabbitMQ.
+  /// Добавить инфраструктуру приложения, привязанную к брокеру сообщений RabbitMQ.
   /// </summary>
   /// <param name="services">Сервисы.</param>
   /// <param name="logger">Логгер.</param>

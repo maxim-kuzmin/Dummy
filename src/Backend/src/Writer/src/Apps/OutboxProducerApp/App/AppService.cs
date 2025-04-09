@@ -14,6 +14,11 @@ public class AppService(
   {
     var connectionTask = _appMessageBroker.Connect(stoppingToken);
 
+    if (stoppingToken.IsCancellationRequested)
+    {
+      return;
+    }
+
     await connectionTask.ConfigureAwait(false);
 
     using IServiceScope scope = _serviceScopeFactory.CreateScope();

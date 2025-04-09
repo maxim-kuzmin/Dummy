@@ -47,8 +47,19 @@ public static class AppExtensions
     services
       .AddAppSharedInfrastructureTiedToCore(logger, appBuilder.Configuration, funcsToConfigureAppLogger)
       .AddAppInfrastructureTiedToCore(logger)
-      .AddAppInfrastructureTiedToMongoDB(logger, appConfigOptions.MongoDB, appBuilder.Configuration)
-      .AddAppInfrastructureTiedToRabbitMQ(logger, appConfigOptions.RabbitMQ);
+      .AddAppInfrastructureTiedToMongoDB(logger, appConfigOptions.MongoDB, appBuilder.Configuration);
+
+    switch (appConfigOptions.MessageBroker)
+    {
+      case AppConfigOptionsMessageBrokerEnum.Kafka:
+        services.AddAppInfrastructureTiedToKafka(logger, appConfigOptions.Kafka);
+        break;
+      case AppConfigOptionsMessageBrokerEnum.RabbitMQ:
+        services.AddAppInfrastructureTiedToRabbitMQ(logger, appConfigOptions.RabbitMQ);
+        break;
+      default:
+        throw new NotImplementedException();
+    }
 
     services.AddHostedService<AppService>();
 

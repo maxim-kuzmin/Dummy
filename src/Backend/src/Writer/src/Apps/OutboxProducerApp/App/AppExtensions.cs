@@ -82,8 +82,19 @@ public static class AppExtensions
     }
 
     services
-      .AddAppInfrastructureTiedToEntityFramework(logger, appDbSQLSettings, appConfigOptions.DbQueryORM)
-      .AddAppInfrastructureTiedToRabbitMQ(logger, appConfigOptions.RabbitMQ);
+      .AddAppInfrastructureTiedToEntityFramework(logger, appDbSQLSettings, appConfigOptions.DbQueryORM);
+
+    switch (appConfigOptions.MessageBroker)
+    {
+      case AppConfigOptionsMessageBrokerEnum.Kafka:
+        services.AddAppInfrastructureTiedToKafka(logger, appConfigOptions.Kafka);
+        break;
+      case AppConfigOptionsMessageBrokerEnum.RabbitMQ:
+        services.AddAppInfrastructureTiedToRabbitMQ(logger, appConfigOptions.RabbitMQ);
+        break;
+      default:
+        throw new NotImplementedException();
+    }
 
     services.AddHostedService<AppService>();
 

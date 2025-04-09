@@ -15,8 +15,6 @@ public abstract class MessageBroker : IMessageBroker, IDisposable
 
   private IConnection? _connection;
 
-  private bool _disposedValue;
-
   /// <summary>
   /// Конструктор.
   /// </summary>
@@ -46,11 +44,11 @@ public abstract class MessageBroker : IMessageBroker, IDisposable
     {
       try
       {
-        _connection = await _connectionFactory.CreateConnectionAsync(cancellationToken).ConfigureAwait(false);
+        _connection = await CreateConnection(_connectionFactory, cancellationToken).ConfigureAwait(false);
 
         _logger.LogDebug("MAKC:MessageBroker:Connect:Connection created");
 
-        _channel = await _connection.CreateChannelAsync(null, cancellationToken).ConfigureAwait(false);
+        _channel = await CreateChannel(_connection, cancellationToken).ConfigureAwait(false);
 
         _logger.LogDebug("MAKC:MessageBroker:Connect:Channel created");
 
@@ -68,10 +66,34 @@ public abstract class MessageBroker : IMessageBroker, IDisposable
   }
 
   /// <summary>
-  /// Получить канал.
+  /// Создать канал.
+  /// </summary>
+  /// <param name="connection">Подключение.</param>
+  /// <param name="cancellationToken">Токен отмены.</param>
+  /// <returns>Канал.</returns>
+  protected virtual Task<IChannel> CreateChannel(IConnection connection, CancellationToken cancellationToken)
+  {
+    return connection.CreateChannelAsync(null, cancellationToken);
+  }
+
+  /// <summary>
+  /// Создать подключение.
+  /// </summary>
+  /// <param name="connectionFactory">Фабрика подключений.</param>
+  /// <param name="cancellationToken">Токен отмены.</param>
+  /// <returns>Подключение.</returns>
+  protected virtual Task<IConnection> CreateConnection(
+    ConnectionFactory connectionFactory,
+    CancellationToken cancellationToken)
+  {
+    return connectionFactory.CreateConnectionAsync(cancellationToken);
+  }
+
+  /// <summary>
+  /// Получить созданный канал.
   /// </summary>
   /// <returns>Канал.</returns>
-  protected IChannel GetChannel()
+  protected IChannel GetCreatedChannel()
   {
     return Guard.Against.Null(_channel);
   }
@@ -91,9 +113,12 @@ public abstract class MessageBroker : IMessageBroker, IDisposable
 
   #region IDisposable
 
+  private bool _disposedValue;
+
   public void Dispose()
   {
     Dispose(disposing: true);
+
     GC.SuppressFinalize(this);
   }
 
