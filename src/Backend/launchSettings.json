@@ -10,6 +10,9 @@
         "backend-gateway-web-app": "StartDebugging",
         "backend-reader-inbox-cleaner-app": "StartDebugging",
         "backend-reader-inbox-consumer-app": "StartDebugging",
+        "backend-reader-web-app": "StartDebugging",
+        "backend-writer-db-migration-for-mssqlserver-app": "StartDebugging",
+        "backend-writer-db-migration-for-postgres-app": "StartDebugging",
         "backend-writer-outbox-cleaner-app": "StartDebugging",
         "backend-writer-outbox-producer-app": "StartDebugging",
         "backend-writer-web-app": "StartDebugging"
