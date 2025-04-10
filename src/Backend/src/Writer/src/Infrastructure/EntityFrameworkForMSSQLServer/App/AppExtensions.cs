@@ -18,15 +18,13 @@ public static class AppExtensions
   public static IServiceCollection AddAppInfrastructureTiedToEntityFrameworkForMSSQLServer(
     this IServiceCollection services,
     ILogger logger,
-    AppConfigOptionsDbMSSQLServerSection? appConfigOptionsMSSQLServerSection,
+    AppConfigOptionsDbMSSQLServerSection appConfigOptionsMSSQLServerSection,
     IConfiguration configuration)
   {
-    Guard.Against.Null(appConfigOptionsMSSQLServerSection, nameof(appConfigOptionsMSSQLServerSection));
-
     var connectionStringTemplate = configuration.GetConnectionString(
       appConfigOptionsMSSQLServerSection.ConnectionStringName);
 
-    Guard.Against.Null(connectionStringTemplate, nameof(connectionStringTemplate));
+    Guard.Against.Null(connectionStringTemplate);
 
     var connectionString = appConfigOptionsMSSQLServerSection.ToConnectionString(connectionStringTemplate);
 

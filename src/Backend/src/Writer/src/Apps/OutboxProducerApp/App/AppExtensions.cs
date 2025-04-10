@@ -1,4 +1,8 @@
-﻿namespace Makc.Dummy.Writer.Apps.OutboxProducerApp.App;
+﻿using Ardalis.GuardClauses;
+using Google.Protobuf.WellKnownTypes;
+using Microsoft.Extensions.Options;
+
+namespace Makc.Dummy.Writer.Apps.OutboxProducerApp.App;
 
 /// <summary>
 /// Расширения приложения.
@@ -54,6 +58,7 @@ public static class AppExtensions
     switch (appConfigOptions.Db)
     {
       case AppConfigOptionsDbEnum.MSSQLServer:
+        Guard.Against.Null(appConfigOptions.MSSQLServer);
         services
           .AddAppInfrastructureTiedToMSSQLServer(logger, out appDbSQLSettings)
           .AddAppInfrastructureTiedToEntityFrameworkForMSSQLServer(
@@ -66,6 +71,7 @@ public static class AppExtensions
             appBuilder.Configuration);
         break;
       case AppConfigOptionsDbEnum.PostgreSQL:
+        Guard.Against.Null(appConfigOptions.PostgreSQL);
         services
           .AddAppInfrastructureTiedToPostgreSQL(logger, out appDbSQLSettings)
           .AddAppInfrastructureTiedToEntityFrameworkForPostgreSQL(
@@ -81,15 +87,16 @@ public static class AppExtensions
         throw new NotImplementedException();
     }
 
-    services
-      .AddAppInfrastructureTiedToEntityFramework(logger, appDbSQLSettings, appConfigOptions.DbQueryORM);
+    services.AddAppInfrastructureTiedToEntityFramework(logger, appDbSQLSettings, appConfigOptions.DbQueryORM);
 
     switch (appConfigOptions.MessageBroker)
     {
       case AppConfigOptionsMessageBrokerEnum.Kafka:
+        Guard.Against.Null(appConfigOptions.Kafka);
         services.AddAppInfrastructureTiedToKafka(logger, appConfigOptions.Kafka);
         break;
       case AppConfigOptionsMessageBrokerEnum.RabbitMQ:
+        Guard.Against.Null(appConfigOptions.RabbitMQ);
         services.AddAppInfrastructureTiedToRabbitMQ(logger, appConfigOptions.RabbitMQ);
         break;
       default:

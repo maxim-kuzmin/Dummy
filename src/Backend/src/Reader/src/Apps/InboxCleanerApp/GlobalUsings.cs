@@ -12,4 +12,5 @@ global using Makc.Dummy.Shared.Core.App.Config.Options.Sections.Db.MongoDB;
 global using Makc.Dummy.Shared.Infrastructure.Core.App;
 global using Makc.Dummy.Shared.Infrastructure.Core.App.Logger.Funcs;
 global using Makc.Dummy.Shared.Infrastructure.CoreForOpenTelemetry.App;
+global using Makc.Dummy.Reader.Infrastructure.MongoDB.App;
 global using Microsoft.Extensions.Options;

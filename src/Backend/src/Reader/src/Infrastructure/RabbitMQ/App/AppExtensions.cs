@@ -17,7 +17,7 @@ public static class AppExtensions
   public static IServiceCollection AddAppInfrastructureTiedToRabbitMQ(
     this IServiceCollection services,
     ILogger logger,
-    AppConfigOptionsRabbitMQSection? appConfigOptionsRabbitMQSection)
+    AppConfigOptionsRabbitMQSection appConfigOptionsRabbitMQSection)
   {
     services.AddSingleton<IAppMessageBroker>(x => new AppMessageBroker(
       appConfigOptionsRabbitMQSection,

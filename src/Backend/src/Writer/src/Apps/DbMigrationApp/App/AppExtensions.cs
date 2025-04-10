@@ -1,4 +1,7 @@
-﻿namespace Makc.Dummy.Reader.Apps.InboxCleanerApp.App;
+﻿using Makc.Dummy.Shared.Core.App.Config.Options.Sections.Db.MSSQLServer;
+using Makc.Dummy.Shared.Core.App.Config.Options.Sections.Db.PostgreSQL;
+
+namespace Makc.Dummy.Writer.Apps.DbMigrationApp.App;
 
 /// <summary>
 /// Расширения приложения.
@@ -24,7 +27,7 @@ public static class AppExtensions
 
     var services = appBuilder.Services.Configure<AppConfigOptions>(appConfigSection)
       .AddAppDomainModel(logger)
-      .AddAppDomainUseCases(logger);
+      .AddAppDomainUseCases(logger, appConfigAuthenticationSection: null);
 
     List<AppLoggerFuncToConfigure> funcsToConfigureAppLogger = [];
 
@@ -46,13 +49,45 @@ public static class AppExtensions
 
     services
       .AddAppSharedInfrastructureTiedToCore(logger, appBuilder.Configuration, funcsToConfigureAppLogger)
-      .AddAppInfrastructureTiedToCore(logger);
+      .AddAppInfrastructureTiedToCore(logger)
+      .AddAppInfrastructureTiedToDapper(logger, appConfigOptions.DbQueryORM);
 
-    Guard.Against.Null(appConfigOptions.MongoDB);
+    AppDbSQLSettings appDbSQLSettings;
 
-    services.AddAppInfrastructureTiedToMongoDB(logger, appConfigOptions.MongoDB, appBuilder.Configuration);
+    switch (appConfigOptions.Db)
+    {
+      case AppConfigOptionsDbEnum.MSSQLServer:
+        Guard.Against.Null(appConfigOptions.MSSQLServer);        
+        services
+          .AddAppInfrastructureTiedToMSSQLServer(logger, out appDbSQLSettings)
+          .AddAppInfrastructureTiedToEntityFrameworkForMSSQLServer(
+            logger,
+            appConfigOptions.MSSQLServer,
+            appBuilder.Configuration)
+          .AddAppInfrastructureTiedToDapperForMSSQLServer(
+            logger,
+            appConfigOptions.MSSQLServer,
+            appBuilder.Configuration);
+        break;
+      case AppConfigOptionsDbEnum.PostgreSQL:
+        Guard.Against.Null(appConfigOptions.PostgreSQL);
+        services
+          .AddAppInfrastructureTiedToPostgreSQL(logger, out appDbSQLSettings)
+          .AddAppInfrastructureTiedToEntityFrameworkForPostgreSQL(
+            logger,
+            appConfigOptions.PostgreSQL,
+            appBuilder.Configuration)
+          .AddAppInfrastructureTiedToDapperForPostgreSQL(
+            logger,
+            appConfigOptions.PostgreSQL,
+            appBuilder.Configuration);
+        break;
+      default:
+        throw new NotImplementedException();
+    }
 
     services
+      .AddAppInfrastructureTiedToEntityFramework(logger, appDbSQLSettings, appConfigOptions.DbQueryORM)
       .AddHostedService<AppService>()
       .TryAddAppDomainUseCasesStubs(logger);
 

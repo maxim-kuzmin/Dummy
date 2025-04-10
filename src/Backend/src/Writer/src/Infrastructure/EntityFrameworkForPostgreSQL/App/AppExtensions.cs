@@ -18,15 +18,13 @@ public static class AppExtensions
   public static IServiceCollection AddAppInfrastructureTiedToEntityFrameworkForPostgreSQL(
     this IServiceCollection services,
     ILogger logger,
-    AppConfigOptionsDbPostgreSQLSection? appConfigOptionsPostgreSQLSection,
+    AppConfigOptionsDbPostgreSQLSection appConfigOptionsPostgreSQLSection,
     IConfiguration configuration)
   {
-    Guard.Against.Null(appConfigOptionsPostgreSQLSection, nameof(appConfigOptionsPostgreSQLSection));
-
     var connectionStringTemplate = configuration.GetConnectionString(
       appConfigOptionsPostgreSQLSection.ConnectionStringName);
 
-    Guard.Against.Null(connectionStringTemplate, nameof(connectionStringTemplate));
+    Guard.Against.Null(connectionStringTemplate);
 
     var connectionString = appConfigOptionsPostgreSQLSection.ToConnectionString(connectionStringTemplate);
 

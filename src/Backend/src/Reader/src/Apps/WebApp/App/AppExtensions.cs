@@ -52,12 +52,15 @@ public static class AppExtensions
 
     services
       .AddAppSharedInfrastructureTiedToCore(logger, appBuilder.Configuration, funcsToConfigureAppLogger)
-      .AddAppInfrastructureTiedToCore(logger)
-      .AddAppInfrastructureTiedToMongoDB(logger, appConfigOptions.MongoDB, appBuilder.Configuration);
+      .AddAppInfrastructureTiedToCore(logger);
+
+    Guard.Against.Null(appConfigOptions.MongoDB);
+
+    services.AddAppInfrastructureTiedToMongoDB(logger, appConfigOptions.MongoDB, appBuilder.Configuration);
 
     services
       .AddAppInfrastructureTiedToGrpc(logger)
-      .AddAppInfrastructureTiedToRabbitMQ(logger, appConfigOptionsRabbitMQSection: null);
+      .TryAddAppDomainUseCasesStubs(logger);
 
     services.Configure<CookiePolicyOptions>(options =>
     {

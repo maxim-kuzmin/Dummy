@@ -17,7 +17,7 @@ public static class AppExtensions
   public static IServiceCollection AddAppInfrastructureTiedToKafka(
     this IServiceCollection services,
     ILogger logger,
-    AppConfigOptionsKafkaSection? appConfigOptionsKafkaSection)
+    AppConfigOptionsKafkaSection appConfigOptionsKafkaSection)
   {
     services.AddSingleton<IAppMessageBroker>(x => new AppMessageBroker(
       appConfigOptionsKafkaSection,

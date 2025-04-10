@@ -54,6 +54,7 @@ public static class AppExtensions
     switch (appConfigOptions.Db)
     {
       case AppConfigOptionsDbEnum.MSSQLServer:
+        Guard.Against.Null(appConfigOptions.MSSQLServer);
         services
           .AddAppInfrastructureTiedToMSSQLServer(logger, out appDbSQLSettings)
           .AddAppInfrastructureTiedToEntityFrameworkForMSSQLServer(
@@ -66,6 +67,7 @@ public static class AppExtensions
             appBuilder.Configuration);
         break;
       case AppConfigOptionsDbEnum.PostgreSQL:
+        Guard.Against.Null(appConfigOptions.PostgreSQL);
         services
           .AddAppInfrastructureTiedToPostgreSQL(logger, out appDbSQLSettings)
           .AddAppInfrastructureTiedToEntityFrameworkForPostgreSQL(
@@ -82,9 +84,9 @@ public static class AppExtensions
     }
 
     services
-      .AddAppInfrastructureTiedToEntityFramework(logger, appDbSQLSettings, appConfigOptions.DbQueryORM);
-
-    services.AddHostedService<AppService>();
+      .AddAppInfrastructureTiedToEntityFramework(logger, appDbSQLSettings, appConfigOptions.DbQueryORM)
+      .AddHostedService<AppService>()
+      .TryAddAppDomainUseCasesStubs(logger);
 
     logger.LogInformation("Application is ready to build");
 

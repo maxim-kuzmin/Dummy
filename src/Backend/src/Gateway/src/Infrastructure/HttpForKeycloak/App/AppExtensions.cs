@@ -13,41 +13,33 @@ public static class AppExtensions
   /// <param name="appConfigOptionsAuthenticationSection">
   /// Раздел аутентификации в параметрах конфигурации приложения.
   /// </param>
-  /// <param name="appConfigKeycloakSection">Раздел поставщика OpenID Keycloak в конфигурации приложения.</param>
   /// <param name="keycloakEndpoint">Конечная точка поставщика OpenID Keycloak.</param>
   /// <returns>Сервисы.</returns>
   public static IServiceCollection AddAppInfrastructureTiedToHttpForKeycloak(
     this IServiceCollection services,
     ILogger logger,
-    AppConfigOptionsAuthenticationSection? appConfigOptionsAuthenticationSection,
-    IConfigurationSection? appConfigKeycloakSection,
-    string? keycloakEndpoint)
+    IConfigurationSection appConfigKeycloakSection,
+    string keycloakEndpoint)
   {
-    if (appConfigOptionsAuthenticationSection?.Type == AppConfigOptionsAuthenticationEnum.Keycloak)
-    {
-      services.AddTransient<IAuthCommandService, AuthCommandService>();
+    services.AddTransient<IAuthCommandService, AuthCommandService>();
 
-      Guard.Against.Null(appConfigKeycloakSection);      
+    services.Configure<AppConfigOptionsKeycloakSection>(appConfigKeycloakSection);
 
-      services.Configure<AppConfigOptionsKeycloakSection>(appConfigKeycloakSection);
+    const string userAgent = nameof(Dummy);
 
-      Guard.Against.Null(keycloakEndpoint);
+    services.AddHttpClient(
+      AuthSettings.HttpClientName,
+      httpClient =>
+      {
+        httpClient.BaseAddress = new Uri(keycloakEndpoint);
 
-      const string userAgent = nameof(Dummy);
+        httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(userAgent);
+      })
+      .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler()
+      {
+        ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+      });
 
-      services.AddHttpClient(
-        AuthSettings.HttpClientName,
-        httpClient =>
-        {
-          httpClient.BaseAddress = new Uri(keycloakEndpoint);
-
-          httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(userAgent);
-        })
-        .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler()
-        {
-          ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
-        });
-    }
 
     logger.LogInformation("Added application infrastructure tied to Http for Keycloak");
 

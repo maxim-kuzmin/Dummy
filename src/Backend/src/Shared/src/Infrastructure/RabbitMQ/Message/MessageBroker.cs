@@ -20,11 +20,9 @@ public abstract class MessageBroker : IMessageBroker, IDisposable
   /// </summary>
   /// <param name="options">Параметры.</param>
   /// <param name="logger">Логгер.</param>
-  public MessageBroker(AppConfigOptionsRabbitMQSection? options, ILogger logger)
+  public MessageBroker(AppConfigOptionsRabbitMQSection options, ILogger logger)
   {
     _logger = logger;
-
-    Guard.Against.Null(options);
 
     _connectionFactory = new()
     {

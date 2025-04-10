@@ -1,4 +1,6 @@
-﻿namespace Makc.Dummy.Gateway.Apps.WebApp.App;
+﻿using Makc.Dummy.Shared.Core.App.Config.Options.Sections;
+
+namespace Makc.Dummy.Gateway.Apps.WebApp.App;
 
 /// <summary>
 /// Расширения приложения.
@@ -76,11 +78,17 @@ public static class AppExtensions
         throw new NotImplementedException();
     }
 
-    services.AddAppInfrastructureTiedToHttpForKeycloak(
-      logger,
-      authentication,
-      appConfigKeycloakSection,
-      appConfigOptions.Keycloak?.BaseUrl);
+    if (authentication.Type == AppConfigOptionsAuthenticationEnum.Keycloak)
+    {
+      Guard.Against.Null(appConfigKeycloakSection);
+
+      string keycloakEndpoint = Guard.Against.Null(appConfigOptions.Keycloak?.BaseUrl);
+      
+      services.AddAppInfrastructureTiedToHttpForKeycloak(
+        logger,
+        appConfigKeycloakSection,
+        keycloakEndpoint);
+    }
 
     services.Configure<CookiePolicyOptions>(options =>
     {

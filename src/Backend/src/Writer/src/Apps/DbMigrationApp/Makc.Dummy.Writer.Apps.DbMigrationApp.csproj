@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Worker">
 
   <PropertyGroup>
-    <UserSecretsId>C4104A4C-7EAC-4AC8-9918-ABD9752BEABD</UserSecretsId>
+    <UserSecretsId>FDB8DC92-54A6-408C-811D-8467F26B4B9B</UserSecretsId>
     <DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
@@ -13,8 +13,15 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Shared\src\Infrastructure\CoreForOpenTelemetry\Makc.Dummy.Shared.Infrastructure.CoreForOpenTelemetry.csproj" />
     <ProjectReference Include="..\..\..\..\Shared\src\Infrastructure\Core\Makc.Dummy.Shared.Infrastructure.Core.csproj" />
-    <ProjectReference Include="..\..\Infrastructure\Core\Makc.Dummy.Reader.Infrastructure.Core.csproj" />
-    <ProjectReference Include="..\..\Infrastructure\MongoDB\Makc.Dummy.Reader.Infrastructure.MongoDB.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Core\Makc.Dummy.Writer.Infrastructure.Core.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\DapperForMSSQLServer\Makc.Dummy.Writer.Infrastructure.DapperForMSSQLServer.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\DapperForPostgreSQL\Makc.Dummy.Writer.Infrastructure.DapperForPostgreSQL.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Dapper\Makc.Dummy.Writer.Infrastructure.Dapper.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\EntityFrameworkForMSSQLServer\Makc.Dummy.Writer.Infrastructure.EntityFrameworkForMSSQLServer.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\EntityFrameworkForPostgreSQL\Makc.Dummy.Writer.Infrastructure.EntityFrameworkForPostgreSQL.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\EntityFramework\Makc.Dummy.Writer.Infrastructure.EntityFramework.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\MSSQLServer\Makc.Dummy.Writer.Infrastructure.MSSQLServer.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\PostgreSQL\Makc.Dummy.Writer.Infrastructure.PostgreSQL.csproj" />
   </ItemGroup>
 
   <ItemGroup>

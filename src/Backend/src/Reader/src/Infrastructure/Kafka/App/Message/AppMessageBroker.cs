@@ -6,7 +6,7 @@
 /// <param name="options">Параметры.</param>
 /// <param name="_logger">Логгер.</param>
 public class AppMessageBroker(
-  AppConfigOptionsKafkaSection? options,
+  AppConfigOptionsKafkaSection options,
   ILogger<AppMessageBroker> _logger) : MessageBroker(options, _logger), IAppMessageBroker
 {
   /// <inheritdoc/>

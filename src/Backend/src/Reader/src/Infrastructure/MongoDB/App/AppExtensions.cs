@@ -16,17 +16,15 @@ public static class AppExtensions
   public static IServiceCollection AddAppInfrastructureTiedToMongoDB(
     this IServiceCollection services,
     ILogger logger,
-    AppConfigOptionsDbMongoDBSection? appConfigOptionsMongoDBSection,
+    AppConfigOptionsDbMongoDBSection appConfigOptionsMongoDBSection,
     IConfiguration configuration)
   {
     services.AddSingleton(x => new AppDbSettings());
 
-    Guard.Against.Null(appConfigOptionsMongoDBSection, nameof(appConfigOptionsMongoDBSection));
-
     var connectionStringTemplate = configuration.GetConnectionString(
       appConfigOptionsMongoDBSection.ConnectionStringName);
 
-    Guard.Against.Null(connectionStringTemplate, nameof(connectionStringTemplate));
+    Guard.Against.Null(connectionStringTemplate);
 
     var connectionString = appConfigOptionsMongoDBSection.ToConnectionString(connectionStringTemplate);
 

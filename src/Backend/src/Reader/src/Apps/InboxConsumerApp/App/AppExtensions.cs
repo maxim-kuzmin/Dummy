@@ -1,4 +1,6 @@
-﻿namespace Makc.Dummy.Reader.Apps.InboxConsumerApp.App;
+﻿using Makc.Dummy.Shared.Core.App.Config.Options.Sections.Db.MongoDB;
+
+namespace Makc.Dummy.Reader.Apps.InboxConsumerApp.App;
 
 /// <summary>
 /// Расширения приложения.
@@ -46,22 +48,29 @@ public static class AppExtensions
 
     services
       .AddAppSharedInfrastructureTiedToCore(logger, appBuilder.Configuration, funcsToConfigureAppLogger)
-      .AddAppInfrastructureTiedToCore(logger)
-      .AddAppInfrastructureTiedToMongoDB(logger, appConfigOptions.MongoDB, appBuilder.Configuration);
+      .AddAppInfrastructureTiedToCore(logger);
+
+    Guard.Against.Null(appConfigOptions.MongoDB);
+
+    services.AddAppInfrastructureTiedToMongoDB(logger, appConfigOptions.MongoDB, appBuilder.Configuration);
 
     switch (appConfigOptions.MessageBroker)
     {
       case AppConfigOptionsMessageBrokerEnum.Kafka:
+        Guard.Against.Null(appConfigOptions.Kafka);
         services.AddAppInfrastructureTiedToKafka(logger, appConfigOptions.Kafka);
         break;
       case AppConfigOptionsMessageBrokerEnum.RabbitMQ:
+        Guard.Against.Null(appConfigOptions.RabbitMQ);
         services.AddAppInfrastructureTiedToRabbitMQ(logger, appConfigOptions.RabbitMQ);
         break;
       default:
         throw new NotImplementedException();
     }
 
-    services.AddHostedService<AppService>();
+    services
+      .AddHostedService<AppService>()
+      .TryAddAppDomainUseCasesStubs(logger);
 
     logger.LogInformation("Application is ready to build");
 
