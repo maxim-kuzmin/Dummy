@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <UserSecretsId>ada5bfb7-1c51-46d2-9541-149628765371</UserSecretsId>
-    <DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <ItemGroup>

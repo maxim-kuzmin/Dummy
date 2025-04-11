@@ -1,8 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <UserSecretsId>A3DC6B46-CFED-49AF-9934-75BE7B15142F</UserSecretsId>
-    <DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
+    <UserSecretsId>A3DC6B46-CFED-49AF-9934-75BE7B15142F</UserSecretsId>    
   </PropertyGroup>
 
   <ItemGroup>
