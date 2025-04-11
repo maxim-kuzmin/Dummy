@@ -24,3 +24,5 @@ global using Makc.Dummy.Writer.Infrastructure.EntityFrameworkForPostgreSQL.App;
 global using Makc.Dummy.Writer.Infrastructure.MSSQLServer.App;
 global using Makc.Dummy.Writer.Infrastructure.PostgreSQL.App;
 global using Microsoft.Extensions.Options;
+global using Makc.Dummy.Writer.Infrastructure.EntityFramework.App.Db;
+global using Microsoft.EntityFrameworkCore;

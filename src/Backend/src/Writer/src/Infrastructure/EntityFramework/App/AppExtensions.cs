@@ -39,33 +39,4 @@ public static class AppExtensions
 
     return services;
   }
-
-  /// <summary>
-  /// Использовать инфраструктуру приложения, привязанную к Entity Framework.
-  /// </summary>
-  /// <param name="app">Приложение.</param>
-  /// <param name="logger">Логгер.</param>
-  /// <returns>Задача.</returns>
-  public static async Task UseAppInfrastructureTiedToEntityFramework(this IHost app, ILogger logger)
-  {
-    using var scope = app.Services.CreateScope();
-
-    var scopedServices = scope.ServiceProvider;
-
-    try
-    {
-      var appDbContext = scopedServices.GetRequiredService<AppDbContext>();
-
-      //await appDbContext.Database.MigrateAsync().ConfigureAwait(false);
-      //await appDbContext.Database.EnsureCreatedAsync().ConfigureAwait(false);
-
-      await AppData.InitializeAsync(appDbContext).ConfigureAwait(false);
-
-      logger.LogInformation("Used application infrastructure tied to Entity Framework");
-    }
-    catch (Exception ex)
-    {
-      logger.LogError(ex, "An error occurred seeding the DB. {exceptionMessage}", ex.Message);
-    }
-  }
 }

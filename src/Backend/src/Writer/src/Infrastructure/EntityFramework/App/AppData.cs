@@ -6,40 +6,25 @@
 public static class AppData
 {
   /// <summary>
-  /// Инициализировать асинхронно.
+  /// Инициализировать.
   /// </summary>
   /// <param name="appDbContext">Контекст базы данных приложения.</param>
+  /// <param name="shouldDbBePopulatedWithTestData">Следует ли заполнять базу данных тестовыми данными?</param>
+  /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Задача.</returns>
-  public static async Task InitializeAsync(AppDbContext appDbContext)
+  public static Task Initialize(
+    AppDbContext appDbContext,
+    bool shouldDbBePopulatedWithTestData,
+    CancellationToken cancellationToken)
   {
-    var isSeeded = await appDbContext.DummyItem.AnyAsync().ConfigureAwait(false);
-
-    if (isSeeded)
-    {
-      return;
-    }
-
-    await PopulateTestDataAsync(appDbContext).ConfigureAwait(false);
+    return shouldDbBePopulatedWithTestData
+      ? PopulateDbWithTestDataAsync(appDbContext, cancellationToken)
+      : Task.CompletedTask;
   }
 
-  /// <summary>
-  /// Заполнить тестовыми данными асинхронно.
-  /// </summary>
-  /// <param name="appDbContext">Контекст базы данных приложения.</param>
-  /// <returns>Задача.</returns>
-  public static async Task PopulateTestDataAsync(AppDbContext appDbContext)
+  private static List<DummyItemEntity> CreateDummyItems()
   {
-    using var tran = appDbContext.Database.BeginTransaction();
-
-    appDbContext.DummyItem.AddRange(CreateDummyItems());
-
-    await appDbContext.SaveChangesAsync().ConfigureAwait(false);
-
-    tran.Commit();
-  }
-
-  private static List<DummyItemEntity> CreateDummyItems() =>
-    [
+    return [
       new()
       {
         ConcurrencyToken = Guid.NewGuid(),
@@ -91,4 +76,23 @@ public static class AppData
         Name = "Balazs Orban"
       },
     ];
+  }
+
+  private static async Task PopulateDbWithTestDataAsync(AppDbContext appDbContext, CancellationToken cancellationToken)
+  {
+    var isSeeded = await appDbContext.DummyItem.AnyAsync(cancellationToken).ConfigureAwait(false);
+
+    if (isSeeded)
+    {
+      return;
+    }
+
+    using var tran = await appDbContext.Database.BeginTransactionAsync(cancellationToken);
+
+    appDbContext.DummyItem.AddRange(CreateDummyItems());
+
+    await appDbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+
+    tran.Commit();
+  }
 }

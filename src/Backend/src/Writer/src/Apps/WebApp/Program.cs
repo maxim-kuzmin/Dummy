@@ -10,7 +10,7 @@ try
 
   var app = appBuilder.BuildApp(logger);
 
-  await app.UseApp(logger);
+  app.UseApp(logger);
 
   app.Run();
 }

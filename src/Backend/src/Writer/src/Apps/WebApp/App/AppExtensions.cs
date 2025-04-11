@@ -144,7 +144,7 @@ public static class AppExtensions
   /// <param name="app">Приложение.</param>
   /// <param name="logger">Логгер.</param>
   /// <returns>Приложение.</returns>
-  public static async Task<WebApplication> UseApp(this WebApplication app, ILogger logger)
+  public static WebApplication UseApp(this WebApplication app, ILogger logger)
   {
     if (app.Environment.IsDevelopment())
     {
@@ -185,8 +185,6 @@ public static class AppExtensions
     app.UseAppInfrastructureTiedToGrpc(logger);
 
     app.UseFastEndpoints().UseSwaggerGen(); // Includes AddFileServer and static files middleware
-
-    await app.UseAppInfrastructureTiedToEntityFramework(logger);
 
     logger.LogInformation("Application is ready to run");
 

@@ -14,24 +14,46 @@ public class AppService(
   /// <inheritdoc/>
   protected override async Task ExecuteAsync(CancellationToken stoppingToken)
   {
+    _logger.LogDebug("MAKC:AppService:ExecuteAsync:Start");
+
     while (!stoppingToken.IsCancellationRequested)
     {
       using IServiceScope scope = _serviceScopeFactory.CreateScope();
 
       var appConfigOptionsSnapshot = scope.ServiceProvider.GetRequiredService<IOptionsSnapshot<AppConfigOptions>>();
 
-      var db = appConfigOptionsSnapshot.Value.Db;
+      var appConfigOptions = appConfigOptionsSnapshot.Value;
 
-      _logger.LogInformation("Db: {db}", db);
+      bool shouldDbBePopulatedWithTestData = appConfigOptions.ShouldDbBePopulatedWithTestData;
 
-      if (_logger.IsEnabled(LogLevel.Information))
+      int timeoutToRetry = appConfigOptions.TimeoutInMillisecondsToRetry;
+
+      _logger.LogDebug("MAKC:AppService:ExecuteAsync:ShouldDbBePopulatedWithTestData={shouldDbBePopulatedWithTestData}, TimeoutInMillisecondsToRetry={timeoutToRetry}", shouldDbBePopulatedWithTestData, timeoutToRetry);      
+
+      var appDbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+      try
       {
-        _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
+        await appDbContext.Database.MigrateAsync(stoppingToken).ConfigureAwait(false);
+
+        _logger.LogDebug("MAKC:AppService:ExecuteAsync:Exception:Database migrated");
+
+        await AppData.Initialize(appDbContext, shouldDbBePopulatedWithTestData, stoppingToken).ConfigureAwait(false);
+
+        _logger.LogDebug("MAKC:AppService:ExecuteAsync:Exception:App data initialized");
+
+        break;
+      }
+      catch (Exception ex)
+      {
+        _logger.LogError(ex, "MAKC:AppService:ExecuteAsync:Exception");
       }
 
-      await Task.Delay(0, stoppingToken);//await Task.Delay(Timeout.Infinite, stoppingToken);
-
-      _hostApplicationLifetime.StopApplication();
+      await Task.Delay(timeoutToRetry, stoppingToken).ConfigureAwait(false);
     }
+
+    _hostApplicationLifetime.StopApplication();
+
+    _logger.LogDebug("MAKC:AppService:ExecuteAsync:End");
   }
 }

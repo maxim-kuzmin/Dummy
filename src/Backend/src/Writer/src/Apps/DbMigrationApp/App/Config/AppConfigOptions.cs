@@ -29,4 +29,14 @@ public record AppConfigOptions : AppConfigOptionsBase
   /// База данных PostgreSQL.
   /// </summary>
   public AppConfigOptionsDbPostgreSQLSection? PostgreSQL { get; set; }
+
+  /// <summary>
+  /// Следует ли заполнять базу данных тестовыми данными?
+  /// </summary>
+  public bool ShouldDbBePopulatedWithTestData { get; set; }
+
+  /// <summary>
+  /// Таймаут в миллисекундах для повторного подключения к базе данных в случае неудачи.
+  /// </summary>
+  public int TimeoutInMillisecondsToRetry { get; set; }
 }
