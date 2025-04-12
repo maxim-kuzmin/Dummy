@@ -3,11 +3,11 @@
 /// <summary>
 /// Брокер сообщений приложения.
 /// </summary>
-/// <param name="options">Параметры.</param>
+/// <param name="_options">Параметры.</param>
 /// <param name="_logger">Логгер.</param>
 public class AppMessageBroker(
-  AppConfigOptionsKafkaSection options,
-  ILogger<AppMessageBroker> _logger) : MessageBroker(options, _logger), IAppMessageBroker
+  AppConfigOptionsMessageBrokerSection _options,
+  ILogger<AppMessageBroker> _logger) : MessageBroker(_options.TimeoutInMillisecondsToRetry, _logger), IAppMessageBroker
 {
   /// <inheritdoc/>
   public IAppMessageConsumer CreateMessageConsumer()
@@ -16,17 +16,13 @@ public class AppMessageBroker(
   }
 
   /// <inheritdoc/>
-  protected override ConsumerConfig? CreateConsumerConfig(ClientConfig clientConfig)
+  protected override ConsumerConfig? GetConsumerConfig()
   {
-    return new(clientConfig)
-    {
-      GroupId = "Makc.Dummy.Reader",
-      AutoOffsetReset = AutoOffsetReset.Earliest
-    };
+    return _options.Consumer;
   }
 
   /// <inheritdoc/>
-  protected override ProducerConfig? CreateProducerConfig(ClientConfig clientConfig)
+  protected override ProducerConfig? GetProducerConfig()
   {
     return null;
   }

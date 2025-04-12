@@ -1,7 +1,4 @@
-﻿using Makc.Dummy.Shared.Core.App.Config.Options.Sections.Db.MSSQLServer;
-using Makc.Dummy.Shared.Core.App.Config.Options.Sections.Db.PostgreSQL;
-
-namespace Makc.Dummy.Writer.Apps.DbMigrationApp.App;
+﻿namespace Makc.Dummy.Writer.Apps.DbMigrationApp.App;
 
 /// <summary>
 /// Расширения приложения.

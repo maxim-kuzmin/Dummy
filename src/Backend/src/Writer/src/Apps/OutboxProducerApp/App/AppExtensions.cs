@@ -1,8 +1,4 @@
-﻿using Ardalis.GuardClauses;
-using Google.Protobuf.WellKnownTypes;
-using Microsoft.Extensions.Options;
-
-namespace Makc.Dummy.Writer.Apps.OutboxProducerApp.App;
+﻿namespace Makc.Dummy.Writer.Apps.OutboxProducerApp.App;
 
 /// <summary>
 /// Расширения приложения.

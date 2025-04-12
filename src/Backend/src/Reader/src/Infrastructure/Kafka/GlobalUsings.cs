@@ -1,5 +1,6 @@
 ﻿global using Confluent.Kafka;
 global using Makc.Dummy.Reader.DomainUseCases.App.Message;
+global using Makc.Dummy.Reader.Infrastructure.Kafka.App.Config.Options.Sections;
 global using Makc.Dummy.Reader.Infrastructure.Kafka.App.Message;
 global using Makc.Dummy.Shared.Core.App.Config.Options.Sections;
 global using Makc.Dummy.Shared.Core.Message;

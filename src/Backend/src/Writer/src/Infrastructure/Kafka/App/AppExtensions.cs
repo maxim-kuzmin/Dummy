@@ -10,17 +10,17 @@ public static class AppExtensions
   /// </summary>
   /// <param name="services">Сервисы.</param>
   /// <param name="logger">Логгер.</param>
-  /// <param name="appConfigOptionsKafkaSection">
-  /// Раздел брокера сообщений Kafka в параметрах конфигурации приложения.
+  /// <param name="appConfigOptionsMessageBrokerSection">
+  /// Раздел брокера сообщений в параметрах конфигурации приложения.
   /// </param>
   /// <returns>Сервисы.</returns>
   public static IServiceCollection AddAppInfrastructureTiedToKafka(
     this IServiceCollection services,
     ILogger logger,
-    AppConfigOptionsKafkaSection appConfigOptionsKafkaSection)
+    AppConfigOptionsMessageBrokerSection appConfigOptionsMessageBrokerSection)
   {
     services.AddSingleton<IAppMessageBroker>(x => new AppMessageBroker(
-      appConfigOptionsKafkaSection,
+      appConfigOptionsMessageBrokerSection,
       x.GetRequiredService<ILogger<AppMessageBroker>>()));
 
     services.AddTransient(x => x.GetRequiredService<IAppMessageBroker>().CreateMessageProducer());

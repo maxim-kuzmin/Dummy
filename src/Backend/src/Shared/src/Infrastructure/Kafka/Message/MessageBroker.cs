@@ -1,39 +1,18 @@
-﻿using Confluent.Kafka;
-
-namespace Makc.Dummy.Shared.Infrastructure.Kafka.Message;
+﻿namespace Makc.Dummy.Shared.Infrastructure.Kafka.Message;
 
 /// <summary>
 /// Брокер сообщений.
 /// </summary>
-public abstract class MessageBroker : IMessageBroker, IDisposable
+/// <param name="_clientConfig">Конфигурация клиента.</param>
+/// <param name="_timeoutToRetry">
+/// Таймаут в миллисекундах для повторного подключения к брокеру сообщений в случае неудачи.
+/// </param>
+/// <param name="_logger">Логгер.</param>
+public abstract class MessageBroker(int _timeoutToRetry, ILogger _logger) : IMessageBroker, IDisposable
 {
-  private readonly ClientConfig _clientConfig;
-
-  private readonly ILogger _logger;
-
-  private readonly int _timeoutToRetry;
-
   private IConsumer<string, string>? _consumer;
 
   private IProducer<string, string>? _producer;
-
-  /// <summary>
-  /// Конструктор.
-  /// </summary>
-  /// <param name="options">Параметры.</param>
-  /// <param name="logger">Логгер.</param>
-  public MessageBroker(AppConfigOptionsKafkaSection options, ILogger logger)
-  {
-    _logger = logger;
-
-    _clientConfig = new()
-    {
-      BootstrapServers = options.BootstrapServers,
-      Acks = Acks.All
-    };
-
-    _timeoutToRetry = options.TimeoutInMillisecondsToRetry;
-  }
 
   public async Task Connect(CancellationToken cancellationToken)
   {
@@ -41,7 +20,7 @@ public abstract class MessageBroker : IMessageBroker, IDisposable
     {
       try
       {
-        var consumerConfig = CreateConsumerConfig(_clientConfig);
+        var consumerConfig = GetConsumerConfig();
 
         _logger.LogDebug("MAKC:MessageBroker:Connect:ConsumerConfig {not}created", consumerConfig != null ? string.Empty : "not ");
 
@@ -52,7 +31,7 @@ public abstract class MessageBroker : IMessageBroker, IDisposable
           _logger.LogDebug("MAKC:MessageBroker:Connect:Consumer created");
         }        
         
-        var producerConfig = CreateProducerConfig(_clientConfig);
+        var producerConfig = GetProducerConfig();
 
         _logger.LogDebug("MAKC:MessageBroker:Connect:ProducerConfig {not}created", producerConfig != null ? string.Empty : "not ");
 
@@ -77,18 +56,16 @@ public abstract class MessageBroker : IMessageBroker, IDisposable
   }
 
   /// <summary>
-  /// Создать конфигурацию потребителя.
+  /// Получить конфигурацию потребителя.
   /// </summary>
-  /// <param name="clientConfig">Конфигурация клиента.</param>
   /// <returns>Конфигурация потребителя.</returns>
-  protected abstract ConsumerConfig? CreateConsumerConfig(ClientConfig clientConfig);
+  protected abstract ConsumerConfig? GetConsumerConfig();
 
   /// <summary>
-  /// Создать конфигурацию поставщика.
+  /// Получить конфигурацию поставщика.
   /// </summary>
-  /// <param name="clientConfig">Конфигурация клиента.</param>
   /// <returns>Конфигурация поставщика.</returns>
-  protected abstract ProducerConfig? CreateProducerConfig(ClientConfig clientConfig);
+  protected abstract ProducerConfig? GetProducerConfig();
 
   /// <summary>
   /// Получить созданного потребителя.

@@ -8,6 +8,7 @@ global using Makc.Dummy.Reader.DomainUseCases.App.Message;
 global using Makc.Dummy.Reader.DomainUseCases.AppInbox.Actions.Consume;
 global using Makc.Dummy.Reader.Infrastructure.Core.App;
 global using Makc.Dummy.Reader.Infrastructure.Kafka.App;
+global using Makc.Dummy.Reader.Infrastructure.Kafka.App.Config.Options.Sections;
 global using Makc.Dummy.Reader.Infrastructure.MongoDB.App;
 global using Makc.Dummy.Reader.Infrastructure.RabbitMQ.App;
 global using Makc.Dummy.Shared.Core.App;

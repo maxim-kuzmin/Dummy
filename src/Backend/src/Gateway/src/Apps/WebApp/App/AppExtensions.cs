@@ -1,6 +1,4 @@
-﻿using Makc.Dummy.Shared.Core.App.Config.Options.Sections;
-
-namespace Makc.Dummy.Gateway.Apps.WebApp.App;
+﻿namespace Makc.Dummy.Gateway.Apps.WebApp.App;
 
 /// <summary>
 /// Расширения приложения.

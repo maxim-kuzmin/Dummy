@@ -1,6 +1,4 @@
-﻿using Makc.Dummy.Shared.Core.App.Config.Options.Sections.Db.MongoDB;
-
-namespace Makc.Dummy.Reader.Apps.InboxConsumerApp.App;
+﻿namespace Makc.Dummy.Reader.Apps.InboxConsumerApp.App;
 
 /// <summary>
 /// Расширения приложения.

@@ -1,6 +1,4 @@
-﻿using Makc.Dummy.Shared.Core.App.Config.Options.Enums.Message;
-
-namespace Makc.Dummy.Reader.Apps.InboxConsumerApp.App.Config;
+﻿namespace Makc.Dummy.Reader.Apps.InboxConsumerApp.App.Config;
 
 /// <summary>
 /// Параметры конфигурации приложения.
@@ -9,7 +7,7 @@ public record AppConfigOptions : AppConfigOptionsBase
 {  /// <summary>
    /// Брокер сообщений Kafka.
    /// </summary>
-  public AppConfigOptionsKafkaSection? Kafka { get; set; }
+  public AppConfigOptionsMessageBrokerSection? Kafka { get; set; }
 
   /// <summary>
   /// Брокер сообщений.

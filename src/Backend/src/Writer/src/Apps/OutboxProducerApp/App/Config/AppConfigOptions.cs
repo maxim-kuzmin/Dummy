@@ -18,7 +18,7 @@ public record AppConfigOptions : AppConfigOptionsBase
   /// <summary>
   /// Брокер сообщений Kafka.
   /// </summary>
-  public AppConfigOptionsKafkaSection? Kafka { get; set; }
+  public AppConfigOptionsMessageBrokerSection? Kafka { get; set; }
 
   /// <summary>
   /// Брокер сообщений.
