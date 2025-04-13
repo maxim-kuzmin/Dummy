@@ -3,12 +3,29 @@
 /// <summary>
 /// Брокер сообщений приложения.
 /// </summary>
-/// <param name="_options">Параметры.</param>
-/// <param name="_logger">Логгер.</param>
-public class AppMessageBroker(
-  AppConfigOptionsMessageBrokerSection _options,
-  ILogger<AppMessageBroker> _logger) : MessageBroker(_options.TimeoutInMillisecondsToRetry, _logger), IAppMessageBroker
+public class AppMessageBroker : MessageBroker, IAppMessageBroker
 {
+  private readonly ProducerConfig _producerConfig;
+
+  private readonly ILogger _logger;
+
+  /// <summary>
+  /// Конструктор.
+  /// </summary>
+  /// <param name="options">Параметры.</param>
+  /// <param name="logger">Логгер.</param>
+  public AppMessageBroker(
+    AppConfigOptionsMessageBrokerSection options,
+    ILogger<AppMessageBroker> logger) : base(options.TimeoutInMillisecondsToRetry, logger)
+  {
+    _producerConfig = new(options.Producer)
+    {
+      Acks = Acks.All      
+    };
+
+    _logger = logger;
+  }
+
   /// <inheritdoc/>
   public IAppMessageProducer CreateMessageProducer()
   {
@@ -24,6 +41,6 @@ public class AppMessageBroker(
   /// <inheritdoc/>
   protected override ProducerConfig? GetProducerConfig()
   {
-    return _options.Producer;
+    return _producerConfig;
   }
 }

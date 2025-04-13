@@ -26,11 +26,16 @@ public abstract class MessageBroker(int _timeoutToRetry, ILogger _logger) : IMes
 
         if (consumerConfig != null)
         {
-          _consumer = new ConsumerBuilder<string, string>(consumerConfig).Build();
+          _consumer = new ConsumerBuilder<string, string>(consumerConfig)
+            .SetPartitionsRevokedHandler((_, _) =>
+            {
+              // https://docs.confluent.io/kafka-clients/dotnet/current/overview.html#committing-during-a-rebalance 
+              _logger.LogDebug("MAKC:MessageBroker:Connect:PartitionsRevokedHandler called");
+            }).Build();
 
           _logger.LogDebug("MAKC:MessageBroker:Connect:Consumer created");
-        }        
-        
+        }
+
         var producerConfig = GetProducerConfig();
 
         _logger.LogDebug("MAKC:MessageBroker:Connect:ProducerConfig {not}created", producerConfig != null ? string.Empty : "not ");

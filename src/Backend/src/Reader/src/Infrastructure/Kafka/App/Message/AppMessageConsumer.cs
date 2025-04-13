@@ -24,6 +24,8 @@ public class AppMessageConsumer(
         string message = consumeResult.Message.Value;
 
         await receiving.FuncToHandleMessage.Invoke(receiving.Sender, message, cancellationToken).ConfigureAwait(false);
+
+        consumer.StoreOffset(consumeResult); // https://docs.confluent.io/kafka-clients/dotnet/current/overview.html#store-offsets
       }
       catch (OperationCanceledException)
       {
