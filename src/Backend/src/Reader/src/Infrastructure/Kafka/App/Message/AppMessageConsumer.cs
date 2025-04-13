@@ -31,6 +31,10 @@ public class AppMessageConsumer(
       {
         _logger.LogDebug("MAKC:AppMessageConsumer:Consume of {sender} canceled", receiving.Sender);
 
+        consumer.Close();
+
+        _logger.LogDebug("MAKC:AppMessageConsumer:Consumer closed");
+
         break;
       }
       catch (Exception ex)
