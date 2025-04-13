@@ -20,7 +20,7 @@ public class AppMessageBroker : MessageBroker, IAppMessageBroker
   {
     _producerConfig = new(options.Producer)
     {
-      Acks = Acks.All      
+      EnableIdempotence = true
     };
 
     _logger = logger;
