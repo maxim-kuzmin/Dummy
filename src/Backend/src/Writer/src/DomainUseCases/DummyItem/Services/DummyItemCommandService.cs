@@ -9,7 +9,7 @@ public class DummyItemCommandService(IMediator _mediator) : IDummyItemCommandSer
   /// <inheritdoc/>
   public Task<Result> OnEntityChanged(EntityChange<DummyItemEntity> entityChange, CancellationToken cancellationToken)
   {
-    AppOutboxSaveActionCommand command = new(AppEventNameEnum.DummyItemChanged, [entityChange]);
+    AppOutboxSaveActionCommand command = new(AppOutgoingEventNameEnum.DummyItemChanged, [entityChange]);
 
     return _mediator.Send(command, cancellationToken);
   }

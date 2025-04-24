@@ -15,7 +15,7 @@ namespace Makc.Dummy.Writer.Infrastructure.EntityFrameworkForMSSQLServer.App.Db.
               name: "writer");
 
           migrationBuilder.CreateTable(
-              name: "AppEvent",
+              name: "AppOutgoingEvent",
               schema: "writer",
               columns: table => new
               {
@@ -28,7 +28,7 @@ namespace Makc.Dummy.Writer.Infrastructure.EntityFrameworkForMSSQLServer.App.Db.
               },
               constraints: table =>
               {
-                  table.PrimaryKey("PK_AppEvent", x => x.Id);
+                  table.PrimaryKey("PK_AppOutgoingEvent", x => x.Id);
               });
 
           migrationBuilder.CreateTable(
@@ -47,33 +47,33 @@ namespace Makc.Dummy.Writer.Infrastructure.EntityFrameworkForMSSQLServer.App.Db.
               });
 
           migrationBuilder.CreateTable(
-              name: "AppEventPayload",
+              name: "AppOutgoingEventPayload",
               schema: "writer",
               columns: table => new
               {
                   Id = table.Column<long>(type: "bigint", nullable: false)
                       .Annotation("SqlServer:Identity", "1, 1"),
-                  AppEventId = table.Column<long>(type: "bigint", nullable: false),
+                  AppOutgoingEventId = table.Column<long>(type: "bigint", nullable: false),
                   ConcurrencyToken = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                   Data = table.Column<string>(type: "nvarchar(max)", nullable: false)
               },
               constraints: table =>
               {
-                  table.PrimaryKey("PK_AppEventPayload", x => x.Id);
+                  table.PrimaryKey("PK_AppOutgoingEventPayload", x => x.Id);
                   table.ForeignKey(
-                      name: "FK_AppEventPayload_AppEvent",
-                      column: x => x.AppEventId,
+                      name: "FK_AppOutgoingEventPayload_AppOutgoingEvent",
+                      column: x => x.AppOutgoingEventId,
                       principalSchema: "writer",
-                      principalTable: "AppEvent",
+                      principalTable: "AppOutgoingEvent",
                       principalColumn: "Id",
                       onDelete: ReferentialAction.Cascade);
               });
 
           migrationBuilder.CreateIndex(
-              name: "IX_AppEventPayload_AppEventId",
+              name: "IX_AppOutgoingEventPayload_AppOutgoingEventId",
               schema: "writer",
-              table: "AppEventPayload",
-              column: "AppEventId");
+              table: "AppOutgoingEventPayload",
+              column: "AppOutgoingEventId");
 
           migrationBuilder.CreateIndex(
               name: "UX_DummyItem_Name",
@@ -87,7 +87,7 @@ namespace Makc.Dummy.Writer.Infrastructure.EntityFrameworkForMSSQLServer.App.Db.
       protected override void Down(MigrationBuilder migrationBuilder)
       {
           migrationBuilder.DropTable(
-              name: "AppEventPayload",
+              name: "AppOutgoingEventPayload",
               schema: "writer");
 
           migrationBuilder.DropTable(
@@ -95,7 +95,7 @@ namespace Makc.Dummy.Writer.Infrastructure.EntityFrameworkForMSSQLServer.App.Db.
               schema: "writer");
 
           migrationBuilder.DropTable(
-              name: "AppEvent",
+              name: "AppOutgoingEvent",
               schema: "writer");
       }
   }

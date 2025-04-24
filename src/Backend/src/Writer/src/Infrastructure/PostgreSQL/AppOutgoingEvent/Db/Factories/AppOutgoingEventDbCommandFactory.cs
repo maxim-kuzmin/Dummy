@@ -1,0 +1,132 @@
+﻿namespace Makc.Dummy.Writer.Infrastructure.PostgreSQL.AppOutgoingEvent.Db.Factories;
+
+/// <summary>
+/// Фабрика команд базы данных исходящего события приложения.
+/// </summary>
+/// <param name="_appDbSettings">Настройки базы данных приложения.</param>
+public class AppOutgoingEventDbCommandFactory(
+  AppDbSettings _appDbSettings,
+  IAppDbSQLCommandHelper _appDbSQLCommandHelper) : IAppOutgoingEventDbSQLCommandFactory
+{
+  /// <inheritdoc/>
+  public DbSQLCommand CreateDbCommand(AppOutgoingEventSingleQuery query)
+  {
+    DbSQLCommand result = new();
+
+    var sAppOutgoingEvent = _appDbSettings.Entities.AppOutgoingEvent;
+
+    result.TextBuilder.Append($$"""
+select
+  "{{sAppOutgoingEvent.ColumnForId}}" "Id",
+  "{{sAppOutgoingEvent.ColumnForCreatedAt}}" "CreatedAt",
+  "{{sAppOutgoingEvent.ColumnForIsPublished}}" "IsPublished",
+  "{{sAppOutgoingEvent.ColumnForName}}" "Name"
+from
+  "{{sAppOutgoingEvent.Schema}}"."{{sAppOutgoingEvent.Table}}"
+where
+  "{{sAppOutgoingEvent.ColumnForId}}" = @Id
+""");
+
+    result.AddParameter("@Id", query.Id);
+
+    return result;
+  }
+
+  /// <inheritdoc/>
+  public DbSQLCommand CreateDbCommandForFilter(AppOutgoingEventPageQuery query)
+  {
+    DbSQLCommand result = new();
+
+    var filter = query.Filter;
+
+    if (!string.IsNullOrEmpty(filter?.FullTextSearchQuery))
+    {
+      var sAppOutgoingEvent = _appDbSettings.Entities.AppOutgoingEvent;
+
+      result.TextBuilder.AppendLine($$"""
+where
+  ae."{{sAppOutgoingEvent.ColumnForId}}"::text ilike @FullTextSearchQuery
+  or
+  ae."{{sAppOutgoingEvent.ColumnForName}}" ilike @FullTextSearchQuery
+""");
+
+      result.AddParameter("@FullTextSearchQuery", $"%{filter.FullTextSearchQuery}%");
+    }
+
+    return result;
+  }
+
+  /// <inheritdoc/>
+  public DbSQLCommand CreateDbCommandForItems(
+    DbSQLCommand dbCommandForFilter,
+    QueryPageSection? page,
+    QuerySortSection? sort)
+  {
+    DbSQLCommand result = new();
+
+    dbCommandForFilter.CopyParametersTo(result);
+
+    var sAppOutgoingEvent = _appDbSettings.Entities.AppOutgoingEvent;
+
+    result.TextBuilder.AppendLine($$"""
+select
+  ae."{{sAppOutgoingEvent.ColumnForId}}" "Id",
+  ae."{{sAppOutgoingEvent.ColumnForCreatedAt}}" "CreatedAt",
+  ae."{{sAppOutgoingEvent.ColumnForIsPublished}}" "IsPublished",
+  ae."{{sAppOutgoingEvent.ColumnForName}}" "Name"
+from
+  "{{sAppOutgoingEvent.Schema}}"."{{sAppOutgoingEvent.Table}}" ae
+""");
+
+    result.TextBuilder.AppendLine(dbCommandForFilter.ToString());
+
+    _appDbSQLCommandHelper.AddSorting(result, sort, DummyItemSettings.DefaultQuerySortSection, CreateOrderByField);
+
+    _appDbSQLCommandHelper.AddPagination(result, page);
+
+    return result;
+  }
+
+  /// <inheritdoc/>
+  public DbSQLCommand CreateDbCommandForTotalCount(DbSQLCommand dbCommandForFilter)
+  {
+    DbSQLCommand result = new();
+
+    dbCommandForFilter.CopyParametersTo(result);
+
+    var sAppOutgoingEvent = _appDbSettings.Entities.AppOutgoingEvent;
+
+    result.TextBuilder.AppendLine($$"""
+select
+  count(*)
+from
+  "{{sAppOutgoingEvent.Schema}}"."{{sAppOutgoingEvent.Table}}" ae
+""");
+
+    result.TextBuilder.AppendLine(dbCommandForFilter.ToString());
+
+    return result;
+  }
+
+  private string CreateOrderByField(string field)
+  {
+    string result;
+
+    var sAppOutgoingEvent = _appDbSettings.Entities.AppOutgoingEvent;
+
+    if (field.EqualsToSortField(AppOutgoingEventSettings.SortFieldForId))
+    {
+      result = $""" ae."{sAppOutgoingEvent.ColumnForId}" """;
+    }
+    else if (field.EqualsToSortField(AppOutgoingEventSettings.SortFieldForName))
+    {
+      result = $""" ae."{sAppOutgoingEvent.ColumnForName}" """;
+    }
+    else
+    {
+      throw new NotImplementedException();
+    }
+
+    return result;
+  }
+}

@@ -26,9 +26,9 @@ public static class AppExtensions
       services.Configure<AppConfigOptionsAuthenticationSection>(appConfigAuthenticationSection);
     }
 
-    services.AddTransient<IAppEventQueryService, AppEventQueryService>();
+    services.AddTransient<IAppOutgoingEventQueryService, AppOutgoingEventQueryService>();
 
-    services.AddTransient<IAppEventPayloadQueryService, AppEventPayloadQueryService>();
+    services.AddTransient<IAppOutgoingEventPayloadQueryService, AppOutgoingEventPayloadQueryService>();
 
     services.AddScoped<IDummyItemCommandService, DummyItemCommandService>();    
     services.AddTransient<IDummyItemQueryService, DummyItemQueryService>();

@@ -11,8 +11,8 @@ public record AppDbSettingsEntities : AppDbSQLSettingsEntities
   /// <param name="schema">Схема.</param>
   public AppDbSettingsEntities(string schema)
   {
-    AppEvent = new AppEventEntityDbSettings(schema);
-    AppEventPayload = new AppEventPayloadEntityDbSettings(schema, AppEvent.Table);
+    AppOutgoingEvent = new AppOutgoingEventEntityDbSettings(schema);
+    AppOutgoingEventPayload = new AppOutgoingEventPayloadEntityDbSettings(schema, AppOutgoingEvent.Table);
     DummyItem = new DummyItemEntityDbSettings(schema);
   }
 }

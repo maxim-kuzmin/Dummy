@@ -14,12 +14,12 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
   /// <summary>
   /// Событие приложения.
   /// </summary>
-  public DbSet<AppEventEntity> AppEvent => base.Set<AppEventEntity>();
+  public DbSet<AppOutgoingEventEntity> AppOutgoingEvent => base.Set<AppOutgoingEventEntity>();
 
   /// <summary>
-  /// Полезная нагрузка события приложения.
+  /// Полезная нагрузка исходящего события приложения.
   /// </summary>
-  public DbSet<AppEventPayloadEntity> AppEventPayload => base.Set<AppEventPayloadEntity>();
+  public DbSet<AppOutgoingEventPayloadEntity> AppOutgoingEventPayload => base.Set<AppOutgoingEventPayloadEntity>();
 
   /// <summary>
   /// Фиктивный предмет.

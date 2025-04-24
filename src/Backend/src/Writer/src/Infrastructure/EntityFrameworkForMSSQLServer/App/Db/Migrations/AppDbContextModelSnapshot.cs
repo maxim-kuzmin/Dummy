@@ -22,7 +22,7 @@ namespace Makc.Dummy.Writer.Infrastructure.EntityFrameworkForMSSQLServer.App.Db.
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Makc.Dummy.Writer.DomainModel.AppEvent.AppEventEntity", b =>
+            modelBuilder.Entity("Makc.Dummy.Writer.DomainModel.AppOutgoingEvent.AppOutgoingEventEntity", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -51,12 +51,12 @@ namespace Makc.Dummy.Writer.Infrastructure.EntityFrameworkForMSSQLServer.App.Db.
                         .HasColumnName("Name");
 
                     b.HasKey("Id")
-                        .HasName("PK_AppEvent");
+                        .HasName("PK_AppOutgoingEvent");
 
-                    b.ToTable("AppEvent", "writer");
+                    b.ToTable("AppOutgoingEvent", "writer");
                 });
 
-            modelBuilder.Entity("Makc.Dummy.Writer.DomainModel.AppEventPayload.AppEventPayloadEntity", b =>
+            modelBuilder.Entity("Makc.Dummy.Writer.DomainModel.AppOutgoingEventPayload.AppOutgoingEventPayloadEntity", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -64,9 +64,9 @@ namespace Makc.Dummy.Writer.Infrastructure.EntityFrameworkForMSSQLServer.App.Db.
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<long>("AppEventId")
+                    b.Property<long>("AppOutgoingEventId")
                         .HasColumnType("bigint")
-                        .HasColumnName("AppEventId");
+                        .HasColumnName("AppOutgoingEventId");
 
                     b.Property<Guid>("ConcurrencyToken")
                         .IsConcurrencyToken()
@@ -79,11 +79,11 @@ namespace Makc.Dummy.Writer.Infrastructure.EntityFrameworkForMSSQLServer.App.Db.
                         .HasColumnName("Data");
 
                     b.HasKey("Id")
-                        .HasName("PK_AppEventPayload");
+                        .HasName("PK_AppOutgoingEventPayload");
 
-                    b.HasIndex("AppEventId");
+                    b.HasIndex("AppOutgoingEventId");
 
-                    b.ToTable("AppEventPayload", "writer");
+                    b.ToTable("AppOutgoingEventPayload", "writer");
                 });
 
             modelBuilder.Entity("Makc.Dummy.Writer.DomainModel.DummyItem.DummyItemEntity", b =>
@@ -116,19 +116,19 @@ namespace Makc.Dummy.Writer.Infrastructure.EntityFrameworkForMSSQLServer.App.Db.
                     b.ToTable("DummyItem", "writer");
                 });
 
-            modelBuilder.Entity("Makc.Dummy.Writer.DomainModel.AppEventPayload.AppEventPayloadEntity", b =>
+            modelBuilder.Entity("Makc.Dummy.Writer.DomainModel.AppOutgoingEventPayload.AppOutgoingEventPayloadEntity", b =>
                 {
-                    b.HasOne("Makc.Dummy.Writer.DomainModel.AppEvent.AppEventEntity", "Event")
+                    b.HasOne("Makc.Dummy.Writer.DomainModel.AppOutgoingEvent.AppOutgoingEventEntity", "Event")
                         .WithMany("Payloads")
-                        .HasForeignKey("AppEventId")
+                        .HasForeignKey("AppOutgoingEventId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("FK_AppEventPayload_AppEvent");
+                        .HasConstraintName("FK_AppOutgoingEventPayload_AppOutgoingEvent");
 
                     b.Navigation("Event");
                 });
 
-            modelBuilder.Entity("Makc.Dummy.Writer.DomainModel.AppEvent.AppEventEntity", b =>
+            modelBuilder.Entity("Makc.Dummy.Writer.DomainModel.AppOutgoingEvent.AppOutgoingEventEntity", b =>
                 {
                     b.Navigation("Payloads");
                 });

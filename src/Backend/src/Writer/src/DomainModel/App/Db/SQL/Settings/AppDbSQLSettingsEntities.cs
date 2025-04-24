@@ -8,12 +8,12 @@ public abstract record AppDbSQLSettingsEntities
   /// <summary>
   /// Событие приложения.
   /// </summary>
-  public AppEventEntityDbSQLSettings AppEvent { get; protected set; } = null!;
+  public AppOutgoingEventEntityDbSQLSettings AppOutgoingEvent { get; protected set; } = null!;
 
   /// <summary>
-  /// Полезная нагрузка события приложения.
+  /// Полезная нагрузка исходящего события приложения.
   /// </summary>
-  public AppEventPayloadEntityDbSQLSettings AppEventPayload { get; protected set; } = null!;
+  public AppOutgoingEventPayloadEntityDbSQLSettings AppOutgoingEventPayload { get; protected set; } = null!;
 
   /// <summary>
   /// Фиктивный предмет.

@@ -13,9 +13,9 @@ public static class AppExtensions
   /// <returns>Сервисы.</returns>
   public static IServiceCollection AddAppDomainModel(this IServiceCollection services, ILogger logger)
   {
-    services.AddSingleton<IAppEventFactory, AppEventFactory>();
+    services.AddSingleton<IAppOutgoingEventFactory, AppOutgoingEventFactory>();
 
-    services.AddSingleton<IAppEventPayloadFactory, AppEventPayloadFactory>();
+    services.AddSingleton<IAppOutgoingEventPayloadFactory, AppOutgoingEventPayloadFactory>();
     
     services.AddSingleton<IDummyItemFactory, DummyItemFactory>();
 

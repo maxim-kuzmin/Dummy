@@ -1,9 +1,9 @@
 ﻿global using Makc.Dummy.Shared.Core.App.Config.Options.Sections;
-global using Makc.Dummy.Writer.DomainModel.AppEvent;
-global using Makc.Dummy.Writer.DomainModel.AppEventPayload;
+global using Makc.Dummy.Writer.DomainModel.AppOutgoingEvent;
+global using Makc.Dummy.Writer.DomainModel.AppOutgoingEventPayload;
 global using Makc.Dummy.Writer.DomainModel.DummyItem;
-global using Makc.Dummy.Writer.Infrastructure.Core.AppEvent;
-global using Makc.Dummy.Writer.Infrastructure.Core.AppEventPayload;
+global using Makc.Dummy.Writer.Infrastructure.Core.AppOutgoingEvent;
+global using Makc.Dummy.Writer.Infrastructure.Core.AppOutgoingEventPayload;
 global using Makc.Dummy.Writer.Infrastructure.Core.DummyItem;
 global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.DependencyInjection;

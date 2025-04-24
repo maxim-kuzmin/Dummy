@@ -29,7 +29,7 @@ public class AppService(
 
     _mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
 
-    MessageReceiving receiving = new(AppEventNameEnum.DummyItemChanged.ToString(), OnMessageReceived);
+    MessageReceiving receiving = new(AppOutgoingEventNameEnum.DummyItemChanged.ToString(), OnMessageReceived);
 
     var subscribtionTask = _appMessageConsumer.Subscribe(receiving, stoppingToken);
 

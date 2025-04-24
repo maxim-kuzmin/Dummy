@@ -23,13 +23,13 @@ public static class AppExtensions
 
     services.AddSingleton<IAppDbSQLCommandHelper, AppDbCommandHelper>();
 
-    services.AddSingleton(appDbSQLSettings.Entities.AppEvent);
-    services.AddSingleton<AppEventEntitySettings>(appDbSQLSettings.Entities.AppEvent);
-    services.AddSingleton<IAppEventDbSQLCommandFactory, AppEventDbCommandFactory>();
+    services.AddSingleton(appDbSQLSettings.Entities.AppOutgoingEvent);
+    services.AddSingleton<AppOutgoingEventEntitySettings>(appDbSQLSettings.Entities.AppOutgoingEvent);
+    services.AddSingleton<IAppOutgoingEventDbSQLCommandFactory, AppOutgoingEventDbCommandFactory>();
 
-    services.AddSingleton(appDbSQLSettings.Entities.AppEventPayload);
-    services.AddSingleton<AppEventPayloadEntitySettings>(appDbSQLSettings.Entities.AppEventPayload);
-    services.AddSingleton<IAppEventPayloadDbSQLCommandFactory, AppEventPayloadDbCommandFactory>();
+    services.AddSingleton(appDbSQLSettings.Entities.AppOutgoingEventPayload);
+    services.AddSingleton<AppOutgoingEventPayloadEntitySettings>(appDbSQLSettings.Entities.AppOutgoingEventPayload);
+    services.AddSingleton<IAppOutgoingEventPayloadDbSQLCommandFactory, AppOutgoingEventPayloadDbCommandFactory>();
 
     services.AddSingleton(appDbSQLSettings.Entities.DummyItem);
     services.AddSingleton<DummyItemEntitySettings>(appDbSQLSettings.Entities.DummyItem);

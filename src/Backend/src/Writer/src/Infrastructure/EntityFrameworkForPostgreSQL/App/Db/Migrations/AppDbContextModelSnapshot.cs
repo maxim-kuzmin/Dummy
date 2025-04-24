@@ -22,7 +22,7 @@ namespace Makc.Dummy.Writer.Infrastructure.EntityFrameworkForPostgreSQL.App.Db.M
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Makc.Dummy.Writer.DomainModel.AppEvent.AppEventEntity", b =>
+            modelBuilder.Entity("Makc.Dummy.Writer.DomainModel.AppOutgoingEvent.AppOutgoingEventEntity", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -51,12 +51,12 @@ namespace Makc.Dummy.Writer.Infrastructure.EntityFrameworkForPostgreSQL.App.Db.M
                         .HasColumnName("name");
 
                     b.HasKey("Id")
-                        .HasName("pk_app_event");
+                        .HasName("pk_app_outgoing_event");
 
-                    b.ToTable("app_event", "writer");
+                    b.ToTable("app_outgoing_event", "writer");
                 });
 
-            modelBuilder.Entity("Makc.Dummy.Writer.DomainModel.AppEventPayload.AppEventPayloadEntity", b =>
+            modelBuilder.Entity("Makc.Dummy.Writer.DomainModel.AppOutgoingEventPayload.AppOutgoingEventPayloadEntity", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -64,9 +64,9 @@ namespace Makc.Dummy.Writer.Infrastructure.EntityFrameworkForPostgreSQL.App.Db.M
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
-                    b.Property<long>("AppEventId")
+                    b.Property<long>("AppOutgoingEventId")
                         .HasColumnType("bigint")
-                        .HasColumnName("app_event_id");
+                        .HasColumnName("app_outgoing_event_id");
 
                     b.Property<Guid>("ConcurrencyToken")
                         .IsConcurrencyToken()
@@ -79,11 +79,11 @@ namespace Makc.Dummy.Writer.Infrastructure.EntityFrameworkForPostgreSQL.App.Db.M
                         .HasColumnName("data");
 
                     b.HasKey("Id")
-                        .HasName("pk_app_event_payload");
+                        .HasName("pk_app_outgoing_event_payload");
 
-                    b.HasIndex("AppEventId");
+                    b.HasIndex("AppOutgoingEventId");
 
-                    b.ToTable("app_event_payload", "writer");
+                    b.ToTable("app_outgoing_event_payload", "writer");
                 });
 
             modelBuilder.Entity("Makc.Dummy.Writer.DomainModel.DummyItem.DummyItemEntity", b =>
@@ -116,19 +116,19 @@ namespace Makc.Dummy.Writer.Infrastructure.EntityFrameworkForPostgreSQL.App.Db.M
                     b.ToTable("dummy_item", "writer");
                 });
 
-            modelBuilder.Entity("Makc.Dummy.Writer.DomainModel.AppEventPayload.AppEventPayloadEntity", b =>
+            modelBuilder.Entity("Makc.Dummy.Writer.DomainModel.AppOutgoingEventPayload.AppOutgoingEventPayloadEntity", b =>
                 {
-                    b.HasOne("Makc.Dummy.Writer.DomainModel.AppEvent.AppEventEntity", "Event")
+                    b.HasOne("Makc.Dummy.Writer.DomainModel.AppOutgoingEvent.AppOutgoingEventEntity", "Event")
                         .WithMany("Payloads")
-                        .HasForeignKey("AppEventId")
+                        .HasForeignKey("AppOutgoingEventId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_app_event_payload_app_event");
+                        .HasConstraintName("fk_app_outgoing_event_payload_app_outgoing_event");
 
                     b.Navigation("Event");
                 });
 
-            modelBuilder.Entity("Makc.Dummy.Writer.DomainModel.AppEvent.AppEventEntity", b =>
+            modelBuilder.Entity("Makc.Dummy.Writer.DomainModel.AppOutgoingEvent.AppOutgoingEventEntity", b =>
                 {
                     b.Navigation("Payloads");
                 });

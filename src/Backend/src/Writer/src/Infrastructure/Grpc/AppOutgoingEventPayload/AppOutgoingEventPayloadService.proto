@@ -1,0 +1,72 @@
+syntax = "proto3";
+
+option csharp_namespace = "Makc.Dummy.Writer.Infrastructure.Grpc.AppOutgoingEventPayload";
+
+package Writer;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/wrappers.proto";
+
+service AppOutgoingEventPayload {
+    rpc Create (AppOutgoingEventPayloadCreateActionRequest) returns (AppOutgoingEventPayloadGetActionReply);
+    rpc Delete (AppOutgoingEventPayloadDeleteActionRequest) returns (google.protobuf.Empty);
+    rpc Get (AppOutgoingEventPayloadGetActionRequest) returns (AppOutgoingEventPayloadGetActionReply);
+    rpc GetList (AppOutgoingEventPayloadGetListActionRequest) returns (AppOutgoingEventPayloadGetListActionReply);
+    rpc Update (AppOutgoingEventPayloadUpdateActionRequest) returns (AppOutgoingEventPayloadGetActionReply);
+}
+
+message ActionRequestSort {
+    string field = 1;
+    bool is_desc = 2;
+}
+
+message ActionRequestPage {
+    int32 number = 1;
+    int32 size = 2;
+}
+
+message AppOutgoingEventPayloadCreateActionRequest {
+    int64 app_outgoing_event_id = 1;
+    string data = 2;
+}
+
+message AppOutgoingEventPayloadDeleteActionRequest {
+    int64 id = 1;
+}
+
+message AppOutgoingEventPayloadGetActionRequest {
+    int64 id = 1;
+}
+
+message AppOutgoingEventPayloadGetActionReply {
+    int64 id = 1;
+    int64 app_outgoing_event_id = 2;
+    string data = 3;
+}
+
+message AppOutgoingEventPayloadGetListActionRequestFilter {
+    google.protobuf.StringValue full_text_search_query = 1;
+}
+
+message AppOutgoingEventPayloadGetListActionRequest {
+    ActionRequestPage page = 1;
+    ActionRequestSort sort = 2;
+    AppOutgoingEventPayloadGetListActionRequestFilter filter = 3;
+}
+
+message AppOutgoingEventPayloadGetListActionReplyItem {
+    int64 id = 1;
+    int64 app_outgoing_event_id = 2;
+    string data = 3;
+}
+
+message AppOutgoingEventPayloadGetListActionReply {
+    int64 total_count = 1;
+    repeated AppOutgoingEventPayloadGetListActionReplyItem items = 2;
+}
+
+message AppOutgoingEventPayloadUpdateActionRequest {
+    int64 id = 1;
+    int64 app_outgoing_event_id = 2;
+    string data = 3;
+}

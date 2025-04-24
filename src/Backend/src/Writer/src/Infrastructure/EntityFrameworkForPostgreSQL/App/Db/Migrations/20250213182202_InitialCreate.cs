@@ -16,7 +16,7 @@ public partial class InitialCreate : Migration
         name: "writer");
 
     migrationBuilder.CreateTable(
-        name: "app_event",
+        name: "app_outgoing_event",
         schema: "writer",
         columns: table => new
         {
@@ -29,7 +29,7 @@ public partial class InitialCreate : Migration
         },
         constraints: table =>
         {
-          table.PrimaryKey("pk_app_event", x => x.id);
+          table.PrimaryKey("pk_app_outgoing_event", x => x.id);
         });
 
     migrationBuilder.CreateTable(
@@ -48,33 +48,33 @@ public partial class InitialCreate : Migration
         });
 
     migrationBuilder.CreateTable(
-        name: "app_event_payload",
+        name: "app_outgoing_event_payload",
         schema: "writer",
         columns: table => new
         {
           Id = table.Column<long>(type: "bigint", nullable: false)
                 .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-          app_event_id = table.Column<long>(type: "bigint", nullable: false),
+          app_outgoing_event_id = table.Column<long>(type: "bigint", nullable: false),
           сoncurrency_token = table.Column<Guid>(type: "uuid", nullable: false),
           data = table.Column<string>(type: "text", nullable: false)
         },
         constraints: table =>
         {
-          table.PrimaryKey("pk_app_event_payload", x => x.Id);
+          table.PrimaryKey("pk_app_outgoing_event_payload", x => x.Id);
           table.ForeignKey(
-                    name: "fk_app_event_payload_app_event",
-                    column: x => x.app_event_id,
+                    name: "fk_app_outgoing_event_payload_app_outgoing_event",
+                    column: x => x.app_outgoing_event_id,
                     principalSchema: "writer",
-                    principalTable: "app_event",
+                    principalTable: "app_outgoing_event",
                     principalColumn: "id",
                     onDelete: ReferentialAction.Cascade);
         });
 
     migrationBuilder.CreateIndex(
-        name: "IX_app_event_payload_app_event_id",
+        name: "IX_app_outgoing_event_payload_app_outgoing_event_id",
         schema: "writer",
-        table: "app_event_payload",
-        column: "app_event_id");
+        table: "app_outgoing_event_payload",
+        column: "app_outgoing_event_id");
 
     migrationBuilder.CreateIndex(
         name: "ux_dummy_item_name",
@@ -88,7 +88,7 @@ public partial class InitialCreate : Migration
   protected override void Down(MigrationBuilder migrationBuilder)
   {
     migrationBuilder.DropTable(
-        name: "app_event_payload",
+        name: "app_outgoing_event_payload",
         schema: "writer");
 
     migrationBuilder.DropTable(
@@ -96,7 +96,7 @@ public partial class InitialCreate : Migration
         schema: "writer");
 
     migrationBuilder.DropTable(
-        name: "app_event",
+        name: "app_outgoing_event",
         schema: "writer");
   }
 }

@@ -1,7 +1,7 @@
 ﻿namespace Makc.Dummy.Writer.DomainUseCases.AppOutbox.Actions.Save;
 
 /// <summary>
-/// Обработчик действия по сохранению в базе данных события приложения, помеченного как неопубликованное.
+/// Обработчик действия по сохранению в базе данных исходящего события приложения, помеченного как неопубликованное.
 /// </summary>
 /// <param name="_appDbExecutionContext">Контекст выполнения базы данных приложения.</param>
 /// <param name="_mediator">Медиатор.</param>
@@ -15,11 +15,11 @@ public class AppOutboxSaveActionHandler(
   {
     async Task FuncToExecute(CancellationToken cancellationToken)
     {
-      var appEvent = await CreateAppEvent(request, cancellationToken).ConfigureAwait(false);
+      var appOutgoingEvent = await CreateAppOutgoingEvent(request, cancellationToken).ConfigureAwait(false);
 
-      foreach (var payload in request.AppEventPayloads)
+      foreach (var payload in request.AppOutgoingEventPayloads)
       {
-        await CreateAppEventPayload(appEvent.Id, payload, cancellationToken).ConfigureAwait(false);
+        await CreateAppOutgoingEventPayload(appOutgoingEvent.Id, payload, cancellationToken).ConfigureAwait(false);
       }
     }
 
@@ -28,23 +28,23 @@ public class AppOutboxSaveActionHandler(
     return Result.NoContent();
   }
 
-  private async Task<AppEventSingleDTO> CreateAppEvent(
+  private async Task<AppOutgoingEventSingleDTO> CreateAppOutgoingEvent(
     AppOutboxSaveActionCommand request,
     CancellationToken cancellationToken)
   {
-    AppEventCreateActionCommand command = new(false, request.AppEventName.ToString());
+    AppOutgoingEventCreateActionCommand command = new(false, request.AppOutgoingEventName.ToString());
 
     var result = await _mediator.Send(command, cancellationToken).ConfigureAwait(false);
 
     return result.Value;
   }
 
-  private async Task<AppEventPayloadSingleDTO> CreateAppEventPayload(
-    long appEventId,
+  private async Task<AppOutgoingEventPayloadSingleDTO> CreateAppOutgoingEventPayload(
+    long appOutgoingEventId,
     object payload,
     CancellationToken cancellationToken)
   {
-    AppEventPayloadCreateActionCommand command = new(appEventId, JsonSerializer.Serialize(payload));
+    AppOutgoingEventPayloadCreateActionCommand command = new(appOutgoingEventId, JsonSerializer.Serialize(payload));
 
     var result = await _mediator.Send(command, cancellationToken).ConfigureAwait(false);
 
