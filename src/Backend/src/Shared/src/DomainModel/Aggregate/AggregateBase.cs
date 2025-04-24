@@ -5,9 +5,6 @@
 /// </summary>
 /// <typeparam name="TEntity">Тип сущности.</typeparam>
 /// <typeparam name="TPrimaryKey">Тип первичного ключа.</typeparam>
-/// <remarks>
-/// Конструктор.
-/// </remarks>
 /// <param name="_entityToChange">Сущность для изменения.</param>
 public class AggregateBase<TEntity, TPrimaryKey>(TEntity? _entityToChange = null)
   where TEntity : class, IEntityBase<TPrimaryKey>, new()
