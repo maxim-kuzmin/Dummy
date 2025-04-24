@@ -5,17 +5,17 @@ services:
       dockerfile: Dockerfile
       args:
         - APP_KEYFILE=${MY_SERVICE_EXTERNAL_MONGO_CONTAINER_KEYFILE}
-    command: --replSet rs0 --keyFile ${MY_SERVICE_EXTERNAL_MONGO_CONTAINER_KEYFILE} --bind_ip_all
+    command: --replSet ${MY_SERVICE_EXTERNAL_MONGO_CONTAINER_REPLICASET} --keyFile ${MY_SERVICE_EXTERNAL_MONGO_CONTAINER_KEYFILE} --bind_ip_all
     healthcheck:
-      test: echo "try { rs.status() } catch (err) { rs.initiate({_id:'rs0', members:[{_id:0, host:'${MY_LOCALHOST}:${MY_SERVICE_EXTERNAL_MONGO_HOST_PORT}'}]}) }"  | mongosh --port ${MY_SERVICE_EXTERNAL_MONGO_CONTAINER_PORT} -u ${MONGO_INITDB_ROOT_USERNAME} -p ${MONGO_INITDB_ROOT_PASSWORD} --authenticationDatabase admin --quiet
+      test: echo "try { rs.status() } catch (err) { rs.initiate({_id:'${MY_SERVICE_EXTERNAL_MONGO_CONTAINER_REPLICASET}', members:[{_id:0, host:'${MY_LOCALHOST}:${MY_SERVICE_EXTERNAL_MONGO_HOST_PORT}'}]}) }"  | mongosh --port ${MY_SERVICE_EXTERNAL_MONGO_CONTAINER_PORT} -u ${MONGO_INITDB_ROOT_USERNAME} -p ${MONGO_INITDB_ROOT_PASSWORD} --authenticationDatabase admin --quiet
       interval: 5s
       timeout: 15s
       start_period: 15s
       retries: 10
     volumes:
       - _mongo_config:${MY_SERVICE_EXTERNAL_MONGO_CONTAINER_FOLDER_CONFIG}
-      - _mongo_data-configdb:${MY_SERVICE_EXTERNAL_MONGO_CONTAINER_FOLDER_DATA_CONFIGDB}
-      - _mongo_data-db:${MY_SERVICE_EXTERNAL_MONGO_CONTAINER_FOLDER_DATA_DB}
+      - _mongo_data_configdb:${MY_SERVICE_EXTERNAL_MONGO_CONTAINER_FOLDER_DATA_CONFIGDB}
+      - _mongo_data_db:${MY_SERVICE_EXTERNAL_MONGO_CONTAINER_FOLDER_DATA_DB}
     ports:
       - ${MY_SERVICE_EXTERNAL_MONGO_HOST_PORT}:${MY_SERVICE_EXTERNAL_MONGO_CONTAINER_PORT}
 
@@ -25,5 +25,5 @@ services:
 
 volumes:
   _mongo_config:
-  _mongo_data-configdb:
-  _mongo_data-db:
+  _mongo_data_configdb:
+  _mongo_data_db:

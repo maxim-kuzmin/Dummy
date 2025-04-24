@@ -40,7 +40,7 @@ public record AppConfigOptionsDbSection
   /// </summary>
   /// <param name="template">Шаблон.</param>
   /// <returns>Строка полключения.</returns>
-  public string ToConnectionString(string template)
+  public virtual string ToConnectionString(string template)
   {
     return template
       .Replace("{Database}", Database)
