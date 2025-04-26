@@ -23,7 +23,9 @@ public record AppOutgoingEventPayloadEntityDbSettings : AppOutgoingEventPayloadE
     ColumnForData = "Data";
     ColumnForId = "Id";
 
-    MaxLengthForData = 0;
+    MaxLengthForData = 0; // //makc//DEL//
+    MaxLengthForEntityId = 255;
+    MaxLengthForEntityName = 255;
 
     ForeignKeyForAppOutgoingEventId = $"FK_{Table}_{tableForAppOutgoingEventPayload}";
   }

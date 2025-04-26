@@ -6,7 +6,7 @@
 public class DummyItemEntity : EntityBaseWithStringPrimaryKey, IAggregateRoot
 {
   /// <summary>
-  /// Токен конкуренции.
+  /// Токен параллелизма.
   /// </summary>
   public Guid ConcurrencyToken { get; set; }
 

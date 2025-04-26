@@ -6,7 +6,7 @@
 public interface IDummyItemResources
 {
   /// <summary>
-  /// Получить сообщение об ошибке недействительного токена конкуренции.
+  /// Получить сообщение об ошибке недействительного токена параллелизма.
   /// </summary>
   /// <returns>Сообщение об ошибке.</returns>
   string GetConcurrencyTokenIsInvalidErrorMessage();

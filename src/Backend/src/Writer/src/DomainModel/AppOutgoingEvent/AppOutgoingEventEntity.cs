@@ -6,7 +6,7 @@
 public class AppOutgoingEventEntity : EntityBaseWithStructPrimaryKey<long>, IAggregateRoot
 {
   /// <summary>
-  /// Токен конкуренции.
+  /// Токен параллелизма.
   /// </summary>
   public Guid ConcurrencyToken { get; set; }
 

@@ -6,7 +6,7 @@
 public abstract record AppOutgoingEventPayloadEntityDbSQLSettings : AppOutgoingEventPayloadEntitySettings
 {
   /// <summary>
-  /// Столбец для токена конкуренции.
+  /// Столбец для токена параллелизма.
   /// </summary>
   public string ColumnForConcurrencyToken { get; protected set; } = string.Empty;
 

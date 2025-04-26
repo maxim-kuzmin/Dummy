@@ -21,6 +21,6 @@ public class AppOutgoingEventResources(IStringLocalizer<AppOutgoingEventResource
   /// <inheritdoc/>
   public string GetNameIsTooLongErrorMessage(int maxLength)
   {
-    return _stringLocalizer["Error:Format:NameIsTooLong", maxLength];
+    return _stringLocalizer["Error:NameIsTooLong:Format", maxLength];
   }
 }

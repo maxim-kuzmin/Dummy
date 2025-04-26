@@ -44,7 +44,7 @@ public class DummyItemAggregate(
   }
 
   /// <summary>
-  /// Обновить токен конкуренции.
+  /// Обновить токен параллелизма.
   /// </summary>
   /// <param name="value">Значение.</param>
   public void UpdateConcurrencyToken(Guid value)

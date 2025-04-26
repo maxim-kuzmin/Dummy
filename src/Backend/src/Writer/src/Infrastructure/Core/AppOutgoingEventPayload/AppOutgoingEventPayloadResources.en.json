@@ -1,4 +1,9 @@
 ﻿{
-  "Error:DataIsEmpty": "Data is empty",
-  "Error:Format:DataIsTooLong": "Data length exceeds the maximum allowed value of {0} characters"
+  "Error:DataIsEmpty": "Data is empty", // //makc//DEL//
+  "Error:DataIsTooLong:Format": "Data length exceeds the maximum allowed value of {0} characters", // //makc//DEL//
+  "Error:EntityIdIsEmpty": "Entity identifier is empty",
+  "Error:EntityIdIsTooLong:Format": "Entity identifier length exceeds the maximum allowed value of {0} characters",
+  "Error:EntityNameIsEmpty": "Entity name is empty",
+  "Error:EntityNameIsTooLong:Format": "Entity name length exceeds the maximum allowed value of {0} characters",
+  "Error:PositionIsNotPositiveNumber": "Position is not a positive number"
 }

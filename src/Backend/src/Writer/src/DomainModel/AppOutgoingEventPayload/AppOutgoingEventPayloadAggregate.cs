@@ -75,10 +75,36 @@ public class AppOutgoingEventPayloadAggregate(
   }
 
   /// <summary>
+  /// Обновить токен параллелизма сущности для удаления.
+  /// </summary>
+  /// <param name="value">Значение.</param>
+  public void UpdateEntityConcurrencyTokenToDelete(Guid? value)
+  {
+    var entity = GetEntityToUpdate();
+
+    entity.EntityConcurrencyTokenToDelete = value;
+
+    MarkPropertyAsChanged(nameof(entity.EntityConcurrencyTokenToDelete));
+  }
+
+  /// <summary>
+  /// Обновить токен параллелизма для вставки.
+  /// </summary>
+  /// <param name="value">Значение.</param>
+  public void UpdateEntityConcurrencyTokenToInsert(Guid? value)
+  {
+    var entity = GetEntityToUpdate();
+
+    entity.EntityConcurrencyTokenToInsert = value;
+
+    MarkPropertyAsChanged(nameof(entity.EntityConcurrencyTokenToInsert));
+  }
+
+  /// <summary>
   /// Обновить данные.
   /// </summary>
   /// <param name="value">Значение.</param>
-  public void UpdateData(string value)
+  public void UpdateData(string value) // //makc//DEL//
   {
     if (string.IsNullOrWhiteSpace(value))
     {
@@ -103,6 +129,90 @@ public class AppOutgoingEventPayloadAggregate(
     entity.Data = value;
 
     MarkPropertyAsChanged(nameof(entity.Data));
+  }
+
+  /// <summary>
+  /// Обновить идентификатор сущности.
+  /// </summary>
+  /// <param name="value">Значение.</param>
+  public void UpdateEntityId(string value)
+  {
+    if (string.IsNullOrWhiteSpace(value))
+    {
+      string errorMessage = _resources.GetEntityIdIsEmptyErrorMessage();
+
+      var appError = AppOutgoingEventPayloadErrorEnum.EntityIdIsEmpty.ToAppError(errorMessage);
+
+      UpdateErrors.Add(appError);
+    }
+
+    if (_settings.MaxLengthForEntityId > 0 && value.Length > _settings.MaxLengthForEntityId)
+    {
+      string errorMessage = _resources.GetEntityIdIsTooLongErrorMessage(_settings.MaxLengthForEntityId);
+
+      var appError = AppOutgoingEventPayloadErrorEnum.EntityIdTooLong.ToAppError(errorMessage);
+
+      UpdateErrors.Add(appError);
+    }
+
+    var entity = GetEntityToUpdate();
+
+    entity.EntityId = value;
+
+    MarkPropertyAsChanged(nameof(entity.EntityId));
+  }
+
+  /// <summary>
+  /// Обновить имя сущности.
+  /// </summary>
+  /// <param name="value">Значение.</param>
+  public void UpdateEntityName(string value)
+  {
+    if (string.IsNullOrWhiteSpace(value))
+    {
+      string errorMessage = _resources.GetEntityNameIsEmptyErrorMessage();
+
+      var appError = AppOutgoingEventPayloadErrorEnum.EntityNameIsEmpty.ToAppError(errorMessage);
+
+      UpdateErrors.Add(appError);
+    }
+
+    if (_settings.MaxLengthForEntityName > 0 && value.Length > _settings.MaxLengthForEntityName)
+    {
+      string errorMessage = _resources.GetEntityNameIsTooLongErrorMessage(_settings.MaxLengthForEntityName);
+
+      var appError = AppOutgoingEventPayloadErrorEnum.EntityNameTooLong.ToAppError(errorMessage);
+
+      UpdateErrors.Add(appError);
+    }
+
+    var entity = GetEntityToUpdate();
+
+    entity.EntityName = value;
+
+    MarkPropertyAsChanged(nameof(entity.EntityName));
+  }
+
+  /// <summary>
+  /// Обновить позицию.
+  /// </summary>
+  /// <param name="value">Значение.</param>
+  public void UpdatePosition(int value)
+  {
+    if (value < 1)
+    {
+      string errorMessage = _resources.GetPositionIsNotPositiveNumberErrorMessage();
+
+      var appError = AppOutgoingEventPayloadErrorEnum.PositionIsNotPositiveNumber.ToAppError(errorMessage);
+
+      UpdateErrors.Add(appError);
+    }
+
+    var entity = GetEntityToUpdate();
+
+    entity.Position = value;
+
+    MarkPropertyAsChanged(nameof(entity.Position));
   }
 
   /// <inheritdoc/>

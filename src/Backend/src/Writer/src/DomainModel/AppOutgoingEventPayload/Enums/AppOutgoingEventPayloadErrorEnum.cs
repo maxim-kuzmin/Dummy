@@ -18,5 +18,29 @@ public enum AppOutgoingEventPayloadErrorEnum
   /// <summary>
   /// Данные слишком длинные.
   /// </summary>
-  DataIsTooLong
+  DataIsTooLong,
+
+  /// <summary>
+  /// Идентификатор сущности пуст.
+  EntityIdIsEmpty,
+
+  /// <summary>
+  /// Идентификатор сущности слишком длинный.
+  /// </summary>
+  EntityIdTooLong,
+
+  /// <summary>
+  /// Имя сущности пустое.
+  /// </summary>
+  EntityNameIsEmpty,
+
+  /// <summary>
+  /// Имя сущности слишком длинное.
+  /// </summary>
+  EntityNameTooLong,
+
+  /// <summary>
+  /// Позиция не является положительным числом.
+  /// </summary>
+  PositionIsNotPositiveNumber,
 }

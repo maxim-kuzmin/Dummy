@@ -16,7 +16,7 @@ public class AppOutgoingEventPayloadEntityConfiguration : IEntityTypeConfigurati
 
     builder.HasKey(e => e.Id).HasName(entityDbSettings.PrimaryKey);
 
-    builder.HasOne(x => x.Event)
+    builder.HasOne(x => x.AppOutgoingEvent)
       .WithMany(x => x.Payloads)
       .HasForeignKey(x => x.AppOutgoingEventId)
       .IsRequired()

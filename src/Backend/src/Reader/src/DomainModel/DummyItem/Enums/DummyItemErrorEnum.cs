@@ -6,7 +6,7 @@
 public enum DummyItemErrorEnum
 {
   /// <summary>
-  /// Токен конкуренции недействителен.
+  /// Токен параллелизма недействителен.
   /// </summary>
   ConcurrencyTokenIsInvalid,
   /// <summary>

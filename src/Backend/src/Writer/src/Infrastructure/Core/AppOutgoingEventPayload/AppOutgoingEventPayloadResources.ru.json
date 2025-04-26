@@ -1,4 +1,9 @@
 ﻿{
-  "Error:DataIsEmpty": "Данные содержат пустое значение",
-  "Error:Format:DataIsTooLong": "Длина данных превышает макимальное значение в {0} символов"
+  "Error:DataIsEmpty": "Данные содержат пустое значение", // //makc//DEL//
+  "Error:DataIsTooLong:Format": "Длина данных превышает макимальное значение в {0} символов", // //makc//DEL//
+  "Error:EntityIdIsEmpty": "Идентификатор сущности содержит пустое значение",
+  "Error:EntityIdIsTooLong:Format": "Длина идентификатора сущности превышает макимальное значение в {0} символов",
+  "Error:EntityNameIsEmpty": "Имя сущности содержит пустое значение",
+  "Error:EntityNameIsTooLong:Format": "Длина имени сущности превышает макимальное значение в {0} символов",
+  "Error:PositionIsNotPositiveNumber": "Позиция не является положительным числом"
 }
