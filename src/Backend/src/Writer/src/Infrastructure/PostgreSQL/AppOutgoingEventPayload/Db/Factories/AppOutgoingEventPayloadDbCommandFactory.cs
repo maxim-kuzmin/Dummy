@@ -20,7 +20,12 @@ public class AppOutgoingEventPayloadDbCommandFactory(
 select
   "{{sAppOutgoingEventPayload.ColumnForId}}" "Id",
   "{{sAppOutgoingEventPayload.ColumnForAppOutgoingEventId}}" "AppOutgoingEventId",
-  "{{sAppOutgoingEventPayload.ColumnForData}}" "Data"
+  "{{sAppOutgoingEventPayload.ColumnForData}}" "Data",
+  "{{sAppOutgoingEventPayload.ColumnForEntityConcurrencyTokenToDelete}}" "EntityConcurrencyTokenToDelete",
+  "{{sAppOutgoingEventPayload.ColumnForEntityConcurrencyTokenToInsert}}" "EntityConcurrencyTokenToInsert",
+  "{{sAppOutgoingEventPayload.ColumnForEntityId}}" "EntityId",
+  "{{sAppOutgoingEventPayload.ColumnForEntityName}}" "EntityName",
+  "{{sAppOutgoingEventPayload.ColumnForPosition}}" "Position"
 from
   "{{sAppOutgoingEventPayload.Schema}}"."{{sAppOutgoingEventPayload.Table}}"
 where
@@ -72,7 +77,12 @@ where
 select
   aep."{{sAppOutgoingEventPayload.ColumnForId}}" "Id",
   aep."{{sAppOutgoingEventPayload.ColumnForAppOutgoingEventId}}" "AppOutgoingEventId",
-  aep."{{sAppOutgoingEventPayload.ColumnForData}}" "Data"
+  aep."{{sAppOutgoingEventPayload.ColumnForData}}" "Data",
+  aep."{{sAppOutgoingEventPayload.ColumnForEntityConcurrencyTokenToDelete}}" "EntityConcurrencyTokenToDelete",
+  aep."{{sAppOutgoingEventPayload.ColumnForEntityConcurrencyTokenToInsert}}" "EntityConcurrencyTokenToInsert",
+  aep."{{sAppOutgoingEventPayload.ColumnForEntityId}}" "EntityId",
+  aep."{{sAppOutgoingEventPayload.ColumnForEntityName}}" "EntityName",
+  aep."{{sAppOutgoingEventPayload.ColumnForPosition}}" "Position"
 from
   "{{sAppOutgoingEventPayload.Schema}}"."{{sAppOutgoingEventPayload.Table}}" aep
 """);
@@ -121,9 +131,29 @@ from
     {
       result = $""" aep."{sAppOutgoingEventPayload.ColumnForData}" """;
     }
+    else if (field.EqualsToSortField(AppOutgoingEventPayloadSettings.SortFieldForEntityConcurrencyTokenToDelete))
+    {
+      result = $""" aep."{sAppOutgoingEventPayload.ColumnForEntityConcurrencyTokenToDelete}" """;
+    }
+    else if (field.EqualsToSortField(AppOutgoingEventPayloadSettings.SortFieldForEntityConcurrencyTokenToInsert))
+    {
+      result = $""" aep."{sAppOutgoingEventPayload.ColumnForEntityConcurrencyTokenToInsert}" """;
+    }
+    else if (field.EqualsToSortField(AppOutgoingEventPayloadSettings.SortFieldForEntityId))
+    {
+      result = $""" aep."{sAppOutgoingEventPayload.ColumnForEntityId}" """;
+    }
+    else if (field.EqualsToSortField(AppOutgoingEventPayloadSettings.SortFieldForEntityName))
+    {
+      result = $""" aep."{sAppOutgoingEventPayload.ColumnForEntityName}" """;
+    }
     else if (field.EqualsToSortField(AppOutgoingEventPayloadSettings.SortFieldForId))
     {
       result = $""" aep."{sAppOutgoingEventPayload.ColumnForId}" """;
+    }
+    else if (field.EqualsToSortField(AppOutgoingEventPayloadSettings.SortFieldForPosition))
+    {
+      result = $""" aep."{sAppOutgoingEventPayload.ColumnForPosition}" """;
     }
     else
     {

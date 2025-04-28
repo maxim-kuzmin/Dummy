@@ -8,7 +8,15 @@ public static class AppOutgoingEventPayloadExtensions
   public static AppOutgoingEventPayloadCreateActionCommand ToAppOutgoingEventPayloadCreateActionCommand(
     this AppOutgoingEventPayloadCreateActionRequest request)
   {
-    return new(request.AppOutgoingEventId, request.Data);
+    AppEventPayload payload = new(
+      request.EntityName,
+      request.EntityConcurrencyTokenToDelete,
+      request.EntityConcurrencyTokenToInsert,
+      request.EntityId,
+      request.Data,
+      request.Position);
+
+    return new(request.AppOutgoingEventId, payload);
   }
 
   public static AppOutgoingEventPayloadDeleteActionCommand ToAppOutgoingEventPayloadDeleteActionCommand(
@@ -32,6 +40,11 @@ public static class AppOutgoingEventPayloadExtensions
       Id = dto.Id,
       AppOutgoingEventId = dto.AppOutgoingEventId,
       Data = dto.Data,
+      EntityConcurrencyTokenToDelete = dto.EntityConcurrencyTokenToDelete,
+      EntityConcurrencyTokenToInsert = dto.EntityConcurrencyTokenToInsert,
+      EntityId = dto.EntityId,
+      EntityName = dto.EntityName,
+      Position = dto.Position,
     };
   }
 
@@ -64,6 +77,11 @@ public static class AppOutgoingEventPayloadExtensions
         Id = itemDTO.Id,
         AppOutgoingEventId = itemDTO.AppOutgoingEventId,
         Data = itemDTO.Data,
+        EntityConcurrencyTokenToDelete = itemDTO.EntityConcurrencyTokenToDelete,
+        EntityConcurrencyTokenToInsert = itemDTO.EntityConcurrencyTokenToInsert,
+        EntityId = itemDTO.EntityId,
+        EntityName = itemDTO.EntityName,
+        Position = itemDTO.Position,
       };
 
       result.Items.Add(item);
@@ -75,6 +93,14 @@ public static class AppOutgoingEventPayloadExtensions
   public static AppOutgoingEventPayloadUpdateActionCommand ToAppOutgoingEventPayloadUpdateActionCommand(
     this AppOutgoingEventPayloadUpdateActionRequest request)
   {
-    return new(request.Id, request.AppOutgoingEventId, request.Data);
+    AppEventPayload payload = new(
+      request.EntityName,
+      request.EntityConcurrencyTokenToDelete,
+      request.EntityConcurrencyTokenToInsert,
+      request.EntityId,
+      request.Data,
+      request.Position);
+
+    return new(request.Id, request.AppOutgoingEventId, payload);
   }
 }

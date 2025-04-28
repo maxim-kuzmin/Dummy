@@ -13,7 +13,9 @@ public class AppOutgoingEventPayloadDeleteActionHandler(
   ICommandHandler<AppOutgoingEventPayloadDeleteActionCommand, Result>
 {
   /// <inheritdoc/>
-  public async Task<Result> Handle(AppOutgoingEventPayloadDeleteActionCommand request, CancellationToken cancellationToken)
+  public async Task<Result> Handle(
+    AppOutgoingEventPayloadDeleteActionCommand request,
+    CancellationToken cancellationToken)
   {
     var entity = await _repository.GetByIdAsync(request.Id, cancellationToken).ConfigureAwait(false);
 

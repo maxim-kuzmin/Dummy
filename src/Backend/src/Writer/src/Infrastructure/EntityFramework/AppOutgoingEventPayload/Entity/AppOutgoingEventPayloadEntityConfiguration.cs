@@ -30,13 +30,55 @@ public class AppOutgoingEventPayloadEntityConfiguration : IEntityTypeConfigurati
       .IsConcurrencyToken()
       .HasColumnName(entityDbSettings.ColumnForConcurrencyToken);
 
-    builder.Property(x => x.Data)
-      .IsRequired()      
+    if (entityDbSettings.MaxLengthForConcurrencyToken > 0)
+    {
+      builder.Property(x => x.ConcurrencyToken).HasMaxLength(entityDbSettings.MaxLengthForConcurrencyToken);
+    }
+
+    builder.Property(x => x.Data)      
       .HasColumnName(entityDbSettings.ColumnForData);
 
     if (entityDbSettings.MaxLengthForData > 0)
     {
       builder.Property(x => x.Data).HasMaxLength(entityDbSettings.MaxLengthForData);
     }
+
+    builder.Property(x => x.EntityConcurrencyTokenToDelete)
+      .HasColumnName(entityDbSettings.ColumnForEntityConcurrencyTokenToDelete);
+
+    if (entityDbSettings.MaxLengthForConcurrencyToken > 0)
+    {
+      builder.Property(x => x.EntityConcurrencyTokenToDelete).HasMaxLength(entityDbSettings.MaxLengthForConcurrencyToken);
+    }
+
+    builder.Property(x => x.EntityConcurrencyTokenToInsert)
+      .HasColumnName(entityDbSettings.ColumnForEntityConcurrencyTokenToInsert);
+
+    if (entityDbSettings.MaxLengthForConcurrencyToken > 0)
+    {
+      builder.Property(x => x.EntityConcurrencyTokenToInsert).HasMaxLength(entityDbSettings.MaxLengthForConcurrencyToken);
+    }
+
+    builder.Property(x => x.EntityId)
+      .IsRequired()
+      .HasColumnName(entityDbSettings.ColumnForEntityId);
+
+    if (entityDbSettings.MaxLengthForEntityId > 0)
+    {
+      builder.Property(x => x.EntityId).HasMaxLength(entityDbSettings.MaxLengthForEntityId);
+    }
+
+    builder.Property(x => x.EntityName)
+      .IsRequired()
+      .HasColumnName(entityDbSettings.ColumnForEntityName);
+
+    if (entityDbSettings.MaxLengthForEntityName > 0)
+    {
+      builder.Property(x => x.EntityId).HasMaxLength(entityDbSettings.MaxLengthForEntityName);
+    }
+
+    builder.Property(x => x.Position)
+      .IsRequired()
+      .HasColumnName(entityDbSettings.ColumnForPosition);
   }
 }

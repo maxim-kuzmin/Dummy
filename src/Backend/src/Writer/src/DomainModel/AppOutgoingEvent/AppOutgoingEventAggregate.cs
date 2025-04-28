@@ -109,9 +109,11 @@ public class AppOutgoingEventAggregate(
       UpdateErrors.Add(appError);
     }
 
-    if (_settings.MaxLengthForName > 0 && value.Length > _settings.MaxLengthForName)
+    int maxLength = _settings.MaxLengthForName;
+
+    if (maxLength > 0 && value.Length > maxLength)
     {
-      string errorMessage = _resources.GetNameIsTooLongErrorMessage(_settings.MaxLengthForName);
+      string errorMessage = _resources.GetNameIsTooLongErrorMessage(maxLength);
 
       var appError = AppOutgoingEventErrorEnum.NameIsTooLong.ToAppError(errorMessage);
 
@@ -141,6 +143,6 @@ public class AppOutgoingEventAggregate(
 
   private static void RefreshConcurrencyToken(AppOutgoingEventEntity entity)
   {
-    entity.ConcurrencyToken = Guid.NewGuid();
+    entity.ConcurrencyToken = Guid.NewGuid().ToString();
   }
 }

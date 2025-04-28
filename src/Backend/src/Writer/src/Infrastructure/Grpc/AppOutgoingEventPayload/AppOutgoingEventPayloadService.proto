@@ -27,7 +27,12 @@ message ActionRequestPage {
 
 message AppOutgoingEventPayloadCreateActionRequest {
     int64 app_outgoing_event_id = 1;
-    string data = 2;
+    google.protobuf.StringValue data = 2;
+    google.protobuf.StringValue entity_concurrency_token_to_delete = 3;
+    google.protobuf.StringValue entity_concurrency_token_to_insert = 4;
+    string entity_id = 5;
+    string entity_name = 6;
+    int32 position = 7;
 }
 
 message AppOutgoingEventPayloadDeleteActionRequest {
@@ -39,9 +44,14 @@ message AppOutgoingEventPayloadGetActionRequest {
 }
 
 message AppOutgoingEventPayloadGetActionReply {
-    int64 id = 1;
-    int64 app_outgoing_event_id = 2;
-    string data = 3;
+    int64 app_outgoing_event_id = 1;    
+    string data = 2;
+    google.protobuf.StringValue entity_concurrency_token_to_delete = 3;
+    google.protobuf.StringValue entity_concurrency_token_to_insert = 4;
+    string entity_id = 5;
+    string entity_name = 6;
+    int32 position = 7;
+    int64 id = 8;
 }
 
 message AppOutgoingEventPayloadGetListActionRequestFilter {
@@ -55,9 +65,14 @@ message AppOutgoingEventPayloadGetListActionRequest {
 }
 
 message AppOutgoingEventPayloadGetListActionReplyItem {
-    int64 id = 1;
-    int64 app_outgoing_event_id = 2;
-    string data = 3;
+    int64 app_outgoing_event_id = 1;
+    string data = 2;
+    google.protobuf.StringValue entity_concurrency_token_to_delete = 3;
+    google.protobuf.StringValue entity_concurrency_token_to_insert = 4;
+    string entity_id = 5;
+    string entity_name = 6;
+    int32 position = 7;
+    int64 id = 8;
 }
 
 message AppOutgoingEventPayloadGetListActionReply {
@@ -66,7 +81,12 @@ message AppOutgoingEventPayloadGetListActionReply {
 }
 
 message AppOutgoingEventPayloadUpdateActionRequest {
-    int64 id = 1;
-    int64 app_outgoing_event_id = 2;
-    string data = 3;
+    int64 app_outgoing_event_id = 1;
+    string data = 2;
+    google.protobuf.StringValue entity_concurrency_token_to_delete = 3;
+    google.protobuf.StringValue entity_concurrency_token_to_insert = 4;
+    string entity_id = 5;
+    string entity_name = 6;
+    int32 position = 7;
+    int64 id = 8;
 }

@@ -8,7 +8,7 @@ public class DummyItemEntity : EntityBaseWithStringPrimaryKey, IAggregateRoot
   /// <summary>
   /// Токен параллелизма.
   /// </summary>
-  public Guid ConcurrencyToken { get; set; }
+  public string ConcurrencyToken { get; set; } = string.Empty;
 
   /// <summary>
   /// Идентификатор.

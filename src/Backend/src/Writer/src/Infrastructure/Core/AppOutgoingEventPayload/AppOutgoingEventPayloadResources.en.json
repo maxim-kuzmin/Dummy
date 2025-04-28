@@ -1,6 +1,7 @@
 ﻿{
-  "Error:DataIsEmpty": "Data is empty", // //makc//DEL//
-  "Error:DataIsTooLong:Format": "Data length exceeds the maximum allowed value of {0} characters", // //makc//DEL//
+  "Error:DataIsTooLong:Format": "Data length exceeds the maximum allowed value of {0} characters",
+  "Error:EntityConcurrencyTokenToDeleteIsTooLong:Format": "Entity concurrency token to delete length exceeds the maximum allowed value of {0} characters",
+  "Error:EntityConcurrencyTokenToInsertIsTooLong:Format": "Entity concurrency token to insert length exceeds the maximum allowed value of {0} characters",
   "Error:EntityIdIsEmpty": "Entity identifier is empty",
   "Error:EntityIdIsTooLong:Format": "Entity identifier length exceeds the maximum allowed value of {0} characters",
   "Error:EntityNameIsEmpty": "Entity name is empty",

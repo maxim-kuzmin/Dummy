@@ -21,6 +21,7 @@ public record DummyItemEntityDbSettings : DummyItemEntityDbSQLSettings
     ColumnForId = "Id";
     ColumnForName = "Name";
 
+    MaxLengthForConcurrencyToken = 255;
     MaxLengthForName = 255;
 
     UniqueIndexForName = $"UX_{Table}_Name";

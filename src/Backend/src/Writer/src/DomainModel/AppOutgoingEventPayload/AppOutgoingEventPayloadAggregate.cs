@@ -78,8 +78,19 @@ public class AppOutgoingEventPayloadAggregate(
   /// Обновить токен параллелизма сущности для удаления.
   /// </summary>
   /// <param name="value">Значение.</param>
-  public void UpdateEntityConcurrencyTokenToDelete(Guid? value)
+  public void UpdateEntityConcurrencyTokenToDelete(string? value)
   {
+    int maxLength = _settings.MaxLengthForConcurrencyToken;
+
+    if (value != null && maxLength > 0 && value.Length > maxLength)
+    {
+      string errorMessage = _resources.GetEntityConcurrencyTokenToDeleteIsTooLongErrorMessage(maxLength);
+
+      var appError = AppOutgoingEventPayloadErrorEnum.EntityConcurrencyTokenToDeleteIsTooLong.ToAppError(errorMessage);
+
+      UpdateErrors.Add(appError);
+    }
+
     var entity = GetEntityToUpdate();
 
     entity.EntityConcurrencyTokenToDelete = value;
@@ -91,8 +102,19 @@ public class AppOutgoingEventPayloadAggregate(
   /// Обновить токен параллелизма для вставки.
   /// </summary>
   /// <param name="value">Значение.</param>
-  public void UpdateEntityConcurrencyTokenToInsert(Guid? value)
+  public void UpdateEntityConcurrencyTokenToInsert(string? value)
   {
+    int maxLength = _settings.MaxLengthForConcurrencyToken;
+
+    if (value != null && maxLength > 0 && value.Length > maxLength)
+    {
+      string errorMessage = _resources.GetEntityConcurrencyTokenToInsertIsTooLongErrorMessage(maxLength);
+
+      var appError = AppOutgoingEventPayloadErrorEnum.EntityConcurrencyTokenToInsertIsTooLong.ToAppError(errorMessage);
+
+      UpdateErrors.Add(appError);
+    }
+
     var entity = GetEntityToUpdate();
 
     entity.EntityConcurrencyTokenToInsert = value;
@@ -104,20 +126,13 @@ public class AppOutgoingEventPayloadAggregate(
   /// Обновить данные.
   /// </summary>
   /// <param name="value">Значение.</param>
-  public void UpdateData(string value) // //makc//DEL//
+  public void UpdateData(string? value)
   {
-    if (string.IsNullOrWhiteSpace(value))
+    int maxLength = _settings.MaxLengthForData;
+
+    if (value != null && maxLength > 0 && value.Length > maxLength)
     {
-      string errorMessage = _resources.GetDataIsEmptyErrorMessage();
-
-      var appError = AppOutgoingEventPayloadErrorEnum.DataIsEmpty.ToAppError(errorMessage);
-
-      UpdateErrors.Add(appError);
-    }
-
-    if (_settings.MaxLengthForData > 0 && value.Length > _settings.MaxLengthForData)
-    {
-      string errorMessage = _resources.GetDataIsTooLongErrorMessage(_settings.MaxLengthForData);
+      string errorMessage = _resources.GetDataIsTooLongErrorMessage(maxLength);
 
       var appError = AppOutgoingEventPayloadErrorEnum.DataIsTooLong.ToAppError(errorMessage);
 
@@ -146,9 +161,11 @@ public class AppOutgoingEventPayloadAggregate(
       UpdateErrors.Add(appError);
     }
 
-    if (_settings.MaxLengthForEntityId > 0 && value.Length > _settings.MaxLengthForEntityId)
+    int maxLength = _settings.MaxLengthForEntityId;
+
+    if (maxLength > 0 && value.Length > maxLength)
     {
-      string errorMessage = _resources.GetEntityIdIsTooLongErrorMessage(_settings.MaxLengthForEntityId);
+      string errorMessage = _resources.GetEntityIdIsTooLongErrorMessage(maxLength);
 
       var appError = AppOutgoingEventPayloadErrorEnum.EntityIdTooLong.ToAppError(errorMessage);
 
@@ -177,9 +194,11 @@ public class AppOutgoingEventPayloadAggregate(
       UpdateErrors.Add(appError);
     }
 
-    if (_settings.MaxLengthForEntityName > 0 && value.Length > _settings.MaxLengthForEntityName)
+    int maxLength = _settings.MaxLengthForEntityName;
+
+    if (maxLength > 0 && value.Length > maxLength)
     {
-      string errorMessage = _resources.GetEntityNameIsTooLongErrorMessage(_settings.MaxLengthForEntityName);
+      string errorMessage = _resources.GetEntityNameIsTooLongErrorMessage(maxLength);
 
       var appError = AppOutgoingEventPayloadErrorEnum.EntityNameTooLong.ToAppError(errorMessage);
 
@@ -229,6 +248,6 @@ public class AppOutgoingEventPayloadAggregate(
 
   private static void RefreshConcurrencyToken(AppOutgoingEventPayloadEntity entity)
   {
-    entity.ConcurrencyToken = Guid.NewGuid();
+    entity.ConcurrencyToken = Guid.NewGuid().ToString();
   }
 }

@@ -17,7 +17,7 @@ public static class DummyItemExtensions
     {
       Id = command.Id,
       Name = command.Name,
-      ConcurrencyToken = command.ConcurrencyToken.ToString()
+      ConcurrencyToken = command.ConcurrencyToken
     };
   }
 
@@ -90,7 +90,7 @@ public static class DummyItemExtensions
         itemReply.ObjectId,
         itemReply.Id,
         itemReply.Name,
-        Guid.Parse(itemReply.ConcurrencyToken));
+        itemReply.ConcurrencyToken);
 
       items.Add(item);
     }
@@ -105,7 +105,7 @@ public static class DummyItemExtensions
   /// <returns>Объект передачи данных действия по получению фиктивного предмета.</returns>
   public static DummyItemSingleDTO ToDummyItemSingleDTO(this DummyItemGetActionReply reply)
   {
-    return new(reply.ObjectId, reply.Id, reply.Name, Guid.Parse(reply.ConcurrencyToken));
+    return new(reply.ObjectId, reply.Id, reply.Name, reply.ConcurrencyToken);
   }
 
   /// <summary>
@@ -121,7 +121,7 @@ public static class DummyItemExtensions
       ObjectId = command.ObjectId,
       Id = command.Id,
       Name = command.Name,
-      ConcurrencyToken = command.ConcurrencyToken.ToString()
+      ConcurrencyToken = command.ConcurrencyToken
     };
   }
 }

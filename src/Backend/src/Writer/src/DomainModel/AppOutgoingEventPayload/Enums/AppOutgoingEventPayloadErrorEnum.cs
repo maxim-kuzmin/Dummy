@@ -11,14 +11,19 @@ public enum AppOutgoingEventPayloadErrorEnum
   AppOutgoingEventIdIsInvalid,
 
   /// <summary>
-  /// Данные пустые.
-  /// </summary>
-  DataIsEmpty,
-
-  /// <summary>
   /// Данные слишком длинные.
   /// </summary>
   DataIsTooLong,
+
+  /// <summary>
+  /// Токен параллелизма сущности для удаления слишком длинный.
+  /// </summary>
+  EntityConcurrencyTokenToDeleteIsTooLong,
+
+  /// <summary>
+  /// Токен параллелизма сущности для вставки слишком длинный.
+  /// </summary>
+  EntityConcurrencyTokenToInsertIsTooLong,
 
   /// <summary>
   /// Идентификатор сущности пуст.

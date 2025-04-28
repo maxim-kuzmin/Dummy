@@ -19,8 +19,15 @@ public class AppOutgoingEventPayloadCreateActionHandler(
   {
     var aggregate = _factory.CreateAggregate();
 
+    var payload = request.Payload;
+
     aggregate.UpdateAppOutgoingEventId(request.AppOutgoingEventId);
-    aggregate.UpdateData(request.Data);
+    aggregate.UpdateData(payload.Data);
+    aggregate.UpdateEntityConcurrencyTokenToDelete(payload.EntityConcurrencyTokenToDelete);
+    aggregate.UpdateEntityConcurrencyTokenToInsert(payload.EntityConcurrencyTokenToInsert);
+    aggregate.UpdateEntityId(payload.EntityId);
+    aggregate.UpdateEntityName(payload.EntityName.ToString());
+    aggregate.UpdatePosition(payload.Position);
 
     var aggregateResult = aggregate.GetResultToCreate();
 

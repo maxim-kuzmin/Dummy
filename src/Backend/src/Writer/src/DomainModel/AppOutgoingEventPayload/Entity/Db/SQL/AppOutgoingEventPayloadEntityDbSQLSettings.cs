@@ -21,6 +21,31 @@ public abstract record AppOutgoingEventPayloadEntityDbSQLSettings : AppOutgoingE
   public string ColumnForData { get; protected set; } = string.Empty;
 
   /// <summary>
+  /// Столбец для токена параллелизма сущности для удаления.
+  /// </summary>
+  public string ColumnForEntityConcurrencyTokenToDelete { get; protected set; } = string.Empty;
+
+  /// <summary>
+  /// Столбец для токена параллелизма сущности для вставки.
+  /// </summary>
+  public string ColumnForEntityConcurrencyTokenToInsert { get; protected set; } = string.Empty;
+
+  /// <summary>
+  /// Столбец для идентификатора сущности.
+  /// </summary>
+  public string ColumnForEntityId { get; protected set; } = string.Empty;
+
+  /// <summary>
+  /// Столбец для имени сущности.
+  /// </summary>
+  public string ColumnForEntityName { get; protected set; } = string.Empty;
+
+  /// <summary>
+  /// Столбец для позиции.
+  /// </summary>
+  public string ColumnForPosition { get; protected set; } = string.Empty;
+
+  /// <summary>
   /// Столбец для идентификатора.
   /// </summary>
   public string ColumnForId { get; protected set; } = string.Empty;

@@ -4,7 +4,8 @@
 /// Ресурсы полезной нагрузки исходящего сообщения приложения.
 /// </summary>
 /// <param name="_stringLocalizer">Локализатор строк.</param>
-public class AppOutgoingEventPayloadResources(IStringLocalizer<AppOutgoingEventPayloadResources> _stringLocalizer) : IAppOutgoingEventPayloadResources
+public class AppOutgoingEventPayloadResources(
+  IStringLocalizer<AppOutgoingEventPayloadResources> _stringLocalizer) : IAppOutgoingEventPayloadResources
 {
   /// <inheritdoc/>
   public string GetAppOutgoingEventIdIsInvalidErrorMessage()
@@ -13,15 +14,19 @@ public class AppOutgoingEventPayloadResources(IStringLocalizer<AppOutgoingEventP
   }
 
   /// <inheritdoc/>
-  public string GetDataIsEmptyErrorMessage() // //makc//DEL//
-  {
-    return _stringLocalizer["Error:DataIsEmpty"];
-  }
-
-  /// <inheritdoc/>
-  public string GetDataIsTooLongErrorMessage(int maxLength) // //makc//DEL//
+  public string GetDataIsTooLongErrorMessage(int maxLength)
   {
     return _stringLocalizer["Error:DataIsTooLong:Format", maxLength];
+  }
+
+  public string GetEntityConcurrencyTokenToDeleteIsTooLongErrorMessage(int maxLength)
+  {
+    return _stringLocalizer["Error:EntityConcurrencyTokenToDeleteIsTooLong:Format", maxLength];
+  }
+
+  public string GetEntityConcurrencyTokenToInsertIsTooLongErrorMessage(int maxLength)
+  {
+    return _stringLocalizer["Error:EntityConcurrencyTokenToInsertIsTooLong:Format", maxLength];
   }
 
   /// <inheritdoc/>

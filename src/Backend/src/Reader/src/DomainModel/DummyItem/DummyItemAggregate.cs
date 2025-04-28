@@ -47,9 +47,9 @@ public class DummyItemAggregate(
   /// Обновить токен параллелизма.
   /// </summary>
   /// <param name="value">Значение.</param>
-  public void UpdateConcurrencyToken(Guid value)
+  public void UpdateConcurrencyToken(string value)
   {
-    if (value == default)
+    if (string.IsNullOrWhiteSpace(value))
     {
       string errorMessage = _resources.GetIdIsInvalidErrorMessage();
 

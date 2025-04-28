@@ -17,7 +17,7 @@ public class AppOutboxSaveActionHandler(
     {
       var appOutgoingEvent = await CreateAppOutgoingEvent(request, cancellationToken).ConfigureAwait(false);
 
-      foreach (var payload in request.AppOutgoingEventPayloads)
+      foreach (var payload in request.AppEventPayloads)
       {
         await CreateAppOutgoingEventPayload(appOutgoingEvent.Id, payload, cancellationToken).ConfigureAwait(false);
       }
@@ -32,7 +32,7 @@ public class AppOutboxSaveActionHandler(
     AppOutboxSaveActionCommand request,
     CancellationToken cancellationToken)
   {
-    AppOutgoingEventCreateActionCommand command = new(false, request.AppOutgoingEventName.ToString());
+    AppOutgoingEventCreateActionCommand command = new(false, request.AppEventName.ToString());
 
     var result = await _mediator.Send(command, cancellationToken).ConfigureAwait(false);
 
@@ -41,10 +41,10 @@ public class AppOutboxSaveActionHandler(
 
   private async Task<AppOutgoingEventPayloadSingleDTO> CreateAppOutgoingEventPayload(
     long appOutgoingEventId,
-    object payload,
+    AppEventPayload payload,
     CancellationToken cancellationToken)
   {
-    AppOutgoingEventPayloadCreateActionCommand command = new(appOutgoingEventId, JsonSerializer.Serialize(payload));
+    AppOutgoingEventPayloadCreateActionCommand command = new(appOutgoingEventId, payload);
 
     var result = await _mediator.Send(command, cancellationToken).ConfigureAwait(false);
 

@@ -16,7 +16,7 @@ public class AppOutboxProduceActionHandler(
 
     while (!cancellationToken.IsCancellationRequested)
     {
-      MessageSending sending = new(AppOutgoingEventNameEnum.DummyItemChanged.ToString(), DateTimeOffset.Now.ToString());
+      MessageSending sending = new(AppEventNameEnum.DummyItemChanged.ToString(), DateTimeOffset.Now.ToString());
 
       try
       {        

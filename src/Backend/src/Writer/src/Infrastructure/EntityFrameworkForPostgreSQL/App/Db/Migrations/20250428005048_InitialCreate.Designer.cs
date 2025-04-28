@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Makc.Dummy.Writer.Infrastructure.EntityFrameworkForPostgreSQL.App.Db.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250213182202_InitialCreate")]
+    [Migration("20250428005048_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -20,7 +20,7 @@ namespace Makc.Dummy.Writer.Infrastructure.EntityFrameworkForPostgreSQL.App.Db.M
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.1")
+                .HasAnnotation("ProductVersion", "9.0.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -34,9 +34,11 @@ namespace Makc.Dummy.Writer.Infrastructure.EntityFrameworkForPostgreSQL.App.Db.M
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
-                    b.Property<Guid>("ConcurrencyToken")
+                    b.Property<string>("ConcurrencyToken")
                         .IsConcurrencyToken()
-                        .HasColumnType("uuid")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)")
                         .HasColumnName("сoncurrency_token");
 
                     b.Property<DateTimeOffset>("CreatedAt")
@@ -71,15 +73,41 @@ namespace Makc.Dummy.Writer.Infrastructure.EntityFrameworkForPostgreSQL.App.Db.M
                         .HasColumnType("bigint")
                         .HasColumnName("app_outgoing_event_id");
 
-                    b.Property<Guid>("ConcurrencyToken")
+                    b.Property<string>("ConcurrencyToken")
                         .IsConcurrencyToken()
-                        .HasColumnType("uuid")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)")
                         .HasColumnName("сoncurrency_token");
 
                     b.Property<string>("Data")
-                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("data");
+
+                    b.Property<string>("EntityConcurrencyTokenToDelete")
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("entity_concurrency_token_to_delete");
+
+                    b.Property<string>("EntityConcurrencyTokenToInsert")
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("entity_concurrency_token_to_insert");
+
+                    b.Property<string>("EntityId")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("entity_id");
+
+                    b.Property<string>("EntityName")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("entity_name");
+
+                    b.Property<int>("Position")
+                        .HasColumnType("integer")
+                        .HasColumnName("position");
 
                     b.HasKey("Id")
                         .HasName("pk_app_outgoing_event_payload");
@@ -98,9 +126,11 @@ namespace Makc.Dummy.Writer.Infrastructure.EntityFrameworkForPostgreSQL.App.Db.M
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
-                    b.Property<Guid>("ConcurrencyToken")
+                    b.Property<string>("ConcurrencyToken")
                         .IsConcurrencyToken()
-                        .HasColumnType("uuid")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)")
                         .HasColumnName("сoncurrency_token");
 
                     b.Property<string>("Name")
@@ -121,14 +151,14 @@ namespace Makc.Dummy.Writer.Infrastructure.EntityFrameworkForPostgreSQL.App.Db.M
 
             modelBuilder.Entity("Makc.Dummy.Writer.DomainModel.AppOutgoingEventPayload.AppOutgoingEventPayloadEntity", b =>
                 {
-                    b.HasOne("Makc.Dummy.Writer.DomainModel.AppOutgoingEvent.AppOutgoingEventEntity", "Event")
+                    b.HasOne("Makc.Dummy.Writer.DomainModel.AppOutgoingEvent.AppOutgoingEventEntity", "AppOutgoingEvent")
                         .WithMany("Payloads")
                         .HasForeignKey("AppOutgoingEventId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_app_outgoing_event_payload_app_outgoing_event");
 
-                    b.Navigation("Event");
+                    b.Navigation("AppOutgoingEvent");
                 });
 
             modelBuilder.Entity("Makc.Dummy.Writer.DomainModel.AppOutgoingEvent.AppOutgoingEventEntity", b =>

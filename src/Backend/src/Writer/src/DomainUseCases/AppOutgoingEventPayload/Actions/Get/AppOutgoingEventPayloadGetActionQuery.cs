@@ -3,4 +3,6 @@
 /// <summary>
 /// Запрос действия по получению полезной нагрузки исходящего события приложения.
 /// </summary>
-public record AppOutgoingEventPayloadGetActionQuery : AppOutgoingEventPayloadSingleQuery, IQuery<Result<AppOutgoingEventPayloadSingleDTO>>;
+public record AppOutgoingEventPayloadGetActionQuery :
+  AppOutgoingEventPayloadSingleQuery,
+  IQuery<Result<AppOutgoingEventPayloadSingleDTO>>;

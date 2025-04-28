@@ -3,8 +3,8 @@
 /// <summary>
 /// Команда действия по сохранению в базе данных исходящего события приложения, помеченного как неопубликованное.
 /// </summary>
-/// <param name="AppOutgoingEventName">Имя исходящего события приложения.</param>
-/// <param name="AppOutgoingEventPayloads">Полезные нагрузки исходящего события приложения.</param>
+/// <param name="AppEventName">Имя события приложения.</param>
+/// <param name="AppEventPayloads">Полезные нагрузки события приложения.</param>
 public record AppOutboxSaveActionCommand(
-  AppOutgoingEventNameEnum AppOutgoingEventName,
-  List<object> AppOutgoingEventPayloads) : ICommand<Result>;
+  string AppEventName,
+  List<AppEventPayload> AppEventPayloads) : ICommand<Result>;

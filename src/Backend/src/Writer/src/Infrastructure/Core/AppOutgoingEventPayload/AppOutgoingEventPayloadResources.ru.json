@@ -1,6 +1,7 @@
 ﻿{
-  "Error:DataIsEmpty": "Данные содержат пустое значение", // //makc//DEL//
-  "Error:DataIsTooLong:Format": "Длина данных превышает макимальное значение в {0} символов", // //makc//DEL//
+  "Error:DataIsTooLong:Format": "Длина данных превышает макимальное значение в {0} символов",
+  "Error:EntityConcurrencyTokenToDeleteIsTooLong:Format": "Длина токена параллелизма сущности для удаления превышает макимальное значение в {0} символов",
+  "Error:EntityConcurrencyTokenToInsertIsTooLong:Format": "Длина токена параллелизма сущности для вставки превышает макимальное значение в {0} символов",
   "Error:EntityIdIsEmpty": "Идентификатор сущности содержит пустое значение",
   "Error:EntityIdIsTooLong:Format": "Длина идентификатора сущности превышает макимальное значение в {0} символов",
   "Error:EntityNameIsEmpty": "Имя сущности содержит пустое значение",

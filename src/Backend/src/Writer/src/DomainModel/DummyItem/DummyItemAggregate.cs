@@ -60,9 +60,11 @@ public class DummyItemAggregate(
       UpdateErrors.Add(appError);
     }
 
-    if (_settings.MaxLengthForName > 0 && value.Length > _settings.MaxLengthForName)
+    int maxLength = _settings.MaxLengthForName;
+
+    if (maxLength > 0 && value.Length > maxLength)
     {
-      string errorMessage = _resources.GetNameIsTooLongErrorMessage(_settings.MaxLengthForName);
+      string errorMessage = _resources.GetNameIsTooLongErrorMessage(maxLength);
 
       var appError = DummyItemErrorEnum.NameIsTooLong.ToAppError(errorMessage);
 
@@ -90,6 +92,6 @@ public class DummyItemAggregate(
 
   private static void RefreshConcurrencyToken(DummyItemEntity entity)
   {
-    entity.ConcurrencyToken = Guid.NewGuid();
+    entity.ConcurrencyToken = Guid.NewGuid().ToString();
   }
 }

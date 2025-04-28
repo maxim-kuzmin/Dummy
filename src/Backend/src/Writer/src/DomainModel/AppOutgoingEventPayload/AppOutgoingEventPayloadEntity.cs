@@ -18,12 +18,12 @@ public class AppOutgoingEventPayloadEntity : EntityBaseWithStructPrimaryKey<long
   /// <summary>
   /// Токен параллелизма.
   /// </summary>
-  public Guid ConcurrencyToken { get; set; }
+  public string ConcurrencyToken { get; set; } = string.Empty;
 
   /// <summary>
   /// Данные.
   /// </summary>
-  public string Data { get; set; } = string.Empty; // //makc//DEL//
+  public string? Data { get; set; }
 
   /// <summary>
   /// Идентификатор.
@@ -33,12 +33,12 @@ public class AppOutgoingEventPayloadEntity : EntityBaseWithStructPrimaryKey<long
   /// <summary>
   /// Токен параллелизма для удаления.
   /// </summary>
-  public Guid? EntityConcurrencyTokenToDelete { get; set; }
+  public string? EntityConcurrencyTokenToDelete { get; set; }
 
   /// <summary>
   /// Токен параллелизма для вставки.
   /// </summary>
-  public Guid? EntityConcurrencyTokenToInsert { get; set; }
+  public string? EntityConcurrencyTokenToInsert { get; set; }
 
   /// <summary>
   /// Идентификатор сущности.

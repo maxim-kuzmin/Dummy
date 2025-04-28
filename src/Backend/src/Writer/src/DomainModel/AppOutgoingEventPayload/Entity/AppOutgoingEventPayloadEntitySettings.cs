@@ -6,9 +6,14 @@
 public record AppOutgoingEventPayloadEntitySettings
 {
   /// <summary>
+  /// Максимальная длина для токена параллелизма.
+  /// </summary>
+  public int MaxLengthForConcurrencyToken { get; protected set; }
+
+  /// <summary>
   /// Максимальная длина для данных.
   /// </summary>
-  public int MaxLengthForData { get; protected set; } // //makc//DEL//
+  public int MaxLengthForData { get; protected set; }
 
   /// <summary>
   /// Максимальная длина для идентификатора сущности.

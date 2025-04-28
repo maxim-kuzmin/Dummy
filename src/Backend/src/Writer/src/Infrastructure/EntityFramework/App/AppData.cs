@@ -27,52 +27,52 @@ public static class AppData
     return [
       new()
       {
-        ConcurrencyToken = Guid.NewGuid(),
+        ConcurrencyToken = Guid.NewGuid().ToString(),
         Name = "Delba de Oliveira"
       },
       new()
       {
-        ConcurrencyToken = Guid.NewGuid(),
+        ConcurrencyToken = Guid.NewGuid().ToString(),
         Name = "Lee Robinson"
       },
       new()
       {
-        ConcurrencyToken = Guid.NewGuid(),
+        ConcurrencyToken = Guid.NewGuid().ToString(),
         Name = "Hector Simpson"
       },
       new()
       {
-        ConcurrencyToken = Guid.NewGuid(),
+        ConcurrencyToken = Guid.NewGuid().ToString(),
         Name = "Steven Tey"
       },
       new()
       {
-        ConcurrencyToken = Guid.NewGuid(),
+        ConcurrencyToken = Guid.NewGuid().ToString(),
         Name = "Steph Dietz"
       },
       new()
       {
-        ConcurrencyToken = Guid.NewGuid(),
+        ConcurrencyToken = Guid.NewGuid().ToString(),
         Name = "Michael Novotny"
       },
       new()
       {
-        ConcurrencyToken = Guid.NewGuid(),
+        ConcurrencyToken = Guid.NewGuid().ToString(),
         Name = "Evil Rabbit"
       },
       new()
       {
-        ConcurrencyToken = Guid.NewGuid(),
+        ConcurrencyToken = Guid.NewGuid().ToString(),
         Name = "Emil Kowalski"
       },
       new()
       {
-        ConcurrencyToken = Guid.NewGuid(),
+        ConcurrencyToken = Guid.NewGuid().ToString(),
         Name = "Amy Burns"
       },
       new()
       {
-        ConcurrencyToken = Guid.NewGuid(),
+        ConcurrencyToken = Guid.NewGuid().ToString(),
         Name = "Balazs Orban"
       },
     ];

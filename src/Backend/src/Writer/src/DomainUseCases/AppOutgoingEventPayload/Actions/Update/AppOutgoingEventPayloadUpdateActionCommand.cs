@@ -5,8 +5,8 @@
 /// </summary>
 /// <param name="Id">Идентификатор.</param>
 /// <param name="AppOutgoingEventId">Идентификатор исходящего события приложения.</param>
-/// <param name="Data">Данные.</param>
+/// <param name="Payload">Полезная нагрузка.</param>
 public record AppOutgoingEventPayloadUpdateActionCommand(
   long Id,
   long AppOutgoingEventId,
-  string Data) : ICommand<Result<AppOutgoingEventPayloadSingleDTO>>;
+  AppEventPayload Payload) : ICommand<Result<AppOutgoingEventPayloadSingleDTO>>;

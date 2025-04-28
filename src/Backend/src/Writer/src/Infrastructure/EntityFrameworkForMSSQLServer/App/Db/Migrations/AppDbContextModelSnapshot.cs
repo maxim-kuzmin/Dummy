@@ -17,7 +17,7 @@ namespace Makc.Dummy.Writer.Infrastructure.EntityFrameworkForMSSQLServer.App.Db.
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.1")
+                .HasAnnotation("ProductVersion", "9.0.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -31,9 +31,11 @@ namespace Makc.Dummy.Writer.Infrastructure.EntityFrameworkForMSSQLServer.App.Db.
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<Guid>("ConcurrencyToken")
+                    b.Property<string>("ConcurrencyToken")
                         .IsConcurrencyToken()
-                        .HasColumnType("uniqueidentifier")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)")
                         .HasColumnName("ConcurrencyToken");
 
                     b.Property<DateTimeOffset>("CreatedAt")
@@ -68,15 +70,41 @@ namespace Makc.Dummy.Writer.Infrastructure.EntityFrameworkForMSSQLServer.App.Db.
                         .HasColumnType("bigint")
                         .HasColumnName("AppOutgoingEventId");
 
-                    b.Property<Guid>("ConcurrencyToken")
+                    b.Property<string>("ConcurrencyToken")
                         .IsConcurrencyToken()
-                        .HasColumnType("uniqueidentifier")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)")
                         .HasColumnName("ConcurrencyToken");
 
                     b.Property<string>("Data")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Data");
+
+                    b.Property<string>("EntityConcurrencyTokenToDelete")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)")
+                        .HasColumnName("EntityConcurrencyTokenToDelete");
+
+                    b.Property<string>("EntityConcurrencyTokenToInsert")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)")
+                        .HasColumnName("EntityConcurrencyTokenToInsert");
+
+                    b.Property<string>("EntityId")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)")
+                        .HasColumnName("EntityId");
+
+                    b.Property<string>("EntityName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("EntityName");
+
+                    b.Property<int>("Position")
+                        .HasColumnType("int")
+                        .HasColumnName("Position");
 
                     b.HasKey("Id")
                         .HasName("PK_AppOutgoingEventPayload");
@@ -95,9 +123,11 @@ namespace Makc.Dummy.Writer.Infrastructure.EntityFrameworkForMSSQLServer.App.Db.
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<Guid>("ConcurrencyToken")
+                    b.Property<string>("ConcurrencyToken")
                         .IsConcurrencyToken()
-                        .HasColumnType("uniqueidentifier")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)")
                         .HasColumnName("ConcurrencyToken");
 
                     b.Property<string>("Name")
@@ -118,14 +148,14 @@ namespace Makc.Dummy.Writer.Infrastructure.EntityFrameworkForMSSQLServer.App.Db.
 
             modelBuilder.Entity("Makc.Dummy.Writer.DomainModel.AppOutgoingEventPayload.AppOutgoingEventPayloadEntity", b =>
                 {
-                    b.HasOne("Makc.Dummy.Writer.DomainModel.AppOutgoingEvent.AppOutgoingEventEntity", "Event")
+                    b.HasOne("Makc.Dummy.Writer.DomainModel.AppOutgoingEvent.AppOutgoingEventEntity", "AppOutgoingEvent")
                         .WithMany("Payloads")
                         .HasForeignKey("AppOutgoingEventId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_AppOutgoingEventPayload_AppOutgoingEvent");
 
-                    b.Navigation("Event");
+                    b.Navigation("AppOutgoingEvent");
                 });
 
             modelBuilder.Entity("Makc.Dummy.Writer.DomainModel.AppOutgoingEvent.AppOutgoingEventEntity", b =>

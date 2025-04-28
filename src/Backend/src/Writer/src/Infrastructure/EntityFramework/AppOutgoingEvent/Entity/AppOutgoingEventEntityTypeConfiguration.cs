@@ -20,6 +20,11 @@ public class AppOutgoingEventEntityTypeConfiguration : IEntityTypeConfiguration<
       .IsConcurrencyToken()
       .HasColumnName(entityDbSettings.ColumnForConcurrencyToken);
 
+    if (entityDbSettings.MaxLengthForConcurrencyToken > 0)
+    {
+      builder.Property(x => x.ConcurrencyToken).HasMaxLength(entityDbSettings.MaxLengthForConcurrencyToken);
+    }
+
     builder.Property(x => x.CreatedAt)
       .IsRequired()
       .HasColumnName(entityDbSettings.ColumnForCreatedAt);

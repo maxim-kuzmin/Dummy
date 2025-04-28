@@ -84,7 +84,7 @@ public static class DummyItemExtensions
 
     foreach (var itemReply in reply.Items)
     {
-      DummyItemSingleDTO item = new(itemReply.Id, itemReply.Name, Guid.Parse(itemReply.ConcurrencyToken));
+      DummyItemSingleDTO item = new(itemReply.Id, itemReply.Name, itemReply.ConcurrencyToken);
 
       items.Add(item);
     }
@@ -99,7 +99,7 @@ public static class DummyItemExtensions
   /// <returns>Объект передачи данных действия по получению фиктивного предмета.</returns>
   public static DummyItemSingleDTO ToDummyItemSingleDTO(this DummyItemGetActionReply reply)
   {
-    return new(reply.Id, reply.Name, Guid.Parse(reply.ConcurrencyToken));
+    return new(reply.Id, reply.Name, reply.ConcurrencyToken);
   }
 
   /// <summary>

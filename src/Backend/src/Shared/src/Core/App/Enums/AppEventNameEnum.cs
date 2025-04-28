@@ -1,9 +1,9 @@
 ﻿namespace Makc.Dummy.Shared.Core.App.Enums;
 
 /// <summary>
-/// Перечисление имён исходящих событий приложения.
+/// Перечисление имён событий приложения.
 /// </summary>
-public enum AppOutgoingEventNameEnum
+public enum AppEventNameEnum
 {
   /// <summary>
   /// Изменился фиктивный предмет.

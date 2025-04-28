@@ -21,9 +21,15 @@ public record AppOutgoingEventPayloadEntityDbSettings : AppOutgoingEventPayloadE
     ColumnForAppOutgoingEventId = "AppOutgoingEventId";
     ColumnForConcurrencyToken = "ConcurrencyToken";
     ColumnForData = "Data";
+    ColumnForEntityConcurrencyTokenToDelete = "EntityConcurrencyTokenToDelete";
+    ColumnForEntityConcurrencyTokenToInsert = "EntityConcurrencyTokenToInsert";
+    ColumnForEntityId = "EntityId";
+    ColumnForEntityName = "EntityName";
     ColumnForId = "Id";
+    ColumnForPosition = "Position";
 
-    MaxLengthForData = 0; // //makc//DEL//
+    MaxLengthForConcurrencyToken = 255;
+    MaxLengthForData = 0;
     MaxLengthForEntityId = 255;
     MaxLengthForEntityName = 255;
 

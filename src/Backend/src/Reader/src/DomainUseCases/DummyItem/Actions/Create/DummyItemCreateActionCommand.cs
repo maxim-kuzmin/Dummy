@@ -9,4 +9,4 @@
 public record DummyItemCreateActionCommand(  
   long Id,
   string Name,
-  Guid ConcurrencyToken) : ICommand<Result<DummyItemSingleDTO>>;
+  string ConcurrencyToken) : ICommand<Result<DummyItemSingleDTO>>;

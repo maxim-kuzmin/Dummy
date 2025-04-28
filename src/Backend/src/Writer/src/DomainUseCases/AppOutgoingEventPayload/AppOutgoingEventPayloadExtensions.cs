@@ -43,6 +43,14 @@ public static class AppOutgoingEventPayloadExtensions
   /// <returns>Объект передачи данных одиночной полезной нагрузки исходящего события приложения.</returns>
   public static AppOutgoingEventPayloadSingleDTO ToAppOutgoingEventPayloadSingleDTO(this AppOutgoingEventPayloadEntity entity)
   {
-    return new(entity.Id, entity.AppOutgoingEventId, entity.Data);
+    return new(
+      entity.Id,
+      entity.AppOutgoingEventId,
+      entity.Data,
+      entity.EntityConcurrencyTokenToDelete,
+      entity.EntityConcurrencyTokenToInsert,
+      entity.EntityId,
+      entity.EntityName,
+      entity.Position);
   }
 }

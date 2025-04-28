@@ -12,17 +12,25 @@ public interface IAppOutgoingEventPayloadResources
   string GetAppOutgoingEventIdIsInvalidErrorMessage();
 
   /// <summary>
-  /// Получить сообщение об ошибке пустых данных.
-  /// </summary>
-  /// <returns>Сообщение об ошибке.</returns>
-  string GetDataIsEmptyErrorMessage(); // //makc//DEL//
-
-  /// <summary>
   /// Получить сообщение об ошибке слишком длинных данных.
   /// </summary>
   /// <param name="maxLength">Максимальная длина.</param>
   /// <returns>Сообщение об ошибке.</returns>
-  string GetDataIsTooLongErrorMessage(int maxLength); // //makc//DEL//
+  string GetDataIsTooLongErrorMessage(int maxLength);
+
+  /// <summary>
+  /// Получить сообщение об ошибке слишком длинного токена параллелизма сущности для удаления.
+  /// </summary>
+  /// <param name="maxLength">Максимальная длина.</param>
+  /// <returns>Сообщение об ошибке.</returns>
+  string GetEntityConcurrencyTokenToDeleteIsTooLongErrorMessage(int maxLength);
+
+  /// <summary>
+  /// Получить сообщение об ошибке слишком длинного токена параллелизма сущности для вставки.
+  /// </summary>
+  /// <param name="maxLength">Максимальная длина.</param>
+  /// <returns>Сообщение об ошибке.</returns>
+  string GetEntityConcurrencyTokenToInsertIsTooLongErrorMessage(int maxLength);
 
   /// <summary>
   /// Получить сообщение об ошибке пустого идентификатора сущности.
