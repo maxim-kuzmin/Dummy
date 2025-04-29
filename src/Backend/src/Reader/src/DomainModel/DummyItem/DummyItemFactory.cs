@@ -4,11 +4,14 @@
 /// Фабрика фиктивного предмета.
 /// </summary>
 /// <param name="_resources">Ресурсы.</param>
-public class DummyItemFactory(IDummyItemResources _resources) : IDummyItemFactory
+/// <param name="_settings">Настройки.</param>
+public class DummyItemFactory(
+  IDummyItemResources _resources,
+  DummyItemEntitySettings _settings) : IDummyItemFactory
 {
   /// <inheritdoc/>
   public DummyItemAggregate CreateAggregate(DummyItemEntity? entityToChange = null)
   {
-    return new(entityToChange, _resources);
+    return new(entityToChange, _resources, _settings);
   }
 }

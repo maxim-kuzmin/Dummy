@@ -23,4 +23,10 @@ public class DummyItemResources(IStringLocalizer<DummyItemResources> _stringLoca
   {
     return _stringLocalizer["Error:NameIsEmpty"];
   }
+
+  /// <inheritdoc/>
+  public string GetNameIsTooLongErrorMessage(int maxLength)
+  {
+    return _stringLocalizer["Error:NameIsTooLong:Format", maxLength];
+  }
 }

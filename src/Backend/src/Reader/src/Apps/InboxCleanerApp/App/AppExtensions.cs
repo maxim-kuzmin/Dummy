@@ -50,7 +50,7 @@ public static class AppExtensions
 
     Guard.Against.Null(appConfigOptions.MongoDB);
 
-    services.AddAppInfrastructureTiedToMongoDB(logger, appConfigOptions.MongoDB, appBuilder.Configuration);
+    services.AddAppInfrastructureTiedToMongoDB(logger, appConfigOptions.MongoDB, appBuilder.Configuration, out _);
 
     services
       .AddHostedService<AppService>()

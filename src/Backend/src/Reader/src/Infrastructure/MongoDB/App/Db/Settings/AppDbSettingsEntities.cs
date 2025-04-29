@@ -3,7 +3,7 @@
 /// <summary>
 /// Сущности в настройках базы данных приложения.
 /// </summary>
-public record AppDbSettingsEntities : AppDbSQLSettingsEntities
+public record AppDbSettingsEntities : AppDbNoSQLSettingsEntities
 {
   /// <summary>
   /// Конструктор.

@@ -5,9 +5,11 @@
 /// </summary>
 /// <param name="entityToChange">Сущность для изменения.</param>
 /// <param name="_resources">Ресурсы.</param>
+/// <param name="_settings">Настройки.</param>
 public class DummyItemAggregate(
   DummyItemEntity? entityToChange,
-  IDummyItemResources _resources) : AggregateBase<DummyItemEntity, string>(entityToChange)
+  IDummyItemResources _resources,
+  DummyItemEntitySettings _settings) : AggregateBase<DummyItemEntity, string>(entityToChange)
 {
   /// <inheritdoc/>
   public sealed override AggregateResult<EntityChange<DummyItemEntity>> GetResultToUpdate()
@@ -99,6 +101,17 @@ public class DummyItemAggregate(
       string errorMessage = _resources.GetNameIsEmptyErrorMessage();
 
       var appError = DummyItemErrorEnum.NameIsEmpty.ToAppError(errorMessage);
+
+      UpdateErrors.Add(appError);
+    }
+
+    int maxLength = _settings.MaxLengthForName;
+
+    if (maxLength > 0 && value.Length > maxLength)
+    {
+      string errorMessage = _resources.GetNameIsTooLongErrorMessage(maxLength);
+
+      var appError = DummyItemErrorEnum.NameIsTooLong.ToAppError(errorMessage);
 
       UpdateErrors.Add(appError);
     }

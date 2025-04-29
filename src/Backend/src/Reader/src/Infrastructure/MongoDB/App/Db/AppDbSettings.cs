@@ -3,7 +3,7 @@
 /// <summary>
 /// Настройки базы данных приложения.
 /// </summary>
-public record AppDbSettings : AppDbSQLSettings
+public record AppDbSettings : AppDbNoSQLSettings
 {
   /// <summary>
   /// Конструктор.

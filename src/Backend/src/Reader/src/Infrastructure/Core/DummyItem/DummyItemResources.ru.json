@@ -1,5 +1,6 @@
 ﻿{
   "Error:ConcurrencyTokenIsInvalid": "Токен параллелизма недействителен",
   "Error:IdIsInvalid": "Идентификатор недействителен",
-  "Error:NameIsEmpty": "Имя содержит пустое значение"
+  "Error:NameIsEmpty": "Имя содержит пустое значение",
+  "Error:NameIsTooLong:Format": "Длина имени превышает макимальное значение в {0} символов"
 }

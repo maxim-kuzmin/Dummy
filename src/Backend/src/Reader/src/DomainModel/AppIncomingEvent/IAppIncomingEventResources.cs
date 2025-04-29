@@ -1,21 +1,15 @@
-﻿namespace Makc.Dummy.Reader.DomainModel.DummyItem;
+﻿namespace Makc.Dummy.Reader.DomainModel.AppIncomingEvent;
 
 /// <summary>
-/// Интерфейс ресурсов фиктивного предмета.
+/// Интерфейс ресурсов входящего события приложения.
 /// </summary>
-public interface IDummyItemResources
+public interface IAppIncomingEventResources
 {
   /// <summary>
-  /// Получить сообщение об ошибке недействительного токена параллелизма.
+  /// Получить сообщение об ошибке недействительной даты создания.
   /// </summary>
   /// <returns>Сообщение об ошибке.</returns>
-  string GetConcurrencyTokenIsInvalidErrorMessage();
-
-  /// <summary>
-  /// Получить сообщение об ошибке недействительного идентификатора.
-  /// </summary>
-  /// <returns>Сообщение об ошибке.</returns>
-  string GetIdIsInvalidErrorMessage();
+  string GetCreatedAtIsInvalidErrorMessage();
 
   /// <summary>
   /// Получить сообщение об ошибке пустого имени.

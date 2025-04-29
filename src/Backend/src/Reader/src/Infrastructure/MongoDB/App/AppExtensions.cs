@@ -1,4 +1,6 @@
-﻿namespace Makc.Dummy.Reader.Infrastructure.MongoDB.App;
+﻿using Makc.Dummy.Reader.DomainModel.DummyItem.Entity;
+
+namespace Makc.Dummy.Reader.Infrastructure.MongoDB.App;
 
 /// <summary>
 /// Расширения приложения.
@@ -12,14 +14,20 @@ public static class AppExtensions
   /// <param name="logger">Логгер.</param>
   /// <param name="appConfigOptionsMongoDBSection">Раздел MongoDB в параметрах конфигурации приложения.</param>
   /// <param name="configuration">Конфигурация.</param>
+  /// <param name="appDbNoSQLSettings">Настройки базы данных NoSQL приложения.</param>
   /// <returns>Сервисы.</returns>
   public static IServiceCollection AddAppInfrastructureTiedToMongoDB(
     this IServiceCollection services,
     ILogger logger,
     AppConfigOptionsDbMongoDBSection appConfigOptionsMongoDBSection,
-    IConfiguration configuration)
+    IConfiguration configuration,
+    out AppDbNoSQLSettings appDbNoSQLSettings)
   {
-    services.AddSingleton(x => new AppDbSettings());
+    appDbNoSQLSettings = new AppDbSettings();
+
+    services.AddSingleton((AppDbSettings)appDbNoSQLSettings);
+
+    services.AddSingleton(appDbNoSQLSettings.Entities.DummyItem);    
 
     var connectionStringTemplate = configuration.GetConnectionString(
       appConfigOptionsMongoDBSection.ConnectionStringName);

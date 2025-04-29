@@ -9,12 +9,19 @@ public enum DummyItemErrorEnum
   /// Токен параллелизма недействителен.
   /// </summary>
   ConcurrencyTokenIsInvalid,
+
   /// <summary>
   /// Идентификатор недействителен.
   /// </summary>
   IdIsInvalid,
+
   /// <summary>
   /// Имя пустое.
   /// </summary>
-  NameIsEmpty
+  NameIsEmpty,
+
+  /// <summary>
+  /// Имя слишком длинное.
+  /// </summary>
+  NameIsTooLong
 }

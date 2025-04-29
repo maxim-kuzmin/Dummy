@@ -3,7 +3,7 @@
 /// <summary>
 /// Настройки базы данных сущности фиктивного предмета.
 /// </summary>
-public abstract record DummyItemEntityDbNoSQLSettings
+public abstract record DummyItemEntityDbNoSQLSettings : DummyItemEntitySettings
 {
   /// <summary>
   /// Таблица.

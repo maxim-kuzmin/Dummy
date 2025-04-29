@@ -1,9 +1,9 @@
 ﻿namespace Makc.Dummy.Reader.DomainModel.App.Db.NoSQL.Settings;
 
 /// <summary>
-/// Сущности в настройках базы данных приложения.
+/// Сущности в настройках базы данных NoSQL приложения.
 /// </summary>
-public abstract record AppDbSQLSettingsEntities
+public abstract record AppDbNoSQLSettingsEntities
 {
   /// <summary>
   /// Фиктивный предмет.

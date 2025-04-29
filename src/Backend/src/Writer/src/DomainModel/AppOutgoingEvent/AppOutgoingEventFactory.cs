@@ -5,7 +5,9 @@
 /// </summary>
 /// <param name="_resources">Ресурсы.</param>
 /// <param name="_settings">Настройки.</param>
-public class AppOutgoingEventFactory(IAppOutgoingEventResources _resources, AppOutgoingEventEntitySettings _settings) : IAppOutgoingEventFactory
+public class AppOutgoingEventFactory(
+  IAppOutgoingEventResources _resources,
+  AppOutgoingEventEntitySettings _settings) : IAppOutgoingEventFactory
 {
   /// <inheritdoc/>
   public AppOutgoingEventAggregate CreateAggregate(AppOutgoingEventEntity? entityToChange = null)

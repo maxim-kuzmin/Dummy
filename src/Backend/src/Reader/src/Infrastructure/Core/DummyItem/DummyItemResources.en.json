@@ -1,5 +1,6 @@
 ﻿{
   "Error:ConcurrencyTokenIsInvalid": "Concurrency token is invalid",
   "Error:IdIsInvalid": "Identifier is invalid",
-  "Error:NameIsEmpty": "Name is empty"
+  "Error:NameIsEmpty": "Name is empty",
+  "Error:NameIsTooLong:Format": "Name length exceeds the maximum allowed value of {0} characters"
 }

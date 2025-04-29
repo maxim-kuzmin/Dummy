@@ -1,7 +1,7 @@
 ﻿namespace Makc.Dummy.Writer.DomainModel.App.Db.SQL.Settings;
 
 /// <summary>
-/// Сущности в настройках базы данных приложения.
+/// Сущности в настройках базы данных SQL приложения.
 /// </summary>
 public abstract record AppDbSQLSettingsEntities
 {
