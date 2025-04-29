@@ -1,0 +1,12 @@
+﻿namespace Makc.Dummy.Reader.DomainUseCases.AppIncomingEventPayload.Queries;
+
+/// <summary>
+/// Запрос единственной полезной нагрузки входящего события приложения.
+/// </summary>
+public record AppIncomingEventPayloadSingleQuery
+{
+  /// <summary>
+  /// Идентификатор.
+  /// </summary>
+  public long Id { get; set; }
+}

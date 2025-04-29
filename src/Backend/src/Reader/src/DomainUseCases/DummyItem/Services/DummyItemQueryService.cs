@@ -3,6 +3,7 @@
 /// <summary>
 /// Сервис запросов фиктивного предмета.
 /// </summary>
+/// <param name="_repository">Репозиторий.</param>
 public class DummyItemQueryService(IDummyItemEntityRepository _repository) : IDummyItemQueryService
 {
   /// <inheritdoc/>
@@ -24,6 +25,6 @@ public class DummyItemQueryService(IDummyItemEntityRepository _repository) : IDu
   {
     var entities = await _repository.ListAsync(query, cancellationToken).ConfigureAwait(false);
 
-    return entities.Select(x =>  x.ToDummyItemSingleDTO()).ToList();
+    return [.. entities.Select(x =>  x.ToDummyItemSingleDTO())];
   }
 }
