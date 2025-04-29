@@ -1,6 +1,4 @@
-﻿using Makc.Dummy.Reader.DomainModel.AppIncomingEventPayload.Entity;
-
-namespace Makc.Dummy.Reader.DomainModel.AppIncomingEventPayload;
+﻿namespace Makc.Dummy.Reader.DomainModel.AppIncomingEventPayload;
 
 /// <summary>
 /// Агрегат полезной нагрузки входящего события приложения.
