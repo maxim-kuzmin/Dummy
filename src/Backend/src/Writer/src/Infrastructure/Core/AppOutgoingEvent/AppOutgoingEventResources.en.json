@@ -1,5 +1,6 @@
 ﻿{
   "Error:CreatedAtIsInvalid": "Creation date is invalid",
   "Error:NameIsEmpty": "Name is empty",
-  "Error:NameIsTooLong:Format": "Name length exceeds the maximum allowed value of {0} characters"
+  "Error:NameIsTooLong:Format": "Name length exceeds the maximum allowed value of {0} characters",
+  "Error:PublishedAtIsInvalid": "Publication date is invalid"
 }

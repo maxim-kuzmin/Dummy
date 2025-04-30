@@ -4,7 +4,11 @@
 /// Объект передачи данных одиночного исходящего события приложения.
 /// </summary>
 /// <param name="Id">Идентификатор.</param>
-/// <param name="CreatedAt">Когда создано.</param>
-/// <param name="IsPublished">Опубликовано ли?</param>
+/// <param name="CreatedAt">Дата создания.</param>
 /// <param name="Name">Имя.</param>
-public record AppOutgoingEventSingleDTO(long Id, DateTimeOffset CreatedAt, bool IsPublished, string Name);
+/// <param name="PublishedAt">Дата публикации.</param>
+public record AppOutgoingEventSingleDTO(
+  long Id,
+  DateTimeOffset CreatedAt,
+  string Name,
+  DateTimeOffset? PublishedAt);

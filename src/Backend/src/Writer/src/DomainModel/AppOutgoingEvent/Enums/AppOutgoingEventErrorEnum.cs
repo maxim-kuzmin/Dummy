@@ -18,5 +18,10 @@ public enum AppOutgoingEventErrorEnum
   /// <summary>
   /// Имя слишком длинное.
   /// </summary>
-  NameIsTooLong
+  NameIsTooLong,
+
+  /// <summary>
+  /// Дата публикации недействительна.
+  /// </summary>
+  PublishedAtIsInvalid,
 }

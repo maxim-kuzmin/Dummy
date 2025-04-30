@@ -21,14 +21,14 @@ public abstract record AppOutgoingEventEntityDbSQLSettings : AppOutgoingEventEnt
   public string ColumnForId { get; protected set; } = string.Empty;
 
   /// <summary>
-  /// Столбец для признака опубликованности.
-  /// </summary>
-  public string ColumnForIsPublished { get; protected set; } = string.Empty;
-
-  /// <summary>
   /// Столбец для имени.
   /// </summary>
   public string ColumnForName { get; protected set; } = string.Empty;
+
+  /// <summary>
+  /// Столбец для даты публикации.
+  /// </summary>
+  public string ColumnForPublishedAt { get; protected set; } = string.Empty;
 
   /// <summary>
   /// Первичный ключ.

@@ -29,16 +29,9 @@ public class AppIncomingEventAggregate(
 
       var entity = GetEntityToUpdate();
 
-      if (HasChangedProperty(nameof(entity.CreatedAt)) && inserted.CreatedAt != entity.CreatedAt)
+      if (HasChangedProperty(nameof(entity.LoadedAt)) && inserted.LoadedAt != entity.LoadedAt)
       {
-        inserted.CreatedAt = entity.CreatedAt;
-
-        isOk = true;
-      }
-
-      if (HasChangedProperty(nameof(entity.IsPublished)) && inserted.IsPublished != entity.IsPublished)
-      {
-        inserted.IsPublished = entity.IsPublished;
+        inserted.LoadedAt = entity.LoadedAt;
 
         isOk = true;
       }
@@ -46,6 +39,13 @@ public class AppIncomingEventAggregate(
       if (HasChangedProperty(nameof(entity.Name)) && inserted.Name != entity.Name)
       {
         inserted.Name = entity.Name;
+
+        isOk = true;
+      }
+
+      if (HasChangedProperty(nameof(entity.CreatedAt)) && inserted.CreatedAt != entity.CreatedAt)
+      {
+        inserted.CreatedAt = entity.CreatedAt;
 
         isOk = true;
       }
@@ -82,16 +82,25 @@ public class AppIncomingEventAggregate(
   }
 
   /// <summary>
-  /// Обновить дату создания.
+  /// Обновить дату загрузки.
   /// </summary>
   /// <param name="value">Значение.</param>
-  public void UpdateIsPublished(bool value)
+  public void UpdateLoadedAt(DateTimeOffset? value)
   {
+    if (value == default)
+    {
+      string errorMessage = _resources.GetLoadedAtIsInvalidErrorMessage();
+
+      var appError = AppIncomingEventErrorEnum.LoadedAtIsInvalid.ToAppError(errorMessage);
+
+      UpdateErrors.Add(appError);
+    }
+
     var entity = GetEntityToUpdate();
 
-    entity.IsPublished = value;
+    entity.LoadedAt = value;
 
-    MarkPropertyAsChanged(nameof(entity.IsPublished));
+    MarkPropertyAsChanged(nameof(entity.LoadedAt));
   }
 
   /// <summary>
@@ -125,6 +134,28 @@ public class AppIncomingEventAggregate(
     entity.Name = value;
 
     MarkPropertyAsChanged(nameof(entity.Name));
+  }
+
+  /// <summary>
+  /// Обновить дату обработки.
+  /// </summary>
+  /// <param name="value">Значение.</param>
+  public void UpdateProcessedAt(DateTimeOffset? value)
+  {
+    if (value == default)
+    {
+      string errorMessage = _resources.GetProcessedAtIsInvalidErrorMessage();
+
+      var appError = AppIncomingEventErrorEnum.ProcessedAtIsInvalid.ToAppError(errorMessage);
+
+      UpdateErrors.Add(appError);
+    }
+
+    var entity = GetEntityToUpdate();
+
+    entity.ProcessedAt = value;
+
+    MarkPropertyAsChanged(nameof(entity.ProcessedAt));
   }
 
   /// <inheritdoc/>

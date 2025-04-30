@@ -23,4 +23,10 @@ public class AppOutgoingEventResources(IStringLocalizer<AppOutgoingEventResource
   {
     return _stringLocalizer["Error:NameIsTooLong:Format", maxLength];
   }
+
+  /// <inheritdoc/>
+  public string GetPublishedAtIsInvalidErrorMessage()
+  {
+    return _stringLocalizer["Error:PublishedAtIsInvalid"];
+  }
 }

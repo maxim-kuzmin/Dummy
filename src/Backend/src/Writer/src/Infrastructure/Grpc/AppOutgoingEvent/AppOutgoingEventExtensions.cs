@@ -8,7 +8,9 @@ public static class AppOutgoingEventExtensions
   public static AppOutgoingEventCreateActionCommand ToAppOutgoingEventCreateActionCommand(
     this AppOutgoingEventCreateActionRequest request)
   {
-    return new(request.IsPublished, request.Name);
+    var publishedAt = request.PublishedAt.ToDateTimeOffset();
+
+    return new(request.Name, publishedAt == default ? null : publishedAt);
   }
 
   public static AppOutgoingEventDeleteActionCommand ToAppOutgoingEventDeleteActionCommand(
@@ -27,12 +29,14 @@ public static class AppOutgoingEventExtensions
 
   public static AppOutgoingEventGetActionReply ToAppOutgoingEventGetActionReply(this AppOutgoingEventSingleDTO dto)
   {
+    var publishedAt = dto.PublishedAt ?? default;
+
     return new()
     {
       Id = dto.Id,
-      CreatedAt = Timestamp.FromDateTimeOffset(dto.CreatedAt),
-      IsPublished = dto.IsPublished,
+      CreatedAt = Timestamp.FromDateTimeOffset(dto.CreatedAt), 
       Name = dto.Name,
+      PublishedAt = Timestamp.FromDateTimeOffset(publishedAt)
     };
   }
 
@@ -75,6 +79,8 @@ public static class AppOutgoingEventExtensions
   public static AppOutgoingEventUpdateActionCommand ToAppOutgoingEventUpdateActionCommand(
     this AppOutgoingEventUpdateActionRequest request)
   {
-    return new(request.Id, request.IsPublished, request.Name);
+    var publishedAt = request.PublishedAt.ToDateTimeOffset();
+
+    return new(request.Id, request.Name, publishedAt == default ? null : publishedAt);
   }
 }

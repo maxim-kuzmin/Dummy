@@ -27,8 +27,8 @@ message ActionRequestPage {
 }
 
 message AppOutgoingEventCreateActionRequest {
-    bool is_published = 1;
-    string name = 2;
+    string name = 1;
+    google.protobuf.Timestamp published_at = 2;
 }
 
 message AppOutgoingEventDeleteActionRequest {
@@ -40,10 +40,11 @@ message AppOutgoingEventGetActionRequest {
 }
 
 message AppOutgoingEventGetActionReply {
-    int64 id = 1;
+    int64 id = 1;    
     google.protobuf.Timestamp created_at = 2;
-    bool is_published = 3;
-    string name = 4;
+    string name = 3;
+    google.protobuf.Timestamp published_at = 4;
+    string concurrency_token = 5;
 }
 
 message AppOutgoingEventGetListActionRequestFilter {
@@ -57,10 +58,11 @@ message AppOutgoingEventGetListActionRequest {
 }
 
 message AppOutgoingEventGetListActionReplyItem {
-    int64 id = 1;
+    int64 id = 1;    
     google.protobuf.Timestamp created_at = 2;
-    bool is_published = 3;
-    string name = 4;
+    string name = 3;
+    google.protobuf.Timestamp published_at = 4;
+    string concurrency_token = 5;
 }
 
 message AppOutgoingEventGetListActionReply {
@@ -68,8 +70,8 @@ message AppOutgoingEventGetListActionReply {
     repeated AppOutgoingEventGetListActionReplyItem items = 2;
 }
 
-message AppOutgoingEventUpdateActionRequest {
-    int64 id = 1;
-    bool is_published = 2;
-    string name = 3;
+message AppOutgoingEventUpdateActionRequest {    
+    string name = 1;
+    google.protobuf.Timestamp published_at = 2;
+    int64 id = 3;
 }

@@ -11,7 +11,7 @@ public class AppOutgoingEventEntity : EntityBaseWithStructPrimaryKey<long>, IAgg
   public string ConcurrencyToken { get; set; } = string.Empty;
 
   /// <summary>
-  /// Когда создано.
+  /// Дата создания.
   /// </summary>
   public DateTimeOffset CreatedAt { get; set; }
 
@@ -21,14 +21,14 @@ public class AppOutgoingEventEntity : EntityBaseWithStructPrimaryKey<long>, IAgg
   public long Id { get; set; }
 
   /// <summary>
-  /// Опубликовано ли?
-  /// </summary>
-  public bool IsPublished { get; set; }
-
-  /// <summary>
   /// Имя.
   /// </summary>
   public string Name { get; set; } = string.Empty;
+
+  /// <summary>
+  /// Дата публикации.
+  /// </summary>
+  public DateTimeOffset? PublishedAt { get; set; }
 
   /// <summary>
   /// Полезные нагрузки.

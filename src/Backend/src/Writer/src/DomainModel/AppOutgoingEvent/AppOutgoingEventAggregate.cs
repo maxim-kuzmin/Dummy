@@ -36,16 +36,16 @@ public class AppOutgoingEventAggregate(
         isOk = true;
       }
 
-      if (HasChangedProperty(nameof(entity.IsPublished)) && inserted.IsPublished != entity.IsPublished)
+      if (HasChangedProperty(nameof(entity.Name)) && inserted.Name != entity.Name)
       {
-        inserted.IsPublished = entity.IsPublished;
+        inserted.Name = entity.Name;
 
         isOk = true;
       }
 
-      if (HasChangedProperty(nameof(entity.Name)) && inserted.Name != entity.Name)
+      if (HasChangedProperty(nameof(entity.PublishedAt)) && inserted.PublishedAt != entity.PublishedAt)
       {
-        inserted.Name = entity.Name;
+        inserted.PublishedAt = entity.PublishedAt;
 
         isOk = true;
       }
@@ -82,19 +82,6 @@ public class AppOutgoingEventAggregate(
   }
 
   /// <summary>
-  /// Обновить дату создания.
-  /// </summary>
-  /// <param name="value">Значение.</param>
-  public void UpdateIsPublished(bool value)
-  {
-    var entity = GetEntityToUpdate();
-
-    entity.IsPublished = value;
-
-    MarkPropertyAsChanged(nameof(entity.IsPublished));
-  }
-
-  /// <summary>
   /// Обновить имя.
   /// </summary>
   /// <param name="value">Значение.</param>
@@ -125,6 +112,28 @@ public class AppOutgoingEventAggregate(
     entity.Name = value;
 
     MarkPropertyAsChanged(nameof(entity.Name));
+  }
+
+  /// <summary>
+  /// Обновить дату публикации.
+  /// </summary>
+  /// <param name="value">Значение.</param>
+  public void UpdatePublishedAt(DateTimeOffset? value)
+  {
+    if (value == default)
+    {
+      string errorMessage = _resources.GetPublishedAtIsInvalidErrorMessage();
+
+      var appError = AppOutgoingEventErrorEnum.PublishedAtIsInvalid.ToAppError(errorMessage);
+
+      UpdateErrors.Add(appError);
+    }
+
+    var entity = GetEntityToUpdate();
+
+    entity.PublishedAt = value;
+
+    MarkPropertyAsChanged(nameof(entity.PublishedAt));
   }
 
   /// <inheritdoc/>

@@ -4,9 +4,11 @@
 /// Команда действия по обновлению входящего события приложения.
 /// </summary>
 /// <param name="Id">Идентификатор.</param>
-/// <param name="IsPublished">Опубликовано ли?</param>
 /// <param name="Name">Имя.</param>
+/// <param name="LoadedAt">Дата загрузки.</param>
+/// <param name="ProcessedAt">Дата обработки.</param>
 public record AppIncomingEventUpdateActionCommand(
   long Id,
-  bool IsPublished,
-  string Name) : ICommand<Result<AppIncomingEventSingleDTO>>;
+  string Name,
+  DateTimeOffset? LoadedAt,
+  DateTimeOffset? ProcessedAt) : ICommand<Result<AppIncomingEventSingleDTO>>;

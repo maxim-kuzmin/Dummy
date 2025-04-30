@@ -11,6 +11,11 @@ public enum AppIncomingEventErrorEnum
   CreatedAtIsInvalid,
 
   /// <summary>
+  /// Дата загрузки недействительна.
+  /// </summary>
+  LoadedAtIsInvalid,
+
+  /// <summary>
   /// Имя пустое.
   /// </summary>
   NameIsEmpty,
@@ -18,5 +23,10 @@ public enum AppIncomingEventErrorEnum
   /// <summary>
   /// Имя слишком длинное.
   /// </summary>
-  NameIsTooLong
+  NameIsTooLong,
+
+  /// <summary>
+  /// Дата обработки недействительна.
+  /// </summary>
+  ProcessedAtIsInvalid,
 }

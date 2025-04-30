@@ -18,9 +18,9 @@ public class AppOutgoingEventCreateActionHandler(
     CancellationToken cancellationToken)
   {
     var aggregate = _factory.CreateAggregate();
-
-    aggregate.UpdateIsPublished(request.IsPublished);
+    
     aggregate.UpdateName(request.Name);
+    aggregate.UpdatePublishedAt(request.PublishedAt);
 
     var aggregateResult = aggregate.GetResultToCreate();
 

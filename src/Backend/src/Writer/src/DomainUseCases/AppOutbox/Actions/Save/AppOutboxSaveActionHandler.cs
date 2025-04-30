@@ -32,7 +32,7 @@ public class AppOutboxSaveActionHandler(
     AppOutboxSaveActionCommand request,
     CancellationToken cancellationToken)
   {
-    AppOutgoingEventCreateActionCommand command = new(false, request.AppEventName.ToString());
+    AppOutgoingEventCreateActionCommand command = new(request.AppEventName.ToString(), DateTimeOffset.Now);
 
     var result = await _mediator.Send(command, cancellationToken).ConfigureAwait(false);
 

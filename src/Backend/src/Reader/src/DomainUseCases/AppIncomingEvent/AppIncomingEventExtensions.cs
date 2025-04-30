@@ -41,6 +41,6 @@ public static class AppIncomingEventExtensions
   /// <returns>Объект передачи данных одиночного входящего события приложения.</returns>
   public static AppIncomingEventSingleDTO ToAppIncomingEventSingleDTO(this AppIncomingEventEntity entity)
   {
-    return new(entity.Id, entity.CreatedAt, entity.IsPublished, entity.Name);
+    return new(entity.Id, entity.CreatedAt, entity.Name, entity.LoadedAt, entity.ProcessedAt);
   }
 }

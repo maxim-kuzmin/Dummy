@@ -11,7 +11,7 @@ public class AppIncomingEventEntity : EntityBaseWithStructPrimaryKey<long>, IAgg
   public string ConcurrencyToken { get; set; } = string.Empty;
 
   /// <summary>
-  /// Когда создано.
+  /// Дата создания.
   /// </summary>
   public DateTimeOffset CreatedAt { get; set; }
 
@@ -21,14 +21,19 @@ public class AppIncomingEventEntity : EntityBaseWithStructPrimaryKey<long>, IAgg
   public long Id { get; set; }
 
   /// <summary>
-  /// Опубликовано ли?
+  /// Дата загрузки.
   /// </summary>
-  public bool IsPublished { get; set; }
+  public DateTimeOffset? LoadedAt { get; set; }
 
   /// <summary>
   /// Имя.
   /// </summary>
   public string Name { get; set; } = string.Empty;
+
+  /// <summary>
+  /// Дата обработки.
+  /// </summary>
+  public DateTimeOffset? ProcessedAt { get; set; }
 
   /// <summary>
   /// Полезные нагрузки.

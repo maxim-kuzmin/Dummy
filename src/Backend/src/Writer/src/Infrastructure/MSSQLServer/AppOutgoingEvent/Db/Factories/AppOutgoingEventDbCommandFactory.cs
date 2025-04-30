@@ -20,8 +20,8 @@ public class AppOutgoingEventDbCommandFactory(
 select
   "{{sAppOutgoingEvent.ColumnForId}}" "Id",
   "{{sAppOutgoingEvent.ColumnForCreatedAt}}" "CreatedAt",
-  "{{sAppOutgoingEvent.ColumnForIsPublished}}" "IsPublished",
-  "{{sAppOutgoingEvent.ColumnForName}}" "Name"
+  "{{sAppOutgoingEvent.ColumnForName}}" "Name",
+  "{{sAppOutgoingEvent.ColumnForPublishedAt}}" "PublishedAt"
 from
   "{{sAppOutgoingEvent.Schema}}"."{{sAppOutgoingEvent.Table}}"
 where
@@ -72,9 +72,9 @@ where
     result.TextBuilder.AppendLine($$"""
 select
   ae."{{sAppOutgoingEvent.ColumnForId}}" "Id",
-  ae."{{sAppOutgoingEvent.ColumnForCreatedAt}}" "CreatedAt",
-  ae."{{sAppOutgoingEvent.ColumnForIsPublished}}" "IsPublished",
-  ae."{{sAppOutgoingEvent.ColumnForName}}" "Name"
+  ae."{{sAppOutgoingEvent.ColumnForCreatedAt}}" "CreatedAt",  
+  ae."{{sAppOutgoingEvent.ColumnForName}}" "Name",
+  ae."{{sAppOutgoingEvent.ColumnForPublishedAt}}" "PublishedAt"
 from
   "{{sAppOutgoingEvent.Schema}}"."{{sAppOutgoingEvent.Table}}" ae
 """);

@@ -3,8 +3,8 @@
 /// <summary>
 /// Команда действия по созданию исходящего события приложения.
 /// </summary>
-/// <param name="IsPublished">Опубликовано ли?</param>
 /// <param name="Name">Имя.</param>
-public record AppOutgoingEventCreateActionCommand(
-  bool IsPublished,
-  string Name) : ICommand<Result<AppOutgoingEventSingleDTO>>;
+/// <param name="PublishedAt">Дата публикации.</param>
+public record AppOutgoingEventCreateActionCommand(  
+  string Name,
+  DateTimeOffset? PublishedAt) : ICommand<Result<AppOutgoingEventSingleDTO>>;

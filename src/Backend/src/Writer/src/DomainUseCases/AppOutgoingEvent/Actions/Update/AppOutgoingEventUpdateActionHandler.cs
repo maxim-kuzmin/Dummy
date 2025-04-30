@@ -26,8 +26,8 @@ public class AppOutgoingEventUpdateActionHandler(
 
     var aggregate = _factory.CreateAggregate(entity);
 
-    aggregate.UpdateIsPublished(request.IsPublished);
     aggregate.UpdateName(request.Name);
+    aggregate.UpdatePublishedAt(request.PublishedAt);
 
     var aggregateResult = aggregate.GetResultToUpdate();
 

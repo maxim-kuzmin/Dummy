@@ -12,6 +12,12 @@ public interface IAppIncomingEventResources
   string GetCreatedAtIsInvalidErrorMessage();
 
   /// <summary>
+  /// Получить сообщение об ошибке недействительной даты загрузки.
+  /// </summary>
+  /// <returns>Сообщение об ошибке.</returns>
+  string GetLoadedAtIsInvalidErrorMessage();
+
+  /// <summary>
   /// Получить сообщение об ошибке пустого имени.
   /// </summary>
   /// <returns>Сообщение об ошибке.</returns>
@@ -23,4 +29,10 @@ public interface IAppIncomingEventResources
   /// <param name="maxLength">Максимальная длина.</param>
   /// <returns>Сообщение об ошибке.</returns>
   string GetNameIsTooLongErrorMessage(int maxLength);
+
+  /// <summary>
+  /// Получить сообщение об ошибке недействительной даты обработки.
+  /// </summary>
+  /// <returns>Сообщение об ошибке.</returns>
+  string GetProcessedAtIsInvalidErrorMessage();
 }

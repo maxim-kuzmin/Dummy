@@ -1,5 +1,6 @@
 ﻿{
   "Error:CreatedAtIsInvalid": "Дата создания недействительна",
   "Error:NameIsEmpty": "Имя содержит пустое значение",
-  "Error:NameIsTooLong:Format": "Длина имени превышает макимальное значение в {0} символов"
+  "Error:NameIsTooLong:Format": "Длина имени превышает макимальное значение в {0} символов",
+  "Error:PublishedAtIsInvalid": "Дата публикации недействительна"
 }

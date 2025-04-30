@@ -23,4 +23,10 @@ public interface IAppOutgoingEventResources
   /// <param name="maxLength">Максимальная длина.</param>
   /// <returns>Сообщение об ошибке.</returns>
   string GetNameIsTooLongErrorMessage(int maxLength);
+
+  /// <summary>
+  /// Получить сообщение об ошибке недействительной даты публикации.
+  /// </summary>
+  /// <returns>Сообщение об ошибке.</returns>
+  string GetPublishedAtIsInvalidErrorMessage();
 }

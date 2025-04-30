@@ -24,8 +24,8 @@ namespace Makc.Dummy.Writer.Infrastructure.EntityFrameworkForPostgreSQL.App.Db.M
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     сoncurrency_token = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
                     created_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    is_published = table.Column<bool>(type: "boolean", nullable: false),
-                    name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false)
+                    name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    published_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {

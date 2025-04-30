@@ -33,10 +33,6 @@ public class AppOutgoingEventEntityTypeConfiguration : IEntityTypeConfiguration<
       .ValueGeneratedOnAdd()
       .HasColumnName(entityDbSettings.ColumnForId);
 
-    builder.Property(x => x.IsPublished)
-      .IsRequired()
-      .HasColumnName(entityDbSettings.ColumnForIsPublished);
-
     builder.Property(x => x.Name)
       .IsRequired()
       .HasColumnName(entityDbSettings.ColumnForName);
@@ -45,5 +41,8 @@ public class AppOutgoingEventEntityTypeConfiguration : IEntityTypeConfiguration<
     {
       builder.Property(x => x.Name).HasMaxLength(entityDbSettings.MaxLengthForName);
     }
+
+    builder.Property(x => x.PublishedAt)
+      .HasColumnName(entityDbSettings.ColumnForPublishedAt);
   }
 }

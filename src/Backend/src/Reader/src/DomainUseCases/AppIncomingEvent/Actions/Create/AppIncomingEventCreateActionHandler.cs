@@ -19,8 +19,9 @@ public class AppIncomingEventCreateActionHandler(
   {
     var aggregate = _factory.CreateAggregate();
 
-    aggregate.UpdateIsPublished(request.IsPublished);
+    aggregate.UpdateLoadedAt(request.LoadedAt);
     aggregate.UpdateName(request.Name);
+    aggregate.UpdateProcessedAt(request.ProcessedAt);
 
     var aggregateResult = aggregate.GetResultToCreate();
 

@@ -42,15 +42,15 @@ namespace Makc.Dummy.Writer.Infrastructure.EntityFrameworkForMSSQLServer.App.Db.
                         .HasColumnType("datetimeoffset")
                         .HasColumnName("CreatedAt");
 
-                    b.Property<bool>("IsPublished")
-                        .HasColumnType("bit")
-                        .HasColumnName("IsPublished");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)")
                         .HasColumnName("Name");
+
+                    b.Property<DateTimeOffset?>("PublishedAt")
+                        .HasColumnType("datetimeoffset")
+                        .HasColumnName("PublishedAt");
 
                     b.HasKey("Id")
                         .HasName("PK_AppOutgoingEvent");

@@ -3,16 +3,16 @@ using System;
 using Makc.Dummy.Writer.Infrastructure.EntityFramework.App.Db;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Makc.Dummy.Writer.Infrastructure.EntityFrameworkForMSSQLServer.App.Db.Migrations
+namespace Makc.Dummy.Writer.Infrastructure.EntityFrameworkForPostgreSQL.App.Db.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250428004714_InitialCreate")]
+    [Migration("20250430230530_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -21,44 +21,44 @@ namespace Makc.Dummy.Writer.Infrastructure.EntityFrameworkForMSSQLServer.App.Db.
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "9.0.2")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+                .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("Makc.Dummy.Writer.DomainModel.AppOutgoingEvent.AppOutgoingEventEntity", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
-                        .HasColumnName("Id");
+                        .HasColumnName("id");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<string>("ConcurrencyToken")
                         .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
-                        .HasColumnName("ConcurrencyToken");
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("сoncurrency_token");
 
                     b.Property<DateTimeOffset>("CreatedAt")
-                        .HasColumnType("datetimeoffset")
-                        .HasColumnName("CreatedAt");
-
-                    b.Property<bool>("IsPublished")
-                        .HasColumnType("bit")
-                        .HasColumnName("IsPublished");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
-                        .HasColumnName("Name");
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("name");
+
+                    b.Property<DateTimeOffset?>("PublishedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("published_at");
 
                     b.HasKey("Id")
-                        .HasName("PK_AppOutgoingEvent");
+                        .HasName("pk_app_outgoing_event");
 
-                    b.ToTable("AppOutgoingEvent", "writer");
+                    b.ToTable("app_outgoing_event", "writer");
                 });
 
             modelBuilder.Entity("Makc.Dummy.Writer.DomainModel.AppOutgoingEventPayload.AppOutgoingEventPayloadEntity", b =>
@@ -67,54 +67,54 @@ namespace Makc.Dummy.Writer.Infrastructure.EntityFrameworkForMSSQLServer.App.Db.
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<long>("AppOutgoingEventId")
                         .HasColumnType("bigint")
-                        .HasColumnName("AppOutgoingEventId");
+                        .HasColumnName("app_outgoing_event_id");
 
                     b.Property<string>("ConcurrencyToken")
                         .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
-                        .HasColumnName("ConcurrencyToken");
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("сoncurrency_token");
 
                     b.Property<string>("Data")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Data");
+                        .HasColumnType("text")
+                        .HasColumnName("data");
 
                     b.Property<string>("EntityConcurrencyTokenToDelete")
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
-                        .HasColumnName("EntityConcurrencyTokenToDelete");
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("entity_concurrency_token_to_delete");
 
                     b.Property<string>("EntityConcurrencyTokenToInsert")
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
-                        .HasColumnName("EntityConcurrencyTokenToInsert");
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("entity_concurrency_token_to_insert");
 
                     b.Property<string>("EntityId")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
-                        .HasColumnName("EntityId");
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("entity_id");
 
                     b.Property<string>("EntityName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("EntityName");
+                        .HasColumnType("text")
+                        .HasColumnName("entity_name");
 
                     b.Property<int>("Position")
-                        .HasColumnType("int")
-                        .HasColumnName("Position");
+                        .HasColumnType("integer")
+                        .HasColumnName("position");
 
                     b.HasKey("Id")
-                        .HasName("PK_AppOutgoingEventPayload");
+                        .HasName("pk_app_outgoing_event_payload");
 
                     b.HasIndex("AppOutgoingEventId");
 
-                    b.ToTable("AppOutgoingEventPayload", "writer");
+                    b.ToTable("app_outgoing_event_payload", "writer");
                 });
 
             modelBuilder.Entity("Makc.Dummy.Writer.DomainModel.DummyItem.DummyItemEntity", b =>
@@ -122,31 +122,31 @@ namespace Makc.Dummy.Writer.Infrastructure.EntityFrameworkForMSSQLServer.App.Db.
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
-                        .HasColumnName("Id");
+                        .HasColumnName("id");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<string>("ConcurrencyToken")
                         .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
-                        .HasColumnName("ConcurrencyToken");
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("сoncurrency_token");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
-                        .HasColumnName("Name");
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("name");
 
                     b.HasKey("Id")
-                        .HasName("PK_DummyItem");
+                        .HasName("pk_dummy_item");
 
                     b.HasIndex("Name")
                         .IsUnique()
-                        .HasDatabaseName("UX_DummyItem_Name");
+                        .HasDatabaseName("ux_dummy_item_name");
 
-                    b.ToTable("DummyItem", "writer");
+                    b.ToTable("dummy_item", "writer");
                 });
 
             modelBuilder.Entity("Makc.Dummy.Writer.DomainModel.AppOutgoingEventPayload.AppOutgoingEventPayloadEntity", b =>
@@ -156,7 +156,7 @@ namespace Makc.Dummy.Writer.Infrastructure.EntityFrameworkForMSSQLServer.App.Db.
                         .HasForeignKey("AppOutgoingEventId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("FK_AppOutgoingEventPayload_AppOutgoingEvent");
+                        .HasConstraintName("fk_app_outgoing_event_payload_app_outgoing_event");
 
                     b.Navigation("AppOutgoingEvent");
                 });
