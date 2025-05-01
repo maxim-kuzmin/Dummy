@@ -3,7 +3,7 @@
 /// <summary>
 /// Настройки базы данных сущности полезной нагрузки входящего события приложения.
 /// </summary>
-public abstract record AppIncomingEventPayloadEntityDbNoSQLSettings
+public abstract record AppIncomingEventPayloadEntityDbNoSQLSettings : AppIncomingEventPayloadEntitySettings
 {
   /// <summary>
   /// Таблица.
