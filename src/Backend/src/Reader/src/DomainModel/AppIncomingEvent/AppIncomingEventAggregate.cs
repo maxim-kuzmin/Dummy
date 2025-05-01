@@ -9,7 +9,7 @@
 public class AppIncomingEventAggregate(
   AppIncomingEventEntity? entityToChange,
   IAppIncomingEventResources _resources,
-  AppIncomingEventEntitySettings _settings) : AggregateBase<AppIncomingEventEntity, long>(entityToChange)
+  AppIncomingEventEntitySettings _settings) : AggregateBase<AppIncomingEventEntity, string>(entityToChange)
 {
   /// <inheritdoc/>
   public sealed override AggregateResult<EntityChange<AppIncomingEventEntity>> GetResultToUpdate()
@@ -23,34 +23,41 @@ public class AppIncomingEventAggregate(
 
     if (HasChangedProperties())
     {
-      var isOk = false;
-
       var inserted = result.Data!.Inserted!;
 
       var entity = GetEntityToUpdate();
 
-      if (HasChangedProperty(nameof(entity.LoadedAt)) && inserted.LoadedAt != entity.LoadedAt)
-      {
-        inserted.LoadedAt = entity.LoadedAt;
+      bool isCreatedAtChanged = HasChangedProperty(nameof(entity.CreatedAt)) && inserted.CreatedAt != entity.CreatedAt;
 
-        isOk = true;
-      }
-
-      if (HasChangedProperty(nameof(entity.Name)) && inserted.Name != entity.Name)
-      {
-        inserted.Name = entity.Name;
-
-        isOk = true;
-      }
-
-      if (HasChangedProperty(nameof(entity.CreatedAt)) && inserted.CreatedAt != entity.CreatedAt)
+      if (isCreatedAtChanged)
       {
         inserted.CreatedAt = entity.CreatedAt;
-
-        isOk = true;
       }
 
-      if (isOk)
+      bool isLoadedAtChanged = HasChangedProperty(nameof(entity.LoadedAt)) && inserted.LoadedAt != entity.LoadedAt;
+
+      if (isLoadedAtChanged)
+      {
+        inserted.LoadedAt = entity.LoadedAt;
+      }
+
+      bool isEventIdChanged = HasChangedProperty(nameof(entity.EventId)) && inserted.EventId != entity.EventId;
+
+      if (isEventIdChanged)
+      {
+        inserted.EventId = entity.EventId;
+      }
+
+      bool isEventNameChanged = HasChangedProperty(nameof(entity.EventName)) && inserted.EventName != entity.EventName;
+
+      if (isEventNameChanged)
+      {
+        inserted.EventName = entity.EventName;
+      }
+
+      bool isChanged = isCreatedAtChanged || isLoadedAtChanged || isEventIdChanged || isEventNameChanged;
+
+      if (isChanged)
       {
         return result;
       }
@@ -104,36 +111,69 @@ public class AppIncomingEventAggregate(
   }
 
   /// <summary>
-  /// Обновить имя.
+  /// Обновить идентификатор события.
   /// </summary>
   /// <param name="value">Значение.</param>
-  public void UpdateName(string value)
+  public void UpdateEventId(string value)
   {
     if (string.IsNullOrWhiteSpace(value))
     {
-      string errorMessage = _resources.GetNameIsEmptyErrorMessage();
+      string errorMessage = _resources.GetEventIdIsEmptyErrorMessage();
 
-      var appError = AppIncomingEventErrorEnum.NameIsEmpty.ToAppError(errorMessage);
+      var appError = AppIncomingEventErrorEnum.EventIdIsEmpty.ToAppError(errorMessage);
 
       UpdateErrors.Add(appError);
     }
 
-    int maxLength = _settings.MaxLengthForName;
+    int maxLength = _settings.MaxLengthForEventId;
 
     if (maxLength > 0 && value.Length > maxLength)
     {
-      string errorMessage = _resources.GetNameIsTooLongErrorMessage(maxLength);
+      string errorMessage = _resources.GetEventIdIsTooLongErrorMessage(maxLength);
 
-      var appError = AppIncomingEventErrorEnum.NameIsTooLong.ToAppError(errorMessage);
+      var appError = AppIncomingEventErrorEnum.EventIdIsTooLong.ToAppError(errorMessage);
 
       UpdateErrors.Add(appError);
     }
 
     var entity = GetEntityToUpdate();
 
-    entity.Name = value;
+    entity.EventId = value;
 
-    MarkPropertyAsChanged(nameof(entity.Name));
+    MarkPropertyAsChanged(nameof(entity.EventId));
+  }
+
+  /// <summary>
+  /// Обновить имя события.
+  /// </summary>
+  /// <param name="value">Значение.</param>
+  public void UpdateEventName(string value)
+  {
+    if (string.IsNullOrWhiteSpace(value))
+    {
+      string errorMessage = _resources.GetEventNameIsEmptyErrorMessage();
+
+      var appError = AppIncomingEventErrorEnum.EventNameIsEmpty.ToAppError(errorMessage);
+
+      UpdateErrors.Add(appError);
+    }
+
+    int maxLength = _settings.MaxLengthForEventName;
+
+    if (maxLength > 0 && value.Length > maxLength)
+    {
+      string errorMessage = _resources.GetEventNameIsTooLongErrorMessage(maxLength);
+
+      var appError = AppIncomingEventErrorEnum.EventNameIsTooLong.ToAppError(errorMessage);
+
+      UpdateErrors.Add(appError);
+    }
+
+    var entity = GetEntityToUpdate();
+
+    entity.EventName = value;
+
+    MarkPropertyAsChanged(nameof(entity.EventName));
   }
 
   /// <summary>

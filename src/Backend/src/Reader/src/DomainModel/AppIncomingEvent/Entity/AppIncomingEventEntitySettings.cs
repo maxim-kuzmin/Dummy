@@ -11,7 +11,12 @@ public record AppIncomingEventEntitySettings
   public int MaxLengthForConcurrencyToken { get; protected set; }
 
   /// <summary>
-  /// Максимальная длина для имени.
+  /// Максимальная длина для идентификатора события.
   /// </summary>
-  public int MaxLengthForName { get; protected set; }
+  public int MaxLengthForEventId { get; protected set; }
+
+  /// <summary>
+  /// Максимальная длина для имени события.
+  /// </summary>
+  public int MaxLengthForEventName { get; protected set; }
 }

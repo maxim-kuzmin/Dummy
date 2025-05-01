@@ -3,14 +3,16 @@
 /// <summary>
 /// Объект передачи данных одиночного входящего события приложения.
 /// </summary>
-/// <param name="Id">Идентификатор.</param>
+/// <param name="ObjectId">Идентификатор объекта.</param>
 /// <param name="CreatedAt">Дата создания.</param>
-/// <param name="Name">Имя.</param>
+/// <param name="EventId">Идентификатор события.</param>
+/// <param name="EventName">Имя события.</param>
 /// <param name="LoadedAt">Дата загрузки.</param>
 /// <param name="ProcessedAt">Дата обработки.</param>
 public record AppIncomingEventSingleDTO(
-  long Id,
+  string? ObjectId,
   DateTimeOffset CreatedAt,
-  string Name,
+  string EventId,
+  string EventName,
   DateTimeOffset? LoadedAt,
   DateTimeOffset? ProcessedAt);

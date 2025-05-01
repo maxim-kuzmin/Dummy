@@ -23,27 +23,29 @@ public class AppOutgoingEventPayloadAggregate(
 
     if (HasChangedProperties())
     {
-      bool isOk = false;
-
       var inserted = result.Data!.Inserted!;
 
       var entity = GetEntityToUpdate();
 
-      if (HasChangedProperty(nameof(entity.AppOutgoingEventId)) && inserted.AppOutgoingEventId != entity.AppOutgoingEventId)
+      bool isAppOutgoingEventIdChanged = HasChangedProperty(nameof(entity.AppOutgoingEventId))
+        &&
+        inserted.AppOutgoingEventId != entity.AppOutgoingEventId;
+
+      if (isAppOutgoingEventIdChanged)
       {
         inserted.AppOutgoingEventId = entity.AppOutgoingEventId;
-
-        isOk = true;
       }
 
-      if (HasChangedProperty(nameof(entity.Data)) && inserted.Data != entity.Data)
+      bool isDataChanged = HasChangedProperty(nameof(entity.Data)) && inserted.Data != entity.Data;
+
+      if (isDataChanged)
       {
         inserted.Data = entity.Data;
-
-        isOk = true;
       }
 
-      if (isOk)
+      bool isChanged = isAppOutgoingEventIdChanged || isDataChanged;
+
+      if (isChanged)
       {
         return result;
       }

@@ -23,20 +23,20 @@ public class DummyItemAggregate(
 
     if (HasChangedProperties())
     {
-      bool isOk = false;
-
       var inserted = result.Data!.Inserted!;
 
       var entity = GetEntityToUpdate();
 
-      if (HasChangedProperty(nameof(entity.Name)) && inserted.Name != entity.Name)
+      bool isNameChanged = HasChangedProperty(nameof(entity.Name)) && inserted.Name != entity.Name;
+
+      if (isNameChanged)
       {
         inserted.Name = entity.Name;
-
-        isOk = true;
       }
 
-      if (isOk)
+      bool isChanged = isNameChanged;
+
+      if (isChanged)
       {
         return result;
       }

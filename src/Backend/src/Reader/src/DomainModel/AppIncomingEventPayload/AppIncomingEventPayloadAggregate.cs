@@ -9,7 +9,7 @@
 public class AppIncomingEventPayloadAggregate(
   AppIncomingEventPayloadEntity? entityToChange,
   IAppIncomingEventPayloadResources _resources,
-  AppIncomingEventPayloadEntitySettings _settings) : AggregateBase<AppIncomingEventPayloadEntity, long>(entityToChange)
+  AppIncomingEventPayloadEntitySettings _settings) : AggregateBase<AppIncomingEventPayloadEntity, string>(entityToChange)
 {
   /// <inheritdoc/>
   public sealed override AggregateResult<EntityChange<AppIncomingEventPayloadEntity>> GetResultToUpdate()
@@ -23,27 +23,29 @@ public class AppIncomingEventPayloadAggregate(
 
     if (HasChangedProperties())
     {
-      bool isOk = false;
-
       var inserted = result.Data!.Inserted!;
 
       var entity = GetEntityToUpdate();
 
-      if (HasChangedProperty(nameof(entity.AppIncomingEventId)) && inserted.AppIncomingEventId != entity.AppIncomingEventId)
-      {
-        inserted.AppIncomingEventId = entity.AppIncomingEventId;
+      bool isAppIncomingEventObjectIdChanged = HasChangedProperty(nameof(entity.AppIncomingEventObjectId))
+        &&
+        inserted.AppIncomingEventObjectId != entity.AppIncomingEventObjectId;
 
-        isOk = true;
+      if (isAppIncomingEventObjectIdChanged)
+      {
+        inserted.AppIncomingEventObjectId = entity.AppIncomingEventObjectId;
       }
 
-      if (HasChangedProperty(nameof(entity.Data)) && inserted.Data != entity.Data)
+      bool isDataChanged = HasChangedProperty(nameof(entity.Data)) && inserted.Data != entity.Data;
+
+      if (isDataChanged)
       {
         inserted.Data = entity.Data;
-
-        isOk = true;
       }
 
-      if (isOk)
+      bool isChanged = isAppIncomingEventObjectIdChanged || isDataChanged;
+
+      if (isChanged)
       {
         return result;
       }
@@ -56,22 +58,33 @@ public class AppIncomingEventPayloadAggregate(
   /// Обновить идентификатор входящего события приложения.
   /// </summary>
   /// <param name="value">Значение.</param>
-  public void UpdateAppIncomingEventId(long value)
+  public void UpdateAppIncomingEventId(string value)
   {
-    if (value == default)
+    if (string.IsNullOrWhiteSpace(value))
     {
-      string errorMessage = _resources.GetAppIncomingEventIdIsInvalidErrorMessage();
+      string errorMessage = _resources.GetAppIncomingEventIdIsEmptyErrorMessage();
 
-      var appError = AppIncomingEventPayloadErrorEnum.AppIncomingEventIdIsInvalid.ToAppError(errorMessage);
+      var appError = AppIncomingEventPayloadErrorEnum.AppIncomingEventIdIsEmpty.ToAppError(errorMessage);
+
+      UpdateErrors.Add(appError);
+    }
+
+    int maxLength = _settings.MaxLengthForAppIncomingEventId;
+
+    if (maxLength > 0 && value.Length > maxLength)
+    {
+      string errorMessage = _resources.GetAppIncomingEventIdIsTooLongErrorMessage(maxLength);
+
+      var appError = AppIncomingEventPayloadErrorEnum.AppIncomingEventIdIsTooLong.ToAppError(errorMessage);
 
       UpdateErrors.Add(appError);
     }
 
     var entity = GetEntityToUpdate();
 
-    entity.AppIncomingEventId = value;
+    entity.AppIncomingEventObjectId = value;
 
-    MarkPropertyAsChanged(nameof(entity.AppIncomingEventId));
+    MarkPropertyAsChanged(nameof(entity.AppIncomingEventObjectId));
   }
 
   /// <summary>
@@ -210,6 +223,39 @@ public class AppIncomingEventPayloadAggregate(
     entity.EntityName = value;
 
     MarkPropertyAsChanged(nameof(entity.EntityName));
+  }
+
+  /// <summary>
+  /// Обновить идентификатор полезной нагрузки события.
+  /// </summary>
+  /// <param name="value">Значение.</param>
+  public void UpdateEventPayloadId(string value)
+  {
+    if (string.IsNullOrWhiteSpace(value))
+    {
+      string errorMessage = _resources.GetEventPayloadIdIsEmptyErrorMessage();
+
+      var appError = AppIncomingEventPayloadErrorEnum.EventPayloadIdIsEmpty.ToAppError(errorMessage);
+
+      UpdateErrors.Add(appError);
+    }
+
+    int maxLength = _settings.MaxLengthForEventPayloadId;
+
+    if (maxLength > 0 && value.Length > maxLength)
+    {
+      string errorMessage = _resources.GetEventPayloadIdIsTooLongErrorMessage(maxLength);
+
+      var appError = AppIncomingEventPayloadErrorEnum.EventPayloadIdTooLong.ToAppError(errorMessage);
+
+      UpdateErrors.Add(appError);
+    }
+
+    var entity = GetEntityToUpdate();
+
+    entity.EventPayloadId = value;
+
+    MarkPropertyAsChanged(nameof(entity.EventPayloadId));
   }
 
   /// <summary>

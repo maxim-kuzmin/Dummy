@@ -23,34 +23,38 @@ public class AppOutgoingEventAggregate(
 
     if (HasChangedProperties())
     {
-      var isOk = false;
-
       var inserted = result.Data!.Inserted!;
 
       var entity = GetEntityToUpdate();
 
-      if (HasChangedProperty(nameof(entity.CreatedAt)) && inserted.CreatedAt != entity.CreatedAt)
+      bool isCreatedAtChanged = HasChangedProperty(nameof(entity.CreatedAt))
+        &&
+        inserted.CreatedAt != entity.CreatedAt;
+
+      if (isCreatedAtChanged)
       {
         inserted.CreatedAt = entity.CreatedAt;
-
-        isOk = true;
       }
 
-      if (HasChangedProperty(nameof(entity.Name)) && inserted.Name != entity.Name)
+      bool isNameChanged = HasChangedProperty(nameof(entity.Name)) && inserted.Name != entity.Name;
+
+      if (isNameChanged)
       {
         inserted.Name = entity.Name;
-
-        isOk = true;
       }
 
-      if (HasChangedProperty(nameof(entity.PublishedAt)) && inserted.PublishedAt != entity.PublishedAt)
+      bool isPublishedAtChanged = HasChangedProperty(nameof(entity.PublishedAt))
+        &&
+        inserted.PublishedAt != entity.PublishedAt;
+
+      if (isPublishedAtChanged)
       {
         inserted.PublishedAt = entity.PublishedAt;
-
-        isOk = true;
       }
 
-      if (isOk)
+      bool isChanged = isCreatedAtChanged || isNameChanged || isPublishedAtChanged;
+
+      if (isChanged)
       {
         return result;
       }

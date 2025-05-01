@@ -17,7 +17,7 @@ public class AppIncomingEventPayloadUpdateActionHandler(
     AppIncomingEventPayloadUpdateActionCommand request,
     CancellationToken cancellationToken)
   {
-    var entity = await _repository.GetByIdAsync(request.Id, cancellationToken).ConfigureAwait(false);
+    var entity = await _repository.GetByIdAsync(request.ObjectId, cancellationToken).ConfigureAwait(false);
 
     if (entity == null)
     {

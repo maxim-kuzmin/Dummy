@@ -3,7 +3,7 @@
 /// <summary>
 /// Настройки базы данных сущности входящего события приложения.
 /// </summary>
-public abstract record AppIncomingEventEntityDbNoSQLSettings
+public abstract record AppIncomingEventEntityDbNoSQLSettings : AppIncomingEventEntitySettings
 {
   /// <summary>
   /// Таблица.

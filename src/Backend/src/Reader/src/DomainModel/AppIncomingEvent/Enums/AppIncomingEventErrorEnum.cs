@@ -11,19 +11,29 @@ public enum AppIncomingEventErrorEnum
   CreatedAtIsInvalid,
 
   /// <summary>
+  /// Идентификатор события пустой.
+  /// </summary>
+  EventIdIsEmpty,
+
+  /// <summary>
+  /// Идентификатор события слишком длинный.
+  /// </summary>
+  EventIdIsTooLong,
+
+  /// <summary>
+  /// Имя события пустое.
+  /// </summary>
+  EventNameIsEmpty,
+
+  /// <summary>
+  /// Имя события слишком длинное.
+  /// </summary>
+  EventNameIsTooLong,
+
+  /// <summary>
   /// Дата загрузки недействительна.
   /// </summary>
   LoadedAtIsInvalid,
-
-  /// <summary>
-  /// Имя пустое.
-  /// </summary>
-  NameIsEmpty,
-
-  /// <summary>
-  /// Имя слишком длинное.
-  /// </summary>
-  NameIsTooLong,
 
   /// <summary>
   /// Дата обработки недействительна.

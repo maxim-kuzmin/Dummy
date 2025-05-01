@@ -6,6 +6,11 @@
 public record AppIncomingEventPayloadEntitySettings
 {
   /// <summary>
+  /// Максимальная длина для идентификатора входящего события приложения.
+  /// </summary>
+  public int MaxLengthForAppIncomingEventId { get; protected set; }
+
+  /// <summary>
   /// Максимальная длина для токена параллелизма.
   /// </summary>
   public int MaxLengthForConcurrencyToken { get; protected set; }
@@ -24,4 +29,9 @@ public record AppIncomingEventPayloadEntitySettings
   /// Максимальная длина для имени сущности.
   /// </summary>
   public int MaxLengthForEntityName { get; protected set; }
+
+  /// <summary>
+  /// Максимальная длина для идентификатора полезной нагрузки события.
+  /// </summary>
+  public int MaxLengthForEventPayloadId { get; protected set; }
 }

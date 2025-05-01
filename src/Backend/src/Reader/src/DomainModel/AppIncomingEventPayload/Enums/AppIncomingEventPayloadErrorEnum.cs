@@ -6,9 +6,14 @@
 public enum AppIncomingEventPayloadErrorEnum
 {
   /// <summary>
-  /// Идентификатор события недействителен.
+  /// Идентификатор входящего события приложения пуст.
   /// </summary>
-  AppIncomingEventIdIsInvalid,
+  AppIncomingEventIdIsEmpty,
+
+  /// <summary>
+  /// Идентификатор входящего события приложения слишком длинный.
+  /// </summary>
+  AppIncomingEventIdIsTooLong,
 
   /// <summary>
   /// Данные слишком длинные.
@@ -27,6 +32,7 @@ public enum AppIncomingEventPayloadErrorEnum
 
   /// <summary>
   /// Идентификатор сущности пуст.
+  /// </summary>
   EntityIdIsEmpty,
 
   /// <summary>
@@ -43,6 +49,15 @@ public enum AppIncomingEventPayloadErrorEnum
   /// Имя сущности слишком длинное.
   /// </summary>
   EntityNameTooLong,
+
+  /// <summary>
+  /// Идентификатор полезной нагрузки события пуст.
+  EventPayloadIdIsEmpty,
+
+  /// <summary>
+  /// Идентификатор полезной нагрузки события слишком длинный.
+  /// </summary>
+  EventPayloadIdTooLong,
 
   /// <summary>
   /// Позиция не является положительным числом.

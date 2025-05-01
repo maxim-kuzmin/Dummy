@@ -3,10 +3,10 @@
 /// <summary>
 /// Команда действия по обновлению полезной нагрузки входящего события приложения.
 /// </summary>
-/// <param name="Id">Идентификатор.</param>
+/// <param name="ObjectId">Идентификатор объекта.</param>
 /// <param name="AppIncomingEventId">Идентификатор входящего события приложения.</param>
 /// <param name="Payload">Полезная нагрузка.</param>
 public record AppIncomingEventPayloadUpdateActionCommand(
-  long Id,
-  long AppIncomingEventId,
+  string ObjectId,
+  string AppIncomingEventId,
   AppEventPayload Payload) : ICommand<Result<AppIncomingEventPayloadSingleDTO>>;

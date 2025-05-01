@@ -6,5 +6,5 @@
 /// <param name="AppIncomingEventId">Идентификатор входящего события приложения.</param>
 /// <param name="Payload">Полезная нагрузка.</param>
 public record AppIncomingEventPayloadCreateActionCommand(
-  long AppIncomingEventId,
+  string AppIncomingEventId,
   AppEventPayload Payload) : ICommand<Result<AppIncomingEventPayloadSingleDTO>>;

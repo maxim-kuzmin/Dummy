@@ -6,10 +6,17 @@
 public interface IAppIncomingEventPayloadResources
 {
   /// <summary>
-  /// Получить сообщение об ошибке недействительного идентификатора входящего события приложения.
+  /// Получить сообщение об ошибке пустого идентификатора входящего события приложения.
   /// </summary>
   /// <returns>Сообщение об ошибке.</returns>
-  string GetAppIncomingEventIdIsInvalidErrorMessage();
+  string GetAppIncomingEventIdIsEmptyErrorMessage();
+
+  /// <summary>
+  /// Получить сообщение об ошибке слишком длинного идентификатора входящего события приложения.
+  /// </summary>
+  /// <param name="maxLength">Максимальная длина.</param>
+  /// <returns>Сообщение об ошибке.</returns>
+  string GetAppIncomingEventIdIsTooLongErrorMessage(int maxLength);
 
   /// <summary>
   /// Получить сообщение об ошибке слишком длинных данных.
@@ -57,6 +64,19 @@ public interface IAppIncomingEventPayloadResources
   /// <param name="maxLength">Максимальная длина.</param>
   /// <returns>Сообщение об ошибке.</returns>
   string GetEntityNameIsTooLongErrorMessage(int maxLength);
+
+  /// <summary>
+  /// Получить сообщение об ошибке пустого идентификатора полезной нагрузки события.
+  /// </summary>
+  /// <returns>Сообщение об ошибке.</returns>
+  string GetEventPayloadIdIsEmptyErrorMessage();
+
+  /// <summary>
+  /// Получить сообщение об ошибке слишком длинного идентификатора полезной нагрузки события.
+  /// </summary>
+  /// <param name="maxLength">Максимальная длина.</param>
+  /// <returns>Сообщение об ошибке.</returns>
+  string GetEventPayloadIdIsTooLongErrorMessage(int maxLength);
 
   /// <summary>
   /// Получить сообщение об ошибке не являющейся положительным числом позиции.

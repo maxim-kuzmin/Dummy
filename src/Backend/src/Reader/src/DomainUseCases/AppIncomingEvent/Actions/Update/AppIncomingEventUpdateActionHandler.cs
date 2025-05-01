@@ -27,7 +27,7 @@ public class AppIncomingEventUpdateActionHandler(
     var aggregate = _factory.CreateAggregate(entity);
 
     aggregate.UpdateLoadedAt(request.LoadedAt);
-    aggregate.UpdateName(request.Name);
+    aggregate.UpdateEventName(request.Name);
     aggregate.UpdateProcessedAt(request.ProcessedAt);
 
     var aggregateResult = aggregate.GetResultToUpdate();

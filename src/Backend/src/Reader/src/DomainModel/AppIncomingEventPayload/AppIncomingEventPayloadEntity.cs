@@ -3,17 +3,12 @@
 /// <summary>
 /// Сущность полезной нагрузки входящего события приложения.
 /// </summary>
-public class AppIncomingEventPayloadEntity : EntityBaseWithStructPrimaryKey<long>, IAggregateRoot
+public class AppIncomingEventPayloadEntity : EntityBaseWithStringPrimaryKey, IAggregateRoot
 {
   /// <summary>
-  /// Исходящее событие приложения.
+  /// Идентификатор объекта входящего события приложения.
   /// </summary>
-  public AppIncomingEventEntity? AppIncomingEvent { get; private set; }
-
-  /// <summary>
-  /// Идентификатор входящего события приложения.
-  /// </summary>
-  public long AppIncomingEventId { get; set; }
+  public string AppIncomingEventObjectId { get; set; } = string.Empty;
 
   /// <summary>
   /// Токен параллелизма.
@@ -24,11 +19,6 @@ public class AppIncomingEventPayloadEntity : EntityBaseWithStructPrimaryKey<long
   /// Данные.
   /// </summary>
   public string? Data { get; set; }
-
-  /// <summary>
-  /// Идентификатор.
-  /// </summary>
-  public long Id { get; set; }
 
   /// <summary>
   /// Токен параллелизма для удаления.
@@ -51,13 +41,23 @@ public class AppIncomingEventPayloadEntity : EntityBaseWithStructPrimaryKey<long
   public string EntityName { get; set; } = string.Empty;
 
   /// <summary>
+  /// Идентификатор полезной нагрузки события.
+  /// </summary>
+  public string EventPayloadId { get; set; } = string.Empty;
+
+  /// <summary>
+  /// Идентификатор объекта.
+  /// </summary>
+  public string? ObjectId { get; set; }
+
+  /// <summary>
   /// Позиция.
   /// </summary>
   public int Position { get; set; }
 
   /// <inheritdoc/>
-  public sealed override long GetPrimaryKey()
+  public sealed override string? GetPrimaryKey()
   {
-    return Id;
+    return ObjectId;
   }
 }

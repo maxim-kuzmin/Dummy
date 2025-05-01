@@ -3,7 +3,7 @@
 /// <summary>
 /// Сущность входящего события приложения.
 /// </summary>
-public class AppIncomingEventEntity : EntityBaseWithStructPrimaryKey<long>, IAggregateRoot
+public class AppIncomingEventEntity : EntityBaseWithStringPrimaryKey, IAggregateRoot
 {
   /// <summary>
   /// Токен параллелизма.
@@ -16,9 +16,14 @@ public class AppIncomingEventEntity : EntityBaseWithStructPrimaryKey<long>, IAgg
   public DateTimeOffset CreatedAt { get; set; }
 
   /// <summary>
-  /// Идентификатор.
+  /// Идентификатор события.
   /// </summary>
-  public long Id { get; set; }
+  public string EventId { get; set; } = string.Empty;
+
+  /// <summary>
+  /// Имя события.
+  /// </summary>
+  public string EventName { get; set; } = string.Empty;
 
   /// <summary>
   /// Дата загрузки.
@@ -26,23 +31,18 @@ public class AppIncomingEventEntity : EntityBaseWithStructPrimaryKey<long>, IAgg
   public DateTimeOffset? LoadedAt { get; set; }
 
   /// <summary>
-  /// Имя.
+  /// Идентификатор объекта.
   /// </summary>
-  public string Name { get; set; } = string.Empty;
+  public string? ObjectId { get; set; }
 
   /// <summary>
   /// Дата обработки.
   /// </summary>
   public DateTimeOffset? ProcessedAt { get; set; }
 
-  /// <summary>
-  /// Полезные нагрузки.
-  /// </summary>
-  public IEnumerable<AppIncomingEventPayloadEntity>? Payloads { get; }
-
   /// <inheritdoc/>
-  public sealed override long GetPrimaryKey()
+  public sealed override string? GetPrimaryKey()
   {
-    return Id;
+    return ObjectId;
   }
 }

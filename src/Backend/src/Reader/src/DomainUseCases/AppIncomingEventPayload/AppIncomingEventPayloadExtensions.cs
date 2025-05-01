@@ -45,13 +45,14 @@ public static class AppIncomingEventPayloadExtensions
     this AppIncomingEventPayloadEntity entity)
   {
     return new(
-      entity.Id,
-      entity.AppIncomingEventId,
+      entity.ObjectId,      
+      entity.AppIncomingEventObjectId,
       entity.Data,
       entity.EntityConcurrencyTokenToDelete,
       entity.EntityConcurrencyTokenToInsert,
       entity.EntityId,
       entity.EntityName,
+      entity.EventPayloadId,
       entity.Position);
   }
 }
