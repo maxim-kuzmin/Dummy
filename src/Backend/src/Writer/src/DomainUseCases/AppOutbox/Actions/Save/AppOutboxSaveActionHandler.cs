@@ -41,7 +41,7 @@ public class AppOutboxSaveActionHandler(
 
   private async Task<AppOutgoingEventPayloadSingleDTO> CreateAppOutgoingEventPayload(
     long appOutgoingEventId,
-    AppEventPayload payload,
+    AppEventPayloadWithDataAsString payload,
     CancellationToken cancellationToken)
   {
     AppOutgoingEventPayloadCreateActionCommand command = new(appOutgoingEventId, payload);

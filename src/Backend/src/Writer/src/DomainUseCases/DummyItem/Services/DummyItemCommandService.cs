@@ -9,41 +9,36 @@ public class DummyItemCommandService(IMediator _mediator) : IDummyItemCommandSer
   /// <inheritdoc/>
   public Task<Result> OnEntityChanged(EntityChange<DummyItemEntity> entityChange, CancellationToken cancellationToken)
   {
-    int position = 1;
-
     var deleted = entityChange.Deleted;
     var inserted = entityChange.Inserted;
 
-    long entityId = 0;
-    AppEventPayloadData? data = null;    
+    AppEventPayloadWithDataAsDictionary payload = new()
+    {
+      EntityName = AppEntityNameEnum.DummyItem.ToString(),
+      Position = 1
+    };
 
     if (inserted != null)
     {
-      entityId = inserted.Id;
+      payload.EntityId = inserted.Id.ToString();
 
-      data = [];
+      payload.EntityConcurrencyTokenToInsert = inserted.ConcurrencyToken;
 
       if (inserted.Name != deleted?.Name)
       {
-        data[nameof(inserted.Name)] = inserted.Name;
+        payload.Data[nameof(inserted.Name)] = inserted.Name;
       }      
     }
     else if (deleted != null)
     {
-      entityId = deleted.Id;
-    }
+      payload.EntityId = deleted.Id.ToString();
 
-    AppEventPayload payload = new(
-      AppEntityNameEnum.DummyItem.ToString(),
-      deleted?.ConcurrencyToken,
-      inserted?.ConcurrencyToken,
-      entityId.ToString(),
-      data != null ? JsonSerializer.Serialize(data) : null,
-      position);
+      payload.EntityConcurrencyTokenToDelete = deleted.ConcurrencyToken;
+    }
 
     AppOutboxSaveActionCommand command = new(
       AppEventNameEnum.DummyItemChanged.ToString(),
-      [payload]);
+      [payload.ToAppEventPayloadWithDataAsString()]);
 
     return _mediator.Send(command, cancellationToken);
   }

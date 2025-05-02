@@ -3,16 +3,30 @@
 /// <summary>
 /// Полезная нагрузка события приложения.
 /// </summary>
-/// <param name="EntityName">Имя сущности.</param>
-/// <param name="EntityConcurrencyTokenToDelete">Токен параллелизма сущности для удаления.</param>
-/// <param name="EntityConcurrencyTokenToInsert">Токен параллелизма сущности для вставки.</param>
-/// <param name="EntityId">Идентификатор сущности.</param>
-/// <param name="Data">Данные.</param>
-/// <param name="Position">Позиция.</param>
-public record AppEventPayload(
-  string EntityName,
-  string? EntityConcurrencyTokenToDelete,
-  string? EntityConcurrencyTokenToInsert,
-  string EntityId,
-  string? Data,
-  int Position);
+public record AppEventPayload
+{
+  /// <summary>
+  /// Идентификатор сущности.
+  /// </summary>
+  public string EntityId { get; set; } = string.Empty;
+
+  /// <summary>
+  /// Имя сущности.
+  /// </summary>
+  public string EntityName { get; set; } = string.Empty;
+
+  /// <summary>
+  /// Токен параллелизма сущности для удаления.
+  /// </summary>
+  public string? EntityConcurrencyTokenToDelete { get; set; } = string.Empty;
+
+  /// <summary>
+  /// Токен параллелизма сущности для вставки.
+  /// </summary>
+  public string? EntityConcurrencyTokenToInsert { get; set; }
+
+  /// <summary>
+  /// Позиция.
+  /// </summary>
+  public int Position { get; set; }
+}

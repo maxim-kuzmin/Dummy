@@ -7,4 +7,4 @@
 /// <param name="Payload">Полезная нагрузка.</param>
 public record AppIncomingEventPayloadCreateActionCommand(
   string AppIncomingEventId,
-  AppEventPayload Payload) : ICommand<Result<AppIncomingEventPayloadSingleDTO>>;
+  AppEventPayloadWithDataAsString Payload) : ICommand<Result<AppIncomingEventPayloadSingleDTO>>;

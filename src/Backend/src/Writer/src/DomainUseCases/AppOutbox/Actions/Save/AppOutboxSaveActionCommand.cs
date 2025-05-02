@@ -7,4 +7,4 @@
 /// <param name="AppEventPayloads">Полезные нагрузки события приложения.</param>
 public record AppOutboxSaveActionCommand(
   string AppEventName,
-  List<AppEventPayload> AppEventPayloads) : ICommand<Result>;
+  List<AppEventPayloadWithDataAsString> AppEventPayloads) : ICommand<Result>;

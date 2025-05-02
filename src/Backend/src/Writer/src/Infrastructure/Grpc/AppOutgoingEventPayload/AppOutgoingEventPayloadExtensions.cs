@@ -8,13 +8,14 @@ public static class AppOutgoingEventPayloadExtensions
   public static AppOutgoingEventPayloadCreateActionCommand ToAppOutgoingEventPayloadCreateActionCommand(
     this AppOutgoingEventPayloadCreateActionRequest request)
   {
-    AppEventPayload payload = new(
-      request.EntityName,
-      request.EntityConcurrencyTokenToDelete,
-      request.EntityConcurrencyTokenToInsert,
-      request.EntityId,
-      request.Data,
-      request.Position);
+    AppEventPayloadWithDataAsString payload = new(request.Data)
+    {
+      EntityConcurrencyTokenToDelete = request.EntityConcurrencyTokenToDelete,
+      EntityConcurrencyTokenToInsert = request.EntityConcurrencyTokenToInsert,
+      EntityId = request.EntityId,
+      EntityName = request.EntityName,      
+      Position = request.Position
+    };
 
     return new(request.AppOutgoingEventId, payload);
   }
@@ -93,13 +94,14 @@ public static class AppOutgoingEventPayloadExtensions
   public static AppOutgoingEventPayloadUpdateActionCommand ToAppOutgoingEventPayloadUpdateActionCommand(
     this AppOutgoingEventPayloadUpdateActionRequest request)
   {
-    AppEventPayload payload = new(
-      request.EntityName,
-      request.EntityConcurrencyTokenToDelete,
-      request.EntityConcurrencyTokenToInsert,
-      request.EntityId,
-      request.Data,
-      request.Position);
+    AppEventPayloadWithDataAsString payload = new(request.Data)
+    {
+      EntityConcurrencyTokenToDelete = request.EntityConcurrencyTokenToDelete,
+      EntityConcurrencyTokenToInsert = request.EntityConcurrencyTokenToInsert,
+      EntityId = request.EntityId,
+      EntityName = request.EntityName,
+      Position = request.Position
+    };
 
     return new(request.Id, request.AppOutgoingEventId, payload);
   }

@@ -9,4 +9,4 @@
 public record AppOutgoingEventPayloadUpdateActionCommand(
   long Id,
   long AppOutgoingEventId,
-  AppEventPayload Payload) : ICommand<Result<AppOutgoingEventPayloadSingleDTO>>;
+  AppEventPayloadWithDataAsString Payload) : ICommand<Result<AppOutgoingEventPayloadSingleDTO>>;

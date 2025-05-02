@@ -1,12 +1,11 @@
 ﻿global using System.Reflection;
-global using System.Text.Json;
 global using Ardalis.Result;
 global using Ardalis.SharedKernel;
 global using Makc.Dummy.Shared.Core.App;
 global using Makc.Dummy.Shared.Core.App.Config.Options.Sections;
 global using Makc.Dummy.Shared.Core.App.Enums;
 global using Makc.Dummy.Shared.Core.App.Event;
-global using Makc.Dummy.Shared.Core.App.Event.Payload;
+global using Makc.Dummy.Shared.Core.App.Event.Payloads;
 global using Makc.Dummy.Shared.Core.Message;
 global using Makc.Dummy.Shared.DomainModel.Entity;
 global using Makc.Dummy.Shared.DomainUseCases.Db.SQL;

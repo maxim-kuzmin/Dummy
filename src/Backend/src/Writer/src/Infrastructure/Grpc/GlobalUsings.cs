@@ -1,6 +1,6 @@
 ﻿global using Google.Protobuf.WellKnownTypes;
 global using Grpc.Core;
-global using Makc.Dummy.Shared.Core.App.Event;
+global using Makc.Dummy.Shared.Core.App.Event.Payloads;
 global using Makc.Dummy.Shared.Infrastructure.Grpc;
 global using Makc.Dummy.Writer.DomainUseCases.AppOutgoingEvent.Actions.Create;
 global using Makc.Dummy.Writer.DomainUseCases.AppOutgoingEvent.Actions.Delete;
