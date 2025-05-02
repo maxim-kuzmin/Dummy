@@ -21,6 +21,12 @@ public class DummyItemEntity : EntityBaseWithStructPrimaryKey<long>, IAggregateR
   public string Name { get; set; } = string.Empty;
 
   /// <inheritdoc/>
+  public sealed override string GetConcurrencyToken()
+  {
+    return ConcurrencyToken;
+  }
+
+  /// <inheritdoc/>
   public sealed override long GetPrimaryKey()
   {
     return Id;

@@ -8,8 +8,8 @@ public interface IDummyItemCommandService
   /// <summary>
   /// Обработчик изменения сущности.
   /// </summary>
-  /// <param name="entityChange">Изменение сущности.</param>
+  /// <param name="payload">Полезная нагрузка.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Результат.</returns>
-  Task<Result> OnEntityChanged(EntityChange<DummyItemEntity> entityChange, CancellationToken cancellationToken);
+  Task<Result> OnEntityChanged(AppEventPayloadWithDataAsDictionary payload, CancellationToken cancellationToken);
 }

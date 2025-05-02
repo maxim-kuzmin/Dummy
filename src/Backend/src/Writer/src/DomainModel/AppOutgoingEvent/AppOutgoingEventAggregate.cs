@@ -12,7 +12,7 @@ public class AppOutgoingEventAggregate(
   AppOutgoingEventEntitySettings _settings) : AggregateBase<AppOutgoingEventEntity, long>(entityToChange)
 {
   /// <inheritdoc/>
-  public sealed override AggregateResult<EntityChange<AppOutgoingEventEntity>> GetResultToUpdate()
+  public sealed override AggregateResult<AppOutgoingEventEntity> GetResultToUpdate()
   {
     var result = base.GetResultToUpdate();
 
@@ -23,24 +23,24 @@ public class AppOutgoingEventAggregate(
 
     if (HasChangedProperties())
     {
-      var inserted = result.Data!.Inserted!;
+      var target = result.Entity!;
 
-      var entity = GetEntityToUpdate();
+      var source = GetEntityToUpdate();
 
       bool isCreatedAtPropertyChanged = PrepareChangedPropertyToUpdate(
-        nameof(entity.CreatedAt),
-        () => inserted.CreatedAt != entity.CreatedAt,
-        () => inserted.CreatedAt = entity.CreatedAt);
+        nameof(source.CreatedAt),
+        () => target.CreatedAt != source.CreatedAt,
+        () => target.CreatedAt = source.CreatedAt);
 
       bool isNamePropertyChanged = PrepareChangedPropertyToUpdate(
-        nameof(entity.Name),
-        () => inserted.Name != entity.Name,
-        () => inserted.Name = entity.Name);
+        nameof(source.Name),
+        () => target.Name != source.Name,
+        () => target.Name = source.Name);
 
       bool isPublishedAtPropertyChanged = PrepareChangedPropertyToUpdate(
-        nameof(entity.PublishedAt),
-        () => inserted.PublishedAt != entity.PublishedAt,
-        () => inserted.PublishedAt = entity.PublishedAt);
+        nameof(source.PublishedAt),
+        () => target.PublishedAt != source.PublishedAt,
+        () => target.PublishedAt = source.PublishedAt);
 
       bool isEntityChanged = isCreatedAtPropertyChanged || isNamePropertyChanged || isPublishedAtPropertyChanged;
 
@@ -50,7 +50,7 @@ public class AppOutgoingEventAggregate(
       }
     }
 
-    return new AggregateResult<EntityChange<AppOutgoingEventEntity>>(new(null, null));
+    return AggregateResult<AppOutgoingEventEntity>.CreateDefault();
   }
 
   /// <summary>

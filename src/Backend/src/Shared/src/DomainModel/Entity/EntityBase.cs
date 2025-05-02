@@ -8,14 +8,26 @@ public abstract class EntityBase<TPrimaryKey> : IEntityBase<TPrimaryKey>
   where TPrimaryKey : IEquatable<TPrimaryKey>
 {
   /// <inheritdoc/>
-  public virtual object DeepCopy()
+  public abstract string GetConcurrencyToken();
+
+  /// <inheritdoc/>
+  public abstract string GetPrimaryKeyAsString();
+
+  /// <inheritdoc/>
+  public bool HasInvalidPrimaryKey()
   {
-    return MemberwiseClone();
+    return GetPrimaryKeyOrDefault().Equals(GetDefaultPrimaryKey());
   }
 
-  /// <inheritdoc/>
-  public abstract TPrimaryKey GetDefaultPrimaryKey();
+  /// <summary>
+  /// Получить первичный ключ по умолчанию.
+  /// </summary>
+  /// <returns>Первичный ключ по умолчанию.</returns>
+  protected abstract TPrimaryKey GetDefaultPrimaryKey();
 
-  /// <inheritdoc/>
-  public abstract TPrimaryKey GetPrimaryKeyOrDefault();
+  /// <summary>
+  /// Получить первичный ключ или значение по умолчанию, если первичный ключ не определён.
+  /// </summary>
+  /// <returns>Первичный ключ.</returns>
+  protected abstract TPrimaryKey GetPrimaryKeyOrDefault();
 }

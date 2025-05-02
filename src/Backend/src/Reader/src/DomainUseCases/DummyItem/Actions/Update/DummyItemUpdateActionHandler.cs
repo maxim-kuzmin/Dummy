@@ -1,4 +1,7 @@
-﻿namespace Makc.Dummy.Reader.DomainUseCases.DummyItem.Actions.Update;
+﻿using Makc.Dummy.Reader.DomainUseCases.AppIncomingEventPayload.Actions.Update;
+using MediatR;
+
+namespace Makc.Dummy.Reader.DomainUseCases.DummyItem.Actions.Update;
 
 /// <summary>
 /// Обработчик действия по обновлению фиктивного предмета.
@@ -25,15 +28,11 @@ public class DummyItemUpdateActionHandler(
       return Result.NotFound();
     }
 
-    var aggregate = _factory.CreateAggregate(entity);
+    var aggregateResult = GetAggregateResult(entity, request);
 
-    aggregate.UpdateConcurrencyToken(request.ConcurrencyToken);
-    aggregate.UpdateId(request.Id);
-    aggregate.UpdateName(request.Name);
+    entity = aggregateResult.Entity;
 
-    var aggregateResult = aggregate.GetResultToUpdate();
-
-    if (aggregateResult.Data == null)
+    if (entity == null)
     {
       return Result.Invalid();
     }
@@ -45,9 +44,9 @@ public class DummyItemUpdateActionHandler(
       return Result.Invalid(validationErrors);
     }
 
-    entity = aggregateResult.Data.Inserted;
+    var payload = aggregateResult.Payload;
 
-    if (entity == null)
+    if (payload == null)
     {
       return Result.Forbidden();
     }
@@ -56,7 +55,7 @@ public class DummyItemUpdateActionHandler(
     {
       await _repository.UpdateAsync(entity, cancellationToken).ConfigureAwait(false);
 
-      await _service.OnEntityChanged(aggregateResult.Data, cancellationToken).ConfigureAwait(false);
+      await _service.OnEntityChanged(payload, cancellationToken).ConfigureAwait(false);
     }
 
     await _appDbExecutionContext.ExecuteInTransaction(FuncToExecute, cancellationToken).ConfigureAwait(false);
@@ -64,5 +63,18 @@ public class DummyItemUpdateActionHandler(
     var dto = entity.ToDummyItemSingleDTO();
 
     return Result.Success(dto);
+  }
+
+  private AggregateResult<DummyItemEntity> GetAggregateResult(
+    DummyItemEntity entity,
+    DummyItemUpdateActionCommand command)
+  {
+    var aggregate = _factory.CreateAggregate(entity);
+
+    aggregate.UpdateConcurrencyToken(command.ConcurrencyToken);
+    aggregate.UpdateId(command.Id);
+    aggregate.UpdateName(command.Name);
+
+    return aggregate.GetResultToUpdate();
   }
 }

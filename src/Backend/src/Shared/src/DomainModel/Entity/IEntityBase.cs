@@ -4,18 +4,23 @@
 /// Интерфейс основы сущности.
 /// </summary>
 /// <typeparam name="TPrimaryKey">Тип первичного ключа.</typeparam>
-public interface IEntityBase<TPrimaryKey> : IDeepCopyable
-  where TPrimaryKey : IEquatable<TPrimaryKey>
+public interface IEntityBase<TPrimaryKey> where TPrimaryKey : IEquatable<TPrimaryKey>
 {
   /// <summary>
-  /// Получить первичный ключ по умолчанию.
+  /// Получить токен параллелизма.
   /// </summary>
-  /// <returns>Первичный ключ по умолчанию.</returns>
-  TPrimaryKey GetDefaultPrimaryKey();
+  /// <returns>Токен параллелизма.</returns>
+  string GetConcurrencyToken();
 
   /// <summary>
-  /// Получить первичный ключ или значение по умолчанию, если первичный ключ равен null.
+  /// Получить первичный ключ как строку.
   /// </summary>
-  /// <returns>Первичный ключ.</returns>
-  TPrimaryKey GetPrimaryKeyOrDefault();
+  /// <returns>Строковое представление первичного ключа.</returns>
+  string GetPrimaryKeyAsString();
+
+  /// <summary>
+  /// Содержит ли некорректный первичный ключ?
+  /// </summary>
+  /// <returns>Если некорректен, то true, иначе - false.</returns>
+  public bool HasInvalidPrimaryKey();
 }

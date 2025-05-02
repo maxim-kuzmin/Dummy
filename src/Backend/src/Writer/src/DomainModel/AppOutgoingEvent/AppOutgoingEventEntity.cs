@@ -36,6 +36,12 @@ public class AppOutgoingEventEntity : EntityBaseWithStructPrimaryKey<long>, IAgg
   public IEnumerable<AppOutgoingEventPayloadEntity>? Payloads { get; }
 
   /// <inheritdoc/>
+  public sealed override string GetConcurrencyToken()
+  {
+    return ConcurrencyToken;
+  }
+
+  /// <inheritdoc/>
   public sealed override long GetPrimaryKey()
   {
     return Id;

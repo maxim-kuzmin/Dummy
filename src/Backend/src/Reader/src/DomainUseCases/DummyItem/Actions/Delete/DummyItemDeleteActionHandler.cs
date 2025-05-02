@@ -23,11 +23,11 @@ public class DummyItemDeleteActionHandler(
       return Result.NotFound();
     }
 
-    var aggregate = _factory.CreateAggregate(entity);
+    var aggregateResult = GetAggregateResult(entity);
 
-    var aggregateResult = aggregate.GetResultToDelete();
+    entity = aggregateResult.Entity;
 
-    if (aggregateResult.Data == null)
+    if (entity == null)
     {
       return Result.Invalid();
     }
@@ -39,22 +39,29 @@ public class DummyItemDeleteActionHandler(
       return Result.Invalid(validationErrors);
     }
 
-    entity = aggregateResult.Data.Deleted;
+    var payload = aggregateResult.Payload;
 
-    if (entity == null)
+    if (payload == null)
     {
       return Result.Forbidden();
     }
 
     async Task FuncToExecute(CancellationToken cancellationToken)
     {
-      await _repository.DeleteAsync(entity, cancellationToken).ConfigureAwait(false);
+      await _repository.DeleteAsync(entity, cancellationToken).ConfigureAwait(false);      
 
-      await _service.OnEntityChanged(aggregateResult.Data, cancellationToken).ConfigureAwait(false);
+      await _service.OnEntityChanged(payload, cancellationToken).ConfigureAwait(false);
     }
 
     await _appDbExecutionContext.ExecuteInTransaction(FuncToExecute, cancellationToken).ConfigureAwait(false);
 
     return Result.Success();
+  }
+
+  private AggregateResult<DummyItemEntity> GetAggregateResult(DummyItemEntity entity)
+  {
+    var aggregate = _factory.CreateAggregate(entity);
+
+    return aggregate.GetResultToDelete();
   }
 }

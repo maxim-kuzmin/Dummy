@@ -18,15 +18,11 @@ public class DummyItemCreateActionHandler(
     DummyItemCreateActionCommand request,
     CancellationToken cancellationToken)
   {
-    var aggregate = _factory.CreateAggregate();
+    var aggregateResult = GetAggregateResult(request);
 
-    aggregate.UpdateConcurrencyToken(request.ConcurrencyToken);
-    aggregate.UpdateId(request.Id);
-    aggregate.UpdateName(request.Name);
+    var entity = aggregateResult.Entity;
 
-    var aggregateResult = aggregate.GetResultToCreate();
-
-    if (aggregateResult.Data == null)
+    if (entity == null)
     {
       return Result.Invalid();
     }
@@ -37,10 +33,10 @@ public class DummyItemCreateActionHandler(
     {
       return Result.Invalid(validationErrors);
     }
+    
+    var payload = aggregateResult.Payload;
 
-    var entity = aggregateResult.Data.Inserted;
-
-    if (entity == null)
+    if (payload == null)
     {
       return Result.Forbidden();
     }
@@ -49,7 +45,9 @@ public class DummyItemCreateActionHandler(
     {
       entity = await _repository.AddAsync(entity, cancellationToken).ConfigureAwait(false);
 
-      await _service.OnEntityChanged(aggregateResult.Data, cancellationToken).ConfigureAwait(false);
+      payload.EntityId = entity.GetPrimaryKeyAsString();
+
+      await _service.OnEntityChanged(payload, cancellationToken).ConfigureAwait(false);
     }
 
     await _appDbExecutionContext.ExecuteInTransaction(FuncToExecute, cancellationToken).ConfigureAwait(false);
@@ -57,5 +55,16 @@ public class DummyItemCreateActionHandler(
     var dto = entity.ToDummyItemSingleDTO();
 
     return Result.Success(dto);
+  }
+
+  private AggregateResult<DummyItemEntity> GetAggregateResult(DummyItemCreateActionCommand command)
+  {
+    var aggregate = _factory.CreateAggregate();
+
+    aggregate.UpdateConcurrencyToken(command.ConcurrencyToken);
+    aggregate.UpdateId(command.Id);
+    aggregate.UpdateName(command.Name);
+
+    return aggregate.GetResultToCreate();
   }
 }

@@ -48,50 +48,60 @@ public abstract class AggregateBase<TEntity, TPrimaryKey>
   /// Получить результат для создания.
   /// </summary>
   /// <returns>Результат для создания.</returns>
-  public virtual AggregateResult<EntityChange<TEntity>> GetResultToCreate()
+  public virtual AggregateResult<TEntity> GetResultToCreate()
   {
     if (_entityToUpdate == null)
     {
-      return new AggregateResult<EntityChange<TEntity>>(null);
+      return AggregateResult<TEntity>.CreateDefault();
     }
 
     OnGetResultToCreate(_entityToUpdate);
 
-    return new AggregateResult<EntityChange<TEntity>>(new(_entityToUpdate, null), UpdateErrors);
+    _payload.EntityConcurrencyTokenToInsert = _entityToUpdate.GetConcurrencyToken();
+
+    return new AggregateResult<TEntity>(_entityToUpdate, _payload, UpdateErrors);
   }
 
   /// <summary>
   /// Получить результат для удаления.
   /// </summary>
   /// <returns>Результат для удаления.</returns>
-  public virtual AggregateResult<EntityChange<TEntity>> GetResultToDelete()
+  public virtual AggregateResult<TEntity> GetResultToDelete()
   {
-    if (_entityToChange == null || _entityToChange.GetPrimaryKeyOrDefault().Equals(_entityToChange.GetDefaultPrimaryKey()))
+    if (_entityToChange == null || _entityToChange.HasInvalidPrimaryKey())
     {
-      return new AggregateResult<EntityChange<TEntity>>(null);
+      return AggregateResult<TEntity>.CreateDefault();
     }
 
     OnGetResultToDelete(_entityToChange);
 
-    return new AggregateResult<EntityChange<TEntity>>(new(null, _entityToChange));
+    _payload.EntityId = _entityToChange.GetPrimaryKeyAsString();
+
+    _payload.EntityConcurrencyTokenToDelete = _entityToChange.GetConcurrencyToken();
+
+    return new AggregateResult<TEntity>(_entityToChange, _payload);
   }
 
   /// <summary>
   /// Получить результат для обновления.
   /// </summary>
   /// <returns>Результат для обновления.</returns>
-  public virtual AggregateResult<EntityChange<TEntity>> GetResultToUpdate()
+  public virtual AggregateResult<TEntity> GetResultToUpdate()
   {
-    if (_entityToChange == null || _entityToChange.GetPrimaryKeyOrDefault().Equals(_entityToChange.GetDefaultPrimaryKey()))
+    if (_entityToChange == null || _entityToChange.HasInvalidPrimaryKey())
     {
-      return new AggregateResult<EntityChange<TEntity>>(null);
+      return AggregateResult<TEntity>.CreateDefault();
     }
 
-    var deleted = (TEntity)_entityToChange.DeepCopy();
+    _payload.EntityId = _entityToChange.GetPrimaryKeyAsString();
+
+    _payload.EntityConcurrencyTokenToDelete = _entityToChange.GetConcurrencyToken();
 
     OnGetResultToUpdate(_entityToChange);
+    
+    _payload.EntityConcurrencyTokenToInsert = _entityToChange.GetConcurrencyToken();
 
-    return new AggregateResult<EntityChange<TEntity>>(new(_entityToChange, deleted), UpdateErrors);
+    return new AggregateResult<TEntity>(_entityToChange, _payload, UpdateErrors);
   }
 
   /// <summary>
@@ -116,13 +126,13 @@ public abstract class AggregateBase<TEntity, TPrimaryKey>
   /// </summary>
   /// <param name="aggregateResult">Результат агрегата.</param>
   /// <returns>Если недействителен для обновления, то true, иначе - false.</returns>
-  protected bool IsInvalidToUpdate(AggregateResult<EntityChange<TEntity>> aggregateResult)
+  protected bool IsInvalidToUpdate(AggregateResult<TEntity> aggregateResult)
   {
     return aggregateResult.IsInvalid
       ||
-      aggregateResult.Data?.Inserted == null
+      aggregateResult.Payload?.EntityConcurrencyTokenToDelete == null
       ||
-      aggregateResult.Data?.Deleted == null;
+      aggregateResult.Payload?.EntityConcurrencyTokenToInsert == null;
   }
 
   /// <summary>

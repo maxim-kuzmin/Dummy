@@ -7,12 +7,6 @@
 public abstract class EntityBaseWithStructPrimaryKey<TPrimaryKey> : EntityBase<TPrimaryKey>
   where TPrimaryKey : struct, IEquatable<TPrimaryKey>
 {
-  /// <inheritdoc/>
-  public sealed override TPrimaryKey GetDefaultPrimaryKey()
-  {
-    return default;
-  }
-
   /// <summary>
   /// Получить первичный ключ.
   /// </summary>
@@ -20,7 +14,19 @@ public abstract class EntityBaseWithStructPrimaryKey<TPrimaryKey> : EntityBase<T
   public abstract TPrimaryKey GetPrimaryKey();
 
   /// <inheritdoc/>
-  public sealed override TPrimaryKey GetPrimaryKeyOrDefault()
+  public sealed override string GetPrimaryKeyAsString()
+  {
+    return GetPrimaryKey().ToString() ?? string.Empty;
+  }
+
+  /// <inheritdoc/>
+  protected sealed override TPrimaryKey GetDefaultPrimaryKey()
+  {
+    return default;
+  }
+
+  /// <inheritdoc/>
+  protected sealed override TPrimaryKey GetPrimaryKeyOrDefault()
   {
     return GetPrimaryKey();
   }

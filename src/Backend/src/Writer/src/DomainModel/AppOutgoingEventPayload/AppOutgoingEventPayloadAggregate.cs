@@ -12,7 +12,7 @@ public class AppOutgoingEventPayloadAggregate(
   AppOutgoingEventPayloadEntitySettings _settings) : AggregateBase<AppOutgoingEventPayloadEntity, long>(entityToChange)
 {
   /// <inheritdoc/>
-  public sealed override AggregateResult<EntityChange<AppOutgoingEventPayloadEntity>> GetResultToUpdate()
+  public sealed override AggregateResult<AppOutgoingEventPayloadEntity> GetResultToUpdate()
   {
     var result = base.GetResultToUpdate();
 
@@ -23,19 +23,19 @@ public class AppOutgoingEventPayloadAggregate(
 
     if (HasChangedProperties())
     {
-      var inserted = result.Data!.Inserted!;
+      var target = result.Entity!;
 
-      var entity = GetEntityToUpdate();
+      var source = GetEntityToUpdate();
 
       bool isAppOutgoingEventIdPropertyChanged = PrepareChangedPropertyToUpdate(
-        nameof(entity.AppOutgoingEventId),
-        () => inserted.AppOutgoingEventId != entity.AppOutgoingEventId,
-        () => inserted.AppOutgoingEventId = entity.AppOutgoingEventId);
+        nameof(source.AppOutgoingEventId),
+        () => target.AppOutgoingEventId != source.AppOutgoingEventId,
+        () => target.AppOutgoingEventId = source.AppOutgoingEventId);
 
       bool isDataPropertyChanged = PrepareChangedPropertyToUpdate(
-        nameof(entity.Data),
-        () => inserted.Data != entity.Data,
-        () => inserted.Data = entity.Data);
+        nameof(source.Data),
+        () => target.Data != source.Data,
+        () => target.Data = source.Data);
 
       bool isEntityChanged = isAppOutgoingEventIdPropertyChanged || isDataPropertyChanged;
 
@@ -45,7 +45,7 @@ public class AppOutgoingEventPayloadAggregate(
       }
     }
 
-    return new AggregateResult<EntityChange<AppOutgoingEventPayloadEntity>>(new(null, null));
+    return AggregateResult<AppOutgoingEventPayloadEntity>.CreateDefault();
   }
 
   /// <summary>

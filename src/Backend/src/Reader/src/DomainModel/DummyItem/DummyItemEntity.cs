@@ -31,6 +31,12 @@ public class DummyItemEntity : EntityBaseWithStringPrimaryKey, IAggregateRoot
   public string? ObjectId { get; set; }
 
   /// <inheritdoc/>
+  public sealed override string GetConcurrencyToken()
+  {
+    return ConcurrencyToken;
+  }
+
+  /// <inheritdoc/>
   public sealed override string? GetPrimaryKey()
   {
     return ObjectId;

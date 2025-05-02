@@ -17,14 +17,11 @@ public class AppOutgoingEventCreateActionHandler(
     AppOutgoingEventCreateActionCommand request,
     CancellationToken cancellationToken)
   {
-    var aggregate = _factory.CreateAggregate();
-    
-    aggregate.UpdateName(request.Name);
-    aggregate.UpdatePublishedAt(request.PublishedAt);
+    var aggregateResult = GetAggregateResult(request);
 
-    var aggregateResult = aggregate.GetResultToCreate();
+    var entity = aggregateResult.Entity;
 
-    if (aggregateResult.Data == null)
+    if (entity == null)
     {
       return Result.Invalid();
     }
@@ -36,9 +33,9 @@ public class AppOutgoingEventCreateActionHandler(
       return Result.Invalid(validationErrors);
     }
 
-    var entity = aggregateResult.Data.Inserted;
+    var payload = aggregateResult.Payload;
 
-    if (entity == null)
+    if (payload == null)
     {
       return Result.Forbidden();
     }
@@ -53,5 +50,16 @@ public class AppOutgoingEventCreateActionHandler(
     var dto = entity.ToAppOutgoingEventSingleDTO();
 
     return Result.Success(dto);
+  }
+
+  private AggregateResult<AppOutgoingEventEntity> GetAggregateResult(
+    AppOutgoingEventCreateActionCommand command)
+  {
+    var aggregate = _factory.CreateAggregate();
+
+    aggregate.UpdateName(command.Name);
+    aggregate.UpdatePublishedAt(command.PublishedAt);
+
+    return aggregate.GetResultToCreate();
   }
 }

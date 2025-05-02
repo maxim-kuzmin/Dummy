@@ -26,7 +26,7 @@ global using Makc.Dummy.Reader.DomainUseCases.DummyItem.Services;
 global using Makc.Dummy.Shared.Core.App;
 global using Makc.Dummy.Shared.Core.App.Event.Payloads;
 global using Makc.Dummy.Shared.Core.Message;
-global using Makc.Dummy.Shared.DomainModel.Entity;
+global using Makc.Dummy.Shared.DomainModel.Aggregate;
 global using Makc.Dummy.Shared.DomainUseCases.Db.NoSQL.Contexts;
 global using Makc.Dummy.Shared.DomainUseCases.Db.SQL;
 global using Makc.Dummy.Shared.DomainUseCases.DTOs;

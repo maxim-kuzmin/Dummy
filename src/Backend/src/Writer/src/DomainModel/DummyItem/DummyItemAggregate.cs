@@ -12,7 +12,7 @@ public class DummyItemAggregate(
   DummyItemEntitySettings _settings) : AggregateBase<DummyItemEntity, long>(entityToChange)
 {
   /// <inheritdoc/>
-  public sealed override AggregateResult<EntityChange<DummyItemEntity>> GetResultToUpdate()
+  public sealed override AggregateResult<DummyItemEntity> GetResultToUpdate()
   {
     var result = base.GetResultToUpdate();
 
@@ -23,14 +23,14 @@ public class DummyItemAggregate(
 
     if (HasChangedProperties())
     {
-      var inserted = result.Data!.Inserted!;
+      var target = result.Entity!;
 
-      var entity = GetEntityToUpdate();
+      var source = GetEntityToUpdate();
 
       bool isNamePropertyChanged = PrepareChangedPropertyToUpdate(
-        nameof(entity.Name),
-        () => inserted.Name != entity.Name,
-        () => inserted.Name = entity.Name);
+        nameof(source.Name),
+        () => target.Name != source.Name,
+        () => target.Name = source.Name);
 
       bool isEntityChanged = isNamePropertyChanged;
 
@@ -40,7 +40,7 @@ public class DummyItemAggregate(
       }
     }
 
-    return new AggregateResult<EntityChange<DummyItemEntity>>(new(null, null));
+    return AggregateResult<DummyItemEntity>.CreateDefault();
   }
 
   /// <summary>

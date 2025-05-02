@@ -24,11 +24,11 @@ public class AppOutgoingEventPayloadDeleteActionHandler(
       return Result.NotFound();
     }
 
-    var aggregate = _factory.CreateAggregate(entity);
+    var aggregateResult = GetAggregateResult(entity);
 
-    var aggregateResult = aggregate.GetResultToDelete();
+    entity = aggregateResult.Entity;
 
-    if (aggregateResult.Data == null)
+    if (entity == null)
     {
       return Result.Invalid();
     }
@@ -40,9 +40,9 @@ public class AppOutgoingEventPayloadDeleteActionHandler(
       return Result.Invalid(validationErrors);
     }
 
-    entity = aggregateResult.Data.Deleted;
+    var payload = aggregateResult.Payload;
 
-    if (entity == null)
+    if (payload == null)
     {
       return Result.Forbidden();
     }
@@ -55,5 +55,12 @@ public class AppOutgoingEventPayloadDeleteActionHandler(
     await _appDbExecutionContext.Execute(FuncToExecute, cancellationToken).ConfigureAwait(false);
 
     return Result.Success();
+  }
+
+  private AggregateResult<AppOutgoingEventPayloadEntity> GetAggregateResult(AppOutgoingEventPayloadEntity entity)
+  {
+    var aggregate = _factory.CreateAggregate(entity);
+
+    return aggregate.GetResultToDelete();
   }
 }

@@ -24,14 +24,11 @@ public class AppOutgoingEventUpdateActionHandler(
       return Result.NotFound();
     }
 
-    var aggregate = _factory.CreateAggregate(entity);
+    var aggregateResult = GetAggregateResult(entity, request);
 
-    aggregate.UpdateName(request.Name);
-    aggregate.UpdatePublishedAt(request.PublishedAt);
+    entity = aggregateResult.Entity;
 
-    var aggregateResult = aggregate.GetResultToUpdate();
-
-    if (aggregateResult.Data == null)
+    if (entity == null)
     {
       return Result.Invalid();
     }
@@ -43,9 +40,9 @@ public class AppOutgoingEventUpdateActionHandler(
       return Result.Invalid(validationErrors);
     }
 
-    entity = aggregateResult.Data.Inserted;
+    var payload = aggregateResult.Payload;
 
-    if (entity == null)
+    if (payload == null)
     {
       return Result.Forbidden();
     }
@@ -60,5 +57,17 @@ public class AppOutgoingEventUpdateActionHandler(
     var dto = entity.ToAppOutgoingEventSingleDTO();
 
     return Result.Success(dto);
+  }
+
+  private AggregateResult<AppOutgoingEventEntity> GetAggregateResult(
+    AppOutgoingEventEntity entity,
+    AppOutgoingEventUpdateActionCommand command)
+  {
+    var aggregate = _factory.CreateAggregate(entity);
+
+    aggregate.UpdateName(command.Name);
+    aggregate.UpdatePublishedAt(command.PublishedAt);
+
+    return aggregate.GetResultToUpdate();
   }
 }

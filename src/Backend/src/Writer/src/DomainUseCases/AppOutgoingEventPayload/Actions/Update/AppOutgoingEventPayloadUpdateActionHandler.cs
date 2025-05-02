@@ -24,21 +24,11 @@ public class AppOutgoingEventPayloadUpdateActionHandler(
       return Result.NotFound();
     }
 
-    var aggregate = _factory.CreateAggregate(entity);
+    var aggregateResult = GetAggregateResult(entity, request);
 
-    var payload = request.Payload;
+    entity = aggregateResult.Entity;
 
-    aggregate.UpdateAppOutgoingEventId(request.AppOutgoingEventId);
-    aggregate.UpdateData(payload.Data);
-    aggregate.UpdateEntityConcurrencyTokenToDelete(payload.EntityConcurrencyTokenToDelete);
-    aggregate.UpdateEntityConcurrencyTokenToInsert(payload.EntityConcurrencyTokenToInsert);
-    aggregate.UpdateEntityId(payload.EntityId);
-    aggregate.UpdateEntityName(payload.EntityName.ToString());
-    aggregate.UpdatePosition(payload.Position);
-
-    var aggregateResult = aggregate.GetResultToUpdate();
-
-    if (aggregateResult.Data == null)
+    if (entity == null)
     {
       return Result.Invalid();
     }
@@ -50,9 +40,9 @@ public class AppOutgoingEventPayloadUpdateActionHandler(
       return Result.Invalid(validationErrors);
     }
 
-    entity = aggregateResult.Data.Inserted;
+    var payload = aggregateResult.Payload;
 
-    if (entity == null)
+    if (payload == null)
     {
       return Result.Forbidden();
     }
@@ -67,5 +57,24 @@ public class AppOutgoingEventPayloadUpdateActionHandler(
     var dto = entity.ToAppOutgoingEventPayloadSingleDTO();
 
     return Result.Success(dto);
+  }
+
+  private AggregateResult<AppOutgoingEventPayloadEntity> GetAggregateResult(
+    AppOutgoingEventPayloadEntity entity,
+    AppOutgoingEventPayloadUpdateActionCommand command)
+  {
+    var aggregate = _factory.CreateAggregate(entity);
+
+    var payload = command.Payload;
+
+    aggregate.UpdateAppOutgoingEventId(command.AppOutgoingEventId);
+    aggregate.UpdateData(payload.Data);
+    aggregate.UpdateEntityConcurrencyTokenToDelete(payload.EntityConcurrencyTokenToDelete);
+    aggregate.UpdateEntityConcurrencyTokenToInsert(payload.EntityConcurrencyTokenToInsert);
+    aggregate.UpdateEntityId(payload.EntityId);
+    aggregate.UpdateEntityName(payload.EntityName.ToString());
+    aggregate.UpdatePosition(payload.Position);
+
+    return aggregate.GetResultToUpdate();
   }
 }

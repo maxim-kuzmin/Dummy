@@ -12,7 +12,7 @@ public class AppIncomingEventAggregate(
   AppIncomingEventEntitySettings _settings) : AggregateBase<AppIncomingEventEntity, string>(entityToChange)
 {
   /// <inheritdoc/>
-  public sealed override AggregateResult<EntityChange<AppIncomingEventEntity>> GetResultToUpdate()
+  public sealed override AggregateResult<AppIncomingEventEntity> GetResultToUpdate()
   {
     var result = base.GetResultToUpdate();
 
@@ -23,29 +23,29 @@ public class AppIncomingEventAggregate(
 
     if (HasChangedProperties())
     {
-      var inserted = result.Data!.Inserted!;
+      var target = result.Entity!;
 
-      var entity = GetEntityToUpdate();
+      var source = GetEntityToUpdate();
 
       bool isCreatedAtPropertyChanged = PrepareChangedPropertyToUpdate(
-        nameof(entity.CreatedAt),
-        () => inserted.CreatedAt != entity.CreatedAt,
-        () => inserted.CreatedAt = entity.CreatedAt);
+        nameof(source.CreatedAt),
+        () => target.CreatedAt != source.CreatedAt,
+        () => target.CreatedAt = source.CreatedAt);
 
       bool isLoadedAtPropertyChanged = PrepareChangedPropertyToUpdate(
-        nameof(entity.LoadedAt),
-        () => inserted.LoadedAt != entity.LoadedAt,
-        () => inserted.LoadedAt = entity.LoadedAt);
+        nameof(source.LoadedAt),
+        () => target.LoadedAt != source.LoadedAt,
+        () => target.LoadedAt = source.LoadedAt);
 
       bool isEventIdPropertyChanged = PrepareChangedPropertyToUpdate(
-        nameof(entity.EventId),
-        () => inserted.EventId != entity.EventId,
-        () => inserted.EventId = entity.EventId);
+        nameof(source.EventId),
+        () => target.EventId != source.EventId,
+        () => target.EventId = source.EventId);
 
       bool isEventNamePropertyChanged = PrepareChangedPropertyToUpdate(
-        nameof(entity.EventName),
-        () => inserted.EventName != entity.EventName,
-        () => inserted.EventName = entity.EventName);
+        nameof(source.EventName),
+        () => target.EventName != source.EventName,
+        () => target.EventName = source.EventName);
 
       bool isEntityChanged = isCreatedAtPropertyChanged
         ||
@@ -61,7 +61,7 @@ public class AppIncomingEventAggregate(
       }
     }
 
-    return new AggregateResult<EntityChange<AppIncomingEventEntity>>(new(null, null));
+    return AggregateResult<AppIncomingEventEntity>.CreateDefault();
   }
 
   /// <summary>

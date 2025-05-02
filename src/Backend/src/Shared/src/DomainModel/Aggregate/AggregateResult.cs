@@ -3,15 +3,29 @@
 /// <summary>
 /// Результат агрегата.
 /// </summary>
-/// <typeparam name="TData">Тип данных.</typeparam>
-/// <param name="Data">Данные.</param>
+/// <typeparam name="TEntity">Тип сущности.</typeparam>
+/// <param name="Entity">Сущность.</param>
+/// <param name="Payload">Полезная нагрузка.</param>
 /// <param name="Errors">Ошибки.</param>
-public record AggregateResult<TData>(TData? Data, HashSet<AppError>? Errors = null)
+public record AggregateResult<TEntity>(
+  TEntity? Entity,
+  AppEventPayloadWithDataAsDictionary? Payload,
+  HashSet<AppError>? Errors = null)
+  where TEntity : class
 {
+  /// <summary>
+  /// Создать по умолчанию.
+  /// </summary>
+  /// <returns>Результат агрегата по умолчанию.</returns>
+  public static AggregateResult<TEntity> CreateDefault()
+  {
+    return new(null, null);
+  }
+
   /// <summary>
   /// Недействителен ли?
   /// </summary>
-  public bool IsInvalid => Data == null || Errors?.Count > 0;
+  public bool IsInvalid => Entity == null || Errors?.Count > 0;
 
   /// <summary>
   /// Преобразовать к ошибкам валидации.

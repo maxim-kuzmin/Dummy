@@ -41,6 +41,12 @@ public class AppIncomingEventEntity : EntityBaseWithStringPrimaryKey, IAggregate
   public DateTimeOffset? ProcessedAt { get; set; }
 
   /// <inheritdoc/>
+  public sealed override string GetConcurrencyToken()
+  {
+    return ConcurrencyToken;
+  }
+
+  /// <inheritdoc/>
   public sealed override string? GetPrimaryKey()
   {
     return ObjectId;

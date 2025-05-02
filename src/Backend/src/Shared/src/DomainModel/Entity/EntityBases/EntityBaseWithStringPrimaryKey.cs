@@ -5,12 +5,6 @@
 /// </summary>
 public abstract class EntityBaseWithStringPrimaryKey : EntityBase<string>  
 {
-  /// <inheritdoc/>
-  public sealed override string GetDefaultPrimaryKey()
-  {
-    return string.Empty;
-  }
-
   /// <summary>
   /// Получить первичный ключ.
   /// </summary>
@@ -18,7 +12,19 @@ public abstract class EntityBaseWithStringPrimaryKey : EntityBase<string>
   public abstract string? GetPrimaryKey();
 
   /// <inheritdoc/>
-  public sealed override string GetPrimaryKeyOrDefault()
+  public sealed override string GetPrimaryKeyAsString()
+  {
+    return GetPrimaryKeyOrDefault();
+  }
+
+  /// <inheritdoc/>
+  protected sealed override string GetDefaultPrimaryKey()
+  {
+    return string.Empty;
+  }
+
+  /// <inheritdoc/>
+  protected sealed override string GetPrimaryKeyOrDefault()
   {
     return GetPrimaryKey() ?? GetDefaultPrimaryKey();
   }

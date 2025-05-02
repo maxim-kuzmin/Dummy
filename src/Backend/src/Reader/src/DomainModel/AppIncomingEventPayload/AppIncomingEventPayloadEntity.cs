@@ -56,6 +56,12 @@ public class AppIncomingEventPayloadEntity : EntityBaseWithStringPrimaryKey, IAg
   public int Position { get; set; }
 
   /// <inheritdoc/>
+  public sealed override string GetConcurrencyToken()
+  {
+    return ConcurrencyToken;
+  }
+
+  /// <inheritdoc/>
   public sealed override string? GetPrimaryKey()
   {
     return ObjectId;

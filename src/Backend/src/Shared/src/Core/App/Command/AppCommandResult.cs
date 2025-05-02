@@ -1,10 +1,10 @@
-﻿namespace Makc.Dummy.Shared.Core.App;
+﻿namespace Makc.Dummy.Shared.Core.App.Command;
 
 /// <summary>
-/// Результат приложения.
+/// Результат команды приложения.
 /// </summary>
 /// <param name="Data">Данные.</param>
-public record AppResult(Result Data)
+public record AppCommandResult(Result Data)
 {
   /// <summary>
   /// Полезные нагрузки.
