@@ -180,18 +180,21 @@ public abstract class AggregateBase<TEntity, TPrimaryKey>
     Func<bool> funcToCompare,
     Action actionToUpdate)
   {
-    bool isPropertyChanged = HasChangedProperty(propertyName) && funcToCompare.Invoke();
-
-    if (isPropertyChanged)
+    if (!HasChangedProperty(propertyName))
     {
-      actionToUpdate.Invoke();
+      return false;
     }
-    else
+
+    if (!funcToCompare.Invoke())
     {
       RemoveChangedProperty(propertyName);
+
+      return false;
     }
 
-    return isPropertyChanged;
+    actionToUpdate.Invoke();
+
+    return true;
   }
 
   /// <summary>
