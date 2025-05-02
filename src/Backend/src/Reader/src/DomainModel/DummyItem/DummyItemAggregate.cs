@@ -23,20 +23,18 @@ public class DummyItemAggregate(
 
     if (HasChangedProperties())
     {
-      bool isOk = false;
-
       var inserted = result.Data!.Inserted!;
 
       var entity = GetEntityToUpdate();
 
-      if (HasChangedProperty(nameof(entity.Name)) && inserted.Name != entity.Name)
-      {
-        inserted.Name = entity.Name;
+      bool isNamePropertyChanged = PrepareChangedPropertyToUpdate(
+        nameof(entity.Name),
+        () => inserted.Name != entity.Name,
+        () => inserted.Name = entity.Name);
 
-        isOk = true;
-      }
+      bool isEntityChanged = isNamePropertyChanged;
 
-      if (isOk)
+      if (isEntityChanged)
       {
         return result;
       }
@@ -64,7 +62,7 @@ public class DummyItemAggregate(
 
     entity.ConcurrencyToken = value;
 
-    MarkPropertyAsChanged(nameof(entity.ConcurrencyToken));
+    AddChangedProperty(nameof(entity.ConcurrencyToken), entity.ConcurrencyToken);
   }
 
   /// <summary>
@@ -87,7 +85,7 @@ public class DummyItemAggregate(
     entity.Id = value;
     entity.IdAsString = value.ToString();
 
-    MarkPropertyAsChanged(nameof(entity.Id));
+    AddChangedProperty(nameof(entity.Id), entity.Id.ToString());
   }
 
   /// <summary>
@@ -120,6 +118,12 @@ public class DummyItemAggregate(
 
     entity.Name = value;
 
-    MarkPropertyAsChanged(nameof(entity.Name));
+    AddChangedProperty(nameof(entity.Name), entity.Name);
+  }
+
+  /// <inheritdoc/>
+  protected override string GetEntityName()
+  {
+    return "DummyItem";
   }
 }

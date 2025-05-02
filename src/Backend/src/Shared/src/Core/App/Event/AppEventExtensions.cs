@@ -14,7 +14,7 @@ public static class AppEventExtensions
     this AppEventPayloadWithDataAsString payload)
   {
     var result = new AppEventPayloadWithDataAsDictionary(
-      payload.Data == null ? null : JsonSerializer.Deserialize<Dictionary<string, string?>>(payload.Data));
+      payload.Data != null ? JsonSerializer.Deserialize<Dictionary<string, string?>>(payload.Data) : null);
 
     Copy(payload, result);
 
@@ -30,7 +30,7 @@ public static class AppEventExtensions
     this AppEventPayloadWithDataAsDictionary payload)
   {
     var result = new AppEventPayloadWithDataAsString(
-      payload.Data == null ? null : JsonSerializer.Serialize(payload.Data));
+      payload.Data.Count > 0 ? JsonSerializer.Serialize(payload.Data) : null);
 
     Copy(payload, result);
 

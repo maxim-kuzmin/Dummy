@@ -27,37 +27,35 @@ public class AppIncomingEventAggregate(
 
       var entity = GetEntityToUpdate();
 
-      bool isCreatedAtChanged = HasChangedProperty(nameof(entity.CreatedAt)) && inserted.CreatedAt != entity.CreatedAt;
+      bool isCreatedAtPropertyChanged = PrepareChangedPropertyToUpdate(
+        nameof(entity.CreatedAt),
+        () => inserted.CreatedAt != entity.CreatedAt,
+        () => inserted.CreatedAt = entity.CreatedAt);
 
-      if (isCreatedAtChanged)
-      {
-        inserted.CreatedAt = entity.CreatedAt;
-      }
+      bool isLoadedAtPropertyChanged = PrepareChangedPropertyToUpdate(
+        nameof(entity.LoadedAt),
+        () => inserted.LoadedAt != entity.LoadedAt,
+        () => inserted.LoadedAt = entity.LoadedAt);
 
-      bool isLoadedAtChanged = HasChangedProperty(nameof(entity.LoadedAt)) && inserted.LoadedAt != entity.LoadedAt;
+      bool isEventIdPropertyChanged = PrepareChangedPropertyToUpdate(
+        nameof(entity.EventId),
+        () => inserted.EventId != entity.EventId,
+        () => inserted.EventId = entity.EventId);
 
-      if (isLoadedAtChanged)
-      {
-        inserted.LoadedAt = entity.LoadedAt;
-      }
+      bool isEventNamePropertyChanged = PrepareChangedPropertyToUpdate(
+        nameof(entity.EventName),
+        () => inserted.EventName != entity.EventName,
+        () => inserted.EventName = entity.EventName);
 
-      bool isEventIdChanged = HasChangedProperty(nameof(entity.EventId)) && inserted.EventId != entity.EventId;
+      bool isEntityChanged = isCreatedAtPropertyChanged
+        ||
+        isLoadedAtPropertyChanged
+        ||
+        isEventIdPropertyChanged
+        ||
+        isEventNamePropertyChanged;
 
-      if (isEventIdChanged)
-      {
-        inserted.EventId = entity.EventId;
-      }
-
-      bool isEventNameChanged = HasChangedProperty(nameof(entity.EventName)) && inserted.EventName != entity.EventName;
-
-      if (isEventNameChanged)
-      {
-        inserted.EventName = entity.EventName;
-      }
-
-      bool isChanged = isCreatedAtChanged || isLoadedAtChanged || isEventIdChanged || isEventNameChanged;
-
-      if (isChanged)
+      if (isEntityChanged)
       {
         return result;
       }
@@ -85,7 +83,7 @@ public class AppIncomingEventAggregate(
 
     entity.CreatedAt = value;
 
-    MarkPropertyAsChanged(nameof(entity.CreatedAt));
+    AddChangedProperty(nameof(entity.CreatedAt), entity.CreatedAt.ToString("O"));
   }
 
   /// <summary>
@@ -107,7 +105,7 @@ public class AppIncomingEventAggregate(
 
     entity.LoadedAt = value;
 
-    MarkPropertyAsChanged(nameof(entity.LoadedAt));
+    AddChangedProperty(nameof(entity.LoadedAt), entity.LoadedAt?.ToString("O"));
   }
 
   /// <summary>
@@ -140,7 +138,7 @@ public class AppIncomingEventAggregate(
 
     entity.EventId = value;
 
-    MarkPropertyAsChanged(nameof(entity.EventId));
+    AddChangedProperty(nameof(entity.EventId), entity.EventId);
   }
 
   /// <summary>
@@ -173,7 +171,7 @@ public class AppIncomingEventAggregate(
 
     entity.EventName = value;
 
-    MarkPropertyAsChanged(nameof(entity.EventName));
+    AddChangedProperty(nameof(entity.EventName), entity.EventName);
   }
 
   /// <summary>
@@ -195,7 +193,13 @@ public class AppIncomingEventAggregate(
 
     entity.ProcessedAt = value;
 
-    MarkPropertyAsChanged(nameof(entity.ProcessedAt));
+    AddChangedProperty(nameof(entity.ProcessedAt), entity.ProcessedAt?.ToString("O"));
+  }
+
+  /// <inheritdoc/>
+  protected sealed override string GetEntityName()
+  {
+    return "AppIncomingEvent";
   }
 
   /// <inheritdoc/>

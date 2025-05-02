@@ -27,34 +27,24 @@ public class AppOutgoingEventAggregate(
 
       var entity = GetEntityToUpdate();
 
-      bool isCreatedAtChanged = HasChangedProperty(nameof(entity.CreatedAt))
-        &&
-        inserted.CreatedAt != entity.CreatedAt;
+      bool isCreatedAtPropertyChanged = PrepareChangedPropertyToUpdate(
+        nameof(entity.CreatedAt),
+        () => inserted.CreatedAt != entity.CreatedAt,
+        () => inserted.CreatedAt = entity.CreatedAt);
 
-      if (isCreatedAtChanged)
-      {
-        inserted.CreatedAt = entity.CreatedAt;
-      }
+      bool isNamePropertyChanged = PrepareChangedPropertyToUpdate(
+        nameof(entity.Name),
+        () => inserted.Name != entity.Name,
+        () => inserted.Name = entity.Name);
 
-      bool isNameChanged = HasChangedProperty(nameof(entity.Name)) && inserted.Name != entity.Name;
+      bool isPublishedAtPropertyChanged = PrepareChangedPropertyToUpdate(
+        nameof(entity.PublishedAt),
+        () => inserted.PublishedAt != entity.PublishedAt,
+        () => inserted.PublishedAt = entity.PublishedAt);
 
-      if (isNameChanged)
-      {
-        inserted.Name = entity.Name;
-      }
+      bool isEntityChanged = isCreatedAtPropertyChanged || isNamePropertyChanged || isPublishedAtPropertyChanged;
 
-      bool isPublishedAtChanged = HasChangedProperty(nameof(entity.PublishedAt))
-        &&
-        inserted.PublishedAt != entity.PublishedAt;
-
-      if (isPublishedAtChanged)
-      {
-        inserted.PublishedAt = entity.PublishedAt;
-      }
-
-      bool isChanged = isCreatedAtChanged || isNameChanged || isPublishedAtChanged;
-
-      if (isChanged)
+      if (isEntityChanged)
       {
         return result;
       }
@@ -82,7 +72,7 @@ public class AppOutgoingEventAggregate(
 
     entity.CreatedAt = value;
 
-    MarkPropertyAsChanged(nameof(entity.CreatedAt));
+    AddChangedProperty(nameof(entity.CreatedAt), entity.CreatedAt.ToString("O"));
   }
 
   /// <summary>
@@ -115,7 +105,7 @@ public class AppOutgoingEventAggregate(
 
     entity.Name = value;
 
-    MarkPropertyAsChanged(nameof(entity.Name));
+    AddChangedProperty(nameof(entity.Name), entity.Name);
   }
 
   /// <summary>
@@ -137,7 +127,13 @@ public class AppOutgoingEventAggregate(
 
     entity.PublishedAt = value;
 
-    MarkPropertyAsChanged(nameof(entity.PublishedAt));
+    AddChangedProperty(nameof(entity.PublishedAt), entity.PublishedAt?.ToString("O"));
+  }
+
+  /// <inheritdoc/>
+  protected sealed override string GetEntityName()
+  {
+    return "AppOutgoingEvent";
   }
 
   /// <inheritdoc/>

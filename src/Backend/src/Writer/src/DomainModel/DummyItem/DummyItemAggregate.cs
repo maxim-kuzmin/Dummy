@@ -27,16 +27,14 @@ public class DummyItemAggregate(
 
       var entity = GetEntityToUpdate();
 
-      bool isNameChanged = HasChangedProperty(nameof(entity.Name)) && inserted.Name != entity.Name;
+      bool isNamePropertyChanged = PrepareChangedPropertyToUpdate(
+        nameof(entity.Name),
+        () => inserted.Name != entity.Name,
+        () => inserted.Name = entity.Name);
 
-      if (isNameChanged)
-      {
-        inserted.Name = entity.Name;
-      }
+      bool isEntityChanged = isNamePropertyChanged;
 
-      bool isChanged = isNameChanged;
-
-      if (isChanged)
+      if (isEntityChanged)
       {
         return result;
       }
@@ -75,7 +73,13 @@ public class DummyItemAggregate(
 
     entity.Name = value;
 
-    MarkPropertyAsChanged(nameof(entity.Name));
+    AddChangedProperty(nameof(entity.Name), entity.Name);
+  }
+
+  /// <inheritdoc/>
+  protected sealed override string GetEntityName()
+  {
+    return "DummyItem";
   }
 
   /// <inheritdoc/>

@@ -27,25 +27,19 @@ public class AppIncomingEventPayloadAggregate(
 
       var entity = GetEntityToUpdate();
 
-      bool isAppIncomingEventObjectIdChanged = HasChangedProperty(nameof(entity.AppIncomingEventObjectId))
-        &&
-        inserted.AppIncomingEventObjectId != entity.AppIncomingEventObjectId;
+      bool isAppIncomingEventObjectIdPropertyChanged = PrepareChangedPropertyToUpdate(
+        nameof(entity.AppIncomingEventObjectId),
+        () => inserted.AppIncomingEventObjectId != entity.AppIncomingEventObjectId,
+        () => inserted.AppIncomingEventObjectId = entity.AppIncomingEventObjectId);
 
-      if (isAppIncomingEventObjectIdChanged)
-      {
-        inserted.AppIncomingEventObjectId = entity.AppIncomingEventObjectId;
-      }
+      bool isDataPropertyChanged = PrepareChangedPropertyToUpdate(
+        nameof(entity.Data),
+        () => inserted.Data != entity.Data,
+        () => inserted.Data = entity.Data);
 
-      bool isDataChanged = HasChangedProperty(nameof(entity.Data)) && inserted.Data != entity.Data;
+      bool isEntityChanged = isAppIncomingEventObjectIdPropertyChanged || isDataPropertyChanged;
 
-      if (isDataChanged)
-      {
-        inserted.Data = entity.Data;
-      }
-
-      bool isChanged = isAppIncomingEventObjectIdChanged || isDataChanged;
-
-      if (isChanged)
+      if (isEntityChanged)
       {
         return result;
       }
@@ -84,7 +78,7 @@ public class AppIncomingEventPayloadAggregate(
 
     entity.AppIncomingEventObjectId = value;
 
-    MarkPropertyAsChanged(nameof(entity.AppIncomingEventObjectId));
+    AddChangedProperty(nameof(entity.AppIncomingEventObjectId), entity.AppIncomingEventObjectId);
   }
 
   /// <summary>
@@ -108,7 +102,7 @@ public class AppIncomingEventPayloadAggregate(
 
     entity.EntityConcurrencyTokenToDelete = value;
 
-    MarkPropertyAsChanged(nameof(entity.EntityConcurrencyTokenToDelete));
+    AddChangedProperty(nameof(entity.EntityConcurrencyTokenToDelete), entity.EntityConcurrencyTokenToDelete);
   }
 
   /// <summary>
@@ -132,7 +126,7 @@ public class AppIncomingEventPayloadAggregate(
 
     entity.EntityConcurrencyTokenToInsert = value;
 
-    MarkPropertyAsChanged(nameof(entity.EntityConcurrencyTokenToInsert));
+    AddChangedProperty(nameof(entity.EntityConcurrencyTokenToInsert), entity.EntityConcurrencyTokenToInsert);
   }
 
   /// <summary>
@@ -156,7 +150,7 @@ public class AppIncomingEventPayloadAggregate(
 
     entity.Data = value;
 
-    MarkPropertyAsChanged(nameof(entity.Data));
+    AddChangedProperty(nameof(entity.Data), entity.Data);
   }
 
   /// <summary>
@@ -189,7 +183,7 @@ public class AppIncomingEventPayloadAggregate(
 
     entity.EntityId = value;
 
-    MarkPropertyAsChanged(nameof(entity.EntityId));
+    AddChangedProperty(nameof(entity.EntityId), entity.EntityId);
   }
 
   /// <summary>
@@ -222,7 +216,7 @@ public class AppIncomingEventPayloadAggregate(
 
     entity.EntityName = value;
 
-    MarkPropertyAsChanged(nameof(entity.EntityName));
+    AddChangedProperty(nameof(entity.EntityName), entity.EntityName);
   }
 
   /// <summary>
@@ -255,7 +249,7 @@ public class AppIncomingEventPayloadAggregate(
 
     entity.EventPayloadId = value;
 
-    MarkPropertyAsChanged(nameof(entity.EventPayloadId));
+    AddChangedProperty(nameof(entity.EventPayloadId), entity.EventPayloadId);
   }
 
   /// <summary>
@@ -277,7 +271,13 @@ public class AppIncomingEventPayloadAggregate(
 
     entity.Position = value;
 
-    MarkPropertyAsChanged(nameof(entity.Position));
+    AddChangedProperty(nameof(entity.Position), entity.Position.ToString());
+  }
+
+  /// <inheritdoc/>
+  protected sealed override string GetEntityName()
+  {
+    return "AppIncomingEventPayload";
   }
 
   /// <inheritdoc/>

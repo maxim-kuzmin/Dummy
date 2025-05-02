@@ -5,12 +5,13 @@
 /// </summary>
 /// <typeparam name="TEntity">Тип сущности.</typeparam>
 /// <typeparam name="TPrimaryKey">Тип первичного ключа.</typeparam>
-/// <param name="_entityToChange">Сущность для изменения.</param>
-public class AggregateBase<TEntity, TPrimaryKey>(TEntity? _entityToChange = null)
+public abstract class AggregateBase<TEntity, TPrimaryKey>
   where TEntity : class, IEntityBase<TPrimaryKey>, new()
   where TPrimaryKey : IEquatable<TPrimaryKey>
 {
-  private readonly HashSet<string> _changedProperties = [];
+  private readonly TEntity? _entityToChange;
+
+  private readonly AppEventPayloadWithDataAsDictionary _payload;
 
   private TEntity? _entityToUpdate;
 
@@ -18,6 +19,30 @@ public class AggregateBase<TEntity, TPrimaryKey>(TEntity? _entityToChange = null
   /// Ошибки обновления.
   /// </summary>
   protected HashSet<AppError> UpdateErrors { get; } = [];
+
+  /// <summary>
+  /// Конструктор.
+  /// </summary>
+  /// <param name="entityToChange">Сущность для изменения.</param>
+  public AggregateBase(TEntity? entityToChange = null)
+  {
+    _entityToChange = entityToChange;
+
+    _payload = new()
+    {
+      EntityName = GetEntityName()
+    };
+  }
+
+  /// <summary>
+  /// Добавить изменённое свойство.
+  /// </summary>
+  /// <param name="propertyName">Имя свойства.</param>
+  /// <param name="propertyValueAsString">Значение свойства в виде строки.</param>
+  protected void AddChangedProperty(string propertyName, string? propertyValueAsString)
+  {
+    _payload.Data[propertyName] = propertyValueAsString;
+  }
 
   /// <summary>
   /// Получить результат для создания.
@@ -70,6 +95,12 @@ public class AggregateBase<TEntity, TPrimaryKey>(TEntity? _entityToChange = null
   }
 
   /// <summary>
+  /// Получить имя сущности.
+  /// </summary>
+  /// <returns>Имя сущности.</returns>
+  protected abstract string GetEntityName();
+
+  /// <summary>
   /// Получить сушность для обновления.
   /// </summary>
   /// <returns>Сущность для обновления.</returns>
@@ -100,7 +131,7 @@ public class AggregateBase<TEntity, TPrimaryKey>(TEntity? _entityToChange = null
   /// <returns>Если есть изменённые свойства, то true, иначе - false.</returns>
   protected bool HasChangedProperties()
   {
-    return _changedProperties.Count > 0;
+    return _payload.Data.Count > 0;
   }
 
   /// <summary>
@@ -110,16 +141,7 @@ public class AggregateBase<TEntity, TPrimaryKey>(TEntity? _entityToChange = null
   /// <returns>Если значение свойства изменилось, то true, иначе - false.</returns>
   protected bool HasChangedProperty(string propertyName)
   {
-    return _changedProperties.Contains(propertyName);
-  }
-
-  /// <summary>
-  /// Пометить свойство как изменённое.
-  /// </summary>
-  /// <param name="propertyName">Имя свойства.</param>
-  protected void MarkPropertyAsChanged(string propertyName)
-  {
-    _changedProperties.Add(propertyName);
+    return _payload.Data.ContainsKey(propertyName);
   }
 
   /// <summary>
@@ -144,5 +166,40 @@ public class AggregateBase<TEntity, TPrimaryKey>(TEntity? _entityToChange = null
   /// <param name="entity">Обновляемая сущность.</param>
   protected virtual void OnGetResultToUpdate(TEntity entity)
   {
+  }
+
+  /// <summary>
+  /// Подготовить изменённое свойство к обновлению.
+  /// </summary>
+  /// <param name="propertyName">Имя свойства.</param>
+  /// <param name="funcToCompare">Функция для сравнения.</param>
+  /// <param name="actionToUpdate">Действие для обновления.</param>
+  /// <returns>Если свойство обновилось, то true, иначе - false.</returns>
+  protected bool PrepareChangedPropertyToUpdate(
+    string propertyName,
+    Func<bool> funcToCompare,
+    Action actionToUpdate)
+  {
+    bool isPropertyChanged = HasChangedProperty(propertyName) && funcToCompare.Invoke();
+
+    if (isPropertyChanged)
+    {
+      actionToUpdate.Invoke();
+    }
+    else
+    {
+      RemoveChangedProperty(propertyName);
+    }
+
+    return isPropertyChanged;
+  }
+
+  /// <summary>
+  /// Удалить изменённое свойство.
+  /// </summary>
+  /// <param name="propertyName">Имя свойства.</param>
+  protected void RemoveChangedProperty(string propertyName)
+  {
+    _payload.Data.Remove(propertyName);
   }
 }
