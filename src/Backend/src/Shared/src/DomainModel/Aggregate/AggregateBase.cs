@@ -175,10 +175,7 @@ public abstract class AggregateBase<TEntity, TPrimaryKey>
   /// <param name="funcToCompare">Функция для сравнения.</param>
   /// <param name="actionToUpdate">Действие для обновления.</param>
   /// <returns>Если свойство обновилось, то true, иначе - false.</returns>
-  protected bool PrepareChangedPropertyToUpdate(
-    string propertyName,
-    Func<bool> funcToCompare,
-    Action actionToUpdate)
+  protected bool PrepareChangedPropertyToUpdate(string propertyName, Func<bool> funcToCompare, Action actionToUpdate)
   {
     if (!HasChangedProperty(propertyName))
     {
