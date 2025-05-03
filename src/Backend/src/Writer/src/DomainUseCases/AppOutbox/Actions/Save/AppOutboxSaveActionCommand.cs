@@ -1,10 +1,10 @@
 ﻿namespace Makc.Dummy.Writer.DomainUseCases.AppOutbox.Actions.Save;
 
 /// <summary>
-/// Команда действия по сохранению в базе данных исходящего события приложения, помеченного как неопубликованное.
+/// Команда действия по сохранению исходящего сообщения приложения.
 /// </summary>
-/// <param name="AppEventName">Имя события приложения.</param>
-/// <param name="AppEventPayloads">Полезные нагрузки события приложения.</param>
+/// <param name="EventName">Имя события.</param>
+/// <param name="Payloads">Полезные нагрузки.</param>
 public record AppOutboxSaveActionCommand(
-  string AppEventName,
-  List<AppEventPayloadWithDataAsString> AppEventPayloads) : ICommand<Result>;
+  string EventName,
+  List<AppEventPayloadWithDataAsString> Payloads) : ICommand<Result>;

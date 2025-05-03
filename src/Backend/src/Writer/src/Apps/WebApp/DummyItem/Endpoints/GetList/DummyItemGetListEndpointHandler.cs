@@ -17,7 +17,7 @@ public class DummyItemGetListEndpointHandler(IMediator _mediator) :
   /// <inheritdoc/>
   public override async Task HandleAsync(DummyItemGetListEndpointRequest request, CancellationToken cancellationToken)
   {
-    DummyItemGetListActionQuery query = request.ToDummyItemGetListActionQuery();
+    var query = request.ToDummyItemGetListActionQuery();
 
     var result = await _mediator.Send(query, cancellationToken);
 

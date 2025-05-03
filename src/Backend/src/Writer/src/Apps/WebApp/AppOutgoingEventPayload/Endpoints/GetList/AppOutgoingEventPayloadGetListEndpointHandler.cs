@@ -15,9 +15,11 @@ public class AppOutgoingEventPayloadGetListEndpointHandler(IMediator _mediator) 
   }
 
   /// <inheritdoc/>
-  public override async Task HandleAsync(AppOutgoingEventPayloadGetListEndpointRequest request, CancellationToken cancellationToken)
+  public override async Task HandleAsync(
+    AppOutgoingEventPayloadGetListEndpointRequest request,
+    CancellationToken cancellationToken)
   {
-    AppOutgoingEventPayloadGetListActionQuery query = request.ToAppOutgoingEventPayloadGetListActionQuery();
+    var query = request.ToAppOutgoingEventPayloadGetListActionQuery();
 
     var result = await _mediator.Send(query, cancellationToken);
 

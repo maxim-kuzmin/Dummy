@@ -5,7 +5,7 @@
 /// </summary>
 /// <param name="_mediator">Медиатор.</param>
 public class AppOutgoingEventUpdateEndpointHandler(IMediator _mediator) :
-  Endpoint<AppOutgoingEventUpdateActionCommand, AppOutgoingEventSingleDTO>
+  Endpoint<AppOutgoingEventUpdateEndpointRequest, AppOutgoingEventSingleDTO>
 {
   /// <inheritdoc/>
   public override void Configure()
@@ -15,9 +15,13 @@ public class AppOutgoingEventUpdateEndpointHandler(IMediator _mediator) :
   }
 
   /// <inheritdoc/>
-  public override async Task HandleAsync(AppOutgoingEventUpdateActionCommand request, CancellationToken cancellationToken)
+  public override async Task HandleAsync(
+    AppOutgoingEventUpdateEndpointRequest request,
+    CancellationToken cancellationToken)
   {
-    var result = await _mediator.Send(request, cancellationToken);
+    var command = request.ToAppOutgoingEventSaveActionCommand();
+
+    var result = await _mediator.Send(command, cancellationToken);
 
     await SendResultAsync(result.ToMinimalApiResult());
   }

@@ -15,7 +15,9 @@ public class AppOutgoingEventGetListEndpointHandler(IMediator _mediator) :
   }
 
   /// <inheritdoc/>
-  public override async Task HandleAsync(AppOutgoingEventGetListEndpointRequest request, CancellationToken cancellationToken)
+  public override async Task HandleAsync(
+    AppOutgoingEventGetListEndpointRequest request,
+    CancellationToken cancellationToken)
   {
     AppOutgoingEventGetListActionQuery query = request.ToAppOutgoingEventGetListActionQuery();
 

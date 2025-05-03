@@ -26,8 +26,12 @@ public static class AppExtensions
       services.Configure<AppConfigOptionsAuthenticationSection>(appConfigAuthenticationSection);
     }
 
+    services.AddTransient<IAppOutboxCommandService, AppOutboxCommandService>();
+
+    services.AddTransient<IAppOutgoingEventCommandService, AppOutgoingEventCommandService>();
     services.AddTransient<IAppOutgoingEventQueryService, AppOutgoingEventQueryService>();
 
+    services.AddTransient<IAppOutgoingEventPayloadCommandService, AppOutgoingEventPayloadCommandService>();
     services.AddTransient<IAppOutgoingEventPayloadQueryService, AppOutgoingEventPayloadQueryService>();
 
     services.AddScoped<IDummyItemCommandService, DummyItemCommandService>();    

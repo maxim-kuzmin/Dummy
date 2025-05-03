@@ -25,14 +25,21 @@ public static class AppEventExtensions
   /// Преобразовать к полезной нагрузке события приложения с данными виде строки.
   /// </summary>
   /// <param name="payload">Полезная нагрузка.</param>
+  /// <param name="position">Позиция.</param>
   /// <returns>Полезная нагрузка события приложения с данными виде строки.</returns>
   public static AppEventPayloadWithDataAsString ToAppEventPayloadWithDataAsString(
-    this AppEventPayloadWithDataAsDictionary payload)
+    this AppEventPayloadWithDataAsDictionary payload,
+    int position = 0)
   {
     var result = new AppEventPayloadWithDataAsString(
       payload.Data.Count > 0 ? JsonSerializer.Serialize(payload.Data) : null);
 
     Copy(payload, result);
+
+    if (position > 0)
+    {
+      result.Position = position;
+    }
 
     return result;
   }

@@ -61,7 +61,7 @@ public class DummyItemService(IMediator _mediator) : DummyItemServiceBase
 
     result.ThrowRpcExceptionIfNotSuccess();
 
-    return result.Value.ToDummyItemGetListActionGrpcReply();
+    return result.Value.ToDummyItemGetListActionReply();
   }
 
   public override async Task<DummyItemGetActionReply> Update(

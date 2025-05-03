@@ -6,11 +6,17 @@
 /// <param name="_mediator">Посредник.</param>
 public class AppOutgoingEventService(IMediator _mediator) : AppOutgoingEventServiceBase
 {
-  public override async Task<AppOutgoingEventGetActionReply> Create(
+  /// <summary>
+  /// Создать.
+  /// </summary>
+  /// <param name="request">Запрос gRPC.</param>
+  /// <param name="context"></param>
+  /// <returns>Отклик gRPC.</returns>
+  public sealed override async Task<AppOutgoingEventGetActionReply> Create(
     AppOutgoingEventCreateActionRequest request,
     ServerCallContext context)
   {
-    AppOutgoingEventCreateActionCommand command = request.ToAppOutgoingEventCreateActionCommand();
+    var command = request.ToAppOutgoingEventSaveActionCommand();
 
     var resultTask = _mediator.Send(command, context.CancellationToken);
 
@@ -21,9 +27,17 @@ public class AppOutgoingEventService(IMediator _mediator) : AppOutgoingEventServ
     return result.Value.ToAppOutgoingEventGetActionReply();
   }
 
-  public override async Task<Empty> Delete(AppOutgoingEventDeleteActionRequest request, ServerCallContext context)
+  /// <summary>
+  /// Удалить.
+  /// </summary>
+  /// <param name="request">Запрос gRPC.</param>
+  /// <param name="context"></param>
+  /// <returns>Отклик gRPC.</returns>
+  public sealed override async Task<Empty> Delete(
+    AppOutgoingEventDeleteActionRequest request,
+    ServerCallContext context)
   {
-    AppOutgoingEventDeleteActionCommand command = request.ToAppOutgoingEventDeleteActionCommand();
+    var command = request.ToAppOutgoingEventDeleteActionCommand();
 
     var resultTask = _mediator.Send(command, context.CancellationToken);
 
@@ -34,11 +48,17 @@ public class AppOutgoingEventService(IMediator _mediator) : AppOutgoingEventServ
     return new Empty();
   }
 
-  public override async Task<AppOutgoingEventGetActionReply> Get(
+  /// <summary>
+  /// Получить.
+  /// </summary>
+  /// <param name="request">Запрос gRPC.</param>
+  /// <param name="context"></param>
+  /// <returns>Отклик gRPC.</returns>
+  public sealed override async Task<AppOutgoingEventGetActionReply> Get(
     AppOutgoingEventGetActionRequest request,
     ServerCallContext context)
   {
-    AppOutgoingEventGetActionQuery query = request.ToAppOutgoingEventGetActionQuery();
+    var query = request.ToAppOutgoingEventGetActionQuery();
 
     var resultTask = _mediator.Send(query, context.CancellationToken);
 
@@ -49,11 +69,17 @@ public class AppOutgoingEventService(IMediator _mediator) : AppOutgoingEventServ
     return result.Value.ToAppOutgoingEventGetActionReply();
   }
 
-  public override async Task<AppOutgoingEventGetListActionReply> GetList(
+  /// <summary>
+  /// Получить список.
+  /// </summary>
+  /// <param name="request">Запрос gRPC.</param>
+  /// <param name="context"></param>
+  /// <returns>Отклик gRPC.</returns>
+  public sealed override async Task<AppOutgoingEventGetListActionReply> GetList(
     AppOutgoingEventGetListActionRequest request,
     ServerCallContext context)
   {
-    AppOutgoingEventGetListActionQuery query = request.ToAppOutgoingEventGetListActionQuery();
+    var query = request.ToAppOutgoingEventGetListActionQuery();
 
     var resultTask = _mediator.Send(query, context.CancellationToken);
 
@@ -61,14 +87,20 @@ public class AppOutgoingEventService(IMediator _mediator) : AppOutgoingEventServ
 
     result.ThrowRpcExceptionIfNotSuccess();
 
-    return result.Value.ToAppOutgoingEventGetListActionGrpcReply();
+    return result.Value.ToAppOutgoingEventGetListActionReply();
   }
 
-  public override async Task<AppOutgoingEventGetActionReply> Update(
+  /// <summary>
+  /// Обновить.
+  /// </summary>
+  /// <param name="request">Запрос gRPC.</param>
+  /// <param name="context"></param>
+  /// <returns>Отклик gRPC.</returns>
+  public sealed override async Task<AppOutgoingEventGetActionReply> Update(
     AppOutgoingEventUpdateActionRequest request,
     ServerCallContext context)
   {
-    AppOutgoingEventUpdateActionCommand command = request.ToAppOutgoingEventUpdateActionCommand();
+    var command = request.ToAppOutgoingEventSaveActionCommand();
 
     var resultTask = _mediator.Send(command, context.CancellationToken);
 

@@ -51,7 +51,7 @@ public static class DummyItemExtensions
     };
   }
 
-  public static DummyItemGetListActionReply ToDummyItemGetListActionGrpcReply(this DummyItemListDTO dto)
+  public static DummyItemGetListActionReply ToDummyItemGetListActionReply(this DummyItemListDTO dto)
   {
     DummyItemGetListActionReply result = new()
     {

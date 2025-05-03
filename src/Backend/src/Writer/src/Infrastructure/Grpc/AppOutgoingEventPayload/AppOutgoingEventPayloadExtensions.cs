@@ -5,28 +5,24 @@
 /// </summary>
 public static class AppOutgoingEventPayloadExtensions
 {
-  public static AppOutgoingEventPayloadCreateActionCommand ToAppOutgoingEventPayloadCreateActionCommand(
-    this AppOutgoingEventPayloadCreateActionRequest request)
-  {
-    AppEventPayloadWithDataAsString payload = new(request.Data)
-    {
-      EntityConcurrencyTokenToDelete = request.EntityConcurrencyTokenToDelete,
-      EntityConcurrencyTokenToInsert = request.EntityConcurrencyTokenToInsert,
-      EntityId = request.EntityId,
-      EntityName = request.EntityName,      
-      Position = request.Position
-    };
-
-    return new(request.AppOutgoingEventId, payload);
-  }
-
+  /// <summary>
+  /// Преобразовать к команде действия по удалению полезной нагрузки исходящего события приложения.
+  /// </summary>
+  /// <param name="request">Запрос gRPC.</param>
+  /// <returns>Команда.</returns>
   public static AppOutgoingEventPayloadDeleteActionCommand ToAppOutgoingEventPayloadDeleteActionCommand(
     this AppOutgoingEventPayloadDeleteActionRequest request)
   {
     return new(request.Id);
   }
 
-  public static AppOutgoingEventPayloadGetActionQuery ToAppOutgoingEventPayloadGetActionQuery(this AppOutgoingEventPayloadGetActionRequest request)
+  /// <summary>
+  /// Преобразовать к запросу действия по получению полезной нагрузки исходящего события приложения.
+  /// </summary>
+  /// <param name="request">Запрос gRPC.</param>
+  /// <returns>Запрос.</returns>
+  public static AppOutgoingEventPayloadGetActionQuery ToAppOutgoingEventPayloadGetActionQuery(
+    this AppOutgoingEventPayloadGetActionRequest request)
   {
     return new()
     {
@@ -34,7 +30,13 @@ public static class AppOutgoingEventPayloadExtensions
     };
   }
 
-  public static AppOutgoingEventPayloadGetActionReply ToAppOutgoingEventPayloadGetActionReply(this AppOutgoingEventPayloadSingleDTO dto)
+  /// <summary>
+  /// Преобразовать к отклику gRPC действия по получению полезной нагрузки исходящего события приложения.
+  /// </summary>
+  /// <param name="dto">Объект передачи данных.</param>
+  /// <returns>Отклик gRPC.</returns>
+  public static AppOutgoingEventPayloadGetActionReply ToAppOutgoingEventPayloadGetActionReply(
+    this AppOutgoingEventPayloadSingleDTO dto)
   {
     return new()
     {
@@ -49,6 +51,11 @@ public static class AppOutgoingEventPayloadExtensions
     };
   }
 
+  /// <summary>
+  /// Преобразовать к запросу действия по получению списка полезных нагрузок исходящих событий приложения.
+  /// </summary>
+  /// <param name="request">Запрос gRPC.</param>
+  /// <returns>Запрос.</returns>
   public static AppOutgoingEventPayloadGetListActionQuery ToAppOutgoingEventPayloadGetListActionQuery(
     this AppOutgoingEventPayloadGetListActionRequest request)
   {
@@ -64,7 +71,13 @@ public static class AppOutgoingEventPayloadExtensions
     };
   }
 
-  public static AppOutgoingEventPayloadGetListActionReply ToAppOutgoingEventPayloadGetListActionGrpcReply(this AppOutgoingEventPayloadListDTO dto)
+  /// <summary>
+  /// Преобразовать к отклику gRPC действия по получению списка полезных нагрузок исходящих событий приложения.
+  /// </summary>
+  /// <param name="dto">Объект передачи данных.</param>
+  /// <returns>Отклик gRPC.</returns>
+  public static AppOutgoingEventPayloadGetListActionReply ToAppOutgoingEventPayloadGetListActionReply(
+    this AppOutgoingEventPayloadListDTO dto)
   {
     AppOutgoingEventPayloadGetListActionReply result = new()
     {
@@ -91,7 +104,32 @@ public static class AppOutgoingEventPayloadExtensions
     return result;
   }
 
-  public static AppOutgoingEventPayloadUpdateActionCommand ToAppOutgoingEventPayloadUpdateActionCommand(
+  /// <summary>
+  /// Преобразовать к команде действия по сохранению полезной нагрузки исходящего события приложения.
+  /// </summary>
+  /// <param name="request">Запрос gRPC.</param>
+  /// <returns>Команда.</returns>
+  public static AppOutgoingEventPayloadSaveActionCommand ToAppOutgoingEventPayloadSaveActionCommand(
+    this AppOutgoingEventPayloadCreateActionRequest request)
+  {
+    AppEventPayloadWithDataAsString payload = new(request.Data)
+    {
+      EntityConcurrencyTokenToDelete = request.EntityConcurrencyTokenToDelete,
+      EntityConcurrencyTokenToInsert = request.EntityConcurrencyTokenToInsert,
+      EntityId = request.EntityId,
+      EntityName = request.EntityName,
+      Position = request.Position
+    };
+
+    return new(0, request.AppOutgoingEventId, payload);
+  }
+
+  /// <summary>
+  /// Преобразовать к команде действия по сохранению полезной нагрузки исходящего события приложения.
+  /// </summary>
+  /// <param name="request">Запрос gRPC.</param>
+  /// <returns>Команда.</returns>
+  public static AppOutgoingEventPayloadSaveActionCommand ToAppOutgoingEventPayloadSaveActionCommand(
     this AppOutgoingEventPayloadUpdateActionRequest request)
   {
     AppEventPayloadWithDataAsString payload = new(request.Data)

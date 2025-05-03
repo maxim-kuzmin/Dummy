@@ -1,12 +1,12 @@
-﻿namespace Makc.Dummy.Writer.DomainUseCases.AppOutgoingEventPayload.Actions.Update;
+﻿namespace Makc.Dummy.Writer.DomainUseCases.AppOutgoingEventPayload.Actions.Save;
 
 /// <summary>
-/// Команда действия по обновлению полезной нагрузки исходящего события приложения.
+/// Команда действия по сохранению полезной нагрузки исходящего события приложения.
 /// </summary>
 /// <param name="Id">Идентификатор.</param>
 /// <param name="AppOutgoingEventId">Идентификатор исходящего события приложения.</param>
 /// <param name="Payload">Полезная нагрузка.</param>
-public record AppOutgoingEventPayloadUpdateActionCommand(
+public record AppOutgoingEventPayloadSaveActionCommand(
   long Id,
   long AppOutgoingEventId,
   AppEventPayloadWithDataAsString Payload) : ICommand<Result<AppOutgoingEventPayloadSingleDTO>>;

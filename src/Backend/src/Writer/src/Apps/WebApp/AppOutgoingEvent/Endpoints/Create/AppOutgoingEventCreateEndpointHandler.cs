@@ -5,7 +5,7 @@
 /// </summary>
 /// <param name="_mediator">Медиатор.</param>
 public class AppOutgoingEventCreateEndpointHandler(IMediator _mediator) :
-  Endpoint<AppOutgoingEventCreateActionCommand, long>
+  Endpoint<AppOutgoingEventCreateEndpointRequest, long>
 {
   /// <inheritdoc/>
   public override void Configure()
@@ -15,9 +15,13 @@ public class AppOutgoingEventCreateEndpointHandler(IMediator _mediator) :
   }
 
   /// <inheritdoc/>
-  public override async Task HandleAsync(AppOutgoingEventCreateActionCommand request, CancellationToken cancellationToken)
+  public override async Task HandleAsync(
+    AppOutgoingEventCreateEndpointRequest request,
+    CancellationToken cancellationToken)
   {
-    var result = await _mediator.Send(request, cancellationToken);
+    var command = request.ToAppOutgoingEventSaveActionCommand();
+
+    var result = await _mediator.Send(command, cancellationToken);
 
     await SendResultAsync(result.ToMinimalApiResult());
   }

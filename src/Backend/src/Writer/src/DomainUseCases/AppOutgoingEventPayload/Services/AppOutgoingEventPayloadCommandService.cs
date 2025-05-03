@@ -1,21 +1,16 @@
-﻿namespace Makc.Dummy.Writer.DomainUseCases.DummyItem.Services;
+﻿namespace Makc.Dummy.Writer.DomainUseCases.AppOutgoingEventPayload.Services;
 
 /// <summary>
-/// Сервис команд фиктивного предмета.
+/// Сервиса команд полезной нагрузки исходящего события приложения.
 /// </summary>
-/// <param name="_appDbExecutionContext">Контекст выполнения базы данных приложения.</param>
-/// <param name="_appOutboxCommandService">Сервис команд исходящего сообщения приложения.</param>
-/// <param name="_factory">Фабрика.</param>
-/// <param name="_repository">Репозиторий.</param>
-public class DummyItemCommandService(
+public class AppOutgoingEventPayloadCommandService(
   IAppDbSQLExecutionContext _appDbExecutionContext,
-  IAppOutboxCommandService _appOutboxCommandService,
-  IDummyItemFactory _factory,
-  IDummyItemEntityRepository _repository) : IDummyItemCommandService
+  IAppOutgoingEventPayloadFactory _factory,
+  IAppOutgoingEventPayloadEntityRepository _repository) : IAppOutgoingEventPayloadCommandService
 {
   /// <inheritdoc/>
   public async Task<AppCommandResultWithoutValue> Delete(
-    DummyItemDeleteActionCommand command,
+    AppOutgoingEventPayloadDeleteActionCommand command,
     CancellationToken cancellationToken)
   {
     var entity = await _repository.GetByIdAsync(command.Id, cancellationToken).ConfigureAwait(false);
@@ -62,21 +57,11 @@ public class DummyItemCommandService(
     return result;
   }
 
-  /// <inheritdoc/>
-  public Task<AppCommandResultWithoutValue> OnEntityChanged(
-    IEnumerable<AppEventPayloadWithDataAsDictionary> payloads,
+  public async Task<AppCommandResultWithValue<AppOutgoingEventPayloadSingleDTO>> Save(
+    AppOutgoingEventPayloadSaveActionCommand command,
     CancellationToken cancellationToken)
   {
-    var command = AppEventNameEnum.DummyItemChanged.ToAppOutboxSaveActionCommand(payloads);
-
-    return _appOutboxCommandService.Save(command, cancellationToken);
-  }
-
-  public async Task<AppCommandResultWithValue<DummyItemSingleDTO>> Save(
-    DummyItemSaveActionCommand command,
-    CancellationToken cancellationToken)
-  {
-    DummyItemEntity? entity = null;
+    AppOutgoingEventPayloadEntity? entity = null;
 
     if (command.Id > 0)
     {
@@ -127,29 +112,37 @@ public class DummyItemCommandService(
 
     await _appDbExecutionContext.Execute(FuncToExecute, cancellationToken).ConfigureAwait(false);
 
-    var dto = entity.ToDummyItemSingleDTO();
+    var dto = entity.ToAppOutgoingEventPayloadSingleDTO();
 
-    AppCommandResultWithValue<DummyItemSingleDTO> result = new(Result.Success(dto));
+    AppCommandResultWithValue<AppOutgoingEventPayloadSingleDTO> result = new(Result.Success(dto));
 
     result.Payloads.Add(payload);
-    
+
     return result;
   }
 
-  private AggregateResult<DummyItemEntity> GetAggregateResultToDelete(DummyItemEntity entity)
+  private AggregateResult<AppOutgoingEventPayloadEntity> GetAggregateResultToDelete(AppOutgoingEventPayloadEntity entity)
   {
     var aggregate = _factory.CreateAggregate(entity);
 
     return aggregate.GetResultToDelete();
   }
 
-  private AggregateResult<DummyItemEntity> GetAggregateResultToSave(
-    DummyItemEntity? entity,
-    DummyItemSaveActionCommand command)
+  private AggregateResult<AppOutgoingEventPayloadEntity> GetAggregateResultToSave(
+    AppOutgoingEventPayloadEntity? entity,
+    AppOutgoingEventPayloadSaveActionCommand command)
   {
     var aggregate = _factory.CreateAggregate(entity);
 
-    aggregate.UpdateName(command.Name);
+    var payload = command.Payload;
+
+    aggregate.UpdateAppOutgoingEventId(command.AppOutgoingEventId);
+    aggregate.UpdateData(payload.Data);
+    aggregate.UpdateEntityConcurrencyTokenToDelete(payload.EntityConcurrencyTokenToDelete);
+    aggregate.UpdateEntityConcurrencyTokenToInsert(payload.EntityConcurrencyTokenToInsert);
+    aggregate.UpdateEntityId(payload.EntityId);
+    aggregate.UpdateEntityName(payload.EntityName.ToString());
+    aggregate.UpdatePosition(payload.Position);
 
     return entity != null ? aggregate.GetResultToCreate() : aggregate.GetResultToUpdate();
   }

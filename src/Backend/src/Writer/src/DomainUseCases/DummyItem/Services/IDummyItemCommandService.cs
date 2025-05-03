@@ -6,10 +6,32 @@
 public interface IDummyItemCommandService
 {
   /// <summary>
-  /// Обработчик изменения сущности.
+  /// Удалить.
   /// </summary>
-  /// <param name="payload">Полезная нагрузка.</param>
+  /// <param name="command">Команда.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Результат.</returns>
-  Task<Result> OnEntityChanged(AppEventPayloadWithDataAsDictionary payload, CancellationToken cancellationToken);
+  Task<AppCommandResultWithoutValue> Delete(
+    DummyItemDeleteActionCommand command,
+    CancellationToken cancellationToken);
+
+  /// <summary>
+  /// Обработчик изменения сущности.
+  /// </summary>
+  /// <param name="payloads">Полезные нагрузки.</param>
+  /// <param name="cancellationToken">Токен отмены.</param>
+  /// <returns>Результат.</returns>
+  Task<AppCommandResultWithoutValue> OnEntityChanged(
+    IEnumerable<AppEventPayloadWithDataAsDictionary> payloads,
+    CancellationToken cancellationToken);
+
+  /// <summary>
+  /// Сохранить.
+  /// </summary>
+  /// <param name="command">Команда.</param>
+  /// <param name="cancellationToken">Токен отмены.</param>
+  /// <returns>Результат.</returns>
+  Task<AppCommandResultWithValue<DummyItemSingleDTO>> Save(
+    DummyItemSaveActionCommand command,
+    CancellationToken cancellationToken);
 }

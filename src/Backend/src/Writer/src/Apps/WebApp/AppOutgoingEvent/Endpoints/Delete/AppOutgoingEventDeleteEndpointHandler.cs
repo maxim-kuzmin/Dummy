@@ -15,7 +15,9 @@ public class AppOutgoingEventDeleteEndpointHandler(IMediator _mediator) :
   }
 
   /// <inheritdoc/>
-  public override async Task HandleAsync(AppOutgoingEventDeleteActionCommand request, CancellationToken cancellationToken)
+  public override async Task HandleAsync(
+    AppOutgoingEventDeleteActionCommand request,
+    CancellationToken cancellationToken)
   {
     var result = await _mediator.Send(request, cancellationToken);
 

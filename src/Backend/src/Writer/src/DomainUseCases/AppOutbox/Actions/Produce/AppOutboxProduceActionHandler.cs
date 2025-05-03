@@ -1,7 +1,7 @@
 ﻿namespace Makc.Dummy.Writer.DomainUseCases.AppOutbox.Actions.Produce;
 
 /// <summary>
-/// Обработчик действия по по отправке в очередь сообщений о неопубликованных событиях и пометки их как опубликованные.
+/// Обработчик действия выдаче исходящего сообщения приложения.
 /// </summary>
 /// <param name="_appMessageProducer">Поставщик сообщений приложения.</param>
 /// <param name="_logger">Логгер.</param>

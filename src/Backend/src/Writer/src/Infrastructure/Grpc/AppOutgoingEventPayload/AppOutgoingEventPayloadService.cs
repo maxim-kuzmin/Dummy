@@ -6,11 +6,17 @@
 /// <param name="_mediator">Посредник.</param>
 public class AppOutgoingEventPayloadService(IMediator _mediator) : AppOutgoingEventPayloadServiceBase
 {
+  /// <summary>
+  /// Создать.
+  /// </summary>
+  /// <param name="request">Запрос gRPC.</param>
+  /// <param name="context"></param>
+  /// <returns>Отклик gRPC.</returns>
   public override async Task<AppOutgoingEventPayloadGetActionReply> Create(
     AppOutgoingEventPayloadCreateActionRequest request,
     ServerCallContext context)
   {
-    AppOutgoingEventPayloadCreateActionCommand command = request.ToAppOutgoingEventPayloadCreateActionCommand();
+    var command = request.ToAppOutgoingEventPayloadSaveActionCommand();
 
     var resultTask = _mediator.Send(command, context.CancellationToken);
 
@@ -21,9 +27,17 @@ public class AppOutgoingEventPayloadService(IMediator _mediator) : AppOutgoingEv
     return result.Value.ToAppOutgoingEventPayloadGetActionReply();
   }
 
-  public override async Task<Empty> Delete(AppOutgoingEventPayloadDeleteActionRequest request, ServerCallContext context)
+  /// <summary>
+  /// Удалить.
+  /// </summary>
+  /// <param name="request">Запрос gRPC.</param>
+  /// <param name="context"></param>
+  /// <returns>Отклик gRPC.</returns>
+  public override async Task<Empty> Delete(
+    AppOutgoingEventPayloadDeleteActionRequest request,
+    ServerCallContext context)
   {
-    AppOutgoingEventPayloadDeleteActionCommand command = request.ToAppOutgoingEventPayloadDeleteActionCommand();
+    var command = request.ToAppOutgoingEventPayloadDeleteActionCommand();
 
     var resultTask = _mediator.Send(command, context.CancellationToken);
 
@@ -34,11 +48,17 @@ public class AppOutgoingEventPayloadService(IMediator _mediator) : AppOutgoingEv
     return new Empty();
   }
 
+  /// <summary>
+  /// Получить.
+  /// </summary>
+  /// <param name="request">Запрос gRPC.</param>
+  /// <param name="context"></param>
+  /// <returns>Отклик gRPC.</returns>
   public override async Task<AppOutgoingEventPayloadGetActionReply> Get(
     AppOutgoingEventPayloadGetActionRequest request,
     ServerCallContext context)
   {
-    AppOutgoingEventPayloadGetActionQuery query = request.ToAppOutgoingEventPayloadGetActionQuery();
+    var query = request.ToAppOutgoingEventPayloadGetActionQuery();
 
     var resultTask = _mediator.Send(query, context.CancellationToken);
 
@@ -49,11 +69,17 @@ public class AppOutgoingEventPayloadService(IMediator _mediator) : AppOutgoingEv
     return result.Value.ToAppOutgoingEventPayloadGetActionReply();
   }
 
+  /// <summary>
+  /// Получить список.
+  /// </summary>
+  /// <param name="request">Запрос gRPC.</param>
+  /// <param name="context"></param>
+  /// <returns>Отклик gRPC.</returns>
   public override async Task<AppOutgoingEventPayloadGetListActionReply> GetList(
     AppOutgoingEventPayloadGetListActionRequest request,
     ServerCallContext context)
   {
-    AppOutgoingEventPayloadGetListActionQuery query = request.ToAppOutgoingEventPayloadGetListActionQuery();
+    var query = request.ToAppOutgoingEventPayloadGetListActionQuery();
 
     var resultTask = _mediator.Send(query, context.CancellationToken);
 
@@ -61,14 +87,20 @@ public class AppOutgoingEventPayloadService(IMediator _mediator) : AppOutgoingEv
 
     result.ThrowRpcExceptionIfNotSuccess();
 
-    return result.Value.ToAppOutgoingEventPayloadGetListActionGrpcReply();
+    return result.Value.ToAppOutgoingEventPayloadGetListActionReply();
   }
 
+  /// <summary>
+  /// Обновить.
+  /// </summary>
+  /// <param name="request">Запрос gRPC.</param>
+  /// <param name="context"></param>
+  /// <returns>Отклик gRPC.</returns>
   public override async Task<AppOutgoingEventPayloadGetActionReply> Update(
     AppOutgoingEventPayloadUpdateActionRequest request,
     ServerCallContext context)
   {
-    AppOutgoingEventPayloadUpdateActionCommand command = request.ToAppOutgoingEventPayloadUpdateActionCommand();
+    var command = request.ToAppOutgoingEventPayloadSaveActionCommand();
 
     var resultTask = _mediator.Send(command, context.CancellationToken);
 

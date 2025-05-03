@@ -1,53 +1,17 @@
 ﻿namespace Makc.Dummy.Writer.DomainUseCases.AppOutbox.Actions.Save;
 
 /// <summary>
-/// Обработчик действия по сохранению в базе данных исходящего события приложения, помеченного как неопубликованное.
+/// Обработчик действия по сохранению исходящего сообщения приложения.
 /// </summary>
-/// <param name="_appDbExecutionContext">Контекст выполнения базы данных приложения.</param>
-/// <param name="_mediator">Медиатор.</param>
-public class AppOutboxSaveActionHandler(
-  IAppDbSQLExecutionContext _appDbExecutionContext,
-  IMediator _mediator) :
+/// <param name="_service">Сервис.</param>
+public class AppOutboxSaveActionHandler(IAppOutboxCommandService _service) :
   ICommandHandler<AppOutboxSaveActionCommand, Result>
 {
   /// <inheritdoc/>
   public async Task<Result> Handle(AppOutboxSaveActionCommand request, CancellationToken cancellationToken)
   {
-    async Task FuncToExecute(CancellationToken cancellationToken)
-    {
-      var appOutgoingEvent = await CreateAppOutgoingEvent(request, cancellationToken).ConfigureAwait(false);
+    var result = await _service.Save(request, cancellationToken).ConfigureAwait(false);
 
-      foreach (var payload in request.AppEventPayloads)
-      {
-        await CreateAppOutgoingEventPayload(appOutgoingEvent.Id, payload, cancellationToken).ConfigureAwait(false);
-      }
-    }
-
-    await _appDbExecutionContext.ExecuteInTransaction(FuncToExecute, cancellationToken).ConfigureAwait(false);
-
-    return Result.NoContent();
-  }
-
-  private async Task<AppOutgoingEventSingleDTO> CreateAppOutgoingEvent(
-    AppOutboxSaveActionCommand request,
-    CancellationToken cancellationToken)
-  {
-    AppOutgoingEventCreateActionCommand command = new(request.AppEventName.ToString(), DateTimeOffset.Now);
-
-    var result = await _mediator.Send(command, cancellationToken).ConfigureAwait(false);
-
-    return result.Value;
-  }
-
-  private async Task<AppOutgoingEventPayloadSingleDTO> CreateAppOutgoingEventPayload(
-    long appOutgoingEventId,
-    AppEventPayloadWithDataAsString payload,
-    CancellationToken cancellationToken)
-  {
-    AppOutgoingEventPayloadCreateActionCommand command = new(appOutgoingEventId, payload);
-
-    var result = await _mediator.Send(command, cancellationToken).ConfigureAwait(false);
-
-    return result.Value;
+    return result.Data;
   }
 }

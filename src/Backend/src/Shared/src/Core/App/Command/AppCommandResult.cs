@@ -3,8 +3,7 @@
 /// <summary>
 /// Результат команды приложения.
 /// </summary>
-/// <param name="Data">Данные.</param>
-public record AppCommandResult(Result Data)
+public record AppCommandResult
 {
   /// <summary>
   /// Полезные нагрузки.

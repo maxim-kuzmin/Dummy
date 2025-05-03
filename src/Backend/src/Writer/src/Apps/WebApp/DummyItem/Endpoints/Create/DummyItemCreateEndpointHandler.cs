@@ -5,7 +5,7 @@
 /// </summary>
 /// <param name="_mediator">Медиатор.</param>
 public class DummyItemCreateEndpointHandler(IMediator _mediator) :
-  Endpoint<DummyItemCreateActionCommand, long>
+  Endpoint<DummyItemCreateEndpointRequest, long>
 {
   /// <inheritdoc/>
   public override void Configure()
@@ -15,9 +15,11 @@ public class DummyItemCreateEndpointHandler(IMediator _mediator) :
   }
 
   /// <inheritdoc/>
-  public override async Task HandleAsync(DummyItemCreateActionCommand request, CancellationToken cancellationToken)
+  public override async Task HandleAsync(DummyItemCreateEndpointRequest request, CancellationToken cancellationToken)
   {
-    var result = await _mediator.Send(request, cancellationToken);
+    var command = request.ToDummyItemSaveActionCommand();
+
+    var result = await _mediator.Send(command, cancellationToken);
 
     await SendResultAsync(result.ToMinimalApiResult());
   }
