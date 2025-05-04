@@ -1,14 +1,14 @@
-﻿namespace Makc.Dummy.Reader.DomainUseCases.DummyItem.Actions.Update;
+﻿namespace Makc.Dummy.Reader.Apps.WebApp.DummyItem.Endpoints.Update;
 
 /// <summary>
-/// Команда действия по обновлению фиктивного предмета.
+/// Запрос конечной точки создания фиктивного предмета.
 /// </summary>
 /// <param name="ObjectId">Идентификатор объекта.</param>
 /// <param name="Id">Идентификатор.</param>
 /// <param name="Name">Имя.</param>
 /// <param name="ConcurrencyToken">Токен параллелизма.</param>
-public record DummyItemUpdateActionCommand(
-  string ObjectId,  
+public record DummyItemUpdateEndpointRequest(
+  string ObjectId,
   long Id,
   string Name,
-  string ConcurrencyToken) : ICommand<Result<DummyItemSingleDTO>>;
+  string ConcurrencyToken);

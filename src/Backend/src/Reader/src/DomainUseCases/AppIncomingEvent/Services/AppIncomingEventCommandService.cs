@@ -1,16 +1,16 @@
-﻿namespace Makc.Dummy.Reader.DomainUseCases.DummyItem.Services;
+﻿namespace Makc.Dummy.Reader.DomainUseCases.AppIncomingEvent.Services;
 
 /// <summary>
-/// Сервис команд фиктивного предмета.
+/// Сервис команд входящего события приложения.
 /// </summary>
-public class DummyItemCommandService(
+public class AppIncomingEventCommandService(
   IAppDbNoSQLExecutionContext _appDbExecutionContext,
-  IDummyItemFactory _factory,
-  IDummyItemEntityRepository _repository) : IDummyItemCommandService
+  IAppIncomingEventFactory _factory,
+  IAppIncomingEventEntityRepository _repository) : IAppIncomingEventCommandService
 {
   /// <inheritdoc/>
   public async Task<AppCommandResultWithoutValue> Delete(
-    DummyItemDeleteActionCommand command,
+    AppIncomingEventDeleteActionCommand command,
     CancellationToken cancellationToken)
   {
     var entity = await _repository.GetByObjectIdAsync(command.ObjectId, cancellationToken).ConfigureAwait(false);
@@ -57,11 +57,11 @@ public class DummyItemCommandService(
     return result;
   }
 
-  public async Task<AppCommandResultWithValue<DummyItemSingleDTO>> Save(
-    DummyItemSaveActionCommand command,
+  public async Task<AppCommandResultWithValue<AppIncomingEventSingleDTO>> Save(
+    AppIncomingEventSaveActionCommand command,
     CancellationToken cancellationToken)
   {
-    DummyItemEntity? entity = null;
+    AppIncomingEventEntity? entity = null;
 
     if (command.HasEntityBeingSavedAlreadyBeenCreated)
     {
@@ -107,36 +107,36 @@ public class DummyItemCommandService(
         entity = await _repository.AddAsync(entity, cancellationToken).ConfigureAwait(false);
 
         payload.EntityId = entity.GetPrimaryKeyAsString();
-      }
+      }        
     }
 
     await _appDbExecutionContext.Execute(FuncToExecute, cancellationToken).ConfigureAwait(false);
 
-    var dto = entity.ToDummyItemSingleDTO();
+    var dto = entity.ToAppIncomingEventSingleDTO();
 
-    AppCommandResultWithValue<DummyItemSingleDTO> result = new(Result.Success(dto));
+    AppCommandResultWithValue<AppIncomingEventSingleDTO> result = new(Result.Success(dto));
 
     result.Payloads.Add(payload);
 
     return result;
   }
 
-  private AggregateResult<DummyItemEntity> GetAggregateResultToDelete(DummyItemEntity entity)
+  private AggregateResult<AppIncomingEventEntity> GetAggregateResultToDelete(AppIncomingEventEntity entity)
   {
     var aggregate = _factory.CreateAggregate(entity);
 
     return aggregate.GetResultToDelete();
   }
 
-  private AggregateResult<DummyItemEntity> GetAggregateResultToSave(
-    DummyItemEntity? entity,
-    DummyItemSaveActionCommand command)
+  private AggregateResult<AppIncomingEventEntity> GetAggregateResultToSave(
+    AppIncomingEventEntity? entity,
+    AppIncomingEventSaveActionCommand command)
   {
     var aggregate = _factory.CreateAggregate(entity);
 
-    aggregate.UpdateConcurrencyToken(command.ConcurrencyToken);
-    aggregate.UpdateId(command.Id);
-    aggregate.UpdateName(command.Name);
+    aggregate.UpdateEventName(command.Name);
+    aggregate.UpdateLoadedAt(command.LoadedAt);    
+    aggregate.UpdateProcessedAt(command.ProcessedAt);
 
     return entity != null ? aggregate.GetResultToCreate() : aggregate.GetResultToUpdate();
   }

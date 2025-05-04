@@ -1,9 +1,9 @@
-﻿namespace Makc.Dummy.Reader.DomainUseCases.DummyItem.Services;
+﻿namespace Makc.Dummy.Reader.DomainUseCases.AppIncomingEventPayload.Services;
 
 /// <summary>
-/// Интерфейс сервиса команд фиктивного предмета.
+/// Интерфейс сервиса команд полезной нагрузки входящего события приложения.
 /// </summary>
-public interface IDummyItemCommandService
+public interface IAppIncomingEventPayloadCommandService
 {
   /// <summary>
   /// Удалить.
@@ -12,7 +12,7 @@ public interface IDummyItemCommandService
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Результат.</returns>
   Task<AppCommandResultWithoutValue> Delete(
-    DummyItemDeleteActionCommand command,
+    AppIncomingEventPayloadDeleteActionCommand command,
     CancellationToken cancellationToken);
 
   /// <summary>
@@ -21,7 +21,7 @@ public interface IDummyItemCommandService
   /// <param name="command">Команда.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Результат.</returns>
-  Task<AppCommandResultWithValue<DummyItemSingleDTO>> Save(
-    DummyItemSaveActionCommand command,
+  Task<AppCommandResultWithValue<AppIncomingEventPayloadSingleDTO>> Save(
+    AppIncomingEventPayloadSaveActionCommand command,
     CancellationToken cancellationToken);
 }

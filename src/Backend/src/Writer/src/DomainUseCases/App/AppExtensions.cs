@@ -34,7 +34,7 @@ public static class AppExtensions
     services.AddTransient<IAppOutgoingEventPayloadCommandService, AppOutgoingEventPayloadCommandService>();
     services.AddTransient<IAppOutgoingEventPayloadQueryService, AppOutgoingEventPayloadQueryService>();
 
-    services.AddScoped<IDummyItemCommandService, DummyItemCommandService>();    
+    services.AddTransient<IDummyItemCommandService, DummyItemCommandService>();    
     services.AddTransient<IDummyItemQueryService, DummyItemQueryService>();
 
     logger.LogInformation("Added application domain use cases");

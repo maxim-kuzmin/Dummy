@@ -63,7 +63,7 @@ public class AppOutgoingEventPayloadCommandService(
   {
     AppOutgoingEventPayloadEntity? entity = null;
 
-    if (command.ShouldEntityBeFoundById)
+    if (command.HasEntityBeingSavedAlreadyBeenCreated)
     {
       entity = await _repository.GetByIdAsync(command.Id, cancellationToken).ConfigureAwait(false);
 
@@ -98,7 +98,7 @@ public class AppOutgoingEventPayloadCommandService(
 
     async Task FuncToExecute(CancellationToken cancellationToken)
     {
-      if (command.ShouldEntityBeFoundById)
+      if (command.HasEntityBeingSavedAlreadyBeenCreated)
       {
         await _repository.UpdateAsync(entity, cancellationToken).ConfigureAwait(false);
       }

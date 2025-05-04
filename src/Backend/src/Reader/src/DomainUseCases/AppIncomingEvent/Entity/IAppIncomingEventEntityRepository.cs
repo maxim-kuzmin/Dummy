@@ -3,8 +3,7 @@
 /// <summary>
 /// Интерфейс репозитория сущности входящего события приложения.
 /// </summary>
-public interface IAppIncomingEventEntityRepository : IReadRepository<AppIncomingEventEntity>,
-  IRepository<AppIncomingEventEntity>
+public interface IAppIncomingEventEntityRepository : IEntityRepository<AppIncomingEventEntity>
 {
   /// <summary>
   /// Подсчитать асинхронно.

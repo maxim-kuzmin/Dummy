@@ -3,9 +3,7 @@
 /// <summary>
 /// Интерфейс репозитория сущности полезной нагрузки входящего события приложения.
 /// </summary>
-public interface IAppIncomingEventPayloadEntityRepository :
-  IReadRepository<AppIncomingEventPayloadEntity>,
-  IRepository<AppIncomingEventPayloadEntity>
+public interface IAppIncomingEventPayloadEntityRepository : IEntityRepository<AppIncomingEventPayloadEntity>
 {
   /// <summary>
   /// Подсчитать асинхронно.
@@ -21,9 +19,7 @@ public interface IAppIncomingEventPayloadEntityRepository :
   /// <param name="query">Запрос.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Сущность.</returns>
-  Task<AppIncomingEventPayloadEntity?> GetAsync(
-    AppIncomingEventPayloadSingleQuery query,
-    CancellationToken cancellationToken);
+  Task<AppIncomingEventPayloadEntity?> GetAsync(AppIncomingEventPayloadSingleQuery query, CancellationToken cancellationToken);
 
   /// <summary>
   /// Перечислить асинхронно.
@@ -31,7 +27,6 @@ public interface IAppIncomingEventPayloadEntityRepository :
   /// <param name="query">Запрос.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Список сущностей.</returns>
-  Task<List<AppIncomingEventPayloadEntity>> ListAsync(
-    AppIncomingEventPayloadListQuery query,
-    CancellationToken cancellationToken);
+  Task<List<AppIncomingEventPayloadEntity>> ListAsync(AppIncomingEventPayloadListQuery query, CancellationToken cancellationToken);
 }
+

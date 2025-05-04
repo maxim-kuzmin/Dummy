@@ -6,7 +6,7 @@
 public record AppIncomingEventSingleQuery
 {
   /// <summary>
-  /// Идентификатор.
+  /// Идентификатор объекта.
   /// </summary>
-  public long Id { get; set; }
+  public string? ObjectId { get; set; }
 }

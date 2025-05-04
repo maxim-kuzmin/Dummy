@@ -3,5 +3,5 @@
 /// <summary>
 /// Команда действия по удалению входящего события приложения.
 /// </summary>
-/// <param name="Id">Идентификатор.</param>
-public record AppIncomingEventDeleteActionCommand(long Id) : ICommand<Result>;
+/// <param name="ObjectId">Идентификатор объекта.</param>
+public record AppIncomingEventDeleteActionCommand(string ObjectId) : ICommand<Result>;

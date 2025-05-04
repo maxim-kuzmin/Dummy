@@ -3,12 +3,12 @@
 /// <summary>
 /// Команда действия по сохранению исходящего события приложения.
 /// </summary>
-/// <param name="ShouldEntityBeFoundById">Должна ли сущность быть найдена по идентификатору</param>
+/// <param name="HasEntityBeingSavedAlreadyBeenCreated">Была ли уже создана сохраняемая сущность?</param>
 /// <param name="Id">Идентификатор.</param>
 /// <param name="Name">Имя.</param>
 /// <param name="PublishedAt">Дата публикации.</param>
 public record AppOutgoingEventSaveActionCommand(
-  bool ShouldEntityBeFoundById,
+  bool HasEntityBeingSavedAlreadyBeenCreated,
   long Id,
   string Name,
   DateTimeOffset? PublishedAt) : ICommand<Result<AppOutgoingEventSingleDTO>>;

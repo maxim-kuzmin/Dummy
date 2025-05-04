@@ -3,62 +3,15 @@
 /// <summary>
 /// Обработчик действия по удалению входящего события приложения.
 /// </summary>
-/// <param name="_appDbExecutionContext">Контекст выполнения базы данных приложения.</param>
-/// <param name="_factory">Фабрика.</param>
-/// <param name="_repository">Репозиторий.</param>
-public class AppIncomingEventDeleteActionHandler(
-  IAppDbNoSQLExecutionContext _appDbExecutionContext,
-  IAppIncomingEventFactory _factory,
-  IAppIncomingEventEntityRepository _repository) :
+/// <param name="_service">Сервис.</param>
+public class AppIncomingEventDeleteActionHandler(IAppIncomingEventCommandService _service) :
   ICommandHandler<AppIncomingEventDeleteActionCommand, Result>
 {
   /// <inheritdoc/>
   public async Task<Result> Handle(AppIncomingEventDeleteActionCommand request, CancellationToken cancellationToken)
   {
-    var entity = await _repository.GetByIdAsync(request.Id, cancellationToken).ConfigureAwait(false);
+    var result = await _service.Delete(request, cancellationToken).ConfigureAwait(false);
 
-    if (entity == null)
-    {
-      return Result.NotFound();
-    }
-
-    var aggregateResult = GetAggregateResult(entity);
-
-    entity = aggregateResult.Entity;
-
-    if (entity == null)
-    {
-      return Result.Invalid();
-    }
-
-    var validationErrors = aggregateResult.ToValidationErrors();
-
-    if (validationErrors.Count > 0)
-    {
-      return Result.Invalid(validationErrors);
-    }
-
-    var payload = aggregateResult.Payload;
-
-    if (payload == null)
-    {
-      return Result.Forbidden();
-    }
-
-    async Task FuncToExecute(CancellationToken cancellationToken)
-    {
-      await _repository.DeleteAsync(entity, cancellationToken).ConfigureAwait(false);
-    }
-
-    await _appDbExecutionContext.Execute(FuncToExecute, cancellationToken).ConfigureAwait(false);
-
-    return Result.Success();
-  }
-
-  private AggregateResult<AppIncomingEventEntity> GetAggregateResult(AppIncomingEventEntity entity)
-  {
-    var aggregate = _factory.CreateAggregate(entity);
-
-    return aggregate.GetResultToDelete();
+    return result.Data;
   }
 }
