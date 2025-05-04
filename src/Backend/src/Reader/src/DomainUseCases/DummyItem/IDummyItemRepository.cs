@@ -3,7 +3,7 @@
 /// <summary>
 /// Интерфейс репозитория фиктивного предмета.
 /// </summary>
-public interface IDummyItemRepository : IEntityRepository<DummyItemEntity>
+public interface IDummyItemRepository : IObjectRepository<DummyItemEntity>
 {
   /// <summary>
   /// Подсчитать асинхронно.

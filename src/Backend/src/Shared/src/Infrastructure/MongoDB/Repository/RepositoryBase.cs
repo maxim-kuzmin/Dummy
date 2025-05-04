@@ -1,15 +1,15 @@
-﻿namespace Makc.Dummy.Shared.Infrastructure.MongoDB.Entity;
+﻿namespace Makc.Dummy.Shared.Infrastructure.MongoDB.Repository;
 
 /// <summary>
-/// Репозиторий сущности.
+/// Основа репозитория.
 /// </summary>
 /// <typeparam name="TEntity">Тип сущности.</typeparam>
 /// <param name="clientSessionHandle">Описатель сессии клиента.</param>
 /// <param name="collection">Коллекция.</param>
-public abstract class EntityRepository<TEntity>(
+public abstract class RepositoryBase<TEntity>(
   IClientSessionHandle clientSessionHandle,
   IMongoCollection<TEntity> collection) :
-  IEntityRepository<TEntity>
+  IObjectRepository<TEntity>
   where TEntity : EntityBaseWithStringPrimaryKey
 {
   /// <summary>
@@ -35,7 +35,7 @@ public abstract class EntityRepository<TEntity>(
   /// <inheritdoc/>
   public async Task DeleteAsync(TEntity entity, CancellationToken cancellationToken)
   {
-    Expression<Func<TEntity, bool>> filter = CreateFilterByPrimaryKey(entity.GetPrimaryKey());
+    var filter = CreateFilterByPrimaryKey(entity.GetPrimaryKey());
 
     var task = Collection.DeleteOneAsync(ClientSessionHandle, filter, cancellationToken: cancellationToken);
 
@@ -45,7 +45,7 @@ public abstract class EntityRepository<TEntity>(
   /// <inheritdoc/>
   public async Task<TEntity?> GetByObjectIdAsync(string objectId, CancellationToken cancellationToken)
   {
-    Expression<Func<TEntity, bool>> filter = CreateFilterByPrimaryKey(objectId);
+    var filter = CreateFilterByPrimaryKey(objectId);
 
     var task = Collection.Find(ClientSessionHandle, filter).FirstOrDefaultAsync(cancellationToken);
 
@@ -57,7 +57,7 @@ public abstract class EntityRepository<TEntity>(
   /// <inheritdoc/>
   public async Task UpdateAsync(TEntity entity, CancellationToken cancellationToken)
   {
-    Expression<Func<TEntity, bool>> filter = CreateFilterByPrimaryKey(entity.GetPrimaryKey());
+    var filter = CreateFilterByPrimaryKey(entity.GetPrimaryKey());
 
     var task = Collection.ReplaceOneAsync(ClientSessionHandle, filter, entity, cancellationToken: cancellationToken);
 

@@ -1,10 +1,10 @@
-﻿namespace Makc.Dummy.Shared.DomainUseCases.Repositories;
+﻿namespace Makc.Dummy.Shared.DomainUseCases.Repository;
 
 /// <summary>
-/// Интерфейс репозитория сущности.
+/// Интерфейс основы репозитория.
 /// </summary>
 /// <typeparam name="TEntity">Тип сущности.</typeparam>
-public interface IEntityRepository<TEntity>
+public interface IRepositoryBase<TEntity>
 {
   /// <summary>
   /// Добавить асинхронно.
@@ -21,14 +21,6 @@ public interface IEntityRepository<TEntity>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Задача.</returns>
   Task DeleteAsync(TEntity entity, CancellationToken cancellationToken);
-
-  /// <summary>
-  /// Получить по идентификатору объекта асинхронно.
-  /// </summary>
-  /// <param name="objectId">Идентификатор объекта.</param>
-  /// <param name="cancellationToken">Токен отмены.</param>
-  /// <returns>Запрошенная сущность.</returns>
-  Task<TEntity?> GetByObjectIdAsync(string objectId, CancellationToken cancellationToken);
 
   /// <summary>
   /// Обновить асинхронно.

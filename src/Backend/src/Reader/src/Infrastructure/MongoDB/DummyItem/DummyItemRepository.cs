@@ -10,7 +10,7 @@ public class DummyItemRepository(
   AppDbSettings appDbSettings,
   IClientSessionHandle clientSessionHandle,
   IMongoDatabase database) :
-  EntityRepository<DummyItemEntity>(
+  AppRepositoryBase<DummyItemEntity>(
     clientSessionHandle,
     database.GetCollection<DummyItemEntity>(appDbSettings.Entities.DummyItem.Collection)),
   IDummyItemRepository

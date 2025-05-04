@@ -3,7 +3,7 @@
 /// <summary>
 /// Интерфейс репозитория полезной нагрузки входящего события приложения.
 /// </summary>
-public interface IAppIncomingEventPayloadRepository : IEntityRepository<AppIncomingEventPayloadEntity>
+public interface IAppIncomingEventPayloadRepository : IObjectRepository<AppIncomingEventPayloadEntity>
 {
   /// <summary>
   /// Подсчитать асинхронно.
