@@ -27,17 +27,16 @@ public class AppIncomingEventPayloadAggregate(
 
       var source = GetEntityToUpdate();
 
-      bool isAppIncomingEventObjectIdPropertyChanged = PrepareChangedPropertyToUpdate(
-        nameof(source.AppIncomingEventObjectId),
-        () => target.AppIncomingEventObjectId != source.AppIncomingEventObjectId,
-        () => target.AppIncomingEventObjectId = source.AppIncomingEventObjectId);
-
-      bool isDataPropertyChanged = PrepareChangedPropertyToUpdate(
-        nameof(source.Data),
-        () => target.Data != source.Data,
-        () => target.Data = source.Data);
-
-      bool isEntityChanged = isAppIncomingEventObjectIdPropertyChanged || isDataPropertyChanged;
+      bool isEntityChanged =
+        PrepareChangedPropertyToUpdate(
+          nameof(source.AppIncomingEventObjectId),
+          () => target.AppIncomingEventObjectId != source.AppIncomingEventObjectId,
+          () => target.AppIncomingEventObjectId = source.AppIncomingEventObjectId)
+        ||
+        PrepareChangedPropertyToUpdate(
+          nameof(source.Data),
+          () => target.Data != source.Data,
+          () => target.Data = source.Data);
 
       if (isEntityChanged)
       {

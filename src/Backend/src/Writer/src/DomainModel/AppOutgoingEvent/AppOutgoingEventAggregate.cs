@@ -27,22 +27,21 @@ public class AppOutgoingEventAggregate(
 
       var source = GetEntityToUpdate();
 
-      bool isCreatedAtPropertyChanged = PrepareChangedPropertyToUpdate(
-        nameof(source.CreatedAt),
-        () => target.CreatedAt != source.CreatedAt,
-        () => target.CreatedAt = source.CreatedAt);
-
-      bool isNamePropertyChanged = PrepareChangedPropertyToUpdate(
-        nameof(source.Name),
-        () => target.Name != source.Name,
-        () => target.Name = source.Name);
-
-      bool isPublishedAtPropertyChanged = PrepareChangedPropertyToUpdate(
-        nameof(source.PublishedAt),
-        () => target.PublishedAt != source.PublishedAt,
-        () => target.PublishedAt = source.PublishedAt);
-
-      bool isEntityChanged = isCreatedAtPropertyChanged || isNamePropertyChanged || isPublishedAtPropertyChanged;
+      bool isEntityChanged =
+        PrepareChangedPropertyToUpdate(
+          nameof(source.CreatedAt),
+          () => target.CreatedAt != source.CreatedAt,
+          () => target.CreatedAt = source.CreatedAt)
+        ||
+        PrepareChangedPropertyToUpdate(
+          nameof(source.Name),
+          () => target.Name != source.Name,
+          () => target.Name = source.Name)
+        ||
+        PrepareChangedPropertyToUpdate(
+          nameof(source.PublishedAt),
+          () => target.PublishedAt != source.PublishedAt,
+          () => target.PublishedAt = source.PublishedAt);
 
       if (isEntityChanged)
       {

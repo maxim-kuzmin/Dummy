@@ -27,33 +27,26 @@ public class AppIncomingEventAggregate(
 
       var source = GetEntityToUpdate();
 
-      bool isCreatedAtPropertyChanged = PrepareChangedPropertyToUpdate(
-        nameof(source.CreatedAt),
-        () => target.CreatedAt != source.CreatedAt,
-        () => target.CreatedAt = source.CreatedAt);
-
-      bool isLoadedAtPropertyChanged = PrepareChangedPropertyToUpdate(
-        nameof(source.LoadedAt),
-        () => target.LoadedAt != source.LoadedAt,
-        () => target.LoadedAt = source.LoadedAt);
-
-      bool isEventIdPropertyChanged = PrepareChangedPropertyToUpdate(
-        nameof(source.EventId),
-        () => target.EventId != source.EventId,
-        () => target.EventId = source.EventId);
-
-      bool isEventNamePropertyChanged = PrepareChangedPropertyToUpdate(
-        nameof(source.EventName),
-        () => target.EventName != source.EventName,
-        () => target.EventName = source.EventName);
-
-      bool isEntityChanged = isCreatedAtPropertyChanged
+      bool isEntityChanged =
+        PrepareChangedPropertyToUpdate(
+          nameof(source.CreatedAt),
+          () => target.CreatedAt != source.CreatedAt,
+          () => target.CreatedAt = source.CreatedAt)
         ||
-        isLoadedAtPropertyChanged
+        PrepareChangedPropertyToUpdate(
+          nameof(source.LoadedAt),
+          () => target.LoadedAt != source.LoadedAt,
+          () => target.LoadedAt = source.LoadedAt)
         ||
-        isEventIdPropertyChanged
+        PrepareChangedPropertyToUpdate(
+          nameof(source.EventId),
+          () => target.EventId != source.EventId,
+          () => target.EventId = source.EventId)
         ||
-        isEventNamePropertyChanged;
+        PrepareChangedPropertyToUpdate(
+          nameof(source.EventName),
+          () => target.EventName != source.EventName,
+          () => target.EventName = source.EventName);
 
       if (isEntityChanged)
       {
