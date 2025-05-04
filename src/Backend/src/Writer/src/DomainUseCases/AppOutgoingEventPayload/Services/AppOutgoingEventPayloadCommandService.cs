@@ -63,7 +63,7 @@ public class AppOutgoingEventPayloadCommandService(
   {
     AppOutgoingEventPayloadEntity? entity = null;
 
-    if (command.Id > 0)
+    if (command.ShouldEntityBeFoundById)
     {
       entity = await _repository.GetByIdAsync(command.Id, cancellationToken).ConfigureAwait(false);
 
@@ -98,7 +98,7 @@ public class AppOutgoingEventPayloadCommandService(
 
     async Task FuncToExecute(CancellationToken cancellationToken)
     {
-      if (entity.Id > 0)
+      if (command.ShouldEntityBeFoundById)
       {
         await _repository.UpdateAsync(entity, cancellationToken).ConfigureAwait(false);
       }

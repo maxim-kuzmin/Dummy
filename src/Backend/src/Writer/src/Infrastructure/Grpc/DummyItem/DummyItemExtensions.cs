@@ -99,7 +99,7 @@ public static class DummyItemExtensions
   public static DummyItemSaveActionCommand ToDummyItemSaveActionCommand(
     this DummyItemCreateActionRequest request)
   {
-    return new(0, request.Name);
+    return new(false, 0, request.Name);
   }
 
   /// <summary>
@@ -110,6 +110,6 @@ public static class DummyItemExtensions
   public static DummyItemSaveActionCommand ToDummyItemSaveActionCommand(
     this DummyItemUpdateActionRequest request)
   {
-    return new(request.Id, request.Name);
+    return new(true, request.Id, request.Name);
   }
 }

@@ -121,7 +121,7 @@ public static class AppOutgoingEventPayloadExtensions
       Position = request.Position
     };
 
-    return new(0, request.AppOutgoingEventId, payload);
+    return new(false, 0, request.AppOutgoingEventId, payload);
   }
 
   /// <summary>
@@ -141,6 +141,6 @@ public static class AppOutgoingEventPayloadExtensions
       Position = request.Position
     };
 
-    return new(request.Id, request.AppOutgoingEventId, payload);
+    return new(true, request.Id, request.AppOutgoingEventId, payload);
   }
 }

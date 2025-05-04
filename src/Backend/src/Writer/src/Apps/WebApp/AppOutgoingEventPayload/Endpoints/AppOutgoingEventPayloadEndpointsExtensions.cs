@@ -13,7 +13,7 @@ public static class AppOutgoingEventPayloadEndpointsExtensions
   public static AppOutgoingEventPayloadSaveActionCommand ToAppOutgoingEventPayloadSaveActionCommand(
     this AppOutgoingEventPayloadCreateEndpointRequest request)
   {
-    return new(0, request.AppOutgoingEventId, request.Payload);
+    return new(false, 0, request.AppOutgoingEventId, request.Payload);
   }
 
   /// <summary>
@@ -24,6 +24,6 @@ public static class AppOutgoingEventPayloadEndpointsExtensions
   public static AppOutgoingEventPayloadSaveActionCommand ToAppOutgoingEventPayloadSaveActionCommand(
     this AppOutgoingEventPayloadUpdateEndpointRequest request)
   {
-    return new(request.Id, request.AppOutgoingEventId, request.Payload);
+    return new(true, request.Id, request.AppOutgoingEventId, request.Payload);
   }
 }

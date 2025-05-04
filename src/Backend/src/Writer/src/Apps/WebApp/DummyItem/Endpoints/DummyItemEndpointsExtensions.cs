@@ -13,7 +13,7 @@ public static class DummyItemEndpointsExtensions
   public static DummyItemSaveActionCommand ToDummyItemSaveActionCommand(
     this DummyItemCreateEndpointRequest request)
   {
-    return new(0, request.Name);
+    return new(false, 0, request.Name);
   }
 
   /// <summary>
@@ -24,6 +24,6 @@ public static class DummyItemEndpointsExtensions
   public static DummyItemSaveActionCommand ToDummyItemSaveActionCommand(
     this DummyItemUpdateEndpointRequest request)
   {
-    return new(request.Id, request.Name);
+    return new(true, request.Id, request.Name);
   }
 }

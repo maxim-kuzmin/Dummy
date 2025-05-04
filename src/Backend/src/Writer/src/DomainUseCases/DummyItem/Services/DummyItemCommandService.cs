@@ -78,7 +78,7 @@ public class DummyItemCommandService(
   {
     DummyItemEntity? entity = null;
 
-    if (command.Id > 0)
+    if (command.ShouldEntityBeFoundById)
     {
       entity = await _repository.GetByIdAsync(command.Id, cancellationToken).ConfigureAwait(false);
 
@@ -113,7 +113,7 @@ public class DummyItemCommandService(
 
     async Task FuncToExecute(CancellationToken cancellationToken)
     {
-      if (entity.Id > 0)
+      if (command.ShouldEntityBeFoundById)
       {
         await _repository.UpdateAsync(entity, cancellationToken).ConfigureAwait(false);
       }

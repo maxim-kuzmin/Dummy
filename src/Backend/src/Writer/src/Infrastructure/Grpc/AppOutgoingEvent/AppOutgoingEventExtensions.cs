@@ -105,7 +105,7 @@ public static class AppOutgoingEventExtensions
   {
     var publishedAt = request.PublishedAt.ToDateTimeOffset();
 
-    return new(0, request.Name, publishedAt == default ? null : publishedAt);
+    return new(false, 0, request.Name, publishedAt == default ? null : publishedAt);
   }
 
   /// <summary>
@@ -118,6 +118,6 @@ public static class AppOutgoingEventExtensions
   {
     var publishedAt = request.PublishedAt.ToDateTimeOffset();
 
-    return new(request.Id, request.Name, publishedAt == default ? null : publishedAt);
+    return new(true, request.Id, request.Name, publishedAt == default ? null : publishedAt);
   }
 }
