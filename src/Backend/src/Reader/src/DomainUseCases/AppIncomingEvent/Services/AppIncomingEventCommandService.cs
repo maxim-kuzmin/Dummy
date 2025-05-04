@@ -6,7 +6,7 @@
 public class AppIncomingEventCommandService(
   IAppDbNoSQLExecutionContext _appDbExecutionContext,
   IAppIncomingEventFactory _factory,
-  IAppIncomingEventEntityRepository _repository) : IAppIncomingEventCommandService
+  IAppIncomingEventRepository _repository) : IAppIncomingEventCommandService
 {
   /// <inheritdoc/>
   public async Task<AppCommandResultWithoutValue> Delete(

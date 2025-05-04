@@ -5,6 +5,6 @@
 /// </summary>
 public class AppOutgoingEventPayloadRepository(AppDbContext dbContext) :
   AppRepositoryBase<AppOutgoingEventPayloadEntity>(dbContext),
-  IAppOutgoingEventPayloadEntityRepository
+  IAppOutgoingEventPayloadRepository
 {
 }

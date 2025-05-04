@@ -1,9 +1,9 @@
-﻿namespace Makc.Dummy.Reader.DomainUseCases.DummyItem.Entity;
+﻿namespace Makc.Dummy.Reader.DomainUseCases.AppIncomingEvent;
 
 /// <summary>
-/// Интерфейс репозитория сущности фиктивного предмета.
+/// Интерфейс репозитория входящего события приложения.
 /// </summary>
-public interface IDummyItemEntityRepository : IEntityRepository<DummyItemEntity>
+public interface IAppIncomingEventRepository : IEntityRepository<AppIncomingEventEntity>
 {
   /// <summary>
   /// Подсчитать асинхронно.
@@ -11,7 +11,7 @@ public interface IDummyItemEntityRepository : IEntityRepository<DummyItemEntity>
   /// <param name="query">Запрос.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Количество сущностей.</returns>
-  Task<long> CountAsync(DummyItemPageQuery query, CancellationToken cancellationToken);
+  Task<long> CountAsync(AppIncomingEventPageQuery query, CancellationToken cancellationToken);
 
   /// <summary>
   /// Получить асинхронно.
@@ -19,7 +19,7 @@ public interface IDummyItemEntityRepository : IEntityRepository<DummyItemEntity>
   /// <param name="query">Запрос.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Сущность.</returns>
-  Task<DummyItemEntity?> GetAsync(DummyItemSingleQuery query, CancellationToken cancellationToken);
+  Task<AppIncomingEventEntity?> GetAsync(AppIncomingEventSingleQuery query, CancellationToken cancellationToken);
 
   /// <summary>
   /// Перечислить асинхронно.
@@ -27,5 +27,5 @@ public interface IDummyItemEntityRepository : IEntityRepository<DummyItemEntity>
   /// <param name="query">Запрос.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Список сущностей.</returns>
-  Task<List<DummyItemEntity>> ListAsync(DummyItemListQuery query, CancellationToken cancellationToken);
+  Task<List<AppIncomingEventEntity>> ListAsync(AppIncomingEventListQuery query, CancellationToken cancellationToken);
 }

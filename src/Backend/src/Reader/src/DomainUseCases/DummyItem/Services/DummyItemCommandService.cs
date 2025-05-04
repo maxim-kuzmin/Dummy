@@ -6,7 +6,7 @@
 public class DummyItemCommandService(
   IAppDbNoSQLExecutionContext _appDbExecutionContext,
   IDummyItemFactory _factory,
-  IDummyItemEntityRepository _repository) : IDummyItemCommandService
+  IDummyItemRepository _repository) : IDummyItemCommandService
 {
   /// <inheritdoc/>
   public async Task<AppCommandResultWithoutValue> Delete(

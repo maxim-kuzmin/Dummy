@@ -1,9 +1,9 @@
-﻿namespace Makc.Dummy.Reader.DomainUseCases.AppIncomingEventPayload.Entity;
+﻿namespace Makc.Dummy.Reader.DomainUseCases.AppIncomingEventPayload;
 
 /// <summary>
-/// Интерфейс репозитория сущности полезной нагрузки входящего события приложения.
+/// Интерфейс репозитория полезной нагрузки входящего события приложения.
 /// </summary>
-public interface IAppIncomingEventPayloadEntityRepository : IEntityRepository<AppIncomingEventPayloadEntity>
+public interface IAppIncomingEventPayloadRepository : IEntityRepository<AppIncomingEventPayloadEntity>
 {
   /// <summary>
   /// Подсчитать асинхронно.

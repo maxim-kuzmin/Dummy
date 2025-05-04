@@ -1,19 +1,19 @@
-﻿namespace Makc.Dummy.Reader.Infrastructure.MongoDB.DummyItem.Entity;
+﻿namespace Makc.Dummy.Reader.Infrastructure.MongoDB.DummyItem;
 
 /// <summary>
-/// Репозиторий сущности фиктивного предмета.
+/// Репозиторий фиктивного предмета.
 /// </summary>
 /// <param name="appDbSettings">Настройки базы данных приложения.</param>
 /// <param name="clientSessionHandle">Описатель сессии клиента.</param>
 /// <param name="database">База данных.</param>
-public class DummyItemEntityRepository(
+public class DummyItemRepository(
   AppDbSettings appDbSettings,
   IClientSessionHandle clientSessionHandle,
   IMongoDatabase database) :
   EntityRepository<DummyItemEntity>(
     clientSessionHandle,
     database.GetCollection<DummyItemEntity>(appDbSettings.Entities.DummyItem.Collection)),
-  IDummyItemEntityRepository
+  IDummyItemRepository
 {
   /// <inheritdoc/>
   public Task<long> CountAsync(DummyItemPageQuery query, CancellationToken cancellationToken)

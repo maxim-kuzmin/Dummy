@@ -4,7 +4,7 @@
 /// Сервис запросов фиктивного предмета.
 /// </summary>
 /// <param name="_repository">Репозиторий.</param>
-public class DummyItemQueryService(IDummyItemEntityRepository _repository) : IDummyItemQueryService
+public class DummyItemQueryService(IDummyItemRepository _repository) : IDummyItemQueryService
 {
   /// <inheritdoc/>
   public Task<long> CountAsync(DummyItemPageQuery query, CancellationToken cancellationToken)

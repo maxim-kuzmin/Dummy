@@ -31,9 +31,9 @@ public static class AppExtensions
     services.AddScoped(typeof(IRepository<>), typeof(AppRepositoryBase<>));
     services.AddScoped(typeof(IReadRepository<>), typeof(AppRepositoryBase<>));
 
-    services.AddScoped<IAppOutgoingEventEntityRepository, AppOutgoingEventEntityRepository>();
-    services.AddScoped<IAppOutgoingEventPayloadEntityRepository, AppOutgoingEventPayloadRepository>();
-    services.AddScoped<IDummyItemEntityRepository, DummyItemEntityRepository>();    
+    services.AddScoped<IAppOutgoingEventRepository, AppOutgoingEventRepository>();
+    services.AddScoped<IAppOutgoingEventPayloadRepository, AppOutgoingEventPayloadRepository>();
+    services.AddScoped<IDummyItemRepository, DummyItemRepository>();    
 
     logger.LogInformation("Added application infrastructure tied to Entity Framework");
 

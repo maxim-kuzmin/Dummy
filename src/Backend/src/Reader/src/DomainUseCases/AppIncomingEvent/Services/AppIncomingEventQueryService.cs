@@ -5,7 +5,7 @@
 /// </summary>
 /// <param name="_repository">Репозиторий.</param>
 public class AppIncomingEventQueryService(
-  IAppIncomingEventEntityRepository _repository) : IAppIncomingEventQueryService
+  IAppIncomingEventRepository _repository) : IAppIncomingEventQueryService
 {
   /// <inheritdoc/>
   public Task<long> CountAsync(AppIncomingEventPageQuery query, CancellationToken cancellationToken)

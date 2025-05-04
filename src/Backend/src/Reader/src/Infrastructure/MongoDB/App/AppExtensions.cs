@@ -1,6 +1,4 @@
-﻿using Makc.Dummy.Reader.DomainModel.DummyItem.Entity;
-
-namespace Makc.Dummy.Reader.Infrastructure.MongoDB.App;
+﻿namespace Makc.Dummy.Reader.Infrastructure.MongoDB.App;
 
 /// <summary>
 /// Расширения приложения.
@@ -56,7 +54,7 @@ public static class AppExtensions
 
     services.AddScoped<IAppDbNoSQLExecutionContext, AppDbExecutionContext>();
 
-    services.AddTransient<IDummyItemEntityRepository, DummyItemEntityRepository>();    
+    services.AddTransient<IDummyItemRepository, DummyItemRepository>();    
 
     logger.LogInformation("Added application infrastructure tied to MongoDB");
 

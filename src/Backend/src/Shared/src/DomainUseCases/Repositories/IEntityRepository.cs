@@ -1,4 +1,4 @@
-﻿namespace Makc.Dummy.Shared.DomainUseCases.Entity;
+﻿namespace Makc.Dummy.Shared.DomainUseCases.Repositories;
 
 /// <summary>
 /// Интерфейс репозитория сущности.
