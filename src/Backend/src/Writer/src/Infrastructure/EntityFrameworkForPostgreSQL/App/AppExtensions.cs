@@ -10,23 +10,20 @@ public static class AppExtensions
   /// </summary>
   /// <param name="services">Сервисы.</param>
   /// <param name="logger">Логгер.</param>
-  /// <param name="appConfigOptionsPostgreSQLSection">
-  /// Раздел базы данных PostgreSQL в параметрах конфигурации приложения.
-  /// </param>
+  /// <param name="appConfigOptions">Параметры конфигурации приложения.</param>
   /// <param name="configuration">Конфигурация.</param>
   /// <returns>Сервисы.</returns>
   public static IServiceCollection AddAppInfrastructureTiedToEntityFrameworkForPostgreSQL(
     this IServiceCollection services,
     ILogger logger,
-    AppConfigOptionsDbPostgreSQLSection appConfigOptionsPostgreSQLSection,
+    AppConfigOptionsInfrastructureDbPostgreSQLSection appConfigOptions,
     IConfiguration configuration)
   {
-    var connectionStringTemplate = configuration.GetConnectionString(
-      appConfigOptionsPostgreSQLSection.ConnectionStringName);
+    var connectionStringTemplate = configuration.GetConnectionString(appConfigOptions.ConnectionStringName);
 
     Guard.Against.Null(connectionStringTemplate);
 
-    var connectionString = appConfigOptionsPostgreSQLSection.ToConnectionString(connectionStringTemplate);
+    var connectionString = appConfigOptions.ToConnectionString(connectionStringTemplate);
 
     services.AddDbContext<AppDbContext>(options => options.UseNpgsql(
       connectionString,

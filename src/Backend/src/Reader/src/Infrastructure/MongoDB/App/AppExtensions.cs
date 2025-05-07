@@ -10,14 +10,14 @@ public static class AppExtensions
   /// </summary>
   /// <param name="services">Сервисы.</param>
   /// <param name="logger">Логгер.</param>
-  /// <param name="appConfigOptionsMongoDBSection">Раздел MongoDB в параметрах конфигурации приложения.</param>
+  /// <param name="appConfigOptions">Параметры конфигурации приложения.</param>
   /// <param name="configuration">Конфигурация.</param>
   /// <param name="appDbNoSQLSettings">Настройки базы данных NoSQL приложения.</param>
   /// <returns>Сервисы.</returns>
   public static IServiceCollection AddAppInfrastructureTiedToMongoDB(
     this IServiceCollection services,
     ILogger logger,
-    AppConfigOptionsDbMongoDBSection appConfigOptionsMongoDBSection,
+    AppConfigOptionsInfrastructureDbMongoDBSection appConfigOptions,
     IConfiguration configuration,
     out AppDbNoSQLSettings appDbNoSQLSettings)
   {
@@ -28,11 +28,11 @@ public static class AppExtensions
     services.AddSingleton(appDbNoSQLSettings.Entities.DummyItem);    
 
     var connectionStringTemplate = configuration.GetConnectionString(
-      appConfigOptionsMongoDBSection.ConnectionStringName);
+      appConfigOptions.ConnectionStringName);
 
     Guard.Against.Null(connectionStringTemplate);
 
-    var connectionString = appConfigOptionsMongoDBSection.ToConnectionString(connectionStringTemplate);
+    var connectionString = appConfigOptions.ToConnectionString(connectionStringTemplate);
 
     services.AddSingleton<IMongoClient>(x =>
     {
@@ -48,7 +48,7 @@ public static class AppExtensions
     });
 
     services.AddSingleton(x =>
-      x.GetRequiredService<IMongoClient>().GetDatabase(appConfigOptionsMongoDBSection.Database));
+      x.GetRequiredService<IMongoClient>().GetDatabase(appConfigOptions.Database));
 
     services.AddScoped(x => x.GetRequiredService<IMongoClient>().StartSession());
 

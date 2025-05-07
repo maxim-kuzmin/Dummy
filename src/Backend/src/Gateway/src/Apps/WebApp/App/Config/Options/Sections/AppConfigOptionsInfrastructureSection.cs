@@ -8,10 +8,10 @@ public record AppConfigOptionsInfrastructureSection
   /// <summary>
   /// Поставщик OpenID "Keycloak".
   /// </summary>
-  public AppConfigOptionsKeycloakSection? Keycloak { get; set; }
+  public AppConfigOptionsInfrastructureKeycloakSection? Keycloak { get; set; }
 
   /// <summary>
   /// Наблюдаемость.
   /// </summary>
-  public AppConfigOptionsObservabilitySection? Observability { get; set; }
+  public AppConfigOptionsInfrastructureObservabilitySection? Observability { get; set; }
 }

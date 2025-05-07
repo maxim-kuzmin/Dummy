@@ -1,4 +1,4 @@
-﻿namespace Makc.Dummy.Gateway.Apps.WebApp.DummyItem.EndpointsForReader;
+﻿namespace Makc.Dummy.Gateway.Apps.WebApp.DummyItem.EndpointsForMicroserviceReader;
 
 /// <summary>
 /// Настройки конечных точек фиктивного предмета.

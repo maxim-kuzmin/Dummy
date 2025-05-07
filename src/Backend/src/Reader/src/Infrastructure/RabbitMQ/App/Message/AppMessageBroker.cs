@@ -3,11 +3,11 @@
 /// <summary>
 /// Брокер сообщений приложения.
 /// </summary>
-/// <param name="options">Параметры.</param>
+/// <param name="appConfigOptions">Параметры конфигурации приложения.</param>
 /// <param name="_logger">Логгер.</param>
 public class AppMessageBroker(
-  AppConfigOptionsRabbitMQSection options,
-  ILogger<AppMessageBroker> _logger) : MessageBroker(options, _logger), IAppMessageBroker
+  AppConfigOptionsInfrastructureRabbitMQSection appConfigOptions,
+  ILogger<AppMessageBroker> _logger) : MessageBroker(appConfigOptions, _logger), IAppMessageBroker
 {
   /// <inheritdoc/>
   public IAppMessageConsumer CreateMessageConsumer()

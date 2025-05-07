@@ -16,7 +16,7 @@ global using Makc.Dummy.Reader.Infrastructure.MongoDB.App.Repository;
 global using Makc.Dummy.Reader.Infrastructure.MongoDB.DummyItem;
 global using Makc.Dummy.Reader.Infrastructure.MongoDB.DummyItem.Entity;
 global using Makc.Dummy.Reader.Infrastructure.MongoDB.DummyItem.Entity.Db;
-global using Makc.Dummy.Shared.Core.App.Config.Options.Sections.Db.MongoDB;
+global using Makc.Dummy.Shared.Core.App.Config.Options.Sections.Infrastructure.Db.MongoDB;
 global using Makc.Dummy.Shared.DomainModel.Entity.EntityBases;
 global using Makc.Dummy.Shared.DomainUseCases.Query;
 global using Makc.Dummy.Shared.Infrastructure.MongoDB.Db;

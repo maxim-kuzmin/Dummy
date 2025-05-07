@@ -1,4 +1,4 @@
-﻿namespace Makc.Dummy.Gateway.Apps.WebApp.Auth.EndpointsForWriter;
+﻿namespace Makc.Dummy.Gateway.Apps.WebApp.Auth.EndpointsForMicroserviceWriter;
 
 /// <summary>
 /// Настройки конечной точки аутентификации.

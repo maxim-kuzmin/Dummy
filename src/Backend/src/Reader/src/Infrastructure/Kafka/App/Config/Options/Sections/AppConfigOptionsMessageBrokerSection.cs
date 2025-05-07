@@ -4,4 +4,5 @@
 /// Раздел брокера сообщений в параметрах конфигурации приложения.
 /// </summary>
 /// <param name="Consumer">Потребитель.</param>
-public record AppConfigOptionsMessageBrokerSection(ConsumerConfig Consumer) : AppConfigOptionsKafkaSection;
+public record AppConfigOptionsMessageBrokerSection(ConsumerConfig Consumer) :
+  AppConfigOptionsInfrastructureKafkaSection;

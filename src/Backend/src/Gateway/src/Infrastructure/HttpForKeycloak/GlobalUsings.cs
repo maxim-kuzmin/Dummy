@@ -1,15 +1,13 @@
 ﻿global using System.Text.Json.Serialization;
-global using Ardalis.GuardClauses;
 global using Ardalis.Result;
 global using Makc.Dummy.Gateway.DomainUseCases.Auth.Actions.Login;
 global using Makc.Dummy.Gateway.DomainUseCases.Auth.DTOs;
 global using Makc.Dummy.Gateway.DomainUseCases.Auth.Services;
 global using Makc.Dummy.Gateway.Infrastructure.HttpForKeycloak.Auth;
-global using Makc.Dummy.Shared.Core.App.Config.Options.Enums;
-global using Makc.Dummy.Shared.Core.App.Config.Options.Sections;
+global using Makc.Dummy.Gateway.Infrastructure.HttpForKeycloak.Auth.Services;
+global using Makc.Dummy.Shared.Core.App.Config.Options.Sections.Infrastructure;
 global using Makc.Dummy.Shared.Core.Http;
 global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Logging;
 global using Microsoft.Extensions.Options;
-global using Makc.Dummy.Gateway.Infrastructure.HttpForKeycloak.Auth.Services;

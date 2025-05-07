@@ -12,13 +12,13 @@ public class AppMessageBroker : MessageBroker, IAppMessageBroker
   /// <summary>
   /// Конструктор.
   /// </summary>
-  /// <param name="options">Параметры.</param>
+  /// <param name="appConfigOptions">Параметры конфигурации приложения.</param>
   /// <param name="logger">Логгер.</param>
   public AppMessageBroker(
-    AppConfigOptionsMessageBrokerSection options,
-    ILogger<AppMessageBroker> logger) : base(options.TimeoutInMillisecondsToRetry, logger)
+    AppConfigOptionsMessageBrokerSection appConfigOptions,
+    ILogger<AppMessageBroker> logger) : base(appConfigOptions.TimeoutInMillisecondsToRetry, logger)
   {
-    _consumerConfig = new(options.Consumer)
+    _consumerConfig = new(appConfigOptions.Consumer)
     {
       AutoOffsetReset = AutoOffsetReset.Earliest,
       EnableAutoCommit = true,

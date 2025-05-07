@@ -1,4 +1,4 @@
-﻿global using Makc.Dummy.Shared.Core.App.Config.Options.Sections;
+﻿global using Makc.Dummy.Shared.Core.App.Config.Options.Sections.Infrastructure;
 global using Makc.Dummy.Shared.Infrastructure.Core.App.Logger.Funcs;
 global using Makc.Dummy.Shared.Infrastructure.CoreForOpenTelemetry.App.Metrics.Funcs;
 global using Makc.Dummy.Shared.Infrastructure.CoreForOpenTelemetry.App.Tracing.Funcs;

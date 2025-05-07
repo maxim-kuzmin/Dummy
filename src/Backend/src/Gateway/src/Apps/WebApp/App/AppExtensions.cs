@@ -27,8 +27,8 @@ public static class AppExtensions
     var services = appBuilder.Services.Configure<AppConfigOptions>(appConfigSection)
       .AddAppDomainModel(logger)
       .AddAppDomainUseCases(logger)
-      .AddAppDomainUseCasesForReader(logger)
-      .AddAppDomainUseCasesForWriter(logger);
+      .AddAppDomainUseCasesForMicroserviceReader(logger)
+      .AddAppDomainUseCasesForMicroserviceWriter(logger);
 
     var domain = Guard.Against.Null(appConfigOptions.Domain);
     var infrastructure = Guard.Against.Null(appConfigOptions.Infrastructure);
@@ -62,18 +62,28 @@ public static class AppExtensions
       .AddAppInfrastructureTiedToCore(logger);
 
     var domainAuth = Guard.Against.Null(domain.Auth);
-    var microcervicesReader = Guard.Against.Null(appConfigOptions.Microservices?.Reader);
-    var microcervicesWriter = Guard.Against.Null(appConfigOptions.Microservices?.Writer);
+    var integrationMicroserviceReader = Guard.Against.Null(appConfigOptions.Integration?.MicroserviceReader);
+    var integrationMicroserviceWriter = Guard.Against.Null(appConfigOptions.Integration?.MicroserviceWriter);
 
-    switch (microcervicesWriter.Protocol)
+    switch (integrationMicroserviceWriter.Protocol)
     {
       case AppConfigOptionsProtocolEnum.Http:
-        services.AddAppInfrastructureTiedToHttpForReader(logger, microcervicesReader.HttpEndpoint);
-        services.AddAppInfrastructureTiedToHttpForWriter(logger, domainAuth, microcervicesWriter.HttpEndpoint);
+        services.AddAppInfrastructureTiedToHttpForMicroserviceReader(
+          logger,
+          integrationMicroserviceReader.HttpEndpoint);
+        services.AddAppInfrastructureTiedToHttpForMicroserviceWriter(
+          logger,
+          domainAuth,
+          integrationMicroserviceWriter.HttpEndpoint);
         break;
       case AppConfigOptionsProtocolEnum.Grpc:
-        services.AddAppInfrastructureTiedToGrpcForReader(logger, microcervicesReader.GrpcEndpoint);
-        services.AddAppInfrastructureTiedToGrpcForWriter(logger, domainAuth, microcervicesWriter.GrpcEndpoint);
+        services.AddAppInfrastructureTiedToGrpcForMicroserviceReader(
+          logger,
+          integrationMicroserviceReader.GrpcEndpoint);
+        services.AddAppInfrastructureTiedToGrpcForMicroserviceWriter(
+          logger,
+          domainAuth,
+          integrationMicroserviceWriter.GrpcEndpoint);
         break;
       default:
         throw new NotImplementedException();

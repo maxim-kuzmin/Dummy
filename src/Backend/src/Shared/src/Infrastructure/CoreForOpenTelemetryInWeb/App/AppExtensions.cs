@@ -1,4 +1,6 @@
-﻿namespace Makc.Dummy.Shared.Infrastructure.CoreForOpenTelemetryInWeb.App;
+﻿using Makc.Dummy.Shared.Core.App.Config.Options.Sections.Infrastructure;
+
+namespace Makc.Dummy.Shared.Infrastructure.CoreForOpenTelemetryInWeb.App;
 
 /// <summary>
 /// Расширения приложения.
@@ -10,20 +12,18 @@ public static class AppExtensions
   /// </summary>
   /// <param name="services">Сервисы.</param>
   /// <param name="logger">Логгер.</param>
-  /// <param name="appConfigOptionsObservabilitySection">
-  /// Раздел наблюдаемости в параметрах конфигурации приложения.
-  /// </param>
+  /// <param name="appConfigOptions">Параметры конфигурации приложения.</param>
   /// <param name="funcToConfigureAppMetrics">Функция настройки измерений приложения.</param>
   /// <param name="funcToConfigureAppTracing">Функция настройки отслеживания приложения.</param>
   /// <returns>Сервисы.</returns>
   public static IServiceCollection AddAppSharedInfrastructureTiedToCoreForOpenTelemetryInWeb(
     this IServiceCollection services,
     ILogger logger,
-    AppConfigOptionsObservabilitySection appConfigOptionsObservabilitySection,
+    AppConfigOptionsInfrastructureObservabilitySection appConfigOptions,
     out AppMetricsFuncToConfigure? funcToConfigureAppMetrics,
     out AppTracingFuncToConfigure? funcToConfigureAppTracing)
   {
-    if (appConfigOptionsObservabilitySection.IsMetricsCollectionEnabled)
+    if (appConfigOptions.IsMetricsCollectionEnabled)
     {
       funcToConfigureAppMetrics = (providerBuilder) => providerBuilder.AddAspNetCoreInstrumentation();
     }
@@ -32,7 +32,7 @@ public static class AppExtensions
       funcToConfigureAppMetrics = null;
     }
 
-    if (appConfigOptionsObservabilitySection.IsTracingCollectionEnabled)
+    if (appConfigOptions.IsTracingCollectionEnabled)
     {
       funcToConfigureAppTracing = (providerBuilder) => providerBuilder.AddAspNetCoreInstrumentation(options =>
         {

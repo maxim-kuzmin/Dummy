@@ -1,4 +1,6 @@
-﻿namespace Makc.Dummy.Writer.Apps.WebApp.App.Config.Options.Sections;
+﻿using Makc.Dummy.Shared.Core.App.Config.Options.Sections.Domain;
+
+namespace Makc.Dummy.Writer.Apps.WebApp.App.Config.Options.Sections;
 
 /// <summary>
 /// Раздел параметров конфигурации предметной области приложения.
@@ -13,5 +15,5 @@ public record AppConfigOptionsDomainSection
   /// <summary>
   /// Аутентификация.
   /// </summary>
-  public AppConfigOptionsAuthenticationSection? Auth { get; set; }
+  public AppConfigOptionsDomainAuthSection? Auth { get; set; }
 }

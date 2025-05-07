@@ -1,4 +1,8 @@
-﻿namespace Makc.Dummy.Writer.Apps.WebApp.App.Config.Options.Sections;
+﻿using Makc.Dummy.Shared.Core.App.Config.Options.Sections.Infrastructure;
+using Makc.Dummy.Shared.Core.App.Config.Options.Sections.Infrastructure.Db.MSSQLServer;
+using Makc.Dummy.Shared.Core.App.Config.Options.Sections.Infrastructure.Db.PostgreSQL;
+
+namespace Makc.Dummy.Writer.Apps.WebApp.App.Config.Options.Sections;
 
 /// <summary>
 /// Раздел параметров конфигурации инфраструктуры приложения.
@@ -8,20 +12,20 @@ public record AppConfigOptionsInfrastructureSection
   /// <summary>
   /// База данных "MS SQL Server".
   /// </summary>
-  public AppConfigOptionsDbMSSQLServerSection? MSSQLServer { get; set; }
+  public AppConfigOptionsInfrastructureDbMSSQLServerSection? MSSQLServer { get; set; }
 
   /// <summary>
   /// Наблюдаемость.
   /// </summary>
-  public AppConfigOptionsObservabilitySection? Observability { get; set; }
+  public AppConfigOptionsInfrastructureObservabilitySection? Observability { get; set; }
 
   /// <summary>
   /// База данных "PostgreSQL".
   /// </summary>
-  public AppConfigOptionsDbPostgreSQLSection? PostgreSQL { get; set; }
+  public AppConfigOptionsInfrastructureDbPostgreSQLSection? PostgreSQL { get; set; }
 
   /// <summary>
   /// Брокер сообщений "RabbitMQ".
   /// </summary>
-  public AppConfigOptionsRabbitMQSection? RabbitMQ { get; set; }
+  public AppConfigOptionsInfrastructureRabbitMQSection? RabbitMQ { get; set; }
 }

@@ -1,4 +1,6 @@
-﻿namespace Makc.Dummy.Shared.Infrastructure.RabbitMQ.Message;
+﻿using Makc.Dummy.Shared.Core.App.Config.Options.Sections.Infrastructure;
+
+namespace Makc.Dummy.Shared.Infrastructure.RabbitMQ.Message;
 
 /// <summary>
 /// Брокер сообщений.
@@ -18,21 +20,21 @@ public abstract class MessageBroker : IMessageBroker, IDisposable
   /// <summary>
   /// Конструктор.
   /// </summary>
-  /// <param name="options">Параметры.</param>
+  /// <param name="appConfigOptions">Параметры конфигурации приложения.</param>
   /// <param name="logger">Логгер.</param>
-  public MessageBroker(AppConfigOptionsRabbitMQSection options, ILogger logger)
+  public MessageBroker(AppConfigOptionsInfrastructureRabbitMQSection appConfigOptions, ILogger logger)
   {
     _logger = logger;
 
     _connectionFactory = new()
     {
-      HostName = options.HostName,
-      Password = options.Password,
-      Port = options.Port,
-      UserName = options.UserName
+      HostName = appConfigOptions.HostName,
+      Password = appConfigOptions.Password,
+      Port = appConfigOptions.Port,
+      UserName = appConfigOptions.UserName
     };
 
-    _timeoutToRetry = options.TimeoutInMillisecondsToRetry;
+    _timeoutToRetry = appConfigOptions.TimeoutInMillisecondsToRetry;
   }
 
   /// <inheritdoc/>

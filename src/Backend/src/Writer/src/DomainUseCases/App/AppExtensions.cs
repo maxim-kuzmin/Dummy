@@ -1,4 +1,6 @@
-﻿namespace Makc.Dummy.Writer.DomainUseCases.App;
+﻿using Makc.Dummy.Shared.Core.App.Config.Options.Sections.Domain;
+
+namespace Makc.Dummy.Writer.DomainUseCases.App;
 
 /// <summary>
 /// Расширения приложения.
@@ -23,7 +25,7 @@ public static class AppExtensions
 
     if (appConfigAuthenticationSection != null)
     {
-      services.Configure<AppConfigOptionsAuthenticationSection>(appConfigAuthenticationSection);
+      services.Configure<AppConfigOptionsDomainAuthSection>(appConfigAuthenticationSection);
     }
 
     services.AddTransient<IAppOutboxCommandService, AppOutboxCommandService>();

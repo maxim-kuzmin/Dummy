@@ -8,7 +8,7 @@
 /// </param>
 /// <param name="_httpClientFactory">Фабрика клиентов HTTP.</param>
 public class AuthCommandService(
-  IOptionsSnapshot<AppConfigOptionsKeycloakSection> _appConfigOptionsKeycloakSectionSnapshot,
+  IOptionsSnapshot<AppConfigOptionsInfrastructureKeycloakSection> _appConfigOptionsKeycloakSectionSnapshot,
   IHttpClientFactory _httpClientFactory) : IAuthCommandService
 {
   /// <inheritdoc/>

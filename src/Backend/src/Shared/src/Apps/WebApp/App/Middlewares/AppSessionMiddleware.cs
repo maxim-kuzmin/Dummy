@@ -11,24 +11,22 @@ public class AppSessionMiddleware(RequestDelegate _next)
   /// </summary>
   /// <param name="httpContext">HTTP-контекст.</param>
   /// <param name="appSession">Сессия приложения.</param>
-  /// <param name="appConfigOptionsAuthenticationSectionSnapshot">
-  /// Снимок раздела аутентификации в параметрах конфигурации приложения.
-  /// </param>
+  /// <param name="optionsSnapshot">Снимок параметров.</param>
   /// <returns>Задача.</returns>
   public async Task InvokeAsync(
     HttpContext httpContext,
     AppSession appSession,
-    IOptionsSnapshot<AppConfigOptionsAuthenticationSection> appConfigOptionsAuthenticationSectionSnapshot)
+    IOptionsSnapshot<AppConfigOptionsDomainAuthSection> optionsSnapshot)
   {
-    var appConfigOptionsAuthenticationSection = appConfigOptionsAuthenticationSectionSnapshot.Value;
+    var options = optionsSnapshot.Value;
 
     string? accessToken = await httpContext.GetTokenAsync("access_token");
 
     var user = httpContext.User;
 
-    if (appConfigOptionsAuthenticationSection.Type == AppConfigOptionsAuthenticationEnum.Keycloak)
+    if (options.Type == AppConfigOptionsAuthenticationEnum.Keycloak)
     {
-      accessToken = appConfigOptionsAuthenticationSection.CreateAccessToken(
+      accessToken = options.CreateAccessToken(
         user.Identity?.Name,
         user.FindAll(ClaimTypes.Role).Select(x => x.Value));
     }

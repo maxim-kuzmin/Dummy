@@ -10,9 +10,7 @@ public static class AppExtensions
   /// </summary>
   /// <param name="services">Сервисы.</param>
   /// <param name="logger">Логгер.</param>
-  /// <param name="appConfigOptionsObservabilitySection">
-  /// Раздел наблюдаемости в параметрах конфигурации приложения.
-  /// </param>
+  /// <param name="appConfigOptions">Параметры конфигурации приложения.</param>
   /// <param name="funcToConfigureAppMetrics">Функция настройки измерений приложения.</param>
   /// <param name="funcToConfigureAppTracing">Функция настройки отслеживания приложения.</param>
   /// <param name="funcToConfigureAppLogger">Функция настройки логгера приложения.</param>
@@ -20,17 +18,17 @@ public static class AppExtensions
   public static IServiceCollection AddAppSharedInfrastructureTiedToCoreForOpenTelemetry(
     this IServiceCollection services,
     Microsoft.Extensions.Logging.ILogger logger,
-    AppConfigOptionsObservabilitySection appConfigOptionsObservabilitySection,
+    AppConfigOptionsInfrastructureObservabilitySection appConfigOptions,
     AppMetricsFuncToConfigure? funcToConfigureAppMetrics,
     AppTracingFuncToConfigure? funcToConfigureAppTracing,
     out AppLoggerFuncToConfigure? funcToConfigureAppLogger)
   {
-    if (appConfigOptionsObservabilitySection.IsLogsCollectionEnabled)
+    if (appConfigOptions.IsLogsCollectionEnabled)
     {
       funcToConfigureAppLogger = (serviceProvider, config) => config.AddAppLogsToOpenTelemetry(
           serviceProvider,
-          appConfigOptionsObservabilitySection.CollectorGrpcEndpoint,
-          appConfigOptionsObservabilitySection.ServiceName);
+          appConfigOptions.CollectorGrpcEndpoint,
+          appConfigOptions.ServiceName);
     }
     else
     {
@@ -38,19 +36,19 @@ public static class AppExtensions
     }
 
     var openTelemetryBuilder = services.AddOpenTelemetry()
-      .ConfigureResource(resource => resource.AddService(appConfigOptionsObservabilitySection.ServiceName));
+      .ConfigureResource(resource => resource.AddService(appConfigOptions.ServiceName));
 
-    if (appConfigOptionsObservabilitySection.IsMetricsCollectionEnabled)
+    if (appConfigOptions.IsMetricsCollectionEnabled)
     {
       openTelemetryBuilder.AddAppMetricsToOpenTelemetry(
-        appConfigOptionsObservabilitySection.CollectorGrpcEndpoint,
+        appConfigOptions.CollectorGrpcEndpoint,
         funcToConfigureAppMetrics);
     }
 
-    if (appConfigOptionsObservabilitySection.IsTracingCollectionEnabled)
+    if (appConfigOptions.IsTracingCollectionEnabled)
     {
       openTelemetryBuilder.AddAppTracingToOpenTelemetry(
-        appConfigOptionsObservabilitySection.CollectorGrpcEndpoint,
+        appConfigOptions.CollectorGrpcEndpoint,
         funcToConfigureAppTracing);
     }
 

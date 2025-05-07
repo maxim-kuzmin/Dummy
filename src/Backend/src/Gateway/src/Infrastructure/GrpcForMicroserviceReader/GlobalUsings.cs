@@ -1,0 +1,17 @@
+﻿global using Ardalis.Result;
+global using Grpc.Core;
+global using Makc.Dummy.Gateway.DomainUseCasesForMicroserviceReader.DummyItem.Actions.Create;
+global using Makc.Dummy.Gateway.DomainUseCasesForMicroserviceReader.DummyItem.Actions.Delete;
+global using Makc.Dummy.Gateway.DomainUseCasesForMicroserviceReader.DummyItem.Actions.Get;
+global using Makc.Dummy.Gateway.DomainUseCasesForMicroserviceReader.DummyItem.Actions.GetList;
+global using Makc.Dummy.Gateway.DomainUseCasesForMicroserviceReader.DummyItem.Actions.Update;
+global using Makc.Dummy.Gateway.DomainUseCasesForMicroserviceReader.DummyItem.DTOs;
+global using Makc.Dummy.Gateway.DomainUseCasesForMicroserviceReader.DummyItem.Services;
+global using Makc.Dummy.Gateway.Infrastructure.GrpcForMicroserviceReader.DummyItem.Services;
+global using Makc.Dummy.Reader.Infrastructure.Grpc.DummyItem;
+global using Makc.Dummy.Shared.Core.App;
+global using Makc.Dummy.Shared.Core.Http;
+global using Makc.Dummy.Shared.Infrastructure.Grpc;
+global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.Extensions.Logging;
+global using DummyItemGrpcClient = Makc.Dummy.Reader.Infrastructure.Grpc.DummyItem.DummyItem.DummyItemClient;

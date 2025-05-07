@@ -1,11 +1,11 @@
-﻿namespace Makc.Dummy.Gateway.Apps.WebApp.DummyItem.EndpointsForWriter.Delete;
+﻿namespace Makc.Dummy.Gateway.Apps.WebApp.DummyItem.EndpointsForMicroserviceWriter.Delete;
 
 /// <summary>
 /// Обработчик конечной точки удаления фиктивного предмета.
 /// </summary>
 /// <param name="_mediator">Медиатор.</param>
 public class DummyItemDeleteEndpointHandler(IMediator _mediator) :
-  Endpoint<DummyItemDeleteActionCommandForWriter>
+  Endpoint<DummyItemDeleteActionCommandForMicroserviceWriter>
 {
   /// <inheritdoc/>
   public override void Configure()
@@ -16,7 +16,7 @@ public class DummyItemDeleteEndpointHandler(IMediator _mediator) :
 
   /// <inheritdoc/>
   public override async Task HandleAsync(
-    DummyItemDeleteActionCommandForWriter request,
+    DummyItemDeleteActionCommandForMicroserviceWriter request,
     CancellationToken cancellationToken)
   {
     var result = await _mediator.Send(request, cancellationToken);

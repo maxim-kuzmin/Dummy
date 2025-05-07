@@ -1,6 +1,6 @@
 ﻿global using System.Data;
 global using Ardalis.GuardClauses;
-global using Makc.Dummy.Shared.Core.App.Config.Options.Sections.Db.PostgreSQL;
+global using Makc.Dummy.Shared.Core.App.Config.Options.Sections.Infrastructure.Db.PostgreSQL;
 global using Makc.Dummy.Shared.Infrastructure.Dapper.Db;
 global using Makc.Dummy.Writer.Infrastructure.Dapper.App.Db;
 global using Makc.Dummy.Writer.Infrastructure.DapperForPostgreSQL.App.Db;

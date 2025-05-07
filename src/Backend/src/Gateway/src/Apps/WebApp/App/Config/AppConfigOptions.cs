@@ -16,7 +16,7 @@ public record AppConfigOptions : AppConfigOptionsBase
   public AppConfigOptionsInfrastructureSection? Infrastructure { get; set; }
 
   /// <summary>
-  /// Микросервисы.
+  /// Интеграция.
   /// </summary>
-  public AppConfigOptionsMicroservicesSection? Microservices { get; set; }
+  public AppConfigOptionsIntegrationSection? Integration { get; set; }
 }

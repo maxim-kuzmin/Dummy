@@ -8,5 +8,5 @@ public record AppConfigOptionsDomainSection
   /// <summary>
   /// Аутентификация.
   /// </summary>
-  public AppConfigOptionsAuthenticationSection? Auth { get; set; }
+  public AppConfigOptionsDomainAuthSection? Auth { get; set; }
 }

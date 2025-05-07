@@ -8,10 +8,10 @@ public record AppConfigOptionsInfrastructureSection
   /// <summary>
   /// База данных MongoDB.
   /// </summary>
-  public AppConfigOptionsDbMongoDBSection? MongoDB { get; set; }
+  public AppConfigOptionsInfrastructureDbMongoDBSection? MongoDB { get; set; }
 
   /// <summary>
   /// Наблюдаемость.
   /// </summary>
-  public AppConfigOptionsObservabilitySection? Observability { get; set; }
+  public AppConfigOptionsInfrastructureObservabilitySection? Observability { get; set; }
 }

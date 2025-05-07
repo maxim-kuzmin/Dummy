@@ -10,23 +10,20 @@ public static class AppExtensions
   /// </summary>
   /// <param name="services">Сервисы.</param>
   /// <param name="logger">Логгер.</param>
-  /// <param name="appConfigOptionsMSSQLServerSection">
-  /// Раздел базы данных MSSQLServer в параметрах конфигурации приложения.
-  /// </param>
+  /// <param name="appConfigOptions">Параметры конфигурации приложения.</param>
   /// <param name="configuration">Конфигурация.</param>
   /// <returns>Сервисы.</returns>
   public static IServiceCollection AddAppInfrastructureTiedToDapperForMSSQLServer(
     this IServiceCollection services,
     ILogger logger,
-    AppConfigOptionsDbMSSQLServerSection appConfigOptionsMSSQLServerSection,
+    AppConfigOptionsInfrastructureDbMSSQLServerSection appConfigOptions,
     IConfiguration configuration)
   {
-    var connectionStringTemplate = configuration.GetConnectionString(
-      appConfigOptionsMSSQLServerSection.ConnectionStringName);
+    var connectionStringTemplate = configuration.GetConnectionString(appConfigOptions.ConnectionStringName);
 
     Guard.Against.Null(connectionStringTemplate);
 
-    var connectionString = appConfigOptionsMSSQLServerSection.ToConnectionString(connectionStringTemplate);
+    var connectionString = appConfigOptions.ToConnectionString(connectionStringTemplate);
 
     services.AddScoped<IAppDbContext>(x => new AppDbContext(connectionString));
 

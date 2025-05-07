@@ -1,11 +1,11 @@
-﻿namespace Makc.Dummy.Gateway.Apps.WebApp.DummyItem.EndpointsForWriter.Get;
+﻿namespace Makc.Dummy.Gateway.Apps.WebApp.DummyItem.EndpointsForMicroserviceWriter.Get;
 
 /// <summary>
 /// Обработчик конечной точки получения фиктивного предмета.
 /// </summary>
 /// <param name="_mediator">Медиатор.</param>
 public class DummyItemGetEndpointHandler(IMediator _mediator) :
-  Endpoint<DummyItemGetActionQueryForWriter, DummyItemSingleDTOForWriter>
+  Endpoint<DummyItemGetActionQueryForMicroserviceWriter, DummyItemSingleDTOForMicroserviceWriter>
 {
   /// <inheritdoc/>
   public override void Configure()
@@ -16,7 +16,7 @@ public class DummyItemGetEndpointHandler(IMediator _mediator) :
 
   /// <inheritdoc/>
   public override async Task HandleAsync(
-    DummyItemGetActionQueryForWriter request,
+    DummyItemGetActionQueryForMicroserviceWriter request,
     CancellationToken cancellationToken)
   {
     var result = await _mediator.Send(request, cancellationToken);

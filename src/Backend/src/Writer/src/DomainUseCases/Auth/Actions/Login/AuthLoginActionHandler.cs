@@ -1,4 +1,6 @@
-﻿namespace Makc.Dummy.Writer.DomainUseCases.Auth.Actions.Login;
+﻿using Makc.Dummy.Shared.Core.App.Config.Options.Sections.Domain;
+
+namespace Makc.Dummy.Writer.DomainUseCases.Auth.Actions.Login;
 
 /// <summary>
 /// Обработчик действия по входу для аутентификации.
@@ -7,7 +9,7 @@
 /// Снимок раздела аутентификации в параметрах конфигурации приложения.
 /// </param>
 public class AuthLoginActionHandler(
-  IOptionsSnapshot<AppConfigOptionsAuthenticationSection> _appConfigOptionsAuthenticationSectionSnapshot) :
+  IOptionsSnapshot<AppConfigOptionsDomainAuthSection> _appConfigOptionsAuthenticationSectionSnapshot) :
   ICommandHandler<AuthLoginActionCommand, Result<AuthLoginDTO>>
 {
   /// <inheritdoc/>

@@ -1,11 +1,11 @@
-﻿namespace Makc.Dummy.Gateway.Apps.WebApp.DummyItem.EndpointsForReader.GetList;
+﻿namespace Makc.Dummy.Gateway.Apps.WebApp.DummyItem.EndpointsForMicroserviceReader.GetList;
 
 /// <summary>
 /// Обработчик конечной точки получения списка фиктивных предметов.
 /// </summary>
 /// <param name="_mediator">Медиатор.</param>
 public class DummyItemGetListEndpointHandler(IMediator _mediator) :
-  Endpoint<DummyItemGetListEndpointRequest, DummyItemListDTOForReader>
+  Endpoint<DummyItemGetListEndpointRequest, DummyItemListDTOForMicroserviceReader>
 {
   /// <inheritdoc/>
   public override void Configure()
@@ -19,10 +19,10 @@ public class DummyItemGetListEndpointHandler(IMediator _mediator) :
     DummyItemGetListEndpointRequest request,
     CancellationToken cancellationToken)
   {
-    DummyItemGetListActionQueryForReader query = new(
+    DummyItemGetListActionQueryForMicroserviceReader query = new(
       new QueryPageSection(request.CurrentPage, request.ItemsPerPage),
-      request.SortField.ToDummyItemQuerySortSectionForReader(request.SortIsDesc),
-      new DummyItemGetListActionQueryFilterForReader(request.Query));
+      request.SortField.ToDummyItemQuerySortSectionForMicroserviceReader(request.SortIsDesc),
+      new DummyItemGetListActionQueryFilterForMicroserviceReader(request.Query));
 
     var result = await _mediator.Send(query, cancellationToken);
 
