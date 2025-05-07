@@ -19,6 +19,8 @@ global using Makc.Dummy.Shared.Infrastructure.CoreForOpenTelemetry.App;
 global using Makc.Dummy.Shared.Infrastructure.CoreForOpenTelemetryInWeb.App;
 global using Makc.Dummy.Writer.Apps.WebApp.App;
 global using Makc.Dummy.Writer.Apps.WebApp.App.Config;
+global using Makc.Dummy.Writer.Apps.WebApp.App.Config.Options.Sections;
+global using Makc.Dummy.Writer.Apps.WebApp.App.Config.Options.Sections.Domain.App;
 global using Makc.Dummy.Writer.Apps.WebApp.AppOutgoingEvent.Endpoints.Create;
 global using Makc.Dummy.Writer.Apps.WebApp.AppOutgoingEvent.Endpoints.Update;
 global using Makc.Dummy.Writer.Apps.WebApp.AppOutgoingEventPayload.Endpoints.Create;

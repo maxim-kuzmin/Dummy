@@ -26,20 +26,23 @@ public static class AppExtensions
       .AddAppDomainModel(logger)
       .AddAppDomainUseCases(logger);
 
+    var domain = Guard.Against.Null(appConfigOptions.Domain);
+    var infrastructure = Guard.Against.Null(appConfigOptions.Infrastructure);
+
     List<AppLoggerFuncToConfigure> funcsToConfigureAppLogger = [];
 
-    if (appConfigOptions.Observability != null)
+    if (infrastructure.Observability != null)
     {
       services
         .AddAppSharedInfrastructureTiedToCoreForOpenTelemetryInWeb(
           logger,
-          appConfigOptions.Observability,
+          infrastructure.Observability,
           out var funcToConfigureMetrics,
           out var funcToConfigureTracing
         )
         .AddAppSharedInfrastructureTiedToCoreForOpenTelemetry(
           logger,
-          appConfigOptions.Observability,
+          infrastructure.Observability,
           funcToConfigureMetrics,
           funcToConfigureTracing,
           out var funcToConfigureAppLogger);
@@ -54,9 +57,9 @@ public static class AppExtensions
       .AddAppSharedInfrastructureTiedToCore(logger, appBuilder.Configuration, funcsToConfigureAppLogger)
       .AddAppInfrastructureTiedToCore(logger);
 
-    Guard.Against.Null(appConfigOptions.MongoDB);
+    Guard.Against.Null(infrastructure.MongoDB);
 
-    services.AddAppInfrastructureTiedToMongoDB(logger, appConfigOptions.MongoDB, appBuilder.Configuration, out _);
+    services.AddAppInfrastructureTiedToMongoDB(logger, infrastructure.MongoDB, appBuilder.Configuration, out _);
 
     services
       .AddAppInfrastructureTiedToGrpc(logger)
@@ -70,23 +73,23 @@ public static class AppExtensions
 
     services.AddFastEndpoints();
 
-    var authentication = Guard.Against.Null(appConfigOptions.Authentication);
+    var domainAuth = Guard.Against.Null(domain.Auth);
 
     services
       .AddAuthorization()
       .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
       .AddJwtBearer(options =>
       {
-        byte[] keyBytes = Encoding.UTF8.GetBytes(authentication.Key);
+        byte[] keyBytes = Encoding.UTF8.GetBytes(domainAuth.Key);
 
-        var issuerSigningKey = authentication.GetSymmetricSecurityKey();
+        var issuerSigningKey = domainAuth.GetSymmetricSecurityKey();
 
         options.TokenValidationParameters = new TokenValidationParameters
         {
           ValidateIssuer = true,
-          ValidIssuer = authentication.Issuer,
+          ValidIssuer = domainAuth.Issuer,
           ValidateAudience = true,
-          ValidAudience = authentication.Audience,
+          ValidAudience = domainAuth.Audience,
           ValidateLifetime = true,
           IssuerSigningKey = issuerSigningKey,
           ValidateIssuerSigningKey = true

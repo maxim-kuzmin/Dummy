@@ -6,17 +6,12 @@
 public record AppConfigOptions : AppConfigOptionsBase
 {
   /// <summary>
-  /// Аутентификация.
+  /// Предметная область.
   /// </summary>
-  public AppConfigOptionsAuthenticationSection? Authentication { get; set; }
+  public AppConfigOptionsDomainSection? Domain { get; set; }
 
   /// <summary>
-  /// База данных MongoDB.
+  /// Инфраструктура.
   /// </summary>
-  public AppConfigOptionsDbMongoDBSection? MongoDB { get; set; }
-
-  /// <summary>
-  /// Наблюдаемость.
-  /// </summary>
-  public AppConfigOptionsObservabilitySection? Observability { get; set; }
+  public AppConfigOptionsInfrastructureSection? Infrastructure { get; set; }
 }

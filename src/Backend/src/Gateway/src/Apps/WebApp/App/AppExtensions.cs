@@ -15,7 +15,7 @@ public static class AppExtensions
   {
     var appConfigSection = appBuilder.Configuration.GetSection("App");
 
-    var appConfigKeycloakSection = appConfigSection.GetSection("Keycloak");
+    var appConfigInfrastructureKeycloakSection = appConfigSection.GetSection("Infrastructure:Keycloak");
 
     var appConfigOptions = new AppConfigOptions();
 
@@ -30,20 +30,23 @@ public static class AppExtensions
       .AddAppDomainUseCasesForReader(logger)
       .AddAppDomainUseCasesForWriter(logger);
 
+    var domain = Guard.Against.Null(appConfigOptions.Domain);
+    var infrastructure = Guard.Against.Null(appConfigOptions.Infrastructure);
+
     List<AppLoggerFuncToConfigure> funcsToConfigureAppLogger = [];
 
-    if (appConfigOptions.Observability != null)
+    if (infrastructure.Observability != null)
     {
       services
         .AddAppSharedInfrastructureTiedToCoreForOpenTelemetryInWeb(
           logger,
-          appConfigOptions.Observability,
+          infrastructure.Observability,
           out var funcToConfigureMetrics,
           out var funcToConfigureTracing
         )
         .AddAppSharedInfrastructureTiedToCoreForOpenTelemetry(
           logger,
-          appConfigOptions.Observability,
+          infrastructure.Observability,
           funcToConfigureMetrics,
           funcToConfigureTracing,
           out var funcToConfigureAppLogger);
@@ -58,33 +61,35 @@ public static class AppExtensions
       .AddAppSharedInfrastructureTiedToCore(logger, appBuilder.Configuration, funcsToConfigureAppLogger)
       .AddAppInfrastructureTiedToCore(logger);
 
-    var authentication = Guard.Against.Null(appConfigOptions.Authentication);
-    var reader = Guard.Against.Null(appConfigOptions.Reader);
-    var writer = Guard.Against.Null(appConfigOptions.Writer);
+    var domainAuth = Guard.Against.Null(domain.Auth);
+    var microcervicesReader = Guard.Against.Null(appConfigOptions.Microservices?.Reader);
+    var microcervicesWriter = Guard.Against.Null(appConfigOptions.Microservices?.Writer);
 
-    switch (writer.Protocol)
+    switch (microcervicesWriter.Protocol)
     {
       case AppConfigOptionsProtocolEnum.Http:
-        services.AddAppInfrastructureTiedToHttpForReader(logger, reader.HttpEndpoint);
-        services.AddAppInfrastructureTiedToHttpForWriter(logger, authentication, writer.HttpEndpoint);
+        services.AddAppInfrastructureTiedToHttpForReader(logger, microcervicesReader.HttpEndpoint);
+        services.AddAppInfrastructureTiedToHttpForWriter(logger, domainAuth, microcervicesWriter.HttpEndpoint);
         break;
       case AppConfigOptionsProtocolEnum.Grpc:
-        services.AddAppInfrastructureTiedToGrpcForReader(logger, reader.GrpcEndpoint);
-        services.AddAppInfrastructureTiedToGrpcForWriter(logger, authentication, writer.GrpcEndpoint);
+        services.AddAppInfrastructureTiedToGrpcForReader(logger, microcervicesReader.GrpcEndpoint);
+        services.AddAppInfrastructureTiedToGrpcForWriter(logger, domainAuth, microcervicesWriter.GrpcEndpoint);
         break;
       default:
         throw new NotImplementedException();
     }
 
-    if (authentication.Type == AppConfigOptionsAuthenticationEnum.Keycloak)
+    if (domainAuth.Type == AppConfigOptionsAuthenticationEnum.Keycloak)
     {
-      Guard.Against.Null(appConfigKeycloakSection);
+      Guard.Against.Null(appConfigInfrastructureKeycloakSection);
 
-      string keycloakEndpoint = Guard.Against.Null(appConfigOptions.Keycloak?.BaseUrl);
+      Guard.Against.Null(infrastructure.Keycloak);
+
+      string keycloakEndpoint = Guard.Against.Null(infrastructure.Keycloak.BaseUrl);
       
       services.AddAppInfrastructureTiedToHttpForKeycloak(
         logger,
-        appConfigKeycloakSection,
+        appConfigInfrastructureKeycloakSection,
         keycloakEndpoint);
     }
 
@@ -98,23 +103,23 @@ public static class AppExtensions
       .AddFastEndpoints()
       .AddAuthorization();    
 
-    switch (authentication.Type)
+    switch (domainAuth.Type)
     {
       case AppConfigOptionsAuthenticationEnum.JWT:
         services
           .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
           .AddJwtBearer(options =>
           {
-            byte[] keyBytes = Encoding.UTF8.GetBytes(authentication.Key);
+            byte[] keyBytes = Encoding.UTF8.GetBytes(domainAuth.Key);
 
-            var issuerSigningKey = authentication.GetSymmetricSecurityKey();
+            var issuerSigningKey = domainAuth.GetSymmetricSecurityKey();
 
             options.TokenValidationParameters = new TokenValidationParameters
             {
               ValidateIssuer = true,
-              ValidIssuer = authentication.Issuer,
+              ValidIssuer = domainAuth.Issuer,
               ValidateAudience = true,
-              ValidAudience = authentication.Audience,
+              ValidAudience = domainAuth.Audience,
               ValidateLifetime = true,
               IssuerSigningKey = issuerSigningKey,
               ValidateIssuerSigningKey = true
@@ -130,9 +135,9 @@ public static class AppExtensions
           })
           .AddJwtBearer(options =>
           {
-            var keycloak = Guard.Against.Null(appConfigOptions.Keycloak);
+            Guard.Against.Null(infrastructure.Keycloak);
 
-            string rootUrl = $"{keycloak.BaseUrl}/realms/{keycloak.Realm}";
+            string rootUrl = $"{infrastructure.Keycloak.BaseUrl}/realms/{infrastructure.Keycloak.Realm}";
 
             options.TokenValidationParameters = new TokenValidationParameters
             {

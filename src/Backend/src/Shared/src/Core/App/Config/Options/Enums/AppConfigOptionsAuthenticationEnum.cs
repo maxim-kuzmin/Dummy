@@ -9,6 +9,7 @@ public enum AppConfigOptionsAuthenticationEnum
   /// JWT.
   /// </summary>
   JWT = 1,
+
   /// <summary>
   /// Поставщик OpenID Keycloak.
   /// </summary>

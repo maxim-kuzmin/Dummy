@@ -6,27 +6,17 @@
 public record AppConfigOptions : AppConfigOptionsBase
 {
   /// <summary>
-  /// Аутентификация.
+  /// Предметная область.
   /// </summary>
-  public AppConfigOptionsAuthenticationSection? Authentication { get; set; }
+  public AppConfigOptionsDomainSection? Domain { get; set; }
 
   /// <summary>
-  /// Поставщик OpenID Keycloak.
+  /// Инфраструктура.
   /// </summary>
-  public AppConfigOptionsKeycloakSection? Keycloak { get; set; }
+  public AppConfigOptionsInfrastructureSection? Infrastructure { get; set; }
 
   /// <summary>
-  /// Наблюдаемость.
+  /// Микросервисы.
   /// </summary>
-  public AppConfigOptionsObservabilitySection? Observability { get; set; }
-
-  /// <summary>
-  /// Микросервис Читатель.
-  /// </summary>
-  public AppConfigOptionsReaderSection? Reader { get; set; }
-
-  /// <summary>
-  /// Микросервис Писатель.
-  /// </summary>
-  public AppConfigOptionsWriterSection? Writer { get; set; }
+  public AppConfigOptionsMicroservicesSection? Microservices { get; set; }
 }

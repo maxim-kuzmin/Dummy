@@ -15,7 +15,7 @@ public static class AppExtensions
   {
     var appConfigSection = appBuilder.Configuration.GetSection("App");
 
-    var appConfigAuthenticationSection = appConfigSection.GetSection("Authentication");
+    var appConfigDomainAuthSection = appConfigSection.GetSection("Domain:Auth");
 
     var appConfigOptions = new AppConfigOptions();
 
@@ -26,22 +26,26 @@ public static class AppExtensions
 
     var services = appBuilder.Services.Configure<AppConfigOptions>(appConfigSection)
       .AddAppDomainModel(logger)
-      .AddAppDomainUseCases(logger, appConfigAuthenticationSection);
+      .AddAppDomainUseCases(logger, appConfigDomainAuthSection);
+
+    var domain = Guard.Against.Null(appConfigOptions.Domain);
+    var domainApp = Guard.Against.Null(domain.App);
+    var infrastructure = Guard.Against.Null(appConfigOptions.Infrastructure);
 
     List<AppLoggerFuncToConfigure> funcsToConfigureAppLogger = [];
 
-    if (appConfigOptions.Observability != null)
+    if (infrastructure.Observability != null)
     {
       services
         .AddAppSharedInfrastructureTiedToCoreForOpenTelemetryInWeb(
           logger,
-          appConfigOptions.Observability,
+          infrastructure.Observability,
           out var funcToConfigureMetrics,
           out var funcToConfigureTracing
         )
         .AddAppSharedInfrastructureTiedToCoreForOpenTelemetry(
           logger,
-          appConfigOptions.Observability,
+          infrastructure.Observability,
           funcToConfigureMetrics,
           funcToConfigureTracing,
           out var funcToConfigureAppLogger);
@@ -55,36 +59,36 @@ public static class AppExtensions
     services
       .AddAppSharedInfrastructureTiedToCore(logger, appBuilder.Configuration, funcsToConfigureAppLogger)
       .AddAppInfrastructureTiedToCore(logger)
-      .AddAppInfrastructureTiedToDapper(logger, appConfigOptions.DbQueryORM);
+      .AddAppInfrastructureTiedToDapper(logger, domainApp.DbQueryORM);
 
     AppDbSQLSettings appDbSQLSettings;
 
-    switch (appConfigOptions.Db)
+    switch (domainApp.Db)
     {
       case AppConfigOptionsDbEnum.MSSQLServer:
-        Guard.Against.Null(appConfigOptions.MSSQLServer);
+        Guard.Against.Null(infrastructure.MSSQLServer);
         services
           .AddAppInfrastructureTiedToMSSQLServer(logger, out appDbSQLSettings)          
           .AddAppInfrastructureTiedToEntityFrameworkForMSSQLServer(
             logger,
-            appConfigOptions.MSSQLServer,
+            infrastructure.MSSQLServer,
             appBuilder.Configuration)
           .AddAppInfrastructureTiedToDapperForMSSQLServer(
             logger,
-            appConfigOptions.MSSQLServer,
+            infrastructure.MSSQLServer,
             appBuilder.Configuration);
         break;
       case AppConfigOptionsDbEnum.PostgreSQL:
-        Guard.Against.Null(appConfigOptions.PostgreSQL);
+        Guard.Against.Null(infrastructure.PostgreSQL);
         services
           .AddAppInfrastructureTiedToPostgreSQL(logger, out appDbSQLSettings)
           .AddAppInfrastructureTiedToEntityFrameworkForPostgreSQL(
             logger,
-            appConfigOptions.PostgreSQL,
+            infrastructure.PostgreSQL,
             appBuilder.Configuration)
           .AddAppInfrastructureTiedToDapperForPostgreSQL(
             logger,
-            appConfigOptions.PostgreSQL,
+            infrastructure.PostgreSQL,
             appBuilder.Configuration);
         break;
       default:
@@ -92,7 +96,7 @@ public static class AppExtensions
     }
 
     services
-      .AddAppInfrastructureTiedToEntityFramework(logger, appDbSQLSettings, appConfigOptions.DbQueryORM)
+      .AddAppInfrastructureTiedToEntityFramework(logger, appDbSQLSettings, domainApp.DbQueryORM)
       .AddAppInfrastructureTiedToGrpc(logger)
       .TryAddAppDomainUseCasesStubs(logger);
 
@@ -104,23 +108,23 @@ public static class AppExtensions
 
     services.AddFastEndpoints();
 
-    var authentication = Guard.Against.Null(appConfigOptions.Authentication);
+    var domainAuth = Guard.Against.Null(domain.Auth);
 
     services
       .AddAuthorization()
       .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
       .AddJwtBearer(options =>
       {
-        byte[] keyBytes = Encoding.UTF8.GetBytes(authentication.Key);
+        byte[] keyBytes = Encoding.UTF8.GetBytes(domainAuth.Key);
 
-        var issuerSigningKey = authentication.GetSymmetricSecurityKey();
+        var issuerSigningKey = domainAuth.GetSymmetricSecurityKey();
 
         options.TokenValidationParameters = new TokenValidationParameters
         {
           ValidateIssuer = true,
-          ValidIssuer = authentication.Issuer,
+          ValidIssuer = domainAuth.Issuer,
           ValidateAudience = true,
-          ValidAudience = authentication.Audience,
+          ValidAudience = domainAuth.Audience,
           ValidateLifetime = true,
           IssuerSigningKey = issuerSigningKey,
           ValidateIssuerSigningKey = true

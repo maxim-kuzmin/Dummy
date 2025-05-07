@@ -6,6 +6,7 @@ global using FastEndpoints;
 global using FastEndpoints.Swagger;
 global using Makc.Dummy.Reader.Apps.WebApp.App;
 global using Makc.Dummy.Reader.Apps.WebApp.App.Config;
+global using Makc.Dummy.Reader.Apps.WebApp.App.Config.Options.Sections;
 global using Makc.Dummy.Reader.Apps.WebApp.DummyItem.Endpoints.Create;
 global using Makc.Dummy.Reader.Apps.WebApp.DummyItem.Endpoints.Update;
 global using Makc.Dummy.Reader.DomainModel.App;
