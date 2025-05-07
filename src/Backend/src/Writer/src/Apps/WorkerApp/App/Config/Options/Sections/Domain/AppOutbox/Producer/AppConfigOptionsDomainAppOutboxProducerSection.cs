@@ -5,8 +5,4 @@
 /// </summary>
 public record AppConfigOptionsDomainAppOutboxProducerSection
 {
-  /// <summary>
-  /// Включено ли?
-  /// </summary>
-  public bool IsEnabled { get; set; }
 }

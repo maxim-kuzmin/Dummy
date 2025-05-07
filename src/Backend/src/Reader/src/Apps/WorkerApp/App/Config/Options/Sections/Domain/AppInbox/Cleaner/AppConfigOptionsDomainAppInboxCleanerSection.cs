@@ -5,8 +5,4 @@
 /// </summary>
 public record AppConfigOptionsDomainAppInboxCleanerSection
 {
-  /// <summary>
-  /// Включено ли?
-  /// </summary>
-  public bool IsEnabled { get; set; }
 }

@@ -2,6 +2,7 @@
 global using Ardalis.GuardClauses;
 global using Makc.Dummy.Reader.Apps.WorkerApp.App;
 global using Makc.Dummy.Reader.Apps.WorkerApp.App.Config;
+global using Makc.Dummy.Reader.Apps.WorkerApp.App.Config.Options.Enums;
 global using Makc.Dummy.Reader.Apps.WorkerApp.App.Config.Options.Sections;
 global using Makc.Dummy.Reader.Apps.WorkerApp.App.Config.Options.Sections.Domain.App;
 global using Makc.Dummy.Reader.Apps.WorkerApp.App.Config.Options.Sections.Domain.AppInbox;

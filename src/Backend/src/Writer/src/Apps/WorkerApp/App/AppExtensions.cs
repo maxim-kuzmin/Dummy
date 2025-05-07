@@ -103,19 +103,29 @@ public static class AppExtensions
         throw new NotImplementedException($"Unknown Domain App {nameof(domainApp.MessageBroker)}: {domainApp.MessageBroker}");
     }
 
-    if (domain.AppDb?.Migration?.IsEnabled == true)
+    var workloads = appConfigOptions.Workloads ?? throw new Exception($"Workloads are null");
+
+    if (workloads.Length == 0)
     {
-      services.AddHostedService<AppDbMigrationService>();
+      throw new Exception($"Workloads are empty");
     }
 
-    if (domain.AppOutbox?.Cleaner?.IsEnabled == true)
+    foreach (var workload in workloads)
     {
-      services.AddHostedService<AppOutboxCleanerService>();
-    }
-
-    if (domain.AppOutbox?.Producer?.IsEnabled == true)
-    {
-      services.AddHostedService<AppOutboxProducerService>();
+      switch (workload)
+      {
+        case AppConfigOptionsWorkloadEnum.AppDbMigration:
+          services.AddHostedService<AppDbMigrationService>();
+          break;
+        case AppConfigOptionsWorkloadEnum.AppOutboxCleaner:
+          services.AddHostedService<AppOutboxCleanerService>();
+          break;
+        case AppConfigOptionsWorkloadEnum.AppOutboxProducer:
+          services.AddHostedService<AppOutboxProducerService>();
+          break;
+        default:
+          throw new NotImplementedException($"Unknown Workload: {workload}");
+      }
     }
 
     services.TryAddAppDomainUseCasesStubs(logger);

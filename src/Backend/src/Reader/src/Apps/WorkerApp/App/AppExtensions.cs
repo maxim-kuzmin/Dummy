@@ -70,14 +70,26 @@ public static class AppExtensions
         throw new NotImplementedException();
     }
 
-    if (domain.AppInbox?.Cleaner?.IsEnabled == true)
+    var workloads = appConfigOptions.Workloads ?? throw new Exception($"Workloads are null");
+
+    if (workloads.Length == 0)
     {
-      services.AddHostedService<AppInboxCleanerService>();
+      throw new Exception($"Workloads are empty");
     }
 
-    if (domain.AppInbox?.Consumer?.IsEnabled == true)
+    foreach (var workload in workloads)
     {
-      services.AddHostedService<AppInboxConsumerService>();
+      switch (workload)
+      {
+        case AppConfigOptionsWorkloadEnum.AppInboxCleaner:
+          services.AddHostedService<AppInboxCleanerService>();
+          break;
+        case AppConfigOptionsWorkloadEnum.AppInboxConsumer:
+          services.AddHostedService<AppInboxConsumerService>();
+          break;
+        default:
+          throw new NotImplementedException($"Unknown Workload: {workload}");
+      }
     }
 
     services.TryAddAppDomainUseCasesStubs(logger);

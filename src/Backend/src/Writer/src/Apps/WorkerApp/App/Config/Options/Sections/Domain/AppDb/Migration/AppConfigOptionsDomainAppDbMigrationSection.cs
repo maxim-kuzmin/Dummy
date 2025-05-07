@@ -6,11 +6,6 @@
 public record AppConfigOptionsDomainAppDbMigrationSection
 {
   /// <summary>
-  /// Включено ли?
-  /// </summary>
-  public bool IsEnabled { get; set; }
-
-  /// <summary>
   /// Следует ли заполнять базу данных тестовыми данными?
   /// </summary>
   public bool ShouldDbBePopulatedWithTestData { get; set; }

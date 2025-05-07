@@ -14,4 +14,9 @@ public record AppConfigOptions : AppConfigOptionsBase
   /// Инфраструктура.
   /// </summary>
   public AppConfigOptionsInfrastructureSection? Infrastructure { get; set; }
+
+  /// <summary>
+  /// Полезные нагрузки.
+  /// </summary>
+  public AppConfigOptionsWorkloadEnum[]? Workloads { get; set; }
 }

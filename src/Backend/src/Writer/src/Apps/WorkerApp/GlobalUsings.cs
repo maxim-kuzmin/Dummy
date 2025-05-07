@@ -9,6 +9,7 @@ global using Makc.Dummy.Shared.Infrastructure.Core.App.Logger.Funcs;
 global using Makc.Dummy.Shared.Infrastructure.CoreForOpenTelemetry.App;
 global using Makc.Dummy.Writer.Apps.WorkerApp.App;
 global using Makc.Dummy.Writer.Apps.WorkerApp.App.Config;
+global using Makc.Dummy.Writer.Apps.WorkerApp.App.Config.Options.Enums;
 global using Makc.Dummy.Writer.Apps.WorkerApp.App.Config.Options.Sections;
 global using Makc.Dummy.Writer.Apps.WorkerApp.App.Config.Options.Sections.Domain.App;
 global using Makc.Dummy.Writer.Apps.WorkerApp.App.Config.Options.Sections.Domain.AppDb;

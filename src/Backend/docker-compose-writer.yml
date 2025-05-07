@@ -4,7 +4,6 @@ services:
     image: ${MY_SERVICE_BACKEND_WRITER_DB_MIGRATION_APP_IMAGE_NAME}
     environment:
       - App__Domain__App__Db=MSSQLServer
-      - App__Domain__AppDb__Migration__IsEnabled=true
       - App__Infrastructure__MSSQLServer__Password=${MY_SERVICE_BACKEND_WRITER_DB_MIGRATION_APP_CONFIG_INFRASTRUCTURE_MSSQLSERVER_PASSWORD}
       - App__Infrastructure__MSSQLServer__Port=${MY_SERVICE_BACKEND_WRITER_DB_MIGRATION_APP_CONFIG_INFRASTRUCTURE_MSSQLSERVER_PORT}
       - App__Infrastructure__MSSQLServer__Server=${MY_SERVICE_BACKEND_WRITER_DB_MIGRATION_APP_CONFIG_INFRASTRUCTURE_MSSQLSERVER_SERVER}
@@ -12,6 +11,7 @@ services:
       - App__Infrastructure__Observability__CollectorGrpcEndpoint=${MY_SERVICE_BACKEND_WRITER_DB_MIGRATION_APP_CONFIG_INFRASTRUCTURE_OBSERVABILITY_COLLECTOR_GRPC_ENDPOINT}
       - App__Infrastructure__Observability__CollectorHttpEndpoint=${MY_SERVICE_BACKEND_WRITER_DB_MIGRATION_APP_CONFIG_INFRASTRUCTURE_OBSERVABILITY_COLLECTOR_HTTP_ENDPOINT}
       - App__Infrastructure__Observability__ServiceName=${MY_SERVICE_BACKEND_WRITER_DB_MIGRATION_FOR_MSSQLSERVER_APP_CONFIG_INFRASTRUCTURE_OBSERVABILITY_SERVICE_NAME}
+      - App__Workloads=["AppDbMigration"]
     networks:
       - network-backend
 
@@ -20,7 +20,6 @@ services:
     image: ${MY_SERVICE_BACKEND_WRITER_DB_MIGRATION_APP_IMAGE_NAME}
     environment:
       - App__Domain__App__Db=PostgreSQL
-      - App__Domain__AppDb__Migration__IsEnabled=true
       - App__Infrastructure__Observability__CollectorGrpcEndpoint=${MY_SERVICE_BACKEND_WRITER_DB_MIGRATION_APP_CONFIG_INFRASTRUCTURE_OBSERVABILITY_COLLECTOR_GRPC_ENDPOINT}
       - App__Infrastructure__Observability__CollectorHttpEndpoint=${MY_SERVICE_BACKEND_WRITER_DB_MIGRATION_APP_CONFIG_INFRASTRUCTURE_OBSERVABILITY_COLLECTOR_HTTP_ENDPOINT}
       - App__Infrastructure__Observability__ServiceName=${MY_SERVICE_BACKEND_WRITER_DB_MIGRATION_FOR_POSTGRES_APP_CONFIG_INFRASTRUCTURE_OBSERVABILITY_SERVICE_NAME}
@@ -28,6 +27,7 @@ services:
       - App__Infrastructure__PostgreSQL__Port=${MY_SERVICE_BACKEND_WRITER_DB_MIGRATION_APP_CONFIG_INFRASTRUCTURE_POSTGRESQL_PORT}
       - App__Infrastructure__PostgreSQL__Server=${MY_SERVICE_BACKEND_WRITER_DB_MIGRATION_APP_CONFIG_INFRASTRUCTURE_POSTGRESQL_SERVER}
       - App__Infrastructure__PostgreSQL__UserId=${MY_SERVICE_BACKEND_WRITER_DB_MIGRATION_APP_CONFIG_INFRASTRUCTURE_POSTGRESQL_USERID}
+      - App__Workloads=["AppDbMigration"]
     networks:
       - network-backend
 
@@ -35,7 +35,6 @@ services:
     container_name: ${MY_SERVICE_BACKEND_WRITER_OUTBOX_CLEANER_APP_CONTAINER_NAME}
     image: ${MY_SERVICE_BACKEND_WRITER_OUTBOX_CLEANER_APP_IMAGE_NAME}
     environment:
-      - App__Domain__AppOutbox__Cleaner__IsEnabled=true
       - App__Infrastructure__MSSQLServer__Password=${MY_SERVICE_BACKEND_WRITER_OUTBOX_CLEANER_APP_CONFIG_INFRASTRUCTURE_MSSQLSERVER_PASSWORD}
       - App__Infrastructure__MSSQLServer__Port=${MY_SERVICE_BACKEND_WRITER_OUTBOX_CLEANER_APP_CONFIG_INFRASTRUCTURE_MSSQLSERVER_PORT}
       - App__Infrastructure__MSSQLServer__Server=${MY_SERVICE_BACKEND_WRITER_OUTBOX_CLEANER_APP_CONFIG_INFRASTRUCTURE_MSSQLSERVER_SERVER}
@@ -47,6 +46,7 @@ services:
       - App__Infrastructure__PostgreSQL__Port=${MY_SERVICE_BACKEND_WRITER_OUTBOX_CLEANER_APP_CONFIG_INFRASTRUCTURE_POSTGRESQL_PORT}
       - App__Infrastructure__PostgreSQL__Server=${MY_SERVICE_BACKEND_WRITER_OUTBOX_CLEANER_APP_CONFIG_INFRASTRUCTURE_POSTGRESQL_SERVER}
       - App__Infrastructure__PostgreSQL__UserId=${MY_SERVICE_BACKEND_WRITER_OUTBOX_CLEANER_APP_CONFIG_INFRASTRUCTURE_POSTGRESQL_USERID}
+      - App__Workloads=["AppOutboxCleaner"]
     networks:
       - network-backend
 
@@ -54,7 +54,6 @@ services:
     container_name: ${MY_SERVICE_BACKEND_WRITER_OUTBOX_PRODUCER_APP_CONTAINER_NAME}
     image: ${MY_SERVICE_BACKEND_WRITER_OUTBOX_PRODUCER_APP_IMAGE_NAME}
     environment:
-      - App__Domain__AppOutbox__Producer__IsEnabled=true
       - App__Infrastructure__Kafka__Producer__BootstrapServers=${MY_SERVICE_BACKEND_WRITER_OUTBOX_PRODUCER_APP_CONFIG_INFRASTRUCTURE_KAFKA_BOOTSTRAP_SERVERS}
       - App__Infrastructure__MSSQLServer__Password=${MY_SERVICE_BACKEND_WRITER_OUTBOX_PRODUCER_APP_CONFIG_INFRASTRUCTURE_MSSQLSERVER_PASSWORD}
       - App__Infrastructure__MSSQLServer__Port=${MY_SERVICE_BACKEND_WRITER_OUTBOX_PRODUCER_APP_CONFIG_INFRASTRUCTURE_MSSQLSERVER_PORT}
@@ -71,6 +70,7 @@ services:
       - App__Infrastructure__RabbitMQ__Password=${MY_SERVICE_BACKEND_WRITER_OUTBOX_PRODUCER_APP_CONFIG_INFRASTRUCTURE_RABBITMQ_PASSWORD}
       - App__Infrastructure__RabbitMQ__Port=${MY_SERVICE_BACKEND_WRITER_OUTBOX_PRODUCER_APP_CONFIG_INFRASTRUCTURE_RABBITMQ_PORT}
       - App__Infrastructure__RabbitMQ__UserName=${MY_SERVICE_BACKEND_WRITER_OUTBOX_PRODUCER_APP_CONFIG_INFRASTRUCTURE_RABBITMQ_USERNAME}
+      - App__Workloads=["AppOutboxProducer"]
     networks:
       - network-backend
       
