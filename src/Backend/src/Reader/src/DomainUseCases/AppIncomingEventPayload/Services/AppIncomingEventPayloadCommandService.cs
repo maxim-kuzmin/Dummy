@@ -136,12 +136,12 @@ public class AppIncomingEventPayloadCommandService(
 
     var payload = command.Payload;
 
-    aggregate.UpdateAppIncomingEventId(command.AppIncomingEventId);
+    aggregate.UpdateAppIncomingEventObjectId(command.AppIncomingEventId);
     aggregate.UpdateData(payload.Data);
     aggregate.UpdateEntityConcurrencyTokenToDelete(payload.EntityConcurrencyTokenToDelete);
     aggregate.UpdateEntityConcurrencyTokenToInsert(payload.EntityConcurrencyTokenToInsert);
     aggregate.UpdateEntityId(payload.EntityId);
-    aggregate.UpdateEntityName(payload.EntityName.ToString());
+    aggregate.UpdateEntityName(payload.EntityName);
     aggregate.UpdatePosition(payload.Position);
 
     return entity != null ? aggregate.GetResultToCreate() : aggregate.GetResultToUpdate();

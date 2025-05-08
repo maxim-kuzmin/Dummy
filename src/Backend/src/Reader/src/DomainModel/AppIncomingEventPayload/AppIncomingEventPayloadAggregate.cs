@@ -34,9 +34,44 @@ public class AppIncomingEventPayloadAggregate(
           () => target.AppIncomingEventObjectId = source.AppIncomingEventObjectId)
         ||
         PrepareChangedPropertyToUpdate(
+          nameof(source.CreatedAt),
+          () => target.CreatedAt != source.CreatedAt,
+          () => target.CreatedAt = source.CreatedAt)
+        ||
+        PrepareChangedPropertyToUpdate(
           nameof(source.Data),
           () => target.Data != source.Data,
-          () => target.Data = source.Data);
+          () => target.Data = source.Data)
+        ||
+        PrepareChangedPropertyToUpdate(
+          nameof(source.EntityConcurrencyTokenToDelete),
+          () => target.EntityConcurrencyTokenToDelete != source.EntityConcurrencyTokenToDelete,
+          () => target.EntityConcurrencyTokenToDelete = source.EntityConcurrencyTokenToDelete)
+        ||
+        PrepareChangedPropertyToUpdate(
+          nameof(source.EntityConcurrencyTokenToInsert),
+          () => target.EntityConcurrencyTokenToInsert != source.EntityConcurrencyTokenToInsert,
+          () => target.EntityConcurrencyTokenToInsert = source.EntityConcurrencyTokenToInsert)
+        ||
+        PrepareChangedPropertyToUpdate(
+          nameof(source.EntityId),
+          () => target.EntityId != source.EntityId,
+          () => target.EntityId = source.EntityId)
+        ||
+        PrepareChangedPropertyToUpdate(
+          nameof(source.EntityName),
+          () => target.EntityName != source.EntityName,
+          () => target.EntityName = source.EntityName)
+        ||
+        PrepareChangedPropertyToUpdate(
+          nameof(source.EventPayloadId),
+          () => target.EventPayloadId != source.EventPayloadId,
+          () => target.EventPayloadId = source.EventPayloadId)
+        ||
+        PrepareChangedPropertyToUpdate(
+          nameof(source.Position),
+          () => target.Position != source.Position,
+          () => target.Position = source.Position);
 
       if (isEntityChanged)
       {
@@ -51,11 +86,11 @@ public class AppIncomingEventPayloadAggregate(
   /// Обновить идентификатор входящего события приложения.
   /// </summary>
   /// <param name="value">Значение.</param>
-  public void UpdateAppIncomingEventId(string value)
+  public void UpdateAppIncomingEventObjectId(string value)
   {
     if (string.IsNullOrWhiteSpace(value))
     {
-      string errorMessage = _resources.GetAppIncomingEventIdIsEmptyErrorMessage();
+      string errorMessage = _resources.GetAppIncomingEventObjectIdIsEmptyErrorMessage();
 
       var appError = AppIncomingEventPayloadErrorEnum.AppIncomingEventIdIsEmpty.ToAppError(errorMessage);
 
@@ -66,7 +101,7 @@ public class AppIncomingEventPayloadAggregate(
 
     if (maxLength > 0 && value.Length > maxLength)
     {
-      string errorMessage = _resources.GetAppIncomingEventIdIsTooLongErrorMessage(maxLength);
+      string errorMessage = _resources.GetAppIncomingEventObjectIdIsTooLongErrorMessage(maxLength);
 
       var appError = AppIncomingEventPayloadErrorEnum.AppIncomingEventIdIsTooLong.ToAppError(errorMessage);
 
@@ -78,6 +113,52 @@ public class AppIncomingEventPayloadAggregate(
     entity.AppIncomingEventObjectId = value;
 
     AddChangedProperty(nameof(entity.AppIncomingEventObjectId), entity.AppIncomingEventObjectId);
+  }
+
+  /// <summary>
+  /// Обновить дату создания.
+  /// </summary>
+  /// <param name="value">Значение.</param>
+  public void UpdateCreatedAt(DateTimeOffset value)
+  {
+    if (value == default)
+    {
+      string errorMessage = _resources.GetCreatedAtIsInvalidErrorMessage();
+
+      var appError = AppIncomingEventPayloadErrorEnum.CreatedAtIsInvalid.ToAppError(errorMessage);
+
+      UpdateErrors.Add(appError);
+    }
+
+    var entity = GetEntityToUpdate();
+
+    entity.CreatedAt = value;
+
+    AddChangedProperty(nameof(entity.CreatedAt), entity.CreatedAt.ToString("O"));
+  }
+
+  /// <summary>
+  /// Обновить данные.
+  /// </summary>
+  /// <param name="value">Значение.</param>
+  public void UpdateData(string? value)
+  {
+    int maxLength = _settings.MaxLengthForData;
+
+    if (value != null && maxLength > 0 && value.Length > maxLength)
+    {
+      string errorMessage = _resources.GetDataIsTooLongErrorMessage(maxLength);
+
+      var appError = AppIncomingEventPayloadErrorEnum.DataIsTooLong.ToAppError(errorMessage);
+
+      UpdateErrors.Add(appError);
+    }
+
+    var entity = GetEntityToUpdate();
+
+    entity.Data = value;
+
+    AddChangedProperty(nameof(entity.Data), entity.Data);
   }
 
   /// <summary>
@@ -105,7 +186,7 @@ public class AppIncomingEventPayloadAggregate(
   }
 
   /// <summary>
-  /// Обновить токен параллелизма для вставки.
+  /// Обновить токен параллелизма сущности для вставки.
   /// </summary>
   /// <param name="value">Значение.</param>
   public void UpdateEntityConcurrencyTokenToInsert(string? value)
@@ -126,30 +207,6 @@ public class AppIncomingEventPayloadAggregate(
     entity.EntityConcurrencyTokenToInsert = value;
 
     AddChangedProperty(nameof(entity.EntityConcurrencyTokenToInsert), entity.EntityConcurrencyTokenToInsert);
-  }
-
-  /// <summary>
-  /// Обновить данные.
-  /// </summary>
-  /// <param name="value">Значение.</param>
-  public void UpdateData(string? value)
-  {
-    int maxLength = _settings.MaxLengthForData;
-
-    if (value != null && maxLength > 0 && value.Length > maxLength)
-    {
-      string errorMessage = _resources.GetDataIsTooLongErrorMessage(maxLength);
-
-      var appError = AppIncomingEventPayloadErrorEnum.DataIsTooLong.ToAppError(errorMessage);
-
-      UpdateErrors.Add(appError);
-    }
-
-    var entity = GetEntityToUpdate();
-
-    entity.Data = value;
-
-    AddChangedProperty(nameof(entity.Data), entity.Data);
   }
 
   /// <summary>
@@ -283,6 +340,8 @@ public class AppIncomingEventPayloadAggregate(
   protected sealed override void OnGetResultToCreate(AppIncomingEventPayloadEntity entity)
   {
     RefreshConcurrencyToken(entity);
+
+    entity.CreatedAt = DateTimeOffset.Now;
   }
   
   /// <inheritdoc/>

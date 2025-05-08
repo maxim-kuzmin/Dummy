@@ -134,8 +134,13 @@ public class AppIncomingEventCommandService(
   {
     var aggregate = _factory.CreateAggregate(entity);
 
-    aggregate.UpdateEventName(command.Name);
-    aggregate.UpdateLoadedAt(command.LoadedAt);    
+    aggregate.UpdateEventId(command.EventId);
+    aggregate.UpdateEventName(command.EventName);
+    aggregate.UpdateLastLoadingAt(command.LastLoadingAt);
+    aggregate.UpdateLastLoadingError(command.LastLoadingError);
+    aggregate.UpdateLoadedAt(command.LoadedAt);
+    aggregate.UpdatePayloadCount(command.PayloadCount);
+    aggregate.UpdatePayloadTotalCount(command.PayloadTotalCount);
     aggregate.UpdateProcessedAt(command.ProcessedAt);
 
     return entity != null ? aggregate.GetResultToCreate() : aggregate.GetResultToUpdate();

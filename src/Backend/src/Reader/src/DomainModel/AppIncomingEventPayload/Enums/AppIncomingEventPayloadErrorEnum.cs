@@ -16,6 +16,11 @@ public enum AppIncomingEventPayloadErrorEnum
   AppIncomingEventIdIsTooLong,
 
   /// <summary>
+  /// Дата создания недействительна.
+  /// </summary>
+  CreatedAtIsInvalid,
+
+  /// <summary>
   /// Данные слишком длинные.
   /// </summary>
   DataIsTooLong,

@@ -26,6 +26,16 @@ public class AppIncomingEventEntity : EntityBaseWithStringPrimaryKey, IAggregate
   public string EventName { get; set; } = string.Empty;
 
   /// <summary>
+  /// Последняя дата загрузки.
+  /// </summary>
+  public DateTimeOffset? LastLoadingAt { get; set; }
+
+  /// <summary>
+  /// Последняя ошибка загрузки.
+  /// </summary>
+  public string? LastLoadingError { get; set; }
+
+  /// <summary>
   /// Дата загрузки.
   /// </summary>
   public DateTimeOffset? LoadedAt { get; set; }
@@ -34,6 +44,16 @@ public class AppIncomingEventEntity : EntityBaseWithStringPrimaryKey, IAggregate
   /// Идентификатор объекта.
   /// </summary>
   public string? ObjectId { get; set; }
+
+  /// <summary>
+  /// Количество полезной нагрузки.
+  /// </summary>
+  public int PayloadCount { get; set; }
+
+  /// <summary>
+  /// Общее количество полезной нагрузки.
+  /// </summary>
+  public int PayloadTotalCount { get; set; }
 
   /// <summary>
   /// Дата обработки.

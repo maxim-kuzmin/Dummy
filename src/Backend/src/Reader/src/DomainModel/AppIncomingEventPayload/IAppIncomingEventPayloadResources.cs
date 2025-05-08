@@ -6,17 +6,23 @@
 public interface IAppIncomingEventPayloadResources
 {
   /// <summary>
-  /// Получить сообщение об ошибке пустого идентификатора входящего события приложения.
+  /// Получить сообщение об ошибке пустого идентификатора объекта входящего события приложения.
   /// </summary>
   /// <returns>Сообщение об ошибке.</returns>
-  string GetAppIncomingEventIdIsEmptyErrorMessage();
+  string GetAppIncomingEventObjectIdIsEmptyErrorMessage();
 
   /// <summary>
-  /// Получить сообщение об ошибке слишком длинного идентификатора входящего события приложения.
+  /// Получить сообщение об ошибке слишком длинного идентификатора объекта входящего события приложения.
   /// </summary>
   /// <param name="maxLength">Максимальная длина.</param>
   /// <returns>Сообщение об ошибке.</returns>
-  string GetAppIncomingEventIdIsTooLongErrorMessage(int maxLength);
+  string GetAppIncomingEventObjectIdIsTooLongErrorMessage(int maxLength);
+
+  /// <summary>
+  /// Получить сообщение об ошибке недействительной даты создания.
+  /// </summary>
+  /// <returns>Сообщение об ошибке.</returns>
+  string GetCreatedAtIsInvalidErrorMessage();
 
   /// <summary>
   /// Получить сообщение об ошибке слишком длинных данных.

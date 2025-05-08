@@ -31,9 +31,29 @@ public enum AppIncomingEventErrorEnum
   EventNameIsTooLong,
 
   /// <summary>
+  /// Последняя дата загрузки недействительна.
+  /// </summary>
+  LastLoadingAtIsInvalid,
+
+  /// <summary>
+  /// Последняя ошибка загрузки слишком длинная.
+  /// </summary>
+  LastLoadingErrorIsTooLong,
+
+  /// <summary>
   /// Дата загрузки недействительна.
   /// </summary>
   LoadedAtIsInvalid,
+
+  /// <summary>
+  /// Количество полезной нагрузки отрицательное.
+  /// </summary>
+  PayloadCountIsNegative,
+
+  /// <summary>
+  /// Общее количество полезной нагрузки отрицательное.
+  /// </summary>
+  PayloadTotalCountIsNegative,
 
   /// <summary>
   /// Дата обработки недействительна.

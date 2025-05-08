@@ -38,10 +38,35 @@ public interface IAppIncomingEventResources
   string GetEventNameIsTooLongErrorMessage(int maxLength);
 
   /// <summary>
+  /// Получить сообщение об ошибке недействительной последней даты загрузки.
+  /// </summary>
+  /// <returns>Сообщение об ошибке.</returns>
+  string GetLastLoadingAtIsInvalidErrorMessage();
+
+  /// <summary>
+  /// Получить сообщение об ошибке слишком длинной последней ошибки загрузки.
+  /// </summary>
+  /// <param name="maxLength">Максимальная длина.</param>
+  /// <returns>Сообщение об ошибке.</returns>
+  string GetLastLoadingErrorIsTooLongErrorMessage(int maxLength);
+
+  /// <summary>
   /// Получить сообщение об ошибке недействительной даты загрузки.
   /// </summary>
   /// <returns>Сообщение об ошибке.</returns>
   string GetLoadedAtIsInvalidErrorMessage();
+
+  /// <summary>
+  /// Получить сообщение об ошибке отрицательного количества полезной загрузки.
+  /// </summary>
+  /// <returns>Сообщение об ошибке.</returns>
+  string GetPayloadCountIsNegativeErrorMessage();
+
+  /// <summary>
+  /// Получить сообщение об ошибке отрицательного общего количества полезной загрузки.
+  /// </summary>
+  /// <returns>Сообщение об ошибке.</returns>
+  string GetPayloadTotalCountIsNegativeErrorMessage();
 
   /// <summary>
   /// Получить сообщение об ошибке недействительной даты обработки.

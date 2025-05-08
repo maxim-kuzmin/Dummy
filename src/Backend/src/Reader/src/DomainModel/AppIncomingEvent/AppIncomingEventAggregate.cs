@@ -34,11 +34,6 @@ public class AppIncomingEventAggregate(
           () => target.CreatedAt = source.CreatedAt)
         ||
         PrepareChangedPropertyToUpdate(
-          nameof(source.LoadedAt),
-          () => target.LoadedAt != source.LoadedAt,
-          () => target.LoadedAt = source.LoadedAt)
-        ||
-        PrepareChangedPropertyToUpdate(
           nameof(source.EventId),
           () => target.EventId != source.EventId,
           () => target.EventId = source.EventId)
@@ -46,7 +41,37 @@ public class AppIncomingEventAggregate(
         PrepareChangedPropertyToUpdate(
           nameof(source.EventName),
           () => target.EventName != source.EventName,
-          () => target.EventName = source.EventName);
+          () => target.EventName = source.EventName)
+        ||
+        PrepareChangedPropertyToUpdate(
+          nameof(source.LastLoadingAt),
+          () => target.LastLoadingAt != source.LastLoadingAt,
+          () => target.LastLoadingAt = source.LastLoadingAt)
+        ||
+        PrepareChangedPropertyToUpdate(
+          nameof(source.LastLoadingError),
+          () => target.LastLoadingError != source.LastLoadingError,
+          () => target.LastLoadingError = source.LastLoadingError)
+        ||
+        PrepareChangedPropertyToUpdate(
+          nameof(source.LoadedAt),
+          () => target.LoadedAt != source.LoadedAt,
+          () => target.LoadedAt = source.LoadedAt)
+        ||
+        PrepareChangedPropertyToUpdate(
+          nameof(source.PayloadCount),
+          () => target.PayloadCount != source.PayloadCount,
+          () => target.PayloadCount = source.PayloadCount)
+        ||
+        PrepareChangedPropertyToUpdate(
+          nameof(source.PayloadTotalCount),
+          () => target.PayloadTotalCount != source.PayloadTotalCount,
+          () => target.PayloadTotalCount = source.PayloadTotalCount)
+        ||
+        PrepareChangedPropertyToUpdate(
+          nameof(source.ProcessedAt),
+          () => target.ProcessedAt != source.ProcessedAt,
+          () => target.ProcessedAt = source.ProcessedAt);
 
       if (isEntityChanged)
       {
@@ -77,28 +102,6 @@ public class AppIncomingEventAggregate(
     entity.CreatedAt = value;
 
     AddChangedProperty(nameof(entity.CreatedAt), entity.CreatedAt.ToString("O"));
-  }
-
-  /// <summary>
-  /// Обновить дату загрузки.
-  /// </summary>
-  /// <param name="value">Значение.</param>
-  public void UpdateLoadedAt(DateTimeOffset? value)
-  {
-    if (value == default)
-    {
-      string errorMessage = _resources.GetLoadedAtIsInvalidErrorMessage();
-
-      var appError = AppIncomingEventErrorEnum.LoadedAtIsInvalid.ToAppError(errorMessage);
-
-      UpdateErrors.Add(appError);
-    }
-
-    var entity = GetEntityToUpdate();
-
-    entity.LoadedAt = value;
-
-    AddChangedProperty(nameof(entity.LoadedAt), entity.LoadedAt?.ToString("O"));
   }
 
   /// <summary>
@@ -165,6 +168,118 @@ public class AppIncomingEventAggregate(
     entity.EventName = value;
 
     AddChangedProperty(nameof(entity.EventName), entity.EventName);
+  }
+
+  /// <summary>
+  /// Обновить последнюю дату загрузки.
+  /// </summary>
+  /// <param name="value">Значение.</param>
+  public void UpdateLastLoadingAt(DateTimeOffset? value)
+  {
+    if (value == default)
+    {
+      string errorMessage = _resources.GetLastLoadingAtIsInvalidErrorMessage();
+
+      var appError = AppIncomingEventErrorEnum.LastLoadingAtIsInvalid.ToAppError(errorMessage);
+
+      UpdateErrors.Add(appError);
+    }
+
+    var entity = GetEntityToUpdate();
+
+    entity.LastLoadingAt = value;
+
+    AddChangedProperty(nameof(entity.LastLoadingAt), entity.LastLoadingAt?.ToString("O"));
+  }
+
+  /// <summary>
+  /// Обновить последнюю ошибку загрузки.
+  /// </summary>
+  /// <param name="value">Значение.</param>
+  public void UpdateLastLoadingError(string? value)
+  {
+    int maxLength = _settings.MaxLengthForEventName;
+
+    if (maxLength > 0 && value?.Length > maxLength)
+    {
+      string errorMessage = _resources.GetLastLoadingErrorIsTooLongErrorMessage(maxLength);
+
+      var appError = AppIncomingEventErrorEnum.LastLoadingErrorIsTooLong.ToAppError(errorMessage);
+
+      UpdateErrors.Add(appError);
+    }
+
+    var entity = GetEntityToUpdate();
+
+    entity.LastLoadingError = value;
+
+    AddChangedProperty(nameof(entity.LastLoadingError), entity.LastLoadingError);
+  }
+
+  /// <summary>
+  /// Обновить дату загрузки.
+  /// </summary>
+  /// <param name="value">Значение.</param>
+  public void UpdateLoadedAt(DateTimeOffset? value)
+  {
+    if (value == default)
+    {
+      string errorMessage = _resources.GetLoadedAtIsInvalidErrorMessage();
+
+      var appError = AppIncomingEventErrorEnum.LoadedAtIsInvalid.ToAppError(errorMessage);
+
+      UpdateErrors.Add(appError);
+    }
+
+    var entity = GetEntityToUpdate();
+
+    entity.LoadedAt = value;
+
+    AddChangedProperty(nameof(entity.LoadedAt), entity.LoadedAt?.ToString("O"));
+  }
+
+  /// <summary>
+  /// Обновить количество полезной нагрузки.
+  /// </summary>
+  /// <param name="value">Значение.</param>
+  public void UpdatePayloadCount(int value)
+  {
+    if (value < 0)
+    {
+      string errorMessage = _resources.GetPayloadCountIsNegativeErrorMessage();
+
+      var appError = AppIncomingEventErrorEnum.PayloadCountIsNegative.ToAppError(errorMessage);
+
+      UpdateErrors.Add(appError);
+    }
+
+    var entity = GetEntityToUpdate();
+
+    entity.PayloadCount = value;
+
+    AddChangedProperty(nameof(entity.PayloadCount), entity.PayloadCount.ToString());
+  }
+
+  /// <summary>
+  /// Обновить количество полезной нагрузки.
+  /// </summary>
+  /// <param name="value">Значение.</param>
+  public void UpdatePayloadTotalCount(int value)
+  {
+    if (value < 0)
+    {
+      string errorMessage = _resources.GetPayloadTotalCountIsNegativeErrorMessage();
+
+      var appError = AppIncomingEventErrorEnum.PayloadTotalCountIsNegative.ToAppError(errorMessage);
+
+      UpdateErrors.Add(appError);
+    }
+
+    var entity = GetEntityToUpdate();
+
+    entity.PayloadTotalCount = value;
+
+    AddChangedProperty(nameof(entity.PayloadTotalCount), entity.PayloadTotalCount.ToString());
   }
 
   /// <summary>

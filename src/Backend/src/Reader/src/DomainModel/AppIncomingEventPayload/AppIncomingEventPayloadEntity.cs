@@ -16,6 +16,11 @@ public class AppIncomingEventPayloadEntity : EntityBaseWithStringPrimaryKey, IAg
   public string ConcurrencyToken { get; set; } = string.Empty;
 
   /// <summary>
+  /// Дата создания.
+  /// </summary>
+  public DateTimeOffset CreatedAt { get; set; }
+
+  /// <summary>
   /// Данные.
   /// </summary>
   public string? Data { get; set; }
