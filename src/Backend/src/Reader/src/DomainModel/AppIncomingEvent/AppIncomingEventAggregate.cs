@@ -198,7 +198,7 @@ public class AppIncomingEventAggregate(
   /// <param name="value">Значение.</param>
   public void UpdateLastLoadingError(string? value)
   {
-    int maxLength = _settings.MaxLengthForEventName;
+    int maxLength = _settings.MaxLengthForLastLoadingError;
 
     if (maxLength > 0 && value?.Length > maxLength)
     {

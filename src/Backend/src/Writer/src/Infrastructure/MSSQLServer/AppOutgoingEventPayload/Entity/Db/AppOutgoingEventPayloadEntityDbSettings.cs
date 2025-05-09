@@ -28,11 +28,6 @@ public record AppOutgoingEventPayloadEntityDbSettings : AppOutgoingEventPayloadE
     ColumnForId = "Id";
     ColumnForPosition = "Position";
 
-    MaxLengthForConcurrencyToken = 255;
-    MaxLengthForData = 0;
-    MaxLengthForEntityId = 255;
-    MaxLengthForEntityName = 255;
-
     ForeignKeyForAppOutgoingEventId = $"FK_{Table}_{tableForAppOutgoingEventPayload}";
   }
 }

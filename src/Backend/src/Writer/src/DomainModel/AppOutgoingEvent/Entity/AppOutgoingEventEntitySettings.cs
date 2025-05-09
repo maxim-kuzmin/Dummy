@@ -8,10 +8,10 @@ public record AppOutgoingEventEntitySettings
   /// <summary>
   /// Максимальная длина для токена параллелизма.
   /// </summary>
-  public int MaxLengthForConcurrencyToken { get; protected set; }
+  public int MaxLengthForConcurrencyToken { get; protected set; } = 255;
 
   /// <summary>
   /// Максимальная длина для имени.
   /// </summary>
-  public int MaxLengthForName { get; protected set; }
+  public int MaxLengthForName { get; protected set; } = 255;
 }

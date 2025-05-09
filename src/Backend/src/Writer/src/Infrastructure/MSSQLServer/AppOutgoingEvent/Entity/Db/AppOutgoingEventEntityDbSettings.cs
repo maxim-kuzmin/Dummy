@@ -22,8 +22,5 @@ public record AppOutgoingEventEntityDbSettings : AppOutgoingEventEntityDbSQLSett
     ColumnForId = "Id";    
     ColumnForName = "Name";
     ColumnForPublishedAt = "PublishedAt";
-
-    MaxLengthForConcurrencyToken = 255;
-    MaxLengthForName = 255;
   }
 }

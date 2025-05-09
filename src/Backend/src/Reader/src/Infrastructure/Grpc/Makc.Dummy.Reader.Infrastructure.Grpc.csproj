@@ -10,7 +10,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Protobuf Include="AppIncomingEventPayload\AppIncomingEventPayloadService.proto" GrpcServices="Server" />
     <Protobuf Include="DummyItem\DummyItemService.proto" GrpcServices="Server" />
+    <Protobuf Include="AppIncomingEvent\AppIncomingEventService.proto" GrpcServices="Server" />
   </ItemGroup>
 
 </Project>

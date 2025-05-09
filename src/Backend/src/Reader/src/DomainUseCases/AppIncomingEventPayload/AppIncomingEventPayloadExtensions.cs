@@ -45,7 +45,9 @@ public static class AppIncomingEventPayloadExtensions
     this AppIncomingEventPayloadEntity entity)
   {
     return new(
-      entity.ObjectId,      
+      entity.ObjectId,
+      entity.ConcurrencyToken,
+      entity.CreatedAt,
       entity.AppIncomingEventObjectId,
       entity.Data,
       entity.EntityConcurrencyTokenToDelete,

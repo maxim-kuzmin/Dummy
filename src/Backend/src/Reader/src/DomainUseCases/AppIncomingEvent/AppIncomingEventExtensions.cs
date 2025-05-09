@@ -43,10 +43,15 @@ public static class AppIncomingEventExtensions
   {
     return new(
       entity.ObjectId,
+      entity.ConcurrencyToken,
       entity.CreatedAt,
       entity.EventId,
       entity.EventName,
+      entity.LastLoadingAt,
+      entity.LastLoadingError,
       entity.LoadedAt,
+      entity.PayloadCount,
+      entity.PayloadTotalCount,
       entity.ProcessedAt);
   }
 }

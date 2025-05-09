@@ -11,8 +11,5 @@ public record DummyItemEntityDbSettings : DummyItemEntityDbNoSQLSettings
   public DummyItemEntityDbSettings()
   {
     Collection = "DummyItem";
-
-    MaxLengthForConcurrencyToken = 255;
-    MaxLengthForName = 255;
   }
 }

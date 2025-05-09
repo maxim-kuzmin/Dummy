@@ -37,14 +37,12 @@ public static class AppOutgoingEventExtensions
   /// <returns>Отклик gRPC.</returns>
   public static AppOutgoingEventGetActionReply ToAppOutgoingEventGetActionReply(this AppOutgoingEventSingleDTO dto)
   {
-    var publishedAt = dto.PublishedAt ?? default;
-
     return new()
     {
       Id = dto.Id,
       CreatedAt = Timestamp.FromDateTimeOffset(dto.CreatedAt), 
       Name = dto.Name,
-      PublishedAt = Timestamp.FromDateTimeOffset(publishedAt)
+      PublishedAt = Timestamp.FromDateTimeOffset(dto.PublishedAt ?? default)
     };
   }
 

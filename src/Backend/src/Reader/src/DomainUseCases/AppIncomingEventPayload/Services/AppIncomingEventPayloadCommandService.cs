@@ -136,7 +136,7 @@ public class AppIncomingEventPayloadCommandService(
 
     var payload = command.Payload;
 
-    aggregate.UpdateAppIncomingEventObjectId(command.AppIncomingEventId);
+    aggregate.UpdateAppIncomingEventObjectId(command.AppIncomingEventObjectId);
     aggregate.UpdateData(payload.Data);
     aggregate.UpdateEntityConcurrencyTokenToDelete(payload.EntityConcurrencyTokenToDelete);
     aggregate.UpdateEntityConcurrencyTokenToInsert(payload.EntityConcurrencyTokenToInsert);
