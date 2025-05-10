@@ -25,7 +25,9 @@ public static class AppExtensions
 
     services.AddSingleton((AppDbSettings)appDbNoSQLSettings);
 
-    services.AddSingleton(appDbNoSQLSettings.Entities.DummyItem);    
+    services.AddSingleton(appDbNoSQLSettings.Entities.AppIncomingEvent);
+    services.AddSingleton(appDbNoSQLSettings.Entities.AppIncomingEventPayload);
+    services.AddSingleton(appDbNoSQLSettings.Entities.DummyItem);
 
     var connectionStringTemplate = configuration.GetConnectionString(
       appConfigOptions.ConnectionStringName);
@@ -39,6 +41,8 @@ public static class AppExtensions
       BsonSerializer.RegisterSerializer(new GuidSerializer(GuidRepresentation.Standard));
 
       IEnumerable<IEntityConfiguration> entityConfigurations = [
+        new AppIncomingEventEntityConfiguration(),
+        new AppIncomingEventPayloadEntityConfiguration(),
         new DummyItemEntityConfiguration()
       ];
 
@@ -54,6 +58,8 @@ public static class AppExtensions
 
     services.AddScoped<IAppDbNoSQLExecutionContext, AppDbExecutionContext>();
 
+    services.AddTransient<IAppIncomingEventRepository, AppIncomingEventRepository>();
+    services.AddTransient<IAppIncomingEventPayloadRepository, AppIncomingEventPayloadRepository>();
     services.AddTransient<IDummyItemRepository, DummyItemRepository>();    
 
     logger.LogInformation("Added application infrastructure tied to MongoDB");

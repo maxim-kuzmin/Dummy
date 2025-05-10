@@ -18,6 +18,8 @@ global using Makc.Dummy.Reader.DomainUseCases.DummyItem.Actions.GetList;
 global using Makc.Dummy.Reader.DomainUseCases.DummyItem.Actions.Save;
 global using Makc.Dummy.Reader.DomainUseCases.DummyItem.DTOs;
 global using Makc.Dummy.Reader.DomainUseCases.DummyItem.Queries;
+global using Makc.Dummy.Reader.Infrastructure.Grpc.AppIncomingEvent;
+global using Makc.Dummy.Reader.Infrastructure.Grpc.AppIncomingEventPayload;
 global using Makc.Dummy.Reader.Infrastructure.Grpc.DummyItem;
 global using Makc.Dummy.Shared.Core.App.Event.Payloads;
 global using Makc.Dummy.Shared.Infrastructure.Grpc;

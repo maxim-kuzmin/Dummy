@@ -15,7 +15,9 @@ public class DummyItemDeleteEndpointHandler(IMediator _mediator) :
   }
 
   /// <inheritdoc/>
-  public override async Task HandleAsync(DummyItemDeleteActionCommand request, CancellationToken cancellationToken)
+  public override async Task HandleAsync(
+    DummyItemDeleteActionCommand request,
+    CancellationToken cancellationToken)
   {
     var result = await _mediator.Send(request, cancellationToken);
 

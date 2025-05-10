@@ -1,8 +1,10 @@
 ﻿global using Ardalis.SharedKernel;
 global using Makc.Dummy.Reader.DomainModel.App.Db.NoSQL.Settings;
+global using Makc.Dummy.Reader.DomainModel.AppIncomingEvent;
 global using Makc.Dummy.Reader.DomainModel.AppIncomingEvent.Entity;
 global using Makc.Dummy.Reader.DomainModel.AppIncomingEvent.Entity.Db.NoSQL;
 global using Makc.Dummy.Reader.DomainModel.AppIncomingEvent.Enums;
+global using Makc.Dummy.Reader.DomainModel.AppIncomingEventPayload;
 global using Makc.Dummy.Reader.DomainModel.AppIncomingEventPayload.Entity;
 global using Makc.Dummy.Reader.DomainModel.AppIncomingEventPayload.Entity.Db.NoSQL;
 global using Makc.Dummy.Reader.DomainModel.AppIncomingEventPayload.Enums;

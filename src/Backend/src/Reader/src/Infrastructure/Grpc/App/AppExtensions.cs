@@ -34,6 +34,8 @@ public static class AppExtensions
   /// <returns>Приложение.</returns>
   public static WebApplication UseAppInfrastructureTiedToGrpc(this WebApplication app, ILogger logger)
   {
+    app.MapGrpcService<AppIncomingEventService>();
+    app.MapGrpcService<AppIncomingEventPayloadService>();
     app.MapGrpcService<DummyItemService>();
 
     logger.LogInformation("Used application infrastructure tied to Grpc");

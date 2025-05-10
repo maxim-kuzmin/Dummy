@@ -15,7 +15,9 @@ public class DummyItemCreateEndpointHandler(IMediator _mediator) :
   }
 
   /// <inheritdoc/>
-  public override async Task HandleAsync(DummyItemCreateEndpointRequest request, CancellationToken cancellationToken)
+  public override async Task HandleAsync(
+    DummyItemCreateEndpointRequest request,
+    CancellationToken cancellationToken)
   {
     var command = request.ToDummyItemSaveActionCommand();
 

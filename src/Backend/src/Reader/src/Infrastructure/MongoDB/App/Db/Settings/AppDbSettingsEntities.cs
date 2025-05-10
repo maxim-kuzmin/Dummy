@@ -11,6 +11,8 @@ public record AppDbSettingsEntities : AppDbNoSQLSettingsEntities
   /// <param name="schema">Схема.</param>
   public AppDbSettingsEntities()
   {
+    AppIncomingEvent = new AppIncomingEventEntityDbSettings();
+    AppIncomingEventPayload = new AppIncomingEventPayloadEntityDbSettings();
     DummyItem = new DummyItemEntityDbSettings();
   }
 }
