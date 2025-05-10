@@ -65,7 +65,7 @@ public enum AppIncomingEventPayloadErrorEnum
   EventPayloadIdTooLong,
 
   /// <summary>
-  /// Позиция не является положительным числом.
+  /// Позиция является отрицательным числом.
   /// </summary>
-  PositionIsNotPositiveNumber,
+  PositionIsNegative,
 }

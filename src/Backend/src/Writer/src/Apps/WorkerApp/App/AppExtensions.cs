@@ -30,6 +30,34 @@ public static class AppExtensions
     var domainApp = Guard.Against.Null(domain.App);
     var infrastructure = Guard.Against.Null(appConfigOptions.Infrastructure);
 
+    bool isMeassageBrokerEnabled = false;
+
+    var workloads = appConfigOptions.Workloads ?? throw new Exception($"Workloads are null");
+
+    if (workloads.Length == 0)
+    {
+      throw new Exception($"Workloads are empty");
+    }
+
+    foreach (var workload in workloads)
+    {
+      switch (workload)
+      {
+        case AppConfigOptionsWorkloadEnum.AppDbMigration:
+          services.AddHostedService<AppDbMigrationService>();
+          break;
+        case AppConfigOptionsWorkloadEnum.AppOutboxCleaner:
+          services.AddHostedService<AppOutboxCleanerService>();
+          break;
+        case AppConfigOptionsWorkloadEnum.AppOutboxProducer:
+          isMeassageBrokerEnabled = true;
+          services.AddHostedService<AppOutboxProducerService>();
+          break;
+        default:
+          throw new NotImplementedException($"Unknown Workload: {workload}");
+      }
+    }
+
     List<AppLoggerFuncToConfigure> funcsToConfigureAppLogger = [];
 
     if (infrastructure.Observability != null)
@@ -89,42 +117,20 @@ public static class AppExtensions
 
     services.AddAppInfrastructureTiedToEntityFramework(logger, appDbSQLSettings, domainApp.DbQueryORM);
 
-    switch (domainApp.MessageBroker)
+    if (isMeassageBrokerEnabled)
     {
-      case AppConfigOptionsMessageBrokerEnum.Kafka:
-        Guard.Against.Null(infrastructure.Kafka);
-        services.AddAppInfrastructureTiedToKafka(logger, infrastructure.Kafka);
-        break;
-      case AppConfigOptionsMessageBrokerEnum.RabbitMQ:
-        Guard.Against.Null(infrastructure.RabbitMQ);
-        services.AddAppInfrastructureTiedToRabbitMQ(logger, infrastructure.RabbitMQ);
-        break;
-      default:
-        throw new NotImplementedException($"Unknown Domain App {nameof(domainApp.MessageBroker)}: {domainApp.MessageBroker}");
-    }
-
-    var workloads = appConfigOptions.Workloads ?? throw new Exception($"Workloads are null");
-
-    if (workloads.Length == 0)
-    {
-      throw new Exception($"Workloads are empty");
-    }
-
-    foreach (var workload in workloads)
-    {
-      switch (workload)
+      switch (domainApp.MessageBroker)
       {
-        case AppConfigOptionsWorkloadEnum.AppDbMigration:
-          services.AddHostedService<AppDbMigrationService>();
+        case AppConfigOptionsMessageBrokerEnum.Kafka:
+          Guard.Against.Null(infrastructure.Kafka);
+          services.AddAppInfrastructureTiedToKafka(logger, infrastructure.Kafka);
           break;
-        case AppConfigOptionsWorkloadEnum.AppOutboxCleaner:
-          services.AddHostedService<AppOutboxCleanerService>();
-          break;
-        case AppConfigOptionsWorkloadEnum.AppOutboxProducer:
-          services.AddHostedService<AppOutboxProducerService>();
+        case AppConfigOptionsMessageBrokerEnum.RabbitMQ:
+          Guard.Against.Null(infrastructure.RabbitMQ);
+          services.AddAppInfrastructureTiedToRabbitMQ(logger, infrastructure.RabbitMQ);
           break;
         default:
-          throw new NotImplementedException($"Unknown Workload: {workload}");
+          throw new NotImplementedException($"Unknown Domain App {nameof(domainApp.MessageBroker)}: {domainApp.MessageBroker}");
       }
     }
 

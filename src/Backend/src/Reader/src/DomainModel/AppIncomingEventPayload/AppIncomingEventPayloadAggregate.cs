@@ -316,9 +316,9 @@ public class AppIncomingEventPayloadAggregate(
   {
     if (value < 1)
     {
-      string errorMessage = _resources.GetPositionIsNotPositiveNumberErrorMessage();
+      string errorMessage = _resources.GetPositionIsNegativeErrorMessage();
 
-      var appError = AppIncomingEventPayloadErrorEnum.PositionIsNotPositiveNumber.ToAppError(errorMessage);
+      var appError = AppIncomingEventPayloadErrorEnum.PositionIsNegative.ToAppError(errorMessage);
 
       UpdateErrors.Add(appError);
     }

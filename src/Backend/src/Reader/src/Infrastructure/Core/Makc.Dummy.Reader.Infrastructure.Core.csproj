@@ -6,6 +6,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Remove="AppIncomingEventPayload\AppIncomingEventPayloadResources.en.json" />
+    <EmbeddedResource Remove="AppIncomingEventPayload\AppIncomingEventPayloadResources.ru.json" />
+    <EmbeddedResource Remove="AppIncomingEvent\AppIncomingEventResources.en.json" />
+    <EmbeddedResource Remove="AppIncomingEvent\AppIncomingEventResources.ru.json" />
     <EmbeddedResource Remove="DummyItem\DummyItemResources.en.json" />
     <EmbeddedResource Remove="DummyItem\DummyItemResources.ru.json" />
   </ItemGroup>

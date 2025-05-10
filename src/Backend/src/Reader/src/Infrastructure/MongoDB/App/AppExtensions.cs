@@ -26,8 +26,13 @@ public static class AppExtensions
     services.AddSingleton((AppDbSettings)appDbNoSQLSettings);
 
     services.AddSingleton(appDbNoSQLSettings.Entities.AppIncomingEvent);
+    services.AddSingleton<AppIncomingEventEntitySettings>(appDbNoSQLSettings.Entities.AppIncomingEvent);
+
     services.AddSingleton(appDbNoSQLSettings.Entities.AppIncomingEventPayload);
+    services.AddSingleton<AppIncomingEventPayloadEntitySettings>(appDbNoSQLSettings.Entities.AppIncomingEventPayload);
+
     services.AddSingleton(appDbNoSQLSettings.Entities.DummyItem);
+    services.AddSingleton<DummyItemEntitySettings>(appDbNoSQLSettings.Entities.DummyItem);
 
     var connectionStringTemplate = configuration.GetConnectionString(
       appConfigOptions.ConnectionStringName);

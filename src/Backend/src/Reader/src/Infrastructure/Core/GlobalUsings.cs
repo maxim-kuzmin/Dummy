@@ -1,4 +1,8 @@
-﻿global using Makc.Dummy.Reader.DomainModel.DummyItem;
+﻿global using Makc.Dummy.Reader.DomainModel.AppIncomingEvent;
+global using Makc.Dummy.Reader.DomainModel.AppIncomingEventPayload;
+global using Makc.Dummy.Reader.DomainModel.DummyItem;
+global using Makc.Dummy.Reader.Infrastructure.Core.AppIncomingEvent;
+global using Makc.Dummy.Reader.Infrastructure.Core.AppIncomingEventPayload;
 global using Makc.Dummy.Reader.Infrastructure.Core.DummyItem;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Localization;

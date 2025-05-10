@@ -11,7 +11,7 @@ services:
       - App__Infrastructure__Observability__CollectorGrpcEndpoint=${MY_SERVICE_BACKEND_READER_INBOX_CLEANER_APP_CONFIG_INFRASTRUCTURE_OBSERVABILITY_COLLECTOR_GRPC_ENDPOINT}
       - App__Infrastructure__Observability__CollectorHttpEndpoint=${MY_SERVICE_BACKEND_READER_INBOX_CLEANER_APP_CONFIG_INFRASTRUCTURE_OBSERVABILITY_COLLECTOR_HTTP_ENDPOINT}
       - App__Infrastructure__Observability__ServiceName=${MY_SERVICE_BACKEND_READER_INBOX_CLEANER_APP_CONFIG_INFRASTRUCTURE_OBSERVABILITY_SERVICE_NAME}
-      - App__Workloads=["AppInboxCleaner"]
+      - App__Workloads__0=AppInboxCleaner
     networks:
       - network-backend
 
@@ -32,7 +32,7 @@ services:
       - App__Infrastructure__RabbitMQ__Password=${MY_SERVICE_BACKEND_READER_INBOX_CONSUMER_APP_CONFIG_INFRASTRUCTURE_RABBITMQ_PASSWORD}
       - App__Infrastructure__RabbitMQ__Port=${MY_SERVICE_BACKEND_READER_INBOX_CONSUMER_APP_CONFIG_INFRASTRUCTURE_RABBITMQ_PORT}
       - App__Infrastructure__RabbitMQ__UserName=${MY_SERVICE_BACKEND_READER_INBOX_CONSUMER_APP_CONFIG_INFRASTRUCTURE_RABBITMQ_USERNAME}
-      - App__Workloads=["AppInboxConsumer"]
+      - App__Workloads__0=AppInboxConsumer
     networks:
       - network-backend
 

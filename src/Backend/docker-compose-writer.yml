@@ -11,7 +11,7 @@ services:
       - App__Infrastructure__Observability__CollectorGrpcEndpoint=${MY_SERVICE_BACKEND_WRITER_DB_MIGRATION_APP_CONFIG_INFRASTRUCTURE_OBSERVABILITY_COLLECTOR_GRPC_ENDPOINT}
       - App__Infrastructure__Observability__CollectorHttpEndpoint=${MY_SERVICE_BACKEND_WRITER_DB_MIGRATION_APP_CONFIG_INFRASTRUCTURE_OBSERVABILITY_COLLECTOR_HTTP_ENDPOINT}
       - App__Infrastructure__Observability__ServiceName=${MY_SERVICE_BACKEND_WRITER_DB_MIGRATION_FOR_MSSQLSERVER_APP_CONFIG_INFRASTRUCTURE_OBSERVABILITY_SERVICE_NAME}
-      - App__Workloads=["AppDbMigration"]
+      - App__Workloads__0=AppDbMigration
     networks:
       - network-backend
 
@@ -27,7 +27,7 @@ services:
       - App__Infrastructure__PostgreSQL__Port=${MY_SERVICE_BACKEND_WRITER_DB_MIGRATION_APP_CONFIG_INFRASTRUCTURE_POSTGRESQL_PORT}
       - App__Infrastructure__PostgreSQL__Server=${MY_SERVICE_BACKEND_WRITER_DB_MIGRATION_APP_CONFIG_INFRASTRUCTURE_POSTGRESQL_SERVER}
       - App__Infrastructure__PostgreSQL__UserId=${MY_SERVICE_BACKEND_WRITER_DB_MIGRATION_APP_CONFIG_INFRASTRUCTURE_POSTGRESQL_USERID}
-      - App__Workloads=["AppDbMigration"]
+      - App__Workloads__0=AppDbMigration
     networks:
       - network-backend
 
@@ -46,7 +46,7 @@ services:
       - App__Infrastructure__PostgreSQL__Port=${MY_SERVICE_BACKEND_WRITER_OUTBOX_CLEANER_APP_CONFIG_INFRASTRUCTURE_POSTGRESQL_PORT}
       - App__Infrastructure__PostgreSQL__Server=${MY_SERVICE_BACKEND_WRITER_OUTBOX_CLEANER_APP_CONFIG_INFRASTRUCTURE_POSTGRESQL_SERVER}
       - App__Infrastructure__PostgreSQL__UserId=${MY_SERVICE_BACKEND_WRITER_OUTBOX_CLEANER_APP_CONFIG_INFRASTRUCTURE_POSTGRESQL_USERID}
-      - App__Workloads=["AppOutboxCleaner"]
+      - App__Workloads__0=AppOutboxCleaner
     networks:
       - network-backend
 
@@ -70,7 +70,7 @@ services:
       - App__Infrastructure__RabbitMQ__Password=${MY_SERVICE_BACKEND_WRITER_OUTBOX_PRODUCER_APP_CONFIG_INFRASTRUCTURE_RABBITMQ_PASSWORD}
       - App__Infrastructure__RabbitMQ__Port=${MY_SERVICE_BACKEND_WRITER_OUTBOX_PRODUCER_APP_CONFIG_INFRASTRUCTURE_RABBITMQ_PORT}
       - App__Infrastructure__RabbitMQ__UserName=${MY_SERVICE_BACKEND_WRITER_OUTBOX_PRODUCER_APP_CONFIG_INFRASTRUCTURE_RABBITMQ_USERNAME}
-      - App__Workloads=["AppOutboxProducer"]
+      - App__Workloads__0=AppOutboxProducer
     networks:
       - network-backend
       

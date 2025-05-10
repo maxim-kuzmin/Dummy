@@ -85,8 +85,8 @@ public interface IAppIncomingEventPayloadResources
   string GetEventPayloadIdIsTooLongErrorMessage(int maxLength);
 
   /// <summary>
-  /// Получить сообщение об ошибке не являющейся положительным числом позиции.
+  /// Получить сообщение об ошибке отрицательной позиции.
   /// </summary>
   /// <returns>Сообщение об ошибке.</returns>
-  string GetPositionIsNotPositiveNumberErrorMessage();
+  string GetPositionIsNegativeErrorMessage();
 }
