@@ -144,6 +144,6 @@ public class AppIncomingEventPayloadCommandService(
     aggregate.UpdateEntityName(payload.EntityName);
     aggregate.UpdatePosition(payload.Position);
 
-    return entity != null ? aggregate.GetResultToCreate() : aggregate.GetResultToUpdate();
+    return entity != null ? aggregate.GetResultToUpdate() : aggregate.GetResultToCreate();
   }
 }

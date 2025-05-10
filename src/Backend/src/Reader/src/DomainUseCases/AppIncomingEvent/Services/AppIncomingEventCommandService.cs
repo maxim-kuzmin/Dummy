@@ -143,6 +143,6 @@ public class AppIncomingEventCommandService(
     aggregate.UpdatePayloadTotalCount(command.PayloadTotalCount);
     aggregate.UpdateProcessedAt(command.ProcessedAt);
 
-    return entity != null ? aggregate.GetResultToCreate() : aggregate.GetResultToUpdate();
+    return entity != null ? aggregate.GetResultToUpdate() : aggregate.GetResultToCreate();
   }
 }

@@ -13,8 +13,9 @@ public static class AppEventExtensions
   public static AppEventPayloadWithDataAsDictionary ToAppEventPayloadWithDataAsDictionary(
     this AppEventPayloadWithDataAsString payload)
   {
-    var result = new AppEventPayloadWithDataAsDictionary(
-      payload.Data != null ? JsonSerializer.Deserialize<Dictionary<string, string?>>(payload.Data) : null);
+    AppEventPayloadWithDataAsDictionary result = payload.Data != null
+      ? new(JsonSerializer.Deserialize<Dictionary<string, string?>>(payload.Data))
+      : new();
 
     Copy(payload, result);
 

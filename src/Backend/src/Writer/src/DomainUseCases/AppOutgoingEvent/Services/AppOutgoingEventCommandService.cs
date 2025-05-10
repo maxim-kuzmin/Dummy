@@ -137,6 +137,6 @@ public class AppOutgoingEventCommandService(
     aggregate.UpdateName(command.Name);
     aggregate.UpdatePublishedAt(command.PublishedAt);
 
-    return entity != null ? aggregate.GetResultToCreate() : aggregate.GetResultToUpdate();
+    return entity != null ? aggregate.GetResultToUpdate() : aggregate.GetResultToCreate();
   }
 }

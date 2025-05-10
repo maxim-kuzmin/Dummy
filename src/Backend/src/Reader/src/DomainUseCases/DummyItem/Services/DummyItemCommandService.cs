@@ -138,6 +138,6 @@ public class DummyItemCommandService(
     aggregate.UpdateId(command.Id);
     aggregate.UpdateName(command.Name);
 
-    return entity != null ? aggregate.GetResultToCreate() : aggregate.GetResultToUpdate();
+    return entity != null ? aggregate.GetResultToUpdate() : aggregate.GetResultToCreate();
   }
 }
