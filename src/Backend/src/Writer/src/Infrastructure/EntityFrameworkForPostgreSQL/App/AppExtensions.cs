@@ -27,7 +27,7 @@ public static class AppExtensions
 
     services.AddDbContext<AppDbContext>(options => options.UseNpgsql(
       connectionString,
-      b => b.MigrationsAssembly(Assembly.GetExecutingAssembly())));
+      b => b.MigrationsAssembly(Assembly.GetExecutingAssembly())).EnableSensitiveDataLogging());
 
     logger.LogInformation("Added application infrastructure tied to Entity Framework for PostgreSQL");
 

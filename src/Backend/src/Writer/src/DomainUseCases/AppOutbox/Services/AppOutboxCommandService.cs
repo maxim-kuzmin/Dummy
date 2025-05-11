@@ -1,4 +1,6 @@
-﻿namespace Makc.Dummy.Writer.DomainUseCases.AppOutbox.Services;
+﻿using Makc.Dummy.Shared.Core.App;
+
+namespace Makc.Dummy.Writer.DomainUseCases.AppOutbox.Services;
 
 /// <summary>
 /// Сервис исходящего сообщения приложения.
@@ -24,6 +26,8 @@ public class AppOutboxCommandService(
     {
       var resultForAppOutgoingEvent = await CreateAppOutgoingEvent(command, cancellationToken).ConfigureAwait(false);
 
+      resultForAppOutgoingEvent.Data.ThrowExceptionIfNotSuccess();
+
       payloads.AddRange(resultForAppOutgoingEvent.Payloads);
 
       long appOutgoingEventId = resultForAppOutgoingEvent.Data.Value.Id;
@@ -33,6 +37,8 @@ public class AppOutboxCommandService(
         var task = CreateAppOutgoingEventPayload(appOutgoingEventId, payload, cancellationToken);
 
         var resultForAppOutgoingEventPayload = await task.ConfigureAwait(false);
+
+        resultForAppOutgoingEventPayload.Data.ThrowExceptionIfNotSuccess();
 
         payloads.AddRange(resultForAppOutgoingEventPayload.Payloads);
       }

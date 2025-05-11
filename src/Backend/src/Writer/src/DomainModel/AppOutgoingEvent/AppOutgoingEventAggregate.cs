@@ -113,7 +113,7 @@ public class AppOutgoingEventAggregate(
   /// <param name="value">Значение.</param>
   public void UpdatePublishedAt(DateTimeOffset? value)
   {
-    if (value == default)
+    if (value == default(DateTimeOffset))
     {
       string errorMessage = _resources.GetPublishedAtIsInvalidErrorMessage();
 

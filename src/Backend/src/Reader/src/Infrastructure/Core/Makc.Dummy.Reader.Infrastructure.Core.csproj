@@ -6,16 +6,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Remove="AppIncomingEventPayload\AppIncomingEventPayloadResources.en.json" />
-    <EmbeddedResource Remove="AppIncomingEventPayload\AppIncomingEventPayloadResources.ru.json" />
-    <EmbeddedResource Remove="AppIncomingEvent\AppIncomingEventResources.en.json" />
-    <EmbeddedResource Remove="AppIncomingEvent\AppIncomingEventResources.ru.json" />
-    <EmbeddedResource Remove="DummyItem\DummyItemResources.en.json" />
-    <EmbeddedResource Remove="DummyItem\DummyItemResources.ru.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Embedded.Json.Localization" />
     <PackageReference Include="Serilog.Extensions.Hosting" />
     <PackageReference Include="Serilog.Formatting.Compact" />
     <PackageReference Include="Serilog.Settings.Configuration" />
@@ -25,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Shared\src\Infrastructure\Core\Makc.Dummy.Shared.Infrastructure.Core.csproj" />
     <ProjectReference Include="..\..\DomainUseCases\Makc.Dummy.Reader.DomainUseCases.csproj" />
   </ItemGroup>
 

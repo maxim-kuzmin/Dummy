@@ -26,7 +26,7 @@ public static class AppOutboxExtensions
   public static AppOutgoingEventSaveActionCommand ToAppOutgoingEventSaveActionCommand(
     this AppOutboxSaveActionCommand command)
   {
-    return new(false, 0, command.EventName, DateTimeOffset.Now);
+    return new(false, 0, command.EventName, null);
   }
 
   /// <summary>

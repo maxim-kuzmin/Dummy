@@ -31,7 +31,7 @@ public static class Extensions
   {
     if (!result.IsSuccess)
     {
-      ((IResult)result).ThrowRpcExceptionIfNotSuccess();
+      result.ThrowRpcException();
     }
   }
 
@@ -44,7 +44,7 @@ public static class Extensions
   {
     if (!result.IsSuccess)
     {
-      ((IResult)result).ThrowRpcExceptionIfNotSuccess();
+      result.ThrowRpcException();
     }
   }
 
@@ -149,45 +149,27 @@ public static class Extensions
   /// <returns></returns>
   public static HttpStatusCode? ToHttpStatusCode(this StatusCode grpcStatusCode)
   {
-    switch (grpcStatusCode)
+    return grpcStatusCode switch
     {
-      case StatusCode.OK:
-        return HttpStatusCode.OK;
-      case StatusCode.Cancelled:
-        return HttpStatusCode.RequestTimeout; // Должно быть 499 Client Closed Request, но такаго варианта нет в перечислении HttpStatusCode
-      case StatusCode.Unknown:
-        return HttpStatusCode.InternalServerError;
-      case StatusCode.InvalidArgument:
-        return HttpStatusCode.BadRequest;
-      case StatusCode.DeadlineExceeded:
-        return HttpStatusCode.GatewayTimeout;
-      case StatusCode.NotFound:
-        return HttpStatusCode.NotFound;
-      case StatusCode.AlreadyExists:
-        return HttpStatusCode.Conflict;
-      case StatusCode.PermissionDenied:
-        return HttpStatusCode.Forbidden;
-      case StatusCode.Unauthenticated:
-        return HttpStatusCode.Unauthorized;
-      case StatusCode.ResourceExhausted:
-        return HttpStatusCode.TooManyRequests;
-      case StatusCode.FailedPrecondition:
-        return HttpStatusCode.BadRequest;
-      case StatusCode.Aborted:
-        return HttpStatusCode.Conflict;
-      case StatusCode.OutOfRange:
-        return HttpStatusCode.BadRequest;
-      case StatusCode.Unimplemented:
-        return HttpStatusCode.NotImplemented;
-      case StatusCode.Internal:
-        return HttpStatusCode.InternalServerError;
-      case StatusCode.Unavailable:
-        return HttpStatusCode.ServiceUnavailable;
-      case StatusCode.DataLoss:
-        return HttpStatusCode.InternalServerError;
-    }
-
-    return null;
+      StatusCode.OK => (HttpStatusCode?)HttpStatusCode.OK,
+      StatusCode.Cancelled => (HttpStatusCode?)HttpStatusCode.RequestTimeout,// Должно быть 499 Client Closed Request, но такаго варианта нет в перечислении HttpStatusCode
+      StatusCode.Unknown => (HttpStatusCode?)HttpStatusCode.InternalServerError,
+      StatusCode.InvalidArgument => (HttpStatusCode?)HttpStatusCode.BadRequest,
+      StatusCode.DeadlineExceeded => (HttpStatusCode?)HttpStatusCode.GatewayTimeout,
+      StatusCode.NotFound => (HttpStatusCode?)HttpStatusCode.NotFound,
+      StatusCode.AlreadyExists => (HttpStatusCode?)HttpStatusCode.Conflict,
+      StatusCode.PermissionDenied => (HttpStatusCode?)HttpStatusCode.Forbidden,
+      StatusCode.Unauthenticated => (HttpStatusCode?)HttpStatusCode.Unauthorized,
+      StatusCode.ResourceExhausted => (HttpStatusCode?)HttpStatusCode.TooManyRequests,
+      StatusCode.FailedPrecondition => (HttpStatusCode?)HttpStatusCode.BadRequest,
+      StatusCode.Aborted => (HttpStatusCode?)HttpStatusCode.Conflict,
+      StatusCode.OutOfRange => (HttpStatusCode?)HttpStatusCode.BadRequest,
+      StatusCode.Unimplemented => (HttpStatusCode?)HttpStatusCode.NotImplemented,
+      StatusCode.Internal => (HttpStatusCode?)HttpStatusCode.InternalServerError,
+      StatusCode.Unavailable => (HttpStatusCode?)HttpStatusCode.ServiceUnavailable,
+      StatusCode.DataLoss => (HttpStatusCode?)HttpStatusCode.InternalServerError,
+      _ => null,
+    };
   }
 
   /// <summary>
@@ -210,116 +192,34 @@ public static class Extensions
     };
   }
 
-  private static void ThrowRpcExceptionIfNotSuccess(this IResult result)
+  private static void ThrowRpcException(this IResult result)
   {
-    StatusCode statusCode;
-    string message;
-    Exception? exception = null;
+    var message = result.ToMainErrorMessage();
 
-    switch (result.Status)
-    {
-      case ResultStatus.Error:
-        statusCode = StatusCode.InvalidArgument;
-        message = "Something went wrong.";
-        break;
-      case ResultStatus.Forbidden:
-        statusCode = StatusCode.PermissionDenied;
-        message = "Forbidden.";
-        break;
-      case ResultStatus.Unauthorized:
-        statusCode = StatusCode.Unauthenticated;
-        message = "Unauthorized.";
-        break;
-      case ResultStatus.Invalid:
-        statusCode = StatusCode.InvalidArgument;
-        message = "Bad request.";
-        break;
-      case ResultStatus.NotFound:
-        statusCode = StatusCode.NotFound;
-        message = "Resource not found.";
-        break;
-      case ResultStatus.Conflict:
-        statusCode = StatusCode.Aborted;
-        message = "There was a conflict.";
-        break;
-      case ResultStatus.CriticalError:
-        statusCode = StatusCode.Unknown;
-        message = "Something went wrong.";
-        break;
-      case ResultStatus.Unavailable:
-        statusCode = StatusCode.Unavailable;
-        message = "Service unavailable.";
-        break;
-      case ResultStatus.Ok:
-      case ResultStatus.Created:
-      case ResultStatus.NoContent:
-        return;
-      default:
-        statusCode = StatusCode.Unknown;
-        message = "Something went wrong.";
-        exception = new NotSupportedException($"Result {result.Status} conversion is not supported.");
-        break;
-    }
+    var detail = result.ToDetailErrorMessage();
 
-    throw result.ToRpcException(statusCode, message, exception);
+    StatusCode statusCode = result.Status.ToRpcStatusCode();
+
+    Exception? debugException = statusCode != StatusCode.Unknown
+      ? null
+      : new NotSupportedException($"Result {result.Status} conversion is not supported.");
+
+    throw new RpcException(new Status(statusCode, detail, debugException), message);
   }
 
-  private static RpcException ToRpcException(
-    this IResult result,
-    StatusCode statusCode,
-    string message,
-    Exception? debugException)
+  private static StatusCode ToRpcStatusCode(this ResultStatus status)
   {
-    var detail = string.Empty;
-
-    if (result.ValidationErrors.Any())
+    return status switch
     {
-      var stringBuilder = new StringBuilder("Validation error(s) occurred:");
-
-      foreach (var error in result.ValidationErrors)
-      {
-        stringBuilder.Append("* ").Append(error.ToGrpcStatusDetail()).AppendLine();
-      }
-
-      detail = stringBuilder.ToString();
-    }
-    else if (result.Errors.Any())
-    {
-      var stringBuilder = new StringBuilder("Next error(s) occurred:");
-
-      foreach (var error in result.Errors)
-      {
-        stringBuilder.Append("* ").Append(error).AppendLine();
-      }
-
-      detail = stringBuilder.ToString();
-    }
-
-    return new RpcException(new Status(statusCode, detail, debugException), message);
-  }
-
-  private static string ToGrpcStatusDetail(this ValidationError validationError)
-  {
-    var parts = new List<string>(4)
-    {
-      $"Severity: {validationError.Severity}"
+      ResultStatus.Error => StatusCode.InvalidArgument,
+      ResultStatus.Forbidden => StatusCode.PermissionDenied,
+      ResultStatus.Unauthorized => StatusCode.Unauthenticated,
+      ResultStatus.Invalid => StatusCode.InvalidArgument,
+      ResultStatus.NotFound => StatusCode.NotFound,
+      ResultStatus.Conflict => StatusCode.Aborted,
+      ResultStatus.CriticalError => StatusCode.Unknown,
+      ResultStatus.Unavailable => StatusCode.Unavailable,
+      _ => StatusCode.Unknown,
     };
-
-    if (!string.IsNullOrWhiteSpace(validationError.Identifier))
-    {
-      parts.Add($"Identifier: {validationError.Identifier}");
-    }
-
-    if (!string.IsNullOrWhiteSpace(validationError.ErrorCode))
-    {
-      parts.Add($"ErrorCode: {validationError.ErrorCode}");
-    }
-
-    if (!string.IsNullOrWhiteSpace(validationError.ErrorMessage))
-    {
-      parts.Add($"ErrorMessage: {validationError.ErrorMessage}");
-    }
-
-    return string.Join(", ", parts);
   }
 }

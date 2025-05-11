@@ -16,7 +16,9 @@ public static class AppExtensions
     ILogger logger)
   {
     services.AddTransient<IAppOutgoingEventResources, AppOutgoingEventResources>();
+
     services.AddTransient<IAppOutgoingEventPayloadResources, AppOutgoingEventPayloadResources>();
+
     services.AddTransient<IDummyItemResources, DummyItemResources>();
 
     logger.LogInformation("Added application infrastructure tied to Core");

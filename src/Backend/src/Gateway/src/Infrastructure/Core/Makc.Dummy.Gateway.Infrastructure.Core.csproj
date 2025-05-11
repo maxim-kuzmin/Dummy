@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Shared\src\DomainUseCases\Makc.Dummy.Shared.DomainUseCases.csproj" />
+    <ProjectReference Include="..\..\..\..\Shared\src\Infrastructure\Core\Makc.Dummy.Shared.Infrastructure.Core.csproj" />
     <ProjectReference Include="..\..\DomainModel\Makc.Dummy.Gateway.DomainModel.csproj" />
   </ItemGroup>
 

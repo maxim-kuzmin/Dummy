@@ -8,77 +8,16 @@ public static class AppData
   /// <summary>
   /// Инициализировать.
   /// </summary>
-  /// <param name="appDbContext">Контекст базы данных приложения.</param>
-  /// <param name="shouldDbBePopulatedWithTestData">Следует ли заполнять базу данных тестовыми данными?</param>
+  /// <param name="appDbContext">Контекст базы данных приложения.</param>  
+  /// <param name="appDbExecutionContext">Контекст выполнения базы данных приложения.</param>
+  /// <param name="mediator">Медиатор.</param>  
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Задача.</returns>
-  public static Task Initialize(
+  public async static Task Initialize(
     AppDbContext appDbContext,
-    bool shouldDbBePopulatedWithTestData,
+    IAppDbSQLExecutionContext appDbExecutionContext,
+    IMediator mediator,      
     CancellationToken cancellationToken)
-  {
-    return shouldDbBePopulatedWithTestData
-      ? PopulateDbWithTestDataAsync(appDbContext, cancellationToken)
-      : Task.CompletedTask;
-  }
-
-  private static List<DummyItemEntity> CreateDummyItems()
-  {
-    return [
-      new()
-      {
-        ConcurrencyToken = Guid.NewGuid().ToString(),
-        Name = "Delba de Oliveira"
-      },
-      new()
-      {
-        ConcurrencyToken = Guid.NewGuid().ToString(),
-        Name = "Lee Robinson"
-      },
-      new()
-      {
-        ConcurrencyToken = Guid.NewGuid().ToString(),
-        Name = "Hector Simpson"
-      },
-      new()
-      {
-        ConcurrencyToken = Guid.NewGuid().ToString(),
-        Name = "Steven Tey"
-      },
-      new()
-      {
-        ConcurrencyToken = Guid.NewGuid().ToString(),
-        Name = "Steph Dietz"
-      },
-      new()
-      {
-        ConcurrencyToken = Guid.NewGuid().ToString(),
-        Name = "Michael Novotny"
-      },
-      new()
-      {
-        ConcurrencyToken = Guid.NewGuid().ToString(),
-        Name = "Evil Rabbit"
-      },
-      new()
-      {
-        ConcurrencyToken = Guid.NewGuid().ToString(),
-        Name = "Emil Kowalski"
-      },
-      new()
-      {
-        ConcurrencyToken = Guid.NewGuid().ToString(),
-        Name = "Amy Burns"
-      },
-      new()
-      {
-        ConcurrencyToken = Guid.NewGuid().ToString(),
-        Name = "Balazs Orban"
-      },
-    ];
-  }
-
-  private static async Task PopulateDbWithTestDataAsync(AppDbContext appDbContext, CancellationToken cancellationToken)
   {
     var isSeeded = await appDbContext.DummyItem.AnyAsync(cancellationToken).ConfigureAwait(false);
 
@@ -87,12 +26,45 @@ public static class AppData
       return;
     }
 
-    using var tran = await appDbContext.Database.BeginTransactionAsync(cancellationToken);
+    async Task FuncToExecute(CancellationToken cancellationToken)
+    {
+      await CreateDummyItems(mediator, cancellationToken).ConfigureAwait(false);
+    }
 
-    appDbContext.DummyItem.AddRange(CreateDummyItems());
+    await appDbExecutionContext.ExecuteInTransaction(FuncToExecute, cancellationToken).ConfigureAwait(false);
+  }
 
-    await appDbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+  private static DummyItemSaveActionCommand CreateDummyItemSaveActionCommand(string name)
+  {
+    return new(false, 0, name);
+  }
 
-    tran.Commit();
+  private static async Task<List<DummyItemSingleDTO>> CreateDummyItems(
+    IMediator mediator,
+    CancellationToken cancellationToken)
+  {
+    DummyItemSaveActionCommand[] commands = [
+      CreateDummyItemSaveActionCommand("Delba de Oliveira"),
+      CreateDummyItemSaveActionCommand("Lee Robinson"),
+      CreateDummyItemSaveActionCommand("Hector Simpson"),
+      CreateDummyItemSaveActionCommand("Steven Tey"),
+      CreateDummyItemSaveActionCommand("Steph Dietz"),
+      CreateDummyItemSaveActionCommand("Michael Novotny"),
+      CreateDummyItemSaveActionCommand("Evil Rabbit"),
+      CreateDummyItemSaveActionCommand("Emil Kowalski"),
+      CreateDummyItemSaveActionCommand("Amy Burns"),
+      CreateDummyItemSaveActionCommand("Balazs Orban"),
+    ];
+
+    List<DummyItemSingleDTO> result = new(commands.Length);
+
+    foreach (var command in commands)
+    {
+      var actionResult = await mediator.Send(command, cancellationToken).ConfigureAwait(false);
+
+      result.Add(actionResult.Value);
+    }
+
+    return result;
   }
 }

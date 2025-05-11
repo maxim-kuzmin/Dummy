@@ -11,7 +11,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Shared\src\Infrastructure\CoreForOpenTelemetry\Makc.Dummy.Shared.Infrastructure.CoreForOpenTelemetry.csproj" />
-    <ProjectReference Include="..\..\..\..\Shared\src\Infrastructure\Core\Makc.Dummy.Shared.Infrastructure.Core.csproj" />    
     <ProjectReference Include="..\..\Infrastructure\Core\Makc.Dummy.Reader.Infrastructure.Core.csproj" />
     <ProjectReference Include="..\..\Infrastructure\Kafka\Makc.Dummy.Reader.Infrastructure.Kafka.csproj" />
     <ProjectReference Include="..\..\Infrastructure\MongoDB\Makc.Dummy.Reader.Infrastructure.MongoDB.csproj" />

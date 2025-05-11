@@ -176,7 +176,7 @@ public class AppIncomingEventAggregate(
   /// <param name="value">Значение.</param>
   public void UpdateLastLoadingAt(DateTimeOffset? value)
   {
-    if (value == default)
+    if (value == default(DateTimeOffset))
     {
       string errorMessage = _resources.GetLastLoadingAtIsInvalidErrorMessage();
 
@@ -222,7 +222,7 @@ public class AppIncomingEventAggregate(
   /// <param name="value">Значение.</param>
   public void UpdateLoadedAt(DateTimeOffset? value)
   {
-    if (value == default)
+    if (value == default(DateTimeOffset))
     {
       string errorMessage = _resources.GetLoadedAtIsInvalidErrorMessage();
 
@@ -288,7 +288,7 @@ public class AppIncomingEventAggregate(
   /// <param name="value">Значение.</param>
   public void UpdateProcessedAt(DateTimeOffset? value)
   {
-    if (value == default)
+    if (value == default(DateTimeOffset))
     {
       string errorMessage = _resources.GetProcessedAtIsInvalidErrorMessage();
 

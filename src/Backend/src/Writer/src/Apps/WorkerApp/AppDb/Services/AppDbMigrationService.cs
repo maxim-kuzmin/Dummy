@@ -32,24 +32,41 @@ public class AppDbMigrationService(
 
       var appDbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
-      try
+      while (!stoppingToken.IsCancellationRequested)
       {
-        await appDbContext.Database.MigrateAsync(stoppingToken).ConfigureAwait(false);
+        try
+        {
+          _logger.LogDebug("MAKC:AppService:ExecuteAsync:Migration start");
 
-        _logger.LogDebug("MAKC:AppService:ExecuteAsync:Exception:Database migrated");
+          await appDbContext.Database.MigrateAsync(stoppingToken).ConfigureAwait(false);
 
-        await AppData.Initialize(appDbContext, shouldDbBePopulatedWithTestData, stoppingToken).ConfigureAwait(false);
+          _logger.LogDebug("MAKC:AppService:ExecuteAsync:Migration end");
 
-        _logger.LogDebug("MAKC:AppService:ExecuteAsync:Exception:App data initialized");
+          break;
+        }
+        catch (Exception ex)
+        {
+          _logger.LogError(ex, "MAKC:AppService:ExecuteAsync:Exception");
+        }
 
-        break;
+        await Task.Delay(timeoutToRetry, stoppingToken).ConfigureAwait(false);
       }
-      catch (Exception ex)
+
+      if (shouldDbBePopulatedWithTestData)
       {
-        _logger.LogError(ex, "MAKC:AppService:ExecuteAsync:Exception");
+        _logger.LogDebug("MAKC:AppService:ExecuteAsync:PopulationWithTestData start");
+
+        var appDbSQLExecutionContext = scope.ServiceProvider.GetRequiredService<IAppDbSQLExecutionContext>();
+        var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+
+        var task = AppData.Initialize(appDbContext, appDbSQLExecutionContext, mediator, stoppingToken);
+
+        await task.ConfigureAwait(false);
+
+        _logger.LogDebug("MAKC:AppService:ExecuteAsync:PopulationWithTestData end");
       }
 
-      await Task.Delay(timeoutToRetry, stoppingToken).ConfigureAwait(false);
+      break;
     }
 
     _hostApplicationLifetime.StopApplication();
