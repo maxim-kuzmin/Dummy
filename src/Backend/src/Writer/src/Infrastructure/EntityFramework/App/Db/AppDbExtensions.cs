@@ -1,22 +1,22 @@
-﻿namespace Makc.Dummy.Writer.Infrastructure.EntityFramework.App;
+﻿namespace Makc.Dummy.Writer.Infrastructure.EntityFramework.App.Db;
 
 /// <summary>
-/// Данные приложения.
+/// Расширения базы данных.
 /// </summary>
-public static class AppData
+public static class AppDbExtensions
 {
   /// <summary>
-  /// Инициализировать.
+  /// Заполнить тестовыми данными.
   /// </summary>
   /// <param name="appDbContext">Контекст базы данных приложения.</param>  
   /// <param name="appDbExecutionContext">Контекст выполнения базы данных приложения.</param>
   /// <param name="mediator">Медиатор.</param>  
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Задача.</returns>
-  public async static Task Initialize(
-    AppDbContext appDbContext,
+  public async static Task PopulateWithTestData(
+    this AppDbContext appDbContext,
     IAppDbSQLExecutionContext appDbExecutionContext,
-    IMediator mediator,      
+    IMediator mediator,
     CancellationToken cancellationToken)
   {
     var isSeeded = await appDbContext.DummyItem.AnyAsync(cancellationToken).ConfigureAwait(false);

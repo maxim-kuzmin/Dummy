@@ -14,7 +14,7 @@ public class AppDbMigrationService(
   /// <inheritdoc/>
   protected override async Task ExecuteAsync(CancellationToken stoppingToken)
   {
-    _logger.LogDebug("MAKC:AppService:ExecuteAsync:Start");
+    _logger.LogDebug("MAKC:AppDbMigrationService:ExecuteAsync:Start");
 
     while (!stoppingToken.IsCancellationRequested)
     {
@@ -28,7 +28,7 @@ public class AppDbMigrationService(
 
       int timeoutToRetry = options.TimeoutInMillisecondsToRetry;
 
-      _logger.LogDebug("MAKC:AppService:ExecuteAsync:ShouldDbBePopulatedWithTestData={shouldDbBePopulatedWithTestData}, TimeoutInMillisecondsToRetry={timeoutToRetry}", shouldDbBePopulatedWithTestData, timeoutToRetry);
+      _logger.LogDebug("MAKC:AppDbMigrationService:ExecuteAsync:ShouldDbBePopulatedWithTestData={shouldDbBePopulatedWithTestData}, TimeoutInMillisecondsToRetry={timeoutToRetry}", shouldDbBePopulatedWithTestData, timeoutToRetry);
 
       var appDbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
@@ -36,17 +36,17 @@ public class AppDbMigrationService(
       {
         try
         {
-          _logger.LogDebug("MAKC:AppService:ExecuteAsync:Migration start");
+          _logger.LogDebug("MAKC:AppDbMigrationService:ExecuteAsync:Migration start");
 
           await appDbContext.Database.MigrateAsync(stoppingToken).ConfigureAwait(false);
 
-          _logger.LogDebug("MAKC:AppService:ExecuteAsync:Migration end");
+          _logger.LogDebug("MAKC:AppDbMigrationService:ExecuteAsync:Migration end");
 
           break;
         }
         catch (Exception ex)
         {
-          _logger.LogError(ex, "MAKC:AppService:ExecuteAsync:Exception");
+          _logger.LogError(ex, "MAKC:AppDbMigrationService:ExecuteAsync:Exception");
         }
 
         await Task.Delay(timeoutToRetry, stoppingToken).ConfigureAwait(false);
@@ -54,16 +54,16 @@ public class AppDbMigrationService(
 
       if (shouldDbBePopulatedWithTestData)
       {
-        _logger.LogDebug("MAKC:AppService:ExecuteAsync:PopulationWithTestData start");
+        _logger.LogDebug("MAKC:AppDbMigrationService:ExecuteAsync:PopulationWithTestData start");
 
         var appDbSQLExecutionContext = scope.ServiceProvider.GetRequiredService<IAppDbSQLExecutionContext>();
         var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
 
-        var task = AppData.Initialize(appDbContext, appDbSQLExecutionContext, mediator, stoppingToken);
+        var task = appDbContext.PopulateWithTestData(appDbSQLExecutionContext, mediator, stoppingToken);
 
         await task.ConfigureAwait(false);
 
-        _logger.LogDebug("MAKC:AppService:ExecuteAsync:PopulationWithTestData end");
+        _logger.LogDebug("MAKC:AppDbMigrationService:ExecuteAsync:PopulationWithTestData end");
       }
 
       break;
@@ -71,6 +71,6 @@ public class AppDbMigrationService(
 
     _hostApplicationLifetime.StopApplication();
 
-    _logger.LogDebug("MAKC:AppService:ExecuteAsync:End");
+    _logger.LogDebug("MAKC:AppDbMigrationService:ExecuteAsync:End");
   }
 }
