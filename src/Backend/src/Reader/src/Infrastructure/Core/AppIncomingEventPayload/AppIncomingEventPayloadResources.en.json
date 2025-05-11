@@ -1,6 +1,15 @@
 ﻿{
-  "Error:ConcurrencyTokenIsInvalid": "Concurrency token is invalid",
-  "Error:IdIsInvalid": "Identifier is invalid",
-  "Error:NameIsEmpty": "Name is empty",
-  "Error:NameIsTooLong:Format": "Name length exceeds the maximum allowed value of {0} characters"
+  "Error:AppIncomingEventObjectIdIsInvalid": "Application incoming event object id is invalid",
+  "Error:AppIncomingEventObjectIdIsTooLong:Format": "Application incoming event object id length exceeds the maximum allowed value of {0} characters",
+  "Error:CreatedAtIsInvalid": "Creation date is invalid",
+  "Error:DataIsTooLong:Format": "Data length exceeds the maximum allowed value of {0} characters",
+  "Error:EntityConcurrencyTokenToDeleteIsTooLong:Format": "Entity concurrency token to delete length exceeds the maximum allowed value of {0} characters",
+  "Error:EntityConcurrencyTokenToInsertIsTooLong:Format": "Entity concurrency token to insert length exceeds the maximum allowed value of {0} characters",
+  "Error:EntityIdIsEmpty": "Entity identifier is empty",
+  "Error:EntityIdIsTooLong:Format": "Entity identifier length exceeds the maximum allowed value of {0} characters",
+  "Error:EntityNameIsEmpty": "Entity name is empty",
+  "Error:EntityNameIsTooLong:Format": "Entity name length exceeds the maximum allowed value of {0} characters",
+  "Error:EntityPayloadIdIsEmpty": "Entity payload identifier is empty",
+  "Error:EntityPayloadIdIsTooLong:Format": "Entity payload identifier length exceeds the maximum allowed value of {0} characters",
+  "Error:PositionIsNegative": "Position is negative"
 }

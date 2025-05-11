@@ -1,6 +1,13 @@
 ﻿{
-  "Error:ConcurrencyTokenIsInvalid": "Токен параллелизма недействителен",
-  "Error:IdIsInvalid": "Идентификатор недействителен",
-  "Error:NameIsEmpty": "Имя содержит пустое значение",
-  "Error:NameIsTooLong:Format": "Длина имени превышает макимальное значение в {0} символов"
+  "Error:CreatedAtIsInvalid": "Дата создания недействительна",
+  "Error:EventIdIsEmpty": "Идентификатор события пуст",
+  "Error:EventIdIsTooLong:Format": "Длина идентификатора события превышает максимально допустимое значение {0} символов",
+  "Error:EventNameIsEmpty": "Имя события пусто",
+  "Error:EventNameIsTooLong:Format": "Длина идентификатора события превышает максимально допустимое значение {0} символов",
+  "Error:LastLoadingAtIsInvalid": "Дата последней загрузки недействительна",
+  "Error:LastLoadingErrorIsTooLong:Format": "Длина ошибки последней загрузки превышает максимально допустимое значение {0} символов",
+  "Error:LoadedAtIsInvalid": "Дата завершения загрузки недействительна",
+  "Error:PayloadCountIsNegative": "Количество полезных данных отрицательно",
+  "Error:PayloadTotalCountIsNegative": "Общее количество полезной нагрузки отрицательно",
+  "Error:ProcessedAtIsInvalid": "Дата завершения обработки недействительна"
 }

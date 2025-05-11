@@ -1,6 +1,15 @@
 ﻿{
-  "Error:ConcurrencyTokenIsInvalid": "Токен параллелизма недействителен",
-  "Error:IdIsInvalid": "Идентификатор недействителен",
-  "Error:NameIsEmpty": "Имя содержит пустое значение",
-  "Error:NameIsTooLong:Format": "Длина имени превышает макимальное значение в {0} символов"
+  "Error:AppIncomingEventObjectIdIsInvalid": "Идентификатор объекта входящего события приложения недействителен",
+  "Error:AppIncomingEventObjectIdIsTooLong:Format": "Длина идентификатора объекта входящего события приложения превышает максимально допустимое значение {0} символов",
+  "Error:CreatedAtIsInvalid": "Дата создания недействительна",
+  "Error:DataIsTooLong:Format": "Длина данных превышает максимально допустимое значение {0} символов",
+  "Error:EntityConcurrencyTokenToDeleteIsTooLong:Format": "Длина токена параллелизма сущности для удаления превышает максимально допустимое значение {0} символов",
+  "Error:EntityConcurrencyTokenToInsertIsTooLong:Format": "Длина токена параллелизма сущности для вставки превышает максимально допустимое значение {0} символов",
+  "Error:EntityIdIsEmpty": "Идентификатор сущности пуст",
+  "Error:EntityIdIsTooLong:Format": "Длина идентификатора сущности превышает максимально допустимое значение {0} символов",
+  "Error:EntityNameIsEmpty": "Имя сущности пусто",
+  "Error:EntityNameIsTooLong:Format": "Длина имени сущности превышает максимально допустимое значение {0} символов",
+  "Error:EntityPayloadIdIsEmpty": "Идентификатор полезной нагрузки сущности пуст",
+  "Error:EntityPayloadIdIsTooLong:Format": "Длина идентификатора полезной нагрузки сущности превышает максимально допустимое значение {0} символов",
+  "Error:PositionIsNegative": "Позиция отрицательная"
 }

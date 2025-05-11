@@ -1,6 +1,13 @@
 ﻿{
-  "Error:ConcurrencyTokenIsInvalid": "Concurrency token is invalid",
-  "Error:IdIsInvalid": "Identifier is invalid",
-  "Error:NameIsEmpty": "Name is empty",
-  "Error:NameIsTooLong:Format": "Name length exceeds the maximum allowed value of {0} characters"
+  "Error:CreatedAtIsInvalid": "Creation date is invalid",
+  "Error:EventIdIsEmpty": "Event identifier is empty",
+  "Error:EventIdIsTooLong:Format": "Event identifier length exceeds the maximum allowed value of {0} characters",
+  "Error:EventNameIsEmpty": "Event name is empty",
+  "Error:EventNameIsTooLong:Format": "Event identifier length exceeds the maximum allowed value of {0} characters",
+  "Error:LastLoadingAtIsInvalid": "Last loading date is invalid",
+  "Error:LastLoadingErrorIsTooLong:Format": "Last loading error length exceeds the maximum allowed value of {0} characters",
+  "Error:LoadedAtIsInvalid": "Download completion date is invalid",
+  "Error:PayloadCountIsNegative": "Payload count is negative",
+  "Error:PayloadTotalCountIsNegative": "Payload total count is negative",
+  "Error:ProcessedAtIsInvalid": "Processing completion date is invalid"
 }
