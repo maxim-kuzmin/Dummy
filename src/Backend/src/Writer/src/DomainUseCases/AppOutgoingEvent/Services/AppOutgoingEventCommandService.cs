@@ -57,6 +57,7 @@ public class AppOutgoingEventCommandService(
     return result;
   }
 
+  /// <inheritdoc/>
   public async Task<AppCommandResultWithValue<AppOutgoingEventSingleDTO>> Save(
     AppOutgoingEventSaveActionCommand command,
     CancellationToken cancellationToken)
@@ -119,6 +120,12 @@ public class AppOutgoingEventCommandService(
     result.Payloads.Add(payload);
 
     return result;
+  }
+
+  /// <inheritdoc/>
+  public Task MarkAsPublished(AppOutgoingEventMarkAsPublishedCommand command, CancellationToken cancellationToken)
+  {
+    return _repository.UpdatePublishedAt(command, cancellationToken);
   }
 
   private AggregateResult<AppOutgoingEventEntity> GetAggregateResultToDelete(AppOutgoingEventEntity entity)

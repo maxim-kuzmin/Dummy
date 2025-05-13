@@ -1,21 +1,35 @@
-﻿using Makc.Dummy.Shared.Core.App;
-
-namespace Makc.Dummy.Writer.DomainUseCases.AppOutbox.Services;
+﻿namespace Makc.Dummy.Writer.DomainUseCases.AppOutbox.Services;
 
 /// <summary>
 /// Сервис исходящего сообщения приложения.
 /// </summary>
 /// <param name="_appDbExecutionContext">Контекст выполнения базы данных приложения.</param>
 /// <param name="_appOutgoingEventCommandService">Сервис команд исходящего события приложения.</param>
+/// <param name="_appOutgoingEventQueryService">Сервис запросов исходящего события приложения.</param>
 /// <param name="_appOutgoingEventPayloadCommandService">
 /// Сервис команд полезной нагрузки исходящего события приложения.
 /// </param>
 public class AppOutboxCommandService(
   IAppDbSQLExecutionContext _appDbExecutionContext,
+  IAppMessageProducer _appMessageProducer,
   IAppOutgoingEventCommandService _appOutgoingEventCommandService,
+  IAppOutgoingEventQueryService _appOutgoingEventQueryService,
   IAppOutgoingEventPayloadCommandService _appOutgoingEventPayloadCommandService) : IAppOutboxCommandService
 {
-  /// <inheritdoc/>>
+  /// <inheritdoc/>
+  public async Task Produce(AppOutboxProduceActionCommand command, CancellationToken cancellationToken)
+  {
+    var ids = await GetUnpublishedAppOutgoingEventList(command.MaxCount, cancellationToken).ConfigureAwait(false);
+
+    if (ids.Count > 0)
+    {
+      await PublishAppOutgoingEvents(ids, cancellationToken).ConfigureAwait(false);
+
+      await MarkAppOutgoingEventsAsPublished(ids, cancellationToken).ConfigureAwait(false);
+    }
+  }
+
+  /// <inheritdoc/>
   public async Task<AppCommandResultWithoutValue> Save(
     AppOutboxSaveActionCommand command,
     CancellationToken cancellationToken)
@@ -70,5 +84,29 @@ public class AppOutboxCommandService(
     var command = payload.ToAppOutgoingEventPayloadSaveActionCommand(appOutgoingEventId);
 
     return _appOutgoingEventPayloadCommandService.Save(command, cancellationToken);
+  }
+
+  private Task<List<long>> GetUnpublishedAppOutgoingEventList(int maxCount, CancellationToken cancellationToken)
+  {
+    AppOutgoingEventUnpublishedListQuery query = new()
+    {
+      MaxCount = maxCount,
+    };
+
+    return _appOutgoingEventQueryService.GetUnpublishedIdList(query, cancellationToken);
+  }
+
+  private Task MarkAppOutgoingEventsAsPublished(IEnumerable<long> ids, CancellationToken cancellationToken)
+  {
+    AppOutgoingEventMarkAsPublishedCommand command = new(ids, DateTimeOffset.Now);
+
+    return _appOutgoingEventCommandService.MarkAsPublished(command, cancellationToken);
+  }
+
+  private ValueTask PublishAppOutgoingEvents(IEnumerable<long> ids, CancellationToken cancellationToken)
+  {
+    MessageSending sending = new(AppEventNameEnum.DummyItemChanged.ToString(), string.Join(",", ids));
+
+    return _appMessageProducer.Publish(sending, cancellationToken);
   }
 }

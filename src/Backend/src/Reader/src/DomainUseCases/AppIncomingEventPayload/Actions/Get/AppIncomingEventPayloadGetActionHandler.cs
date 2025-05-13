@@ -12,7 +12,7 @@ public class AppIncomingEventPayloadGetActionHandler(IAppIncomingEventPayloadQue
     AppIncomingEventPayloadGetActionQuery request,
     CancellationToken cancellationToken)
   {
-    var dto = await _service.GetAsync(request, cancellationToken).ConfigureAwait(false);
+    var dto = await _service.GetSingle(request, cancellationToken).ConfigureAwait(false);
 
     return dto != null ? Result.Success(dto) : Result.NotFound();
   }

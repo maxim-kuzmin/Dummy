@@ -5,4 +5,13 @@
 /// </summary>
 public record AppConfigOptionsDomainAppOutboxProducerSection
 {
+  /// <summary>
+  /// Максимальное количество событий, публикуемых за одно повторение.
+  /// </summary>
+  public int MaxCount { get; set; }
+
+  /// <summary>
+  /// Таймаут в миллисекундах для повторения.
+  /// </summary>
+  public int TimeoutInMillisecondsToRepeat { get; set; }
 }

@@ -6,6 +6,14 @@
 public interface IAppOutboxCommandService
 {
   /// <summary>
+  /// Выдать.
+  /// </summary>
+  /// <param name="command">Команда.</param>
+  /// <param name="cancellationToken">Токен отмены.</param>
+  /// <returns>Задача.</returns>
+  Task Produce(AppOutboxProduceActionCommand command, CancellationToken cancellationToken);
+
+  /// <summary>
   /// Сохранить.
   /// </summary>
   /// <param name="command">Команда.</param>

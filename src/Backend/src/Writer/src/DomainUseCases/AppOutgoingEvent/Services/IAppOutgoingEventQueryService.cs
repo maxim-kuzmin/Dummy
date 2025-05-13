@@ -6,26 +6,36 @@
 public interface IAppOutgoingEventQueryService
 {
   /// <summary>
-  /// Подсчитать асинхронно.
+  /// Получить количество сущностей.
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Количество сущностей.</returns>
-  Task<long> CountAsync(AppOutgoingEventPageQuery query, CancellationToken cancellationToken);
+  Task<long> GetCount(AppOutgoingEventPageQuery query, CancellationToken cancellationToken);
 
   /// <summary>
-  /// Получить асинхронно.
+  /// Получить единственную сущность.
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
-  /// <returns>Объект передачи данных.</returns>
-  Task<AppOutgoingEventSingleDTO?> GetAsync(AppOutgoingEventSingleQuery query, CancellationToken cancellationToken);
+  /// <returns>Сущность.</returns>
+  Task<AppOutgoingEventSingleDTO?> GetSingle(AppOutgoingEventSingleQuery query, CancellationToken cancellationToken);
 
   /// <summary>
-  /// Перечислить асинхронно.
+  /// Получить список сущностей.
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
-  /// <returns>Список объектов передачи данных.</returns>
-  Task<List<AppOutgoingEventSingleDTO>> ListAsync(AppOutgoingEventListQuery query, CancellationToken cancellationToken);
+  /// <returns>Список сущностей.</returns>
+  Task<List<AppOutgoingEventSingleDTO>> GetList(AppOutgoingEventListQuery query, CancellationToken cancellationToken);
+
+  /// <summary>
+  /// Получить список идентификаторов неопубликованных сущностей.
+  /// </summary>
+  /// <param name="query">Запрос.</param>
+  /// <param name="cancellationToken">Токен отмены.</param>
+  /// <returns>Список идентификаторов.</returns>
+  Task<List<long>> GetUnpublishedIdList(
+    AppOutgoingEventUnpublishedListQuery query,
+    CancellationToken cancellationToken);
 }

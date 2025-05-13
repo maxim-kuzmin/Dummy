@@ -6,26 +6,26 @@
 public interface IDummyItemQueryService
 {
   /// <summary>
-  /// Подсчитать асинхронно.
+  /// Получить количество сущностей.
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Количество сущностей.</returns>
-  Task<long> CountAsync(DummyItemPageQuery query, CancellationToken cancellationToken);
+  Task<long> GetCount(DummyItemPageQuery query, CancellationToken cancellationToken);
 
   /// <summary>
-  /// Получить асинхронно.
+  /// Получить единственную сущность.
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
-  /// <returns>Объект передачи данных.</returns>
-  Task<DummyItemSingleDTO?> GetAsync(DummyItemSingleQuery query, CancellationToken cancellationToken);
+  /// <returns>Сущность.</returns>
+  Task<DummyItemSingleDTO?> GetSingle(DummyItemSingleQuery query, CancellationToken cancellationToken);
 
   /// <summary>
-  /// Перечислить асинхронно.
+  /// Получить список сущностей.
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
-  /// <returns>Список объектов передачи данных.</returns>
-  Task<List<DummyItemSingleDTO>> ListAsync(DummyItemListQuery query, CancellationToken cancellationToken);
+  /// <returns>Список сущностей.</returns>
+  Task<List<DummyItemSingleDTO>> GetList(DummyItemListQuery query, CancellationToken cancellationToken);
 }

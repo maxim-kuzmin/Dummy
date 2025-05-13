@@ -56,7 +56,7 @@ public abstract class MessageBroker : IMessageBroker, IDisposable
       }
       catch (Exception ex)
       {
-        _logger.LogError(ex, "MAKC:MessageBroker:Connect:Exception thrown");
+        _logger.LogError(ex, "MAKC:MessageBroker:Connect failed");
 
         DisposeManagedResources();        
       }

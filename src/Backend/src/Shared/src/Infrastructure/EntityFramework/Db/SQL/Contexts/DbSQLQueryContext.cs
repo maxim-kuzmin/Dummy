@@ -9,18 +9,18 @@ public abstract class DbSQLQueryContext<TDbContext>(TDbContext _dbContext) : IDb
   where TDbContext : DbContext
 {
   /// <inheritdoc/>
-  public Task<T?> GetFirstOrDefaultAsync<T>(DbSQLCommand dbCommand, CancellationToken cancellationToken)
+  public Task<T?> GetFirstOrDefault<T>(DbSQLCommand dbCommand, CancellationToken cancellationToken)
   {
-    return CreateQuery<T>(dbCommand).FirstOrDefaultAsync(cancellationToken);
+    return Execute<T>(dbCommand).FirstOrDefaultAsync(cancellationToken);
   }
 
   /// <inheritdoc/>
-  public Task<List<T>> GetListAsync<T>(DbSQLCommand dbCommand, CancellationToken cancellationToken)
+  public Task<List<T>> GetList<T>(DbSQLCommand dbCommand, CancellationToken cancellationToken)
   {
-    return CreateQuery<T>(dbCommand).ToListAsync(cancellationToken);
+    return Execute<T>(dbCommand).ToListAsync(cancellationToken);
   }
 
-  private IQueryable<T> CreateQuery<T>(DbSQLCommand dbCommand)
+  private IQueryable<T> Execute<T>(DbSQLCommand dbCommand)
   {
     var formattableStrting = dbCommand.ToFormattableString();
 

@@ -16,7 +16,7 @@ public class AppIncomingEventRepository(
   IAppIncomingEventRepository
 {
   /// <inheritdoc/>
-  public Task<long> CountAsync(AppIncomingEventPageQuery query, CancellationToken cancellationToken)
+  public Task<long> GetCount(AppIncomingEventPageQuery query, CancellationToken cancellationToken)
   {
     var filter = CreateFilter(query.Filter);
 
@@ -24,7 +24,7 @@ public class AppIncomingEventRepository(
   }
 
   /// <inheritdoc/>
-  public async Task<AppIncomingEventEntity?> GetAsync(
+  public async Task<AppIncomingEventEntity?> GetSingle(
     AppIncomingEventSingleQuery query,
     CancellationToken cancellationToken)
   {
@@ -43,7 +43,7 @@ public class AppIncomingEventRepository(
   }
 
   /// <inheritdoc/>
-  public async Task<List<AppIncomingEventEntity>> ListAsync(
+  public async Task<List<AppIncomingEventEntity>> GetList(
     AppIncomingEventListQuery query,
     CancellationToken cancellationToken)
   {

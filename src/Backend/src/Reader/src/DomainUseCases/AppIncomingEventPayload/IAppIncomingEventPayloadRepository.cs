@@ -6,27 +6,31 @@
 public interface IAppIncomingEventPayloadRepository : IObjectRepository<AppIncomingEventPayloadEntity>
 {
   /// <summary>
-  /// Подсчитать асинхронно.
+  /// Получить количество сущностей.
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Количество сущностей.</returns>
-  Task<long> CountAsync(AppIncomingEventPayloadPageQuery query, CancellationToken cancellationToken);
+  Task<long> GetCount(AppIncomingEventPayloadPageQuery query, CancellationToken cancellationToken);
 
   /// <summary>
-  /// Получить асинхронно.
+  /// Получить единственную сущность.
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Сущность.</returns>
-  Task<AppIncomingEventPayloadEntity?> GetAsync(AppIncomingEventPayloadSingleQuery query, CancellationToken cancellationToken);
+  Task<AppIncomingEventPayloadEntity?> GetSingle(
+    AppIncomingEventPayloadSingleQuery query,
+    CancellationToken cancellationToken);
 
   /// <summary>
-  /// Перечислить асинхронно.
+  /// Получить список сущностей.
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Список сущностей.</returns>
-  Task<List<AppIncomingEventPayloadEntity>> ListAsync(AppIncomingEventPayloadListQuery query, CancellationToken cancellationToken);
+  Task<List<AppIncomingEventPayloadEntity>> GetList(
+    AppIncomingEventPayloadListQuery query,
+    CancellationToken cancellationToken);
 }
 

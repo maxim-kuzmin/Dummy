@@ -7,26 +7,26 @@
 public interface IRepositoryBase<TEntity>
 {
   /// <summary>
-  /// Добавить асинхронно.
+  /// Добавить.
   /// </summary>
   /// <param name="entity">Сущность.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Добавленная сущность.</returns>
-  Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken);
+  Task<TEntity> Add(TEntity entity, CancellationToken cancellationToken);
 
   /// <summary>
-  /// Удалить асинхронно.
+  /// Удалить.
   /// </summary>
   /// <param name="entity">Удаляемая сущность.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Задача.</returns>
-  Task DeleteAsync(TEntity entity, CancellationToken cancellationToken);
+  Task Delete(TEntity entity, CancellationToken cancellationToken);
 
   /// <summary>
-  /// Обновить асинхронно.
+  /// Обновить.
   /// </summary>
   /// <param name="entity">Сущность.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Задача.</returns>
-  Task UpdateAsync(TEntity entity, CancellationToken cancellationToken);
+  Task Update(TEntity entity, CancellationToken cancellationToken);
 }

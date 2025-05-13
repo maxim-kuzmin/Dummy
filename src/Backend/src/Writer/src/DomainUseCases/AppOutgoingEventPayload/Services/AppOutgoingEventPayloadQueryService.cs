@@ -10,32 +10,32 @@ public class AppOutgoingEventPayloadQueryService(
   IAppOutgoingEventPayloadDbSQLCommandFactory _dbCommandFactory) : IAppOutgoingEventPayloadQueryService
 {
   /// <inheritdoc/>
-  public async Task<long> CountAsync(AppOutgoingEventPayloadPageQuery query, CancellationToken cancellationToken)
+  public async Task<long> GetCount(AppOutgoingEventPayloadPageQuery query, CancellationToken cancellationToken)
   {
     var dbCommandForFilter = _dbCommandFactory.CreateDbCommandForFilter(query);
 
     var dbCommand = _dbCommandFactory.CreateDbCommandForTotalCount(dbCommandForFilter);
 
-    var data = await _appDbQueryContext.GetListAsync<long>(dbCommand, cancellationToken).ConfigureAwait(false);
+    var data = await _appDbQueryContext.GetList<long>(dbCommand, cancellationToken).ConfigureAwait(false);
 
     return data[0];
   }
 
   /// <inheritdoc/>
-  public Task<AppOutgoingEventPayloadSingleDTO?> GetAsync(AppOutgoingEventPayloadSingleQuery query, CancellationToken cancellationToken)
+  public Task<AppOutgoingEventPayloadSingleDTO?> GetSingle(AppOutgoingEventPayloadSingleQuery query, CancellationToken cancellationToken)
   {
     var dbCommand = _dbCommandFactory.CreateDbCommand(query);
 
-    return _appDbQueryContext.GetFirstOrDefaultAsync<AppOutgoingEventPayloadSingleDTO>(dbCommand, cancellationToken);
+    return _appDbQueryContext.GetFirstOrDefault<AppOutgoingEventPayloadSingleDTO>(dbCommand, cancellationToken);
   }
 
   /// <inheritdoc/>
-  public Task<List<AppOutgoingEventPayloadSingleDTO>> ListAsync(AppOutgoingEventPayloadListQuery query, CancellationToken cancellationToken)
+  public Task<List<AppOutgoingEventPayloadSingleDTO>> GetList(AppOutgoingEventPayloadListQuery query, CancellationToken cancellationToken)
   {
     var dbCommandForFilter = _dbCommandFactory.CreateDbCommandForFilter(query.PageQuery);
 
     var dbCommandForItems = _dbCommandFactory.CreateDbCommandForItems(dbCommandForFilter, query.PageQuery.Page, query.Sort);
 
-    return _appDbQueryContext.GetListAsync<AppOutgoingEventPayloadSingleDTO>(dbCommandForItems, cancellationToken);
+    return _appDbQueryContext.GetList<AppOutgoingEventPayloadSingleDTO>(dbCommandForItems, cancellationToken);
   }
 }

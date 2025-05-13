@@ -24,4 +24,12 @@ public interface IAppOutgoingEventCommandService
   Task<AppCommandResultWithValue<AppOutgoingEventSingleDTO>> Save(
     AppOutgoingEventSaveActionCommand command,
     CancellationToken cancellationToken);
+
+  /// <summary>
+  /// Пометить как опубликованное.
+  /// </summary>
+  /// <param name="command">Команда.</param>
+  /// <param name="cancellationToken">Токен отмены.</param>
+  /// <returns>Задача.</returns>
+  Task MarkAsPublished(AppOutgoingEventMarkAsPublishedCommand command, CancellationToken cancellationToken);
 }

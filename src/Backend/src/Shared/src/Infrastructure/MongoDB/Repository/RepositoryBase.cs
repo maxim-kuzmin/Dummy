@@ -23,7 +23,7 @@ public abstract class RepositoryBase<TEntity>(
   protected IMongoCollection<TEntity> Collection { get; } = collection;
 
   /// <inheritdoc/>
-  public async Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken)
+  public async Task<TEntity> Add(TEntity entity, CancellationToken cancellationToken)
   {
     var task = Collection.InsertOneAsync(ClientSessionHandle, entity, cancellationToken: cancellationToken);
 
@@ -33,7 +33,7 @@ public abstract class RepositoryBase<TEntity>(
   }
 
   /// <inheritdoc/>
-  public async Task DeleteAsync(TEntity entity, CancellationToken cancellationToken)
+  public async Task Delete(TEntity entity, CancellationToken cancellationToken)
   {
     var filter = CreateFilterByPrimaryKey(entity.GetPrimaryKey());
 
@@ -43,7 +43,7 @@ public abstract class RepositoryBase<TEntity>(
   }
 
   /// <inheritdoc/>
-  public async Task<TEntity?> GetByObjectIdAsync(string objectId, CancellationToken cancellationToken)
+  public async Task<TEntity?> GetByObjectId(string objectId, CancellationToken cancellationToken)
   {
     var filter = CreateFilterByPrimaryKey(objectId);
 
@@ -55,7 +55,7 @@ public abstract class RepositoryBase<TEntity>(
   }
 
   /// <inheritdoc/>
-  public async Task UpdateAsync(TEntity entity, CancellationToken cancellationToken)
+  public async Task Update(TEntity entity, CancellationToken cancellationToken)
   {
     var filter = CreateFilterByPrimaryKey(entity.GetPrimaryKey());
 

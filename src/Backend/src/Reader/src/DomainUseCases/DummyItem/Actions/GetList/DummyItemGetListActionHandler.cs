@@ -20,13 +20,13 @@ public class DummyItemGetListActionHandler(
 
     _logger.LogDebug("User name: {userName}", userName);
 
-    var totalCount = await _service.CountAsync(request.PageQuery, cancellationToken).ConfigureAwait(false);
+    var totalCount = await _service.GetCount(request.PageQuery, cancellationToken).ConfigureAwait(false);
 
     List<DummyItemSingleDTO> items;
 
     if (totalCount > 0)
     {
-      items = await _service.ListAsync(request, cancellationToken).ConfigureAwait(false);
+      items = await _service.GetList(request, cancellationToken).ConfigureAwait(false);
     }
     else
     {

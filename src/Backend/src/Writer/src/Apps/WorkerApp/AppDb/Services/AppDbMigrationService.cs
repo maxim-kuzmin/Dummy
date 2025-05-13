@@ -14,7 +14,7 @@ public class AppDbMigrationService(
   /// <inheritdoc/>
   protected override async Task ExecuteAsync(CancellationToken stoppingToken)
   {
-    _logger.LogDebug("MAKC:AppDbMigrationService:ExecuteAsync:Start");
+    _logger.LogDebug("MAKC:AppDbMigrationService:ExecuteAsync start");
 
     while (!stoppingToken.IsCancellationRequested)
     {
@@ -46,7 +46,7 @@ public class AppDbMigrationService(
         }
         catch (Exception ex)
         {
-          _logger.LogError(ex, "MAKC:AppDbMigrationService:ExecuteAsync:Exception");
+          _logger.LogError(ex, "MAKC:AppDbMigrationService:ExecuteAsync failed");
         }
 
         await Task.Delay(timeoutToRetry, stoppingToken).ConfigureAwait(false);
@@ -71,6 +71,6 @@ public class AppDbMigrationService(
 
     _hostApplicationLifetime.StopApplication();
 
-    _logger.LogDebug("MAKC:AppDbMigrationService:ExecuteAsync:End");
+    _logger.LogDebug("MAKC:AppDbMigrationService:ExecuteAsync end");
   }
 }

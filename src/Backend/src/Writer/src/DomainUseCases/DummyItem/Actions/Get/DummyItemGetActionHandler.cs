@@ -21,7 +21,7 @@ public class DummyItemGetActionHandler(
 
     _logger.LogDebug("User name: {userName}", userName);
 
-    var dto = await _service.GetAsync(request, cancellationToken).ConfigureAwait(false);
+    var dto = await _service.Get(request, cancellationToken).ConfigureAwait(false);
 
     return dto != null ? Result.Success(dto) : Result.NotFound();
   }

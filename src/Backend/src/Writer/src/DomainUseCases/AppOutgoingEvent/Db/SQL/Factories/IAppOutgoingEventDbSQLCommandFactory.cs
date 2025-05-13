@@ -13,6 +13,13 @@ public interface IAppOutgoingEventDbSQLCommandFactory
   DbSQLCommand CreateDbCommand(AppOutgoingEventSingleQuery query);
 
   /// <summary>
+  /// Создать команду базы данных.
+  /// </summary>
+  /// <param name="query">Запрос.</param>
+  /// <returns>Команда базы данных.</returns>
+  DbSQLCommand CreateDbCommand(AppOutgoingEventUnpublishedListQuery query);
+
+  /// <summary>
   /// Создать команду базы данных для фильтра.
   /// </summary>
   /// <param name="query">Запрос.</param>

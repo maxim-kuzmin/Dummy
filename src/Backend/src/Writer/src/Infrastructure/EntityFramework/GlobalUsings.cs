@@ -10,6 +10,7 @@ global using Makc.Dummy.Writer.DomainModel.AppOutgoingEventPayload;
 global using Makc.Dummy.Writer.DomainModel.DummyItem;
 global using Makc.Dummy.Writer.DomainUseCases.App.Db.SQL.Contexts;
 global using Makc.Dummy.Writer.DomainUseCases.AppOutgoingEvent;
+global using Makc.Dummy.Writer.DomainUseCases.AppOutgoingEvent.Commands;
 global using Makc.Dummy.Writer.DomainUseCases.AppOutgoingEventPayload;
 global using Makc.Dummy.Writer.DomainUseCases.DummyItem;
 global using Makc.Dummy.Writer.DomainUseCases.DummyItem.Actions.Save;

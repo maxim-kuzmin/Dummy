@@ -6,26 +6,26 @@
 public interface IDummyItemRepository : IObjectRepository<DummyItemEntity>
 {
   /// <summary>
-  /// Подсчитать асинхронно.
+  /// Получить количество сущностей.
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Количество сущностей.</returns>
-  Task<long> CountAsync(DummyItemPageQuery query, CancellationToken cancellationToken);
+  Task<long> GetCount(DummyItemPageQuery query, CancellationToken cancellationToken);
 
   /// <summary>
-  /// Получить асинхронно.
+  /// Получить единственную сущность.
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Сущность.</returns>
-  Task<DummyItemEntity?> GetAsync(DummyItemSingleQuery query, CancellationToken cancellationToken);
+  Task<DummyItemEntity?> GetSingle(DummyItemSingleQuery query, CancellationToken cancellationToken);
 
   /// <summary>
-  /// Перечислить асинхронно.
+  /// Получить список сущностей.
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Список сущностей.</returns>
-  Task<List<DummyItemEntity>> ListAsync(DummyItemListQuery query, CancellationToken cancellationToken);
+  Task<List<DummyItemEntity>> GetList(DummyItemListQuery query, CancellationToken cancellationToken);
 }

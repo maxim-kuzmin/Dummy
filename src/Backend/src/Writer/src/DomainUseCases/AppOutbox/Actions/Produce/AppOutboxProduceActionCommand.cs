@@ -3,4 +3,5 @@
 /// <summary>
 /// Команда действия по выдаче исходящего сообщения приложения.
 /// </summary>
-public record AppOutboxProduceActionCommand : ICommand<Result>;
+/// <param name="MaxCount">Максимальное количество.</param>
+public record AppOutboxProduceActionCommand(int MaxCount) : ICommand<Result>;

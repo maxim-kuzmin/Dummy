@@ -8,27 +8,27 @@ public class AppIncomingEventQueryService(
   IAppIncomingEventRepository _repository) : IAppIncomingEventQueryService
 {
   /// <inheritdoc/>
-  public Task<long> CountAsync(AppIncomingEventPageQuery query, CancellationToken cancellationToken)
+  public Task<long> GetCount(AppIncomingEventPageQuery query, CancellationToken cancellationToken)
   {
-    return _repository.CountAsync(query, cancellationToken);
+    return _repository.GetCount(query, cancellationToken);
   }
 
   /// <inheritdoc/>
-  public async Task<AppIncomingEventSingleDTO?> GetAsync(
+  public async Task<AppIncomingEventSingleDTO?> GetSingle(
     AppIncomingEventSingleQuery query,
     CancellationToken cancellationToken)
   {
-    var entity = await _repository.GetAsync(query, cancellationToken).ConfigureAwait(false);
+    var entity = await _repository.GetSingle(query, cancellationToken).ConfigureAwait(false);
 
     return entity?.ToAppIncomingEventSingleDTO();
   }
 
   /// <inheritdoc/>
-  public async Task<List<AppIncomingEventSingleDTO>> ListAsync(
+  public async Task<List<AppIncomingEventSingleDTO>> GetList(
     AppIncomingEventListQuery query,
     CancellationToken cancellationToken)
   {
-    var entities = await _repository.ListAsync(query, cancellationToken).ConfigureAwait(false);
+    var entities = await _repository.GetList(query, cancellationToken).ConfigureAwait(false);
 
     return [.. entities.Select(x => x.ToAppIncomingEventSingleDTO())];
   }

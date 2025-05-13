@@ -34,6 +34,55 @@ where
   }
 
   /// <inheritdoc/>
+  public DbSQLCommand CreateDbCommand(AppOutgoingEventUnpublishedListQuery query)
+  {
+    DbSQLCommand result = new();
+
+    var sAppOutgoingEvent = _appDbSettings.Entities.AppOutgoingEvent;
+
+    string maxCountQuery = query.MaxCount > 0 ? $" top {query.MaxCount}" : string.Empty;
+
+    result.TextBuilder.AppendLine($$"""
+select{{maxCountQuery}}
+  "{{sAppOutgoingEvent.ColumnForId}}" "Id"
+from
+  "{{sAppOutgoingEvent.Schema}}"."{{sAppOutgoingEvent.Table}}"
+where
+  "{{sAppOutgoingEvent.ColumnForPublishedAt}}" is null
+""");
+
+    if (query.Ids.Count > 0)
+    {
+      List<string> parameterNames = new(query.Ids.Count);
+
+      int index = 0;
+
+      foreach (var id in query.Ids)
+      {
+        string parameterName = $"@Id{index++}";
+
+        parameterNames.Add(parameterName);
+
+        result.AddParameter(parameterName, id);
+      }
+
+      string ids = string.Join(",", parameterNames);
+
+      result.TextBuilder.AppendLine($$"""
+  and
+  "{{sAppOutgoingEvent.ColumnForId}}" in ({{ids}})
+""");
+    }
+
+    result.TextBuilder.AppendLine($$"""
+order by
+  "{{sAppOutgoingEvent.ColumnForId}}" asc
+""");
+
+    return result;
+  }
+
+  /// <inheritdoc/>
   public DbSQLCommand CreateDbCommandForFilter(AppOutgoingEventPageQuery query)
   {
     DbSQLCommand result = new();

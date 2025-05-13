@@ -16,7 +16,7 @@ public class DummyItemRepository(
   IDummyItemRepository
 {
   /// <inheritdoc/>
-  public Task<long> CountAsync(DummyItemPageQuery query, CancellationToken cancellationToken)
+  public Task<long> GetCount(DummyItemPageQuery query, CancellationToken cancellationToken)
   {
     var filter = CreateFilter(query.Filter);
 
@@ -24,7 +24,7 @@ public class DummyItemRepository(
   }
 
   /// <inheritdoc/>
-  public async Task<DummyItemEntity?> GetAsync(DummyItemSingleQuery query, CancellationToken cancellationToken)
+  public async Task<DummyItemEntity?> GetSingle(DummyItemSingleQuery query, CancellationToken cancellationToken)
   {
     if (query.ObjectId == null)
     {
@@ -41,7 +41,7 @@ public class DummyItemRepository(
   }
 
   /// <inheritdoc/>
-  public async Task<List<DummyItemEntity>> ListAsync(DummyItemListQuery query, CancellationToken cancellationToken)
+  public async Task<List<DummyItemEntity>> GetList(DummyItemListQuery query, CancellationToken cancellationToken)
   {
     var filter = CreateFilter(query.PageQuery.Filter);
 

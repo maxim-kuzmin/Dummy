@@ -13,7 +13,7 @@ public class AppMessageConsumer(
 
     consumer.Subscribe(topic);
 
-    _logger.LogDebug("MAKC:AppMessageConsumer:Subscribe:Start");
+    _logger.LogDebug("MAKC:AppMessageConsumer:Subscribe start");
 
     while (!cancellationToken.IsCancellationRequested)
     {
@@ -39,10 +39,10 @@ public class AppMessageConsumer(
       }
       catch (Exception ex)
       {
-        _logger.LogError(ex, "MAKC:AppMessageConsumer:Subscribe:Exception");
+        _logger.LogError(ex, "MAKC:AppMessageConsumer:Subscribe failed");
       }
     }
 
-    _logger.LogDebug("MAKC:AppMessageConsumer:Subscribe:End");
+    _logger.LogDebug("MAKC:AppMessageConsumer:Subscribe end");
   }
 }

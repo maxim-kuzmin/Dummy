@@ -3,8 +3,9 @@
 /// <summary>
 /// Репозиторий фиктивного предмета.
 /// </summary>
-public class DummyItemRepository(AppDbContext dbContext) :
-  AppRepositoryBase<DummyItemEntity>(dbContext),
+/// <param name="appDbContext">Контекст базы данных приложения.</param>
+public class DummyItemRepository(AppDbContext appDbContext) :
+  AppRepositoryBase<DummyItemEntity>(appDbContext),
   IDummyItemRepository
 {
 }

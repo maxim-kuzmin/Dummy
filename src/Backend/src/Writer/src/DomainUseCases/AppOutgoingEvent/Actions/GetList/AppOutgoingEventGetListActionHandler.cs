@@ -12,13 +12,13 @@ public class AppOutgoingEventGetListActionHandler(IAppOutgoingEventQueryService 
     AppOutgoingEventGetListActionQuery request,
     CancellationToken cancellationToken)
   {
-    var totalCount = await _service.CountAsync(request.PageQuery, cancellationToken).ConfigureAwait(false);
+    var totalCount = await _service.GetCount(request.PageQuery, cancellationToken).ConfigureAwait(false);
 
     List<AppOutgoingEventSingleDTO> items;
 
     if (totalCount > 0)
     {
-      items = await _service.ListAsync(request, cancellationToken).ConfigureAwait(false);
+      items = await _service.GetList(request, cancellationToken).ConfigureAwait(false);
     }
     else
     {

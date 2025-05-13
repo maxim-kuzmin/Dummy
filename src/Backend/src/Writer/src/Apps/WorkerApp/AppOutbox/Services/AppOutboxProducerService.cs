@@ -4,29 +4,59 @@
 /// Сервис поставщика исходящих сообщений приложения.
 /// </summary>
 /// <param name="_appMessageBroker">Брокер сообщений приложения.</param>
+/// <param name="_logger">Логгер.</param>
 /// <param name="_serviceScopeFactory">Фабрика области видимости сервисов.</param>
 public class AppOutboxProducerService(
   IAppMessageBroker _appMessageBroker,
+  ILogger<AppOutboxProducerService> _logger,
   IServiceScopeFactory _serviceScopeFactory) : BackgroundService
 {
   /// <inheritdoc/>
   protected override async Task ExecuteAsync(CancellationToken stoppingToken)
   {
-    var connectionTask = _appMessageBroker.Connect(stoppingToken);
+    _logger.LogDebug("MAKC:AppOutboxProducerService:ExecuteAsync start");
 
-    if (stoppingToken.IsCancellationRequested)
+    _logger.LogDebug("MAKC:AppOutboxProducerService:ExecuteAsync:Connect start");
+
+    await _appMessageBroker.Connect(stoppingToken).ConfigureAwait(false);
+
+    _logger.LogDebug("MAKC:AppOutboxProducerService:ExecuteAsync:Connect end");
+
+    while (!stoppingToken.IsCancellationRequested)
     {
-      return;
+      using var scope = _serviceScopeFactory.CreateScope();
+
+      var appConfigOptionsSnapshot = scope.ServiceProvider.GetRequiredService<IOptionsSnapshot<AppConfigOptions>>();
+
+      var options = Guard.Against.Null(appConfigOptionsSnapshot.Value.Domain?.AppOutbox?.Producer);
+
+      int maxCount = options.MaxCount;
+      int timeoutToRepeat = options.TimeoutInMillisecondsToRepeat;
+
+      var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+
+      try
+      {
+        _logger.LogDebug("MAKC:AppOutboxProducerService:ExecuteAsync:Produce start");
+
+        AppOutboxProduceActionCommand command = new(maxCount);
+
+        await mediator.Send(command, stoppingToken).ConfigureAwait(false);
+
+        _logger.LogDebug("MAKC:AppOutboxProducerService:ExecuteAsync:Produce end");
+      }
+      catch (OperationCanceledException)
+      {
+        _logger.LogDebug("MAKC:AppOutboxProducerService:ExecuteAsync canceled");
+      }
+      catch (Exception ex)
+      {
+        _logger.LogError(ex, "MAKC:AppOutboxProducerService:ExecuteAsync failed");
+      }
+
+      await Task.Delay(timeoutToRepeat, stoppingToken);
     }
 
-    await connectionTask.ConfigureAwait(false);
-
-    using var scope = _serviceScopeFactory.CreateScope();
-
-    var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
-
-    AppOutboxProduceActionCommand command = new();
-
-    await mediator.Send(command, stoppingToken).ConfigureAwait(false);
-  }
+    _logger.LogDebug("MAKC:AppOutboxProducerService:ExecuteAsync end");
+  }  
 }

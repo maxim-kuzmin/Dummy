@@ -13,7 +13,7 @@ public class AppIncomingEventCommandService(
     AppIncomingEventDeleteActionCommand command,
     CancellationToken cancellationToken)
   {
-    var entity = await _repository.GetByObjectIdAsync(command.ObjectId, cancellationToken).ConfigureAwait(false);
+    var entity = await _repository.GetByObjectId(command.ObjectId, cancellationToken).ConfigureAwait(false);
 
     if (entity == null)
     {
@@ -45,7 +45,7 @@ public class AppIncomingEventCommandService(
 
     async Task FuncToExecute(CancellationToken cancellationToken)
     {
-      await _repository.DeleteAsync(entity, cancellationToken).ConfigureAwait(false);
+      await _repository.Delete(entity, cancellationToken).ConfigureAwait(false);
     }
 
     await _appDbExecutionContext.Execute(FuncToExecute, cancellationToken).ConfigureAwait(false);
@@ -65,7 +65,7 @@ public class AppIncomingEventCommandService(
 
     if (command.HasEntityBeingSavedAlreadyBeenCreated)
     {
-      entity = await _repository.GetByObjectIdAsync(command.ObjectId, cancellationToken).ConfigureAwait(false);
+      entity = await _repository.GetByObjectId(command.ObjectId, cancellationToken).ConfigureAwait(false);
 
       if (entity == null)
       {
@@ -100,11 +100,11 @@ public class AppIncomingEventCommandService(
     {
       if (command.HasEntityBeingSavedAlreadyBeenCreated)
       {
-        await _repository.UpdateAsync(entity, cancellationToken).ConfigureAwait(false);
+        await _repository.Update(entity, cancellationToken).ConfigureAwait(false);
       }
       else
       {
-        entity = await _repository.AddAsync(entity, cancellationToken).ConfigureAwait(false);
+        entity = await _repository.Add(entity, cancellationToken).ConfigureAwait(false);
 
         payload.EntityId = entity.GetPrimaryKeyAsString();
       }        

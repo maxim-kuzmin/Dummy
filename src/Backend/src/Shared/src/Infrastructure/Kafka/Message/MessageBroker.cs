@@ -51,7 +51,7 @@ public abstract class MessageBroker(int _timeoutToRetry, ILogger _logger) : IMes
       }
       catch (Exception ex)
       {
-        _logger.LogError(ex, "MAKC:MessageBroker:Connect:Exception thrown");
+        _logger.LogError(ex, "MAKC:MessageBroker:Connect failed");
 
         DisposeManagedResources();
       }

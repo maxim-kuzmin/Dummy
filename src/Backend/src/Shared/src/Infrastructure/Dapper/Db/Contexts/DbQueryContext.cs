@@ -9,22 +9,22 @@ public abstract class DbQueryContext<TDbContext>(TDbContext _dbContext) : IDbSQL
   where TDbContext : IDbContext
 {
   /// <inheritdoc/>
-  public async Task<T?> GetFirstOrDefaultAsync<T>(DbSQLCommand dbCommand, CancellationToken cancellationToken)
+  public async Task<T?> GetFirstOrDefault<T>(DbSQLCommand dbCommand, CancellationToken cancellationToken)
   {
-    var query = await CreateQuery<T>(dbCommand).ConfigureAwait(false);
+    var result = await Execute<T>(dbCommand).ConfigureAwait(false);
 
-    return query.FirstOrDefault();
+    return result.FirstOrDefault();
   }
 
   /// <inheritdoc/>
-  public async Task<List<T>> GetListAsync<T>(DbSQLCommand dbCommand, CancellationToken cancellationToken)
+  public async Task<List<T>> GetList<T>(DbSQLCommand dbCommand, CancellationToken cancellationToken)
   {
-    var query = await CreateQuery<T>(dbCommand).ConfigureAwait(false);
+    var result = await Execute<T>(dbCommand).ConfigureAwait(false);
 
-    return [.. query];
+    return [.. result];
   }
 
-  private Task<IEnumerable<T>> CreateQuery<T>(DbSQLCommand dbCommand)
+  private Task<IEnumerable<T>> Execute<T>(DbSQLCommand dbCommand)
   {
     DynamicParameters parameters = new();
 
