@@ -57,6 +57,7 @@ public class AppIncomingEventPayloadCommandService(
     return result;
   }
 
+  /// <inheritdoc/>
   public async Task<AppCommandResultWithValue<AppIncomingEventPayloadSingleDTO>> Save(
     AppIncomingEventPayloadSaveActionCommand command,
     CancellationToken cancellationToken)

@@ -16,6 +16,14 @@ public interface IAppIncomingEventCommandService
     CancellationToken cancellationToken);
 
   /// <summary>
+  /// Вставить список.
+  /// </summary>
+  /// <param name="command">Команда.</param>
+  /// <param name="cancellationToken">Токен отмены.</param>
+  /// <returns>Результат.</returns>
+  Task<Result> InsertList(AppIncomingEventInsertListCommand command, CancellationToken cancellationToken);
+
+  /// <summary>
   /// Сохранить.
   /// </summary>
   /// <param name="command">Команда.</param>

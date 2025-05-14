@@ -17,6 +17,8 @@ public static class AppExtensions
 
     services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
 
+    services.AddTransient<IAppInboxCommandService, AppInboxCommandService>();
+
     services.AddTransient<IAppIncomingEventCommandService, AppIncomingEventCommandService>();
     services.AddTransient<IAppIncomingEventQueryService, AppIncomingEventQueryService>();
 

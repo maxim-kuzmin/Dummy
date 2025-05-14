@@ -72,6 +72,7 @@ public class DummyItemCommandService(
     return _appOutboxCommandService.Save(command, cancellationToken);
   }
 
+  /// <inheritdoc/>
   public async Task<AppCommandResultWithValue<DummyItemSingleDTO>> Save(
     DummyItemSaveActionCommand command,
     CancellationToken cancellationToken)

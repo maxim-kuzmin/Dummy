@@ -57,6 +57,7 @@ public class DummyItemCommandService(
     return result;
   }
 
+  /// <inheritdoc/>
   public async Task<AppCommandResultWithValue<DummyItemSingleDTO>> Save(
     DummyItemSaveActionCommand command,
     CancellationToken cancellationToken)

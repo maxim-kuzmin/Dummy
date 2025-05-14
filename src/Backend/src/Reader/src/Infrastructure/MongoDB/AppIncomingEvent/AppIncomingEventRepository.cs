@@ -16,6 +16,30 @@ public class AppIncomingEventRepository(
   IAppIncomingEventRepository
 {
   /// <inheritdoc/>
+  public async Task AddIfNotExistsByEventIdAndName(
+    IEnumerable<AppIncomingEventEntity> entities,
+    CancellationToken cancellationToken)
+  {
+    var requests = entities.Select(x => new UpdateOneModel<AppIncomingEventEntity>(
+        filter: new ExpressionFilterDefinition<AppIncomingEventEntity>(
+          xx => xx.EventId == x.EventId && xx.EventName == x.EventName),
+        update: Builders<AppIncomingEventEntity>.Update
+          .SetOnInsert(xx => xx.ConcurrencyToken, x.ConcurrencyToken)
+          .SetOnInsert(xx => xx.CreatedAt, x.CreatedAt)
+          .SetOnInsert(xx => xx.EventId, x.EventId)
+          .SetOnInsert(xx => xx.EventName, x.EventName)
+          .SetOnInsert(xx => xx.LastLoadingAt, x.LastLoadingAt)
+          .SetOnInsert(xx => xx.LastLoadingError, x.LastLoadingError)
+          .SetOnInsert(xx => xx.LoadedAt, x.LoadedAt)
+          .SetOnInsert(xx => xx.PayloadCount, x.PayloadCount)
+          .SetOnInsert(xx => xx.PayloadTotalCount, x.PayloadTotalCount)
+          .SetOnInsert(xx => xx.ProcessedAt, x.ProcessedAt))
+    { IsUpsert = true });
+
+    await Collection.BulkWriteAsync(requests, cancellationToken: cancellationToken);
+  }
+
+  /// <inheritdoc/>
   public Task<long> GetCount(AppIncomingEventPageQuery query, CancellationToken cancellationToken)
   {
     var filter = CreateFilter(query.Filter);

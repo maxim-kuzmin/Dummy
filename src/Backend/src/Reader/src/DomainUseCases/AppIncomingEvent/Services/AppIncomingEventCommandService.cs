@@ -1,4 +1,6 @@
-﻿namespace Makc.Dummy.Reader.DomainUseCases.AppIncomingEvent.Services;
+﻿using Ardalis.Specification;
+
+namespace Makc.Dummy.Reader.DomainUseCases.AppIncomingEvent.Services;
 
 /// <summary>
 /// Сервис команд входящего события приложения.
@@ -57,6 +59,36 @@ public class AppIncomingEventCommandService(
     return result;
   }
 
+  /// <inheritdoc/>
+  public async Task<Result> InsertList(AppIncomingEventInsertListCommand command, CancellationToken cancellationToken)
+  {
+    List<AppIncomingEventEntity> entities = new(command.Items.Count);
+
+    foreach (var item in command.Items)
+    {
+      var aggregate = _factory.CreateAggregate();
+
+      aggregate.UpdateEventId(item.EventId);
+      aggregate.UpdateEventName(item.EventName);
+
+      var aggregateResult = aggregate.GetResultToCreate();
+
+      var entity = aggregateResult.Entity;
+
+      if (entity == null)
+      {
+        return Result.Invalid();
+      }
+
+      entities.Add(entity);
+    }
+
+    await _repository.AddIfNotExistsByEventIdAndName(entities, cancellationToken);
+
+    return Result.Success();
+  }
+
+  /// <inheritdoc/>
   public async Task<AppCommandResultWithValue<AppIncomingEventSingleDTO>> Save(
     AppIncomingEventSaveActionCommand command,
     CancellationToken cancellationToken)

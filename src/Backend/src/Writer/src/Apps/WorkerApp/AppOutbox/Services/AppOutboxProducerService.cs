@@ -41,6 +41,8 @@ public class AppOutboxProducerService(
 
         AppOutboxProduceActionCommand command = new(maxCount);
 
+        _logger.LogDebug("MAKC:AppOutboxProducerService:ExecuteAsync:Produce:Command: {command}", command);
+
         await mediator.Send(command, stoppingToken).ConfigureAwait(false);
 
         _logger.LogDebug("MAKC:AppOutboxProducerService:ExecuteAsync:Produce end");
