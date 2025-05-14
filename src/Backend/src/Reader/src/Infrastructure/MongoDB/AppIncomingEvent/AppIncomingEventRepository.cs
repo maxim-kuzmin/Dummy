@@ -16,7 +16,7 @@ public class AppIncomingEventRepository(
   IAppIncomingEventRepository
 {
   /// <inheritdoc/>
-  public async Task AddIfNotExistsByEventIdAndName(
+  public Task AddIfNotExistsByEvent(
     IEnumerable<AppIncomingEventEntity> entities,
     CancellationToken cancellationToken)
   {
@@ -36,7 +36,7 @@ public class AppIncomingEventRepository(
           .SetOnInsert(xx => xx.ProcessedAt, x.ProcessedAt))
     { IsUpsert = true });
 
-    await Collection.BulkWriteAsync(requests, cancellationToken: cancellationToken);
+    return Collection.BulkWriteAsync(requests, cancellationToken: cancellationToken);
   }
 
   /// <inheritdoc/>

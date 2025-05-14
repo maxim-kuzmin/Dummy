@@ -6,6 +6,16 @@
 public interface IAppIncomingEventPayloadRepository : IObjectRepository<AppIncomingEventPayloadEntity>
 {
   /// <summary>
+  /// Добавить, если не существует по по полезной нагрузке события.
+  /// </summary>
+  /// <param name="entities">Сущности.</param>
+  /// <param name="cancellationToken">Токен отмены.</param>
+  /// <returns>Задача.</returns>
+  Task AddIfNotExistsByEventPayload(
+    IEnumerable<AppIncomingEventPayloadEntity> entities,
+    CancellationToken cancellationToken);
+
+  /// <summary>
   /// Получить количество сущностей.
   /// </summary>
   /// <param name="query">Запрос.</param>

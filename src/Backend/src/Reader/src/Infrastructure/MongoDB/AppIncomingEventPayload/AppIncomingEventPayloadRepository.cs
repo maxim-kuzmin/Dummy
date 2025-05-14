@@ -1,4 +1,6 @@
-﻿namespace Makc.Dummy.Reader.Infrastructure.MongoDB.AppIncomingEventPayload;
+﻿using System.Linq;
+
+namespace Makc.Dummy.Reader.Infrastructure.MongoDB.AppIncomingEventPayload;
 
 /// <summary>
 /// Репозиторий полезной нагрузки входящего события приложения.
@@ -15,6 +17,30 @@ public class AppIncomingEventPayloadRepository(
     database.GetCollection<AppIncomingEventPayloadEntity>(appDbSettings.Entities.AppIncomingEvent.Collection)),
   IAppIncomingEventPayloadRepository
 {
+  /// <inheritdoc/>
+  public Task AddIfNotExistsByEventPayload(
+    IEnumerable<AppIncomingEventPayloadEntity> entities,
+    CancellationToken cancellationToken)
+  {
+    var requests = entities.Select(x => new UpdateOneModel<AppIncomingEventPayloadEntity>(
+        filter: new ExpressionFilterDefinition<AppIncomingEventPayloadEntity>(
+          xx => xx.AppIncomingEventObjectId == x.AppIncomingEventObjectId && xx.EventPayloadId == x.EventPayloadId),
+        update: Builders<AppIncomingEventPayloadEntity>.Update
+          .SetOnInsert(xx => xx.AppIncomingEventObjectId, x.AppIncomingEventObjectId)
+          .SetOnInsert(xx => xx.ConcurrencyToken, x.ConcurrencyToken)          
+          .SetOnInsert(xx => xx.CreatedAt, x.CreatedAt)
+          .SetOnInsert(xx => xx.Data, x.Data)
+          .SetOnInsert(xx => xx.EntityConcurrencyTokenToDelete, x.EntityConcurrencyTokenToDelete)
+          .SetOnInsert(xx => xx.EntityConcurrencyTokenToInsert, x.EntityConcurrencyTokenToInsert)
+          .SetOnInsert(xx => xx.EntityId, x.EntityId)
+          .SetOnInsert(xx => xx.EntityName, x.EntityName)          
+          .SetOnInsert(xx => xx.EventPayloadId, x.EventPayloadId)
+          .SetOnInsert(xx => xx.Position, x.Position))
+    { IsUpsert = true });
+
+    return Collection.BulkWriteAsync(requests, cancellationToken: cancellationToken);
+  }
+
   /// <inheritdoc/>
   public Task<long> GetCount(AppIncomingEventPayloadPageQuery query, CancellationToken cancellationToken)
   {

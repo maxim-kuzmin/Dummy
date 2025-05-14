@@ -6,12 +6,12 @@
 public interface IAppIncomingEventRepository : IObjectRepository<AppIncomingEventEntity>
 {
   /// <summary>
-  /// Добавить, если не существует по идентификатору и имени события.
+  /// Добавить, если не существует по событию.
   /// </summary>
   /// <param name="entities">Сущности.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Задача.</returns>
-  Task AddIfNotExistsByEventIdAndName(
+  Task AddIfNotExistsByEvent(
     IEnumerable<AppIncomingEventEntity> entities,
     CancellationToken cancellationToken);
 

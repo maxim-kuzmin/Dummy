@@ -83,7 +83,7 @@ public class AppIncomingEventCommandService(
       entities.Add(entity);
     }
 
-    await _repository.AddIfNotExistsByEventIdAndName(entities, cancellationToken);
+    await _repository.AddIfNotExistsByEvent(entities, cancellationToken);
 
     return Result.Success();
   }
