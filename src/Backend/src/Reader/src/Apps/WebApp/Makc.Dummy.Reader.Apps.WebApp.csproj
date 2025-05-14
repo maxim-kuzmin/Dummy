@@ -26,8 +26,4 @@
     <ProjectReference Include="..\..\Infrastructure\RabbitMQ\Makc.Dummy.Reader.Infrastructure.RabbitMQ.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="App\Config\Options\Sections\Domain\" />
-  </ItemGroup>
-
 </Project>
