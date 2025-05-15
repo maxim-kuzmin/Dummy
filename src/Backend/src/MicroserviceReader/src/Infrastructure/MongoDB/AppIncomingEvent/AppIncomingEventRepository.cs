@@ -74,8 +74,41 @@ public class AppIncomingEventRepository(
     var filter = CreateFilter(query.PageQuery.Filter);
 
     var found = Collection.Find(ClientSessionHandle, filter)
-      .TakePage(query.PageQuery.Page)
-      .Sort(query.Sort, AppIncomingEventSettings.DefaultQuerySortSection, CreateSortFieldExpression);
+      .Sort(query.Sort, AppIncomingEventSettings.DefaultQuerySortSection, CreateSortFieldExpression)
+      .TakePage(query.PageQuery.Page);
+
+    var result = await found.ToListAsync(cancellationToken).ConfigureAwait(false);
+
+    return result;
+  }
+
+  /// <inheritdoc/>
+  public async Task<List<AppIncomingEventEntity>> GetUnloadedList(
+    AppIncomingEventUnloadedListQuery query,
+    CancellationToken cancellationToken)
+  {
+    var filterBuilder = Builders<AppIncomingEventEntity>.Filter;
+
+    List<FilterDefinition<AppIncomingEventEntity>> filterDefinitions = [
+      filterBuilder.Eq(x => x.LoadedAt, null),
+      filterBuilder.Eq(x => x.EventName, query.EventName)
+    ];
+
+    if (query.ObjectIds.Count > 0)
+    {
+      filterDefinitions.Add(filterBuilder.In(x => x.ObjectId, query.ObjectIds));
+    }
+
+    var filter = filterBuilder.And(filterDefinitions);
+
+    IFindFluent<AppIncomingEventEntity, AppIncomingEventEntity> found = Collection
+      .Find(ClientSessionHandle, filter)
+      .SortBy(x => x.EventId);
+
+    if (query.MaxCount > 0)
+    {
+      found = found.Limit(query.MaxCount);
+    }
 
     var result = await found.ToListAsync(cancellationToken).ConfigureAwait(false);
 
@@ -92,7 +125,7 @@ public class AppIncomingEventRepository(
   private static FilterDefinition<AppIncomingEventEntity> CreateFilter(
     AppIncomingEventQueryFilterSection? filterSection)
   {
-    var builder = Builders<AppIncomingEventEntity>.Filter;
+    var filterBuilder = Builders<AppIncomingEventEntity>.Filter;
 
     var result = Builders<AppIncomingEventEntity>.Filter.Empty;
 
@@ -100,7 +133,9 @@ public class AppIncomingEventRepository(
     {
       Regex re = new($".*{filterSection.FullTextSearchQuery}.*", RegexOptions.IgnoreCase);
 
-      result = builder.Or(builder.Regex(x => x.EventId, re), builder.Regex(x => x.EventName, re));
+      result = filterBuilder.Or(
+        filterBuilder.Regex(x => x.EventId, re),
+        filterBuilder.Regex(x => x.EventName, re));
     }
 
     return result;

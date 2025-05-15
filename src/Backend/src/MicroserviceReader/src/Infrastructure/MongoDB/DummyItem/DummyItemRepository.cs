@@ -46,8 +46,8 @@ public class DummyItemRepository(
     var filter = CreateFilter(query.PageQuery.Filter);
 
     var found = Collection.Find(ClientSessionHandle, filter)
-      .TakePage(query.PageQuery.Page)
-      .Sort(query.Sort, DummyItemSettings.DefaultQuerySortSection, CreateSortFieldExpression);
+      .Sort(query.Sort, DummyItemSettings.DefaultQuerySortSection, CreateSortFieldExpression)
+      .TakePage(query.PageQuery.Page);
 
     var result = await found.ToListAsync(cancellationToken).ConfigureAwait(false);
 
@@ -62,7 +62,7 @@ public class DummyItemRepository(
 
   private static FilterDefinition<DummyItemEntity> CreateFilter(DummyItemQueryFilterSection? filterSection)
   {
-    var builder = Builders<DummyItemEntity>.Filter;
+    var filterBuilder = Builders<DummyItemEntity>.Filter;
 
     var result = Builders<DummyItemEntity>.Filter.Empty;
 
@@ -70,7 +70,9 @@ public class DummyItemRepository(
     {
       Regex re = new($".*{filterSection.FullTextSearchQuery}.*", RegexOptions.IgnoreCase);
 
-      result = builder.Or(builder.Regex(x => x.IdAsString, re), builder.Regex(x => x.Name, re));
+      result = filterBuilder.Or(
+        filterBuilder.Regex(x => x.IdAsString, re),
+        filterBuilder.Regex(x => x.Name, re));
     }
 
     return result;

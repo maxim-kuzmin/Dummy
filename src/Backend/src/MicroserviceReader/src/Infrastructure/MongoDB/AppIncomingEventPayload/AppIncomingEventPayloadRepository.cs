@@ -74,8 +74,8 @@ public class AppIncomingEventPayloadRepository(
     var filter = CreateFilter(query.PageQuery.Filter);
 
     var found = Collection.Find(ClientSessionHandle, filter)
-      .TakePage(query.PageQuery.Page)
-      .Sort(query.Sort, AppIncomingEventSettings.DefaultQuerySortSection, CreateSortFieldExpression);
+      .Sort(query.Sort, AppIncomingEventSettings.DefaultQuerySortSection, CreateSortFieldExpression)
+      .TakePage(query.PageQuery.Page);
 
     var result = await found.ToListAsync(cancellationToken).ConfigureAwait(false);
 
@@ -92,7 +92,7 @@ public class AppIncomingEventPayloadRepository(
   private static FilterDefinition<AppIncomingEventPayloadEntity> CreateFilter(
     AppIncomingEventPayloadQueryFilterSection? filterSection)
   {
-    var builder = Builders<AppIncomingEventPayloadEntity>.Filter;
+    var filterBuilder = Builders<AppIncomingEventPayloadEntity>.Filter;
 
     var result = Builders<AppIncomingEventPayloadEntity>.Filter.Empty;
 
@@ -100,7 +100,9 @@ public class AppIncomingEventPayloadRepository(
     {
       Regex re = new($".*{filterSection.FullTextSearchQuery}.*", RegexOptions.IgnoreCase);
 
-      result = builder.Or(builder.Regex(x => x.EntityId, re), builder.Regex(x => x.EntityName, re));
+      result = filterBuilder.Or(
+        filterBuilder.Regex(x => x.EntityId, re),
+        filterBuilder.Regex(x => x.EntityName, re));
     }
 
     return result;
