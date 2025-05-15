@@ -1,13 +1,17 @@
-﻿using Makc.Dummy.MicroserviceReader.DomainUseCases.AppInbox.Actions.Load;
-
-namespace Makc.Dummy.MicroserviceReader.DomainUseCases.AppInbox.Services;
+﻿namespace Makc.Dummy.MicroserviceReader.DomainUseCases.AppInbox.Services;
 
 /// <summary>
 /// Сервис входящих сообщений приложения.
 /// </summary>
 /// <param name="_appIncomingEventCommandService">Сервис команд входящего события приложения.</param>
+/// <param name="_appIncomingEventQueryService">Сервис запросов входящего события приложения.</param>
+/// <param name="_appIncomingEventPayloadQueryService">
+/// Сервис запросов полезной нагрузки входящего события приложения.
+/// </param>
 public class AppInboxCommandService(
-  IAppIncomingEventCommandService _appIncomingEventCommandService) : IAppInboxCommandService
+  IAppIncomingEventCommandService _appIncomingEventCommandService,
+  IAppIncomingEventQueryService _appIncomingEventQueryService,
+  IAppIncomingEventPayloadQueryService _appIncomingEventPayloadQueryService) : IAppInboxCommandService
 {
   /// <summary>
   /// Потребить.
@@ -23,13 +27,44 @@ public class AppInboxCommandService(
 
     return eventIds.Length > 0
       ? InsertAppIncomingEvents(eventIds, command.Sender, cancellationToken)
-      : Task.FromResult(Result.NoContent());
+      : Task.FromResult(Result.Success());
   }
 
   /// <inheritdoc/>
-  public Task<Result> Load(AppInboxLoadActionCommand request, CancellationToken cancellationToken)
+  public async Task<Result> Load(AppInboxLoadActionCommand request, CancellationToken cancellationToken)
   {
-    throw new NotImplementedException();
+    var taskToGetUnloadedList = GetUnloadedAppIncomingEvents(request.EventName, request.MaxCount, cancellationToken);
+
+    var unloadedList = await taskToGetUnloadedList.ConfigureAwait(false);
+
+    foreach (var unloaded in unloadedList)
+    {
+      await DownloadAppIncomingEventPayloads(unloaded.EventId, cancellationToken).ConfigureAwait(false);
+    }
+
+    return Result.Success();
+  }
+
+  private Task<AppIncomingEventPayloadListDTO> DownloadAppIncomingEventPayloads(
+    string eventId,
+    CancellationToken cancellationToken)
+  {
+    AppIncomingEventPayloadDownloadQuery query = new(eventId);
+
+    return _appIncomingEventPayloadQueryService.Download(query, cancellationToken);
+  }
+
+  private Task<List<AppIncomingEventSingleDTO>> GetUnloadedAppIncomingEvents(
+    string eventName,
+    int maxCount,
+    CancellationToken cancellationToken)
+  {
+    AppIncomingEventUnloadedListQuery query = new(eventName)
+    {
+      MaxCount = maxCount,
+    };
+
+    return _appIncomingEventQueryService.GetUnloadedList(query, cancellationToken);
   }
 
   private Task<Result> InsertAppIncomingEvents(

@@ -28,4 +28,14 @@ public interface IAppIncomingEventQueryService
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Список сущностей.</returns>
   Task<List<AppIncomingEventSingleDTO>> GetList(AppIncomingEventListQuery query, CancellationToken cancellationToken);
+
+  /// <summary>
+  /// Получить список незагруженных сущностей.
+  /// </summary>
+  /// <param name="query">Запрос.</param>
+  /// <param name="cancellationToken">Токен отмены.</param>
+  /// <returns>Список сущностей.</returns>
+  Task<List<AppIncomingEventSingleDTO>> GetUnloadedList(
+      AppIncomingEventUnloadedListQuery query,
+      CancellationToken cancellationToken);
 }

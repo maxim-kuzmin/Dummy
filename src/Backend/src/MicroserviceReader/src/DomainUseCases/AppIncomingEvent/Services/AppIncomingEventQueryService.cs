@@ -32,4 +32,14 @@ public class AppIncomingEventQueryService(
 
     return [.. entities.Select(x => x.ToAppIncomingEventSingleDTO())];
   }
+
+  /// <inheritdoc/>
+  public async Task<List<AppIncomingEventSingleDTO>> GetUnloadedList(
+    AppIncomingEventUnloadedListQuery query,
+    CancellationToken cancellationToken)
+  {
+    var entities = await _repository.GetUnloadedList(query, cancellationToken).ConfigureAwait(false);
+
+    return [.. entities.Select(x => x.ToAppIncomingEventSingleDTO())];
+  }
 }

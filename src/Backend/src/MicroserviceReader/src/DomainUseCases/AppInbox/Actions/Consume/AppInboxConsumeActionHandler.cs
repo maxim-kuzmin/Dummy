@@ -8,8 +8,10 @@ public class AppInboxConsumeActionHandler(IAppInboxCommandService _service) :
   ICommandHandler<AppInboxConsumeActionCommand, Result>
 {
   /// <inheritdoc/>
-  public Task<Result> Handle(AppInboxConsumeActionCommand request, CancellationToken cancellationToken)
+  public async Task<Result> Handle(AppInboxConsumeActionCommand request, CancellationToken cancellationToken)
   {
-    return _service.Consume(request, cancellationToken);
+    var result = await _service.Consume(request, cancellationToken);
+
+    return result.IsSuccess ? Result.NoContent() : result;
   }
 }
