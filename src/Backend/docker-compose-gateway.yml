@@ -15,5 +15,5 @@ services:
     networks:
       - network-backend
     depends_on:
-      backend-writer-web-app:
+      backend-microservice-writer-web-app:
         condition: service_started

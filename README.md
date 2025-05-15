@@ -73,7 +73,7 @@ dotnet dev-certs https --trust
 1. Добавить миграцию с именем InitialCreate:
 
 ```
-cd .\src\Backend\src\Writer\src\Infrastructure\EntityFrameworkForMSSQLServer
+cd .\src\Backend\src\MicroserviceWriter\src\Infrastructure\EntityFrameworkForMSSQLServer
 
 dotnet ef migrations add InitialCreate --startup-project ../../Apps/WebApp --output-dir ./App/Db/Migrations
 ```
@@ -81,7 +81,7 @@ dotnet ef migrations add InitialCreate --startup-project ../../Apps/WebApp --out
 2. Применить все миграции:
 
 ```
-cd .\src\Backend\src\Writer\src\Infrastructure\EntityFrameworkForMSSQLServer
+cd .\src\Backend\src\MicroserviceWriter\src\Infrastructure\EntityFrameworkForMSSQLServer
 
 dotnet ef database update --startup-project ../../Apps/WebApp
 ```
@@ -91,7 +91,7 @@ dotnet ef database update --startup-project ../../Apps/WebApp
 1. Добавить миграцию с именем InitialCreate:
 
 ```
-cd .\src\Backend\src\Writer\src\Infrastructure\EntityFrameworkForPostgreSQL
+cd .\src\Backend\src\MicroserviceWriter\src\Infrastructure\EntityFrameworkForPostgreSQL
 
 dotnet ef migrations add InitialCreate --startup-project ../../Apps/WebApp --output-dir ./App/Db/Migrations
 ```
@@ -99,7 +99,7 @@ dotnet ef migrations add InitialCreate --startup-project ../../Apps/WebApp --out
 2. Применить все миграции:
 
 ```
-cd .\src\Backend\src\Writer\src\Infrastructure\EntityFrameworkForPostgreSQL
+cd .\src\Backend\src\MicroserviceWriter\src\Infrastructure\EntityFrameworkForPostgreSQL
 
 dotnet ef database update --startup-project ../../Apps/WebApp
 ```

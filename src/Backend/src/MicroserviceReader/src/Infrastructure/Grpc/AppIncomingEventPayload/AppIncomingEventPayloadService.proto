@@ -1,0 +1,101 @@
+syntax = "proto3";
+
+option csharp_namespace = "Makc.Dummy.MicroserviceReader.Infrastructure.Grpc.AppIncomingEventPayload";
+
+package Reader;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+service AppIncomingEventPayload {
+    rpc Create (AppIncomingEventPayloadCreateActionRequest) returns (AppIncomingEventPayloadGetActionReply);
+    rpc Delete (AppIncomingEventPayloadDeleteActionRequest) returns (google.protobuf.Empty);
+    rpc Get (AppIncomingEventPayloadGetActionRequest) returns (AppIncomingEventPayloadGetActionReply);
+    rpc GetList (AppIncomingEventPayloadGetListActionRequest) returns (AppIncomingEventPayloadGetListActionReply);
+    rpc Update (AppIncomingEventPayloadUpdateActionRequest) returns (AppIncomingEventPayloadGetActionReply);
+}
+
+message ActionRequestSort {
+    string field = 1;
+    bool is_desc = 2;
+}
+
+message ActionRequestPage {
+    int32 number = 1;
+    int32 size = 2;
+}
+
+message AppIncomingEventPayloadCreateActionRequest {
+    string app_incoming_event_object_id = 1;
+    google.protobuf.StringValue data = 2;
+    google.protobuf.StringValue entity_concurrency_token_to_delete = 3;
+    google.protobuf.StringValue entity_concurrency_token_to_insert = 4;
+    string entity_id = 5;
+    string entity_name = 6;
+    string event_payload_id = 7;
+    int32 position = 8;
+}
+
+message AppIncomingEventPayloadDeleteActionRequest {
+    string object_id = 1;
+}
+
+message AppIncomingEventPayloadGetActionRequest {
+    string object_id = 1;
+}
+
+message AppIncomingEventPayloadGetActionReply {
+    string app_incoming_event_object_id = 1;
+    google.protobuf.StringValue data = 2;
+    google.protobuf.StringValue entity_concurrency_token_to_delete = 3;
+    google.protobuf.StringValue entity_concurrency_token_to_insert = 4;
+    string entity_id = 5;
+    string entity_name = 6;
+    string event_payload_id = 7;
+    int32 position = 8;
+    string object_id = 9;
+    string concurrency_token = 10;
+    google.protobuf.Timestamp created_at = 11;
+}
+
+message AppIncomingEventPayloadGetListActionRequestFilter {
+    google.protobuf.StringValue full_text_search_query = 1;
+}
+
+message AppIncomingEventPayloadGetListActionRequest {
+    ActionRequestPage page = 1;
+    ActionRequestSort sort = 2;
+    AppIncomingEventPayloadGetListActionRequestFilter filter = 3;
+}
+
+message AppIncomingEventPayloadGetListActionReplyItem {
+    string app_incoming_event_object_id = 1;
+    google.protobuf.StringValue data = 2;
+    google.protobuf.StringValue entity_concurrency_token_to_delete = 3;
+    google.protobuf.StringValue entity_concurrency_token_to_insert = 4;
+    string entity_id = 5;
+    string entity_name = 6;
+    string event_payload_id = 7;
+    int32 position = 8;
+    string object_id = 9;
+    string concurrency_token = 10;
+    google.protobuf.Timestamp created_at = 11;
+}
+
+message AppIncomingEventPayloadGetListActionReply {
+    int64 total_count = 1;
+    repeated AppIncomingEventPayloadGetListActionReplyItem items = 2;
+}
+
+message AppIncomingEventPayloadUpdateActionRequest {    
+    string app_incoming_event_object_id = 1;
+    google.protobuf.StringValue data = 2;
+    google.protobuf.StringValue entity_concurrency_token_to_delete = 3;
+    google.protobuf.StringValue entity_concurrency_token_to_insert = 4;
+    string entity_id = 5;
+    string entity_name = 6;
+    string event_payload_id = 7;
+    int32 position = 8;
+    string object_id = 9;
+}

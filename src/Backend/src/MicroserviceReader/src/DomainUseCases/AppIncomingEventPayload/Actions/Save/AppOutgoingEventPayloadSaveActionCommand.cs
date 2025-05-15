@@ -1,0 +1,16 @@
+﻿namespace Makc.Dummy.MicroserviceReader.DomainUseCases.AppIncomingEventPayload.Actions.Save;
+
+/// <summary>
+/// Команда действия по сохранению полезной нагрузки входящего события приложения.
+/// </summary>
+/// <param name="HasEntityBeingSavedAlreadyBeenCreated">Была ли уже создана сохраняемая сущность?</param>
+/// <param name="ObjectId">Идентификатор объекта.</param>
+/// <param name="AppIncomingEventObjectId">Идентификатор объекта входящего события приложения.</param>
+/// <param name="Payload">Полезная нагрузка.</param>
+public record AppIncomingEventPayloadSaveActionCommand(
+  bool HasEntityBeingSavedAlreadyBeenCreated,
+  string ObjectId,
+  string AppIncomingEventObjectId,
+  AppEventPayloadWithDataAsString Payload) :
+  AppIncomingEventPayloadInsertSingleCommand(AppIncomingEventObjectId, Payload),
+  ICommand<Result<AppIncomingEventPayloadSingleDTO>>;

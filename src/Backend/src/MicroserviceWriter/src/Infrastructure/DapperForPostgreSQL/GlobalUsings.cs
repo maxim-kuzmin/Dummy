@@ -1,0 +1,10 @@
+﻿global using System.Data;
+global using Ardalis.GuardClauses;
+global using Makc.Dummy.Shared.Core.App.Config.Options.Sections.Infrastructure.Db.PostgreSQL;
+global using Makc.Dummy.Shared.Infrastructure.Dapper.Db;
+global using Makc.Dummy.MicroserviceWriter.Infrastructure.Dapper.App.Db;
+global using Makc.Dummy.MicroserviceWriter.Infrastructure.DapperForPostgreSQL.App.Db;
+global using Microsoft.Extensions.Configuration;
+global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.Extensions.Logging;
+global using Npgsql;
