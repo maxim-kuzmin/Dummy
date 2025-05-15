@@ -12,4 +12,12 @@ public interface IAppInboxCommandService
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Результат.</returns>
   Task<Result> Consume(AppInboxConsumeActionCommand command, CancellationToken cancellationToken);
+
+  /// <summary>
+  /// Загрузить.
+  /// </summary>
+  /// <param name="command">Команда.</param>
+  /// <param name="cancellationToken">Токен отмены.</param>
+  /// <returns>Результат.</returns>
+  Task<Result> Load(AppInboxLoadActionCommand request, CancellationToken cancellationToken);
 }

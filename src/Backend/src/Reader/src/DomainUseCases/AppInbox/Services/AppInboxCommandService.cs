@@ -1,4 +1,6 @@
-﻿namespace Makc.Dummy.Reader.DomainUseCases.AppInbox.Services;
+﻿using Makc.Dummy.Reader.DomainUseCases.AppInbox.Actions.Load;
+
+namespace Makc.Dummy.Reader.DomainUseCases.AppInbox.Services;
 
 /// <summary>
 /// Сервис входящих сообщений приложения.
@@ -24,13 +26,27 @@ public class AppInboxCommandService(
       : Task.FromResult(Result.NoContent());
   }
 
+  /// <inheritdoc/>
+  public Task<Result> Load(AppInboxLoadActionCommand request, CancellationToken cancellationToken)
+  {
+    throw new NotImplementedException();
+  }
+
   private Task<Result> InsertAppIncomingEvents(
     string[] eventIds,
     string eventName,
     CancellationToken cancellationToken)
   {
     AppIncomingEventInsertListCommand command = new([..eventIds.Select(eventId =>
-      new AppIncomingEventInsertSingleCommand(eventId, eventName))]);
+      new AppIncomingEventInsertSingleCommand(
+        EventId: eventId,
+        EventName: eventName,
+        LastLoadingAt: null,
+        LastLoadingError: null,
+        LoadedAt: null,
+        PayloadCount: 0,
+        PayloadTotalCount: 0,
+        ProcessedAt: null))]);
 
     return _appIncomingEventCommandService.InsertList(command, cancellationToken);
   }

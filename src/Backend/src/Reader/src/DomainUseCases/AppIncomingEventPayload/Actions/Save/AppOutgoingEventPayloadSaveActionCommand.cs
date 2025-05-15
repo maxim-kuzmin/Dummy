@@ -11,4 +11,6 @@ public record AppIncomingEventPayloadSaveActionCommand(
   bool HasEntityBeingSavedAlreadyBeenCreated,
   string ObjectId,
   string AppIncomingEventObjectId,
-  AppEventPayloadWithDataAsString Payload) : ICommand<Result<AppIncomingEventPayloadSingleDTO>>;
+  AppEventPayloadWithDataAsString Payload) :
+  AppIncomingEventPayloadInsertSingleCommand(AppIncomingEventObjectId, Payload),
+  ICommand<Result<AppIncomingEventPayloadSingleDTO>>;

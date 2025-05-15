@@ -16,7 +16,7 @@ public class AppIncomingEventRepository(
   IAppIncomingEventRepository
 {
   /// <inheritdoc/>
-  public Task AddIfNotExistsByEvent(
+  public Task AddNotFoundByEvent(
     IEnumerable<AppIncomingEventEntity> entities,
     CancellationToken cancellationToken)
   {

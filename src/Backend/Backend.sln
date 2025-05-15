@@ -50,7 +50,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.Gateway.DomainUs
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Makc.Dummy.Gateway.DomainUseCasesForMicroserviceWriter", "src\Gateway\src\DomainUseCasesForMicroserviceWriter\Makc.Dummy.Gateway.DomainUseCasesForMicroserviceWriter.csproj", "{1038A4F6-E393-4A80-A7D5-F34BCE77EE95}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Reader", "Reader", "{86D0AEEE-A675-4B81-A5AE-BC08F9C92803}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MicroserviceReader", "MicroserviceReader", "{86D0AEEE-A675-4B81-A5AE-BC08F9C92803}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Apps", "Apps", "{77C4E24B-11C3-4777-88E6-F070D4E24679}"
 EndProject
@@ -110,7 +110,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.Shared.DomainMod
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.Shared.DomainUseCases", "src\Shared\src\DomainUseCases\Makc.Dummy.Shared.DomainUseCases.csproj", "{AA13D732-CA94-4EEF-B915-45E185354328}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Writer", "Writer", "{79303FD3-E3EE-4B57-BBDC-AFF7EBC56AFD}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MicroserviceWriter", "MicroserviceWriter", "{79303FD3-E3EE-4B57-BBDC-AFF7EBC56AFD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Apps", "Apps", "{0DBD4A79-928C-47E4-9CE0-9237938BBBDF}"
 EndProject

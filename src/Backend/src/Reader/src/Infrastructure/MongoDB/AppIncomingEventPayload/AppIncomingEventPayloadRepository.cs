@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace Makc.Dummy.Reader.Infrastructure.MongoDB.AppIncomingEventPayload;
+﻿namespace Makc.Dummy.Reader.Infrastructure.MongoDB.AppIncomingEventPayload;
 
 /// <summary>
 /// Репозиторий полезной нагрузки входящего события приложения.
@@ -18,7 +16,7 @@ public class AppIncomingEventPayloadRepository(
   IAppIncomingEventPayloadRepository
 {
   /// <inheritdoc/>
-  public Task AddIfNotExistsByEventPayload(
+  public Task AddNotFoundByEventPayload(
     IEnumerable<AppIncomingEventPayloadEntity> entities,
     CancellationToken cancellationToken)
   {

@@ -58,6 +58,32 @@ public class AppIncomingEventPayloadCommandService(
   }
 
   /// <inheritdoc/>
+  public async Task<Result> InsertList(
+    AppIncomingEventPayloadInsertListCommand command,
+    CancellationToken cancellationToken)
+  {
+    List<AppIncomingEventPayloadEntity> entities = new(command.Items.Count);
+
+    foreach (var item in command.Items)
+    {
+      var aggregateResult = GetAggregateResultToSave(null, item);
+
+      var entity = aggregateResult.Entity;
+
+      if (entity == null)
+      {
+        return Result.Invalid();
+      }
+
+      entities.Add(entity);
+    }
+
+    await _repository.AddNotFoundByEventPayload(entities, cancellationToken);
+
+    return Result.Success();
+  }
+
+  /// <inheritdoc/>
   public async Task<AppCommandResultWithValue<AppIncomingEventPayloadSingleDTO>> Save(
     AppIncomingEventPayloadSaveActionCommand command,
     CancellationToken cancellationToken)
@@ -131,7 +157,7 @@ public class AppIncomingEventPayloadCommandService(
 
   private AggregateResult<AppIncomingEventPayloadEntity> GetAggregateResultToSave(
     AppIncomingEventPayloadEntity? entity,
-    AppIncomingEventPayloadSaveActionCommand command)
+    AppIncomingEventPayloadInsertSingleCommand command)
   {
     var aggregate = _factory.CreateAggregate(entity);
 

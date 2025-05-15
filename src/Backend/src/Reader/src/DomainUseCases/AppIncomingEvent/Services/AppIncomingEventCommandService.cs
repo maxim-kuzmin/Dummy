@@ -1,6 +1,4 @@
-﻿using Ardalis.Specification;
-
-namespace Makc.Dummy.Reader.DomainUseCases.AppIncomingEvent.Services;
+﻿namespace Makc.Dummy.Reader.DomainUseCases.AppIncomingEvent.Services;
 
 /// <summary>
 /// Сервис команд входящего события приложения.
@@ -66,12 +64,7 @@ public class AppIncomingEventCommandService(
 
     foreach (var item in command.Items)
     {
-      var aggregate = _factory.CreateAggregate();
-
-      aggregate.UpdateEventId(item.EventId);
-      aggregate.UpdateEventName(item.EventName);
-
-      var aggregateResult = aggregate.GetResultToCreate();
+      var aggregateResult = GetAggregateResultToSave(null, item);
 
       var entity = aggregateResult.Entity;
 
@@ -83,7 +76,7 @@ public class AppIncomingEventCommandService(
       entities.Add(entity);
     }
 
-    await _repository.AddIfNotExistsByEvent(entities, cancellationToken);
+    await _repository.AddNotFoundByEvent(entities, cancellationToken);
 
     return Result.Success();
   }
@@ -162,7 +155,7 @@ public class AppIncomingEventCommandService(
 
   private AggregateResult<AppIncomingEventEntity> GetAggregateResultToSave(
     AppIncomingEventEntity? entity,
-    AppIncomingEventSaveActionCommand command)
+    AppIncomingEventInsertSingleCommand command)
   {
     var aggregate = _factory.CreateAggregate(entity);
 
