@@ -5,7 +5,6 @@ global using Makc.Dummy.Gateway.DomainUseCases.Auth.DTOs;
 global using Makc.Dummy.Gateway.DomainUseCases.Auth.Services;
 global using Makc.Dummy.Gateway.DomainUseCasesForMicroserviceWriter.DummyItem.Actions.Create;
 global using Makc.Dummy.Gateway.DomainUseCasesForMicroserviceWriter.DummyItem.Actions.Delete;
-global using Makc.Dummy.Gateway.DomainUseCasesForMicroserviceWriter.DummyItem.Actions.GetList;
 global using Makc.Dummy.Gateway.DomainUseCasesForMicroserviceWriter.DummyItem.Actions.Update;
 global using Makc.Dummy.Gateway.DomainUseCasesForMicroserviceWriter.DummyItem.DTOs;
 global using Makc.Dummy.Gateway.DomainUseCasesForMicroserviceWriter.DummyItem.Queries;

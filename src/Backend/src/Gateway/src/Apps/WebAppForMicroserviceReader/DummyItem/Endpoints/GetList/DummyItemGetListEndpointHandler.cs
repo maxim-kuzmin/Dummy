@@ -19,10 +19,7 @@ public class DummyItemGetListEndpointHandler(IMediator _mediator) :
     DummyItemGetListEndpointRequest request,
     CancellationToken cancellationToken)
   {
-    DummyItemGetListActionQuery query = new(
-      new QueryPageSection(request.CurrentPage, request.ItemsPerPage),
-      request.SortField.ToDummyItemQuerySortSectionForMicroserviceReader(request.SortIsDesc),
-      new DummyItemGetListActionQueryFilter(request.Query));
+    var query = request.ToDummyItemGetListActionQuery();
 
     var result = await _mediator.Send(query, cancellationToken);
 

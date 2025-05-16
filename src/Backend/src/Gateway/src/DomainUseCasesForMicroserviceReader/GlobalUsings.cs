@@ -5,11 +5,13 @@ global using Makc.Dummy.Gateway.DomainUseCasesForMicroserviceReader.DummyItem.Ac
 global using Makc.Dummy.Gateway.DomainUseCasesForMicroserviceReader.DummyItem.Actions.Delete;
 global using Makc.Dummy.Gateway.DomainUseCasesForMicroserviceReader.DummyItem.Actions.Get;
 global using Makc.Dummy.Gateway.DomainUseCasesForMicroserviceReader.DummyItem.Actions.GetList;
-global using Makc.Dummy.Gateway.DomainUseCasesForMicroserviceReader.DummyItem.Actions.GetList.Query;
 global using Makc.Dummy.Gateway.DomainUseCasesForMicroserviceReader.DummyItem.Actions.Update;
 global using Makc.Dummy.Gateway.DomainUseCasesForMicroserviceReader.DummyItem.DTOs;
+global using Makc.Dummy.Gateway.DomainUseCasesForMicroserviceReader.DummyItem.Queries;
+global using Makc.Dummy.Gateway.DomainUseCasesForMicroserviceReader.DummyItem.Query.Sections;
 global using Makc.Dummy.Gateway.DomainUseCasesForMicroserviceReader.DummyItem.Services;
 global using Makc.Dummy.Shared.DomainUseCases.DTOs;
+global using Makc.Dummy.Shared.DomainUseCases.Queries;
 global using Makc.Dummy.Shared.DomainUseCases.Query.Sections;
 global using MediatR;
 global using Microsoft.Extensions.DependencyInjection;

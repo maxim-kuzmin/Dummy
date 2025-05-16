@@ -40,7 +40,7 @@ public static class DummyItemExtensions
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <returns>Запрос действия на получение фиктивного предмета.</returns>
-  public static DummyItemGetActionRequest ToDummyItemGetActionRequest(this DummyItemGetActionQuery query)
+  public static DummyItemGetActionRequest ToDummyItemGetActionRequest(this DummyItemSingleQuery query)
   {
     return new DummyItemGetActionRequest
     {
@@ -53,24 +53,27 @@ public static class DummyItemExtensions
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <returns>Запрос действия на получение списка фиктивных предметов.</returns>
-  public static DummyItemGetListActionRequest ToDummyItemGetListActionRequest(
-    this DummyItemGetListActionQuery query)
+  public static DummyItemGetListActionRequest ToDummyItemGetListActionRequest(this DummyItemListQuery query)
   {
+    var filter = query.PageQuery.Filter;
+    var page = query.PageQuery.Page;
+    var sort = query.Sort;
+
     return new()
     {
       Page = new()
       {
-        Number = query.Page.Number,
-        Size = query.Page.Size
+        Number = page?.Number ?? 0,
+        Size = page?.Size ?? 0
       },
       Sort = new()
       {
-        Field = query.Sort.Field,        
-        IsDesc = query.Sort.IsDesc
+        Field = sort?.Field ?? string.Empty,
+        IsDesc = sort?.IsDesc ?? false,
       },
       Filter = new()
       {
-        FullTextSearchQuery = query.Filter.FullTextSearchQuery
+        FullTextSearchQuery = filter?.FullTextSearchQuery ?? string.Empty,
       }
     };
   }

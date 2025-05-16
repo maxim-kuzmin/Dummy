@@ -1,4 +1,4 @@
-﻿namespace Makc.Dummy.Gateway.DomainUseCasesForMicroserviceWriter.DummyItem.Queries;
+﻿namespace Makc.Dummy.Gateway.DomainUseCasesForMicroserviceReader.DummyItem.Queries;
 
 /// <summary>
 /// Запрос списка фиктивных предметов.

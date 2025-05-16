@@ -6,6 +6,7 @@ global using Makc.Dummy.Gateway.DomainUseCasesForMicroserviceReader.DummyItem.Ac
 global using Makc.Dummy.Gateway.DomainUseCasesForMicroserviceReader.DummyItem.Actions.GetList;
 global using Makc.Dummy.Gateway.DomainUseCasesForMicroserviceReader.DummyItem.Actions.Update;
 global using Makc.Dummy.Gateway.DomainUseCasesForMicroserviceReader.DummyItem.DTOs;
+global using Makc.Dummy.Gateway.DomainUseCasesForMicroserviceReader.DummyItem.Queries;
 global using Makc.Dummy.Gateway.DomainUseCasesForMicroserviceReader.DummyItem.Services;
 global using Makc.Dummy.Gateway.Infrastructure.GrpcForMicroserviceReader.DummyItem.Services;
 global using Makc.Dummy.MicroserviceReader.Infrastructure.Grpc.DummyItem;
