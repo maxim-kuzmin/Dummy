@@ -76,10 +76,10 @@ public static class DummyItemExtensions
   }
 
   /// <summary>
-  /// Преобразовать к объекту передачи данных действия по получению списка фиктивных предметов.
+  /// Преобразовать к объекту передачи данных списка фиктивных предметов.
   /// </summary>
   /// <param name="reply">Ответ.</param>
-  /// <returns>Объект передачи данных действия по получению списка фиктивных предметов.</returns>
+  /// <returns>Объект передачи данных списка фиктивных предметов.</returns>
   public static DummyItemListDTO ToDummyItemListDTO(this DummyItemGetListActionReply reply)
   {
     var items = new List<DummyItemSingleDTO>(reply.Items.Count);
@@ -99,10 +99,10 @@ public static class DummyItemExtensions
   }
 
   /// <summary>
-  /// Преобразовать к объекту передачи данных действия по получению фиктивного предмета.
+  /// Преобразовать к объекту передачи данных фиктивного предмета.
   /// </summary>
   /// <param name="reply">Ответ.</param>
-  /// <returns>Объект передачи данных действия по получению фиктивного предмета.</returns>
+  /// <returns>Объект передачи данных фиктивного предмета.</returns>
   public static DummyItemSingleDTO ToDummyItemSingleDTO(this DummyItemGetActionReply reply)
   {
     return new(reply.ObjectId, reply.Id, reply.Name, reply.ConcurrencyToken);

@@ -22,16 +22,6 @@ public class AppIncomingEventPayloadQueryService(
   }
 
   /// <inheritdoc/>
-  public async Task<AppIncomingEventPayloadSingleDTO?> GetSingle(
-    AppIncomingEventPayloadSingleQuery query,
-    CancellationToken cancellationToken)
-  {
-    var entity = await _repository.GetSingle(query, cancellationToken).ConfigureAwait(false);
-
-    return entity?.ToAppIncomingEventPayloadSingleDTO();
-  }
-
-  /// <inheritdoc/>
   public async Task<List<AppIncomingEventPayloadSingleDTO>> GetList(
     AppIncomingEventPayloadListQuery query,
     CancellationToken cancellationToken)
@@ -39,5 +29,15 @@ public class AppIncomingEventPayloadQueryService(
     var entities = await _repository.GetList(query, cancellationToken).ConfigureAwait(false);
 
     return [.. entities.Select(x => x.ToAppIncomingEventPayloadSingleDTO())];
+  }
+
+  /// <inheritdoc/>
+  public async Task<AppIncomingEventPayloadSingleDTO?> GetSingle(
+    AppIncomingEventPayloadSingleQuery query,
+    CancellationToken cancellationToken)
+  {
+    var entity = await _repository.GetSingle(query, cancellationToken).ConfigureAwait(false);
+
+    return entity?.ToAppIncomingEventPayloadSingleDTO();
   }
 }

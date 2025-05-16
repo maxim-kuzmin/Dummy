@@ -6,7 +6,7 @@
 public static class AppExtensions
 {
   /// <summary>
-  /// Добавить инфраструктуру приложения, привязанную к Http для микросервиса Писатель.
+  /// Добавить инфраструктуру приложения, привязанную к Http для микросервиса "Писатель".
   /// </summary>
   /// <param name="services">Сервисы.</param>
   /// <param name="logger">Логгер.</param>

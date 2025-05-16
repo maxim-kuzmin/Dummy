@@ -21,7 +21,7 @@ public class AuthCommandService(AuthGrpcClient _grpcClient) : IAuthCommandServic
 
       var reply = await replyTask.ConfigureAwait(false);
 
-      return Result.Success(reply.ToAuthLoginActionDTO());
+      return Result.Success(reply.ToAuthLoginDTO());
     }
     catch (RpcException ex)
     {

@@ -6,26 +6,26 @@
 public interface IDummyItemQueryService
 {
   /// <summary>
-  /// Получить количество сущностей.
+  /// Получить количество объектов.
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
-  /// <returns>Количество сущностей.</returns>
+  /// <returns>Количество объектов.</returns>
   Task<long> GetCount(DummyItemPageQuery query, CancellationToken cancellationToken);
 
   /// <summary>
-  /// Получить единственную сущность.
+  /// Получить список объектов.
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
-  /// <returns>Сущность.</returns>
-  Task<DummyItemSingleDTO?> GetSingle(DummyItemSingleQuery query, CancellationToken cancellationToken);
+  /// <returns>Список объектов.</returns>
+  Task<List<DummyItemSingleDTO>> GetList(DummyItemListQuery query, CancellationToken cancellationToken);
 
   /// <summary>
-  /// Получить список сущностей.
+  /// Получить единственный объект.
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
-  /// <returns>Список сущностей.</returns>
-  Task<List<DummyItemSingleDTO>> GetList(DummyItemListQuery query, CancellationToken cancellationToken);
+  /// <returns>Объект.</returns>
+  Task<DummyItemSingleDTO?> GetSingle(DummyItemSingleQuery query, CancellationToken cancellationToken);
 }

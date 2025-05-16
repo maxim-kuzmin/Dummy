@@ -1,7 +1,7 @@
 ﻿namespace Makc.Dummy.Gateway.DomainUseCases.Auth.Actions.Login;
 
 /// <summary>
-/// Команда действия по входу для аутентификации.
+/// Команда действия по входу.
 /// </summary>
 /// <param name="UserName">Имя пользователя.</param>
 /// <param name="Password">Пароль.</param>

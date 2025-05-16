@@ -1,7 +1,7 @@
 ﻿namespace Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEventPayload.DTOs;
 
 /// <summary>
-/// Объект передачи данных действия по получению полезной нагрузки исходящего события приложения.
+/// Объект передачи данных полезной нагрузки исходящего события приложения.
 /// </summary>
 /// <param name="Id">Идентификатор.</param>
 /// <param name="AppOutgoingEventId">Идентификатор исходящего события приложения.</param>

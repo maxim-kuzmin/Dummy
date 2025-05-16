@@ -48,6 +48,22 @@ public class AppIncomingEventRepository(
   }
 
   /// <inheritdoc/>
+  public async Task<List<AppIncomingEventEntity>> GetList(
+    AppIncomingEventListQuery query,
+    CancellationToken cancellationToken)
+  {
+    var filter = CreateFilter(query.PageQuery.Filter);
+
+    var found = Collection.Find(ClientSessionHandle, filter)
+      .Sort(query.Sort, AppIncomingEventSettings.DefaultQuerySortSection, CreateSortFieldExpression)
+      .TakePage(query.PageQuery.Page);
+
+    var result = await found.ToListAsync(cancellationToken).ConfigureAwait(false);
+
+    return result;
+  }
+
+  /// <inheritdoc/>
   public async Task<AppIncomingEventEntity?> GetSingle(
     AppIncomingEventSingleQuery query,
     CancellationToken cancellationToken)
@@ -62,22 +78,6 @@ public class AppIncomingEventRepository(
     var task = Collection.Find(ClientSessionHandle, filter).FirstOrDefaultAsync(cancellationToken);
 
     var result = await task.ConfigureAwait(false);
-
-    return result;
-  }
-
-  /// <inheritdoc/>
-  public async Task<List<AppIncomingEventEntity>> GetList(
-    AppIncomingEventListQuery query,
-    CancellationToken cancellationToken)
-  {
-    var filter = CreateFilter(query.PageQuery.Filter);
-
-    var found = Collection.Find(ClientSessionHandle, filter)
-      .Sort(query.Sort, AppIncomingEventSettings.DefaultQuerySortSection, CreateSortFieldExpression)
-      .TakePage(query.PageQuery.Page);
-
-    var result = await found.ToListAsync(cancellationToken).ConfigureAwait(false);
 
     return result;
   }

@@ -24,6 +24,20 @@ public class DummyItemRepository(
   }
 
   /// <inheritdoc/>
+  public async Task<List<DummyItemEntity>> GetList(DummyItemListQuery query, CancellationToken cancellationToken)
+  {
+    var filter = CreateFilter(query.PageQuery.Filter);
+
+    var found = Collection.Find(ClientSessionHandle, filter)
+      .Sort(query.Sort, DummyItemSettings.DefaultQuerySortSection, CreateSortFieldExpression)
+      .TakePage(query.PageQuery.Page);
+
+    var result = await found.ToListAsync(cancellationToken).ConfigureAwait(false);
+
+    return result;
+  }
+
+  /// <inheritdoc/>
   public async Task<DummyItemEntity?> GetSingle(DummyItemSingleQuery query, CancellationToken cancellationToken)
   {
     if (query.ObjectId == null)
@@ -36,20 +50,6 @@ public class DummyItemRepository(
     var task = Collection.Find(ClientSessionHandle, filter).FirstOrDefaultAsync(cancellationToken);
 
     var result = await task.ConfigureAwait(false);
-
-    return result;
-  }
-
-  /// <inheritdoc/>
-  public async Task<List<DummyItemEntity>> GetList(DummyItemListQuery query, CancellationToken cancellationToken)
-  {
-    var filter = CreateFilter(query.PageQuery.Filter);
-
-    var found = Collection.Find(ClientSessionHandle, filter)
-      .Sort(query.Sort, DummyItemSettings.DefaultQuerySortSection, CreateSortFieldExpression)
-      .TakePage(query.PageQuery.Page);
-
-    var result = await found.ToListAsync(cancellationToken).ConfigureAwait(false);
 
     return result;
   }

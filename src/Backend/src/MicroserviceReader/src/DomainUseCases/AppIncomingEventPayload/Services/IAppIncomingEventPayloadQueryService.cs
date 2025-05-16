@@ -10,36 +10,36 @@ public interface IAppIncomingEventPayloadQueryService
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
-  /// <returns>Список сущностей.</returns>
+  /// <returns>Объект списка.</returns>
   Task<AppIncomingEventPayloadListDTO> Download(
       AppIncomingEventPayloadDownloadQuery query,
       CancellationToken cancellationToken);
 
   /// <summary>
-  /// Получить количество сущностей.
+  /// Получить список объектов.
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
-  /// <returns>Количество сущностей.</returns>
-  Task<long> GetCount(AppIncomingEventPayloadPageQuery query, CancellationToken cancellationToken);
-
-  /// <summary>
-  /// Получить единственную сущность.
-  /// </summary>
-  /// <param name="query">Запрос.</param>
-  /// <param name="cancellationToken">Токен отмены.</param>
-  /// <returns>Сущность.</returns>
-  Task<AppIncomingEventPayloadSingleDTO?> GetSingle(
-    AppIncomingEventPayloadSingleQuery query,
+  /// <returns>Список объектов.</returns>
+  Task<List<AppIncomingEventPayloadSingleDTO>> GetList(
+    AppIncomingEventPayloadListQuery query,
     CancellationToken cancellationToken);
 
   /// <summary>
-  /// Получить список сущностей.
+  /// Получить количество объектов.
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
-  /// <returns>Список сущностей.</returns>
-  Task<List<AppIncomingEventPayloadSingleDTO>> GetList(
-    AppIncomingEventPayloadListQuery query,
+  /// <returns>Количество объектов.</returns>
+  Task<long> GetCount(AppIncomingEventPayloadPageQuery query, CancellationToken cancellationToken);
+
+  /// <summary>
+  /// Получить единственный объект.
+  /// </summary>
+  /// <param name="query">Запрос.</param>
+  /// <param name="cancellationToken">Токен отмены.</param>
+  /// <returns>Объект.</returns>
+  Task<AppIncomingEventPayloadSingleDTO?> GetSingle(
+    AppIncomingEventPayloadSingleQuery query,
     CancellationToken cancellationToken);
 }

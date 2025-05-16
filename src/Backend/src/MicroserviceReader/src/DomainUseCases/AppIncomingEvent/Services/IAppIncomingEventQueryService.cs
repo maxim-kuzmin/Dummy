@@ -6,35 +6,35 @@
 public interface IAppIncomingEventQueryService
 {
   /// <summary>
-  /// Получить количество сущностей.
+  /// Получить количество объектов.
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
-  /// <returns>Количество сущностей.</returns>
+  /// <returns>Количество объектов.</returns>
   Task<long> GetCount(AppIncomingEventPageQuery query, CancellationToken cancellationToken);
 
   /// <summary>
-  /// Получить единственную сущность.
+  /// Получить единственный объект.
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
-  /// <returns>Сущность.</returns>
+  /// <returns>Объект.</returns>
   Task<AppIncomingEventSingleDTO?> GetSingle(AppIncomingEventSingleQuery query, CancellationToken cancellationToken);
 
   /// <summary>
-  /// Получить список сущностей.
+  /// Получить список объектов.
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
-  /// <returns>Список сущностей.</returns>
+  /// <returns>Список объектов.</returns>
   Task<List<AppIncomingEventSingleDTO>> GetList(AppIncomingEventListQuery query, CancellationToken cancellationToken);
 
   /// <summary>
-  /// Получить список незагруженных сущностей.
+  /// Получить список незагруженных объектов.
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
-  /// <returns>Список сущностей.</returns>
+  /// <returns>Список незагруженных объектов.</returns>
   Task<List<AppIncomingEventSingleDTO>> GetUnloadedList(
       AppIncomingEventUnloadedListQuery query,
       CancellationToken cancellationToken);

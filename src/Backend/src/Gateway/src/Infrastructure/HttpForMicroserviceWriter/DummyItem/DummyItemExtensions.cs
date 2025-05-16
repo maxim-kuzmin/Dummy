@@ -30,7 +30,7 @@ public static class DummyItemExtensions
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <returns>URL запроса HTTP.</returns>
-  public static string ToHttpRequestUrl(this DummyItemGetActionQuery query)
+  public static string ToHttpRequestUrl(this DummyItemSingleQuery query)
   {
     return $"{DummyItemSettings.Root}/{query.Id}";
   }
@@ -40,14 +40,18 @@ public static class DummyItemExtensions
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <returns>URL запроса HTTP.</returns>
-  public static string ToHttpRequestUrl(this DummyItemGetListActionQuery query)
+  public static string ToHttpRequestUrl(this DummyItemListQuery query)
   {
+    var filter = query.PageQuery.Filter;
+    var page = query.PageQuery.Page;
+    var sort = query.Sort;
+
     IEnumerable<KeyValuePair<string, string?>> parameters = [
-      new("CurrentPage", query.Page.Number.ToString()),
-      new("ItemsPerPage", query.Page.Size.ToString()),
-      new("SortField", query.Sort.Field),
-      new("SortIsDesc", query.Sort.IsDesc.ToString()),
-      new("Query", query.Filter.FullTextSearchQuery)
+      new("CurrentPage", (page?.Number ?? 0).ToString()),
+      new("ItemsPerPage", (page?.Size ?? 0).ToString()),
+      new("SortField", (sort?.Field ?? string.Empty)),
+      new("SortIsDesc", (sort?.IsDesc ?? false).ToString()),
+      new("Query", filter?.FullTextSearchQuery ?? string.Empty)
     ];
 
     var queryString = QueryString.Create(parameters);

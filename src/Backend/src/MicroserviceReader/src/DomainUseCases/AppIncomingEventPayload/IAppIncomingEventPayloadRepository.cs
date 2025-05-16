@@ -24,16 +24,6 @@ public interface IAppIncomingEventPayloadRepository : IObjectRepository<AppIncom
   Task<long> GetCount(AppIncomingEventPayloadPageQuery query, CancellationToken cancellationToken);
 
   /// <summary>
-  /// Получить единственную сущность.
-  /// </summary>
-  /// <param name="query">Запрос.</param>
-  /// <param name="cancellationToken">Токен отмены.</param>
-  /// <returns>Сущность.</returns>
-  Task<AppIncomingEventPayloadEntity?> GetSingle(
-    AppIncomingEventPayloadSingleQuery query,
-    CancellationToken cancellationToken);
-
-  /// <summary>
   /// Получить список сущностей.
   /// </summary>
   /// <param name="query">Запрос.</param>
@@ -41,6 +31,16 @@ public interface IAppIncomingEventPayloadRepository : IObjectRepository<AppIncom
   /// <returns>Список сущностей.</returns>
   Task<List<AppIncomingEventPayloadEntity>> GetList(
     AppIncomingEventPayloadListQuery query,
+    CancellationToken cancellationToken);
+
+  /// <summary>
+  /// Получить единственную сущность.
+  /// </summary>
+  /// <param name="query">Запрос.</param>
+  /// <param name="cancellationToken">Токен отмены.</param>
+  /// <returns>Сущность.</returns>
+  Task<AppIncomingEventPayloadEntity?> GetSingle(
+    AppIncomingEventPayloadSingleQuery query,
     CancellationToken cancellationToken);
 }
 

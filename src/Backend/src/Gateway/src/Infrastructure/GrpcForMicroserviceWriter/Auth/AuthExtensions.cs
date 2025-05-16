@@ -20,11 +20,11 @@ public static class AuthExtensions
   }
 
   /// <summary>
-  /// Преобразовать к объекту передачи данных действия по входу в приложение.
+  /// Преобразовать к объекту передачи данных входа.
   /// </summary>
   /// <param name="reply">Ответ.</param>
-  /// <returns>Объект передачи данных действия по входу в приложение.</returns>
-  public static AuthLoginDTO ToAuthLoginActionDTO(this AuthLoginActionReply reply)
+  /// <returns>Объект передачи данных входа.</returns>
+  public static AuthLoginDTO ToAuthLoginDTO(this AuthLoginActionReply reply)
   {
     return new(reply.UserName, reply.AccessToken);
   }

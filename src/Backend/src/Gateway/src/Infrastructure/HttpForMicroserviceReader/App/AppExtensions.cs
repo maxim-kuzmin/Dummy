@@ -6,11 +6,11 @@
 public static class AppExtensions
 {
   /// <summary>
-  /// Добавить инфраструктуру приложения, привязанную к Http для микросервиса Читатель.
+  /// Добавить инфраструктуру приложения, привязанную к Http для микросервиса "Читатель".
   /// </summary>
   /// <param name="services">Сервисы.</param>
   /// <param name="logger">Логгер.</param>
-  /// <param name="readerEndpoint">Конечная точка микросервиса Читатель.</param>
+  /// <param name="readerEndpoint">Конечная точка микросервиса "Читатель".</param>
   /// <returns>Сервисы.</returns>
   public static IServiceCollection AddAppInfrastructureTiedToHttpForMicroserviceReader(
       this IServiceCollection services,

@@ -22,14 +22,6 @@ public class AppOutgoingEventQueryService(
   }
 
   /// <inheritdoc/>
-  public Task<AppOutgoingEventSingleDTO?> GetSingle(AppOutgoingEventSingleQuery query, CancellationToken cancellationToken)
-  {
-    var dbCommand = _dbCommandFactory.CreateDbCommand(query);
-
-    return _appDbQueryContext.GetFirstOrDefault<AppOutgoingEventSingleDTO>(dbCommand, cancellationToken);
-  }
-
-  /// <inheritdoc/>
   public Task<List<AppOutgoingEventSingleDTO>> GetList(AppOutgoingEventListQuery query, CancellationToken cancellationToken)
   {
     var dbCommandForFilter = _dbCommandFactory.CreateDbCommandForFilter(query.PageQuery);
@@ -37,6 +29,14 @@ public class AppOutgoingEventQueryService(
     var dbCommandForItems = _dbCommandFactory.CreateDbCommandForItems(dbCommandForFilter, query.PageQuery.Page, query.Sort);
 
     return _appDbQueryContext.GetList<AppOutgoingEventSingleDTO>(dbCommandForItems, cancellationToken);
+  }
+
+  /// <inheritdoc/>
+  public Task<AppOutgoingEventSingleDTO?> GetSingle(AppOutgoingEventSingleQuery query, CancellationToken cancellationToken)
+  {
+    var dbCommand = _dbCommandFactory.CreateDbCommand(query);
+
+    return _appDbQueryContext.GetFirstOrDefault<AppOutgoingEventSingleDTO>(dbCommand, cancellationToken);
   }
 
   /// <inheritdoc/>

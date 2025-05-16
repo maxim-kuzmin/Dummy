@@ -1,7 +1,7 @@
 ﻿namespace Makc.Dummy.Gateway.DomainUseCasesForMicroserviceWriter.DummyItem.DTOs;
 
 /// <summary>
-/// Объект передачи данных действия по получению списка фиктивных предметов.
+/// Объект передачи данных списка фиктивных предметов.
 /// </summary>
 /// <param name="Items">Элементы.</param>
 /// <param name="TotalCount">Общее количество.</param>

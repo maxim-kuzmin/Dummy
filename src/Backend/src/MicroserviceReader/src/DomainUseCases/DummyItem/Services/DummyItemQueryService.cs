@@ -13,18 +13,18 @@ public class DummyItemQueryService(IDummyItemRepository _repository) : IDummyIte
   }
 
   /// <inheritdoc/>
-  public async Task<DummyItemSingleDTO?> GetSingle(DummyItemSingleQuery query, CancellationToken cancellationToken)
-  {
-    var entity = await _repository.GetSingle(query, cancellationToken).ConfigureAwait(false);
-
-    return entity?.ToDummyItemSingleDTO();
-  }
-
-  /// <inheritdoc/>
   public async Task<List<DummyItemSingleDTO>> GetList(DummyItemListQuery query, CancellationToken cancellationToken)
   {
     var entities = await _repository.GetList(query, cancellationToken).ConfigureAwait(false);
 
     return [.. entities.Select(x =>  x.ToDummyItemSingleDTO())];
+  }
+
+  /// <inheritdoc/>
+  public async Task<DummyItemSingleDTO?> GetSingle(DummyItemSingleQuery query, CancellationToken cancellationToken)
+  {
+    var entity = await _repository.GetSingle(query, cancellationToken).ConfigureAwait(false);
+
+    return entity?.ToDummyItemSingleDTO();
   }
 }

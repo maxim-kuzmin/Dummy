@@ -1,7 +1,7 @@
 ﻿namespace Makc.Dummy.Gateway.DomainUseCasesForMicroserviceWriter.DummyItem.DTOs;
 
 /// <summary>
-/// Объект передачи данных действия по получению фиктивного предмета.
+/// Объект передачи данных фиктивного предмета.
 /// </summary>
 /// <param name="Id">Идентификатор.</param>
 /// <param name="Name">Имя.</param>

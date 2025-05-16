@@ -24,20 +24,20 @@ public interface IAppIncomingEventRepository : IObjectRepository<AppIncomingEven
   Task<long> GetCount(AppIncomingEventPageQuery query, CancellationToken cancellationToken);
 
   /// <summary>
-  /// Получить единственную сущность.
-  /// </summary>
-  /// <param name="query">Запрос.</param>
-  /// <param name="cancellationToken">Токен отмены.</param>
-  /// <returns>Сущность.</returns>
-  Task<AppIncomingEventEntity?> GetSingle(AppIncomingEventSingleQuery query, CancellationToken cancellationToken);
-
-  /// <summary>
   /// Получить список сущностей.
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Список сущностей.</returns>
   Task<List<AppIncomingEventEntity>> GetList(AppIncomingEventListQuery query, CancellationToken cancellationToken);
+
+  /// <summary>
+  /// Получить единственную сущность.
+  /// </summary>
+  /// <param name="query">Запрос.</param>
+  /// <param name="cancellationToken">Токен отмены.</param>
+  /// <returns>Сущность.</returns>
+  Task<AppIncomingEventEntity?> GetSingle(AppIncomingEventSingleQuery query, CancellationToken cancellationToken);
 
   /// <summary>
   /// Получить список незагруженных сущностей.

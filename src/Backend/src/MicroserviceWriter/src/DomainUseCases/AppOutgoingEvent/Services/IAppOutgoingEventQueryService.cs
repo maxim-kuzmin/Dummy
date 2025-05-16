@@ -6,35 +6,35 @@
 public interface IAppOutgoingEventQueryService
 {
   /// <summary>
-  /// Получить количество сущностей.
+  /// Получить количество объектов.
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
-  /// <returns>Количество сущностей.</returns>
+  /// <returns>Количество объектов.</returns>
   Task<long> GetCount(AppOutgoingEventPageQuery query, CancellationToken cancellationToken);
 
   /// <summary>
-  /// Получить единственную сущность.
+  /// Получить список объектов.
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
-  /// <returns>Сущность.</returns>
-  Task<AppOutgoingEventSingleDTO?> GetSingle(AppOutgoingEventSingleQuery query, CancellationToken cancellationToken);
-
-  /// <summary>
-  /// Получить список сущностей.
-  /// </summary>
-  /// <param name="query">Запрос.</param>
-  /// <param name="cancellationToken">Токен отмены.</param>
-  /// <returns>Список сущностей.</returns>
+  /// <returns>Список объектов.</returns>
   Task<List<AppOutgoingEventSingleDTO>> GetList(AppOutgoingEventListQuery query, CancellationToken cancellationToken);
 
   /// <summary>
-  /// Получить список идентификаторов неопубликованных сущностей.
+  /// Получить единственный объект.
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
-  /// <returns>Список идентификаторов.</returns>
+  /// <returns>Объект.</returns>
+  Task<AppOutgoingEventSingleDTO?> GetSingle(AppOutgoingEventSingleQuery query, CancellationToken cancellationToken);
+
+  /// <summary>
+  /// Получить список неопубликованных идентификаторов.
+  /// </summary>
+  /// <param name="query">Запрос.</param>
+  /// <param name="cancellationToken">Токен отмены.</param>
+  /// <returns>Список неопубликованных идентификаторов.</returns>
   Task<List<long>> GetUnpublishedIdList(
     AppOutgoingEventUnpublishedListQuery query,
     CancellationToken cancellationToken);

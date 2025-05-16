@@ -6,30 +6,30 @@
 public interface IAppOutgoingEventPayloadQueryService
 {
   /// <summary>
-  /// Получить количество сущностей.
+  /// Получить количество объектов.
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
-  /// <returns>Количество сущностей.</returns>
+  /// <returns>Количество объектов.</returns>
   Task<long> GetCount(AppOutgoingEventPayloadPageQuery query, CancellationToken cancellationToken);
 
   /// <summary>
-  /// Получить единственную сущность.
+  /// Получить список объектов.
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
-  /// <returns>Сущность.</returns>
-  Task<AppOutgoingEventPayloadSingleDTO?> GetSingle(
-    AppOutgoingEventPayloadSingleQuery query,
+  /// <returns>Список объектов.</returns>
+  Task<List<AppOutgoingEventPayloadSingleDTO>> GetList(
+    AppOutgoingEventPayloadListQuery query,
     CancellationToken cancellationToken);
 
   /// <summary>
-  /// Получить список сущностей.
+  /// Получить единственный объект.
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
-  /// <returns>Список сущностей.</returns>
-  Task<List<AppOutgoingEventPayloadSingleDTO>> GetList(
-    AppOutgoingEventPayloadListQuery query,
+  /// <returns>Объект.</returns>
+  Task<AppOutgoingEventPayloadSingleDTO?> GetSingle(
+    AppOutgoingEventPayloadSingleQuery query,
     CancellationToken cancellationToken);
 }

@@ -1,7 +1,7 @@
 ﻿namespace Makc.Dummy.Gateway.DomainUseCases.Auth.Actions.Login;
 
 /// <summary>
-/// Обработчик действия по входу для аутентификации.
+/// Обработчик действия по входу.
 /// </summary>
 /// <param name="_service">Сервис.</param>
 public class AuthLoginActionHandler(

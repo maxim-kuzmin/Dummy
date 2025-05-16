@@ -10,9 +10,7 @@ public class DummyItemQueryService(
   DummyItemGrpcClient _grpcClient) : IDummyItemQueryService
 {
   /// <inheritdoc/>
-  public async Task<Result<DummyItemSingleDTO>> Get(
-      DummyItemGetActionQuery query,
-      CancellationToken cancellationToken)
+  public async Task<Result<DummyItemSingleDTO>> Get(DummyItemSingleQuery query, CancellationToken cancellationToken)
   {
     try
     {
@@ -31,9 +29,7 @@ public class DummyItemQueryService(
   }
 
   /// <inheritdoc/>
-  public async Task<Result<DummyItemListDTO>> GetList(
-      DummyItemGetListActionQuery query,
-      CancellationToken cancellationToken)
+  public async Task<Result<DummyItemListDTO>> GetList(DummyItemListQuery query, CancellationToken cancellationToken)
   {
     try
     {

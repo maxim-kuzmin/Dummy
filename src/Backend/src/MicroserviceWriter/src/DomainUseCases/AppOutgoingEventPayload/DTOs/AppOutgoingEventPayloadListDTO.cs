@@ -1,7 +1,7 @@
 ﻿namespace Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEventPayload.DTOs;
 
 /// <summary>
-/// Объект передачи данных действия по получению списка полезных нагрузок исходящего события приложения.
+/// Объект передачи данных списка полезных нагрузок исходящего события приложения.
 /// </summary>
 /// <param name="Items">Элементы.</param>
 /// <param name="TotalCount">Общее количество.</param>

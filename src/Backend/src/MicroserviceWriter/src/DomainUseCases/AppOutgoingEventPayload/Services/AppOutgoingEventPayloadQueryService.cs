@@ -22,20 +22,27 @@ public class AppOutgoingEventPayloadQueryService(
   }
 
   /// <inheritdoc/>
-  public Task<AppOutgoingEventPayloadSingleDTO?> GetSingle(AppOutgoingEventPayloadSingleQuery query, CancellationToken cancellationToken)
+  public Task<List<AppOutgoingEventPayloadSingleDTO>> GetList(
+    AppOutgoingEventPayloadListQuery query,
+    CancellationToken cancellationToken)
+  {
+    var dbCommandForFilter = _dbCommandFactory.CreateDbCommandForFilter(query.PageQuery);
+
+    var dbCommandForItems = _dbCommandFactory.CreateDbCommandForItems(
+      dbCommandForFilter,
+      query.PageQuery.Page,
+      query.Sort);
+
+    return _appDbQueryContext.GetList<AppOutgoingEventPayloadSingleDTO>(dbCommandForItems, cancellationToken);
+  }
+
+  /// <inheritdoc/>
+  public Task<AppOutgoingEventPayloadSingleDTO?> GetSingle(
+    AppOutgoingEventPayloadSingleQuery query,
+    CancellationToken cancellationToken)
   {
     var dbCommand = _dbCommandFactory.CreateDbCommand(query);
 
     return _appDbQueryContext.GetFirstOrDefault<AppOutgoingEventPayloadSingleDTO>(dbCommand, cancellationToken);
-  }
-
-  /// <inheritdoc/>
-  public Task<List<AppOutgoingEventPayloadSingleDTO>> GetList(AppOutgoingEventPayloadListQuery query, CancellationToken cancellationToken)
-  {
-    var dbCommandForFilter = _dbCommandFactory.CreateDbCommandForFilter(query.PageQuery);
-
-    var dbCommandForItems = _dbCommandFactory.CreateDbCommandForItems(dbCommandForFilter, query.PageQuery.Page, query.Sort);
-
-    return _appDbQueryContext.GetList<AppOutgoingEventPayloadSingleDTO>(dbCommandForItems, cancellationToken);
   }
 }

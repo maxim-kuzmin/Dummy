@@ -5,7 +5,7 @@
 /// </summary>
 /// <param name="_mediator">Медиатор.</param>
 public class DummyItemGetListEndpointHandler(IMediator _mediator) :
-  Endpoint<DummyItemGetListEndpointRequest, DummyItemListDTOForMicroserviceWriter>
+  Endpoint<DummyItemGetListEndpointRequestForMicroserviceWriter, DummyItemListDTOForMicroserviceWriter>
 {
   /// <inheritdoc/>
   public override void Configure()
@@ -16,13 +16,10 @@ public class DummyItemGetListEndpointHandler(IMediator _mediator) :
 
   /// <inheritdoc/>
   public override async Task HandleAsync(
-    DummyItemGetListEndpointRequest request,
+    DummyItemGetListEndpointRequestForMicroserviceWriter request,
     CancellationToken cancellationToken)
   {
-    DummyItemGetListActionQueryForMicroserviceWriter query = new(
-      new QueryPageSection(request.CurrentPage, request.ItemsPerPage),
-      request.SortField.ToDummyItemQuerySortSectionForMicroserviceWriter(request.SortIsDesc),
-      new DummyItemGetListActionQueryFilterForMicroserviceWriter(request.Query));
+    var query = request.ToDummyItemGetListActionQueryForMicroserviceWriter();
 
     var result = await _mediator.Send(query, cancellationToken);
 

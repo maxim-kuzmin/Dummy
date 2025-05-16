@@ -1,7 +1,7 @@
 ﻿namespace Makc.Dummy.MicroserviceReader.DomainUseCases.AppIncomingEventPayload.DTOs;
 
 /// <summary>
-/// Объект передачи данных действия по получению полезной нагрузки входящего события приложения.
+/// Объект передачи данных полезной нагрузки входящего события приложения.
 /// </summary>
 /// <param name="ObjectId">Идентификатор объекта.</param>
 /// <param name="ConcurrencyToken">Токен паралеллизма.</param>

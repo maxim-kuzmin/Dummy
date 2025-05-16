@@ -6,26 +6,26 @@
 public interface IDummyItemQueryService
 {
   /// <summary>
-  /// Подсчитать.
+  /// Получить количество объектов.
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
-  /// <returns>Количество сущностей.</returns>
-  Task<long> Count(DummyItemPageQuery query, CancellationToken cancellationToken);
+  /// <returns>Количество объектов.</returns>
+  Task<long> GetCount(DummyItemPageQuery query, CancellationToken cancellationToken);
 
   /// <summary>
-  /// Получить.
+  /// Получить список объектов.
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
-  /// <returns>Объект передачи данных.</returns>
-  Task<DummyItemSingleDTO?> Get(DummyItemSingleQuery query, CancellationToken cancellationToken);
+  /// <returns>Список объектов.</returns>
+  Task<List<DummyItemSingleDTO>> GetList(DummyItemListQuery query, CancellationToken cancellationToken);
 
   /// <summary>
-  /// Перечислить.
+  /// Получить единственный объект.
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
-  /// <returns>Список объектов передачи данных.</returns>
-  Task<List<DummyItemSingleDTO>> List(DummyItemListQuery query, CancellationToken cancellationToken);
+  /// <returns>Сущность.</returns>
+  Task<DummyItemSingleDTO?> GetSingle(DummyItemSingleQuery query, CancellationToken cancellationToken);
 }
