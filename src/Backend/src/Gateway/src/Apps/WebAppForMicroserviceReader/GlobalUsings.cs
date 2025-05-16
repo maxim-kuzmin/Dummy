@@ -1,0 +1,9 @@
+﻿global using Ardalis.Result.AspNetCore;
+global using FastEndpoints;
+global using Makc.Dummy.Gateway.DomainUseCasesForMicroserviceReader.DummyItem;
+global using Makc.Dummy.Gateway.DomainUseCasesForMicroserviceReader.DummyItem.Actions.Get;
+global using Makc.Dummy.Gateway.DomainUseCasesForMicroserviceReader.DummyItem.Actions.GetList;
+global using Makc.Dummy.Gateway.DomainUseCasesForMicroserviceReader.DummyItem.Actions.GetList.Query;
+global using Makc.Dummy.Gateway.DomainUseCasesForMicroserviceReader.DummyItem.DTOs;
+global using Makc.Dummy.Shared.DomainUseCases.Query.Sections;
+global using MediatR;

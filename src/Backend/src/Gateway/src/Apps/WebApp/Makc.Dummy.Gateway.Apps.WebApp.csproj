@@ -4,10 +4,7 @@
     <UserSecretsId>ada5bfb7-1c51-46d2-9541-149628765371</UserSecretsId>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Ardalis.Result.AspNetCore" />
-    <PackageReference Include="FastEndpoints" />
-    <PackageReference Include="FastEndpoints.Swagger" />    
+  <ItemGroup>   
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" />    
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" />
@@ -27,5 +24,7 @@
     <ProjectReference Include="..\..\Infrastructure\HttpForKeycloak\Makc.Dummy.Gateway.Infrastructure.HttpForKeycloak.csproj" />
     <ProjectReference Include="..\..\Infrastructure\HttpForMicroserviceReader\Makc.Dummy.Gateway.Infrastructure.HttpForMicroserviceReader.csproj" />
     <ProjectReference Include="..\..\Infrastructure\HttpForMicroserviceWriter\Makc.Dummy.Gateway.Infrastructure.HttpForMicroserviceWriter.csproj" />
+    <ProjectReference Include="..\WebAppForMicroserviceReader\Makc.Dummy.Gateway.Apps.WebAppForMicroserviceReader.csproj" />
+    <ProjectReference Include="..\WebAppForMicroserviceWriter\Makc.Dummy.Gateway.Apps.WebAppForMicroserviceWriter.csproj" />
   </ItemGroup>
 </Project>

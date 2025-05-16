@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <OutputType>library</OutputType>
+    <NoDefaultLaunchSettingsFile>true</NoDefaultLaunchSettingsFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Shared\src\Apps\WebApp\Makc.Dummy.Shared.Apps.WebApp.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Core\Makc.Dummy.Gateway.Infrastructure.Core.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\GrpcForMicroserviceWriter\Makc.Dummy.Gateway.Infrastructure.GrpcForMicroserviceWriter.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\HttpForMicroserviceWriter\Makc.Dummy.Gateway.Infrastructure.HttpForMicroserviceWriter.csproj" />
+  </ItemGroup>
+
+</Project>
