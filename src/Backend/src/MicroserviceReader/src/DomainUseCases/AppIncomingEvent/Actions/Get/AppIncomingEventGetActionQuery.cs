@@ -3,4 +3,7 @@
 /// <summary>
 /// Запрос действия по получению входящего события приложения.
 /// </summary>
-public record AppIncomingEventGetActionQuery : AppIncomingEventSingleQuery, IQuery<Result<AppIncomingEventSingleDTO>>;
+/// <param name="ObjectId">Идентификатор объекта.</param>
+public record AppIncomingEventGetActionQuery(string? ObjectId) :
+  AppIncomingEventSingleQuery(ObjectId),
+  IQuery<Result<AppIncomingEventSingleDTO>>;

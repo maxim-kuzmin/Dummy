@@ -24,10 +24,7 @@ public static class AppIncomingEventPayloadExtensions
   public static AppIncomingEventPayloadGetActionQuery ToAppIncomingEventPayloadGetActionQuery(
     this AppIncomingEventPayloadGetActionRequest request)
   {
-    return new()
-    {
-      ObjectId = request.ObjectId
-    };
+    return new(request.ObjectId);
   }
 
   /// <summary>

@@ -3,10 +3,5 @@
 /// <summary>
 /// Запрос единственной полезной нагрузки исходящего события приложения.
 /// </summary>
-public record AppOutgoingEventPayloadSingleQuery
-{
-  /// <summary>
-  /// Идентификатор.
-  /// </summary>
-  public long Id { get; set; }
-}
+/// <param name="Id">Идентификатор.</param>
+public record AppOutgoingEventPayloadSingleQuery(long Id);

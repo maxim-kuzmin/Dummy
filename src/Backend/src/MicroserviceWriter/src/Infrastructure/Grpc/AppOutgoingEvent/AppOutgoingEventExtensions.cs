@@ -24,10 +24,7 @@ public static class AppOutgoingEventExtensions
   public static AppOutgoingEventGetActionQuery ToAppOutgoingEventGetActionQuery(
     this AppOutgoingEventGetActionRequest request)
   {
-    return new()
-    {
-      Id = request.Id
-    };
+    return new(request.Id);
   }
 
   /// <summary>

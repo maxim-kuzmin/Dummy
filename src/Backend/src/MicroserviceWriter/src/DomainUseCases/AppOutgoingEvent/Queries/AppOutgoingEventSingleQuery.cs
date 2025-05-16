@@ -3,10 +3,5 @@
 /// <summary>
 /// Запрос единственного исходящего события приложения.
 /// </summary>
-public record AppOutgoingEventSingleQuery
-{
-  /// <summary>
-  /// Идентификатор.
-  /// </summary>
-  public long Id { get; set; }
-}
+/// <param name="Id">Идентификатор.</param>
+public record AppOutgoingEventSingleQuery(long Id);

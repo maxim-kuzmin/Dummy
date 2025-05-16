@@ -23,10 +23,7 @@ public static class DummyItemExtensions
   /// <returns>Запрос.</returns>
   public static DummyItemGetActionQuery ToDummyItemGetActionQuery(this DummyItemGetActionRequest request)
   {
-    return new()
-    {
-      ObjectId = request.ObjectId
-    };
+    return new(request.ObjectId);
   }
 
   /// <summary>

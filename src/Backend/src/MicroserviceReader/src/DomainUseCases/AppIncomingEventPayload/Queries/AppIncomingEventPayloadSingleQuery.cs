@@ -3,10 +3,5 @@
 /// <summary>
 /// Запрос единственной полезной нагрузки входящего события приложения.
 /// </summary>
-public record AppIncomingEventPayloadSingleQuery
-{
-  /// <summary>
-  /// Идентификатор объекта.
-  /// </summary>
-  public string? ObjectId { get; set; }
-}
+/// <param name="ObjectId">Идентификатор объекта.</param>
+public record AppIncomingEventPayloadSingleQuery(string? ObjectId);

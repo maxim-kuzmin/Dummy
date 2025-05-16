@@ -23,10 +23,7 @@ public static class AppIncomingEventExtensions
   /// <returns>Запрос.</returns>
   public static AppIncomingEventGetActionQuery ToAppIncomingEventGetActionQuery(this AppIncomingEventGetActionRequest request)
   {
-    return new()
-    {
-      ObjectId = request.ObjectId
-    };
+    return new(request.ObjectId);
   }
 
   /// <summary>
