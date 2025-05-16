@@ -1,4 +1,6 @@
-﻿namespace Makc.Dummy.Gateway.Apps.WebApp.App;
+﻿using System.Reflection;
+
+namespace Makc.Dummy.Gateway.Apps.WebApp.App;
 
 /// <summary>
 /// Расширения приложения.
@@ -110,7 +112,13 @@ public static class AppExtensions
     });
 
     services
-      .AddFastEndpoints()
+      .AddFastEndpoints(options => {
+        options.Assemblies = [
+          typeof(WebAppForMicroserviceReader.DummyItem.Endpoints.DummyItemEndpointsSettings).Assembly,
+          typeof(WebAppForMicroserviceWriter.DummyItem.Endpoints.DummyItemEndpointsSettings).Assembly
+          ];
+        options.DisableAutoDiscovery = true;
+      })
       .AddAuthorization();    
 
     switch (domainAuth.Type)
