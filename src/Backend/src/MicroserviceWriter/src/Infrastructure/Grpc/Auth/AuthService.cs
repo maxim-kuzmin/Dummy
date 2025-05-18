@@ -16,7 +16,7 @@ public class AuthService(IMediator _mediator) : AuthServiceBase
     AuthLoginGrpcRequest request,
     ServerCallContext context)
   {
-    AuthLoginActionCommand command = request.ToAuthLoginActionCommand();
+    AuthLoginActionRequest command = request.ToAuthLoginActionCommand();
 
     var resultTask = _mediator.Send(command, context.CancellationToken);
 

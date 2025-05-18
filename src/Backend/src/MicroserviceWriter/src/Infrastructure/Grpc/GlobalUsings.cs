@@ -13,6 +13,7 @@ global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEventPayloa
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEventPayload.DTOs;
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEventPayload.Queries;
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.Auth.Actions.Login;
+global using Makc.Dummy.MicroserviceWriter.DomainUseCases.Auth.Commands;
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.Auth.DTOs;
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.DummyItem.Actions.Delete;
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.DummyItem.Actions.Get;

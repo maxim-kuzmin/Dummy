@@ -1,6 +1,4 @@
-﻿using Makc.Dummy.Shared.Core.App.Config.Options.Sections.Domain;
-
-namespace Makc.Dummy.MicroserviceWriter.DomainUseCases.App;
+﻿namespace Makc.Dummy.MicroserviceWriter.DomainUseCases.App;
 
 /// <summary>
 /// Расширения приложения.
@@ -35,6 +33,8 @@ public static class AppExtensions
 
     services.AddTransient<IAppOutgoingEventPayloadCommandService, AppOutgoingEventPayloadCommandService>();
     services.AddTransient<IAppOutgoingEventPayloadQueryService, AppOutgoingEventPayloadQueryService>();
+
+    services.AddTransient<IAuthCommandService, AuthCommandService>();
 
     services.AddTransient<IDummyItemCommandService, DummyItemCommandService>();    
     services.AddTransient<IDummyItemQueryService, DummyItemQueryService>();

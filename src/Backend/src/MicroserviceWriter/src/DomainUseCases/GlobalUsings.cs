@@ -26,7 +26,9 @@ global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEventPayloa
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEventPayload.Queries;
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEventPayload.Query.Sections;
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEventPayload.Services;
+global using Makc.Dummy.MicroserviceWriter.DomainUseCases.Auth.Commands;
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.Auth.DTOs;
+global using Makc.Dummy.MicroserviceWriter.DomainUseCases.Auth.Services;
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.DummyItem.Command.Sections;
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.DummyItem.Commands;
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.DummyItem.Db.SQL.Factories;
@@ -36,6 +38,7 @@ global using Makc.Dummy.MicroserviceWriter.DomainUseCases.DummyItem.Query.Sectio
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.DummyItem.Services;
 global using Makc.Dummy.Shared.Core.App;
 global using Makc.Dummy.Shared.Core.App.Command.Results;
+global using Makc.Dummy.Shared.Core.App.Config.Options.Sections.Domain;
 global using Makc.Dummy.Shared.Core.App.Enums;
 global using Makc.Dummy.Shared.Core.App.Event;
 global using Makc.Dummy.Shared.Core.App.Event.Payloads;

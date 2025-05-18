@@ -10,9 +10,11 @@ public static class AuthExtensions
   /// </summary>
   /// <param name="request">Запрос.</param>
   /// <returns>Команда действия по входу в приложение.</returns>
-  public static AuthLoginActionCommand ToAuthLoginActionCommand(this AuthLoginGrpcRequest request)
+  public static AuthLoginActionRequest ToAuthLoginActionCommand(this AuthLoginGrpcRequest request)
   {
-    return new(request.UserName, request.Password);
+    AuthLoginCommand command = new(request.UserName, request.Password);
+
+    return new(command);
   }
 
   /// <summary>
