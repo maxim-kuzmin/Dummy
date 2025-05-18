@@ -6,11 +6,11 @@
 public static class DummyItemExtensions
 {
   /// <summary>
-  /// Преобразовать к команде действия по удалению фиктивного предмета.
+  /// Преобразовать к запросу действия по удалению фиктивного предмета.
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
-  /// <returns>Команда.</returns>
-  public static DummyItemDeleteActionRequest ToDummyItemDeleteActionCommand(
+  /// <returns>Запрос действия.</returns>
+  public static DummyItemDeleteActionRequest ToDummyItemDeleteActionRequest(
     this DummyItemDeleteGrpcRequest request)
   {
     DummyItemDeleteCommand command = new(Id: request.Id);
@@ -22,8 +22,8 @@ public static class DummyItemExtensions
   /// Преобразовать к запросу действия по получению фиктивного предмета.
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
-  /// <returns>Запрос.</returns>
-  public static DummyItemGetActionRequest ToDummyItemGetActionQuery(this DummyItemGetGrpcRequest request)
+  /// <returns>Запрос действия.</returns>
+  public static DummyItemGetActionRequest ToDummyItemGetActionRequest(this DummyItemGetGrpcRequest request)
   {
     DummyItemSingleQuery query = new(Id: request.Id);
 
@@ -49,8 +49,8 @@ public static class DummyItemExtensions
   /// Преобразовать к запросу действия по получению списка фиктивных предметов.
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
-  /// <returns>Запрос.</returns>
-  public static DummyItemGetListActionRequest ToDummyItemGetListActionQuery(
+  /// <returns>Запрос действия.</returns>
+  public static DummyItemGetListActionRequest ToDummyItemGetListActionRequest(
     this DummyItemGetListGrpcRequest request)
   {
     DummyItemPageQuery query = new(
@@ -89,11 +89,11 @@ public static class DummyItemExtensions
   }
 
   /// <summary>
-  /// Преобразовать к команде действия по сохранению фиктивного предмета.
+  /// Преобразовать к запросу действия по сохранению фиктивного предмета.
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
-  /// <returns>Команда.</returns
-  public static DummyItemSaveActionRequest ToDummyItemSaveActionCommand(
+  /// <returns>Запрос действия.</returns
+  public static DummyItemSaveActionRequest ToDummyItemSaveActionRequest(
     this DummyItemCreateGrpcRequest request)
   {
     DummyItemSaveCommand command = new(
@@ -105,11 +105,11 @@ public static class DummyItemExtensions
   }
 
   /// <summary>
-  /// Преобразовать к команде действия по сохранению фиктивного предмета.
+  /// Преобразовать к запросу действия по сохранению фиктивного предмета.
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
-  /// <returns>Команда.</returns
-  public static DummyItemSaveActionRequest ToDummyItemSaveActionCommand(
+  /// <returns>Запрос действия.</returns
+  public static DummyItemSaveActionRequest ToDummyItemSaveActionRequest(
     this DummyItemUpdateGrpcRequest request)
   {
     DummyItemSaveCommand command = new(

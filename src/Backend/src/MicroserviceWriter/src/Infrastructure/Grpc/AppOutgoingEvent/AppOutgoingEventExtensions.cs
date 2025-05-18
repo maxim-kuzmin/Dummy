@@ -9,7 +9,7 @@ public static class AppOutgoingEventExtensions
   /// Преобразовать к запросу действия по удалению исходящего события приложения.
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
-  /// <returns>Команда.</returns>
+  /// <returns>Запрос действия.</returns>
   public static AppOutgoingEventDeleteActionRequest ToAppOutgoingEventDeleteActionRequest(
     this AppOutgoingEventDeleteGrpcRequest request)
   {
@@ -22,7 +22,7 @@ public static class AppOutgoingEventExtensions
   /// Преобразовать к запросу действия по получению исходящего события приложения.
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
-  /// <returns>Запрос.</returns>
+  /// <returns>Запрос действия.</returns>
   public static AppOutgoingEventGetActionRequest ToAppOutgoingEventGetActionRequest(
     this AppOutgoingEventGetGrpcRequest request)
   {
@@ -51,15 +51,14 @@ public static class AppOutgoingEventExtensions
   /// Преобразовать к запросу действия по получению списка исходящих событий приложения.
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
-  /// <returns>Запрос.</returns>
-  public static AppOutgoingEventGetListActionRequest ToAppOutgoingEventGetListActionQuery(
+  /// <returns>Запрос действия.</returns>
+  public static AppOutgoingEventGetListActionRequest ToAppOutgoingEventGetListActionRequest(
     this AppOutgoingEventGetListGrpcRequest request)
   {
     AppOutgoingEventPageQuery query = new(
       Page: new(request.Page.Number, request.Page.Size),
       Sort: new(request.Sort.Field, request.Sort.IsDesc),
-      Filter: new(request.Filter.FullTextSearchQuery)
-    );
+      Filter: new(request.Filter.FullTextSearchQuery));
 
     return new(query);
   }
@@ -92,11 +91,11 @@ public static class AppOutgoingEventExtensions
   }
 
   /// <summary>
-  /// Преобразовать к команде действия по сохранению исходящего события приложения.
+  /// Преобразовать к запросу действия по сохранению исходящего события приложения.
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
-  /// <returns>Команда.</returns>
-  public static AppOutgoingEventSaveActionRequest ToAppOutgoingEventSaveActionCommand(
+  /// <returns>Запрос действия.</returns>
+  public static AppOutgoingEventSaveActionRequest ToAppOutgoingEventSaveActionRequest(
     this AppOutgoingEventCreateGrpcRequest request)
   {
     var publishedAt = request.PublishedAt.ToDateTimeOffset();
@@ -104,18 +103,17 @@ public static class AppOutgoingEventExtensions
     AppOutgoingEventSaveCommand command = new(
       IsUpdate: false,
       Id: 0,
-      Data: new(Name: request.Name, PublishedAt: publishedAt == default ? null : publishedAt)
-      );
+      Data: new(Name: request.Name, PublishedAt: publishedAt == default ? null : publishedAt));
 
     return new(command);
   }
 
   /// <summary>
-  /// Преобразовать к команде действия по сохранению исходящего события приложения.
+  /// Преобразовать к запросу действия по сохранению исходящего события приложения.
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
-  /// <returns>Команда.</returns>
-  public static AppOutgoingEventSaveActionRequest ToAppOutgoingEventSaveActionCommand(
+  /// <returns>Запрос действия.</returns>
+  public static AppOutgoingEventSaveActionRequest ToAppOutgoingEventSaveActionRequest(
     this AppOutgoingEventUpdateGrpcRequest request)
   {
     var publishedAt = request.PublishedAt.ToDateTimeOffset();
@@ -123,8 +121,7 @@ public static class AppOutgoingEventExtensions
     AppOutgoingEventSaveCommand command = new(
       IsUpdate: true,
       Id: request.Id,
-      Data: new(Name: request.Name, PublishedAt: publishedAt == default ? null : publishedAt)
-      );
+      Data: new(Name: request.Name, PublishedAt: publishedAt == default ? null : publishedAt));
 
     return new(command);
   }

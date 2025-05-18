@@ -16,7 +16,7 @@ public class AppOutgoingEventService(IMediator _mediator) : AppOutgoingEventServ
     AppOutgoingEventCreateGrpcRequest request,
     ServerCallContext context)
   {
-    var command = request.ToAppOutgoingEventSaveActionCommand();
+    var command = request.ToAppOutgoingEventSaveActionRequest();
 
     var resultTask = _mediator.Send(command, context.CancellationToken);
 
@@ -79,7 +79,7 @@ public class AppOutgoingEventService(IMediator _mediator) : AppOutgoingEventServ
     AppOutgoingEventGetListGrpcRequest request,
     ServerCallContext context)
   {
-    var query = request.ToAppOutgoingEventGetListActionQuery();
+    var query = request.ToAppOutgoingEventGetListActionRequest();
 
     var resultTask = _mediator.Send(query, context.CancellationToken);
 
@@ -100,7 +100,7 @@ public class AppOutgoingEventService(IMediator _mediator) : AppOutgoingEventServ
     AppOutgoingEventUpdateGrpcRequest request,
     ServerCallContext context)
   {
-    var command = request.ToAppOutgoingEventSaveActionCommand();
+    var command = request.ToAppOutgoingEventSaveActionRequest();
 
     var resultTask = _mediator.Send(command, context.CancellationToken);
 

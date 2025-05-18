@@ -16,7 +16,7 @@ public class AppOutgoingEventPayloadService(IMediator _mediator) : AppOutgoingEv
     AppOutgoingEventPayloadCreateGrpcRequest request,
     ServerCallContext context)
   {
-    var command = request.ToAppOutgoingEventPayloadSaveActionCommand();
+    var command = request.ToAppOutgoingEventPayloadSaveActionRequest();
 
     var resultTask = _mediator.Send(command, context.CancellationToken);
 
@@ -37,7 +37,7 @@ public class AppOutgoingEventPayloadService(IMediator _mediator) : AppOutgoingEv
     AppOutgoingEventPayloadDeleteGrpcRequest request,
     ServerCallContext context)
   {
-    var command = request.ToAppOutgoingEventPayloadDeleteActionCommand();
+    var command = request.ToAppOutgoingEventPayloadDeleteActionRequest();
 
     var resultTask = _mediator.Send(command, context.CancellationToken);
 
@@ -58,7 +58,7 @@ public class AppOutgoingEventPayloadService(IMediator _mediator) : AppOutgoingEv
     AppOutgoingEventPayloadGetGrpcRequest request,
     ServerCallContext context)
   {
-    var query = request.ToAppOutgoingEventPayloadGetActionQuery();
+    var query = request.ToAppOutgoingEventPayloadGetActionRequest();
 
     var resultTask = _mediator.Send(query, context.CancellationToken);
 
@@ -79,7 +79,7 @@ public class AppOutgoingEventPayloadService(IMediator _mediator) : AppOutgoingEv
     AppOutgoingEventPayloadGetListGrpcRequest request,
     ServerCallContext context)
   {
-    var query = request.ToAppOutgoingEventPayloadGetListActionQuery();
+    var query = request.ToAppOutgoingEventPayloadGetListActionRequest();
 
     var resultTask = _mediator.Send(query, context.CancellationToken);
 
@@ -100,7 +100,7 @@ public class AppOutgoingEventPayloadService(IMediator _mediator) : AppOutgoingEv
     AppOutgoingEventPayloadUpdateGrpcRequest request,
     ServerCallContext context)
   {
-    var command = request.ToAppOutgoingEventPayloadSaveActionCommand();
+    var command = request.ToAppOutgoingEventPayloadSaveActionRequest();
 
     var resultTask = _mediator.Send(command, context.CancellationToken);
 

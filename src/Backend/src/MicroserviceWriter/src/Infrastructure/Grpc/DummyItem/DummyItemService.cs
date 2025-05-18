@@ -16,7 +16,7 @@ public class DummyItemService(IMediator _mediator) : DummyItemServiceBase
     DummyItemCreateGrpcRequest request,
     ServerCallContext context)
   {
-    var command = request.ToDummyItemSaveActionCommand();
+    var command = request.ToDummyItemSaveActionRequest();
 
     var resultTask = _mediator.Send(command, context.CancellationToken);
 
@@ -35,7 +35,7 @@ public class DummyItemService(IMediator _mediator) : DummyItemServiceBase
   /// <returns>Отклик gRPC.</returns>
   public override async Task<Empty> Delete(DummyItemDeleteGrpcRequest request, ServerCallContext context)
   {
-    var command = request.ToDummyItemDeleteActionCommand();
+    var command = request.ToDummyItemDeleteActionRequest();
 
     var resultTask = _mediator.Send(command, context.CancellationToken);
 
@@ -56,7 +56,7 @@ public class DummyItemService(IMediator _mediator) : DummyItemServiceBase
     DummyItemGetGrpcRequest request,
     ServerCallContext context)
   {
-    var query = request.ToDummyItemGetActionQuery();
+    var query = request.ToDummyItemGetActionRequest();
 
     var resultTask = _mediator.Send(query, context.CancellationToken);
 
@@ -77,7 +77,7 @@ public class DummyItemService(IMediator _mediator) : DummyItemServiceBase
     DummyItemGetListGrpcRequest request,
     ServerCallContext context)
   {
-    var query = request.ToDummyItemGetListActionQuery();
+    var query = request.ToDummyItemGetListActionRequest();
 
     var resultTask = _mediator.Send(query, context.CancellationToken);
 
@@ -98,7 +98,7 @@ public class DummyItemService(IMediator _mediator) : DummyItemServiceBase
     DummyItemUpdateGrpcRequest request,
     ServerCallContext context)
   {
-    var command = request.ToDummyItemSaveActionCommand();
+    var command = request.ToDummyItemSaveActionRequest();
 
     var resultTask = _mediator.Send(command, context.CancellationToken);
 

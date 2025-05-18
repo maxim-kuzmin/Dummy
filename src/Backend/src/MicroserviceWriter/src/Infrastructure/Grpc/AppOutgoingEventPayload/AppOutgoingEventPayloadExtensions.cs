@@ -1,7 +1,4 @@
-﻿using Makc.Dummy.MicroserviceWriter.Infrastructure.Grpc.AppOutgoingEvent;
-using static Makc.Dummy.MicroserviceWriter.Infrastructure.Grpc.AppOutgoingEventPayload.AppOutgoingEventPayload;
-
-namespace Makc.Dummy.MicroserviceWriter.Infrastructure.Grpc.AppOutgoingEventPayload;
+﻿namespace Makc.Dummy.MicroserviceWriter.Infrastructure.Grpc.AppOutgoingEventPayload;
 
 /// <summary>
 /// Расширения полезной нагрузки исходящего события приложения.
@@ -9,11 +6,11 @@ namespace Makc.Dummy.MicroserviceWriter.Infrastructure.Grpc.AppOutgoingEventPayl
 public static class AppOutgoingEventPayloadExtensions
 {
   /// <summary>
-  /// Преобразовать к команде действия по удалению полезной нагрузки исходящего события приложения.
+  /// Преобразовать к запросу действия по удалению полезной нагрузки исходящего события приложения.
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
-  /// <returns>Команда.</returns>
-  public static AppOutgoingEventPayloadDeleteActionRequest ToAppOutgoingEventPayloadDeleteActionCommand(
+  /// <returns>Запрос действия.</returns>
+  public static AppOutgoingEventPayloadDeleteActionRequest ToAppOutgoingEventPayloadDeleteActionRequest(
     this AppOutgoingEventPayloadDeleteGrpcRequest request)
   {
     AppOutgoingEventPayloadDeleteCommand command = new(request.Id);
@@ -25,8 +22,8 @@ public static class AppOutgoingEventPayloadExtensions
   /// Преобразовать к запросу действия по получению полезной нагрузки исходящего события приложения.
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
-  /// <returns>Запрос.</returns>
-  public static AppOutgoingEventPayloadGetActionRequest ToAppOutgoingEventPayloadGetActionQuery(
+  /// <returns>Запрос действия.</returns>
+  public static AppOutgoingEventPayloadGetActionRequest ToAppOutgoingEventPayloadGetActionRequest(
     this AppOutgoingEventPayloadGetGrpcRequest request)
   {
     AppOutgoingEventPayloadSingleQuery query = new(request.Id);
@@ -59,8 +56,8 @@ public static class AppOutgoingEventPayloadExtensions
   /// Преобразовать к запросу действия по получению списка полезных нагрузок исходящих событий приложения.
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
-  /// <returns>Запрос.</returns>
-  public static AppOutgoingEventPayloadGetListActionRequest ToAppOutgoingEventPayloadGetListActionQuery(
+  /// <returns>Запрос действия.</returns>
+  public static AppOutgoingEventPayloadGetListActionRequest ToAppOutgoingEventPayloadGetListActionRequest(
     this AppOutgoingEventPayloadGetListGrpcRequest request)
   {
     AppOutgoingEventPayloadPageQuery query = new(    
@@ -105,11 +102,11 @@ public static class AppOutgoingEventPayloadExtensions
   }
 
   /// <summary>
-  /// Преобразовать к команде действия по сохранению полезной нагрузки исходящего события приложения.
+  /// Преобразовать к запросу действия по сохранению полезной нагрузки исходящего события приложения.
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
-  /// <returns>Команда.</returns>
-  public static AppOutgoingEventPayloadSaveActionRequest ToAppOutgoingEventPayloadSaveActionCommand(
+  /// <returns>Запрос действия.</returns>
+  public static AppOutgoingEventPayloadSaveActionRequest ToAppOutgoingEventPayloadSaveActionRequest(
     this AppOutgoingEventPayloadCreateGrpcRequest request)
   {
     AppEventPayloadWithDataAsString payload = new(request.Data)
@@ -130,11 +127,11 @@ public static class AppOutgoingEventPayloadExtensions
   }
 
   /// <summary>
-  /// Преобразовать к команде действия по сохранению полезной нагрузки исходящего события приложения.
+  /// Преобразовать к запросу действия по сохранению полезной нагрузки исходящего события приложения.
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
-  /// <returns>Команда.</returns>
-  public static AppOutgoingEventPayloadSaveActionRequest ToAppOutgoingEventPayloadSaveActionCommand(
+  /// <returns>Запрос действия.</returns>
+  public static AppOutgoingEventPayloadSaveActionRequest ToAppOutgoingEventPayloadSaveActionRequest(
     this AppOutgoingEventPayloadUpdateGrpcRequest request)
   {
     AppEventPayloadWithDataAsString payload = new(request.Data)
