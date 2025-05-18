@@ -15,7 +15,7 @@ public class DummyItemQueryService(
     try
     {
       var replyTask = _grpcClient.GetAsync(
-        query.ToDummyItemGetActionRequest(),
+        query.ToDummyItemGetGrpcRequest(),
         cancellationToken: cancellationToken);
 
       var reply = await replyTask.ConfigureAwait(false);
@@ -38,7 +38,7 @@ public class DummyItemQueryService(
 
       headers.AddAuthorizationHeader(_appSession);
 
-      var request = query.ToDummyItemGetListActionRequest();
+      var request = query.ToDummyItemGetListGrpcRequest();
 
       var replyTask = _grpcClient.GetListAsync(
         request,

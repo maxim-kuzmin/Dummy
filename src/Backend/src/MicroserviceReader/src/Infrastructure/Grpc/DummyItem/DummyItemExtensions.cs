@@ -11,7 +11,7 @@ public static class DummyItemExtensions
   /// <param name="request">Запрос gRPC.</param>
   /// <returns>Команда.</returns>
   public static DummyItemDeleteActionCommand ToDummyItemDeleteActionCommand(
-    this DummyItemDeleteActionRequest request)
+    this DummyItemDeleteGrpcRequest request)
   {
     return new(request.ObjectId);
   }
@@ -21,17 +21,17 @@ public static class DummyItemExtensions
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
   /// <returns>Запрос.</returns>
-  public static DummyItemGetActionQuery ToDummyItemGetActionQuery(this DummyItemGetActionRequest request)
+  public static DummyItemGetActionQuery ToDummyItemGetActionQuery(this DummyItemGetGrpcRequest request)
   {
     return new(request.ObjectId);
   }
 
   /// <summary>
-  /// Преобразовать к отклику gRPC действия по получению фиктивного предмета.
+  /// Преобразовать к отклику gRPC получения фиктивного предмета.
   /// </summary>
   /// <param name="dto">Объект передачи данных.</param>
   /// <returns>Отклик gRPC.</returns>
-  public static DummyItemGetActionReply ToDummyItemGetActionReply(this DummyItemSingleDTO dto)
+  public static DummyItemGetGrpcReply ToDummyItemGetGrpcReply(this DummyItemSingleDTO dto)
   {
     return new()
     {
@@ -48,7 +48,7 @@ public static class DummyItemExtensions
   /// <param name="request">Запрос gRPC.</param>
   /// <returns>Запрос.</returns>
   public static DummyItemGetListActionQuery ToDummyItemGetListActionQuery(
-    this DummyItemGetListActionRequest request)
+    this DummyItemGetListGrpcRequest request)
   {
     DummyItemPageQuery pageQuery = new()
     {
@@ -63,20 +63,20 @@ public static class DummyItemExtensions
   }
 
   /// <summary>
-  /// Преобразовать к отклику gRPC действия по получению списка фиктивных предметов.
+  /// Преобразовать к отклику gRPC получения списка фиктивных предметов.
   /// </summary>
   /// <param name="dto">Объект передачи данных.</param>
   /// <returns>Отклик gRPC.</returns>
-  public static DummyItemGetListActionReply ToDummyItemGetListActionReply(this DummyItemListDTO dto)
+  public static DummyItemGetListGrpcReply ToDummyItemGetListGrpcReply(this DummyItemListDTO dto)
   {
-    DummyItemGetListActionReply result = new()
+    DummyItemGetListGrpcReply result = new()
     {
       TotalCount = dto.TotalCount,
     };
 
     foreach (var itemDTO in dto.Items)
     {
-      DummyItemGetListActionReplyItem item = new()
+      DummyItemGetListGrpcReplyItem item = new()
       {
         ObjectId = itemDTO.ObjectId,
         Id = itemDTO.Id,
@@ -96,7 +96,7 @@ public static class DummyItemExtensions
   /// <param name="request">Запрос gRPC.</param>
   /// <returns>Команда.</returns
   public static DummyItemSaveActionCommand ToDummyItemSaveActionCommand(
-    this DummyItemCreateActionRequest request)
+    this DummyItemCreateGrpcRequest request)
   {
     return new(false, string.Empty, request.Id, request.Name, request.ConcurrencyToken);
   }
@@ -107,7 +107,7 @@ public static class DummyItemExtensions
   /// <param name="request">Запрос gRPC.</param>
   /// <returns>Команда.</returns
   public static DummyItemSaveActionCommand ToDummyItemSaveActionCommand(
-    this DummyItemUpdateActionRequest request)
+    this DummyItemUpdateGrpcRequest request)
   {
     return new(true, request.ObjectId, request.Id, request.Name, request.ConcurrencyToken);
   }

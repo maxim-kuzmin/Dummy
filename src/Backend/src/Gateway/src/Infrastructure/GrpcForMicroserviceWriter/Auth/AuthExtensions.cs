@@ -10,7 +10,7 @@ public static class AuthExtensions
   /// </summary>
   /// <param name="command">Команда.</param>
   /// <returns>Запрос действия по входу в приложение.</returns>
-  public static AuthLoginActionRequest ToAuthLoginActionRequest(this AuthLoginActionCommand command)
+  public static AuthLoginGrpcRequest ToAuthLoginGrpcRequest(this AuthLoginActionCommand command)
   {
     return new()
     {
@@ -24,7 +24,7 @@ public static class AuthExtensions
   /// </summary>
   /// <param name="reply">Ответ.</param>
   /// <returns>Объект передачи данных входа.</returns>
-  public static AuthLoginDTO ToAuthLoginDTO(this AuthLoginActionReply reply)
+  public static AuthLoginDTO ToAuthLoginDTO(this AuthLoginGrpcReply reply)
   {
     return new(reply.UserName, reply.AccessToken);
   }

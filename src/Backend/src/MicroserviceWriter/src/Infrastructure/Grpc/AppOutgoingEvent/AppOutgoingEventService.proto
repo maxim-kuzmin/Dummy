@@ -9,11 +9,11 @@ import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
 
 service AppOutgoingEvent {
-    rpc Create (AppOutgoingEventCreateActionRequest) returns (AppOutgoingEventGetActionReply);
-    rpc Delete (AppOutgoingEventDeleteActionRequest) returns (google.protobuf.Empty);
-    rpc Get (AppOutgoingEventGetActionRequest) returns (AppOutgoingEventGetActionReply);
-    rpc GetList (AppOutgoingEventGetListActionRequest) returns (AppOutgoingEventGetListActionReply);
-    rpc Update (AppOutgoingEventUpdateActionRequest) returns (AppOutgoingEventGetActionReply);
+    rpc Create (AppOutgoingEventCreateGrpcRequest) returns (AppOutgoingEventGetGrpcReply);
+    rpc Delete (AppOutgoingEventDeleteGrpcRequest) returns (google.protobuf.Empty);
+    rpc Get (AppOutgoingEventGetGrpcRequest) returns (AppOutgoingEventGetGrpcReply);
+    rpc GetList (AppOutgoingEventGetListGrpcRequest) returns (AppOutgoingEventGetListGrpcReply);
+    rpc Update (AppOutgoingEventUpdateGrpcRequest) returns (AppOutgoingEventGetGrpcReply);
 }
 
 message ActionRequestSort {
@@ -26,20 +26,20 @@ message ActionRequestPage {
     int32 size = 2;
 }
 
-message AppOutgoingEventCreateActionRequest {
+message AppOutgoingEventCreateGrpcRequest {
     string name = 1;
     google.protobuf.Timestamp published_at = 2;
 }
 
-message AppOutgoingEventDeleteActionRequest {
+message AppOutgoingEventDeleteGrpcRequest {
     int64 id = 1;
 }
 
-message AppOutgoingEventGetActionRequest {
+message AppOutgoingEventGetGrpcRequest {
     int64 id = 1;
 }
 
-message AppOutgoingEventGetActionReply {
+message AppOutgoingEventGetGrpcReply {
     int64 id = 1;    
     google.protobuf.Timestamp created_at = 2;
     string name = 3;
@@ -47,17 +47,17 @@ message AppOutgoingEventGetActionReply {
     string concurrency_token = 5;
 }
 
-message AppOutgoingEventGetListActionRequestFilter {
+message AppOutgoingEventGetListGrpcRequestFilter {
     google.protobuf.StringValue full_text_search_query = 1;
 }
 
-message AppOutgoingEventGetListActionRequest {
+message AppOutgoingEventGetListGrpcRequest {
     ActionRequestPage page = 1;
     ActionRequestSort sort = 2;
-    AppOutgoingEventGetListActionRequestFilter filter = 3;
+    AppOutgoingEventGetListGrpcRequestFilter filter = 3;
 }
 
-message AppOutgoingEventGetListActionReplyItem {
+message AppOutgoingEventGetListGrpcReplyItem {
     int64 id = 1;    
     google.protobuf.Timestamp created_at = 2;
     string name = 3;
@@ -65,12 +65,12 @@ message AppOutgoingEventGetListActionReplyItem {
     string concurrency_token = 5;
 }
 
-message AppOutgoingEventGetListActionReply {
+message AppOutgoingEventGetListGrpcReply {
     int64 total_count = 1;
-    repeated AppOutgoingEventGetListActionReplyItem items = 2;
+    repeated AppOutgoingEventGetListGrpcReplyItem items = 2;
 }
 
-message AppOutgoingEventUpdateActionRequest {    
+message AppOutgoingEventUpdateGrpcRequest {    
     string name = 1;
     google.protobuf.Timestamp published_at = 2;
     int64 id = 3;

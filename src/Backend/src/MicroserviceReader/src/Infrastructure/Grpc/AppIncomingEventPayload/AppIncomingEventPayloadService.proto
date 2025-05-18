@@ -9,11 +9,11 @@ import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
 
 service AppIncomingEventPayload {
-    rpc Create (AppIncomingEventPayloadCreateActionRequest) returns (AppIncomingEventPayloadGetActionReply);
-    rpc Delete (AppIncomingEventPayloadDeleteActionRequest) returns (google.protobuf.Empty);
-    rpc Get (AppIncomingEventPayloadGetActionRequest) returns (AppIncomingEventPayloadGetActionReply);
-    rpc GetList (AppIncomingEventPayloadGetListActionRequest) returns (AppIncomingEventPayloadGetListActionReply);
-    rpc Update (AppIncomingEventPayloadUpdateActionRequest) returns (AppIncomingEventPayloadGetActionReply);
+    rpc Create (AppIncomingEventPayloadCreateGrpcRequest) returns (AppIncomingEventPayloadGetGrpcReply);
+    rpc Delete (AppIncomingEventPayloadDeleteGrpcRequest) returns (google.protobuf.Empty);
+    rpc Get (AppIncomingEventPayloadGetGrpcRequest) returns (AppIncomingEventPayloadGetGrpcReply);
+    rpc GetList (AppIncomingEventPayloadGetListGrpcRequest) returns (AppIncomingEventPayloadGetListGrpcReply);
+    rpc Update (AppIncomingEventPayloadUpdateGrpcRequest) returns (AppIncomingEventPayloadGetGrpcReply);
 }
 
 message ActionRequestSort {
@@ -26,7 +26,7 @@ message ActionRequestPage {
     int32 size = 2;
 }
 
-message AppIncomingEventPayloadCreateActionRequest {
+message AppIncomingEventPayloadCreateGrpcRequest {
     string app_incoming_event_object_id = 1;
     google.protobuf.StringValue data = 2;
     google.protobuf.StringValue entity_concurrency_token_to_delete = 3;
@@ -37,15 +37,15 @@ message AppIncomingEventPayloadCreateActionRequest {
     int32 position = 8;
 }
 
-message AppIncomingEventPayloadDeleteActionRequest {
+message AppIncomingEventPayloadDeleteGrpcRequest {
     string object_id = 1;
 }
 
-message AppIncomingEventPayloadGetActionRequest {
+message AppIncomingEventPayloadGetGrpcRequest {
     string object_id = 1;
 }
 
-message AppIncomingEventPayloadGetActionReply {
+message AppIncomingEventPayloadGetGrpcReply {
     string app_incoming_event_object_id = 1;
     google.protobuf.StringValue data = 2;
     google.protobuf.StringValue entity_concurrency_token_to_delete = 3;
@@ -59,17 +59,17 @@ message AppIncomingEventPayloadGetActionReply {
     google.protobuf.Timestamp created_at = 11;
 }
 
-message AppIncomingEventPayloadGetListActionRequestFilter {
+message AppIncomingEventPayloadGetListGrpcRequestFilter {
     google.protobuf.StringValue full_text_search_query = 1;
 }
 
-message AppIncomingEventPayloadGetListActionRequest {
+message AppIncomingEventPayloadGetListGrpcRequest {
     ActionRequestPage page = 1;
     ActionRequestSort sort = 2;
-    AppIncomingEventPayloadGetListActionRequestFilter filter = 3;
+    AppIncomingEventPayloadGetListGrpcRequestFilter filter = 3;
 }
 
-message AppIncomingEventPayloadGetListActionReplyItem {
+message AppIncomingEventPayloadGetListGrpcReplyItem {
     string app_incoming_event_object_id = 1;
     google.protobuf.StringValue data = 2;
     google.protobuf.StringValue entity_concurrency_token_to_delete = 3;
@@ -83,12 +83,12 @@ message AppIncomingEventPayloadGetListActionReplyItem {
     google.protobuf.Timestamp created_at = 11;
 }
 
-message AppIncomingEventPayloadGetListActionReply {
+message AppIncomingEventPayloadGetListGrpcReply {
     int64 total_count = 1;
-    repeated AppIncomingEventPayloadGetListActionReplyItem items = 2;
+    repeated AppIncomingEventPayloadGetListGrpcReplyItem items = 2;
 }
 
-message AppIncomingEventPayloadUpdateActionRequest {    
+message AppIncomingEventPayloadUpdateGrpcRequest {    
     string app_incoming_event_object_id = 1;
     google.protobuf.StringValue data = 2;
     google.protobuf.StringValue entity_concurrency_token_to_delete = 3;

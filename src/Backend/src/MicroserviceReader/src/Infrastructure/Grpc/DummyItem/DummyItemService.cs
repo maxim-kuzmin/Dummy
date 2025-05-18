@@ -12,8 +12,8 @@ public class DummyItemService(IMediator _mediator) : DummyItemServiceBase
   /// <param name="request">Запрос gRPC.</param>
   /// <param name="context"></param>
   /// <returns>Отклик gRPC.</returns>
-  public override async Task<DummyItemGetActionReply> Create(
-    DummyItemCreateActionRequest request,
+  public override async Task<DummyItemGetGrpcReply> Create(
+    DummyItemCreateGrpcRequest request,
     ServerCallContext context)
   {
     var command = request.ToDummyItemSaveActionCommand();
@@ -24,7 +24,7 @@ public class DummyItemService(IMediator _mediator) : DummyItemServiceBase
 
     result.ThrowRpcExceptionIfNotSuccess();
 
-    return result.Value.ToDummyItemGetActionReply();
+    return result.Value.ToDummyItemGetGrpcReply();
   }
 
   /// <summary>
@@ -33,7 +33,7 @@ public class DummyItemService(IMediator _mediator) : DummyItemServiceBase
   /// <param name="request">Запрос gRPC.</param>
   /// <param name="context"></param>
   /// <returns>Отклик gRPC.</returns>
-  public override async Task<Empty> Delete(DummyItemDeleteActionRequest request, ServerCallContext context)
+  public override async Task<Empty> Delete(DummyItemDeleteGrpcRequest request, ServerCallContext context)
   {
     var command = request.ToDummyItemDeleteActionCommand();
 
@@ -52,8 +52,8 @@ public class DummyItemService(IMediator _mediator) : DummyItemServiceBase
   /// <param name="request">Запрос gRPC.</param>
   /// <param name="context"></param>
   /// <returns>Отклик gRPC.</returns>
-  public override async Task<DummyItemGetActionReply> Get(
-    DummyItemGetActionRequest request,
+  public override async Task<DummyItemGetGrpcReply> Get(
+    DummyItemGetGrpcRequest request,
     ServerCallContext context)
   {
     DummyItemGetActionQuery query = request.ToDummyItemGetActionQuery();
@@ -64,7 +64,7 @@ public class DummyItemService(IMediator _mediator) : DummyItemServiceBase
 
     result.ThrowRpcExceptionIfNotSuccess();
 
-    return result.Value.ToDummyItemGetActionReply();
+    return result.Value.ToDummyItemGetGrpcReply();
   }
 
   /// <summary>
@@ -73,8 +73,8 @@ public class DummyItemService(IMediator _mediator) : DummyItemServiceBase
   /// <param name="request">Запрос gRPC.</param>
   /// <param name="context"></param>
   /// <returns>Отклик gRPC.</returns>
-  public override async Task<DummyItemGetListActionReply> GetList(
-    DummyItemGetListActionRequest request,
+  public override async Task<DummyItemGetListGrpcReply> GetList(
+    DummyItemGetListGrpcRequest request,
     ServerCallContext context)
   {
     DummyItemGetListActionQuery query = request.ToDummyItemGetListActionQuery();
@@ -85,7 +85,7 @@ public class DummyItemService(IMediator _mediator) : DummyItemServiceBase
 
     result.ThrowRpcExceptionIfNotSuccess();
 
-    return result.Value.ToDummyItemGetListActionReply();
+    return result.Value.ToDummyItemGetListGrpcReply();
   }
 
   /// <summary>
@@ -94,8 +94,8 @@ public class DummyItemService(IMediator _mediator) : DummyItemServiceBase
   /// <param name="request">Запрос gRPC.</param>
   /// <param name="context"></param>
   /// <returns>Отклик gRPC.</returns>
-  public override async Task<DummyItemGetActionReply> Update(
-    DummyItemUpdateActionRequest request,
+  public override async Task<DummyItemGetGrpcReply> Update(
+    DummyItemUpdateGrpcRequest request,
     ServerCallContext context)
   {
     var command = request.ToDummyItemSaveActionCommand();
@@ -106,6 +106,6 @@ public class DummyItemService(IMediator _mediator) : DummyItemServiceBase
 
     result.ThrowRpcExceptionIfNotSuccess();
 
-    return result.Value.ToDummyItemGetActionReply();
+    return result.Value.ToDummyItemGetGrpcReply();
   }
 }

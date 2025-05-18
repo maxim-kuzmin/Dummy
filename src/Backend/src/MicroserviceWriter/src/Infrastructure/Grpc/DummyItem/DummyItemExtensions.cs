@@ -11,7 +11,7 @@ public static class DummyItemExtensions
   /// <param name="request">Запрос gRPC.</param>
   /// <returns>Команда.</returns>
   public static DummyItemDeleteActionCommand ToDummyItemDeleteActionCommand(
-    this DummyItemDeleteActionRequest request)
+    this DummyItemDeleteGrpcRequest request)
   {
     return new(request.Id);
   }
@@ -21,17 +21,17 @@ public static class DummyItemExtensions
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
   /// <returns>Запрос.</returns>
-  public static DummyItemGetActionQuery ToDummyItemGetActionQuery(this DummyItemGetActionRequest request)
+  public static DummyItemGetActionQuery ToDummyItemGetActionQuery(this DummyItemGetGrpcRequest request)
   {
     return new(request.Id);
   }
 
   /// <summary>
-  /// Преобразовать к отклику gRPC действия по получению фиктивного предмета.
+  /// Преобразовать к отклику gRPC получения фиктивного предмета.
   /// </summary>
   /// <param name="dto">Объект передачи данных.</param>
   /// <returns>Отклик gRPC.</returns>
-  public static DummyItemGetActionReply ToDummyItemGetActionReply(this DummyItemSingleDTO dto)
+  public static DummyItemGetGrpcReply ToDummyItemGetGrpcReply(this DummyItemSingleDTO dto)
   {
     return new()
     {
@@ -47,35 +47,31 @@ public static class DummyItemExtensions
   /// <param name="request">Запрос gRPC.</param>
   /// <returns>Запрос.</returns>
   public static DummyItemGetListActionQuery ToDummyItemGetListActionQuery(
-    this DummyItemGetListActionRequest request)
+    this DummyItemGetListGrpcRequest request)
   {
-    DummyItemPageQuery pageQuery = new()
-    {
-      Page = new(request.Page.Number, request.Page.Size),
-      Filter = new(request.Filter.FullTextSearchQuery)
-    };
+    DummyItemPageQuery query = new(
+      Page: new(request.Page.Number, request.Page.Size),
+      Sort: new(request.Sort.Field, request.Sort.IsDesc),
+      Filter: new(request.Filter.FullTextSearchQuery));
 
-    return new(pageQuery)
-    {
-      Sort = new(request.Sort.Field, request.Sort.IsDesc)
-    };
+    return new(query);
   }
 
   /// <summary>
-  /// Преобразовать к отклику gRPC действия по получению списка фиктивных предметов.
+  /// Преобразовать к отклику gRPC получения списка фиктивных предметов.
   /// </summary>
   /// <param name="dto">Объект передачи данных.</param>
   /// <returns>Отклик gRPC.</returns>
-  public static DummyItemGetListActionReply ToDummyItemGetListActionReply(this DummyItemListDTO dto)
+  public static DummyItemGetListGrpcReply ToDummyItemGetListGrpcReply(this DummyItemListDTO dto)
   {
-    DummyItemGetListActionReply result = new()
+    DummyItemGetListGrpcReply result = new()
     {
       TotalCount = dto.TotalCount,
     };
 
     foreach (var itemDTO in dto.Items)
     {
-      DummyItemGetListActionReplyItem item = new()
+      DummyItemGetListGrpcReplyItem item = new()
       {
         Id = itemDTO.Id,
         Name = itemDTO.Name,
@@ -94,7 +90,7 @@ public static class DummyItemExtensions
   /// <param name="request">Запрос gRPC.</param>
   /// <returns>Команда.</returns
   public static DummyItemSaveActionCommand ToDummyItemSaveActionCommand(
-    this DummyItemCreateActionRequest request)
+    this DummyItemCreateGrpcRequest request)
   {
     return new(false, 0, request.Name);
   }
@@ -105,7 +101,7 @@ public static class DummyItemExtensions
   /// <param name="request">Запрос gRPC.</param>
   /// <returns>Команда.</returns
   public static DummyItemSaveActionCommand ToDummyItemSaveActionCommand(
-    this DummyItemUpdateActionRequest request)
+    this DummyItemUpdateGrpcRequest request)
   {
     return new(true, request.Id, request.Name);
   }

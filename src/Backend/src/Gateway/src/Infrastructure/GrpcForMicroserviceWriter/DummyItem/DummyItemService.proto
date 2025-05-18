@@ -8,11 +8,11 @@ import "google/protobuf/empty.proto";
 import "google/protobuf/wrappers.proto";
 
 service DummyItem {
-    rpc Create (DummyItemCreateActionRequest) returns (DummyItemGetActionReply);
-    rpc Delete (DummyItemDeleteActionRequest) returns (google.protobuf.Empty);
-    rpc Get (DummyItemGetActionRequest) returns (DummyItemGetActionReply);
-    rpc GetList (DummyItemGetListActionRequest) returns (DummyItemGetListActionReply);
-    rpc Update (DummyItemUpdateActionRequest) returns (DummyItemGetActionReply);
+    rpc Create (DummyItemCreateGrpcRequest) returns (DummyItemGetGrpcReply);
+    rpc Delete (DummyItemDeleteGrpcRequest) returns (google.protobuf.Empty);
+    rpc Get (DummyItemGetGrpcRequest) returns (DummyItemGetGrpcReply);
+    rpc GetList (DummyItemGetListGrpcRequest) returns (DummyItemGetListGrpcReply);
+    rpc Update (DummyItemUpdateGrpcRequest) returns (DummyItemGetGrpcReply);
 }
 
 message ActionRequestSort {
@@ -25,46 +25,46 @@ message ActionRequestPage {
     int32 size = 2;
 }
 
-message DummyItemCreateActionRequest {
+message DummyItemCreateGrpcRequest {
     string name = 1;
 }
 
-message DummyItemDeleteActionRequest {
+message DummyItemDeleteGrpcRequest {
     int64 id = 1;
 }
 
-message DummyItemGetActionRequest {
+message DummyItemGetGrpcRequest {
     int64 id = 1;
 }
 
-message DummyItemGetActionReply {
+message DummyItemGetGrpcReply {
     int64 id = 1;
     string name = 2;
     string concurrency_token = 3;
 }
 
-message DummyItemGetListActionRequestFilter {
+message DummyItemGetListGrpcRequestFilter {
     google.protobuf.StringValue full_text_search_query = 1;
 }
 
-message DummyItemGetListActionRequest {
+message DummyItemGetListGrpcRequest {
     ActionRequestPage page = 1;
     ActionRequestSort sort = 2;
-    DummyItemGetListActionRequestFilter filter = 3;
+    DummyItemGetListGrpcRequestFilter filter = 3;
 }
 
-message DummyItemGetListActionReplyItem {
+message DummyItemGetListGrpcReplyItem {
     int64 id = 1;
     string name = 2;
     string concurrency_token = 3;    
 }
 
-message DummyItemGetListActionReply {
+message DummyItemGetListGrpcReply {
     int64 total_count = 1;
-    repeated DummyItemGetListActionReplyItem items = 2;
+    repeated DummyItemGetListGrpcReplyItem items = 2;
 }
 
-message DummyItemUpdateActionRequest {    
+message DummyItemUpdateGrpcRequest {    
     string name = 1;
     int64 id = 2;
 }

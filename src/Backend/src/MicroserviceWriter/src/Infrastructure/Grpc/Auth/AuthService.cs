@@ -12,8 +12,8 @@ public class AuthService(IMediator _mediator) : AuthServiceBase
   /// <param name="request">Запрос.</param>
   /// <param name="context">Контекст.</param>
   /// <returns>Ответ.</returns>
-  public override async Task<AuthLoginActionReply> Login(
-    AuthLoginActionRequest request,
+  public override async Task<AuthLoginGrpcReply> Login(
+    AuthLoginGrpcRequest request,
     ServerCallContext context)
   {
     AuthLoginActionCommand command = request.ToAuthLoginActionCommand();
@@ -24,6 +24,6 @@ public class AuthService(IMediator _mediator) : AuthServiceBase
 
     result.ThrowRpcExceptionIfNotSuccess();
 
-    return result.Value.ToAuthLoginActionReply();
+    return result.Value.ToAuthLoginGrpcReply();
   }
 }

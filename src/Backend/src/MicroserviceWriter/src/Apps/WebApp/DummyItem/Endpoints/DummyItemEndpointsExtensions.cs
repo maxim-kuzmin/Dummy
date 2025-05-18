@@ -12,16 +12,12 @@ public static class DummyItemEndpointsExtensions
   /// <returns>Запрос действия по получению списка фиктивных предметов.</returns>
   public static DummyItemGetListActionQuery ToDummyItemGetListActionQuery(this DummyItemGetListEndpointRequest request)
   {
-    DummyItemPageQuery pageQuery = new()
-    {
-      Page = new(request.CurrentPage, request.ItemsPerPage),
-      Filter = new(request.Query)
-    };
+    DummyItemPageQuery query = new(
+      Page: new(request.CurrentPage, request.ItemsPerPage),
+      Sort: request.SortField.ToDummyItemQuerySortSection(request.SortIsDesc),
+      Filter: new(request.Query));
 
-    return new(pageQuery)
-    {
-      Sort = request.SortField.ToDummyItemQuerySortSection(request.SortIsDesc)
-    };
+    return new(query);
   }
 
   /// <summary>

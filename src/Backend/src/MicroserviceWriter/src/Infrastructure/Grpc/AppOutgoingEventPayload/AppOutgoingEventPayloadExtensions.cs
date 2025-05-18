@@ -11,7 +11,7 @@ public static class AppOutgoingEventPayloadExtensions
   /// <param name="request">Запрос gRPC.</param>
   /// <returns>Команда.</returns>
   public static AppOutgoingEventPayloadDeleteActionCommand ToAppOutgoingEventPayloadDeleteActionCommand(
-    this AppOutgoingEventPayloadDeleteActionRequest request)
+    this AppOutgoingEventPayloadDeleteGrpcRequest request)
   {
     return new(request.Id);
   }
@@ -22,17 +22,17 @@ public static class AppOutgoingEventPayloadExtensions
   /// <param name="request">Запрос gRPC.</param>
   /// <returns>Запрос.</returns>
   public static AppOutgoingEventPayloadGetActionQuery ToAppOutgoingEventPayloadGetActionQuery(
-    this AppOutgoingEventPayloadGetActionRequest request)
+    this AppOutgoingEventPayloadGetGrpcRequest request)
   {
     return new(request.Id);
   }
 
   /// <summary>
-  /// Преобразовать к отклику gRPC действия по получению полезной нагрузки исходящего события приложения.
+  /// Преобразовать к отклику gRPC получения полезной нагрузки исходящего события приложения.
   /// </summary>
   /// <param name="dto">Объект передачи данных.</param>
   /// <returns>Отклик gRPC.</returns>
-  public static AppOutgoingEventPayloadGetActionReply ToAppOutgoingEventPayloadGetActionReply(
+  public static AppOutgoingEventPayloadGetGrpcReply ToAppOutgoingEventPayloadGetGrpcReply(
     this AppOutgoingEventPayloadSingleDTO dto)
   {
     return new()
@@ -54,7 +54,7 @@ public static class AppOutgoingEventPayloadExtensions
   /// <param name="request">Запрос gRPC.</param>
   /// <returns>Запрос.</returns>
   public static AppOutgoingEventPayloadGetListActionQuery ToAppOutgoingEventPayloadGetListActionQuery(
-    this AppOutgoingEventPayloadGetListActionRequest request)
+    this AppOutgoingEventPayloadGetListGrpcRequest request)
   {
     AppOutgoingEventPayloadPageQuery pageQuery = new()
     {
@@ -69,21 +69,21 @@ public static class AppOutgoingEventPayloadExtensions
   }
 
   /// <summary>
-  /// Преобразовать к отклику gRPC действия по получению списка полезных нагрузок исходящих событий приложения.
+  /// Преобразовать к отклику gRPC получения списка полезных нагрузок исходящих событий приложения.
   /// </summary>
   /// <param name="dto">Объект передачи данных.</param>
   /// <returns>Отклик gRPC.</returns>
-  public static AppOutgoingEventPayloadGetListActionReply ToAppOutgoingEventPayloadGetListActionReply(
+  public static AppOutgoingEventPayloadGetListGrpcReply ToAppOutgoingEventPayloadGetListGrpcReply(
     this AppOutgoingEventPayloadListDTO dto)
   {
-    AppOutgoingEventPayloadGetListActionReply result = new()
+    AppOutgoingEventPayloadGetListGrpcReply result = new()
     {
       TotalCount = dto.TotalCount,
     };
 
     foreach (var itemDTO in dto.Items)
     {
-      AppOutgoingEventPayloadGetListActionReplyItem item = new()
+      AppOutgoingEventPayloadGetListGrpcReplyItem item = new()
       {
         Id = itemDTO.Id,
         AppOutgoingEventId = itemDTO.AppOutgoingEventId,
@@ -107,7 +107,7 @@ public static class AppOutgoingEventPayloadExtensions
   /// <param name="request">Запрос gRPC.</param>
   /// <returns>Команда.</returns>
   public static AppOutgoingEventPayloadSaveActionCommand ToAppOutgoingEventPayloadSaveActionCommand(
-    this AppOutgoingEventPayloadCreateActionRequest request)
+    this AppOutgoingEventPayloadCreateGrpcRequest request)
   {
     AppEventPayloadWithDataAsString payload = new(request.Data)
     {
@@ -127,7 +127,7 @@ public static class AppOutgoingEventPayloadExtensions
   /// <param name="request">Запрос gRPC.</param>
   /// <returns>Команда.</returns>
   public static AppOutgoingEventPayloadSaveActionCommand ToAppOutgoingEventPayloadSaveActionCommand(
-    this AppOutgoingEventPayloadUpdateActionRequest request)
+    this AppOutgoingEventPayloadUpdateGrpcRequest request)
   {
     AppEventPayloadWithDataAsString payload = new(request.Data)
     {

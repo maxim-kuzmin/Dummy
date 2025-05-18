@@ -33,11 +33,9 @@ where
   }
 
   /// <inheritdoc/>
-  public DbSQLCommand CreateDbCommandForFilter(DummyItemPageQuery query)
+  public DbSQLCommand CreateDbCommandForFilter(DummyItemQueryFilterSection? filter)
   {
     DbSQLCommand result = new();
-
-    var filter = query.Filter;
 
     if (!string.IsNullOrEmpty(filter?.FullTextSearchQuery))
     {
@@ -59,8 +57,8 @@ where
   /// <inheritdoc/>
   public DbSQLCommand CreateDbCommandForItems(
     DbSQLCommand dbCommandForFilter,
-    QueryPageSection? page,
-    QuerySortSection? sort)
+    QuerySortSection? sort,
+    QueryPageSection? page = null)
   {
     DbSQLCommand result = new();
 

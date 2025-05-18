@@ -13,7 +13,7 @@ public class AuthCommandService(AuthGrpcClient _grpcClient) : IAuthCommandServic
   {
     try
     {
-      var request = command.ToAuthLoginActionRequest();
+      var request = command.ToAuthLoginGrpcRequest();
 
       var replyTask = _grpcClient.LoginAsync(
         request,

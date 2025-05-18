@@ -12,8 +12,8 @@ public class AppIncomingEventPayloadService(IMediator _mediator) : AppIncomingEv
   /// <param name="request">Запрос gRPC.</param>
   /// <param name="context"></param>
   /// <returns>Отклик gRPC.</returns>
-  public override async Task<AppIncomingEventPayloadGetActionReply> Create(
-    AppIncomingEventPayloadCreateActionRequest request,
+  public override async Task<AppIncomingEventPayloadGetGrpcReply> Create(
+    AppIncomingEventPayloadCreateGrpcRequest request,
     ServerCallContext context)
   {
     var command = request.ToAppIncomingEventPayloadSaveActionCommand();
@@ -24,7 +24,7 @@ public class AppIncomingEventPayloadService(IMediator _mediator) : AppIncomingEv
 
     result.ThrowRpcExceptionIfNotSuccess();
 
-    return result.Value.ToAppIncomingEventPayloadGetActionReply();
+    return result.Value.ToAppIncomingEventPayloadGetGrpcReply();
   }
 
   /// <summary>
@@ -33,7 +33,7 @@ public class AppIncomingEventPayloadService(IMediator _mediator) : AppIncomingEv
   /// <param name="request">Запрос gRPC.</param>
   /// <param name="context"></param>
   /// <returns>Отклик gRPC.</returns>
-  public override async Task<Empty> Delete(AppIncomingEventPayloadDeleteActionRequest request, ServerCallContext context)
+  public override async Task<Empty> Delete(AppIncomingEventPayloadDeleteGrpcRequest request, ServerCallContext context)
   {
     var command = request.ToAppIncomingEventPayloadDeleteActionCommand();
 
@@ -52,8 +52,8 @@ public class AppIncomingEventPayloadService(IMediator _mediator) : AppIncomingEv
   /// <param name="request">Запрос gRPC.</param>
   /// <param name="context"></param>
   /// <returns>Отклик gRPC.</returns>
-  public override async Task<AppIncomingEventPayloadGetActionReply> Get(
-    AppIncomingEventPayloadGetActionRequest request,
+  public override async Task<AppIncomingEventPayloadGetGrpcReply> Get(
+    AppIncomingEventPayloadGetGrpcRequest request,
     ServerCallContext context)
   {
     AppIncomingEventPayloadGetActionQuery query = request.ToAppIncomingEventPayloadGetActionQuery();
@@ -64,7 +64,7 @@ public class AppIncomingEventPayloadService(IMediator _mediator) : AppIncomingEv
 
     result.ThrowRpcExceptionIfNotSuccess();
 
-    return result.Value.ToAppIncomingEventPayloadGetActionReply();
+    return result.Value.ToAppIncomingEventPayloadGetGrpcReply();
   }
 
   /// <summary>
@@ -73,8 +73,8 @@ public class AppIncomingEventPayloadService(IMediator _mediator) : AppIncomingEv
   /// <param name="request">Запрос gRPC.</param>
   /// <param name="context"></param>
   /// <returns>Отклик gRPC.</returns>
-  public override async Task<AppIncomingEventPayloadGetListActionReply> GetList(
-    AppIncomingEventPayloadGetListActionRequest request,
+  public override async Task<AppIncomingEventPayloadGetListGrpcReply> GetList(
+    AppIncomingEventPayloadGetListGrpcRequest request,
     ServerCallContext context)
   {
     AppIncomingEventPayloadGetListActionQuery query = request.ToAppIncomingEventPayloadGetListActionQuery();
@@ -85,7 +85,7 @@ public class AppIncomingEventPayloadService(IMediator _mediator) : AppIncomingEv
 
     result.ThrowRpcExceptionIfNotSuccess();
 
-    return result.Value.ToAppIncomingEventPayloadGetListActionReply();
+    return result.Value.ToAppIncomingEventPayloadGetListGrpcReply();
   }
 
   /// <summary>
@@ -94,8 +94,8 @@ public class AppIncomingEventPayloadService(IMediator _mediator) : AppIncomingEv
   /// <param name="request">Запрос gRPC.</param>
   /// <param name="context"></param>
   /// <returns>Отклик gRPC.</returns>
-  public override async Task<AppIncomingEventPayloadGetActionReply> Update(
-    AppIncomingEventPayloadUpdateActionRequest request,
+  public override async Task<AppIncomingEventPayloadGetGrpcReply> Update(
+    AppIncomingEventPayloadUpdateGrpcRequest request,
     ServerCallContext context)
   {
     var command = request.ToAppIncomingEventPayloadSaveActionCommand();
@@ -106,6 +106,6 @@ public class AppIncomingEventPayloadService(IMediator _mediator) : AppIncomingEv
 
     result.ThrowRpcExceptionIfNotSuccess();
 
-    return result.Value.ToAppIncomingEventPayloadGetActionReply();
+    return result.Value.ToAppIncomingEventPayloadGetGrpcReply();
   }
 }

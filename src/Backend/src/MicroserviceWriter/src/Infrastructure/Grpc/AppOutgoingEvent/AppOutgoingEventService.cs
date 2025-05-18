@@ -12,8 +12,8 @@ public class AppOutgoingEventService(IMediator _mediator) : AppOutgoingEventServ
   /// <param name="request">Запрос gRPC.</param>
   /// <param name="context"></param>
   /// <returns>Отклик gRPC.</returns>
-  public sealed override async Task<AppOutgoingEventGetActionReply> Create(
-    AppOutgoingEventCreateActionRequest request,
+  public sealed override async Task<AppOutgoingEventGetGrpcReply> Create(
+    AppOutgoingEventCreateGrpcRequest request,
     ServerCallContext context)
   {
     var command = request.ToAppOutgoingEventSaveActionCommand();
@@ -24,7 +24,7 @@ public class AppOutgoingEventService(IMediator _mediator) : AppOutgoingEventServ
 
     result.ThrowRpcExceptionIfNotSuccess();
 
-    return result.Value.ToAppOutgoingEventGetActionReply();
+    return result.Value.ToAppOutgoingEventGetGrpcReply();
   }
 
   /// <summary>
@@ -34,7 +34,7 @@ public class AppOutgoingEventService(IMediator _mediator) : AppOutgoingEventServ
   /// <param name="context"></param>
   /// <returns>Отклик gRPC.</returns>
   public sealed override async Task<Empty> Delete(
-    AppOutgoingEventDeleteActionRequest request,
+    AppOutgoingEventDeleteGrpcRequest request,
     ServerCallContext context)
   {
     var command = request.ToAppOutgoingEventDeleteActionCommand();
@@ -54,8 +54,8 @@ public class AppOutgoingEventService(IMediator _mediator) : AppOutgoingEventServ
   /// <param name="request">Запрос gRPC.</param>
   /// <param name="context"></param>
   /// <returns>Отклик gRPC.</returns>
-  public sealed override async Task<AppOutgoingEventGetActionReply> Get(
-    AppOutgoingEventGetActionRequest request,
+  public sealed override async Task<AppOutgoingEventGetGrpcReply> Get(
+    AppOutgoingEventGetGrpcRequest request,
     ServerCallContext context)
   {
     var query = request.ToAppOutgoingEventGetActionQuery();
@@ -66,7 +66,7 @@ public class AppOutgoingEventService(IMediator _mediator) : AppOutgoingEventServ
 
     result.ThrowRpcExceptionIfNotSuccess();
 
-    return result.Value.ToAppOutgoingEventGetActionReply();
+    return result.Value.ToAppOutgoingEventGetGrpcReply();
   }
 
   /// <summary>
@@ -75,8 +75,8 @@ public class AppOutgoingEventService(IMediator _mediator) : AppOutgoingEventServ
   /// <param name="request">Запрос gRPC.</param>
   /// <param name="context"></param>
   /// <returns>Отклик gRPC.</returns>
-  public sealed override async Task<AppOutgoingEventGetListActionReply> GetList(
-    AppOutgoingEventGetListActionRequest request,
+  public sealed override async Task<AppOutgoingEventGetListGrpcReply> GetList(
+    AppOutgoingEventGetListGrpcRequest request,
     ServerCallContext context)
   {
     var query = request.ToAppOutgoingEventGetListActionQuery();
@@ -87,7 +87,7 @@ public class AppOutgoingEventService(IMediator _mediator) : AppOutgoingEventServ
 
     result.ThrowRpcExceptionIfNotSuccess();
 
-    return result.Value.ToAppOutgoingEventGetListActionReply();
+    return result.Value.ToAppOutgoingEventGetListGrpcReply();
   }
 
   /// <summary>
@@ -96,8 +96,8 @@ public class AppOutgoingEventService(IMediator _mediator) : AppOutgoingEventServ
   /// <param name="request">Запрос gRPC.</param>
   /// <param name="context"></param>
   /// <returns>Отклик gRPC.</returns>
-  public sealed override async Task<AppOutgoingEventGetActionReply> Update(
-    AppOutgoingEventUpdateActionRequest request,
+  public sealed override async Task<AppOutgoingEventGetGrpcReply> Update(
+    AppOutgoingEventUpdateGrpcRequest request,
     ServerCallContext context)
   {
     var command = request.ToAppOutgoingEventSaveActionCommand();
@@ -108,6 +108,6 @@ public class AppOutgoingEventService(IMediator _mediator) : AppOutgoingEventServ
 
     result.ThrowRpcExceptionIfNotSuccess();
 
-    return result.Value.ToAppOutgoingEventGetActionReply();
+    return result.Value.ToAppOutgoingEventGetGrpcReply();
   }
 }

@@ -3,10 +3,11 @@
 /// <summary>
 /// Запрос страницы фиктивных предметов.
 /// </summary>
-public record DummyItemPageQuery : PageQuery
-{
-  /// <summary>
-  /// Фильтр.
-  /// </summary>
-  public DummyItemQueryFilterSection? Filter { get; set; }
-}
+/// <param name="Page">Страница.</param>
+/// <param name="Sort">Сортировка.</param>
+/// <param name="Filter">Фильтр.</param>
+public record DummyItemPageQuery(
+  QueryPageSection? Page,
+  QuerySortSection? Sort,
+  DummyItemQueryFilterSection? Filter) :
+  DummyItemListQuery(Sort, Filter);

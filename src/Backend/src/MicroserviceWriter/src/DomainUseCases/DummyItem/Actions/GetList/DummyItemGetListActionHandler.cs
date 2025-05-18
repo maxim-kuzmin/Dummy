@@ -21,21 +21,8 @@ public class DummyItemGetListActionHandler(
 
     _logger.LogDebug("User name: {userName}", userName);
 
-    var totalCount = await _service.GetCount(request.PageQuery, cancellationToken).ConfigureAwait(false);
+    var result = await _service.GetPage(request.Query, cancellationToken);
 
-    List<DummyItemSingleDTO> items;
-
-    if (totalCount > 0)
-    {
-      items = await _service.GetList(request, cancellationToken).ConfigureAwait(false);
-    }
-    else
-    {
-      items = [];
-    }
-
-    DummyItemListDTO dto = new(items, totalCount);
-
-    return Result.Success(dto);
+    return Result.Success(result);
   }
 }

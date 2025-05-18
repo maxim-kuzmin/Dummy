@@ -10,10 +10,10 @@ public static class DummyItemExtensions
   /// </summary>
   /// <param name="command">Команда.</param>
   /// <returns>Запрос действия по созданию фиктивного предмета.</returns>
-  public static DummyItemCreateActionRequest ToDummyItemCreateActionRequest(
+  public static DummyItemCreateGrpcRequest ToDummyItemCreateGrpcRequest(
     this DummyItemCreateActionCommand command)
   {
-    return new DummyItemCreateActionRequest
+    return new DummyItemCreateGrpcRequest
     {
       Id = command.Id,
       Name = command.Name,
@@ -26,10 +26,10 @@ public static class DummyItemExtensions
   /// </summary>
   /// <param name="command">Команда.</param>
   /// <returns>Запрос действия по удалению фиктивного предмета.</returns>
-  public static DummyItemDeleteActionRequest ToDummyItemDeleteActionRequest(
+  public static DummyItemDeleteGrpcRequest ToDummyItemDeleteGrpcRequest(
     this DummyItemDeleteActionCommand command)
   {
-    return new DummyItemDeleteActionRequest
+    return new DummyItemDeleteGrpcRequest
     {
       ObjectId = command.ObjectId,
     };
@@ -40,9 +40,9 @@ public static class DummyItemExtensions
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <returns>Запрос действия на получение фиктивного предмета.</returns>
-  public static DummyItemGetActionRequest ToDummyItemGetActionRequest(this DummyItemSingleQuery query)
+  public static DummyItemGetGrpcRequest ToDummyItemGetGrpcRequest(this DummyItemSingleQuery query)
   {
-    return new DummyItemGetActionRequest
+    return new DummyItemGetGrpcRequest
     {
       ObjectId = query.ObjectId,
     };
@@ -53,7 +53,7 @@ public static class DummyItemExtensions
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <returns>Запрос действия на получение списка фиктивных предметов.</returns>
-  public static DummyItemGetListActionRequest ToDummyItemGetListActionRequest(this DummyItemListQuery query)
+  public static DummyItemGetListGrpcRequest ToDummyItemGetListGrpcRequest(this DummyItemListQuery query)
   {
     var filter = query.PageQuery.Filter;
     var page = query.PageQuery.Page;
@@ -83,7 +83,7 @@ public static class DummyItemExtensions
   /// </summary>
   /// <param name="reply">Ответ.</param>
   /// <returns>Объект передачи данных списка фиктивных предметов.</returns>
-  public static DummyItemListDTO ToDummyItemListDTO(this DummyItemGetListActionReply reply)
+  public static DummyItemListDTO ToDummyItemListDTO(this DummyItemGetListGrpcReply reply)
   {
     var items = new List<DummyItemSingleDTO>(reply.Items.Count);
 
@@ -106,7 +106,7 @@ public static class DummyItemExtensions
   /// </summary>
   /// <param name="reply">Ответ.</param>
   /// <returns>Объект передачи данных фиктивного предмета.</returns>
-  public static DummyItemSingleDTO ToDummyItemSingleDTO(this DummyItemGetActionReply reply)
+  public static DummyItemSingleDTO ToDummyItemSingleDTO(this DummyItemGetGrpcReply reply)
   {
     return new(reply.ObjectId, reply.Id, reply.Name, reply.ConcurrencyToken);
   }
@@ -116,10 +116,10 @@ public static class DummyItemExtensions
   /// </summary>
   /// <param name="command">Команда.</param>
   /// <returns>Запрос действия по обновлению фиктивного предмета.</returns>
-  public static DummyItemUpdateActionRequest ToDummyItemUpdateActionRequest(
+  public static DummyItemUpdateGrpcRequest ToDummyItemUpdateGrpcRequest(
     this DummyItemUpdateActionCommand command)
   {
-    return new DummyItemUpdateActionRequest
+    return new DummyItemUpdateGrpcRequest
     {
       ObjectId = command.ObjectId,
       Id = command.Id,

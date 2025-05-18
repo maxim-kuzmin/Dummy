@@ -11,7 +11,7 @@ public static class AppIncomingEventExtensions
   /// <param name="request">Запрос gRPC.</param>
   /// <returns>Команда.</returns>
   public static AppIncomingEventDeleteActionCommand ToAppIncomingEventDeleteActionCommand(
-    this AppIncomingEventDeleteActionRequest request)
+    this AppIncomingEventDeleteGrpcRequest request)
   {
     return new(request.ObjectId);
   }
@@ -21,17 +21,17 @@ public static class AppIncomingEventExtensions
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
   /// <returns>Запрос.</returns>
-  public static AppIncomingEventGetActionQuery ToAppIncomingEventGetActionQuery(this AppIncomingEventGetActionRequest request)
+  public static AppIncomingEventGetActionQuery ToAppIncomingEventGetActionQuery(this AppIncomingEventGetGrpcRequest request)
   {
     return new(request.ObjectId);
   }
 
   /// <summary>
-  /// Преобразовать к отклику gRPC действия по получению входящего события приложения.
+  /// Преобразовать к отклику gRPC получения входящего события приложения.
   /// </summary>
   /// <param name="dto">Объект передачи данных.</param>
   /// <returns>Отклик gRPC.</returns>
-  public static AppIncomingEventGetActionReply ToAppIncomingEventGetActionReply(this AppIncomingEventSingleDTO dto)
+  public static AppIncomingEventGetGrpcReply ToAppIncomingEventGetGrpcReply(this AppIncomingEventSingleDTO dto)
   {
     return new()
     {
@@ -54,7 +54,7 @@ public static class AppIncomingEventExtensions
   /// <param name="request">Запрос gRPC.</param>
   /// <returns>Запрос.</returns>
   public static AppIncomingEventGetListActionQuery ToAppIncomingEventGetListActionQuery(
-    this AppIncomingEventGetListActionRequest request)
+    this AppIncomingEventGetListGrpcRequest request)
   {
     AppIncomingEventPageQuery pageQuery = new()
     {
@@ -69,13 +69,13 @@ public static class AppIncomingEventExtensions
   }
 
   /// <summary>
-  /// Преобразовать к отклику gRPC действия по получению списка входящих событий приложения.
+  /// Преобразовать к отклику gRPC получения списка входящих событий приложения.
   /// </summary>
   /// <param name="dto">Объект передачи данных.</param>
   /// <returns>Отклик gRPC.</returns>
-  public static AppIncomingEventGetListActionReply ToAppIncomingEventGetListActionReply(this AppIncomingEventListDTO dto)
+  public static AppIncomingEventGetListGrpcReply ToAppIncomingEventGetListGrpcReply(this AppIncomingEventListDTO dto)
   {
-    AppIncomingEventGetListActionReply result = new()
+    AppIncomingEventGetListGrpcReply result = new()
     {
       TotalCount = dto.TotalCount,
     };
@@ -87,7 +87,7 @@ public static class AppIncomingEventExtensions
         continue;
       }
 
-      var item = itemDTO.ToAppIncomingEventGetListActionReplyItem();
+      var item = itemDTO.ToAppIncomingEventGetListGrpcReplyItem();
 
       result.Items.Add(item);
     }
@@ -101,7 +101,7 @@ public static class AppIncomingEventExtensions
   /// <param name="request">Запрос gRPC.</param>
   /// <returns>Команда.</returns
   public static AppIncomingEventSaveActionCommand ToAppIncomingEventSaveActionCommand(
-    this AppIncomingEventCreateActionRequest request)
+    this AppIncomingEventCreateGrpcRequest request)
   {
     var lastLoadingAt = request.LastLoadingAt.ToDateTimeOffset();
     var loadedAt = request.LoadedAt.ToDateTimeOffset();
@@ -126,7 +126,7 @@ public static class AppIncomingEventExtensions
   /// <param name="request">Запрос gRPC.</param>
   /// <returns>Команда.</returns
   public static AppIncomingEventSaveActionCommand ToAppIncomingEventSaveActionCommand(
-    this AppIncomingEventUpdateActionRequest request)
+    this AppIncomingEventUpdateGrpcRequest request)
   {
     var lastLoadingAt = request.LastLoadingAt.ToDateTimeOffset();
     var loadedAt = request.LoadedAt.ToDateTimeOffset();
@@ -145,7 +145,7 @@ public static class AppIncomingEventExtensions
       processedAt == default ? null : processedAt);
   }
 
-  private static AppIncomingEventGetListActionReplyItem ToAppIncomingEventGetListActionReplyItem(
+  private static AppIncomingEventGetListGrpcReplyItem ToAppIncomingEventGetListGrpcReplyItem(
     this AppIncomingEventSingleDTO dto)
   {
     return new()

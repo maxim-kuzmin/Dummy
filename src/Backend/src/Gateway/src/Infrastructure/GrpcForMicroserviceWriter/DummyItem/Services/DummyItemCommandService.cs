@@ -15,7 +15,7 @@ public class DummyItemCommandService(
     try
     {
       var replyTask = _grpcClient.CreateAsync(
-        command.ToDummyItemCreateActionRequest(),
+        command.ToDummyItemCreateGrpcRequest(),
         cancellationToken: cancellationToken);
 
       var reply = await replyTask.ConfigureAwait(false);
@@ -36,7 +36,7 @@ public class DummyItemCommandService(
     try
     {
       var replyTask = _grpcClient.DeleteAsync(
-        command.ToDummyItemDeleteActionRequest(),
+        command.ToDummyItemDeleteGrpcRequest(),
         cancellationToken: cancellationToken);
 
       var reply = await replyTask.ConfigureAwait(false);
@@ -57,7 +57,7 @@ public class DummyItemCommandService(
     try
     {
       var replyTask = _grpcClient.UpdateAsync(
-        command.ToDummyItemUpdateActionRequest(),
+        command.ToDummyItemUpdateGrpcRequest(),
         cancellationToken: cancellationToken);
 
       var reply = await replyTask.ConfigureAwait(false);

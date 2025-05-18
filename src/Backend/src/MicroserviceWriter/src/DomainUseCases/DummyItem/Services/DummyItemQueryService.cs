@@ -10,25 +10,37 @@ public class DummyItemQueryService(
   IDummyItemDbSQLCommandFactory _dbCommandFactory) : IDummyItemQueryService
 {
   /// <inheritdoc/>
-  public async Task<long> GetCount(DummyItemPageQuery query, CancellationToken cancellationToken)
+  public Task<long> GetCount(DummyItemCountQuery query, CancellationToken cancellationToken)
   {
-    var dbCommandForFilter = _dbCommandFactory.CreateDbCommandForFilter(query);
+    var dbCommandForFilter = _dbCommandFactory.CreateDbCommandForFilter(query.Filter);
 
-    var dbCommand = _dbCommandFactory.CreateDbCommandForTotalCount(dbCommandForFilter);
-
-    var data = await _appDbQueryContext.GetList<long>(dbCommand, cancellationToken).ConfigureAwait(false);
-
-    return data[0];
+    return GetCount(dbCommandForFilter, cancellationToken);
   }
 
   /// <inheritdoc/>
   public Task<List<DummyItemSingleDTO>> GetList(DummyItemListQuery query, CancellationToken cancellationToken)
   {
-    var dbCommandForFilter = _dbCommandFactory.CreateDbCommandForFilter(query.PageQuery);
+    var dbCommandForFilter = _dbCommandFactory.CreateDbCommandForFilter(query.Filter);
 
-    var dbCommandForItems = _dbCommandFactory.CreateDbCommandForItems(dbCommandForFilter, query.PageQuery.Page, query.Sort);
+    var dbCommand = _dbCommandFactory.CreateDbCommandForItems(dbCommandForFilter, query.Sort);
 
-    return _appDbQueryContext.GetList<DummyItemSingleDTO>(dbCommandForItems, cancellationToken);
+    return _appDbQueryContext.GetList<DummyItemSingleDTO>(dbCommand, cancellationToken);
+  }
+
+  /// <inheritdoc/>
+  public async Task<DummyItemListDTO> GetPage(DummyItemPageQuery query, CancellationToken cancellationToken)
+  {
+    var dbCommandForFilter = _dbCommandFactory.CreateDbCommandForFilter(query.Filter);
+
+    var totalCount = await GetCount(dbCommandForFilter, cancellationToken).ConfigureAwait(false);    
+
+    var dbCommand = _dbCommandFactory.CreateDbCommandForItems(dbCommandForFilter, query.Sort, query.Page);
+
+    List<DummyItemSingleDTO> items = totalCount > 0
+      ? await _appDbQueryContext.GetList<DummyItemSingleDTO>(dbCommand, cancellationToken).ConfigureAwait(false)
+      : [];
+
+    return new(items, totalCount);
   }
 
   /// <inheritdoc/>
@@ -37,5 +49,14 @@ public class DummyItemQueryService(
     var dbCommand = _dbCommandFactory.CreateDbCommand(query);
 
     return _appDbQueryContext.GetFirstOrDefault<DummyItemSingleDTO>(dbCommand, cancellationToken);
+  }
+
+  private async Task<long> GetCount(DbSQLCommand dbCommandForFilter, CancellationToken cancellationToken)
+  {
+    var dbCommand = _dbCommandFactory.CreateDbCommandForTotalCount(dbCommandForFilter);
+
+    var data = await _appDbQueryContext.GetList<long>(dbCommand, cancellationToken).ConfigureAwait(false);
+
+    return data[0];
   }
 }

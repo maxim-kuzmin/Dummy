@@ -11,7 +11,7 @@ public static class AppOutgoingEventExtensions
   /// <param name="request">Запрос gRPC.</param>
   /// <returns>Команда.</returns>
   public static AppOutgoingEventDeleteActionCommand ToAppOutgoingEventDeleteActionCommand(
-    this AppOutgoingEventDeleteActionRequest request)
+    this AppOutgoingEventDeleteGrpcRequest request)
   {
     return new(request.Id);
   }
@@ -22,17 +22,17 @@ public static class AppOutgoingEventExtensions
   /// <param name="request">Запрос gRPC.</param>
   /// <returns>Запрос.</returns>
   public static AppOutgoingEventGetActionQuery ToAppOutgoingEventGetActionQuery(
-    this AppOutgoingEventGetActionRequest request)
+    this AppOutgoingEventGetGrpcRequest request)
   {
     return new(request.Id);
   }
 
   /// <summary>
-  /// Преобразовать к отклику gRPC действия по получению исходящего события приложения.
+  /// Преобразовать к отклику gRPC получения исходящего события приложения.
   /// </summary>
   /// <param name="dto">Объект передачи данных.</param>
   /// <returns>Отклик gRPC.</returns>
-  public static AppOutgoingEventGetActionReply ToAppOutgoingEventGetActionReply(this AppOutgoingEventSingleDTO dto)
+  public static AppOutgoingEventGetGrpcReply ToAppOutgoingEventGetGrpcReply(this AppOutgoingEventSingleDTO dto)
   {
     return new()
     {
@@ -49,7 +49,7 @@ public static class AppOutgoingEventExtensions
   /// <param name="request">Запрос gRPC.</param>
   /// <returns>Запрос.</returns>
   public static AppOutgoingEventGetListActionQuery ToAppOutgoingEventGetListActionQuery(
-    this AppOutgoingEventGetListActionRequest request)
+    this AppOutgoingEventGetListGrpcRequest request)
   {
     AppOutgoingEventPageQuery pageQuery = new()
     {
@@ -64,21 +64,21 @@ public static class AppOutgoingEventExtensions
   }
 
   /// <summary>
-  /// Преобразовать к отклику gRPC действия по получению списка исходящих событий приложения.
+  /// Преобразовать к отклику gRPC получения списка исходящих событий приложения.
   /// </summary>
   /// <param name="dto">Объект передачи данных.</param>
   /// <returns>Отклик gRPC.</returns>
-  public static AppOutgoingEventGetListActionReply ToAppOutgoingEventGetListActionReply(
+  public static AppOutgoingEventGetListGrpcReply ToAppOutgoingEventGetListGrpcReply(
     this AppOutgoingEventListDTO dto)
   {
-    AppOutgoingEventGetListActionReply result = new()
+    AppOutgoingEventGetListGrpcReply result = new()
     {
       TotalCount = dto.TotalCount,
     };
 
     foreach (var itemDTO in dto.Items)
     {
-      AppOutgoingEventGetListActionReplyItem item = new()
+      AppOutgoingEventGetListGrpcReplyItem item = new()
       {
         Id = itemDTO.Id,
         Name = itemDTO.Name,
@@ -96,7 +96,7 @@ public static class AppOutgoingEventExtensions
   /// <param name="request">Запрос gRPC.</param>
   /// <returns>Команда.</returns>
   public static AppOutgoingEventSaveActionCommand ToAppOutgoingEventSaveActionCommand(
-    this AppOutgoingEventCreateActionRequest request)
+    this AppOutgoingEventCreateGrpcRequest request)
   {
     var publishedAt = request.PublishedAt.ToDateTimeOffset();
 
@@ -109,7 +109,7 @@ public static class AppOutgoingEventExtensions
   /// <param name="request">Запрос gRPC.</param>
   /// <returns>Команда.</returns>
   public static AppOutgoingEventSaveActionCommand ToAppOutgoingEventSaveActionCommand(
-    this AppOutgoingEventUpdateActionRequest request)
+    this AppOutgoingEventUpdateGrpcRequest request)
   {
     var publishedAt = request.PublishedAt.ToDateTimeOffset();
 
