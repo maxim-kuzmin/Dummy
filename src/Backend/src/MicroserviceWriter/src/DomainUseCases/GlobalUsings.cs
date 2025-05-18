@@ -21,6 +21,8 @@ global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEvent.Query
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEvent.Services;
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEventPayload.Actions.Delete;
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEventPayload.Actions.Save;
+global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEventPayload.Command.Sections;
+global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEventPayload.Commands;
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEventPayload.Db.SQL.Factories;
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEventPayload.DTOs;
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEventPayload.Queries;

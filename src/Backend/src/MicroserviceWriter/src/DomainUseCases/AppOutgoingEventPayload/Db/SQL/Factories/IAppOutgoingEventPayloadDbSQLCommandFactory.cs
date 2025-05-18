@@ -15,21 +15,21 @@ public interface IAppOutgoingEventPayloadDbSQLCommandFactory
   /// <summary>
   /// Создать команду базы данных для фильтра.
   /// </summary>
-  /// <param name="query">Запрос.</param>
+  /// <param name="filter">Фильтр.</param>
   /// <returns>Команда базы данных для фильтра.</returns>
-  DbSQLCommand CreateDbCommandForFilter(AppOutgoingEventPayloadPageQuery query);
+  DbSQLCommand CreateDbCommandForFilter(AppOutgoingEventPayloadQueryFilterSection? filter);
 
   /// <summary>
   /// Создать базы данных для элементов.
   /// </summary>
   /// <param name="dbCommandForFilter">Команда базы данных для фильтра.</param>
-  /// <param name="page">Страница.</param>
   /// <param name="sort">Сортировка.</param>
+  /// <param name="page">Страница.</param>  
   /// <returns>Команда базы данных для элементов.</returns>
   DbSQLCommand CreateDbCommandForItems(
     DbSQLCommand dbCommandForFilter,
-    QueryPageSection? page,
-    QuerySortSection? sort);
+    QuerySortSection? sort,
+    QueryPageSection? page = null);
 
   /// <summary>
   /// Создать базы данных для общего количества.

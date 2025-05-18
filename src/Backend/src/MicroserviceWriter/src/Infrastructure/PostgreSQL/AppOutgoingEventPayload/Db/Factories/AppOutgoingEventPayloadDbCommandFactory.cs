@@ -38,11 +38,9 @@ where
   }
 
   /// <inheritdoc/>
-  public DbSQLCommand CreateDbCommandForFilter(AppOutgoingEventPayloadPageQuery query)
+  public DbSQLCommand CreateDbCommandForFilter(AppOutgoingEventPayloadQueryFilterSection? filter)
   {
     DbSQLCommand result = new();
-
-    var filter = query.Filter;
 
     if (!string.IsNullOrEmpty(filter?.FullTextSearchQuery))
     {
@@ -64,8 +62,8 @@ where
   /// <inheritdoc/>
   public DbSQLCommand CreateDbCommandForItems(
     DbSQLCommand dbCommandForFilter,
-    QueryPageSection? page,
-    QuerySortSection? sort)
+    QuerySortSection? sort,
+    QueryPageSection? page = null)
   {
     DbSQLCommand result = new();
 

@@ -81,9 +81,9 @@ public class AppOutboxCommandService(
     AppEventPayloadWithDataAsString payload,
     CancellationToken cancellationToken)
   {
-    var command = payload.ToAppOutgoingEventPayloadSaveActionCommand(appOutgoingEventId);
+    var request = payload.ToAppOutgoingEventPayloadSaveActionRequest(appOutgoingEventId);
 
-    return _appOutgoingEventPayloadCommandService.Save(command, cancellationToken);
+    return _appOutgoingEventPayloadCommandService.Save(request.Command, cancellationToken);
   }
 
   private Task<List<long>> GetUnpublishedAppOutgoingEventList(int maxCount, CancellationToken cancellationToken)

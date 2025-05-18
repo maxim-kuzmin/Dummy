@@ -10,6 +10,7 @@ global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEventPayloa
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEventPayload.Actions.Get;
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEventPayload.Actions.GetList;
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEventPayload.Actions.Save;
+global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEventPayload.Commands;
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEventPayload.DTOs;
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEventPayload.Queries;
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.Auth.Actions.Login;

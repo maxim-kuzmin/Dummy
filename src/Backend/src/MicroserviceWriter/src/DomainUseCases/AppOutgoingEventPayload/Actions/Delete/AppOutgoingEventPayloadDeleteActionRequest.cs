@@ -4,4 +4,5 @@
 /// Команда действия по удалению полезной нагрузки исходящего события приложения.
 /// </summary>
 /// <param name="Id">Идентификатор.</param>
-public record AppOutgoingEventPayloadDeleteActionCommand(long Id) : ICommand<Result>;
+public record AppOutgoingEventPayloadDeleteActionRequest(AppOutgoingEventPayloadDeleteCommand Command) :
+  ICommand<Result>;

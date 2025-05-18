@@ -30,15 +30,20 @@ public static class AppOutboxExtensions
   }
 
   /// <summary>
-  /// Преобразовать к команде действия по сохранению полезной нагрузки исходящего события приложения.
+  /// Преобразовать к запросу действия по сохранению полезной нагрузки исходящего события приложения.
   /// </summary>
   /// <param name="payload">Полезная нагрузка.</param>
   /// <param name="appOutgoingEventId">Идентификатор исходящего события приложения.</param>
   /// <returns>Команда.</returns>
-  public static AppOutgoingEventPayloadSaveActionCommand ToAppOutgoingEventPayloadSaveActionCommand(
+  public static AppOutgoingEventPayloadSaveActionRequest ToAppOutgoingEventPayloadSaveActionRequest(
     this AppEventPayloadWithDataAsString payload,
     long appOutgoingEventId)
   {
-    return new(false, 0, appOutgoingEventId, payload);
+    AppOutgoingEventPayloadSaveCommand command = new(
+      IsUpdate: false,
+      Id: 0,
+      Data: new(AppOutgoingEventId: appOutgoingEventId, Payload: payload));
+
+    return new(command);
   }
 }

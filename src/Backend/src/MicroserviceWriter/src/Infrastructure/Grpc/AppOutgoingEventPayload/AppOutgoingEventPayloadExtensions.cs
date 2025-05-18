@@ -1,4 +1,7 @@
-﻿namespace Makc.Dummy.MicroserviceWriter.Infrastructure.Grpc.AppOutgoingEventPayload;
+﻿using Makc.Dummy.MicroserviceWriter.Infrastructure.Grpc.AppOutgoingEvent;
+using static Makc.Dummy.MicroserviceWriter.Infrastructure.Grpc.AppOutgoingEventPayload.AppOutgoingEventPayload;
+
+namespace Makc.Dummy.MicroserviceWriter.Infrastructure.Grpc.AppOutgoingEventPayload;
 
 /// <summary>
 /// Расширения полезной нагрузки исходящего события приложения.
@@ -10,10 +13,12 @@ public static class AppOutgoingEventPayloadExtensions
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
   /// <returns>Команда.</returns>
-  public static AppOutgoingEventPayloadDeleteActionCommand ToAppOutgoingEventPayloadDeleteActionCommand(
+  public static AppOutgoingEventPayloadDeleteActionRequest ToAppOutgoingEventPayloadDeleteActionCommand(
     this AppOutgoingEventPayloadDeleteGrpcRequest request)
   {
-    return new(request.Id);
+    AppOutgoingEventPayloadDeleteCommand command = new(request.Id);
+
+    return new(command);
   }
 
   /// <summary>
@@ -21,10 +26,12 @@ public static class AppOutgoingEventPayloadExtensions
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
   /// <returns>Запрос.</returns>
-  public static AppOutgoingEventPayloadGetActionQuery ToAppOutgoingEventPayloadGetActionQuery(
+  public static AppOutgoingEventPayloadGetActionRequest ToAppOutgoingEventPayloadGetActionQuery(
     this AppOutgoingEventPayloadGetGrpcRequest request)
   {
-    return new(request.Id);
+    AppOutgoingEventPayloadSingleQuery query = new(request.Id);
+
+    return new(query);
   }
 
   /// <summary>
@@ -53,19 +60,15 @@ public static class AppOutgoingEventPayloadExtensions
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
   /// <returns>Запрос.</returns>
-  public static AppOutgoingEventPayloadGetListActionQuery ToAppOutgoingEventPayloadGetListActionQuery(
+  public static AppOutgoingEventPayloadGetListActionRequest ToAppOutgoingEventPayloadGetListActionQuery(
     this AppOutgoingEventPayloadGetListGrpcRequest request)
   {
-    AppOutgoingEventPayloadPageQuery pageQuery = new()
-    {
-      Page = new(request.Page.Number, request.Page.Size),
-      Filter = new(request.Filter.FullTextSearchQuery)
-    };
+    AppOutgoingEventPayloadPageQuery query = new(    
+      Page: new(request.Page.Number, request.Page.Size),
+      Sort: new(request.Sort.Field, request.Sort.IsDesc),
+      Filter: new(request.Filter.FullTextSearchQuery));
 
-    return new(pageQuery)
-    {
-      Sort = new(request.Sort.Field, request.Sort.IsDesc)
-    };
+    return new(query);
   }
 
   /// <summary>
@@ -106,7 +109,7 @@ public static class AppOutgoingEventPayloadExtensions
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
   /// <returns>Команда.</returns>
-  public static AppOutgoingEventPayloadSaveActionCommand ToAppOutgoingEventPayloadSaveActionCommand(
+  public static AppOutgoingEventPayloadSaveActionRequest ToAppOutgoingEventPayloadSaveActionCommand(
     this AppOutgoingEventPayloadCreateGrpcRequest request)
   {
     AppEventPayloadWithDataAsString payload = new(request.Data)
@@ -118,7 +121,12 @@ public static class AppOutgoingEventPayloadExtensions
       Position = request.Position
     };
 
-    return new(false, 0, request.AppOutgoingEventId, payload);
+    AppOutgoingEventPayloadSaveCommand command = new(
+      IsUpdate: false,
+      Id: 0,
+      Data: new(AppOutgoingEventId: request.AppOutgoingEventId, Payload: payload));
+
+    return new(command);
   }
 
   /// <summary>
@@ -126,7 +134,7 @@ public static class AppOutgoingEventPayloadExtensions
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
   /// <returns>Команда.</returns>
-  public static AppOutgoingEventPayloadSaveActionCommand ToAppOutgoingEventPayloadSaveActionCommand(
+  public static AppOutgoingEventPayloadSaveActionRequest ToAppOutgoingEventPayloadSaveActionCommand(
     this AppOutgoingEventPayloadUpdateGrpcRequest request)
   {
     AppEventPayloadWithDataAsString payload = new(request.Data)
@@ -138,6 +146,11 @@ public static class AppOutgoingEventPayloadExtensions
       Position = request.Position
     };
 
-    return new(true, request.Id, request.AppOutgoingEventId, payload);
+    AppOutgoingEventPayloadSaveCommand command = new(
+      IsUpdate: true,
+      Id: request.Id,
+      Data: new(AppOutgoingEventId: request.AppOutgoingEventId, Payload: payload));
+
+    return new(command);
   }
 }

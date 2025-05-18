@@ -19,7 +19,7 @@ public class AppOutgoingEventPayloadUpdateEndpointHandler(IMediator _mediator) :
     AppOutgoingEventPayloadUpdateEndpointRequest
     request, CancellationToken cancellationToken)
   {
-    var command = request.ToAppOutgoingEventPayloadSaveActionCommand();
+    var command = request.ToAppOutgoingEventPayloadSaveActionRequest();
 
     var result = await _mediator.Send(command, cancellationToken);
 

@@ -13,6 +13,7 @@ global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEvent.Queri
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEventPayload;
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEventPayload.Db.SQL.Factories;
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEventPayload.Queries;
+global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEventPayload.Query.Sections;
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.DummyItem;
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.DummyItem.Db.SQL.Factories;
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.DummyItem.Queries;

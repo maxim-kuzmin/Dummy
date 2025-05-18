@@ -19,7 +19,7 @@ public class DummyItemGetListEndpointHandler(IMediator _mediator) :
     DummyItemGetListEndpointRequest request,
     CancellationToken cancellationToken)
   {
-    var query = request.ToDummyItemGetListActionQuery();
+    var query = request.ToDummyItemGetListActionRequest();
 
     var result = await _mediator.Send(query, cancellationToken);
 

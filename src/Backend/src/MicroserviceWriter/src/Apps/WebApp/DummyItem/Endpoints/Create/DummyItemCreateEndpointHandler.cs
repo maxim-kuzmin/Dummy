@@ -19,7 +19,7 @@ public class DummyItemCreateEndpointHandler(IMediator _mediator) :
     DummyItemCreateEndpointRequest request,
     CancellationToken cancellationToken)
   {
-    var command = request.ToDummyItemSaveActionCommand();
+    var command = request.ToDummyItemSaveActionRequest();
 
     var result = await _mediator.Send(command, cancellationToken);
 

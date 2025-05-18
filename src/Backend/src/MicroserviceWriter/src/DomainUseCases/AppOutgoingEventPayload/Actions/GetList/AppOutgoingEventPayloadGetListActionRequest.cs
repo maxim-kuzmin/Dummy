@@ -3,7 +3,6 @@
 /// <summary>
 /// Запрос действия по получению списка полезных нагрузок исходящего события приложения.
 /// </summary>
-/// <param name="PageQuery">Запрос страницы.</param>
-public record AppOutgoingEventPayloadGetListActionQuery(AppOutgoingEventPayloadPageQuery PageQuery) :
-  AppOutgoingEventPayloadListQuery(PageQuery),
+/// <param name="Query">Запрос.</param>
+public record AppOutgoingEventPayloadGetListActionRequest(AppOutgoingEventPayloadPageQuery Query) :
   IQuery<Result<AppOutgoingEventPayloadListDTO>>;

@@ -10,7 +10,7 @@ public class AppOutgoingEventPayloadCommandService(
 {
   /// <inheritdoc/>
   public async Task<AppCommandResultWithoutValue> Delete(
-    AppOutgoingEventPayloadDeleteActionCommand command,
+    AppOutgoingEventPayloadDeleteCommand command,
     CancellationToken cancellationToken)
   {
     var entity = await _repository.GetByIdAsync(command.Id, cancellationToken).ConfigureAwait(false);
@@ -59,12 +59,12 @@ public class AppOutgoingEventPayloadCommandService(
 
   /// <inheritdoc/>
   public async Task<AppCommandResultWithValue<AppOutgoingEventPayloadSingleDTO>> Save(
-    AppOutgoingEventPayloadSaveActionCommand command,
+    AppOutgoingEventPayloadSaveCommand command,
     CancellationToken cancellationToken)
   {
     AppOutgoingEventPayloadEntity? entity = null;
 
-    if (command.HasEntityBeingSavedAlreadyBeenCreated)
+    if (command.IsUpdate)
     {
       entity = await _repository.GetByIdAsync(command.Id, cancellationToken).ConfigureAwait(false);
 
@@ -74,7 +74,7 @@ public class AppOutgoingEventPayloadCommandService(
       }
     }
 
-    var aggregateResult = GetAggregateResultToSave(entity, command);
+    var aggregateResult = GetAggregateResultToSave(entity, command.Data);
 
     entity = aggregateResult.Entity;
 
@@ -99,7 +99,7 @@ public class AppOutgoingEventPayloadCommandService(
 
     async Task FuncToExecute(CancellationToken cancellationToken)
     {
-      if (command.HasEntityBeingSavedAlreadyBeenCreated)
+      if (command.IsUpdate)
       {
         await _repository.UpdateAsync(entity, cancellationToken).ConfigureAwait(false);
       }
@@ -131,13 +131,13 @@ public class AppOutgoingEventPayloadCommandService(
 
   private AggregateResult<AppOutgoingEventPayloadEntity> GetAggregateResultToSave(
     AppOutgoingEventPayloadEntity? entity,
-    AppOutgoingEventPayloadSaveActionCommand command)
+    AppOutgoingEventPayloadCommandDataSection data)
   {
     var aggregate = _factory.CreateAggregate(entity);
 
-    var payload = command.Payload;
+    var payload = data.Payload;
 
-    aggregate.UpdateAppOutgoingEventId(command.AppOutgoingEventId);
+    aggregate.UpdateAppOutgoingEventId(data.AppOutgoingEventId);
     aggregate.UpdateData(payload.Data);
     aggregate.UpdateEntityConcurrencyTokenToDelete(payload.EntityConcurrencyTokenToDelete);
     aggregate.UpdateEntityConcurrencyTokenToInsert(payload.EntityConcurrencyTokenToInsert);

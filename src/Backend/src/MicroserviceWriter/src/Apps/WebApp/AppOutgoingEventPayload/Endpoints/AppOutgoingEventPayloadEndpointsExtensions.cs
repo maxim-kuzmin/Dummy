@@ -10,40 +10,46 @@ public static class AppOutgoingEventPayloadEndpointsExtensions
   /// </summary>
   /// <param name="request">Запрос.</param>
   /// <returns>Запрос действия по получению списка полезных нагрузок исходящего события приложения.</returns>
-  public static AppOutgoingEventPayloadGetListActionQuery ToAppOutgoingEventPayloadGetListActionQuery(
+  public static AppOutgoingEventPayloadGetListActionRequest ToAppOutgoingEventPayloadGetListActionRequest(
     this AppOutgoingEventPayloadGetListEndpointRequest request)
   {
-    AppOutgoingEventPayloadPageQuery pageQuery = new()
-    {
-      Page = new QueryPageSection(request.CurrentPage, request.ItemsPerPage),
-      Filter = new AppOutgoingEventPayloadQueryFilterSection(request.Query)
-    };
+    AppOutgoingEventPayloadPageQuery query = new(
+      Page: new QueryPageSection(request.CurrentPage, request.ItemsPerPage),
+      Sort: request.SortField.ToAppOutgoingEventPayloadQuerySortSection(request.SortIsDesc),
+      Filter: new AppOutgoingEventPayloadQueryFilterSection(request.Query));
 
-    return new(pageQuery)
-    {
-      Sort = request.SortField.ToAppOutgoingEventPayloadQuerySortSection(request.SortIsDesc)
-    };
+    return new(query);
   }
 
   /// <summary>
-  /// Преобразовать к команде действия по сохранению полезной нагрузки исходящего события приложения.
+  /// Преобразовать к запросу действия по сохранению полезной нагрузки исходящего события приложения.
   /// </summary>
   /// <param name="request">Запрос.</param>
   /// <returns>Команда.</returns>
-  public static AppOutgoingEventPayloadSaveActionCommand ToAppOutgoingEventPayloadSaveActionCommand(
+  public static AppOutgoingEventPayloadSaveActionRequest ToAppOutgoingEventPayloadSaveActionRequest(
     this AppOutgoingEventPayloadCreateEndpointRequest request)
   {
-    return new(false, 0, request.AppOutgoingEventId, request.Payload);
+    AppOutgoingEventPayloadSaveCommand command = new(
+      IsUpdate: false,
+      Id: 0,
+      Data: new(AppOutgoingEventId: request.AppOutgoingEventId, Payload: request.Payload));
+
+    return new(command);
   }
 
   /// <summary>
-  /// Преобразовать к команде действия по сохранению полезной нагрузки исходящего события приложения.
+  /// Преобразовать к запросу действия по сохранению полезной нагрузки исходящего события приложения.
   /// </summary>
   /// <param name="request">Запрос.</param>
   /// <returns>Команда.</returns>
-  public static AppOutgoingEventPayloadSaveActionCommand ToAppOutgoingEventPayloadSaveActionCommand(
+  public static AppOutgoingEventPayloadSaveActionRequest ToAppOutgoingEventPayloadSaveActionRequest(
     this AppOutgoingEventPayloadUpdateEndpointRequest request)
   {
-    return new(true, request.Id, request.AppOutgoingEventId, request.Payload);
+    AppOutgoingEventPayloadSaveCommand command = new(
+      IsUpdate: true,
+      Id: request.Id,
+      Data: new(AppOutgoingEventId: request.AppOutgoingEventId, Payload: request.Payload));
+
+    return new(command);
   }
 }

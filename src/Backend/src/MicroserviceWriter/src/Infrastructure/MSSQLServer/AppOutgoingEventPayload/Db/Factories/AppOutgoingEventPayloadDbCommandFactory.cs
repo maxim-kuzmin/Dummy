@@ -1,4 +1,6 @@
-﻿namespace Makc.Dummy.MicroserviceWriter.Infrastructure.MSSQLServer.AppOutgoingEventPayload.Db.Factories;
+﻿using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEventPayload.Query.Sections;
+
+namespace Makc.Dummy.MicroserviceWriter.Infrastructure.MSSQLServer.AppOutgoingEventPayload.Db.Factories;
 
 /// <summary>
 /// Фабрика команд базы данных полезной нагрузки исходящего события приложения.
@@ -38,11 +40,9 @@ where
   }
 
   /// <inheritdoc/>
-  public DbSQLCommand CreateDbCommandForFilter(AppOutgoingEventPayloadPageQuery query)
+  public DbSQLCommand CreateDbCommandForFilter(AppOutgoingEventPayloadQueryFilterSection? filter)
   {
     DbSQLCommand result = new();
-
-    var filter = query.Filter;
 
     if (!string.IsNullOrEmpty(filter?.FullTextSearchQuery))
     {
@@ -64,8 +64,8 @@ where
   /// <inheritdoc/>
   public DbSQLCommand CreateDbCommandForItems(
     DbSQLCommand dbCommandForFilter,
-    QueryPageSection? page,
-    QuerySortSection? sort)
+    QuerySortSection? sort,
+    QueryPageSection? page = null)
   {
     DbSQLCommand result = new();
 
