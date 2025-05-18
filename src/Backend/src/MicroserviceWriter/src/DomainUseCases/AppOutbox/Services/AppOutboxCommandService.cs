@@ -68,12 +68,12 @@ public class AppOutboxCommandService(
   }
 
   private Task<AppCommandResultWithValue<AppOutgoingEventSingleDTO>> CreateAppOutgoingEvent(
-    AppOutboxSaveActionCommand request,
+    AppOutboxSaveActionCommand command,
     CancellationToken cancellationToken)
   {
-    var command = request.ToAppOutgoingEventSaveActionCommand();
+    var request = command.ToAppOutgoingEventSaveActionRequest();
 
-    return _appOutgoingEventCommandService.Save(command, cancellationToken);
+    return _appOutgoingEventCommandService.Save(request.Command, cancellationToken);
   }
 
   private Task<AppCommandResultWithValue<AppOutgoingEventPayloadSingleDTO>> CreateAppOutgoingEventPayload(

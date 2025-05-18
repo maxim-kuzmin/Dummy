@@ -11,7 +11,7 @@ public interface IAppOutgoingEventQueryService
   /// <param name="query">Запрос.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Количество объектов.</returns>
-  Task<long> GetCount(AppOutgoingEventPageQuery query, CancellationToken cancellationToken);
+  Task<long> GetCount(AppOutgoingEventCountQuery query, CancellationToken cancellationToken);
 
   /// <summary>
   /// Получить список объектов.
@@ -20,6 +20,14 @@ public interface IAppOutgoingEventQueryService
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Список объектов.</returns>
   Task<List<AppOutgoingEventSingleDTO>> GetList(AppOutgoingEventListQuery query, CancellationToken cancellationToken);
+
+  /// <summary>
+  /// Получить страницу объектов.
+  /// </summary>
+  /// <param name="query">Запрос.</param>
+  /// <param name="cancellationToken">Токен отмены.</param>
+  /// <returns>Список объектов.</returns>
+  Task<AppOutgoingEventListDTO> GetPage(AppOutgoingEventPageQuery query, CancellationToken cancellationToken);
 
   /// <summary>
   /// Получить единственный объект.

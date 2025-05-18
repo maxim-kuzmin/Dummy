@@ -25,6 +25,7 @@ global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEvent.Actio
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEvent.Actions.Get;
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEvent.Actions.GetList;
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEvent.Actions.Save;
+global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEvent.Commands;
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEvent.DTOs;
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEvent.Queries;
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEvent.Query.Sections;

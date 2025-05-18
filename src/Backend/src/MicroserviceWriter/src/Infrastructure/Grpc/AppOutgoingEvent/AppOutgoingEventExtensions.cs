@@ -6,14 +6,16 @@
 public static class AppOutgoingEventExtensions
 {
   /// <summary>
-  /// Преобразовать к команде действия по удалению исходящего события приложения.
+  /// Преобразовать к запросу действия по удалению исходящего события приложения.
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
   /// <returns>Команда.</returns>
-  public static AppOutgoingEventDeleteActionCommand ToAppOutgoingEventDeleteActionCommand(
+  public static AppOutgoingEventDeleteActionRequest ToAppOutgoingEventDeleteActionRequest(
     this AppOutgoingEventDeleteGrpcRequest request)
   {
-    return new(request.Id);
+    AppOutgoingEventDeleteCommand command = new(request.Id);
+
+    return new(command);
   }
 
   /// <summary>
@@ -21,10 +23,12 @@ public static class AppOutgoingEventExtensions
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
   /// <returns>Запрос.</returns>
-  public static AppOutgoingEventGetActionQuery ToAppOutgoingEventGetActionQuery(
+  public static AppOutgoingEventGetActionRequest ToAppOutgoingEventGetActionRequest(
     this AppOutgoingEventGetGrpcRequest request)
   {
-    return new(request.Id);
+    AppOutgoingEventSingleQuery query = new(request.Id);
+
+    return new(query);
   }
 
   /// <summary>
@@ -48,19 +52,16 @@ public static class AppOutgoingEventExtensions
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
   /// <returns>Запрос.</returns>
-  public static AppOutgoingEventGetListActionQuery ToAppOutgoingEventGetListActionQuery(
+  public static AppOutgoingEventGetListActionRequest ToAppOutgoingEventGetListActionQuery(
     this AppOutgoingEventGetListGrpcRequest request)
   {
-    AppOutgoingEventPageQuery pageQuery = new()
-    {
-      Page = new(request.Page.Number, request.Page.Size),
-      Filter = new(request.Filter.FullTextSearchQuery)
-    };
+    AppOutgoingEventPageQuery query = new(
+      Page: new(request.Page.Number, request.Page.Size),
+      Sort: new(request.Sort.Field, request.Sort.IsDesc),
+      Filter: new(request.Filter.FullTextSearchQuery)
+    );
 
-    return new(pageQuery)
-    {
-      Sort = new(request.Sort.Field, request.Sort.IsDesc)
-    };
+    return new(query);
   }
 
   /// <summary>
@@ -95,12 +96,18 @@ public static class AppOutgoingEventExtensions
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
   /// <returns>Команда.</returns>
-  public static AppOutgoingEventSaveActionCommand ToAppOutgoingEventSaveActionCommand(
+  public static AppOutgoingEventSaveActionRequest ToAppOutgoingEventSaveActionCommand(
     this AppOutgoingEventCreateGrpcRequest request)
   {
     var publishedAt = request.PublishedAt.ToDateTimeOffset();
 
-    return new(false, 0, request.Name, publishedAt == default ? null : publishedAt);
+    AppOutgoingEventSaveCommand command = new(
+      IsUpdate: false,
+      Id: 0,
+      Data: new(Name: request.Name, PublishedAt: publishedAt == default ? null : publishedAt)
+      );
+
+    return new(command);
   }
 
   /// <summary>
@@ -108,11 +115,17 @@ public static class AppOutgoingEventExtensions
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
   /// <returns>Команда.</returns>
-  public static AppOutgoingEventSaveActionCommand ToAppOutgoingEventSaveActionCommand(
+  public static AppOutgoingEventSaveActionRequest ToAppOutgoingEventSaveActionCommand(
     this AppOutgoingEventUpdateGrpcRequest request)
   {
     var publishedAt = request.PublishedAt.ToDateTimeOffset();
 
-    return new(true, request.Id, request.Name, publishedAt == default ? null : publishedAt);
+    AppOutgoingEventSaveCommand command = new(
+      IsUpdate: true,
+      Id: request.Id,
+      Data: new(Name: request.Name, PublishedAt: publishedAt == default ? null : publishedAt)
+      );
+
+    return new(command);
   }
 }

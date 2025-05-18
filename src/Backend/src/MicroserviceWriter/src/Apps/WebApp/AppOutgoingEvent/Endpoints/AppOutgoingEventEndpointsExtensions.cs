@@ -10,39 +10,46 @@ public static class AppOutgoingEventEndpointsExtensions
   /// </summary>
   /// <param name="request">Запрос.</param>
   /// <returns>Запрос действия по получению списка исходящих событий приложения.</returns>
-  public static AppOutgoingEventGetListActionQuery ToAppOutgoingEventGetListActionQuery(this AppOutgoingEventGetListEndpointRequest request)
+  public static AppOutgoingEventGetListActionRequest ToAppOutgoingEventGetListActionRequest(
+    this AppOutgoingEventGetListEndpointRequest request)
   {
-    AppOutgoingEventPageQuery pageQuery = new()
-    {
-      Page = new QueryPageSection(request.CurrentPage, request.ItemsPerPage),
-      Filter = new AppOutgoingEventQueryFilterSection(request.Query)
-    };
+    AppOutgoingEventPageQuery query = new(
+      Page: new QueryPageSection(request.CurrentPage, request.ItemsPerPage),
+      Sort: request.SortField.ToAppOutgoingEventQuerySortSection(request.SortIsDesc),
+      Filter: new AppOutgoingEventQueryFilterSection(request.Query));
 
-    return new(pageQuery)
-    {
-      Sort = request.SortField.ToAppOutgoingEventQuerySortSection(request.SortIsDesc)
-    };
+    return new(query);
   }
 
   /// <summary>
-  /// Преобразовать к команде действия по сохранению исходящего события приложения.
+  /// Преобразовать к запросу действия по сохранению исходящего события приложения.
   /// </summary>
   /// <param name="request">Запрос.</param>
   /// <returns>Команда.</returns>
-  public static AppOutgoingEventSaveActionCommand ToAppOutgoingEventSaveActionCommand(
+  public static AppOutgoingEventSaveActionRequest ToAppOutgoingEventSaveActionRequest(
     this AppOutgoingEventCreateEndpointRequest request)
   {
-    return new(false, 0, request.Name, request.PublishedAt);
+    AppOutgoingEventSaveCommand command = new(
+      IsUpdate: false,
+      Id: 0,
+      Data: new(Name: request.Name, PublishedAt: request.PublishedAt));
+
+    return new(command);
   }
 
   /// <summary>
-  /// Преобразовать к команде действия по сохранению исходящего события приложения.
+  /// Преобразовать к запросу действия по сохранению исходящего события приложения.
   /// </summary>
   /// <param name="request">Запрос.</param>
   /// <returns>Команда.</returns>
-  public static AppOutgoingEventSaveActionCommand ToAppOutgoingEventSaveActionCommand(
+  public static AppOutgoingEventSaveActionRequest ToAppOutgoingEventSaveActionRequest(
     this AppOutgoingEventUpdateEndpointRequest request)
   {
-    return new(true, request.Id, request.Name, request.PublishedAt);
+    AppOutgoingEventSaveCommand command = new(
+      IsUpdate: true,
+      Id: request.Id,
+      Data: new(Name: request.Name, PublishedAt: request.PublishedAt));
+
+    return new(command);
   }
 }

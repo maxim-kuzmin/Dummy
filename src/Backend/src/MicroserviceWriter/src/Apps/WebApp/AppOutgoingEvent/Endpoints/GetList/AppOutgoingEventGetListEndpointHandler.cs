@@ -19,7 +19,7 @@ public class AppOutgoingEventGetListEndpointHandler(IMediator _mediator) :
     AppOutgoingEventGetListEndpointRequest request,
     CancellationToken cancellationToken)
   {
-    AppOutgoingEventGetListActionQuery query = request.ToAppOutgoingEventGetListActionQuery();
+    AppOutgoingEventGetListActionRequest query = request.ToAppOutgoingEventGetListActionRequest();
 
     var result = await _mediator.Send(query, cancellationToken);
 

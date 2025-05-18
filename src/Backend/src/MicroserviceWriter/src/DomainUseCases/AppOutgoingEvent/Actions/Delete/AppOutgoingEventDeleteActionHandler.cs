@@ -5,12 +5,12 @@
 /// </summary>
 /// <param name="_service">Сервис.</param>
 public class AppOutgoingEventDeleteActionHandler(IAppOutgoingEventCommandService _service) :
-  ICommandHandler<AppOutgoingEventDeleteActionCommand, Result>
+  ICommandHandler<AppOutgoingEventDeleteActionRequest, Result>
 {
   /// <inheritdoc/>
-  public async Task<Result> Handle(AppOutgoingEventDeleteActionCommand request, CancellationToken cancellationToken)
+  public async Task<Result> Handle(AppOutgoingEventDeleteActionRequest request, CancellationToken cancellationToken)
   {
-    var result = await _service.Delete(request, cancellationToken).ConfigureAwait(false);
+    var result = await _service.Delete(request.Command, cancellationToken).ConfigureAwait(false);
 
     return result.Data;
   }

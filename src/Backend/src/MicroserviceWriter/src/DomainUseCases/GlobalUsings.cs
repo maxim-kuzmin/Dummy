@@ -13,13 +13,13 @@ global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutbox.Actions.Save
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutbox.Services;
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEvent.Actions.Delete;
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEvent.Actions.Save;
+global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEvent.Command.Sections;
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEvent.Commands;
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEvent.Db.SQL.Factories;
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEvent.DTOs;
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEvent.Queries;
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEvent.Query.Sections;
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEvent.Services;
-global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEventPayload.Actions.Delete;
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEventPayload.Actions.Save;
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEventPayload.Command.Sections;
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEventPayload.Commands;

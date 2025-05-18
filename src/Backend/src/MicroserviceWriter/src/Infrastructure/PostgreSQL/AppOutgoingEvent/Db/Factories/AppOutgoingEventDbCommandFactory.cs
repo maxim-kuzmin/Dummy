@@ -1,4 +1,6 @@
-﻿namespace Makc.Dummy.MicroserviceWriter.Infrastructure.PostgreSQL.AppOutgoingEvent.Db.Factories;
+﻿using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEvent.Query.Sections;
+
+namespace Makc.Dummy.MicroserviceWriter.Infrastructure.PostgreSQL.AppOutgoingEvent.Db.Factories;
 
 /// <summary>
 /// Фабрика команд базы данных исходящего события приложения.
@@ -87,11 +89,9 @@ limit {{query.MaxCount}}
   }
 
   /// <inheritdoc/>
-  public DbSQLCommand CreateDbCommandForFilter(AppOutgoingEventPageQuery query)
+  public DbSQLCommand CreateDbCommandForFilter(AppOutgoingEventQueryFilterSection? filter)
   {
     DbSQLCommand result = new();
-
-    var filter = query.Filter;
 
     if (!string.IsNullOrEmpty(filter?.FullTextSearchQuery))
     {
@@ -112,9 +112,9 @@ where
 
   /// <inheritdoc/>
   public DbSQLCommand CreateDbCommandForItems(
-    DbSQLCommand dbCommandForFilter,
-    QueryPageSection? page,
-    QuerySortSection? sort)
+    DbSQLCommand dbCommandForFilter,    
+    QuerySortSection? sort,
+    QueryPageSection? page = null)
   {
     DbSQLCommand result = new();
 

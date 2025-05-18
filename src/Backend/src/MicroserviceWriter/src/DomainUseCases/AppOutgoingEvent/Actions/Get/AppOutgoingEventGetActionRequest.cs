@@ -3,6 +3,6 @@
 /// <summary>
 /// Запрос действия по получению исходящего события приложения.
 /// </summary>
-public record AppOutgoingEventGetActionQuery(long Id) :
-  AppOutgoingEventSingleQuery(Id),
+/// <param name="Query">Запрос.</param>
+public record AppOutgoingEventGetActionRequest(AppOutgoingEventSingleQuery Query) :
   IQuery<Result<AppOutgoingEventSingleDTO>>;

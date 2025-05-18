@@ -5,14 +5,14 @@
 /// </summary>
 /// <param name="_service">Сервис.</param>
 public class AppOutgoingEventSaveActionHandler(IAppOutgoingEventCommandService _service) :
-  ICommandHandler<AppOutgoingEventSaveActionCommand, Result<AppOutgoingEventSingleDTO>>
+  ICommandHandler<AppOutgoingEventSaveActionRequest, Result<AppOutgoingEventSingleDTO>>
 {
   /// <inheritdoc/>
   public async Task<Result<AppOutgoingEventSingleDTO>> Handle(
-    AppOutgoingEventSaveActionCommand request,
+    AppOutgoingEventSaveActionRequest request,
     CancellationToken cancellationToken)
   {
-    var result = await _service.Save(request, cancellationToken).ConfigureAwait(false);
+    var result = await _service.Save(request.Command, cancellationToken).ConfigureAwait(false);
 
     return result.Data;
   }

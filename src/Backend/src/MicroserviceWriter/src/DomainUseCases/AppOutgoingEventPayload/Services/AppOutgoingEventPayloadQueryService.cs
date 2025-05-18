@@ -18,7 +18,9 @@ public class AppOutgoingEventPayloadQueryService(
   }
 
   /// <inheritdoc/>
-  public Task<List<AppOutgoingEventPayloadSingleDTO>> GetList(AppOutgoingEventPayloadListQuery query, CancellationToken cancellationToken)
+  public Task<List<AppOutgoingEventPayloadSingleDTO>> GetList(
+    AppOutgoingEventPayloadListQuery query,
+    CancellationToken cancellationToken)
   {
     var dbCommandForFilter = _dbCommandFactory.CreateDbCommandForFilter(query.Filter);
 
@@ -28,7 +30,9 @@ public class AppOutgoingEventPayloadQueryService(
   }
 
   /// <inheritdoc/>
-  public async Task<AppOutgoingEventPayloadListDTO> GetPage(AppOutgoingEventPayloadPageQuery query, CancellationToken cancellationToken)
+  public async Task<AppOutgoingEventPayloadListDTO> GetPage(
+    AppOutgoingEventPayloadPageQuery query,
+    CancellationToken cancellationToken)
   {
     var dbCommandForFilter = _dbCommandFactory.CreateDbCommandForFilter(query.Filter);
 
@@ -36,15 +40,26 @@ public class AppOutgoingEventPayloadQueryService(
 
     var dbCommand = _dbCommandFactory.CreateDbCommandForItems(dbCommandForFilter, query.Sort, query.Page);
 
-    List<AppOutgoingEventPayloadSingleDTO> items = totalCount > 0
-      ? await _appDbQueryContext.GetList<AppOutgoingEventPayloadSingleDTO>(dbCommand, cancellationToken).ConfigureAwait(false)
-      : [];
+    List<AppOutgoingEventPayloadSingleDTO> items;
+
+    if (totalCount > 0)
+    {
+      var task = _appDbQueryContext.GetList<AppOutgoingEventPayloadSingleDTO>(dbCommand, cancellationToken);
+
+      items = await task.ConfigureAwait(false);
+    }
+    else
+    {
+      items = [];
+    }
 
     return new(items, totalCount);
   }
 
   /// <inheritdoc/>
-  public Task<AppOutgoingEventPayloadSingleDTO?> GetSingle(AppOutgoingEventPayloadSingleQuery query, CancellationToken cancellationToken)
+  public Task<AppOutgoingEventPayloadSingleDTO?> GetSingle(
+    AppOutgoingEventPayloadSingleQuery query,
+    CancellationToken cancellationToken)
   {
     var dbCommand = _dbCommandFactory.CreateDbCommand(query);
 

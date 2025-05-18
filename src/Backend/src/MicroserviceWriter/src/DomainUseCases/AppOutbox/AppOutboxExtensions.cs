@@ -19,14 +19,19 @@ public static class AppOutboxExtensions
   }
 
   /// <summary>
-  /// Преобразовать к команде действия по сохранению исходящего события приложения.
+  /// Преобразовать к запросу действия по сохранению исходящего события приложения.
   /// </summary>
   /// <param name="command">Команда действия по сохранению исходящего сообщения приложения.</param>
   /// <returns>Команда.</returns>
-  public static AppOutgoingEventSaveActionCommand ToAppOutgoingEventSaveActionCommand(
-    this AppOutboxSaveActionCommand command)
+  public static AppOutgoingEventSaveActionRequest ToAppOutgoingEventSaveActionRequest(
+    this AppOutboxSaveActionCommand actionCommand)
   {
-    return new(false, 0, command.EventName, null);
+    AppOutgoingEventSaveCommand command = new(
+      IsUpdate: false,
+      Id: 0,
+      Data: new(Name: actionCommand.EventName, PublishedAt: null));
+
+    return new(command);
   }
 
   /// <summary>

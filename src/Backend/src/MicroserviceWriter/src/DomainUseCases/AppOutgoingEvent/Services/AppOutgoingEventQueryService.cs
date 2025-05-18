@@ -10,29 +10,56 @@ public class AppOutgoingEventQueryService(
   IAppOutgoingEventDbSQLCommandFactory _dbCommandFactory) : IAppOutgoingEventQueryService
 {
   /// <inheritdoc/>
-  public async Task<long> GetCount(AppOutgoingEventPageQuery query, CancellationToken cancellationToken)
+  public Task<long> GetCount(AppOutgoingEventCountQuery query, CancellationToken cancellationToken)
   {
-    var dbCommandForFilter = _dbCommandFactory.CreateDbCommandForFilter(query);
+    var dbCommandForFilter = _dbCommandFactory.CreateDbCommandForFilter(query.Filter);
 
-    var dbCommand = _dbCommandFactory.CreateDbCommandForTotalCount(dbCommandForFilter);
-
-    var data = await _appDbQueryContext.GetList<long>(dbCommand, cancellationToken).ConfigureAwait(false);
-
-    return data[0];
+    return GetCount(dbCommandForFilter, cancellationToken);
   }
 
   /// <inheritdoc/>
-  public Task<List<AppOutgoingEventSingleDTO>> GetList(AppOutgoingEventListQuery query, CancellationToken cancellationToken)
+  public Task<List<AppOutgoingEventSingleDTO>> GetList(
+    AppOutgoingEventListQuery query,
+    CancellationToken cancellationToken)
   {
-    var dbCommandForFilter = _dbCommandFactory.CreateDbCommandForFilter(query.PageQuery);
+    var dbCommandForFilter = _dbCommandFactory.CreateDbCommandForFilter(query.Filter);
 
-    var dbCommandForItems = _dbCommandFactory.CreateDbCommandForItems(dbCommandForFilter, query.PageQuery.Page, query.Sort);
+    var dbCommand = _dbCommandFactory.CreateDbCommandForItems(dbCommandForFilter, query.Sort);
 
-    return _appDbQueryContext.GetList<AppOutgoingEventSingleDTO>(dbCommandForItems, cancellationToken);
+    return _appDbQueryContext.GetList<AppOutgoingEventSingleDTO>(dbCommand, cancellationToken);
   }
 
   /// <inheritdoc/>
-  public Task<AppOutgoingEventSingleDTO?> GetSingle(AppOutgoingEventSingleQuery query, CancellationToken cancellationToken)
+  public async Task<AppOutgoingEventListDTO> GetPage(
+    AppOutgoingEventPageQuery query,
+    CancellationToken cancellationToken)
+  {
+    var dbCommandForFilter = _dbCommandFactory.CreateDbCommandForFilter(query.Filter);
+
+    var totalCount = await GetCount(dbCommandForFilter, cancellationToken).ConfigureAwait(false);
+
+    var dbCommand = _dbCommandFactory.CreateDbCommandForItems(dbCommandForFilter, query.Sort, query.Page);
+
+    List<AppOutgoingEventSingleDTO> items;
+
+    if (totalCount > 0)
+    {
+      var task = _appDbQueryContext.GetList<AppOutgoingEventSingleDTO>(dbCommand, cancellationToken);
+
+      items = await task.ConfigureAwait(false);
+    }
+    else
+    {
+      items = [];
+    }
+
+    return new(items, totalCount);
+  }
+
+  /// <inheritdoc/>
+  public Task<AppOutgoingEventSingleDTO?> GetSingle(
+    AppOutgoingEventSingleQuery query,
+    CancellationToken cancellationToken)
   {
     var dbCommand = _dbCommandFactory.CreateDbCommand(query);
 
@@ -47,5 +74,14 @@ public class AppOutgoingEventQueryService(
     var dbCommand = _dbCommandFactory.CreateDbCommand(query);
 
     return _appDbQueryContext.GetList<long>(dbCommand, cancellationToken);
+  }
+
+  private async Task<long> GetCount(DbSQLCommand dbCommandForFilter, CancellationToken cancellationToken)
+  {
+    var dbCommand = _dbCommandFactory.CreateDbCommandForTotalCount(dbCommandForFilter);
+
+    var data = await _appDbQueryContext.GetList<long>(dbCommand, cancellationToken).ConfigureAwait(false);
+
+    return data[0];
   }
 }

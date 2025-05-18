@@ -3,10 +3,11 @@
 /// <summary>
 /// Запрос страницы исходящих событий приложения.
 /// </summary>
-public record AppOutgoingEventPageQuery : PageQuery
-{
-  /// <summary>
-  /// Фильтр.
-  /// </summary>
-  public AppOutgoingEventQueryFilterSection? Filter { get; set; }
-}
+/// <param name="Page">Страница.</param>
+/// <param name="Sort">Сортировка.</param>
+/// <param name="Filter">Фильтр.</param>
+public record AppOutgoingEventPageQuery(
+  QueryPageSection? Page,
+  QuerySortSection? Sort,
+  AppOutgoingEventQueryFilterSection? Filter) :
+  AppOutgoingEventListQuery(Sort, Filter);

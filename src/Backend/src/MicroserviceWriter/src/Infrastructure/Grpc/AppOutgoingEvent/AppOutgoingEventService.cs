@@ -37,7 +37,7 @@ public class AppOutgoingEventService(IMediator _mediator) : AppOutgoingEventServ
     AppOutgoingEventDeleteGrpcRequest request,
     ServerCallContext context)
   {
-    var command = request.ToAppOutgoingEventDeleteActionCommand();
+    var command = request.ToAppOutgoingEventDeleteActionRequest();
 
     var resultTask = _mediator.Send(command, context.CancellationToken);
 
@@ -58,7 +58,7 @@ public class AppOutgoingEventService(IMediator _mediator) : AppOutgoingEventServ
     AppOutgoingEventGetGrpcRequest request,
     ServerCallContext context)
   {
-    var query = request.ToAppOutgoingEventGetActionQuery();
+    var query = request.ToAppOutgoingEventGetActionRequest();
 
     var resultTask = _mediator.Send(query, context.CancellationToken);
 

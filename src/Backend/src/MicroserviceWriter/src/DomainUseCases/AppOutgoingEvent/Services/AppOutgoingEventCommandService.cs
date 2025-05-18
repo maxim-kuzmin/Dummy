@@ -10,7 +10,7 @@ public class AppOutgoingEventCommandService(
 {
   /// <inheritdoc/>
   public async Task<AppCommandResultWithoutValue> Delete(
-    AppOutgoingEventDeleteActionCommand command,
+    AppOutgoingEventDeleteCommand command,
     CancellationToken cancellationToken)
   {
     var entity = await _repository.GetByIdAsync(command.Id, cancellationToken).ConfigureAwait(false);
@@ -59,12 +59,12 @@ public class AppOutgoingEventCommandService(
 
   /// <inheritdoc/>
   public async Task<AppCommandResultWithValue<AppOutgoingEventSingleDTO>> Save(
-    AppOutgoingEventSaveActionCommand command,
+    AppOutgoingEventSaveCommand command,
     CancellationToken cancellationToken)
   {
     AppOutgoingEventEntity? entity = null;
 
-    if (command.HasEntityBeingSavedAlreadyBeenCreated)
+    if (command.IsUpdate)
     {
       entity = await _repository.GetByIdAsync(command.Id, cancellationToken).ConfigureAwait(false);
 
@@ -74,7 +74,7 @@ public class AppOutgoingEventCommandService(
       }
     }
 
-    var aggregateResult = GetAggregateResultToSave(entity, command);
+    var aggregateResult = GetAggregateResultToSave(entity, command.Data);
 
     entity = aggregateResult.Entity;
 
@@ -99,7 +99,7 @@ public class AppOutgoingEventCommandService(
 
     async Task FuncToExecute(CancellationToken cancellationToken)
     {
-      if (command.HasEntityBeingSavedAlreadyBeenCreated)
+      if (command.IsUpdate)
       {
         await _repository.UpdateAsync(entity, cancellationToken).ConfigureAwait(false);
       }
@@ -137,12 +137,12 @@ public class AppOutgoingEventCommandService(
 
   private AggregateResult<AppOutgoingEventEntity> GetAggregateResultToSave(
     AppOutgoingEventEntity? entity,
-    AppOutgoingEventSaveActionCommand command)
+    AppOutgoingEventCommandDataSection data)
   {
     var aggregate = _factory.CreateAggregate(entity);
 
-    aggregate.UpdateName(command.Name);
-    aggregate.UpdatePublishedAt(command.PublishedAt);
+    aggregate.UpdateName(data.Name);
+    aggregate.UpdatePublishedAt(data.PublishedAt);
 
     return entity != null ? aggregate.GetResultToUpdate() : aggregate.GetResultToCreate();
   }

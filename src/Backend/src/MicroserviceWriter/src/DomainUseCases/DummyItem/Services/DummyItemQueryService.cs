@@ -36,9 +36,18 @@ public class DummyItemQueryService(
 
     var dbCommand = _dbCommandFactory.CreateDbCommandForItems(dbCommandForFilter, query.Sort, query.Page);
 
-    List<DummyItemSingleDTO> items = totalCount > 0
-      ? await _appDbQueryContext.GetList<DummyItemSingleDTO>(dbCommand, cancellationToken).ConfigureAwait(false)
-      : [];
+    List <DummyItemSingleDTO> items;
+
+    if (totalCount > 0)
+    {
+      var task = _appDbQueryContext.GetList<DummyItemSingleDTO>(dbCommand, cancellationToken);
+
+      items = await task.ConfigureAwait(false);
+    }
+    else
+    {
+      items = [];
+    }
 
     return new(items, totalCount);
   }

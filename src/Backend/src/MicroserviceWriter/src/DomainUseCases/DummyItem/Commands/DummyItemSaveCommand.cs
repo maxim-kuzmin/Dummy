@@ -9,4 +9,4 @@
 public record DummyItemSaveCommand(
   bool IsUpdate,
   long Id,
-  DummyItemCommandDataSection Data) : ICommand<Result<DummyItemSingleDTO>>;
+  DummyItemCommandDataSection Data);
