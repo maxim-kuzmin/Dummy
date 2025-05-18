@@ -10,18 +10,18 @@ public class DummyItemGetActionHandler(
   AppSession _appSession,
   ILogger<DummyItemGetActionHandler> _logger,
   IDummyItemQueryService _service) :
-  IQueryHandler<DummyItemGetActionQuery, Result<DummyItemSingleDTO>>
+  IQueryHandler<DummyItemGetActionRequest, Result<DummyItemSingleDTO>>
 {
   /// <inheritdoc/>
   public async Task<Result<DummyItemSingleDTO>> Handle(
-    DummyItemGetActionQuery request,
+    DummyItemGetActionRequest request,
     CancellationToken cancellationToken)
   {
     var userName = _appSession.User.Identity?.Name;
 
     _logger.LogDebug("User name: {userName}", userName);
 
-    var dto = await _service.GetSingle(request, cancellationToken).ConfigureAwait(false);
+    var dto = await _service.GetSingle(request.Query, cancellationToken).ConfigureAwait(false);
 
     return dto != null ? Result.Success(dto) : Result.NotFound();
   }

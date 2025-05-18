@@ -5,7 +5,7 @@
 /// </summary>
 /// <param name="_mediator">Медиатор.</param>
 public class DummyItemDeleteEndpointHandler(IMediator _mediator) :
-  Endpoint<DummyItemDeleteActionCommand, DummyItemSingleDTO>
+  Endpoint<DummyItemDeleteActionRequest, DummyItemSingleDTO>
 {
   /// <inheritdoc/>
   public override void Configure()
@@ -16,7 +16,7 @@ public class DummyItemDeleteEndpointHandler(IMediator _mediator) :
 
   /// <inheritdoc/>
   public override async Task HandleAsync(
-    DummyItemDeleteActionCommand request,
+    DummyItemDeleteActionRequest request,
     CancellationToken cancellationToken)
   {
     var result = await _mediator.Send(request, cancellationToken);

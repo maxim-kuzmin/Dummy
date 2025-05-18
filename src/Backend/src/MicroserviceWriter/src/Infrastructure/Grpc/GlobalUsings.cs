@@ -1,7 +1,5 @@
 ﻿global using Google.Protobuf.WellKnownTypes;
 global using Grpc.Core;
-global using Makc.Dummy.Shared.Core.App.Event.Payloads;
-global using Makc.Dummy.Shared.Infrastructure.Grpc;
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEvent.Actions.Delete;
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEvent.Actions.Get;
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEvent.Actions.GetList;
@@ -20,12 +18,15 @@ global using Makc.Dummy.MicroserviceWriter.DomainUseCases.DummyItem.Actions.Dele
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.DummyItem.Actions.Get;
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.DummyItem.Actions.GetList;
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.DummyItem.Actions.Save;
+global using Makc.Dummy.MicroserviceWriter.DomainUseCases.DummyItem.Commands;
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.DummyItem.DTOs;
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.DummyItem.Queries;
 global using Makc.Dummy.MicroserviceWriter.Infrastructure.Grpc.AppOutgoingEvent;
 global using Makc.Dummy.MicroserviceWriter.Infrastructure.Grpc.AppOutgoingEventPayload;
 global using Makc.Dummy.MicroserviceWriter.Infrastructure.Grpc.Auth;
 global using Makc.Dummy.MicroserviceWriter.Infrastructure.Grpc.DummyItem;
+global using Makc.Dummy.Shared.Core.App.Event.Payloads;
+global using Makc.Dummy.Shared.Infrastructure.Grpc;
 global using MediatR;
 global using Microsoft.AspNetCore.Builder;
 global using Microsoft.Extensions.Configuration;

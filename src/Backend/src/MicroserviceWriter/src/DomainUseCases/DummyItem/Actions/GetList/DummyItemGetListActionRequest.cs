@@ -3,5 +3,5 @@
 /// <summary>
 /// Запрос действия по получению списка фиктивных предметов.
 /// </summary>
-/// <param name="Query">Запрос страницы.</param>
-public record DummyItemGetListActionQuery(DummyItemPageQuery Query) : IQuery<Result<DummyItemListDTO>>;
+/// <param name="Query">Запрос.</param>
+public record DummyItemGetListActionRequest(DummyItemPageQuery Query) : IQuery<Result<DummyItemListDTO>>;

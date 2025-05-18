@@ -10,7 +10,7 @@ public static class DummyItemEndpointsExtensions
   /// </summary>
   /// <param name="request">Запрос.</param>
   /// <returns>Запрос действия по получению списка фиктивных предметов.</returns>
-  public static DummyItemGetListActionQuery ToDummyItemGetListActionQuery(this DummyItemGetListEndpointRequest request)
+  public static DummyItemGetListActionRequest ToDummyItemGetListActionQuery(this DummyItemGetListEndpointRequest request)
   {
     DummyItemPageQuery query = new(
       Page: new(request.CurrentPage, request.ItemsPerPage),
@@ -25,10 +25,15 @@ public static class DummyItemEndpointsExtensions
   /// </summary>
   /// <param name="request">Запрос.</param>
   /// <returns>Команда.</returns>
-  public static DummyItemSaveActionCommand ToDummyItemSaveActionCommand(
+  public static DummyItemSaveActionRequest ToDummyItemSaveActionCommand(
     this DummyItemCreateEndpointRequest request)
   {
-    return new(false, 0, request.Name);
+    DummyItemSaveCommand command = new(
+      IsUpdate: false,
+      Id: 0,
+      Data: new(request.Name));
+
+    return new(command);
   }
 
   /// <summary>
@@ -36,9 +41,14 @@ public static class DummyItemEndpointsExtensions
   /// </summary>
   /// <param name="request">Запрос.</param>
   /// <returns>Команда.</returns>
-  public static DummyItemSaveActionCommand ToDummyItemSaveActionCommand(
+  public static DummyItemSaveActionRequest ToDummyItemSaveActionCommand(
     this DummyItemUpdateEndpointRequest request)
   {
-    return new(true, request.Id, request.Name);
+    DummyItemSaveCommand command = new(
+      IsUpdate: true,
+      Id: request.Id,
+      Data: new(request.Name));
+
+    return new(command);
   }
 }

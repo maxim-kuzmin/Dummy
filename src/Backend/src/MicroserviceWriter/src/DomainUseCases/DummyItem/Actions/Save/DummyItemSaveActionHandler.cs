@@ -8,18 +8,18 @@
 public class DummyItemSaveActionHandler(
   IAppDbSQLExecutionContext _appDbExecutionContext,
   IDummyItemCommandService _service) :
-  ICommandHandler<DummyItemSaveActionCommand, Result<DummyItemSingleDTO>>
+  ICommandHandler<DummyItemSaveActionRequest, Result<DummyItemSingleDTO>>
 {
   /// <inheritdoc/>
   public async Task<Result<DummyItemSingleDTO>> Handle(
-    DummyItemSaveActionCommand request,
+    DummyItemSaveActionRequest request,
     CancellationToken cancellationToken)
   {
     Result<DummyItemSingleDTO> result = null!;
 
     async Task FuncToExecute(CancellationToken cancellationToken)
     {
-      var resultForSave = await _service.Save(request, cancellationToken).ConfigureAwait(false);
+      var resultForSave = await _service.Save(request.Command, cancellationToken).ConfigureAwait(false);
 
       result = resultForSave.Data;
 

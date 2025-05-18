@@ -15,7 +15,7 @@ public class DummyItemCommandService(
 {
   /// <inheritdoc/>
   public async Task<AppCommandResultWithoutValue> Delete(
-    DummyItemDeleteActionCommand command,
+    DummyItemDeleteCommand command,
     CancellationToken cancellationToken)
   {
     var entity = await _repository.GetByIdAsync(command.Id, cancellationToken).ConfigureAwait(false);
@@ -74,12 +74,12 @@ public class DummyItemCommandService(
 
   /// <inheritdoc/>
   public async Task<AppCommandResultWithValue<DummyItemSingleDTO>> Save(
-    DummyItemSaveActionCommand command,
+    DummyItemSaveCommand command,
     CancellationToken cancellationToken)
   {
     DummyItemEntity? entity = null;
 
-    if (command.HasEntityBeingSavedAlreadyBeenCreated)
+    if (command.IsUpdate)
     {
       entity = await _repository.GetByIdAsync(command.Id, cancellationToken).ConfigureAwait(false);
 
@@ -89,7 +89,7 @@ public class DummyItemCommandService(
       }
     }
 
-    var aggregateResult = GetAggregateResultToSave(entity, command);
+    var aggregateResult = GetAggregateResultToSave(entity, command.Data);
 
     entity = aggregateResult.Entity;
 
@@ -114,7 +114,7 @@ public class DummyItemCommandService(
 
     async Task FuncToExecute(CancellationToken cancellationToken)
     {
-      if (command.HasEntityBeingSavedAlreadyBeenCreated)
+      if (command.IsUpdate)
       {
         await _repository.UpdateAsync(entity, cancellationToken).ConfigureAwait(false);
       }
@@ -146,11 +146,11 @@ public class DummyItemCommandService(
 
   private AggregateResult<DummyItemEntity> GetAggregateResultToSave(
     DummyItemEntity? entity,
-    DummyItemSaveActionCommand command)
+    DummyItemCommandDataSection data)
   {
     var aggregate = _factory.CreateAggregate(entity);
 
-    aggregate.UpdateName(command.Name);
+    aggregate.UpdateName(data.Name);
 
     return entity != null ? aggregate.GetResultToUpdate() : aggregate.GetResultToCreate();
   }

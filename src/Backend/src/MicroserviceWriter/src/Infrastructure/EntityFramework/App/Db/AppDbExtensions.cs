@@ -1,4 +1,6 @@
-﻿namespace Makc.Dummy.MicroserviceWriter.Infrastructure.EntityFramework.App.Db;
+﻿using Makc.Dummy.MicroserviceWriter.DomainUseCases.DummyItem.Command.Sections;
+
+namespace Makc.Dummy.MicroserviceWriter.Infrastructure.EntityFramework.App.Db;
 
 /// <summary>
 /// Расширения базы данных.
@@ -34,33 +36,38 @@ public static class AppDbExtensions
     await appDbExecutionContext.ExecuteInTransaction(FuncToExecute, cancellationToken).ConfigureAwait(false);
   }
 
-  private static DummyItemSaveActionCommand CreateDummyItemSaveActionCommand(string name)
+  private static DummyItemSaveActionRequest CreateDummyItemSaveActionRequest(string name)
   {
-    return new(false, 0, name);
+    DummyItemSaveCommand command = new(
+      IsUpdate: false,
+      Id: 0,
+      Data: new(Name: name));
+
+    return new(command);
   }
 
   private static async Task<List<DummyItemSingleDTO>> CreateDummyItems(
     IMediator mediator,
     CancellationToken cancellationToken)
   {
-    DummyItemSaveActionCommand[] commands = [
-      CreateDummyItemSaveActionCommand("Delba de Oliveira"),
-      CreateDummyItemSaveActionCommand("Lee Robinson"),
-      CreateDummyItemSaveActionCommand("Hector Simpson"),
-      CreateDummyItemSaveActionCommand("Steven Tey"),
-      CreateDummyItemSaveActionCommand("Steph Dietz"),
-      CreateDummyItemSaveActionCommand("Michael Novotny"),
-      CreateDummyItemSaveActionCommand("Evil Rabbit"),
-      CreateDummyItemSaveActionCommand("Emil Kowalski"),
-      CreateDummyItemSaveActionCommand("Amy Burns"),
-      CreateDummyItemSaveActionCommand("Balazs Orban"),
+    DummyItemSaveActionRequest[] requests = [
+      CreateDummyItemSaveActionRequest("Delba de Oliveira"),
+      CreateDummyItemSaveActionRequest("Lee Robinson"),
+      CreateDummyItemSaveActionRequest("Hector Simpson"),
+      CreateDummyItemSaveActionRequest("Steven Tey"),
+      CreateDummyItemSaveActionRequest("Steph Dietz"),
+      CreateDummyItemSaveActionRequest("Michael Novotny"),
+      CreateDummyItemSaveActionRequest("Evil Rabbit"),
+      CreateDummyItemSaveActionRequest("Emil Kowalski"),
+      CreateDummyItemSaveActionRequest("Amy Burns"),
+      CreateDummyItemSaveActionRequest("Balazs Orban"),
     ];
 
-    List<DummyItemSingleDTO> result = new(commands.Length);
+    List<DummyItemSingleDTO> result = new(requests.Length);
 
-    foreach (var command in commands)
+    foreach (var request in requests)
     {
-      var actionResult = await mediator.Send(command, cancellationToken).ConfigureAwait(false);
+      var actionResult = await mediator.Send(request, cancellationToken).ConfigureAwait(false);
 
       result.Add(actionResult.Value);
     }

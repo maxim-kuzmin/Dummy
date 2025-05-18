@@ -10,11 +10,11 @@ public class DummyItemGetListActionHandler(
   AppSession _appSession,
   ILogger<DummyItemGetListActionHandler> _logger,
   IDummyItemQueryService _service) :
-  IQueryHandler<DummyItemGetListActionQuery, Result<DummyItemListDTO>>
+  IQueryHandler<DummyItemGetListActionRequest, Result<DummyItemListDTO>>
 {
   /// <inheritdoc/>
   public async Task<Result<DummyItemListDTO>> Handle(
-    DummyItemGetListActionQuery request,
+    DummyItemGetListActionRequest request,
     CancellationToken cancellationToken)
   {
     var userName = _appSession.User.Identity?.Name;

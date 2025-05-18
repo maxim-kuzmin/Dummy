@@ -10,10 +10,12 @@ public static class DummyItemExtensions
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
   /// <returns>Команда.</returns>
-  public static DummyItemDeleteActionCommand ToDummyItemDeleteActionCommand(
+  public static DummyItemDeleteActionRequest ToDummyItemDeleteActionCommand(
     this DummyItemDeleteGrpcRequest request)
   {
-    return new(request.Id);
+    DummyItemDeleteCommand command = new(Id: request.Id);
+
+    return new(command);
   }
 
   /// <summary>
@@ -21,9 +23,11 @@ public static class DummyItemExtensions
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
   /// <returns>Запрос.</returns>
-  public static DummyItemGetActionQuery ToDummyItemGetActionQuery(this DummyItemGetGrpcRequest request)
+  public static DummyItemGetActionRequest ToDummyItemGetActionQuery(this DummyItemGetGrpcRequest request)
   {
-    return new(request.Id);
+    DummyItemSingleQuery query = new(Id: request.Id);
+
+    return new(query);
   }
 
   /// <summary>
@@ -46,7 +50,7 @@ public static class DummyItemExtensions
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
   /// <returns>Запрос.</returns>
-  public static DummyItemGetListActionQuery ToDummyItemGetListActionQuery(
+  public static DummyItemGetListActionRequest ToDummyItemGetListActionQuery(
     this DummyItemGetListGrpcRequest request)
   {
     DummyItemPageQuery query = new(
@@ -89,10 +93,15 @@ public static class DummyItemExtensions
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
   /// <returns>Команда.</returns
-  public static DummyItemSaveActionCommand ToDummyItemSaveActionCommand(
+  public static DummyItemSaveActionRequest ToDummyItemSaveActionCommand(
     this DummyItemCreateGrpcRequest request)
   {
-    return new(false, 0, request.Name);
+    DummyItemSaveCommand command = new(
+      IsUpdate: false,
+      Id: 0,
+      Data: new(Name: request.Name));
+
+    return new(command);
   }
 
   /// <summary>
@@ -100,9 +109,14 @@ public static class DummyItemExtensions
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
   /// <returns>Команда.</returns
-  public static DummyItemSaveActionCommand ToDummyItemSaveActionCommand(
+  public static DummyItemSaveActionRequest ToDummyItemSaveActionCommand(
     this DummyItemUpdateGrpcRequest request)
   {
-    return new(true, request.Id, request.Name);
+    DummyItemSaveCommand command = new(
+      IsUpdate: true,
+      Id: request.Id,
+      Data: new(Name: request.Name));
+
+    return new(command);
   }
 }

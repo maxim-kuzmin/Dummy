@@ -8,16 +8,16 @@
 public class DummyItemDeleteActionHandler(
   IAppDbSQLExecutionContext _appDbExecutionContext,
   IDummyItemCommandService _service) :
-  ICommandHandler<DummyItemDeleteActionCommand, Result>
+  ICommandHandler<DummyItemDeleteActionRequest, Result>
 {
   /// <inheritdoc/>
-  public async Task<Result> Handle(DummyItemDeleteActionCommand request, CancellationToken cancellationToken)
+  public async Task<Result> Handle(DummyItemDeleteActionRequest request, CancellationToken cancellationToken)
   {
     Result result = null!;
 
     async Task FuncToExecute(CancellationToken cancellationToken)
     {
-      var resultForDelete = await _service.Delete(request, cancellationToken).ConfigureAwait(false);
+      var resultForDelete = await _service.Delete(request.Command, cancellationToken).ConfigureAwait(false);
 
       result = resultForDelete.Data;
 
