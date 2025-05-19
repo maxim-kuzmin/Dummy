@@ -5,15 +5,15 @@
 /// </summary>
 /// <param name="_service">Сервис.</param>
 public class AppIncomingEventPayloadGetActionHandler(IAppIncomingEventPayloadQueryService _service) :
-  IQueryHandler<AppIncomingEventPayloadGetActionQuery, Result<AppIncomingEventPayloadSingleDTO>>
+  IQueryHandler<AppIncomingEventPayloadGetActionRequest, Result<AppIncomingEventPayloadSingleDTO>>
 {
   /// <inheritdoc/>
   public async Task<Result<AppIncomingEventPayloadSingleDTO>> Handle(
-    AppIncomingEventPayloadGetActionQuery request,
+    AppIncomingEventPayloadGetActionRequest request,
     CancellationToken cancellationToken)
   {
-    var dto = await _service.GetSingle(request, cancellationToken).ConfigureAwait(false);
+    var result = await _service.GetSingle(request.Query, cancellationToken).ConfigureAwait(false);
 
-    return dto != null ? Result.Success(dto) : Result.NotFound();
+    return result != null ? Result.Success(result) : Result.NotFound();
   }
 }

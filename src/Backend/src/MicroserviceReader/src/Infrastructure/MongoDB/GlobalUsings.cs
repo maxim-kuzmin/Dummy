@@ -50,3 +50,4 @@ global using MongoDB.Bson.Serialization;
 global using MongoDB.Bson.Serialization.IdGenerators;
 global using MongoDB.Bson.Serialization.Serializers;
 global using MongoDB.Driver;
+global using Makc.Dummy.MicroserviceReader.DomainUseCases.AppIncomingEventPayload.Commands;

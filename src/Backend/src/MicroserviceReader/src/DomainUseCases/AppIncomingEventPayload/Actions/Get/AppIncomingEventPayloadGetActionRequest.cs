@@ -3,7 +3,6 @@
 /// <summary>
 /// Запрос действия по получению полезной нагрузки входящего события приложения.
 /// </summary>
-/// <param name="ObjectId">Идентификатор объекта.</param>
-public record AppIncomingEventPayloadGetActionQuery(string? ObjectId) :
-  AppIncomingEventPayloadSingleQuery(ObjectId),
+/// <param name="Query">Запрос.</param>
+public record AppIncomingEventPayloadGetActionRequest(AppIncomingEventPayloadSingleQuery Query) :
   IQuery<Result<AppIncomingEventPayloadSingleDTO>>;

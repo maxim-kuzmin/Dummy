@@ -1,12 +1,13 @@
 ﻿namespace Makc.Dummy.MicroserviceReader.DomainUseCases.AppIncomingEventPayload.Queries;
 
 /// <summary>
-/// Запрос страницы полезных нагрузок входящего события приложения.
+/// Запрос страницы полезной нагрузки входящего события приложения.
 /// </summary>
-public record AppIncomingEventPayloadPageQuery : PageQuery
-{
-  /// <summary>
-  /// Фильтр.
-  /// </summary>
-  public AppIncomingEventPayloadQueryFilterSection? Filter { get; set; }         
-}
+/// <param name="Page">Страница.</param>
+/// <param name="Sort">Сортировка.</param>
+/// <param name="Filter">Фильтр.</param>
+public record AppIncomingEventPayloadPageQuery(
+  QueryPageSection? Page,
+  QuerySortSection? Sort,
+  AppIncomingEventPayloadQueryFilterSection? Filter) :
+  AppIncomingEventPayloadListQuery(Sort, Filter);

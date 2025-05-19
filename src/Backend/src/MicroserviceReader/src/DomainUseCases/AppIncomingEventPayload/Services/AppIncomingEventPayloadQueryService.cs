@@ -16,7 +16,7 @@ public class AppIncomingEventPayloadQueryService(
   }
 
   /// <inheritdoc/>
-  public Task<long> GetCount(AppIncomingEventPayloadPageQuery query, CancellationToken cancellationToken)
+  public Task<long> GetCount(AppIncomingEventPayloadCountQuery query, CancellationToken cancellationToken)
   {
     return _repository.GetCount(query, cancellationToken);
   }
@@ -29,6 +29,29 @@ public class AppIncomingEventPayloadQueryService(
     var entities = await _repository.GetList(query, cancellationToken).ConfigureAwait(false);
 
     return [.. entities.Select(x => x.ToAppIncomingEventPayloadSingleDTO())];
+  }
+
+  /// <inheritdoc/>
+  public async Task<AppIncomingEventPayloadListDTO> GetPage(
+    AppIncomingEventPayloadPageQuery query,
+    CancellationToken cancellationToken)
+  {
+    var totalCount = await GetCount(query, cancellationToken).ConfigureAwait(false);
+
+    List<AppIncomingEventPayloadSingleDTO> items;
+
+    if (totalCount > 0)
+    {
+      var entities = await _repository.GetPageItems(query, cancellationToken).ConfigureAwait(false);
+
+      items = [.. entities.Select(x => x.ToAppIncomingEventPayloadSingleDTO())];
+    }
+    else
+    {
+      items = [];
+    }
+
+    return new(items, totalCount);
   }
 
   /// <inheritdoc/>

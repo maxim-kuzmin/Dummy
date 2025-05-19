@@ -12,7 +12,7 @@ public class AppIncomingEventPayloadSaveActionHandler(IAppIncomingEventPayloadCo
     AppIncomingEventPayloadSaveActionCommand request,
     CancellationToken cancellationToken)
   {
-    var result = await _service.Save(request, cancellationToken).ConfigureAwait(false);
+    var result = await _service.Save(request.Command, cancellationToken).ConfigureAwait(false);
 
     return result.Data;
   }

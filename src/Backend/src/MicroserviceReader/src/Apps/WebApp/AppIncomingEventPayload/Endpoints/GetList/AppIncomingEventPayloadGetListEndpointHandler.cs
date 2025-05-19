@@ -19,9 +19,9 @@ public class AppIncomingEventPayloadGetListEndpointHandler(IMediator _mediator) 
     AppIncomingEventPayloadGetListEndpointRequest request,
     CancellationToken cancellationToken)
   {
-    AppIncomingEventPayloadGetListActionQuery query = request.ToAppIncomingEventPayloadGetListActionQuery();
+    var task = _mediator.Send(request.ToAppIncomingEventPayloadGetListActionRequest(), cancellationToken);
 
-    var result = await _mediator.Send(query, cancellationToken);
+    var result = await task.ConfigureAwait(false);
 
     await SendResultAsync(result.ToMinimalApiResult());
   }

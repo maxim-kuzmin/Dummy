@@ -1,4 +1,4 @@
-﻿namespace Makc.Dummy.MicroserviceReader.DomainUseCases.AppIncomingEventPayload.Query;
+﻿namespace Makc.Dummy.MicroserviceReader.DomainUseCases.AppIncomingEventPayload.Queries;
 
 /// <summary>
 /// Запрос на скачивание полезных нагрузок входящего события.

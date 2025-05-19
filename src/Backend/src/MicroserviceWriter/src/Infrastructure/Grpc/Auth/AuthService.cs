@@ -16,11 +16,9 @@ public class AuthService(IMediator _mediator) : AuthServiceBase
     AuthLoginGrpcRequest request,
     ServerCallContext context)
   {
-    AuthLoginActionRequest command = request.ToAuthLoginActionRequest();
+    var task = _mediator.Send(request.ToAuthLoginActionRequest(), context.CancellationToken);
 
-    var resultTask = _mediator.Send(command, context.CancellationToken);
-
-    var result = await resultTask.ConfigureAwait(false);
+    var result = await task.ConfigureAwait(false);
 
     result.ThrowRpcExceptionIfNotSuccess();
 

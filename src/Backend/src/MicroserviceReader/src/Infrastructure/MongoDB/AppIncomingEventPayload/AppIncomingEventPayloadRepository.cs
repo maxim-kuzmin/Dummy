@@ -40,7 +40,7 @@ public class AppIncomingEventPayloadRepository(
   }
 
   /// <inheritdoc/>
-  public Task<long> GetCount(AppIncomingEventPayloadPageQuery query, CancellationToken cancellationToken)
+  public Task<long> GetCount(AppIncomingEventPayloadCountQuery query, CancellationToken cancellationToken)
   {
     var filter = CreateFilter(query.Filter);
 
@@ -52,11 +52,26 @@ public class AppIncomingEventPayloadRepository(
     AppIncomingEventPayloadListQuery query,
     CancellationToken cancellationToken)
   {
-    var filter = CreateFilter(query.PageQuery.Filter);
+    var filter = CreateFilter(query.Filter);
 
     var found = Collection.Find(ClientSessionHandle, filter)
-      .Sort(query.Sort, AppIncomingEventSettings.DefaultQuerySortSection, CreateSortFieldExpression)
-      .TakePage(query.PageQuery.Page);
+      .Sort(query.Sort, AppIncomingEventSettings.DefaultQuerySortSection, CreateSortFieldExpression);
+
+    var result = await found.ToListAsync(cancellationToken).ConfigureAwait(false);
+
+    return result;
+  }
+
+  /// <inheritdoc/>
+  public async Task<List<AppIncomingEventPayloadEntity>> GetPageItems(
+    AppIncomingEventPayloadPageQuery query,
+    CancellationToken cancellationToken)
+  {
+    var filter = CreateFilter(query.Filter);
+
+    var found = Collection.Find(ClientSessionHandle, filter)
+      .Sort(query.Sort, AppIncomingEventPayloadSettings.DefaultQuerySortSection, CreateSortFieldExpression)
+      .TakePage(query.Page);
 
     var result = await found.ToListAsync(cancellationToken).ConfigureAwait(false);
 

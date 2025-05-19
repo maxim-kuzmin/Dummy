@@ -11,6 +11,8 @@ global using Makc.Dummy.MicroserviceReader.Apps.WebApp.AppIncomingEvent.Endpoint
 global using Makc.Dummy.MicroserviceReader.Apps.WebApp.AppIncomingEvent.Endpoints.GetList;
 global using Makc.Dummy.MicroserviceReader.Apps.WebApp.AppIncomingEvent.Endpoints.Update;
 global using Makc.Dummy.MicroserviceReader.Apps.WebApp.AppIncomingEventPayload.Endpoints.Create;
+global using Makc.Dummy.MicroserviceReader.Apps.WebApp.AppIncomingEventPayload.Endpoints.Delete;
+global using Makc.Dummy.MicroserviceReader.Apps.WebApp.AppIncomingEventPayload.Endpoints.Get;
 global using Makc.Dummy.MicroserviceReader.Apps.WebApp.AppIncomingEventPayload.Endpoints.GetList;
 global using Makc.Dummy.MicroserviceReader.Apps.WebApp.AppIncomingEventPayload.Endpoints.Update;
 global using Makc.Dummy.MicroserviceReader.Apps.WebApp.DummyItem.Endpoints.Create;
@@ -32,6 +34,7 @@ global using Makc.Dummy.MicroserviceReader.DomainUseCases.AppIncomingEventPayloa
 global using Makc.Dummy.MicroserviceReader.DomainUseCases.AppIncomingEventPayload.Actions.Get;
 global using Makc.Dummy.MicroserviceReader.DomainUseCases.AppIncomingEventPayload.Actions.GetList;
 global using Makc.Dummy.MicroserviceReader.DomainUseCases.AppIncomingEventPayload.Actions.Save;
+global using Makc.Dummy.MicroserviceReader.DomainUseCases.AppIncomingEventPayload.Commands;
 global using Makc.Dummy.MicroserviceReader.DomainUseCases.AppIncomingEventPayload.DTOs;
 global using Makc.Dummy.MicroserviceReader.DomainUseCases.AppIncomingEventPayload.Queries;
 global using Makc.Dummy.MicroserviceReader.DomainUseCases.DummyItem;
@@ -61,3 +64,4 @@ global using Microsoft.AspNetCore.Authentication.JwtBearer;
 global using Microsoft.Extensions.Options;
 global using Microsoft.IdentityModel.Logging;
 global using Microsoft.IdentityModel.Tokens;
+

@@ -94,7 +94,7 @@ public static class DummyItemExtensions
   /// Преобразовать к запросу действия по сохранению фиктивного предмета.
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
-  /// <returns>Команда.</returns
+  /// <returns>Запрос действия.</returns
   public static DummyItemSaveActionRequest ToDummyItemSaveActionRequest(
     this DummyItemCreateGrpcRequest request)
   {
@@ -110,7 +110,7 @@ public static class DummyItemExtensions
   /// Преобразовать к запросу действия по сохранению фиктивного предмета.
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
-  /// <returns>Команда.</returns
+  /// <returns>Запрос действия.</returns
   public static DummyItemSaveActionRequest ToDummyItemSaveActionRequest(
     this DummyItemUpdateGrpcRequest request)
   {

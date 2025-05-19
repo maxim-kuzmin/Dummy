@@ -16,6 +16,14 @@ public interface IAppIncomingEventPayloadQueryService
       CancellationToken cancellationToken);
 
   /// <summary>
+  /// Получить количество объектов.
+  /// </summary>
+  /// <param name="query">Запрос.</param>
+  /// <param name="cancellationToken">Токен отмены.</param>
+  /// <returns>Количество объектов.</returns>
+  Task<long> GetCount(AppIncomingEventPayloadCountQuery query, CancellationToken cancellationToken);
+
+  /// <summary>
   /// Получить список объектов.
   /// </summary>
   /// <param name="query">Запрос.</param>
@@ -26,12 +34,14 @@ public interface IAppIncomingEventPayloadQueryService
     CancellationToken cancellationToken);
 
   /// <summary>
-  /// Получить количество объектов.
+  /// Получить страницу объектов.
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
-  /// <returns>Количество объектов.</returns>
-  Task<long> GetCount(AppIncomingEventPayloadPageQuery query, CancellationToken cancellationToken);
+  /// <returns>Список объектов.</returns>
+  Task<AppIncomingEventPayloadListDTO> GetPage(
+    AppIncomingEventPayloadPageQuery query,
+    CancellationToken cancellationToken);
 
   /// <summary>
   /// Получить единственный объект.

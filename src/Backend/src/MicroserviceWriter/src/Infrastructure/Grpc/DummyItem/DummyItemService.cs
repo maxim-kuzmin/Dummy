@@ -16,11 +16,9 @@ public class DummyItemService(IMediator _mediator) : DummyItemServiceBase
     DummyItemCreateGrpcRequest request,
     ServerCallContext context)
   {
-    var command = request.ToDummyItemSaveActionRequest();
+    var task = _mediator.Send(request.ToDummyItemSaveActionRequest(), context.CancellationToken);
 
-    var resultTask = _mediator.Send(command, context.CancellationToken);
-
-    var result = await resultTask.ConfigureAwait(false);
+    var result = await task.ConfigureAwait(false);
 
     result.ThrowRpcExceptionIfNotSuccess();
 
@@ -35,11 +33,9 @@ public class DummyItemService(IMediator _mediator) : DummyItemServiceBase
   /// <returns>Отклик gRPC.</returns>
   public override async Task<Empty> Delete(DummyItemDeleteGrpcRequest request, ServerCallContext context)
   {
-    var command = request.ToDummyItemDeleteActionRequest();
+    var task = _mediator.Send(request.ToDummyItemDeleteActionRequest(), context.CancellationToken);
 
-    var resultTask = _mediator.Send(command, context.CancellationToken);
-
-    var result = await resultTask.ConfigureAwait(false);
+    var result = await task.ConfigureAwait(false);
 
     result.ThrowRpcExceptionIfNotSuccess();
 
@@ -52,15 +48,11 @@ public class DummyItemService(IMediator _mediator) : DummyItemServiceBase
   /// <param name="request">Запрос gRPC.</param>
   /// <param name="context"></param>
   /// <returns>Отклик gRPC.</returns>
-  public override async Task<DummyItemGetGrpcReply> Get(
-    DummyItemGetGrpcRequest request,
-    ServerCallContext context)
+  public override async Task<DummyItemGetGrpcReply> Get(DummyItemGetGrpcRequest request, ServerCallContext context)
   {
-    var query = request.ToDummyItemGetActionRequest();
+    var task = _mediator.Send(request.ToDummyItemGetActionRequest(), context.CancellationToken);
 
-    var resultTask = _mediator.Send(query, context.CancellationToken);
-
-    var result = await resultTask.ConfigureAwait(false);
+    var result = await task.ConfigureAwait(false);
 
     result.ThrowRpcExceptionIfNotSuccess();
 
@@ -77,11 +69,9 @@ public class DummyItemService(IMediator _mediator) : DummyItemServiceBase
     DummyItemGetListGrpcRequest request,
     ServerCallContext context)
   {
-    var query = request.ToDummyItemGetListActionRequest();
+    var task = _mediator.Send(request.ToDummyItemGetListActionRequest(), context.CancellationToken);
 
-    var resultTask = _mediator.Send(query, context.CancellationToken);
-
-    var result = await resultTask.ConfigureAwait(false);
+    var result = await task.ConfigureAwait(false);
 
     result.ThrowRpcExceptionIfNotSuccess();
 
@@ -98,11 +88,9 @@ public class DummyItemService(IMediator _mediator) : DummyItemServiceBase
     DummyItemUpdateGrpcRequest request,
     ServerCallContext context)
   {
-    var command = request.ToDummyItemSaveActionRequest();
+    var task = _mediator.Send(request.ToDummyItemSaveActionRequest(), context.CancellationToken);
 
-    var resultTask = _mediator.Send(command, context.CancellationToken);
-
-    var result = await resultTask.ConfigureAwait(false);
+    var result = await task.ConfigureAwait(false);
 
     result.ThrowRpcExceptionIfNotSuccess();
 

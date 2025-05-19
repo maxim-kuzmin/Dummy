@@ -16,11 +16,9 @@ public class AppOutgoingEventPayloadService(IMediator _mediator) : AppOutgoingEv
     AppOutgoingEventPayloadCreateGrpcRequest request,
     ServerCallContext context)
   {
-    var command = request.ToAppOutgoingEventPayloadSaveActionRequest();
+    var task = _mediator.Send(request.ToAppOutgoingEventPayloadSaveActionRequest(), context.CancellationToken);
 
-    var resultTask = _mediator.Send(command, context.CancellationToken);
-
-    var result = await resultTask.ConfigureAwait(false);
+    var result = await task.ConfigureAwait(false);
 
     result.ThrowRpcExceptionIfNotSuccess();
 
@@ -37,11 +35,9 @@ public class AppOutgoingEventPayloadService(IMediator _mediator) : AppOutgoingEv
     AppOutgoingEventPayloadDeleteGrpcRequest request,
     ServerCallContext context)
   {
-    var command = request.ToAppOutgoingEventPayloadDeleteActionRequest();
+    var task = _mediator.Send(request.ToAppOutgoingEventPayloadDeleteActionRequest(), context.CancellationToken);
 
-    var resultTask = _mediator.Send(command, context.CancellationToken);
-
-    var result = await resultTask.ConfigureAwait(false);
+    var result = await task.ConfigureAwait(false);
 
     result.ThrowRpcExceptionIfNotSuccess();
 
@@ -58,11 +54,9 @@ public class AppOutgoingEventPayloadService(IMediator _mediator) : AppOutgoingEv
     AppOutgoingEventPayloadGetGrpcRequest request,
     ServerCallContext context)
   {
-    var query = request.ToAppOutgoingEventPayloadGetActionRequest();
+    var task = _mediator.Send(request.ToAppOutgoingEventPayloadGetActionRequest(), context.CancellationToken);
 
-    var resultTask = _mediator.Send(query, context.CancellationToken);
-
-    var result = await resultTask.ConfigureAwait(false);
+    var result = await task.ConfigureAwait(false);
 
     result.ThrowRpcExceptionIfNotSuccess();
 
@@ -79,11 +73,9 @@ public class AppOutgoingEventPayloadService(IMediator _mediator) : AppOutgoingEv
     AppOutgoingEventPayloadGetListGrpcRequest request,
     ServerCallContext context)
   {
-    var query = request.ToAppOutgoingEventPayloadGetListActionRequest();
+    var task = _mediator.Send(request.ToAppOutgoingEventPayloadGetListActionRequest(), context.CancellationToken);
 
-    var resultTask = _mediator.Send(query, context.CancellationToken);
-
-    var result = await resultTask.ConfigureAwait(false);
+    var result = await task.ConfigureAwait(false);
 
     result.ThrowRpcExceptionIfNotSuccess();
 
@@ -100,11 +92,9 @@ public class AppOutgoingEventPayloadService(IMediator _mediator) : AppOutgoingEv
     AppOutgoingEventPayloadUpdateGrpcRequest request,
     ServerCallContext context)
   {
-    var command = request.ToAppOutgoingEventPayloadSaveActionRequest();
+    var task = _mediator.Send(request.ToAppOutgoingEventPayloadSaveActionRequest(), context.CancellationToken);
 
-    var resultTask = _mediator.Send(command, context.CancellationToken);
-
-    var result = await resultTask.ConfigureAwait(false);
+    var result = await task.ConfigureAwait(false);
 
     result.ThrowRpcExceptionIfNotSuccess();
 

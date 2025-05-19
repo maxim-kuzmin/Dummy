@@ -19,15 +19,15 @@ global using Makc.Dummy.MicroserviceReader.DomainUseCases.AppIncomingEvent.Query
 global using Makc.Dummy.MicroserviceReader.DomainUseCases.AppIncomingEvent.Services;
 global using Makc.Dummy.MicroserviceReader.DomainUseCases.AppIncomingEventPayload.Actions.Delete;
 global using Makc.Dummy.MicroserviceReader.DomainUseCases.AppIncomingEventPayload.Actions.Save;
+global using Makc.Dummy.MicroserviceReader.DomainUseCases.AppIncomingEventPayload.Command.Sections;
+global using Makc.Dummy.MicroserviceReader.DomainUseCases.AppIncomingEventPayload.Commands;
 global using Makc.Dummy.MicroserviceReader.DomainUseCases.AppIncomingEventPayload.Commands.Insert;
 global using Makc.Dummy.MicroserviceReader.DomainUseCases.AppIncomingEventPayload.DTOs;
 global using Makc.Dummy.MicroserviceReader.DomainUseCases.AppIncomingEventPayload.Queries;
 global using Makc.Dummy.MicroserviceReader.DomainUseCases.AppIncomingEventPayload.Query;
 global using Makc.Dummy.MicroserviceReader.DomainUseCases.AppIncomingEventPayload.Query.Sections;
 global using Makc.Dummy.MicroserviceReader.DomainUseCases.AppIncomingEventPayload.Services;
-global using Makc.Dummy.MicroserviceReader.DomainUseCases.DummyItem.Actions.Delete;
 global using Makc.Dummy.MicroserviceReader.DomainUseCases.DummyItem.Actions.Get;
-global using Makc.Dummy.MicroserviceReader.DomainUseCases.DummyItem.Actions.Save;
 global using Makc.Dummy.MicroserviceReader.DomainUseCases.DummyItem.Command.Sections;
 global using Makc.Dummy.MicroserviceReader.DomainUseCases.DummyItem.Commands;
 global using Makc.Dummy.MicroserviceReader.DomainUseCases.DummyItem.DTOs;

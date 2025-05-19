@@ -5,28 +5,15 @@
 /// </summary>
 /// <param name="_service">Сервис.</param>
 public class AppIncomingEventPayloadGetListActionHandler(IAppIncomingEventPayloadQueryService _service) :
-  IQueryHandler<AppIncomingEventPayloadGetListActionQuery, Result<AppIncomingEventPayloadListDTO>>
+  IQueryHandler<AppIncomingEventPayloadGetListActionRequest, Result<AppIncomingEventPayloadListDTO>>
 {
   /// <inheritdoc/>
   public async Task<Result<AppIncomingEventPayloadListDTO>> Handle(
-    AppIncomingEventPayloadGetListActionQuery request,
+    AppIncomingEventPayloadGetListActionRequest request,
     CancellationToken cancellationToken)
   {
-    var totalCount = await _service.GetCount(request.PageQuery, cancellationToken).ConfigureAwait(false);
+    var result = await _service.GetPage(request.Query, cancellationToken);
 
-    List<AppIncomingEventPayloadSingleDTO> items;
-
-    if (totalCount > 0)
-    {
-      items = await _service.GetList(request, cancellationToken).ConfigureAwait(false);
-    }
-    else
-    {
-      items = [];
-    }
-
-    AppIncomingEventPayloadListDTO dto = new(items, totalCount);
-
-    return Result.Success(dto);
+    return Result.Success(result);
   }
 }

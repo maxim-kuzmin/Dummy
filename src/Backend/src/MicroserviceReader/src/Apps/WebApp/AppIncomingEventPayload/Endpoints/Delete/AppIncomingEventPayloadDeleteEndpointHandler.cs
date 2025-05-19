@@ -5,7 +5,7 @@
 /// </summary>
 /// <param name="_mediator">Медиатор.</param>
 public class AppIncomingEventPayloadDeleteEndpointHandler(IMediator _mediator) :
-  Endpoint<AppIncomingEventPayloadDeleteActionCommand, AppIncomingEventPayloadSingleDTO>
+  Endpoint<AppIncomingEventPayloadDeleteEndpointRequest, AppIncomingEventPayloadSingleDTO>
 {
   /// <inheritdoc/>
   public override void Configure()
@@ -16,10 +16,12 @@ public class AppIncomingEventPayloadDeleteEndpointHandler(IMediator _mediator) :
 
   /// <inheritdoc/>
   public override async Task HandleAsync(
-    AppIncomingEventPayloadDeleteActionCommand request,
+    AppIncomingEventPayloadDeleteEndpointRequest request,
     CancellationToken cancellationToken)
   {
-    var result = await _mediator.Send(request, cancellationToken);
+    var task = _mediator.Send(request.ToAppIncomingEventPayloadDeleteActionRequest(), cancellationToken);
+
+    var result = await task.ConfigureAwait(false);
 
     await SendResultAsync(result.ToMinimalApiResult());
   }

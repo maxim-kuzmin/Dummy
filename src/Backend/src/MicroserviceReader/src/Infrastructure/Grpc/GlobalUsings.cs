@@ -10,6 +10,7 @@ global using Makc.Dummy.MicroserviceReader.DomainUseCases.AppIncomingEventPayloa
 global using Makc.Dummy.MicroserviceReader.DomainUseCases.AppIncomingEventPayload.Actions.Get;
 global using Makc.Dummy.MicroserviceReader.DomainUseCases.AppIncomingEventPayload.Actions.GetList;
 global using Makc.Dummy.MicroserviceReader.DomainUseCases.AppIncomingEventPayload.Actions.Save;
+global using Makc.Dummy.MicroserviceReader.DomainUseCases.AppIncomingEventPayload.Commands;
 global using Makc.Dummy.MicroserviceReader.DomainUseCases.AppIncomingEventPayload.DTOs;
 global using Makc.Dummy.MicroserviceReader.DomainUseCases.AppIncomingEventPayload.Queries;
 global using Makc.Dummy.MicroserviceReader.DomainUseCases.DummyItem.Actions.Delete;

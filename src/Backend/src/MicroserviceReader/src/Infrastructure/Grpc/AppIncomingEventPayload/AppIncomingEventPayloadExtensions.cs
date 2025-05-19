@@ -6,25 +6,29 @@
 public static class AppIncomingEventPayloadExtensions
 {
   /// <summary>
-  /// Преобразовать к команде действия по удалению полезной нагрузки входящего события приложения.
+  /// Преобразовать к запросу действия по удалению полезной нагрузки входящего события приложения.
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
-  /// <returns>Команда.</returns>
-  public static AppIncomingEventPayloadDeleteActionCommand ToAppIncomingEventPayloadDeleteActionCommand(
+  /// <returns>Запрос действия.</returns>
+  public static AppIncomingEventPayloadDeleteActionRequest ToAppIncomingEventPayloadDeleteActionRequest(
     this AppIncomingEventPayloadDeleteGrpcRequest request)
   {
-    return new(request.ObjectId);
+    AppIncomingEventPayloadDeleteCommand command = new(request.ObjectId);
+
+    return new(command);
   }
 
   /// <summary>
   /// Преобразовать к запросу действия по получению полезной нагрузки входящего события приложения.
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
-  /// <returns>Запрос.</returns>
-  public static AppIncomingEventPayloadGetActionQuery ToAppIncomingEventPayloadGetActionQuery(
+  /// <returns>Запрос действия.</returns>
+  public static AppIncomingEventPayloadGetActionRequest ToAppIncomingEventPayloadGetActionRequest(
     this AppIncomingEventPayloadGetGrpcRequest request)
   {
-    return new(request.ObjectId);
+    AppIncomingEventPayloadSingleQuery query = new(request.ObjectId);
+
+    return new(query);
   }
 
   /// <summary>
@@ -55,20 +59,16 @@ public static class AppIncomingEventPayloadExtensions
   /// Преобразовать к запросу действия по получению списка полезных нагрузок входящего события приложения.
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
-  /// <returns>Запрос.</returns>
-  public static AppIncomingEventPayloadGetListActionQuery ToAppIncomingEventPayloadGetListActionQuery(
+  /// <returns>Запрос действия.</returns>
+  public static AppIncomingEventPayloadGetListActionRequest ToAppIncomingEventPayloadGetListActionRequest(
     this AppIncomingEventPayloadGetListGrpcRequest request)
   {
-    AppIncomingEventPayloadPageQuery pageQuery = new()
-    {
-      Page = new(request.Page.Number, request.Page.Size),
-      Filter = new(request.Filter.FullTextSearchQuery)
-    };
+    AppIncomingEventPayloadPageQuery query = new(
+      Page: new(request.Page.Number, request.Page.Size),
+      Sort: new(request.Sort.Field, request.Sort.IsDesc),
+      Filter: new(request.Filter.FullTextSearchQuery));
 
-    return new(pageQuery)
-    {
-      Sort = new(request.Sort.Field, request.Sort.IsDesc)
-    };
+    return new(query);
   }
 
   /// <summary>
@@ -100,11 +100,11 @@ public static class AppIncomingEventPayloadExtensions
   }
 
   /// <summary>
-  /// Преобразовать к команде действия по сохранению полезной нагрузки входящего события приложения.
+  /// Преобразовать к запросу действия по сохранению полезной нагрузки входящего события приложения.
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
-  /// <returns>Команда.</returns
-  public static AppIncomingEventPayloadSaveActionCommand ToAppIncomingEventPayloadSaveActionCommand(
+  /// <returns>Запрос действия.</returns
+  public static AppIncomingEventPayloadSaveActionCommand ToAppIncomingEventPayloadSaveActionRequest(
     this AppIncomingEventPayloadCreateGrpcRequest request)
   {
     AppEventPayloadWithDataAsString payload = new(request.Data)
@@ -116,15 +116,20 @@ public static class AppIncomingEventPayloadExtensions
       Position = request.Position,
     };
 
-    return new(false, string.Empty, request.AppIncomingEventObjectId, payload);
+    AppIncomingEventPayloadSaveCommand command = new(
+      IsUpdate: false,
+      ObjectId: string.Empty,
+      Data: new(AppIncomingEventObjectId: request.AppIncomingEventObjectId, Payload: payload));
+
+    return new(command);
   }
 
   /// <summary>
-  /// Преобразовать к команде действия по сохранению полезной нагрузки входящего события приложения.
+  /// Преобразовать к запросу действия по сохранению полезной нагрузки входящего события приложения.
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
-  /// <returns>Команда.</returns
-  public static AppIncomingEventPayloadSaveActionCommand ToAppIncomingEventPayloadSaveActionCommand(
+  /// <returns>Запрос действия.</returns
+  public static AppIncomingEventPayloadSaveActionCommand ToAppIncomingEventPayloadSaveActionRequest(
     this AppIncomingEventPayloadUpdateGrpcRequest request)
   {
     AppEventPayloadWithDataAsString payload = new(request.Data)
@@ -136,7 +141,12 @@ public static class AppIncomingEventPayloadExtensions
       Position = request.Position,
     };
 
-    return new(true, request.ObjectId, request.AppIncomingEventObjectId, payload);
+    AppIncomingEventPayloadSaveCommand command = new(
+      IsUpdate: true,
+      ObjectId: request.ObjectId,
+      Data: new(AppIncomingEventObjectId: request.AppIncomingEventObjectId, Payload: payload));
+
+    return new(command);
   }
 
   private static AppIncomingEventPayloadGetListGrpcReplyItem ToAppIncomingEventPayloadGetListGrpcReplyItem(

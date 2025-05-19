@@ -6,52 +6,76 @@
 public static class AppIncomingEventPayloadEndpointsExtensions
 {
   /// <summary>
+  /// Преобразовать к запросу действия по удалению полезной нагрузки входящего события приложения.
+  /// </summary>
+  /// <param name="request">Запрос.</param>
+  /// <returns>Запрос действия.</returns>
+  public static AppIncomingEventPayloadDeleteActionRequest ToAppIncomingEventPayloadDeleteActionRequest(
+    this AppIncomingEventPayloadDeleteEndpointRequest request)
+  {
+    AppIncomingEventPayloadDeleteCommand command = new(request.ObjectId);
+
+    return new(command);
+  }
+
+  /// <summary>
+  /// Преобразовать к запросу действия по получению полезной нагрузки входящего события приложения.
+  /// </summary>
+  /// <param name="request">Запрос.</param>
+  /// <returns>Запрос действия.</returns>
+  public static AppIncomingEventPayloadGetActionRequest ToAppIncomingEventPayloadGetActionRequest(
+    this AppIncomingEventPayloadGetEndpointRequest request)
+  {
+    AppIncomingEventPayloadSingleQuery query = new(request.ObjectId);
+
+    return new(query);
+  }
+
+  /// <summary>
   /// Преобразовать к запросу действия по получению списка полезных нагрузок входящего события приложения.
   /// </summary>
   /// <param name="request">Запрос.</param>
-  /// <returns>Запрос действия по получению списка полезных нагрузок входящего события приложения.</returns>
-  public static AppIncomingEventPayloadGetListActionQuery ToAppIncomingEventPayloadGetListActionQuery(
+  /// <returns>Запрос действия.</returns>
+  public static AppIncomingEventPayloadGetListActionRequest ToAppIncomingEventPayloadGetListActionRequest(
     this AppIncomingEventPayloadGetListEndpointRequest request)
   {
-    AppIncomingEventPayloadPageQuery pageQuery = new()
-    {
-      Page = new(request.CurrentPage, request.ItemsPerPage),
-      Filter = new(request.Query)
-    };
+    AppIncomingEventPayloadPageQuery query = new(
+      Page: new(request.CurrentPage, request.ItemsPerPage),
+      Sort: request.SortField.ToAppIncomingEventPayloadQuerySortSection(request.SortIsDesc),
+      Filter: new(request.Query));
 
-    return new(pageQuery)
-    {
-      Sort = request.SortField.ToAppIncomingEventPayloadQuerySortSection(request.SortIsDesc)
-    };
+    return new(query);
   }
 
   /// <summary>
-  /// Преобразовать к команде действия по сохранению полезной нагрузки входящего события приложения.
+  /// Преобразовать к запросу действия по сохранению полезной нагрузки входящего события приложения.
   /// </summary>
   /// <param name="request">Запрос.</param>
-  /// <returns>Команда.</returns>
-  public static AppIncomingEventPayloadSaveActionCommand ToAppIncomingEventPayloadSaveActionCommand(
+  /// <returns>Запрос действия.</returns>
+  public static AppIncomingEventPayloadSaveActionCommand ToAppIncomingEventPayloadSaveActionRequest(
     this AppIncomingEventPayloadCreateEndpointRequest request)
   {
-    return new(
-      false,
-      string.Empty,
-      request.AppIncomingEventObjectId,
-      request.Payload);
+    AppIncomingEventPayloadSaveCommand command = new(
+      IsUpdate: false,
+      ObjectId: string.Empty,
+      Data: new(AppIncomingEventObjectId: request.AppIncomingEventObjectId, Payload: request.Payload));
+
+    return new(command);
   }
 
   /// <summary>
-  /// Преобразовать к команде действия по сохранению полезной нагрузки входящего события приложения.
+  /// Преобразовать к запросу действия по сохранению полезной нагрузки входящего события приложения.
   /// </summary>
   /// <param name="request">Запрос.</param>
-  /// <returns>Команда.</returns>
-  public static AppIncomingEventPayloadSaveActionCommand ToAppIncomingEventPayloadSaveActionCommand(
+  /// <returns>Запрос действия.</returns>
+  public static AppIncomingEventPayloadSaveActionCommand ToAppIncomingEventPayloadSaveActionRequest(
     this AppIncomingEventPayloadUpdateEndpointRequest request)
   {
-    return new(
-      true,
-      request.ObjectId,
-      request.AppIncomingEventObjectId,
-      request.Payload);
+    AppIncomingEventPayloadSaveCommand command = new(
+      IsUpdate: true,
+      ObjectId: request.ObjectId,
+      Data: new(AppIncomingEventObjectId: request.AppIncomingEventObjectId, Payload: request.Payload));
+
+    return new(command);
   }
 }
