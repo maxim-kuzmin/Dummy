@@ -7,7 +7,7 @@
 public class DummyItemQueryService(IDummyItemRepository _repository) : IDummyItemQueryService
 {
   /// <inheritdoc/>
-  public Task<long> GetCount(DummyItemPageQuery query, CancellationToken cancellationToken)
+  public Task<long> GetCount(DummyItemCountQuery query, CancellationToken cancellationToken)
   {
     return _repository.GetCount(query, cancellationToken);
   }
@@ -18,6 +18,27 @@ public class DummyItemQueryService(IDummyItemRepository _repository) : IDummyIte
     var entities = await _repository.GetList(query, cancellationToken).ConfigureAwait(false);
 
     return [.. entities.Select(x =>  x.ToDummyItemSingleDTO())];
+  }
+
+  /// <inheritdoc/>
+  public async Task<DummyItemListDTO> GetPage(DummyItemPageQuery query, CancellationToken cancellationToken)
+  {
+    var totalCount = await GetCount(query, cancellationToken).ConfigureAwait(false);
+
+    List<DummyItemSingleDTO> items;
+
+    if (totalCount > 0)
+    {
+      var entities = await _repository.GetPageItems(query, cancellationToken).ConfigureAwait(false);
+
+      items = [.. entities.Select(x => x.ToDummyItemSingleDTO())];
+    }
+    else
+    {
+      items = [];
+    }
+
+    return new(items, totalCount);
   }
 
   /// <inheritdoc/>

@@ -11,7 +11,7 @@ public interface IDummyItemQueryService
   /// <param name="query">Запрос.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Количество объектов.</returns>
-  Task<long> GetCount(DummyItemPageQuery query, CancellationToken cancellationToken);
+  Task<long> GetCount(DummyItemCountQuery query, CancellationToken cancellationToken);
 
   /// <summary>
   /// Получить список объектов.
@@ -20,6 +20,14 @@ public interface IDummyItemQueryService
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Список объектов.</returns>
   Task<List<DummyItemSingleDTO>> GetList(DummyItemListQuery query, CancellationToken cancellationToken);
+
+  /// <summary>
+  /// Получить страницу объектов.
+  /// </summary>
+  /// <param name="query">Запрос.</param>
+  /// <param name="cancellationToken">Токен отмены.</param>
+  /// <returns>Список объектов.</returns>
+  Task<DummyItemListDTO> GetPage(DummyItemPageQuery query, CancellationToken cancellationToken);
 
   /// <summary>
   /// Получить единственный объект.

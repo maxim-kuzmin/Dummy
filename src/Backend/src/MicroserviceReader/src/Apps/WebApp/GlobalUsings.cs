@@ -14,6 +14,8 @@ global using Makc.Dummy.MicroserviceReader.Apps.WebApp.AppIncomingEventPayload.E
 global using Makc.Dummy.MicroserviceReader.Apps.WebApp.AppIncomingEventPayload.Endpoints.GetList;
 global using Makc.Dummy.MicroserviceReader.Apps.WebApp.AppIncomingEventPayload.Endpoints.Update;
 global using Makc.Dummy.MicroserviceReader.Apps.WebApp.DummyItem.Endpoints.Create;
+global using Makc.Dummy.MicroserviceReader.Apps.WebApp.DummyItem.Endpoints.Delete;
+global using Makc.Dummy.MicroserviceReader.Apps.WebApp.DummyItem.Endpoints.Get;
 global using Makc.Dummy.MicroserviceReader.Apps.WebApp.DummyItem.Endpoints.GetList;
 global using Makc.Dummy.MicroserviceReader.Apps.WebApp.DummyItem.Endpoints.Update;
 global using Makc.Dummy.MicroserviceReader.DomainModel.App;
@@ -37,6 +39,7 @@ global using Makc.Dummy.MicroserviceReader.DomainUseCases.DummyItem.Actions.Dele
 global using Makc.Dummy.MicroserviceReader.DomainUseCases.DummyItem.Actions.Get;
 global using Makc.Dummy.MicroserviceReader.DomainUseCases.DummyItem.Actions.GetList;
 global using Makc.Dummy.MicroserviceReader.DomainUseCases.DummyItem.Actions.Save;
+global using Makc.Dummy.MicroserviceReader.DomainUseCases.DummyItem.Commands;
 global using Makc.Dummy.MicroserviceReader.DomainUseCases.DummyItem.DTOs;
 global using Makc.Dummy.MicroserviceReader.DomainUseCases.DummyItem.Queries;
 global using Makc.Dummy.MicroserviceReader.Infrastructure.Core.App;

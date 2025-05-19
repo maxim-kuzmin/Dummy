@@ -6,54 +6,76 @@
 public static class DummyItemEndpointsExtensions
 {
   /// <summary>
+  /// Преобразовать к запросу действия по удалению фиктивного предмета.
+  /// </summary>
+  /// <param name="request">Запрос.</param>
+  /// <returns>Запрос действия.</returns>
+  public static DummyItemDeleteActionRequest ToDummyItemDeleteActionRequest(
+    this DummyItemDeleteEndpointRequest request)
+  {
+    DummyItemDeleteCommand command = new(request.ObjectId);
+
+    return new(command);
+  }
+
+  /// <summary>
+  /// Преобразовать к запросу действия по получению фиктивного предмета.
+  /// </summary>
+  /// <param name="request">Запрос.</param>
+  /// <returns>Запрос действия.</returns>
+  public static DummyItemGetActionRequest ToDummyItemGetActionRequest(
+    this DummyItemGetEndpointRequest request)
+  {
+    DummyItemSingleQuery query = new(request.ObjectId);
+
+    return new(query);
+  }
+
+  /// <summary>
   /// Преобразовать к запросу действия по получению списка фиктивных предметов.
   /// </summary>
   /// <param name="request">Запрос.</param>
-  /// <returns>Запрос действия по получению списка фиктивных предметов.</returns>
-  public static DummyItemGetListActionQuery ToDummyItemGetListActionQuery(
+  /// <returns>Запрос действия.</returns>
+  public static DummyItemGetListActionRequest ToDummyItemGetListActionRequest(
     this DummyItemGetListEndpointRequest request)
   {
-    DummyItemPageQuery pageQuery = new()
-    {
-      Page = new(request.CurrentPage, request.ItemsPerPage),
-      Filter = new(request.Query)
-    };
+    DummyItemPageQuery query = new(
+      Page: new(request.CurrentPage, request.ItemsPerPage),
+      Sort: request.SortField.ToDummyItemQuerySortSection(request.SortIsDesc),
+      Filter: new(request.Query));
 
-    return new(pageQuery)
-    {
-      Sort = request.SortField.ToDummyItemQuerySortSection(request.SortIsDesc)
-    };
+    return new(query);
   }
 
   /// <summary>
-  /// Преобразовать к команде действия по сохранению фиктивного предмета.
+  /// Преобразовать к запросу действия по сохранению фиктивного предмета.
   /// </summary>
   /// <param name="request">Запрос.</param>
-  /// <returns>Команда.</returns>
-  public static DummyItemSaveActionCommand ToDummyItemSaveActionCommand(
+  /// <returns>Запрос действия.</returns>
+  public static DummyItemSaveActionRequest ToDummyItemSaveActionRequest(
     this DummyItemCreateEndpointRequest request)
   {
-    return new(
-      false,
-      string.Empty,
-      request.Id,
-      request.Name,
-      request.ConcurrencyToken);
+    DummyItemSaveCommand command = new(
+      IsUpdate: false,
+      ObjectId: string.Empty,
+      Data: new(Id: request.Id, Name: request.Name, ConcurrencyToken: request.ConcurrencyToken));
+
+    return new(command);
   }
 
   /// <summary>
-  /// Преобразовать к команде действия по сохранению фиктивного предмета.
+  /// Преобразовать к запросу действия по сохранению фиктивного предмета.
   /// </summary>
   /// <param name="request">Запрос.</param>
-  /// <returns>Команда.</returns>
-  public static DummyItemSaveActionCommand ToDummyItemSaveActionCommand(
+  /// <returns>Запрос действия.</returns>
+  public static DummyItemSaveActionRequest ToDummyItemSaveActionRequest(
     this DummyItemUpdateEndpointRequest request)
   {
-    return new(
-      true,
-      request.ObjectId,
-      request.Id,
-      request.Name,
-      request.ConcurrencyToken);
+    DummyItemSaveCommand command = new(
+      IsUpdate: true,
+      ObjectId: request.ObjectId,
+      Data: new(Id: request.Id, Name: request.Name, ConcurrencyToken: request.ConcurrencyToken));
+
+    return new(command);
   }
 }

@@ -12,9 +12,14 @@ global using Makc.Dummy.MicroserviceWriter.Apps.WebApp.AppOutgoingEvent.Endpoint
 global using Makc.Dummy.MicroserviceWriter.Apps.WebApp.AppOutgoingEvent.Endpoints.GetList;
 global using Makc.Dummy.MicroserviceWriter.Apps.WebApp.AppOutgoingEvent.Endpoints.Update;
 global using Makc.Dummy.MicroserviceWriter.Apps.WebApp.AppOutgoingEventPayload.Endpoints.Create;
+global using Makc.Dummy.MicroserviceWriter.Apps.WebApp.AppOutgoingEventPayload.Endpoints.Delete;
+global using Makc.Dummy.MicroserviceWriter.Apps.WebApp.AppOutgoingEventPayload.Endpoints.Get;
 global using Makc.Dummy.MicroserviceWriter.Apps.WebApp.AppOutgoingEventPayload.Endpoints.GetList;
 global using Makc.Dummy.MicroserviceWriter.Apps.WebApp.AppOutgoingEventPayload.Endpoints.Update;
+global using Makc.Dummy.MicroserviceWriter.Apps.WebApp.Auth.Endpoints.Login;
 global using Makc.Dummy.MicroserviceWriter.Apps.WebApp.DummyItem.Endpoints.Create;
+global using Makc.Dummy.MicroserviceWriter.Apps.WebApp.DummyItem.Endpoints.Delete;
+global using Makc.Dummy.MicroserviceWriter.Apps.WebApp.DummyItem.Endpoints.Get;
 global using Makc.Dummy.MicroserviceWriter.Apps.WebApp.DummyItem.Endpoints.GetList;
 global using Makc.Dummy.MicroserviceWriter.Apps.WebApp.DummyItem.Endpoints.Update;
 global using Makc.Dummy.MicroserviceWriter.DomainModel.App;
@@ -39,6 +44,7 @@ global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEventPayloa
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEventPayload.Queries;
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEventPayload.Query.Sections;
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.Auth.Actions.Login;
+global using Makc.Dummy.MicroserviceWriter.DomainUseCases.Auth.Commands;
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.Auth.DTOs;
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.DummyItem;
 global using Makc.Dummy.MicroserviceWriter.DomainUseCases.DummyItem.Actions.Delete;

@@ -5,12 +5,12 @@
 /// </summary>
 /// <param name="_service">Сервис.</param>
 public class AppOutboxSaveActionHandler(IAppOutboxCommandService _service) :
-  ICommandHandler<AppOutboxSaveActionCommand, Result>
+  ICommandHandler<AppOutboxSaveActionRequest, Result>
 {
   /// <inheritdoc/>
-  public async Task<Result> Handle(AppOutboxSaveActionCommand request, CancellationToken cancellationToken)
+  public async Task<Result> Handle(AppOutboxSaveActionRequest request, CancellationToken cancellationToken)
   {
-    var result = await _service.Save(request, cancellationToken).ConfigureAwait(false);
+    var result = await _service.Save(request.Command, cancellationToken).ConfigureAwait(false);
 
     return result.Data;
   }

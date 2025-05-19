@@ -6,24 +6,28 @@
 public static class DummyItemExtensions
 {
   /// <summary>
-  /// Преобразовать к команде действия по удалению фиктивного предмета.
+  /// Преобразовать к запросу действия по удалению фиктивного предмета.
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
-  /// <returns>Команда.</returns>
-  public static DummyItemDeleteActionCommand ToDummyItemDeleteActionCommand(
+  /// <returns>Запрос действия.</returns>
+  public static DummyItemDeleteActionRequest ToDummyItemDeleteActionRequest(
     this DummyItemDeleteGrpcRequest request)
   {
-    return new(request.ObjectId);
+    DummyItemDeleteCommand command = new(request.ObjectId);
+
+    return new(command);
   }
 
   /// <summary>
   /// Преобразовать к запросу действия по получению фиктивного предмета.
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
-  /// <returns>Запрос.</returns>
-  public static DummyItemGetActionQuery ToDummyItemGetActionQuery(this DummyItemGetGrpcRequest request)
+  /// <returns>Запрос действия.</returns>
+  public static DummyItemGetActionRequest ToDummyItemGetActionRequest(this DummyItemGetGrpcRequest request)
   {
-    return new(request.ObjectId);
+    DummyItemSingleQuery query = new(request.ObjectId);
+
+    return new(query);
   }
 
   /// <summary>
@@ -46,20 +50,16 @@ public static class DummyItemExtensions
   /// Преобразовать к запросу действия по получению списка фиктивных предметов.
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
-  /// <returns>Запрос.</returns>
-  public static DummyItemGetListActionQuery ToDummyItemGetListActionQuery(
+  /// <returns>Запрос действия.</returns>
+  public static DummyItemGetListActionRequest ToDummyItemGetListActionRequest(
     this DummyItemGetListGrpcRequest request)
   {
-    DummyItemPageQuery pageQuery = new()
-    {
-      Page = new(request.Page.Number, request.Page.Size),
-      Filter = new(request.Filter.FullTextSearchQuery)
-    };
+    DummyItemPageQuery query = new(
+      Page: new(request.Page.Number, request.Page.Size),
+      Sort: new(request.Sort.Field, request.Sort.IsDesc),
+      Filter: new(request.Filter.FullTextSearchQuery));
 
-    return new(pageQuery)
-    {
-      Sort = new(request.Sort.Field, request.Sort.IsDesc)
-    };
+    return new(query);
   }
 
   /// <summary>
@@ -91,24 +91,34 @@ public static class DummyItemExtensions
   }
 
   /// <summary>
-  /// Преобразовать к команде действия по сохранению фиктивного предмета.
+  /// Преобразовать к запросу действия по сохранению фиктивного предмета.
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
   /// <returns>Команда.</returns
-  public static DummyItemSaveActionCommand ToDummyItemSaveActionCommand(
+  public static DummyItemSaveActionRequest ToDummyItemSaveActionRequest(
     this DummyItemCreateGrpcRequest request)
   {
-    return new(false, string.Empty, request.Id, request.Name, request.ConcurrencyToken);
+    DummyItemSaveCommand command = new(
+      IsUpdate: false,
+      ObjectId: string.Empty,
+      Data: new(request.Id, request.Name, request.ConcurrencyToken));
+
+    return new(command);
   }
 
   /// <summary>
-  /// Преобразовать к команде действия по сохранению фиктивного предмета.
+  /// Преобразовать к запросу действия по сохранению фиктивного предмета.
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
   /// <returns>Команда.</returns
-  public static DummyItemSaveActionCommand ToDummyItemSaveActionCommand(
+  public static DummyItemSaveActionRequest ToDummyItemSaveActionRequest(
     this DummyItemUpdateGrpcRequest request)
   {
-    return new(true, request.ObjectId, request.Id, request.Name, request.ConcurrencyToken);
+    DummyItemSaveCommand command = new(
+      IsUpdate: true,
+      ObjectId: request.ObjectId,
+      Data: new(request.Id, request.Name, request.ConcurrencyToken));
+
+    return new(command);
   }
 }

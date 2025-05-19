@@ -5,12 +5,12 @@
 /// </summary>
 /// <param name="_service">Сервис.</param>
 public class DummyItemDeleteActionHandler(IDummyItemCommandService _service) :
-  ICommandHandler<DummyItemDeleteActionCommand, Result>
+  ICommandHandler<DummyItemDeleteActionRequest, Result>
 {
   /// <inheritdoc/>
-  public async Task<Result> Handle(DummyItemDeleteActionCommand request, CancellationToken cancellationToken)
+  public async Task<Result> Handle(DummyItemDeleteActionRequest request, CancellationToken cancellationToken)
   {
-    var result = await _service.Delete(request, cancellationToken).ConfigureAwait(false);
+    var result = await _service.Delete(request.Command, cancellationToken).ConfigureAwait(false);
 
     return result.Data;
   }

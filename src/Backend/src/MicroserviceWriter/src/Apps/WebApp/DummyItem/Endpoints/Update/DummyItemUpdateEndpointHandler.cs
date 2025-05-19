@@ -19,9 +19,9 @@ public class DummyItemUpdateEndpointHandler(IMediator _mediator) :
     DummyItemUpdateEndpointRequest request,
     CancellationToken cancellationToken)
   {
-    var command = request.ToDummyItemSaveActionRequest();
+    var task = _mediator.Send(request.ToDummyItemSaveActionRequest(), cancellationToken);
 
-    var result = await _mediator.Send(command, cancellationToken);
+    var result = await task.ConfigureAwait(false);
 
     await SendResultAsync(result.ToMinimalApiResult());
   }

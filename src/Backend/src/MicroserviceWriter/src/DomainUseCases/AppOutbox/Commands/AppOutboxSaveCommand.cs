@@ -1,10 +1,10 @@
-﻿namespace Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutbox.Actions.Save;
+﻿namespace Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutbox.Commands;
 
 /// <summary>
-/// Команда действия по сохранению исходящего сообщения приложения.
+/// Команда сохранения исходящего сообщения приложения.
 /// </summary>
 /// <param name="EventName">Имя события.</param>
 /// <param name="Payloads">Полезные нагрузки.</param>
-public record AppOutboxSaveActionCommand(
+public record AppOutboxSaveCommand(
   string EventName,
   List<AppEventPayloadWithDataAsString> Payloads) : ICommand<Result>;

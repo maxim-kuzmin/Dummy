@@ -5,7 +5,7 @@
 /// </summary>
 /// <param name="_mediator">Медиатор.</param>
 public class AuthLoginEndpointHandler(IMediator _mediator) :
-  Endpoint<AuthLoginActionRequest, AuthLoginDTO>
+  Endpoint<AuthLoginEndpointRequest, AuthLoginDTO>
 {
   /// <inheritdoc/>
   public override void Configure()
@@ -15,9 +15,11 @@ public class AuthLoginEndpointHandler(IMediator _mediator) :
   }
 
   /// <inheritdoc/>
-  public override async Task HandleAsync(AuthLoginActionRequest request, CancellationToken cancellationToken)
+  public override async Task HandleAsync(AuthLoginEndpointRequest request, CancellationToken cancellationToken)
   {
-    var result = await _mediator.Send(request, cancellationToken);
+    var task = _mediator.Send(request.ToAuthLoginActionRequest(), cancellationToken);
+
+    var result = await task.ConfigureAwait(false);
 
     await SendResultAsync(result.ToMinimalApiResult());
   }

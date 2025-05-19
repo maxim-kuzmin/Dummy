@@ -67,7 +67,7 @@ public class DummyItemCommandService(
     IEnumerable<AppEventPayloadWithDataAsDictionary> payloads,
     CancellationToken cancellationToken)
   {
-    var command = AppEventNameEnum.DummyItemChanged.ToAppOutboxSaveActionCommand(payloads);
+    var command = AppEventNameEnum.DummyItemChanged.ToAppOutboxSaveCommand(payloads);
 
     return _appOutboxCommandService.Save(command, cancellationToken);
   }

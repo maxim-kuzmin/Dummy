@@ -11,7 +11,7 @@ public interface IAppOutboxCommandService
   /// <param name="command">Команда.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Задача.</returns>
-  Task Produce(AppOutboxProduceActionCommand command, CancellationToken cancellationToken);
+  Task Produce(AppOutboxProduceCommand command, CancellationToken cancellationToken);
 
   /// <summary>
   /// Сохранить.
@@ -19,5 +19,5 @@ public interface IAppOutboxCommandService
   /// <param name="command">Команда.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Результат.</returns>
-  Task<AppCommandResultWithoutValue> Save(AppOutboxSaveActionCommand command, CancellationToken cancellationToken);
+  Task<AppCommandResultWithoutValue> Save(AppOutboxSaveCommand command, CancellationToken cancellationToken);
 }

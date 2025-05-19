@@ -16,7 +16,7 @@ public class DummyItemRepository(
   IDummyItemRepository
 {
   /// <inheritdoc/>
-  public Task<long> GetCount(DummyItemPageQuery query, CancellationToken cancellationToken)
+  public Task<long> GetCount(DummyItemCountQuery query, CancellationToken cancellationToken)
   {
     var filter = CreateFilter(query.Filter);
 
@@ -26,11 +26,24 @@ public class DummyItemRepository(
   /// <inheritdoc/>
   public async Task<List<DummyItemEntity>> GetList(DummyItemListQuery query, CancellationToken cancellationToken)
   {
-    var filter = CreateFilter(query.PageQuery.Filter);
+    var filter = CreateFilter(query.Filter);
+
+    var found = Collection.Find(ClientSessionHandle, filter)
+      .Sort(query.Sort, DummyItemSettings.DefaultQuerySortSection, CreateSortFieldExpression);
+
+    var result = await found.ToListAsync(cancellationToken).ConfigureAwait(false);
+
+    return result;
+  }
+
+  /// <inheritdoc/>
+  public async Task<List<DummyItemEntity>> GetPageItems(DummyItemPageQuery query, CancellationToken cancellationToken)
+  {
+    var filter = CreateFilter(query.Filter);
 
     var found = Collection.Find(ClientSessionHandle, filter)
       .Sort(query.Sort, DummyItemSettings.DefaultQuerySortSection, CreateSortFieldExpression)
-      .TakePage(query.PageQuery.Page);
+      .TakePage(query.Page);
 
     var result = await found.ToListAsync(cancellationToken).ConfigureAwait(false);
 

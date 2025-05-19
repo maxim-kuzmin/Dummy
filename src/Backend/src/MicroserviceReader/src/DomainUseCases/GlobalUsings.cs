@@ -28,6 +28,8 @@ global using Makc.Dummy.MicroserviceReader.DomainUseCases.AppIncomingEventPayloa
 global using Makc.Dummy.MicroserviceReader.DomainUseCases.DummyItem.Actions.Delete;
 global using Makc.Dummy.MicroserviceReader.DomainUseCases.DummyItem.Actions.Get;
 global using Makc.Dummy.MicroserviceReader.DomainUseCases.DummyItem.Actions.Save;
+global using Makc.Dummy.MicroserviceReader.DomainUseCases.DummyItem.Command.Sections;
+global using Makc.Dummy.MicroserviceReader.DomainUseCases.DummyItem.Commands;
 global using Makc.Dummy.MicroserviceReader.DomainUseCases.DummyItem.DTOs;
 global using Makc.Dummy.MicroserviceReader.DomainUseCases.DummyItem.Queries;
 global using Makc.Dummy.MicroserviceReader.DomainUseCases.DummyItem.Query.Sections;

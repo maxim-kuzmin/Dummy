@@ -6,10 +6,36 @@
 public static class AppOutgoingEventPayloadEndpointsExtensions
 {
   /// <summary>
+  /// Преобразовать к запросу действия по удалению полезной нагрузки исходящего события приложения.
+  /// </summary>
+  /// <param name="request">Запрос.</param>
+  /// <returns>Запрос действия.</returns>
+  public static AppOutgoingEventPayloadDeleteActionRequest ToAppOutgoingEventPayloadDeleteActionRequest(
+    this AppOutgoingEventPayloadDeleteEndpointRequest request)
+  {
+    AppOutgoingEventPayloadDeleteCommand command = new(request.Id);
+
+    return new(command);
+  }
+
+  /// <summary>
+  /// Преобразовать к запросу действия по получению полезной нагрузки исходящего события приложения.
+  /// </summary>
+  /// <param name="request">Запрос.</param>
+  /// <returns>Запрос действия.</returns>
+  public static AppOutgoingEventPayloadGetActionRequest ToAppOutgoingEventPayloadGetActionRequest(
+    this AppOutgoingEventPayloadGetEndpointRequest request)
+  {
+    AppOutgoingEventPayloadSingleQuery query = new(request.Id);
+
+    return new(query);
+  }
+
+  /// <summary>
   /// Преобразовать к запросу действия по получению списка полезных нагрузок исходящего события приложения.
   /// </summary>
   /// <param name="request">Запрос.</param>
-  /// <returns>Запрос действия по получению списка полезных нагрузок исходящего события приложения.</returns>
+  /// <returns>Запрос действия.</returns>
   public static AppOutgoingEventPayloadGetListActionRequest ToAppOutgoingEventPayloadGetListActionRequest(
     this AppOutgoingEventPayloadGetListEndpointRequest request)
   {
@@ -25,7 +51,7 @@ public static class AppOutgoingEventPayloadEndpointsExtensions
   /// Преобразовать к запросу действия по сохранению полезной нагрузки исходящего события приложения.
   /// </summary>
   /// <param name="request">Запрос.</param>
-  /// <returns>Команда.</returns>
+  /// <returns>Запрос действия.</returns>
   public static AppOutgoingEventPayloadSaveActionRequest ToAppOutgoingEventPayloadSaveActionRequest(
     this AppOutgoingEventPayloadCreateEndpointRequest request)
   {
@@ -41,7 +67,7 @@ public static class AppOutgoingEventPayloadEndpointsExtensions
   /// Преобразовать к запросу действия по сохранению полезной нагрузки исходящего события приложения.
   /// </summary>
   /// <param name="request">Запрос.</param>
-  /// <returns>Команда.</returns>
+  /// <returns>Запрос действия.</returns>
   public static AppOutgoingEventPayloadSaveActionRequest ToAppOutgoingEventPayloadSaveActionRequest(
     this AppOutgoingEventPayloadUpdateEndpointRequest request)
   {

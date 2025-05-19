@@ -11,7 +11,7 @@ public interface IDummyItemRepository : IObjectRepository<DummyItemEntity>
   /// <param name="query">Запрос.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Количество сущностей.</returns>
-  Task<long> GetCount(DummyItemPageQuery query, CancellationToken cancellationToken);
+  Task<long> GetCount(DummyItemCountQuery query, CancellationToken cancellationToken);
 
   /// <summary>
   /// Получить список сущностей.
@@ -20,6 +20,14 @@ public interface IDummyItemRepository : IObjectRepository<DummyItemEntity>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Список сущностей.</returns>
   Task<List<DummyItemEntity>> GetList(DummyItemListQuery query, CancellationToken cancellationToken);
+
+  /// <summary>
+  /// Получить элементы страницы.
+  /// </summary>
+  /// <param name="query">Запрос.</param>
+  /// <param name="cancellationToken">Токен отмены.</param>
+  /// <returns>Список сущностей.</returns>
+  Task<List<DummyItemEntity>> GetPageItems(DummyItemPageQuery query, CancellationToken cancellationToken);
 
   /// <summary>
   /// Получить единственную сущность.

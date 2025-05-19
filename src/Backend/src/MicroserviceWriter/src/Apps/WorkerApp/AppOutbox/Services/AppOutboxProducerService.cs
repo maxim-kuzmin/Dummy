@@ -39,11 +39,13 @@ public class AppOutboxProducerService(
       {
         _logger.LogDebug("MAKC:AppOutboxProducerService:ExecuteAsync:Produce start");
 
-        AppOutboxProduceActionCommand command = new(maxCount);
+        AppOutboxProduceCommand command = new(maxCount);
 
         _logger.LogDebug("MAKC:AppOutboxProducerService:ExecuteAsync:Produce:Command: {command}", command);
 
-        await mediator.Send(command, stoppingToken).ConfigureAwait(false);
+        AppOutboxProduceActionRequest request = new(command);        
+
+        await mediator.Send(request, stoppingToken).ConfigureAwait(false);
 
         _logger.LogDebug("MAKC:AppOutboxProducerService:ExecuteAsync:Produce end");
       }

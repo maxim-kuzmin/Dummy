@@ -6,49 +6,46 @@
 public static class AppOutboxExtensions
 {
   /// <summary>
-  /// Преобразовать к команде действия по сохранению исходящего сообщения приложения.
+  /// Преобразовать к команде сохранения исходящего сообщения приложения.
   /// </summary>
   /// <param name="appEventName">Имя события приложения.</param>
   /// <param name="payloads">Полезные нагрузки.</param>
   /// <returns>Команда.</returns>
-  public static AppOutboxSaveActionCommand ToAppOutboxSaveActionCommand(
+  public static AppOutboxSaveCommand ToAppOutboxSaveCommand(
     this AppEventNameEnum appEventName,
     IEnumerable<AppEventPayloadWithDataAsDictionary> payloads)
   {
-    return new(appEventName.ToString(), [..payloads.Select((x, i) => x.ToAppEventPayloadWithDataAsString(++i))]);
+    return new(
+      EventName: appEventName.ToString(),
+      Payloads: [..payloads.Select((x, i) => x.ToAppEventPayloadWithDataAsString(++i))]);
   }
 
   /// <summary>
-  /// Преобразовать к запросу действия по сохранению исходящего события приложения.
+  /// Преобразовать к команде сохранения исходящего события приложения.
   /// </summary>
-  /// <param name="command">Команда действия по сохранению исходящего сообщения приложения.</param>
+  /// <param name="command">Команда.</param>
   /// <returns>Команда.</returns>
-  public static AppOutgoingEventSaveActionRequest ToAppOutgoingEventSaveActionRequest(
-    this AppOutboxSaveActionCommand actionCommand)
+  public static AppOutgoingEventSaveCommand ToAppOutgoingEventSaveCommand(this AppOutboxSaveCommand command)
   {
-    AppOutgoingEventSaveCommand command = new(
+    return new(
       IsUpdate: false,
       Id: 0,
-      Data: new(Name: actionCommand.EventName, PublishedAt: null));
-
-    return new(command);
+      Data: new(Name: command.EventName, PublishedAt: null));
   }
 
   /// <summary>
-  /// Преобразовать к запросу действия по сохранению полезной нагрузки исходящего события приложения.
+  /// Преобразовать к команде сохранения полезной нагрузки исходящего события приложения.
   /// </summary>
   /// <param name="payload">Полезная нагрузка.</param>
   /// <param name="appOutgoingEventId">Идентификатор исходящего события приложения.</param>
   /// <returns>Команда.</returns>
-  public static AppOutgoingEventPayloadSaveActionRequest ToAppOutgoingEventPayloadSaveActionRequest(
+  public static AppOutgoingEventPayloadSaveCommand ToAppOutgoingEventPayloadSaveCommand(
     this AppEventPayloadWithDataAsString payload,
     long appOutgoingEventId)
   {
-    AppOutgoingEventPayloadSaveCommand command = new(
+    return new(
       IsUpdate: false,
       Id: 0,
       Data: new(AppOutgoingEventId: appOutgoingEventId, Payload: payload));
-
-    return new(command);
   }
 }

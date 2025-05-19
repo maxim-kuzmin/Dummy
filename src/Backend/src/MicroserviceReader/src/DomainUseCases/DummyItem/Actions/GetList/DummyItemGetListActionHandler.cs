@@ -9,32 +9,19 @@
 public class DummyItemGetListActionHandler(
   AppSession _appSession,
   ILogger<DummyItemGetActionHandler> _logger,
-  IDummyItemQueryService _service) : IQueryHandler<DummyItemGetListActionQuery, Result<DummyItemListDTO>>
+  IDummyItemQueryService _service) : IQueryHandler<DummyItemGetListActionRequest, Result<DummyItemListDTO>>
 {
   /// <inheritdoc/>
   public async Task<Result<DummyItemListDTO>> Handle(
-    DummyItemGetListActionQuery request,
+    DummyItemGetListActionRequest request,
     CancellationToken cancellationToken)
   {
     var userName = _appSession.User.Identity?.Name;
 
     _logger.LogDebug("User name: {userName}", userName);
 
-    var totalCount = await _service.GetCount(request.PageQuery, cancellationToken).ConfigureAwait(false);
+    var result = await _service.GetPage(request.Query, cancellationToken);
 
-    List<DummyItemSingleDTO> items;
-
-    if (totalCount > 0)
-    {
-      items = await _service.GetList(request, cancellationToken).ConfigureAwait(false);
-    }
-    else
-    {
-      items = [];
-    }
-
-    DummyItemListDTO dto = new(items, totalCount);
-
-    return Result.Success(dto);
+    return Result.Success(result);
   }
 }

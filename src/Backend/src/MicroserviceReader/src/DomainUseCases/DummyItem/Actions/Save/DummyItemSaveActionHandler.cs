@@ -5,14 +5,14 @@
 /// </summary>
 /// <param name="_service">Сервис.</param>
 public class DummyItemSaveActionHandler(IDummyItemCommandService _service) :
-  ICommandHandler<DummyItemSaveActionCommand, Result<DummyItemSingleDTO>>
+  ICommandHandler<DummyItemSaveActionRequest, Result<DummyItemSingleDTO>>
 {
   /// <inheritdoc/>
   public async Task<Result<DummyItemSingleDTO>> Handle(
-    DummyItemSaveActionCommand request,
+    DummyItemSaveActionRequest request,
     CancellationToken cancellationToken)
   {
-    var result = await _service.Save(request, cancellationToken).ConfigureAwait(false);
+    var result = await _service.Save(request.Command, cancellationToken).ConfigureAwait(false);
 
     return result.Data;
   }

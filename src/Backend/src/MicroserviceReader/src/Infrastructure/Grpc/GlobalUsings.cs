@@ -16,6 +16,7 @@ global using Makc.Dummy.MicroserviceReader.DomainUseCases.DummyItem.Actions.Dele
 global using Makc.Dummy.MicroserviceReader.DomainUseCases.DummyItem.Actions.Get;
 global using Makc.Dummy.MicroserviceReader.DomainUseCases.DummyItem.Actions.GetList;
 global using Makc.Dummy.MicroserviceReader.DomainUseCases.DummyItem.Actions.Save;
+global using Makc.Dummy.MicroserviceReader.DomainUseCases.DummyItem.Commands;
 global using Makc.Dummy.MicroserviceReader.DomainUseCases.DummyItem.DTOs;
 global using Makc.Dummy.MicroserviceReader.DomainUseCases.DummyItem.Queries;
 global using Makc.Dummy.MicroserviceReader.Infrastructure.Grpc.AppIncomingEvent;

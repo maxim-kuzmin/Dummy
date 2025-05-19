@@ -19,9 +19,9 @@ public class DummyItemGetListEndpointHandler(IMediator _mediator) :
     DummyItemGetListEndpointRequest request,
     CancellationToken cancellationToken)
   {
-    var query = request.ToDummyItemGetListActionRequest();
+    var task = _mediator.Send(request.ToDummyItemGetListActionRequest(), cancellationToken);
 
-    var result = await _mediator.Send(query, cancellationToken);
+    var result = await task.ConfigureAwait(false);
 
     await SendResultAsync(result.ToMinimalApiResult());
   }

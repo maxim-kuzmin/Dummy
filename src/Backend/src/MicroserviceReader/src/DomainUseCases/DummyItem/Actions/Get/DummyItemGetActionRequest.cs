@@ -3,7 +3,5 @@
 /// <summary>
 /// Запрос действия по получению фиктивного предмета.
 /// </summary>
-/// <param name="ObjectId">Идентификатор объекта.</param>
-public record DummyItemGetActionQuery(string? ObjectId) :
-  DummyItemSingleQuery(ObjectId),
-  IQuery<Result<DummyItemSingleDTO>>;
+/// <param name="Query">Запрос.</param>
+public record DummyItemGetActionRequest(DummyItemSingleQuery Query) : IQuery<Result<DummyItemSingleDTO>>;

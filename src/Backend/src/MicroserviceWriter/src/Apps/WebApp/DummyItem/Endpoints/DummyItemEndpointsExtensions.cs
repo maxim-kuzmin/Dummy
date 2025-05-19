@@ -6,10 +6,36 @@
 public static class DummyItemEndpointsExtensions
 {
   /// <summary>
+  /// Преобразовать к запросу действия по удалению фиктивного предмета.
+  /// </summary>
+  /// <param name="request">Запрос.</param>
+  /// <returns>Запрос действия.</returns>
+  public static DummyItemDeleteActionRequest ToDummyItemDeleteActionRequest(
+    this DummyItemDeleteEndpointRequest request)
+  {
+    DummyItemDeleteCommand command = new(request.Id);
+
+    return new(command);
+  }
+
+  /// <summary>
+  /// Преобразовать к запросу действия по получению фиктивного предмета.
+  /// </summary>
+  /// <param name="request">Запрос.</param>
+  /// <returns>Запрос действия.</returns>
+  public static DummyItemGetActionRequest ToDummyItemGetActionRequest(
+    this DummyItemGetEndpointRequest request)
+  {
+    DummyItemSingleQuery query = new(request.Id);
+
+    return new(query);
+  }
+
+  /// <summary>
   /// Преобразовать к запросу действия по получению списка фиктивных предметов.
   /// </summary>
   /// <param name="request">Запрос.</param>
-  /// <returns>Запрос действия по получению списка фиктивных предметов.</returns>
+  /// <returns>Запрос действия.</returns>
   public static DummyItemGetListActionRequest ToDummyItemGetListActionRequest(
     this DummyItemGetListEndpointRequest request)
   {
@@ -25,7 +51,7 @@ public static class DummyItemEndpointsExtensions
   /// Преобразовать к запросу действия по сохранению фиктивного предмета.
   /// </summary>
   /// <param name="request">Запрос.</param>
-  /// <returns>Команда.</returns>
+  /// <returns>Запрос действия.</returns>
   public static DummyItemSaveActionRequest ToDummyItemSaveActionRequest(
     this DummyItemCreateEndpointRequest request)
   {
@@ -41,7 +67,7 @@ public static class DummyItemEndpointsExtensions
   /// Преобразовать к запросу действия по сохранению фиктивного предмета.
   /// </summary>
   /// <param name="request">Запрос.</param>
-  /// <returns>Команда.</returns>
+  /// <returns>Запрос действия.</returns>
   public static DummyItemSaveActionRequest ToDummyItemSaveActionRequest(
     this DummyItemUpdateEndpointRequest request)
   {

@@ -17,7 +17,7 @@ public class AppOutboxCommandService(
   IAppOutgoingEventPayloadCommandService _appOutgoingEventPayloadCommandService) : IAppOutboxCommandService
 {
   /// <inheritdoc/>
-  public async Task Produce(AppOutboxProduceActionCommand command, CancellationToken cancellationToken)
+  public async Task Produce(AppOutboxProduceCommand command, CancellationToken cancellationToken)
   {
     var ids = await GetUnpublishedAppOutgoingEventList(command.MaxCount, cancellationToken).ConfigureAwait(false);
 
@@ -31,14 +31,18 @@ public class AppOutboxCommandService(
 
   /// <inheritdoc/>
   public async Task<AppCommandResultWithoutValue> Save(
-    AppOutboxSaveActionCommand command,
+    AppOutboxSaveCommand command,
     CancellationToken cancellationToken)
   {
     List<AppEventPayloadWithDataAsDictionary> payloads = [];
 
     async Task FuncToExecute(CancellationToken cancellationToken)
     {
-      var resultForAppOutgoingEvent = await CreateAppOutgoingEvent(command, cancellationToken).ConfigureAwait(false);
+      var taskForAppOutgoingEvent = _appOutgoingEventCommandService.Save(
+        command.ToAppOutgoingEventSaveCommand(),
+        cancellationToken);
+
+      var resultForAppOutgoingEvent = await taskForAppOutgoingEvent.ConfigureAwait(false);
 
       resultForAppOutgoingEvent.Data.ThrowExceptionIfNotSuccess();
 
@@ -48,9 +52,11 @@ public class AppOutboxCommandService(
 
       foreach (var payload in command.Payloads)
       {
-        var task = CreateAppOutgoingEventPayload(appOutgoingEventId, payload, cancellationToken);
+        var taskForAppOutgoingEventPayload = _appOutgoingEventPayloadCommandService.Save(
+          payload.ToAppOutgoingEventPayloadSaveCommand(appOutgoingEventId),
+          cancellationToken);
 
-        var resultForAppOutgoingEventPayload = await task.ConfigureAwait(false);
+        var resultForAppOutgoingEventPayload = await taskForAppOutgoingEventPayload.ConfigureAwait(false);
 
         resultForAppOutgoingEventPayload.Data.ThrowExceptionIfNotSuccess();
 
@@ -65,25 +71,6 @@ public class AppOutboxCommandService(
     result.Payloads.AddRange(payloads);
 
     return result;
-  }
-
-  private Task<AppCommandResultWithValue<AppOutgoingEventSingleDTO>> CreateAppOutgoingEvent(
-    AppOutboxSaveActionCommand command,
-    CancellationToken cancellationToken)
-  {
-    var request = command.ToAppOutgoingEventSaveActionRequest();
-
-    return _appOutgoingEventCommandService.Save(request.Command, cancellationToken);
-  }
-
-  private Task<AppCommandResultWithValue<AppOutgoingEventPayloadSingleDTO>> CreateAppOutgoingEventPayload(
-    long appOutgoingEventId,
-    AppEventPayloadWithDataAsString payload,
-    CancellationToken cancellationToken)
-  {
-    var request = payload.ToAppOutgoingEventPayloadSaveActionRequest(appOutgoingEventId);
-
-    return _appOutgoingEventPayloadCommandService.Save(request.Command, cancellationToken);
   }
 
   private Task<List<long>> GetUnpublishedAppOutgoingEventList(int maxCount, CancellationToken cancellationToken)

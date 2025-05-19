@@ -12,8 +12,8 @@ public class AppOutgoingEventGetActionHandler(IAppOutgoingEventQueryService _ser
     AppOutgoingEventGetActionRequest request,
     CancellationToken cancellationToken)
   {
-    var dto = await _service.GetSingle(request.Query, cancellationToken).ConfigureAwait(false);
+    var result = await _service.GetSingle(request.Query, cancellationToken).ConfigureAwait(false);
 
-    return dto != null ? Result.Success(dto) : Result.NotFound();
+    return result != null ? Result.Success(result) : Result.NotFound();
   }
 }

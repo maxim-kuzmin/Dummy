@@ -10,7 +10,7 @@ public class DummyItemCommandService(
 {
   /// <inheritdoc/>
   public async Task<AppCommandResultWithoutValue> Delete(
-    DummyItemDeleteActionCommand command,
+    DummyItemDeleteCommand command,
     CancellationToken cancellationToken)
   {
     var entity = await _repository.GetByObjectId(command.ObjectId, cancellationToken).ConfigureAwait(false);
@@ -59,12 +59,12 @@ public class DummyItemCommandService(
 
   /// <inheritdoc/>
   public async Task<AppCommandResultWithValue<DummyItemSingleDTO>> Save(
-    DummyItemSaveActionCommand command,
+    DummyItemSaveCommand command,
     CancellationToken cancellationToken)
   {
     DummyItemEntity? entity = null;
 
-    if (command.HasEntityBeingSavedAlreadyBeenCreated)
+    if (command.IsUpdate)
     {
       entity = await _repository.GetByObjectId(command.ObjectId, cancellationToken).ConfigureAwait(false);
 
@@ -74,7 +74,7 @@ public class DummyItemCommandService(
       }
     }
 
-    var aggregateResult = GetAggregateResultToSave(entity, command);
+    var aggregateResult = GetAggregateResultToSave(entity, command.Data);
 
     entity = aggregateResult.Entity;
 
@@ -99,7 +99,7 @@ public class DummyItemCommandService(
 
     async Task FuncToExecute(CancellationToken cancellationToken)
     {
-      if (command.HasEntityBeingSavedAlreadyBeenCreated)
+      if (command.IsUpdate)
       {
         await _repository.Update(entity, cancellationToken).ConfigureAwait(false);
       }
@@ -131,13 +131,13 @@ public class DummyItemCommandService(
 
   private AggregateResult<DummyItemEntity> GetAggregateResultToSave(
     DummyItemEntity? entity,
-    DummyItemSaveActionCommand command)
+    DummyItemCommandDataSection data)
   {
     var aggregate = _factory.CreateAggregate(entity);
 
-    aggregate.UpdateConcurrencyToken(command.ConcurrencyToken);
-    aggregate.UpdateId(command.Id);
-    aggregate.UpdateName(command.Name);
+    aggregate.UpdateConcurrencyToken(data.ConcurrencyToken);
+    aggregate.UpdateId(data.Id);
+    aggregate.UpdateName(data.Name);
 
     return entity != null ? aggregate.GetResultToUpdate() : aggregate.GetResultToCreate();
   }
