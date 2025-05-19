@@ -9,6 +9,8 @@ global using Makc.Dummy.MicroserviceWriter.Apps.WebApp.App.Config;
 global using Makc.Dummy.MicroserviceWriter.Apps.WebApp.App.Config.Options.Sections;
 global using Makc.Dummy.MicroserviceWriter.Apps.WebApp.App.Config.Options.Sections.Domain.App;
 global using Makc.Dummy.MicroserviceWriter.Apps.WebApp.AppOutgoingEvent.Endpoints.Create;
+global using Makc.Dummy.MicroserviceWriter.Apps.WebApp.AppOutgoingEvent.Endpoints.Delete;
+global using Makc.Dummy.MicroserviceWriter.Apps.WebApp.AppOutgoingEvent.Endpoints.Get;
 global using Makc.Dummy.MicroserviceWriter.Apps.WebApp.AppOutgoingEvent.Endpoints.GetList;
 global using Makc.Dummy.MicroserviceWriter.Apps.WebApp.AppOutgoingEvent.Endpoints.Update;
 global using Makc.Dummy.MicroserviceWriter.Apps.WebApp.AppOutgoingEventPayload.Endpoints.Create;

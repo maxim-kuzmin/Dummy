@@ -6,10 +6,36 @@
 public static class AppOutgoingEventEndpointsExtensions
 {
   /// <summary>
+  /// Преобразовать к запросу действия по удалению исходящего события приложения.
+  /// </summary>
+  /// <param name="request">Запрос.</param>
+  /// <returns>Запрос действия.</returns>
+  public static AppOutgoingEventDeleteActionRequest ToAppOutgoingEventDeleteActionRequest(
+    this AppOutgoingEventDeleteEndpointRequest request)
+  {
+    AppOutgoingEventDeleteCommand command = new(request.Id);
+
+    return new(command);
+  }
+
+  /// <summary>
+  /// Преобразовать к запросу действия по получению исходящего события приложения.
+  /// </summary>
+  /// <param name="request">Запрос.</param>
+  /// <returns>Запрос действия.</returns>
+  public static AppOutgoingEventGetActionRequest ToAppOutgoingEventGetActionRequest(
+    this AppOutgoingEventGetEndpointRequest request)
+  {
+    AppOutgoingEventSingleQuery query = new(request.Id);
+
+    return new(query);
+  }
+
+  /// <summary>
   /// Преобразовать к запросу действия по получению списка исходящих событий приложения.
   /// </summary>
   /// <param name="request">Запрос.</param>
-  /// <returns>Запрос действия по получению списка исходящих событий приложения.</returns>
+  /// <returns>Запрос действия.</returns>
   public static AppOutgoingEventGetListActionRequest ToAppOutgoingEventGetListActionRequest(
     this AppOutgoingEventGetListEndpointRequest request)
   {
@@ -25,7 +51,7 @@ public static class AppOutgoingEventEndpointsExtensions
   /// Преобразовать к запросу действия по сохранению исходящего события приложения.
   /// </summary>
   /// <param name="request">Запрос.</param>
-  /// <returns>Команда.</returns>
+  /// <returns>Запрос действия.</returns>
   public static AppOutgoingEventSaveActionRequest ToAppOutgoingEventSaveActionRequest(
     this AppOutgoingEventCreateEndpointRequest request)
   {
@@ -41,7 +67,7 @@ public static class AppOutgoingEventEndpointsExtensions
   /// Преобразовать к запросу действия по сохранению исходящего события приложения.
   /// </summary>
   /// <param name="request">Запрос.</param>
-  /// <returns>Команда.</returns>
+  /// <returns>Запрос действия.</returns>
   public static AppOutgoingEventSaveActionRequest ToAppOutgoingEventSaveActionRequest(
     this AppOutgoingEventUpdateEndpointRequest request)
   {
