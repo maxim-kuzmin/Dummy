@@ -21,7 +21,7 @@ public interface IAppIncomingEventRepository : IObjectRepository<AppIncomingEven
   /// <param name="query">Запрос.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Количество сущностей.</returns>
-  Task<long> GetCount(AppIncomingEventPageQuery query, CancellationToken cancellationToken);
+  Task<long> GetCount(AppIncomingEventCountQuery query, CancellationToken cancellationToken);
 
   /// <summary>
   /// Получить список сущностей.
@@ -30,6 +30,16 @@ public interface IAppIncomingEventRepository : IObjectRepository<AppIncomingEven
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Список сущностей.</returns>
   Task<List<AppIncomingEventEntity>> GetList(AppIncomingEventListQuery query, CancellationToken cancellationToken);
+  
+  /// <summary>
+  /// Получить элементы страницы.
+  /// </summary>
+  /// <param name="query">Запрос.</param>
+  /// <param name="cancellationToken">Токен отмены.</param>
+  /// <returns>Список сущностей.</returns>
+  Task<List<AppIncomingEventEntity>> GetPageItems(
+    AppIncomingEventPageQuery query,
+    CancellationToken cancellationToken);
 
   /// <summary>
   /// Получить единственную сущность.

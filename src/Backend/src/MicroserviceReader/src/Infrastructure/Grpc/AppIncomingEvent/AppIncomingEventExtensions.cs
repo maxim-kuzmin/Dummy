@@ -6,24 +6,29 @@
 public static class AppIncomingEventExtensions
 {
   /// <summary>
-  /// Преобразовать к команде действия по удалению входящего события приложения.
+  /// Преобразовать к запросу действия по удалению входящего события приложения.
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
-  /// <returns>Команда.</returns>
-  public static AppIncomingEventDeleteActionCommand ToAppIncomingEventDeleteActionCommand(
+  /// <returns>Запрос действия.</returns>
+  public static AppIncomingEventDeleteActionRequest ToAppIncomingEventDeleteActionRequest(
     this AppIncomingEventDeleteGrpcRequest request)
   {
-    return new(request.ObjectId);
+    AppIncomingEventDeleteCommand command = new(request.ObjectId);
+
+    return new(command);
   }
 
   /// <summary>
   /// Преобразовать к запросу действия по получению входящего события приложения.
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
-  /// <returns>Запрос.</returns>
-  public static AppIncomingEventGetActionQuery ToAppIncomingEventGetActionQuery(this AppIncomingEventGetGrpcRequest request)
+  /// <returns>Запрос действия.</returns>
+  public static AppIncomingEventGetActionRequest ToAppIncomingEventGetActionRequest(
+    this AppIncomingEventGetGrpcRequest request)
   {
-    return new(request.ObjectId);
+    AppIncomingEventSingleQuery query = new(request.ObjectId);
+
+    return new(query);
   }
 
   /// <summary>
@@ -52,20 +57,16 @@ public static class AppIncomingEventExtensions
   /// Преобразовать к запросу действия по получению списка входящих событий приложения.
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
-  /// <returns>Запрос.</returns>
-  public static AppIncomingEventGetListActionQuery ToAppIncomingEventGetListActionQuery(
+  /// <returns>Запрос действия.</returns>
+  public static AppIncomingEventGetListActionRequest ToAppIncomingEventGetListActionRequest(
     this AppIncomingEventGetListGrpcRequest request)
   {
-    AppIncomingEventPageQuery pageQuery = new()
-    {
-      Page = new(request.Page.Number, request.Page.Size),
-      Filter = new(request.Filter.FullTextSearchQuery)
-    };
+    AppIncomingEventPageQuery query = new(
+      Page: new(request.Page.Number, request.Page.Size),
+      Sort: new(request.Sort.Field, request.Sort.IsDesc),
+      Filter: new(request.Filter.FullTextSearchQuery));
 
-    return new(pageQuery)
-    {
-      Sort = new(request.Sort.Field, request.Sort.IsDesc)
-    };
+    return new(query);
   }
 
   /// <summary>
@@ -96,53 +97,59 @@ public static class AppIncomingEventExtensions
   }
 
   /// <summary>
-  /// Преобразовать к команде действия по сохранению входящего события приложения.
+  /// Преобразовать к запросу действия по сохранению входящего события приложения.
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
-  /// <returns>Команда.</returns
-  public static AppIncomingEventSaveActionCommand ToAppIncomingEventSaveActionCommand(
+  /// <returns>Запрос действия.</returns>
+  public static AppIncomingEventSaveActionRequest ToAppIncomingEventSaveActionRequest(
     this AppIncomingEventCreateGrpcRequest request)
   {
     var lastLoadingAt = request.LastLoadingAt.ToDateTimeOffset();
     var loadedAt = request.LoadedAt.ToDateTimeOffset();
     var processedAt = request.ProcessedAt.ToDateTimeOffset();
 
-    return new(
-      false,
-      string.Empty,
-      request.EventId,
-      request.EventName,
-      lastLoadingAt == default ? null : lastLoadingAt,
-      request.LastLoadingError,
-      loadedAt == default ? null : loadedAt,
-      request.PayloadCount,
-      request.PayloadTotalCount,
-      processedAt == default ? null : processedAt);
+    AppIncomingEventSaveCommand command = new(
+      IsUpdate: false,
+      ObjectId: string.Empty,
+      Data: new(
+        EventId: request.EventId,
+        EventName: request.EventName,
+        LastLoadingAt: lastLoadingAt == default ? null : lastLoadingAt,
+        LastLoadingError:request.LastLoadingError,
+        LoadedAt: loadedAt == default ? null : loadedAt,
+        PayloadCount: request.PayloadCount,
+        PayloadTotalCount: request.PayloadTotalCount,
+        ProcessedAt: processedAt == default ? null : processedAt));
+
+    return new(command);
   }
 
   /// <summary>
-  /// Преобразовать к команде действия по сохранению входящего события приложения.
+  /// Преобразовать к запросу действия по сохранению входящего события приложения.
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
-  /// <returns>Команда.</returns
-  public static AppIncomingEventSaveActionCommand ToAppIncomingEventSaveActionCommand(
+  /// <returns>Запрос действия.</returns>
+  public static AppIncomingEventSaveActionRequest ToAppIncomingEventSaveActionRequest(
     this AppIncomingEventUpdateGrpcRequest request)
   {
     var lastLoadingAt = request.LastLoadingAt.ToDateTimeOffset();
     var loadedAt = request.LoadedAt.ToDateTimeOffset();
     var processedAt = request.ProcessedAt.ToDateTimeOffset();
 
-    return new(
-      true,
-      request.ObjectId,
-      request.EventId,
-      request.EventName,
-      lastLoadingAt == default ? null : lastLoadingAt,
-      request.LastLoadingError,
-      loadedAt == default ? null : loadedAt,
-      request.PayloadCount,
-      request.PayloadTotalCount,
-      processedAt == default ? null : processedAt);
+    AppIncomingEventSaveCommand command = new(
+      IsUpdate: true,
+      ObjectId: request.ObjectId,
+      Data: new(
+        EventId: request.EventId,
+        EventName: request.EventName,
+        LastLoadingAt: lastLoadingAt == default ? null : lastLoadingAt,
+        LastLoadingError: request.LastLoadingError,
+        LoadedAt: loadedAt == default ? null : loadedAt,
+        PayloadCount: request.PayloadCount,
+        PayloadTotalCount: request.PayloadTotalCount,
+        ProcessedAt: processedAt == default ? null : processedAt));
+
+    return new(command);
   }
 
   private static AppIncomingEventGetListGrpcReplyItem ToAppIncomingEventGetListGrpcReplyItem(

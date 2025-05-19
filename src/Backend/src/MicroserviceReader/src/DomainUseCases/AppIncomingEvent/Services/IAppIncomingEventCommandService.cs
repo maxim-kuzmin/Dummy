@@ -12,7 +12,7 @@ public interface IAppIncomingEventCommandService
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Результат.</returns>
   Task<AppCommandResultWithoutValue> Delete(
-    AppIncomingEventDeleteActionCommand command,
+    AppIncomingEventDeleteCommand command,
     CancellationToken cancellationToken);
 
   /// <summary>
@@ -30,6 +30,6 @@ public interface IAppIncomingEventCommandService
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Результат.</returns>
   Task<AppCommandResultWithValue<AppIncomingEventSingleDTO>> Save(
-    AppIncomingEventSaveActionCommand command,
+    AppIncomingEventSaveCommand command,
     CancellationToken cancellationToken);
 }

@@ -19,9 +19,9 @@ public class AppIncomingEventCreateEndpointHandler(IMediator _mediator) :
     AppIncomingEventCreateEndpointRequest request,
     CancellationToken cancellationToken)
   {
-    var command = request.ToAppIncomingEventSaveActionCommand();
+    var task = _mediator.Send(request.ToAppIncomingEventSaveActionRequest(), cancellationToken);
 
-    var result = await _mediator.Send(command, cancellationToken);
+    var result = await task.ConfigureAwait(false);
 
     await SendResultAsync(result.ToMinimalApiResult());
   }

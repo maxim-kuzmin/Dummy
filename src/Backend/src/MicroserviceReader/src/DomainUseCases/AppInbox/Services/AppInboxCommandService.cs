@@ -73,7 +73,7 @@ public class AppInboxCommandService(
     CancellationToken cancellationToken)
   {
     AppIncomingEventInsertListCommand command = new([..eventIds.Select(eventId =>
-      new AppIncomingEventInsertSingleCommand(
+      new AppIncomingEventCommandDataSection(
         EventId: eventId,
         EventName: eventName,
         LastLoadingAt: null,

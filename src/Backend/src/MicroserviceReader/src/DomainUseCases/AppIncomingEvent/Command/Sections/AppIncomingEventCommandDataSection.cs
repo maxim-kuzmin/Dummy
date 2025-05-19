@@ -1,7 +1,7 @@
-﻿namespace Makc.Dummy.MicroserviceReader.DomainUseCases.AppIncomingEvent.Commands.Insert;
+﻿namespace Makc.Dummy.MicroserviceReader.DomainUseCases.AppIncomingEvent.Command.Sections;
 
 /// <summary>
-/// Команда вставки единственного входящего события приложения.
+/// Раздел данных команды входящего события приложения.
 /// </summary>
 /// <param name="EventId">Идентификатор события.</param>
 /// <param name="EventName">Имя события.</param>
@@ -11,7 +11,7 @@
 /// <param name="PayloadCount">Количество полезной нагрузки.</param>
 /// <param name="PayloadTotalCount">Общее количество полезной нагрузки.</param>
 /// <param name="ProcessedAt">Дата обработки.</param>
-public record AppIncomingEventInsertSingleCommand(
+public record AppIncomingEventCommandDataSection(
   string EventId,
   string EventName,
   DateTimeOffset? LastLoadingAt,

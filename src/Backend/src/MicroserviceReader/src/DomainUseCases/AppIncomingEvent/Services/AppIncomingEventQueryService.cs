@@ -8,7 +8,7 @@ public class AppIncomingEventQueryService(
   IAppIncomingEventRepository _repository) : IAppIncomingEventQueryService
 {
   /// <inheritdoc/>
-  public Task<long> GetCount(AppIncomingEventPageQuery query, CancellationToken cancellationToken)
+  public Task<long> GetCount(AppIncomingEventCountQuery query, CancellationToken cancellationToken)
   {
     return _repository.GetCount(query, cancellationToken);
   }
@@ -21,6 +21,29 @@ public class AppIncomingEventQueryService(
     var entities = await _repository.GetList(query, cancellationToken).ConfigureAwait(false);
 
     return [.. entities.Select(x => x.ToAppIncomingEventSingleDTO())];
+  }
+
+  /// <inheritdoc/>
+  public async Task<AppIncomingEventListDTO> GetPage(
+    AppIncomingEventPageQuery query,
+    CancellationToken cancellationToken)
+  {
+    var totalCount = await GetCount(query, cancellationToken).ConfigureAwait(false);
+
+    List<AppIncomingEventSingleDTO> items;
+
+    if (totalCount > 0)
+    {
+      var entities = await _repository.GetPageItems(query, cancellationToken).ConfigureAwait(false);
+
+      items = [.. entities.Select(x => x.ToAppIncomingEventSingleDTO())];
+    }
+    else
+    {
+      items = [];
+    }
+
+    return new(items, totalCount);
   }
 
   /// <inheritdoc/>

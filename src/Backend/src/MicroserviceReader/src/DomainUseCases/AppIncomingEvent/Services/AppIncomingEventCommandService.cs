@@ -10,7 +10,7 @@ public class AppIncomingEventCommandService(
 {
   /// <inheritdoc/>
   public async Task<AppCommandResultWithoutValue> Delete(
-    AppIncomingEventDeleteActionCommand command,
+    AppIncomingEventDeleteCommand command,
     CancellationToken cancellationToken)
   {
     var entity = await _repository.GetByObjectId(command.ObjectId, cancellationToken).ConfigureAwait(false);
@@ -83,12 +83,12 @@ public class AppIncomingEventCommandService(
 
   /// <inheritdoc/>
   public async Task<AppCommandResultWithValue<AppIncomingEventSingleDTO>> Save(
-    AppIncomingEventSaveActionCommand command,
+    AppIncomingEventSaveCommand command,
     CancellationToken cancellationToken)
   {
     AppIncomingEventEntity? entity = null;
 
-    if (command.HasEntityBeingSavedAlreadyBeenCreated)
+    if (command.IsUpdate)
     {
       entity = await _repository.GetByObjectId(command.ObjectId, cancellationToken).ConfigureAwait(false);
 
@@ -98,7 +98,7 @@ public class AppIncomingEventCommandService(
       }
     }
 
-    var aggregateResult = GetAggregateResultToSave(entity, command);
+    var aggregateResult = GetAggregateResultToSave(entity, command.Data);
 
     entity = aggregateResult.Entity;
 
@@ -123,7 +123,7 @@ public class AppIncomingEventCommandService(
 
     async Task FuncToExecute(CancellationToken cancellationToken)
     {
-      if (command.HasEntityBeingSavedAlreadyBeenCreated)
+      if (command.IsUpdate)
       {
         await _repository.Update(entity, cancellationToken).ConfigureAwait(false);
       }
@@ -155,18 +155,18 @@ public class AppIncomingEventCommandService(
 
   private AggregateResult<AppIncomingEventEntity> GetAggregateResultToSave(
     AppIncomingEventEntity? entity,
-    AppIncomingEventInsertSingleCommand command)
+    AppIncomingEventCommandDataSection data)
   {
     var aggregate = _factory.CreateAggregate(entity);
 
-    aggregate.UpdateEventId(command.EventId);
-    aggregate.UpdateEventName(command.EventName);
-    aggregate.UpdateLastLoadingAt(command.LastLoadingAt);
-    aggregate.UpdateLastLoadingError(command.LastLoadingError);
-    aggregate.UpdateLoadedAt(command.LoadedAt);
-    aggregate.UpdatePayloadCount(command.PayloadCount);
-    aggregate.UpdatePayloadTotalCount(command.PayloadTotalCount);
-    aggregate.UpdateProcessedAt(command.ProcessedAt);
+    aggregate.UpdateEventId(data.EventId);
+    aggregate.UpdateEventName(data.EventName);
+    aggregate.UpdateLastLoadingAt(data.LastLoadingAt);
+    aggregate.UpdateLastLoadingError(data.LastLoadingError);
+    aggregate.UpdateLoadedAt(data.LoadedAt);
+    aggregate.UpdatePayloadCount(data.PayloadCount);
+    aggregate.UpdatePayloadTotalCount(data.PayloadTotalCount);
+    aggregate.UpdateProcessedAt(data.ProcessedAt);
 
     return entity != null ? aggregate.GetResultToUpdate() : aggregate.GetResultToCreate();
   }

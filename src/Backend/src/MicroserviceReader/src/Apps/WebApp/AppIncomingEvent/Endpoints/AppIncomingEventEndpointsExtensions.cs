@@ -6,23 +6,45 @@
 public static class AppIncomingEventEndpointsExtensions
 {
   /// <summary>
+  /// Преобразовать к запросу действия по удалению входящего события приложения.
+  /// </summary>
+  /// <param name="request">Запрос.</param>
+  /// <returns>Запрос действия.</returns>
+  public static AppIncomingEventDeleteActionRequest ToAppIncomingEventDeleteActionRequest(
+    this AppIncomingEventDeleteEndpointRequest request)
+  {
+    AppIncomingEventDeleteCommand command = new(request.ObjectId);
+
+    return new(command);
+  }
+
+  /// <summary>
+  /// Преобразовать к запросу действия по получению входящего события приложения.
+  /// </summary>
+  /// <param name="request">Запрос.</param>
+  /// <returns>Запрос действия.</returns>
+  public static AppIncomingEventGetActionRequest ToAppIncomingEventGetActionRequest(
+    this AppIncomingEventGetEndpointRequest request)
+  {
+    AppIncomingEventSingleQuery query = new(request.ObjectId);
+
+    return new(query);
+  }
+
+  /// <summary>
   /// Преобразовать к запросу действия по получению списка входящих событий приложения.
   /// </summary>
   /// <param name="request">Запрос.</param>
-  /// <returns>Запрос действия по получению списка входящих событий приложения.</returns>
-  public static AppIncomingEventGetListActionQuery ToAppIncomingEventGetListActionQuery(
+  /// <returns>Запрос действия.</returns>
+  public static AppIncomingEventGetListActionRequest ToAppIncomingEventGetListActionRequest(
     this AppIncomingEventGetListEndpointRequest request)
   {
-    AppIncomingEventPageQuery pageQuery = new()
-    {
-      Page = new(request.CurrentPage, request.ItemsPerPage),
-      Filter = new(request.Query)
-    };
+    AppIncomingEventPageQuery query = new(
+      Page: new(request.CurrentPage, request.ItemsPerPage),
+      Sort: request.SortField.ToAppIncomingEventQuerySortSection(request.SortIsDesc),
+      Filter: new(request.Query));
 
-    return new(pageQuery)
-    {
-      Sort = request.SortField.ToAppIncomingEventQuerySortSection(request.SortIsDesc)
-    };
+    return new(query);
   }
 
   /// <summary>
@@ -30,20 +52,23 @@ public static class AppIncomingEventEndpointsExtensions
   /// </summary>
   /// <param name="request">Запрос.</param>
   /// <returns>Команда.</returns>
-  public static AppIncomingEventSaveActionCommand ToAppIncomingEventSaveActionCommand(
+  public static AppIncomingEventSaveActionRequest ToAppIncomingEventSaveActionRequest(
     this AppIncomingEventCreateEndpointRequest request)
   {
-    return new(
-      false,
-      string.Empty,
-      request.EventId,
-      request.EventName,
-      request.LastLoadingAt,
-      request.LastLoadingError,
-      request.LoadedAt,
-      request.PayloadCount,
-      request.PayloadTotalCount,
-      request.ProcessedAt);
+    AppIncomingEventSaveCommand command = new(
+      IsUpdate: false,
+      ObjectId: string.Empty,
+      Data: new(
+        EventId: request.EventId,
+        EventName: request.EventName,
+        LastLoadingAt: request.LastLoadingAt,
+        LastLoadingError: request.LastLoadingError,
+        LoadedAt: request.LoadedAt,
+        PayloadCount: request.PayloadCount,
+        PayloadTotalCount: request.PayloadTotalCount,
+        ProcessedAt: request.ProcessedAt));
+
+    return new(command);
   }
 
   /// <summary>
@@ -51,19 +76,22 @@ public static class AppIncomingEventEndpointsExtensions
   /// </summary>
   /// <param name="request">Запрос.</param>
   /// <returns>Команда.</returns>
-  public static AppIncomingEventSaveActionCommand ToAppIncomingEventSaveActionCommand(
+  public static AppIncomingEventSaveActionRequest ToAppIncomingEventSaveActionRequest(
     this AppIncomingEventUpdateEndpointRequest request)
   {
-    return new(
-      true,
-      request.ObjectId,
-      request.EventId,
-      request.EventName,
-      request.LastLoadingAt,
-      request.LastLoadingError,
-      request.LoadedAt,
-      request.PayloadCount,
-      request.PayloadTotalCount,
-      request.ProcessedAt);
+    AppIncomingEventSaveCommand command = new(
+      IsUpdate: true,
+      ObjectId: request.ObjectId,
+      Data: new(
+        EventId: request.EventId,
+        EventName: request.EventName,
+        LastLoadingAt: request.LastLoadingAt,
+        LastLoadingError: request.LastLoadingError,
+        LoadedAt: request.LoadedAt,
+        PayloadCount: request.PayloadCount,
+        PayloadTotalCount: request.PayloadTotalCount,
+        ProcessedAt: request.ProcessedAt));
+
+    return new(command);
   }
 }
