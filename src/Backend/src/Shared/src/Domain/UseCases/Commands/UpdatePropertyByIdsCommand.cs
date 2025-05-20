@@ -7,6 +7,4 @@
 /// <typeparam name="TPropertyValue">Тип значения свойства.</typeparam>
 /// <param name="Ids">Идентификаторы.</param>
 /// <param name="PropertyValue">Значение свойства.</param>
-public record UpdatePropertyByIdsCommand<TId, TPropertyValue>(IEnumerable<TId> Ids, TPropertyValue PropertyValue)
-{
-}
+public record UpdatePropertyByIdsCommand<TId, TPropertyValue>(IEnumerable<TId> Ids, TPropertyValue PropertyValue);

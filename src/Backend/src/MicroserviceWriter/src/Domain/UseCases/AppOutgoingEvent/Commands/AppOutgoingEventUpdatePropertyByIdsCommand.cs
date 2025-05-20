@@ -8,6 +8,4 @@
 /// <param name="PropertyValue">Значение свойства.</param>
 public record AppOutgoingEventUpdatePropertyByIdsCommand<TPropertyValue>(
   IEnumerable<long> Ids,
-  TPropertyValue PropertyValue) : UpdatePropertyByIdsCommand<long, TPropertyValue>(Ids, PropertyValue)
-{
-}
+  TPropertyValue PropertyValue) : UpdatePropertyByIdsCommand<long, TPropertyValue>(Ids, PropertyValue);
