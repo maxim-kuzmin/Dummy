@@ -6,18 +6,18 @@
 public interface IDummyItemQueryService
 {
   /// <summary>
-  /// Получить.
+  /// Получить страницу объектов.
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
-  /// <returns>Результат.</returns>
-  Task<Result<DummyItemSingleDTO>> Get(DummyItemSingleQuery query, CancellationToken cancellationToken);
+  /// <returns>Страница объектов.</returns>
+  Task<Result<DummyItemListDTO>> GetPage(DummyItemPageQuery query, CancellationToken cancellationToken);
 
   /// <summary>
-  /// Получить список.
+  /// Получить единственный объект.
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
-  /// <returns>Результат.</returns>
-  Task<Result<DummyItemListDTO>> GetList(DummyItemListQuery query, CancellationToken cancellationToken);
+  /// <returns>Сущность.</returns>
+  Task<Result<DummyItemSingleDTO>> GetSingle(DummyItemSingleQuery query, CancellationToken cancellationToken);
 }

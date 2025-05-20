@@ -53,7 +53,7 @@ public class AppOutgoingEventPayloadQueryService(
       items = [];
     }
 
-    return new(items, totalCount);
+    return items.ToAppOutgoingEventPayloadListDTO(totalCount);
   }
 
   /// <inheritdoc/>

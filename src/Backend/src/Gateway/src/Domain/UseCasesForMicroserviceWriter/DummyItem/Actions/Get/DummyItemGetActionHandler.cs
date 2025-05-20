@@ -5,12 +5,13 @@
 /// </summary>
 /// <param name="_service">Сервис.</param>
 public class DummyItemGetActionHandler(IDummyItemQueryService _service) :
-  IQueryHandler<DummyItemGetActionQuery, Result<DummyItemSingleDTO>>
+  IQueryHandler<DummyItemGetActionRequest, Result<DummyItemSingleDTO>>
 {
+  /// <inheritdoc/>
   public Task<Result<DummyItemSingleDTO>> Handle(
-    DummyItemGetActionQuery request,
+    DummyItemGetActionRequest request,
     CancellationToken cancellationToken)
   {
-    return _service.Get(request, cancellationToken);
+    return _service.GetSingle(request.Query, cancellationToken);
   }
 }

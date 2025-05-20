@@ -8,21 +8,11 @@ public static class DummyItemExtensions
   /// <summary>
   /// Преобразовать к содержимому запроса HTTP.
   /// </summary>
-  /// <param name="command">Команда.</param>
+  /// <param name="data">Данные.</param>
   /// <returns>Содержимое запроса HTTP.</returns>
-  public static JsonContent ToHttpRequestContent(this DummyItemCreateActionCommand command)
+  public static JsonContent ToHttpRequestContent(this DummyItemCommandDataSection data)
   {
-    return JsonContent.Create(command);
-  }
-
-  /// <summary>
-  /// Преобразовать к содержимому запроса HTTP.
-  /// </summary>
-  /// <param name="command">Команда.</param>
-  /// <returns>Содержимое запроса HTTP.</returns>
-  public static JsonContent ToHttpRequestContent(this DummyItemUpdateActionCommand command)
-  {
-    return JsonContent.Create(command);
+    return JsonContent.Create(data);
   }
 
   /// <summary>
@@ -40,10 +30,10 @@ public static class DummyItemExtensions
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <returns>URL запроса HTTP.</returns>
-  public static string ToHttpRequestUrl(this DummyItemListQuery query)
+  public static string ToHttpRequestUrl(this DummyItemPageQuery query)
   {
-    var filter = query.PageQuery.Filter;
-    var page = query.PageQuery.Page;
+    var filter = query.Filter;
+    var page = query.Page;
     var sort = query.Sort;
 
     IEnumerable<KeyValuePair<string, string?>> parameters = [
@@ -64,7 +54,7 @@ public static class DummyItemExtensions
   /// </summary>
   /// <param name="command">Команда.</param>
   /// <returns>URL запроса HTTP.</returns>
-  public static string ToHttpRequestUrl(this DummyItemDeleteActionCommand command)
+  public static string ToHttpRequestUrl(this DummyItemDeleteCommand command)
   {
     return $"{DummyItemSettings.Root}/{command.Id}";
   }
@@ -74,8 +64,8 @@ public static class DummyItemExtensions
   /// </summary>
   /// <param name="command">Команда.</param>
   /// <returns>URL запроса HTTP.</returns>
-  public static string ToHttpRequestUrl(this DummyItemUpdateActionCommand command)
+  public static string ToHttpRequestUrl(this DummyItemSaveCommand command)
   {
-    return $"{DummyItemSettings.Root}/{command.Id}";
+    return command.IsUpdate ? $"{DummyItemSettings.Root}/{command.Id}" : DummyItemSettings.Root;
   }
 }

@@ -10,23 +10,7 @@ public class DummyItemQueryService(
   IHttpClientFactory _httpClientFactory) : IDummyItemQueryService
 {
   /// <inheritdoc/>
-  public async Task<Result<DummyItemSingleDTO>> Get(DummyItemSingleQuery query, CancellationToken cancellationToken)
-  {
-    using var httpClient = _httpClientFactory.CreateClient(AuthSettings.HttpClientName);
-
-    var httpResponseTask = httpClient.GetAsync(query.ToHttpRequestUrl(), cancellationToken);
-
-    using var httpResponse = await httpResponseTask.ConfigureAwait(false);
-
-    var resultTask = httpResponse.ToResultFromJsonAsync<DummyItemSingleDTO>(cancellationToken);
-
-    var result = await resultTask.ConfigureAwait(false);
-
-    return result;
-  }
-
-  /// <inheritdoc/>
-  public async Task<Result<DummyItemListDTO>> GetList(DummyItemListQuery query, CancellationToken cancellationToken)
+  public async Task<Result<DummyItemListDTO>> GetPage(DummyItemPageQuery query, CancellationToken cancellationToken)
   {
     using var httpClient = _httpClientFactory.CreateClient(AuthSettings.HttpClientName);
 
@@ -39,6 +23,22 @@ public class DummyItemQueryService(
     using var httpResponse = await httpResponseTask.ConfigureAwait(false);
 
     var resultTask = httpResponse.ToResultFromJsonAsync<DummyItemListDTO>(cancellationToken);
+
+    var result = await resultTask.ConfigureAwait(false);
+
+    return result;
+  }
+
+  /// <inheritdoc/>
+  public async Task<Result<DummyItemSingleDTO>> GetSingle(DummyItemSingleQuery query, CancellationToken cancellationToken)
+  {
+    using var httpClient = _httpClientFactory.CreateClient(AuthSettings.HttpClientName);
+
+    var httpResponseTask = httpClient.GetAsync(query.ToHttpRequestUrl(), cancellationToken);
+
+    using var httpResponse = await httpResponseTask.ConfigureAwait(false);
+
+    var resultTask = httpResponse.ToResultFromJsonAsync<DummyItemSingleDTO>(cancellationToken);
 
     var result = await resultTask.ConfigureAwait(false);
 

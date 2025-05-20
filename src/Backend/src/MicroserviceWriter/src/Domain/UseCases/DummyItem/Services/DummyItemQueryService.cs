@@ -49,7 +49,7 @@ public class DummyItemQueryService(
       items = [];
     }
 
-    return new(items, totalCount);
+    return items.ToDummyItemListDTO(totalCount);
   }
 
   /// <inheritdoc/>

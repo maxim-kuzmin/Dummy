@@ -12,21 +12,8 @@ public class AppIncomingEventGetListActionHandler(IAppIncomingEventQueryService 
     AppIncomingEventGetListActionRequest request,
     CancellationToken cancellationToken)
   {
-    var totalCount = await _service.GetCount(request.Query, cancellationToken).ConfigureAwait(false);
+    var result = await _service.GetPage(request.Query, cancellationToken);
 
-    List<AppIncomingEventSingleDTO> items;
-
-    if (totalCount > 0)
-    {
-      items = await _service.GetList(request.Query, cancellationToken).ConfigureAwait(false);
-    }
-    else
-    {
-      items = [];
-    }
-
-    AppIncomingEventListDTO dto = new(items, totalCount);
-
-    return Result.Success(dto);
+    return Result.Success(result);
   }
 }

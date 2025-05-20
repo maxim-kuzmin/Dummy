@@ -8,31 +8,8 @@ public class DummyItemCommandService(
   IHttpClientFactory _httpClientFactory) : IDummyItemCommandService
 {
   /// <inheritdoc/>
-  public async Task<Result<DummyItemSingleDTO>> Create(
-    DummyItemCreateActionCommand command,
-    CancellationToken cancellationToken)
-  {
-    using var httpClient = _httpClientFactory.CreateClient(AuthSettings.HttpClientName);
-
-    using var httpRequestContent = command.ToHttpRequestContent();
-
-    var httpResponseTask = httpClient.PostAsync(
-      DummyItemSettings.Root,
-      httpRequestContent,
-      cancellationToken);
-
-    using var httpResponse = await httpResponseTask.ConfigureAwait(false);
-
-    var resultTask = httpResponse.ToResultFromJsonAsync<DummyItemSingleDTO>(cancellationToken);
-
-    var result = await resultTask.ConfigureAwait(false);
-
-    return result;
-  }
-
-  /// <inheritdoc/>
   public async Task<Result> Delete(
-    DummyItemDeleteActionCommand command,
+    DummyItemDeleteCommand command,
     CancellationToken cancellationToken)
   {
     using var httpClient = _httpClientFactory.CreateClient(AuthSettings.HttpClientName);
@@ -44,19 +21,19 @@ public class DummyItemCommandService(
     return httpResponse.ToResult();
   }
 
-  /// <inheritdoc/>
-  public async Task<Result<DummyItemSingleDTO>> Update(
-      DummyItemUpdateActionCommand command,
-      CancellationToken cancellationToken)
+  public async Task<Result<DummyItemSingleDTO>> Save(
+    DummyItemSaveCommand command,
+    CancellationToken cancellationToken)
   {
     using var httpClient = _httpClientFactory.CreateClient(AuthSettings.HttpClientName);
 
-    using var httpRequestContent = command.ToHttpRequestContent();
+    using var httpRequestContent = command.Data.ToHttpRequestContent();
 
-    var httpResponseTask = httpClient.PutAsync(
-      command.ToHttpRequestUrl(),
-      httpRequestContent,
-      cancellationToken);
+    string url = command.ToHttpRequestUrl();
+
+    var httpResponseTask = command.IsUpdate
+      ? httpClient.PutAsync(url, httpRequestContent, cancellationToken)
+      : httpClient.PostAsync(url, httpRequestContent, cancellationToken);
 
     using var httpResponse = await httpResponseTask.ConfigureAwait(false);
 

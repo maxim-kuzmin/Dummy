@@ -10,26 +10,9 @@ public class DummyItemQueryService(
   DummyItemGrpcClient _grpcClient) : IDummyItemQueryService
 {
   /// <inheritdoc/>
-  public async Task<Result<DummyItemSingleDTO>> Get(DummyItemSingleQuery query, CancellationToken cancellationToken)
-  {
-    try
-    {
-      var replyTask = _grpcClient.GetAsync(
-        query.ToDummyItemGetGrpcRequest(),
-        cancellationToken: cancellationToken);
-
-      var reply = await replyTask.ConfigureAwait(false);
-
-      return Result.Success(reply.ToDummyItemSingleDTO());
-    }
-    catch (RpcException ex)
-    {
-      return ex.ToUnsuccessfulResult();
-    }
-  }
-
-  /// <inheritdoc/>
-  public async Task<Result<DummyItemListDTO>> GetList(DummyItemListQuery query, CancellationToken cancellationToken)
+  public async Task<Result<DummyItemListDTO>> GetPage(
+    DummyItemPageQuery query,
+    CancellationToken cancellationToken)
   {
     try
     {
@@ -40,14 +23,35 @@ public class DummyItemQueryService(
 
       var request = query.ToDummyItemGetListGrpcRequest();
 
-      var replyTask = _grpcClient.GetListAsync(
+      var task = _grpcClient.GetListAsync(
         request,
         headers: headers,
         cancellationToken: cancellationToken);
 
-      var reply = await replyTask.ConfigureAwait(false);
+      var reply = await task.ConfigureAwait(false);
 
       return Result.Success(reply.ToDummyItemListDTO());
+    }
+    catch (RpcException ex)
+    {
+      return ex.ToUnsuccessfulResult();
+    }
+  }
+
+  /// <inheritdoc/>
+  public async Task<Result<DummyItemSingleDTO>> GetSingle(
+    DummyItemSingleQuery query,
+    CancellationToken cancellationToken)
+  {
+    try
+    {
+      var task = _grpcClient.GetAsync(
+        query.ToDummyItemGetGrpcRequest(),
+        cancellationToken: cancellationToken);
+
+      var reply = await task.ConfigureAwait(false);
+
+      return Result.Success(reply.ToDummyItemSingleDTO());
     }
     catch (RpcException ex)
     {

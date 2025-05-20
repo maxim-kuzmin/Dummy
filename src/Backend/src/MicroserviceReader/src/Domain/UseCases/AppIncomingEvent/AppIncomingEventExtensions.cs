@@ -11,7 +11,9 @@ public static class AppIncomingEventExtensions
   /// <param name="items">Элементы.</param>
   /// <param name="totalCount">Общее количество.</param>
   /// <returns>Объект передачи данных списка входящих событий приложения.</returns>
-  public static AppIncomingEventListDTO ToAppIncomingEventListDTO(this List<AppIncomingEventSingleDTO> items, long totalCount)
+  public static AppIncomingEventListDTO ToAppIncomingEventListDTO(
+    this List<AppIncomingEventSingleDTO> items,
+    long totalCount)
   {
     return new(items, totalCount);
   }

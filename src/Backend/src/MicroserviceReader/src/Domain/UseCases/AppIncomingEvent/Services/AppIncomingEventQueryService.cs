@@ -43,7 +43,7 @@ public class AppIncomingEventQueryService(
       items = [];
     }
 
-    return new(items, totalCount);
+    return items.ToAppIncomingEventListDTO(totalCount);
   }
 
   /// <inheritdoc/>

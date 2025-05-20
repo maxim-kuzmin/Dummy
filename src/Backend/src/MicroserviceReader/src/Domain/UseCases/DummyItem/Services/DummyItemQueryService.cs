@@ -38,7 +38,7 @@ public class DummyItemQueryService(IDummyItemRepository _repository) : IDummyIte
       items = [];
     }
 
-    return new(items, totalCount);
+    return items.ToDummyItemListDTO(totalCount);
   }
 
   /// <inheritdoc/>
