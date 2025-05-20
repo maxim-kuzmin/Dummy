@@ -8,12 +8,12 @@ public class AuthCommandService(IHttpClientFactory _httpClientFactory) : IAuthCo
 {
   /// <inheritdoc/>
   public async Task<Result<AuthLoginDTO>> Login(
-    AuthLoginActionCommand request,
+    AuthLoginCommand command,
     CancellationToken cancellationToken)
   {
     using var httpClient = _httpClientFactory.CreateClient(AuthSettings.HttpClientName);
 
-    using var httpRequestContent = request.ToHttpRequestContent();
+    using var httpRequestContent = command.ToHttpRequestContent();
 
     var httpResponseTask = httpClient.PostAsync(
       AuthSettings.LoginActionUrl,

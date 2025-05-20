@@ -1,13 +1,15 @@
 ﻿global using System.Reflection;
 global using Ardalis.Result;
 global using Ardalis.SharedKernel;
+global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceWriter.Auth.Commands;
+global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceWriter.Auth.DTOs;
+global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceWriter.Auth.Services;
 global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceWriter.DummyItem.Command.Sections;
 global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceWriter.DummyItem.Commands;
 global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceWriter.DummyItem.DTOs;
 global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceWriter.DummyItem.Queries;
 global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceWriter.DummyItem.Query.Sections;
 global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceWriter.DummyItem.Services;
-global using Makc.Dummy.Shared.Core.App.Command.Results;
 global using Makc.Dummy.Shared.Domain.UseCases.DTOs;
 global using Makc.Dummy.Shared.Domain.UseCases.Query.Sections;
 global using MediatR;

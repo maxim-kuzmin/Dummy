@@ -8,7 +8,7 @@ public class AuthSettings
   /// <summary>
   /// Имя клиента gRPC приложения.
   /// </summary>
-  public const string AuthGrpcClientName = "WriterApp";
+  public const string AuthGrpcClientName = "WriterAuth";
 
   /// <summary>
   /// Имя клиента gRPC фиктивного предмета.

@@ -10,7 +10,7 @@ public static class AuthExtensions
   /// </summary>
   /// <param name="command">Команда.</param>
   /// <returns>Содержимое запроса HTTP.</returns>
-  public static JsonContent ToHttpRequestContent(this AuthLoginActionCommand command)
+  public static JsonContent ToHttpRequestContent(this AuthLoginCommand command)
   {
     return JsonContent.Create(command);
   }

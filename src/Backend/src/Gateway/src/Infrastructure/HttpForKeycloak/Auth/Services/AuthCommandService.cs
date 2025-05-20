@@ -13,7 +13,7 @@ public class AuthCommandService(
 {
   /// <inheritdoc/>
   public async Task<Result<AuthLoginDTO>> Login(
-    AuthLoginActionCommand request,
+    AuthLoginCommand command,
     CancellationToken cancellationToken)
   {
     var appConfigOptionsKeycloakSection = _appConfigOptionsKeycloakSectionSnapshot.Value;
@@ -25,8 +25,8 @@ public class AuthCommandService(
       { "grant_type", "password" },
       { "client_id", appConfigOptionsKeycloakSection.ClientId },
       { "client_secret", appConfigOptionsKeycloakSection.ClientSecret },
-      { "username", request.UserName },
-      { "password", request.Password }
+      { "username", command.UserName },
+      { "password", command.Password }
     };
 
     using var httpRequestContent = new FormUrlEncodedContent(httpRequestBody);
@@ -39,7 +39,7 @@ public class AuthCommandService(
     using var httpResponse = await httpResponseTask.ConfigureAwait(false);
 
     var resultTask = httpResponse.ToResultFromJsonAsync<AuthLoginDTO, TokenResponse>(
-      content => new AuthLoginDTO(request.UserName, content.AccessToken ?? string.Empty),
+      content => new AuthLoginDTO(command.UserName, content.AccessToken ?? string.Empty),
       cancellationToken);
 
     var result = await resultTask.ConfigureAwait(false);

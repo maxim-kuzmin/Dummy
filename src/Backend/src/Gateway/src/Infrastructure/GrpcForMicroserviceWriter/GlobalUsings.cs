@@ -1,8 +1,8 @@
 ﻿global using Ardalis.Result;
 global using Grpc.Core;
-global using Makc.Dummy.Gateway.Domain.UseCases.Auth.Actions.Login;
-global using Makc.Dummy.Gateway.Domain.UseCases.Auth.DTOs;
-global using Makc.Dummy.Gateway.Domain.UseCases.Auth.Services;
+global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceWriter.Auth.Commands;
+global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceWriter.Auth.DTOs;
+global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceWriter.Auth.Services;
 global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceWriter.DummyItem.Command.Sections;
 global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceWriter.DummyItem.Commands;
 global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceWriter.DummyItem.DTOs;

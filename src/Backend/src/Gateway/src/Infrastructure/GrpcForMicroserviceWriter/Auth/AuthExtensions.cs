@@ -6,11 +6,11 @@
 public static class AuthExtensions
 {
   /// <summary>
-  /// Преобразовать к запросу действия по входу в приложение.
+  /// Преобразовать к запросу gRPC входа для аутентификации.
   /// </summary>
   /// <param name="command">Команда.</param>
-  /// <returns>Запрос действия по входу в приложение.</returns>
-  public static AuthLoginGrpcRequest ToAuthLoginGrpcRequest(this AuthLoginActionCommand command)
+  /// <returns>Запрос gRPC.</returns>
+  public static AuthLoginGrpcRequest ToAuthLoginGrpcRequest(this AuthLoginCommand command)
   {
     return new()
     {
@@ -20,10 +20,10 @@ public static class AuthExtensions
   }
 
   /// <summary>
-  /// Преобразовать к объекту передачи данных входа.
+  /// Преобразовать к объекту передачи данных входа для аутентификации.
   /// </summary>
   /// <param name="reply">Ответ.</param>
-  /// <returns>Объект передачи данных входа.</returns>
+  /// <returns>Объект передачи данных.</returns>
   public static AuthLoginDTO ToAuthLoginDTO(this AuthLoginGrpcReply reply)
   {
     return new(reply.UserName, reply.AccessToken);

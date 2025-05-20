@@ -1,11 +1,11 @@
 ﻿namespace Makc.Dummy.Gateway.Infrastructure.WebForMicroserviceWriter.Auth.Endpoints.Login;
 
 /// <summary>
-/// Обработчик конечной точки входа.
+/// Обработчик конечной точки входа для аутентификации.
 /// </summary>
 /// <param name="_mediator">Медиатор.</param>
 public class AuthLoginEndpointHandler(IMediator _mediator) :
-  Endpoint<AuthLoginActionCommand, AuthLoginDTO>
+  Endpoint<AuthLoginEndpointRequest, AuthLoginDTO>
 {
   /// <inheritdoc/>
   public override void Configure()
@@ -15,11 +15,11 @@ public class AuthLoginEndpointHandler(IMediator _mediator) :
   }
 
   /// <inheritdoc/>
-  public override async Task HandleAsync(
-    AuthLoginActionCommand request,
-    CancellationToken cancellationToken)
+  public override async Task HandleAsync(AuthLoginEndpointRequest request, CancellationToken cancellationToken)
   {
-    var result = await _mediator.Send(request, cancellationToken);
+    var task = _mediator.Send(request.ToAuthLoginActionRequest(), cancellationToken);
+
+    var result = await task.ConfigureAwait(false);
 
     await SendResultAsync(result.ToMinimalApiResult());
   }

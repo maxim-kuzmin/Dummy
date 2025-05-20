@@ -1,7 +1,7 @@
-﻿namespace Makc.Dummy.Gateway.Domain.UseCases.Auth.DTOs;
+﻿namespace Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceWriter.Auth.DTOs;
 
 /// <summary>
-/// Объект передачи данных входа.
+/// Объект передачи данных входа для аутентификации.
 /// </summary>
 /// <param name="UserName">Имя пользователя.</param>
 /// <param name="AccessToken">Токен доступа.</param>

@@ -1,9 +1,5 @@
 ﻿global using System.Reflection;
-global using Ardalis.Result;
 global using Ardalis.SharedKernel;
-global using Makc.Dummy.Gateway.Domain.UseCases.Auth.Actions.Login;
-global using Makc.Dummy.Gateway.Domain.UseCases.Auth.DTOs;
-global using Makc.Dummy.Gateway.Domain.UseCases.Auth.Services;
 global using MediatR;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Logging;

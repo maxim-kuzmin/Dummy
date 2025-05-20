@@ -7,19 +7,15 @@
 public class AuthCommandService(AuthGrpcClient _grpcClient) : IAuthCommandService
 {
   /// <inheritdoc/>
-  public async Task<Result<AuthLoginDTO>> Login(
-    AuthLoginActionCommand command,
-    CancellationToken cancellationToken)
+  public async Task<Result<AuthLoginDTO>> Login(AuthLoginCommand command, CancellationToken cancellationToken)
   {
     try
     {
       var request = command.ToAuthLoginGrpcRequest();
 
-      var replyTask = _grpcClient.LoginAsync(
-        request,
-        cancellationToken: cancellationToken);
+      var task = _grpcClient.LoginAsync(request, cancellationToken: cancellationToken);
 
-      var reply = await replyTask.ConfigureAwait(false);
+      var reply = await task.ConfigureAwait(false);
 
       return Result.Success(reply.ToAuthLoginDTO());
     }

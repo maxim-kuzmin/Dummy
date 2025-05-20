@@ -1,7 +1,8 @@
 ﻿global using Ardalis.Result.AspNetCore;
 global using FastEndpoints;
-global using Makc.Dummy.Gateway.Domain.UseCases.Auth.Actions.Login;
-global using Makc.Dummy.Gateway.Domain.UseCases.Auth.DTOs;
+global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceWriter.Auth.Actions.Login;
+global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceWriter.Auth.Commands;
+global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceWriter.Auth.DTOs;
 global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceWriter.DummyItem;
 global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceWriter.DummyItem.Actions.Delete;
 global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceWriter.DummyItem.Actions.Get;
@@ -10,6 +11,7 @@ global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceWriter.DummyItem.A
 global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceWriter.DummyItem.Commands;
 global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceWriter.DummyItem.DTOs;
 global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceWriter.DummyItem.Queries;
+global using Makc.Dummy.Gateway.Infrastructure.WebForMicroserviceWriter.Auth.Endpoints.Login;
 global using Makc.Dummy.Gateway.Infrastructure.WebForMicroserviceWriter.DummyItem.Endpoints.Create;
 global using Makc.Dummy.Gateway.Infrastructure.WebForMicroserviceWriter.DummyItem.Endpoints.Delete;
 global using Makc.Dummy.Gateway.Infrastructure.WebForMicroserviceWriter.DummyItem.Endpoints.Get;
