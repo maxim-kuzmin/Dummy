@@ -10,9 +10,9 @@ global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceWriter.DummyItem.D
 global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceWriter.DummyItem.Queries;
 global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceWriter.DummyItem.Query.Sections;
 global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceWriter.DummyItem.Services;
-global using Makc.Dummy.Shared.DomainUseCases.DTOs;
-global using Makc.Dummy.Shared.DomainUseCases.Queries;
-global using Makc.Dummy.Shared.DomainUseCases.Query.Sections;
+global using Makc.Dummy.Shared.Domain.UseCases.DTOs;
+global using Makc.Dummy.Shared.Domain.UseCases.Queries;
+global using Makc.Dummy.Shared.Domain.UseCases.Query.Sections;
 global using MediatR;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Logging;

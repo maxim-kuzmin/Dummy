@@ -5,5 +5,5 @@ global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceReader.DummyItem;
 global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceReader.DummyItem.Actions.Get;
 global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceReader.DummyItem.Actions.GetList;
 global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceReader.DummyItem.DTOs;
-global using Makc.Dummy.Shared.DomainUseCases.Query.Sections;
+global using Makc.Dummy.Shared.Domain.UseCases.Query.Sections;
 global using MediatR;

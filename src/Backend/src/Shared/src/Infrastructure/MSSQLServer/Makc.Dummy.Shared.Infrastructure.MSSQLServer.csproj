@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\..\DomainUseCases\Makc.Dummy.Shared.DomainUseCases.csproj" />
+    <ProjectReference Include="..\..\Domain\UseCases\Makc.Dummy.Shared.Domain.UseCases.csproj" />
   </ItemGroup>
 
 </Project>

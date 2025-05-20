@@ -46,5 +46,5 @@ global using Makc.Dummy.MicroserviceWriter.Infrastructure.Web.DummyItem.Endpoint
 global using Makc.Dummy.MicroserviceWriter.Infrastructure.Web.DummyItem.Endpoints.GetList;
 global using Makc.Dummy.MicroserviceWriter.Infrastructure.Web.DummyItem.Endpoints.Update;
 global using Makc.Dummy.Shared.Core.App.Event.Payloads;
-global using Makc.Dummy.Shared.DomainUseCases.Query.Sections;
+global using Makc.Dummy.Shared.Domain.UseCases.Query.Sections;
 global using MediatR;

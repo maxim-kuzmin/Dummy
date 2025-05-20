@@ -27,9 +27,9 @@ global using Makc.Dummy.MicroserviceWriter.Infrastructure.PostgreSQL.AppOutgoing
 global using Makc.Dummy.MicroserviceWriter.Infrastructure.PostgreSQL.AppOutgoingEventPayload.Entity.Db;
 global using Makc.Dummy.MicroserviceWriter.Infrastructure.PostgreSQL.DummyItem.Db.Factories;
 global using Makc.Dummy.MicroserviceWriter.Infrastructure.PostgreSQL.DummyItem.Entity.Db;
-global using Makc.Dummy.Shared.DomainUseCases.Db.SQL;
-global using Makc.Dummy.Shared.DomainUseCases.Query;
-global using Makc.Dummy.Shared.DomainUseCases.Query.Sections;
+global using Makc.Dummy.Shared.Domain.UseCases.Db.SQL;
+global using Makc.Dummy.Shared.Domain.UseCases.Query;
+global using Makc.Dummy.Shared.Domain.UseCases.Query.Sections;
 global using Makc.Dummy.Shared.Infrastructure.PostgreSQL.Db.Command;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Logging;
