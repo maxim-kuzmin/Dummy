@@ -66,7 +66,7 @@ global using Makc.Dummy.MicroserviceWriter.Infrastructure.EntityFrameworkForPost
 global using Makc.Dummy.MicroserviceWriter.Infrastructure.Grpc.App;
 global using Makc.Dummy.MicroserviceWriter.Infrastructure.MSSQLServer.App;
 global using Makc.Dummy.MicroserviceWriter.Infrastructure.PostgreSQL.App;
-global using Makc.Dummy.Shared.Apps.WebApp.App.Middlewares;
+global using Makc.Dummy.Shared.Infrastructure.Web.App.Middlewares;
 global using Makc.Dummy.Shared.Core.App;
 global using Makc.Dummy.Shared.Core.App.Config.Options;
 global using Makc.Dummy.Shared.Core.App.Config.Options.Enums;

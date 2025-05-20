@@ -16,10 +16,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Shared\src\Apps\WebApp\Makc.Dummy.Shared.Apps.WebApp.csproj" />
+  <ItemGroup>    
     <ProjectReference Include="..\..\..\..\Shared\src\Infrastructure\CoreForOpenTelemetry\Makc.Dummy.Shared.Infrastructure.CoreForOpenTelemetry.csproj" />
     <ProjectReference Include="..\..\..\..\Shared\src\Infrastructure\CoreForOpenTelemetryInWeb\Makc.Dummy.Shared.Infrastructure.CoreForOpenTelemetryInWeb.csproj" />
+    <ProjectReference Include="..\..\..\..\Shared\src\Infrastructure\Web\Makc.Dummy.Shared.Infrastructure.Web.csproj" />
     <ProjectReference Include="..\..\Infrastructure\Core\Makc.Dummy.MicroserviceReader.Infrastructure.Core.csproj" />
     <ProjectReference Include="..\..\Infrastructure\Grpc\Makc.Dummy.MicroserviceReader.Infrastructure.Grpc.csproj" />
     <ProjectReference Include="..\..\Infrastructure\MongoDB\Makc.Dummy.MicroserviceReader.Infrastructure.MongoDB.csproj" />

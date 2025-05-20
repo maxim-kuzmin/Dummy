@@ -51,7 +51,7 @@ global using Makc.Dummy.MicroserviceReader.DomainUseCases.DummyItem.Queries;
 global using Makc.Dummy.MicroserviceReader.Infrastructure.Core.App;
 global using Makc.Dummy.MicroserviceReader.Infrastructure.Grpc.App;
 global using Makc.Dummy.MicroserviceReader.Infrastructure.MongoDB.App;
-global using Makc.Dummy.Shared.Apps.WebApp.App.Middlewares;
+global using Makc.Dummy.Shared.Infrastructure.Web.App.Middlewares;
 global using Makc.Dummy.Shared.Core.App;
 global using Makc.Dummy.Shared.Core.App.Config.Options;
 global using Makc.Dummy.Shared.Core.App.Config.Options.Sections.Domain;
