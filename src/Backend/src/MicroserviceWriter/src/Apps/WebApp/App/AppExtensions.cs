@@ -107,11 +107,10 @@ public static class AppExtensions
     });
 
     services.AddFastEndpoints(options => {
+      options.DisableAutoDiscovery = true; options.DisableAutoDiscovery = true;
       options.Assemblies = [
         typeof(Infrastructure.Web.DummyItem.Endpoints.DummyItemEndpointsSettings).Assembly,
-        ];
-
-      options.DisableAutoDiscovery = true;
+        ];      
     });
 
     var domainAuth = Guard.Against.Null(domain.Auth);

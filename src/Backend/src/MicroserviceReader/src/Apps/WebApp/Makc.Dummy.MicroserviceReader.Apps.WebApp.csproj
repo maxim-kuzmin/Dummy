@@ -19,11 +19,11 @@
   <ItemGroup>    
     <ProjectReference Include="..\..\..\..\Shared\src\Infrastructure\CoreForOpenTelemetry\Makc.Dummy.Shared.Infrastructure.CoreForOpenTelemetry.csproj" />
     <ProjectReference Include="..\..\..\..\Shared\src\Infrastructure\CoreForOpenTelemetryInWeb\Makc.Dummy.Shared.Infrastructure.CoreForOpenTelemetryInWeb.csproj" />
-    <ProjectReference Include="..\..\..\..\Shared\src\Infrastructure\Web\Makc.Dummy.Shared.Infrastructure.Web.csproj" />
     <ProjectReference Include="..\..\Infrastructure\Core\Makc.Dummy.MicroserviceReader.Infrastructure.Core.csproj" />
     <ProjectReference Include="..\..\Infrastructure\Grpc\Makc.Dummy.MicroserviceReader.Infrastructure.Grpc.csproj" />
     <ProjectReference Include="..\..\Infrastructure\MongoDB\Makc.Dummy.MicroserviceReader.Infrastructure.MongoDB.csproj" />
     <ProjectReference Include="..\..\Infrastructure\RabbitMQ\Makc.Dummy.MicroserviceReader.Infrastructure.RabbitMQ.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Web\Makc.Dummy.MicroserviceReader.Infrastructure.Web.csproj" />
   </ItemGroup>
 
 </Project>

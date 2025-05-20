@@ -111,12 +111,11 @@ public static class AppExtensions
 
     services
       .AddFastEndpoints(options => {
+        options.DisableAutoDiscovery = true;
         options.Assemblies = [
           typeof(Infrastructure.WebForMicroserviceReader.DummyItem.Endpoints.DummyItemEndpointsSettings).Assembly,
           typeof(Infrastructure.WebForMicroserviceWriter.DummyItem.Endpoints.DummyItemEndpointsSettings).Assembly
           ];
-
-        options.DisableAutoDiscovery = true;
       })
       .AddAuthorization();    
 
