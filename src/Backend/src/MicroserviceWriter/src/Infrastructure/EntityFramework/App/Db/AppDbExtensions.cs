@@ -1,4 +1,4 @@
-﻿using Makc.Dummy.MicroserviceWriter.DomainUseCases.DummyItem.Command.Sections;
+﻿using Makc.Dummy.MicroserviceWriter.Domain.UseCases.DummyItem.Command.Sections;
 
 namespace Makc.Dummy.MicroserviceWriter.Infrastructure.EntityFramework.App.Db;
 

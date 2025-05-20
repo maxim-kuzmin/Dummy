@@ -25,7 +25,7 @@ namespace Makc.Dummy.MicroserviceWriter.Infrastructure.EntityFrameworkForPostgre
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Makc.Dummy.MicroserviceWriter.DomainModel.AppOutgoingEvent.AppOutgoingEventEntity", b =>
+            modelBuilder.Entity("Makc.Dummy.MicroserviceWriter.Domain.Model.AppOutgoingEvent.AppOutgoingEventEntity", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -61,7 +61,7 @@ namespace Makc.Dummy.MicroserviceWriter.Infrastructure.EntityFrameworkForPostgre
                     b.ToTable("app_outgoing_event", "writer");
                 });
 
-            modelBuilder.Entity("Makc.Dummy.MicroserviceWriter.DomainModel.AppOutgoingEventPayload.AppOutgoingEventPayloadEntity", b =>
+            modelBuilder.Entity("Makc.Dummy.MicroserviceWriter.Domain.Model.AppOutgoingEventPayload.AppOutgoingEventPayloadEntity", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -117,7 +117,7 @@ namespace Makc.Dummy.MicroserviceWriter.Infrastructure.EntityFrameworkForPostgre
                     b.ToTable("app_outgoing_event_payload", "writer");
                 });
 
-            modelBuilder.Entity("Makc.Dummy.MicroserviceWriter.DomainModel.DummyItem.DummyItemEntity", b =>
+            modelBuilder.Entity("Makc.Dummy.MicroserviceWriter.Domain.Model.DummyItem.DummyItemEntity", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -149,9 +149,9 @@ namespace Makc.Dummy.MicroserviceWriter.Infrastructure.EntityFrameworkForPostgre
                     b.ToTable("dummy_item", "writer");
                 });
 
-            modelBuilder.Entity("Makc.Dummy.MicroserviceWriter.DomainModel.AppOutgoingEventPayload.AppOutgoingEventPayloadEntity", b =>
+            modelBuilder.Entity("Makc.Dummy.MicroserviceWriter.Domain.Model.AppOutgoingEventPayload.AppOutgoingEventPayloadEntity", b =>
                 {
-                    b.HasOne("Makc.Dummy.MicroserviceWriter.DomainModel.AppOutgoingEvent.AppOutgoingEventEntity", "AppOutgoingEvent")
+                    b.HasOne("Makc.Dummy.MicroserviceWriter.Domain.Model.AppOutgoingEvent.AppOutgoingEventEntity", "AppOutgoingEvent")
                         .WithMany("Payloads")
                         .HasForeignKey("AppOutgoingEventId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -161,7 +161,7 @@ namespace Makc.Dummy.MicroserviceWriter.Infrastructure.EntityFrameworkForPostgre
                     b.Navigation("AppOutgoingEvent");
                 });
 
-            modelBuilder.Entity("Makc.Dummy.MicroserviceWriter.DomainModel.AppOutgoingEvent.AppOutgoingEventEntity", b =>
+            modelBuilder.Entity("Makc.Dummy.MicroserviceWriter.Domain.Model.AppOutgoingEvent.AppOutgoingEventEntity", b =>
                 {
                     b.Navigation("Payloads");
                 });

@@ -1,4 +1,4 @@
-﻿using Makc.Dummy.MicroserviceWriter.DomainUseCases.AppOutgoingEvent.Query.Sections;
+﻿using Makc.Dummy.MicroserviceWriter.Domain.UseCases.AppOutgoingEvent.Query.Sections;
 
 namespace Makc.Dummy.MicroserviceWriter.Infrastructure.MSSQLServer.AppOutgoingEvent.Db.Factories;
 

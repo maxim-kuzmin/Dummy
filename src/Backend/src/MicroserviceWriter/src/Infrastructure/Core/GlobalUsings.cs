@@ -1,7 +1,7 @@
 ﻿global using Makc.Dummy.Shared.Core.App.Config.Options.Sections;
-global using Makc.Dummy.MicroserviceWriter.DomainModel.AppOutgoingEvent;
-global using Makc.Dummy.MicroserviceWriter.DomainModel.AppOutgoingEventPayload;
-global using Makc.Dummy.MicroserviceWriter.DomainModel.DummyItem;
+global using Makc.Dummy.MicroserviceWriter.Domain.Model.AppOutgoingEvent;
+global using Makc.Dummy.MicroserviceWriter.Domain.Model.AppOutgoingEventPayload;
+global using Makc.Dummy.MicroserviceWriter.Domain.Model.DummyItem;
 global using Makc.Dummy.MicroserviceWriter.Infrastructure.Core.AppOutgoingEvent;
 global using Makc.Dummy.MicroserviceWriter.Infrastructure.Core.AppOutgoingEventPayload;
 global using Makc.Dummy.MicroserviceWriter.Infrastructure.Core.DummyItem;

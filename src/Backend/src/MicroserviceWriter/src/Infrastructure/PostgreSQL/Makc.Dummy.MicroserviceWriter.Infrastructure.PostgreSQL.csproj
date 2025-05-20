@@ -2,7 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Shared\src\Infrastructure\PostgreSQL\Makc.Dummy.Shared.Infrastructure.PostgreSQL.csproj" />
-    <ProjectReference Include="..\..\DomainUseCases\Makc.Dummy.MicroserviceWriter.DomainUseCases.csproj" />
+    <ProjectReference Include="..\..\Domain\UseCases\Makc.Dummy.MicroserviceWriter.Domain.UseCases.csproj" />
   </ItemGroup>
 
 </Project>
