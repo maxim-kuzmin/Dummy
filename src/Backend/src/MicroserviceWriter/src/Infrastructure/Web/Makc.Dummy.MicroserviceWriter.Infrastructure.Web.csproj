@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>library</OutputType>
+    <NoDefaultLaunchSettingsFile>true</NoDefaultLaunchSettingsFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Shared\src\Infrastructure\Web\Makc.Dummy.Shared.Infrastructure.Web.csproj" />
+    <ProjectReference Include="..\..\DomainUseCases\Makc.Dummy.MicroserviceWriter.DomainUseCases.csproj" />
+  </ItemGroup>
+
+</Project>

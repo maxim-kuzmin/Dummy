@@ -106,7 +106,13 @@ public static class AppExtensions
       options.MinimumSameSitePolicy = SameSiteMode.None;
     });
 
-    services.AddFastEndpoints();
+    services.AddFastEndpoints(options => {
+      options.Assemblies = [
+        typeof(Infrastructure.Web.DummyItem.Endpoints.DummyItemEndpointsSettings).Assembly,
+        ];
+
+      options.DisableAutoDiscovery = true;
+    });
 
     var domainAuth = Guard.Against.Null(domain.Auth);
 

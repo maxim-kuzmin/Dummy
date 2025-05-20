@@ -115,6 +115,7 @@ public static class AppExtensions
           typeof(Infrastructure.WebForMicroserviceReader.DummyItem.Endpoints.DummyItemEndpointsSettings).Assembly,
           typeof(Infrastructure.WebForMicroserviceWriter.DummyItem.Endpoints.DummyItemEndpointsSettings).Assembly
           ];
+
         options.DisableAutoDiscovery = true;
       })
       .AddAuthorization();    
