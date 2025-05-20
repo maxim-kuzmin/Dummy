@@ -1,11 +1,11 @@
 ﻿global using System.Net.Http.Json;
 global using Ardalis.Result;
-global using Makc.Dummy.Gateway.DomainUseCasesForMicroserviceReader.DummyItem.Actions.Create;
-global using Makc.Dummy.Gateway.DomainUseCasesForMicroserviceReader.DummyItem.Actions.Delete;
-global using Makc.Dummy.Gateway.DomainUseCasesForMicroserviceReader.DummyItem.Actions.Update;
-global using Makc.Dummy.Gateway.DomainUseCasesForMicroserviceReader.DummyItem.DTOs;
-global using Makc.Dummy.Gateway.DomainUseCasesForMicroserviceReader.DummyItem.Queries;
-global using Makc.Dummy.Gateway.DomainUseCasesForMicroserviceReader.DummyItem.Services;
+global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceReader.DummyItem.Actions.Create;
+global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceReader.DummyItem.Actions.Delete;
+global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceReader.DummyItem.Actions.Update;
+global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceReader.DummyItem.DTOs;
+global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceReader.DummyItem.Queries;
+global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceReader.DummyItem.Services;
 global using Makc.Dummy.Gateway.Infrastructure.HttpForMicroserviceReader.App;
 global using Makc.Dummy.Gateway.Infrastructure.HttpForMicroserviceReader.DummyItem.Services;
 global using Makc.Dummy.Shared.Core.App;

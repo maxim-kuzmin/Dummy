@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Shared\src\Infrastructure\Grpc\Makc.Dummy.Shared.Infrastructure.Grpc.csproj" />
-    <ProjectReference Include="..\..\DomainUseCasesForMicroserviceWriter\Makc.Dummy.Gateway.DomainUseCasesForMicroserviceWriter.csproj" />
+    <ProjectReference Include="..\..\Domain\UseCasesForMicroserviceWriter\Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceWriter.csproj" />
   </ItemGroup>
 
   <ItemGroup>
