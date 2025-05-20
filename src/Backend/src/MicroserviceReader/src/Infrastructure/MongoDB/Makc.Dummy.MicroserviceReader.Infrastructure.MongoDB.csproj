@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Shared\src\Infrastructure\MongoDB\Makc.Dummy.Shared.Infrastructure.MongoDB.csproj" />
-    <ProjectReference Include="..\..\DomainUseCases\Makc.Dummy.MicroserviceReader.DomainUseCases.csproj" />
+    <ProjectReference Include="..\..\Domain\UseCases\Makc.Dummy.MicroserviceReader.Domain.UseCases.csproj" />
   </ItemGroup>
 
 </Project>

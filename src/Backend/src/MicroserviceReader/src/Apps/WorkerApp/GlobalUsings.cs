@@ -9,10 +9,10 @@ global using Makc.Dummy.MicroserviceReader.Apps.WorkerApp.App.Config.Options.Sec
 global using Makc.Dummy.MicroserviceReader.Apps.WorkerApp.App.Config.Options.Sections.Domain.AppInbox.Cleaner;
 global using Makc.Dummy.MicroserviceReader.Apps.WorkerApp.App.Config.Options.Sections.Domain.AppInbox.Consumer;
 global using Makc.Dummy.MicroserviceReader.Apps.WorkerApp.AppInbox.Services;
-global using Makc.Dummy.MicroserviceReader.DomainModel.App;
-global using Makc.Dummy.MicroserviceReader.DomainUseCases.App;
-global using Makc.Dummy.MicroserviceReader.DomainUseCases.App.Message;
-global using Makc.Dummy.MicroserviceReader.DomainUseCases.AppInbox.Actions.Consume;
+global using Makc.Dummy.MicroserviceReader.Domain.Model.App;
+global using Makc.Dummy.MicroserviceReader.Domain.UseCases.App;
+global using Makc.Dummy.MicroserviceReader.Domain.UseCases.App.Message;
+global using Makc.Dummy.MicroserviceReader.Domain.UseCases.AppInbox.Actions.Consume;
 global using Makc.Dummy.MicroserviceReader.Infrastructure.Core.App;
 global using Makc.Dummy.MicroserviceReader.Infrastructure.Kafka.App;
 global using Makc.Dummy.MicroserviceReader.Infrastructure.Kafka.App.Config.Options.Sections;
