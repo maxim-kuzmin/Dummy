@@ -12,7 +12,7 @@ public class DummyItemQueryService(
   /// <inheritdoc/>
   public async Task<Result<DummyItemListDTO>> GetPage(DummyItemPageQuery query, CancellationToken cancellationToken)
   {
-    using var httpClient = _httpClientFactory.CreateClient(AuthSettings.HttpClientName);
+    using var httpClient = _httpClientFactory.CreateClient(AppSettings.HttpClientName);
 
     using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, query.ToHttpRequestUrl());
 
@@ -30,9 +30,11 @@ public class DummyItemQueryService(
   }
 
   /// <inheritdoc/>
-  public async Task<Result<DummyItemSingleDTO>> GetSingle(DummyItemSingleQuery query, CancellationToken cancellationToken)
+  public async Task<Result<DummyItemSingleDTO>> GetSingle(
+    DummyItemSingleQuery query,
+    CancellationToken cancellationToken)
   {
-    using var httpClient = _httpClientFactory.CreateClient(AuthSettings.HttpClientName);
+    using var httpClient = _httpClientFactory.CreateClient(AppSettings.HttpClientName);
 
     var httpResponseTask = httpClient.GetAsync(query.ToHttpRequestUrl(), cancellationToken);
 

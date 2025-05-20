@@ -32,7 +32,7 @@ public static class AppExtensions
     const string userAgent = nameof(Dummy);
 
     services.AddHttpClient(
-      AuthSettings.HttpClientName,
+      AppSettings.HttpClientName,
       httpClient =>
       {
         httpClient.BaseAddress = new Uri(microserviceWriterEndpoint);

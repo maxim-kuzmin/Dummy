@@ -14,9 +14,4 @@ public class AuthSettings
   /// URL действия по входу.
   /// </summary>
   public const string LoginActionUrl = $"{Root}/login";
-
-  /// <summary>
-  /// Имя клиента HTTP.
-  /// </summary>
-  public const string HttpClientName = "Writer";
 }

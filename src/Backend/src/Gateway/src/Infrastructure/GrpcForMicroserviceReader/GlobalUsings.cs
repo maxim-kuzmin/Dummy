@@ -1,10 +1,7 @@
 ﻿global using Ardalis.Result;
 global using Grpc.Core;
-global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceReader.DummyItem.Actions.Create;
-global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceReader.DummyItem.Actions.Delete;
-global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceReader.DummyItem.Actions.Get;
-global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceReader.DummyItem.Actions.GetList;
-global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceReader.DummyItem.Actions.Update;
+global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceReader.DummyItem.Command.Sections;
+global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceReader.DummyItem.Commands;
 global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceReader.DummyItem.DTOs;
 global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceReader.DummyItem.Queries;
 global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceReader.DummyItem.Services;

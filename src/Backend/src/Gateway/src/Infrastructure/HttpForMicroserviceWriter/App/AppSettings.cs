@@ -1,4 +1,4 @@
-﻿namespace Makc.Dummy.Gateway.Infrastructure.HttpForMicroserviceReader.App;
+﻿namespace Makc.Dummy.Gateway.Infrastructure.HttpForMicroserviceWriter.App;
 
 /// <summary>
 /// Настройки приложения.
@@ -8,5 +8,5 @@ public class AppSettings
   /// <summary>
   /// Имя клиента HTTP.
   /// </summary>
-  public const string HttpClientName = "Reader";
+  public const string HttpClientName = "Writer";
 }

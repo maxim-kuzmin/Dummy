@@ -6,28 +6,28 @@
 public static class DummyItemExtensions
 {
   /// <summary>
-  /// Преобразовать к запросу действия по созданию фиктивного предмета.
+  /// Преобразовать к запросу gRPC создания фиктивного предмета.
   /// </summary>
-  /// <param name="command">Команда.</param>
-  /// <returns>Запрос действия по созданию фиктивного предмета.</returns>
+  /// <param name="data">Данные.</param>
+  /// <returns>Запрос gRPC.</returns>
   public static DummyItemCreateGrpcRequest ToDummyItemCreateGrpcRequest(
-    this DummyItemCreateActionCommand command)
+    this DummyItemCommandDataSection data)
   {
     return new DummyItemCreateGrpcRequest
     {
-      Id = command.Id,
-      Name = command.Name,
-      ConcurrencyToken = command.ConcurrencyToken
+      Id = data.Id,
+      Name = data.Name,
+      ConcurrencyToken = data.ConcurrencyToken
     };
   }
 
   /// <summary>
-  /// Преобразовать к запросу действия по удалению фиктивного предмета.
+  /// Преобразовать к запросу gRPC удаления фиктивного предмета.
   /// </summary>
   /// <param name="command">Команда.</param>
-  /// <returns>Запрос действия по удалению фиктивного предмета.</returns>
+  /// <returns>Запрос gRPC.</returns>
   public static DummyItemDeleteGrpcRequest ToDummyItemDeleteGrpcRequest(
-    this DummyItemDeleteActionCommand command)
+    this DummyItemDeleteCommand command)
   {
     return new DummyItemDeleteGrpcRequest
     {
@@ -36,10 +36,10 @@ public static class DummyItemExtensions
   }
 
   /// <summary>
-  /// Преобразовать к запросу действия на получение фиктивного предмета.
+  /// Преобразовать к запросу gRPC получения фиктивного предмета.
   /// </summary>
   /// <param name="query">Запрос.</param>
-  /// <returns>Запрос действия на получение фиктивного предмета.</returns>
+  /// <returns>Запрос gRPC.</returns>
   public static DummyItemGetGrpcRequest ToDummyItemGetGrpcRequest(this DummyItemSingleQuery query)
   {
     return new DummyItemGetGrpcRequest
@@ -49,14 +49,14 @@ public static class DummyItemExtensions
   }
 
   /// <summary>
-  /// Преобразовать к запросу действия на получение списка фиктивных предметов.
+  /// Преобразовать к запросу gRPC получения списка фиктивных предметов.
   /// </summary>
   /// <param name="query">Запрос.</param>
-  /// <returns>Запрос действия на получение списка фиктивных предметов.</returns>
-  public static DummyItemGetListGrpcRequest ToDummyItemGetListGrpcRequest(this DummyItemListQuery query)
+  /// <returns>Запрос gRPC.</returns>
+  public static DummyItemGetListGrpcRequest ToDummyItemGetListGrpcRequest(this DummyItemPageQuery query)
   {
-    var filter = query.PageQuery.Filter;
-    var page = query.PageQuery.Page;
+    var filter = query.Filter;
+    var page = query.Page;
     var sort = query.Sort;
 
     return new()
@@ -112,19 +112,20 @@ public static class DummyItemExtensions
   }
 
   /// <summary>
-  /// Преобразовать к запросу действия по обновлению фиктивного предмета.
+  /// Преобразовать к запросу gRPC обновления фиктивного предмета.
   /// </summary>
-  /// <param name="command">Команда.</param>
-  /// <returns>Запрос действия по обновлению фиктивного предмета.</returns>
+  /// <param name="data">Команда.</param>
+  /// <returns>Запрос gRPC.</returns>
   public static DummyItemUpdateGrpcRequest ToDummyItemUpdateGrpcRequest(
-    this DummyItemUpdateActionCommand command)
+    this DummyItemCommandDataSection data,
+    string objectId)
   {
     return new DummyItemUpdateGrpcRequest
     {
-      ObjectId = command.ObjectId,
-      Id = command.Id,
-      Name = command.Name,
-      ConcurrencyToken = command.ConcurrencyToken
+      ObjectId = objectId,
+      Id = data.Id,
+      Name = data.Name,
+      ConcurrencyToken = data.ConcurrencyToken
     };
   }
 }

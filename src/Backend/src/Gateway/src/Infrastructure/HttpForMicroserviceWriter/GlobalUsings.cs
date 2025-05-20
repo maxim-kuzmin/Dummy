@@ -8,6 +8,7 @@ global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceWriter.DummyItem.C
 global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceWriter.DummyItem.DTOs;
 global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceWriter.DummyItem.Queries;
 global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceWriter.DummyItem.Services;
+global using Makc.Dummy.Gateway.Infrastructure.HttpForMicroserviceWriter.App;
 global using Makc.Dummy.Gateway.Infrastructure.HttpForMicroserviceWriter.Auth;
 global using Makc.Dummy.Gateway.Infrastructure.HttpForMicroserviceWriter.Auth.Services;
 global using Makc.Dummy.Gateway.Infrastructure.HttpForMicroserviceWriter.DummyItem.Services;

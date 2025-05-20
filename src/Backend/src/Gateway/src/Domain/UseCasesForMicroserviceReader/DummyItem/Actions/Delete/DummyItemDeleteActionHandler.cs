@@ -5,11 +5,11 @@
 /// </summary>
 /// <param name="_service">Сервис.</param>
 public class DummyItemDeleteActionHandler(IDummyItemCommandService _service) :
-  ICommandHandler<DummyItemDeleteActionCommand, Result>
+  ICommandHandler<DummyItemDeleteActionRequest, Result>
 {
   /// <inheritdoc/>
-  public Task<Result> Handle(DummyItemDeleteActionCommand request, CancellationToken cancellationToken)
+  public Task<Result> Handle(DummyItemDeleteActionRequest request, CancellationToken cancellationToken)
   {
-    return _service.Delete(request, cancellationToken);
+    return _service.Delete(request.Command, cancellationToken);
   }
 }

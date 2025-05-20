@@ -11,7 +11,7 @@ public class AuthCommandService(IHttpClientFactory _httpClientFactory) : IAuthCo
     AuthLoginCommand command,
     CancellationToken cancellationToken)
   {
-    using var httpClient = _httpClientFactory.CreateClient(AuthSettings.HttpClientName);
+    using var httpClient = _httpClientFactory.CreateClient(AppSettings.HttpClientName);
 
     using var httpRequestContent = command.ToHttpRequestContent();
 

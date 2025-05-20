@@ -4,42 +4,20 @@
 /// Сервис команд фиктивного предмета.
 /// </summary>
 /// <param name="_grpcClient">Клиент gRPC.</param>
-public class DummyItemCommandService(
-  DummyItemGrpcClient _grpcClient) : IDummyItemCommandService
+public class DummyItemCommandService(DummyItemGrpcClient _grpcClient) : IDummyItemCommandService
 {
   /// <inheritdoc/>
-  public async Task<Result<DummyItemSingleDTO>> Create(
-    DummyItemCreateActionCommand command,
-    CancellationToken cancellationToken)
-  {
-    try
-    {
-      var replyTask = _grpcClient.CreateAsync(
-        command.ToDummyItemCreateGrpcRequest(),
-        cancellationToken: cancellationToken);
-
-      var reply = await replyTask.ConfigureAwait(false);
-
-      return Result.Success(reply.ToDummyItemSingleDTO());
-    }
-    catch (RpcException ex)
-    {
-      return ex.ToUnsuccessfulResult();
-    }
-  }
-
-  /// <inheritdoc/>
   public async Task<Result> Delete(
-    DummyItemDeleteActionCommand command,
+    DummyItemDeleteCommand command,
     CancellationToken cancellationToken)
   {
     try
     {
-      var replyTask = _grpcClient.DeleteAsync(
+      var task = _grpcClient.DeleteAsync(
         command.ToDummyItemDeleteGrpcRequest(),
         cancellationToken: cancellationToken);
 
-      var reply = await replyTask.ConfigureAwait(false);
+      var reply = await task.ConfigureAwait(false);
 
       return Result.Success();
     }
@@ -49,18 +27,21 @@ public class DummyItemCommandService(
     }
   }
 
-  /// <inheritdoc/>
-  public async Task<Result<DummyItemSingleDTO>> Update(
-      DummyItemUpdateActionCommand command,
-      CancellationToken cancellationToken)
+  public async Task<Result<DummyItemSingleDTO>> Save(
+    DummyItemSaveCommand command,
+    CancellationToken cancellationToken)
   {
     try
     {
-      var replyTask = _grpcClient.UpdateAsync(
-        command.ToDummyItemUpdateGrpcRequest(),
-        cancellationToken: cancellationToken);
+      var task = command.IsUpdate
+        ? _grpcClient.UpdateAsync(
+          command.Data.ToDummyItemUpdateGrpcRequest(command.ObjectId),
+          cancellationToken: cancellationToken)
+        : _grpcClient.CreateAsync(
+          command.Data.ToDummyItemCreateGrpcRequest(),
+          cancellationToken: cancellationToken);
 
-      var reply = await replyTask.ConfigureAwait(false);
+      var reply = await task.ConfigureAwait(false);
 
       return Result.Success(reply.ToDummyItemSingleDTO());
     }

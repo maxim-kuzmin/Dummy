@@ -6,26 +6,18 @@
 public interface IDummyItemCommandService
 {
   /// <summary>
-  /// Создать.
-  /// </summary>
-  /// <param name="command">Команда.</param>
-  /// <param name="cancellationToken">Токен отмены.</param>
-  /// <returns>Результат.</returns>
-  Task<Result<DummyItemSingleDTO>> Create(DummyItemCreateActionCommand command, CancellationToken cancellationToken);
-
-  /// <summary>
   /// Удалить.
   /// </summary>
   /// <param name="command">Команда.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Результат.</returns>
-  Task<Result> Delete(DummyItemDeleteActionCommand command, CancellationToken cancellationToken);
+  Task<Result> Delete(DummyItemDeleteCommand command, CancellationToken cancellationToken);
 
   /// <summary>
-  /// Обновить.
+  /// Сохранить.
   /// </summary>
   /// <param name="command">Команда.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Результат.</returns>
-  Task<Result<DummyItemSingleDTO>> Update(DummyItemUpdateActionCommand command, CancellationToken cancellationToken);
+  Task<Result<DummyItemSingleDTO>> Save(DummyItemSaveCommand command, CancellationToken cancellationToken);
 }
