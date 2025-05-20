@@ -74,7 +74,7 @@ public static class AppOutgoingEventPayloadExtensions
   /// <param name="dto">Объект передачи данных.</param>
   /// <returns>Отклик gRPC.</returns>
   public static AppOutgoingEventPayloadGetListGrpcReply ToAppOutgoingEventPayloadGetListGrpcReply(
-    this AppOutgoingEventPayloadListDTO dto)
+    this AppOutgoingEventPayloadPageDTO dto)
   {
     AppOutgoingEventPayloadGetListGrpcReply result = new()
     {

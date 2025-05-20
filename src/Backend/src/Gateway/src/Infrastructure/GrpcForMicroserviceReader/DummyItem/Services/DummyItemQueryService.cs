@@ -10,7 +10,7 @@ public class DummyItemQueryService(
   DummyItemGrpcClient _grpcClient) : IDummyItemQueryService
 {
   /// <inheritdoc/>
-  public async Task<Result<DummyItemListDTO>> GetPage(
+  public async Task<Result<DummyItemPageDTO>> GetPage(
     DummyItemPageQuery query,
     CancellationToken cancellationToken)
   {
@@ -30,7 +30,7 @@ public class DummyItemQueryService(
 
       var reply = await task.ConfigureAwait(false);
 
-      return Result.Success(reply.ToDummyItemListDTO());
+      return Result.Success(reply.ToDummyItemPageDTO());
     }
     catch (RpcException ex)
     {

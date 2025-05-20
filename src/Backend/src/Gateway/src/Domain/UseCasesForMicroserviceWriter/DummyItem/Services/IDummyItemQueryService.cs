@@ -11,7 +11,7 @@ public interface IDummyItemQueryService
   /// <param name="query">Запрос.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Страница объектов.</returns>
-  Task<Result<DummyItemListDTO>> GetPage(DummyItemPageQuery query, CancellationToken cancellationToken);
+  Task<Result<DummyItemPageDTO>> GetPage(DummyItemPageQuery query, CancellationToken cancellationToken);
 
   /// <summary>
   /// Получить единственный объект.

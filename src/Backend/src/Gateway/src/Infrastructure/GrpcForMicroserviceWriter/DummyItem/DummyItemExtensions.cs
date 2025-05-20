@@ -77,11 +77,11 @@ public static class DummyItemExtensions
   }
 
   /// <summary>
-  /// Преобразовать к объекту передачи данных списка фиктивных предметов.
+  /// Преобразовать к объекту передачи данных страницы фиктивных предметов.
   /// </summary>
   /// <param name="reply">Ответ.</param>
   /// <returns>Объект передачи данных.</returns>
-  public static DummyItemListDTO ToDummyItemListDTO(this DummyItemGetListGrpcReply reply)
+  public static DummyItemPageDTO ToDummyItemPageDTO(this DummyItemGetListGrpcReply reply)
   {
     var items = new List<DummyItemSingleDTO>(reply.Items.Count);
 
@@ -96,7 +96,7 @@ public static class DummyItemExtensions
   }
 
   /// <summary>
-  /// Преобразовать к объекту передачи данных фиктивного предмета.
+  /// Преобразовать к объекту передачи данных единственного фиктивного предмета.
   /// </summary>
   /// <param name="reply">Ответ.</param>
   /// <returns>Объект передачи данных.</returns>

@@ -30,7 +30,7 @@ public class AppOutgoingEventQueryService(
   }
 
   /// <inheritdoc/>
-  public async Task<AppOutgoingEventListDTO> GetPage(
+  public async Task<AppOutgoingEventPageDTO> GetPage(
     AppOutgoingEventPageQuery query,
     CancellationToken cancellationToken)
   {
@@ -53,7 +53,7 @@ public class AppOutgoingEventQueryService(
       items = [];
     }
 
-    return items.ToAppOutgoingEventListDTO(totalCount);
+    return items.ToAppOutgoingEventPageDTO(totalCount);
   }
 
   /// <inheritdoc/>

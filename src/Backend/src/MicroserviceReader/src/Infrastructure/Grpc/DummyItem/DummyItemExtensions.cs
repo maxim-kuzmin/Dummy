@@ -67,7 +67,7 @@ public static class DummyItemExtensions
   /// </summary>
   /// <param name="dto">Объект передачи данных.</param>
   /// <returns>Отклик gRPC.</returns>
-  public static DummyItemGetListGrpcReply ToDummyItemGetListGrpcReply(this DummyItemListDTO dto)
+  public static DummyItemGetListGrpcReply ToDummyItemGetListGrpcReply(this DummyItemPageDTO dto)
   {
     DummyItemGetListGrpcReply result = new()
     {

@@ -45,7 +45,7 @@ public class AppInboxCommandService(
     return Result.Success();
   }
 
-  private Task<AppIncomingEventPayloadListDTO> DownloadAppIncomingEventPayloads(
+  private Task<AppIncomingEventPayloadPageDTO> DownloadAppIncomingEventPayloads(
     string eventId,
     CancellationToken cancellationToken)
   {

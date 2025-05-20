@@ -1,13 +1,13 @@
 ﻿namespace Makc.Dummy.Shared.Domain.UseCases.DTOs;
 
 /// <summary>
-/// Объект передачи данных списка.
+/// Объект передачи данных страницы.
 /// </summary>
 /// <typeparam name="TItem">Тип элемента.</typeparam>
 /// <typeparam name="TTotalCount">Тип общего количества.</typeparam>
 /// <param name="Items">Элементы.</param>
 /// <param name="TotalCount">Общее количество.</param>
-public record ListDTO<TItem, TTotalCount>(
+public record PageDTO<TItem, TTotalCount>(
   List<TItem> Items,
   TTotalCount TotalCount)
   where TItem : class

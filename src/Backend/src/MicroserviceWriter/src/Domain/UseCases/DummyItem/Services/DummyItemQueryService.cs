@@ -28,7 +28,7 @@ public class DummyItemQueryService(
   }
 
   /// <inheritdoc/>
-  public async Task<DummyItemListDTO> GetPage(DummyItemPageQuery query, CancellationToken cancellationToken)
+  public async Task<DummyItemPageDTO> GetPage(DummyItemPageQuery query, CancellationToken cancellationToken)
   {
     var dbCommandForFilter = _dbCommandFactory.CreateDbCommandForFilter(query.Filter);
 
@@ -49,7 +49,7 @@ public class DummyItemQueryService(
       items = [];
     }
 
-    return items.ToDummyItemListDTO(totalCount);
+    return items.ToDummyItemPageDTO(totalCount);
   }
 
   /// <inheritdoc/>

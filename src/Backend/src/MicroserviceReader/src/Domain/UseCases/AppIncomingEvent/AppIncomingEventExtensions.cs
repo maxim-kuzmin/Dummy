@@ -6,12 +6,12 @@
 public static class AppIncomingEventExtensions
 {
   /// <summary>
-  /// Преобразовать к объекту передачи данных списка входящих событий приложения.
+  /// Преобразовать к объекту передачи данных страницы входящих событий приложения.
   /// </summary>
   /// <param name="items">Элементы.</param>
   /// <param name="totalCount">Общее количество.</param>
-  /// <returns>Объект передачи данных списка входящих событий приложения.</returns>
-  public static AppIncomingEventListDTO ToAppIncomingEventListDTO(
+  /// <returns>Объект передачи данных.</returns>
+  public static AppIncomingEventPageDTO ToAppIncomingEventPageDTO(
     this List<AppIncomingEventSingleDTO> items,
     long totalCount)
   {
@@ -37,10 +37,10 @@ public static class AppIncomingEventExtensions
   }
 
   /// <summary>
-  /// Преобразовать к объекту передачи данных одиночного входящего события приложения.
+  /// Преобразовать к объекту передачи данных единственного входящего события приложения.
   /// </summary>
   /// <param name="entity">Сущность.</param>
-  /// <returns>Объект передачи данных одиночного входящего события приложения.</returns>
+  /// <returns>Объект передачи данных.</returns>
   public static AppIncomingEventSingleDTO ToAppIncomingEventSingleDTO(this AppIncomingEventEntity entity)
   {
     return new(

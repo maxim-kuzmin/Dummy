@@ -11,7 +11,7 @@ public interface IAppIncomingEventPayloadQueryService
   /// <param name="query">Запрос.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Объект списка.</returns>
-  Task<AppIncomingEventPayloadListDTO> Download(
+  Task<AppIncomingEventPayloadPageDTO> Download(
       AppIncomingEventPayloadDownloadQuery query,
       CancellationToken cancellationToken);
 
@@ -39,7 +39,7 @@ public interface IAppIncomingEventPayloadQueryService
   /// <param name="query">Запрос.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Список объектов.</returns>
-  Task<AppIncomingEventPayloadListDTO> GetPage(
+  Task<AppIncomingEventPayloadPageDTO> GetPage(
     AppIncomingEventPayloadPageQuery query,
     CancellationToken cancellationToken);
 

@@ -6,12 +6,12 @@
 public static class AppOutgoingEventPayloadExtensions
 {
   /// <summary>
-  /// Преобразовать к объекту передачи данных списка полезных нагрузок исходящего события приложения.
+  /// Преобразовать к объекту передачи данных страницы полезных нагрузок исходящего события приложения.
   /// </summary>
   /// <param name="items">Элементы.</param>
   /// <param name="totalCount">Общее количество.</param>
-  /// <returns>Объект передачи данных списка полезных нагрузок исходящего события приложения.</returns>
-  public static AppOutgoingEventPayloadListDTO ToAppOutgoingEventPayloadListDTO(
+  /// <returns>Объект передачи данных.</returns>
+  public static AppOutgoingEventPayloadPageDTO ToAppOutgoingEventPayloadPageDTO(
     this List<AppOutgoingEventPayloadSingleDTO> items,
     long totalCount)
   {
@@ -37,10 +37,10 @@ public static class AppOutgoingEventPayloadExtensions
   }
 
   /// <summary>
-  /// Преобразовать к объекту передачи данных одиночной полезной нагрузки исходящего события приложения.
+  /// Преобразовать к объекту передачи данных единственной полезной нагрузки исходящего события приложения.
   /// </summary>
   /// <param name="entity">Сущность.</param>
-  /// <returns>Объект передачи данных одиночной полезной нагрузки исходящего события приложения.</returns>
+  /// <returns>Объект передачи данных.</returns>
   public static AppOutgoingEventPayloadSingleDTO ToAppOutgoingEventPayloadSingleDTO(this AppOutgoingEventPayloadEntity entity)
   {
     return new(

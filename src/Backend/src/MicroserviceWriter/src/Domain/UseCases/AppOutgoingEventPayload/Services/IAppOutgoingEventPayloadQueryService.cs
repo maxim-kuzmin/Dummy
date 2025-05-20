@@ -29,7 +29,7 @@ public interface IAppOutgoingEventPayloadQueryService
   /// <param name="query">Запрос.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Страница объектов.</returns>
-  Task<AppOutgoingEventPayloadListDTO> GetPage(
+  Task<AppOutgoingEventPayloadPageDTO> GetPage(
     AppOutgoingEventPayloadPageQuery query,
     CancellationToken cancellationToken);
 

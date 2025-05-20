@@ -27,7 +27,7 @@ public interface IAppOutgoingEventQueryService
   /// <param name="query">Запрос.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Список объектов.</returns>
-  Task<AppOutgoingEventListDTO> GetPage(AppOutgoingEventPageQuery query, CancellationToken cancellationToken);
+  Task<AppOutgoingEventPageDTO> GetPage(AppOutgoingEventPageQuery query, CancellationToken cancellationToken);
 
   /// <summary>
   /// Получить единственный объект.

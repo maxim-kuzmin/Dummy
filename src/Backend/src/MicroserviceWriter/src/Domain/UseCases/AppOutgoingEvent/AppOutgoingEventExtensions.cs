@@ -6,12 +6,12 @@
 public static class AppOutgoingEventExtensions
 {
   /// <summary>
-  /// Преобразовать к объекту передачи данных списка исходящих событий приложения.
+  /// Преобразовать к объекту передачи данных страницы исходящих событий приложения.
   /// </summary>
   /// <param name="items">Элементы.</param>
   /// <param name="totalCount">Общее количество.</param>
-  /// <returns>Объект передачи данных списка исходящих событий приложения.</returns>
-  public static AppOutgoingEventListDTO ToAppOutgoingEventListDTO(
+  /// <returns>Объект передачи данных.</returns>
+  public static AppOutgoingEventPageDTO ToAppOutgoingEventPageDTO(
     this List<AppOutgoingEventSingleDTO> items,
     long totalCount)
   {
@@ -37,10 +37,10 @@ public static class AppOutgoingEventExtensions
   }
 
   /// <summary>
-  /// Преобразовать к объекту передачи данных одиночного исходящего события приложения.
+  /// Преобразовать к объекту передачи данных единственного исходящего события приложения.
   /// </summary>
   /// <param name="entity">Сущность.</param>
-  /// <returns>Объект передачи данных одиночного исходящего события приложения.</returns>
+  /// <returns>Объект передачи данных.</returns>
   public static AppOutgoingEventSingleDTO ToAppOutgoingEventSingleDTO(this AppOutgoingEventEntity entity)
   {
     return new(entity.Id, entity.CreatedAt, entity.Name, entity.PublishedAt);

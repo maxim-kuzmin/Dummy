@@ -5,7 +5,7 @@
 /// </summary>
 /// <param name="_mediator">Медиатор.</param>
 public class DummyItemGetListEndpointHandler(IMediator _mediator) :
-  Endpoint<DummyItemGetListEndpointRequest, DummyItemListDTO>
+  Endpoint<DummyItemGetListEndpointRequest, DummyItemPageDTO>
 {
   /// <inheritdoc/>
   public override void Configure()

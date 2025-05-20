@@ -8,7 +8,7 @@ public class AppIncomingEventPayloadQueryService(
   IAppIncomingEventPayloadRepository _repository) : IAppIncomingEventPayloadQueryService
 {
   /// <inheritdoc/>
-  public Task<AppIncomingEventPayloadListDTO> Download(
+  public Task<AppIncomingEventPayloadPageDTO> Download(
     AppIncomingEventPayloadDownloadQuery query,
     CancellationToken cancellationToken)
   {
@@ -32,7 +32,7 @@ public class AppIncomingEventPayloadQueryService(
   }
 
   /// <inheritdoc/>
-  public async Task<AppIncomingEventPayloadListDTO> GetPage(
+  public async Task<AppIncomingEventPayloadPageDTO> GetPage(
     AppIncomingEventPayloadPageQuery query,
     CancellationToken cancellationToken)
   {
@@ -51,7 +51,7 @@ public class AppIncomingEventPayloadQueryService(
       items = [];
     }
 
-    return items.ToAppIncomingEventPayloadListDTO(totalCount);
+    return items.ToAppIncomingEventPayloadPageDTO(totalCount);
   }
 
   /// <inheritdoc/>

@@ -10,7 +10,7 @@ public class DummyItemQueryService(
   IHttpClientFactory _httpClientFactory) : IDummyItemQueryService
 {
   /// <inheritdoc/>
-  public async Task<Result<DummyItemListDTO>> GetPage(DummyItemPageQuery query, CancellationToken cancellationToken)
+  public async Task<Result<DummyItemPageDTO>> GetPage(DummyItemPageQuery query, CancellationToken cancellationToken)
   {
     using var httpClient = _httpClientFactory.CreateClient(AppSettings.HttpClientName);
 
@@ -22,7 +22,7 @@ public class DummyItemQueryService(
 
     using var httpResponse = await httpResponseTask.ConfigureAwait(false);
 
-    var resultTask = httpResponse.ToResultFromJsonAsync<DummyItemListDTO>(cancellationToken);
+    var resultTask = httpResponse.ToResultFromJsonAsync<DummyItemPageDTO>(cancellationToken);
 
     var result = await resultTask.ConfigureAwait(false);
 
