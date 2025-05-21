@@ -1,0 +1,12 @@
+﻿namespace Makc.Dummy.Integration.MicroserviceWriter.Infrastructure.HttpClient.DummyItem;
+
+/// <summary>
+/// Настройки фиктивного предмета.
+/// </summary>
+public class DummyItemSettings
+{
+  /// <summary>
+  /// Корень.
+  /// </summary>
+  public const string Root = "dummy-items";
+}
