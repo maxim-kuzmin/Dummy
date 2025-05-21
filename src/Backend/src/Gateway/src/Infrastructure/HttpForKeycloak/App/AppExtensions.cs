@@ -6,7 +6,7 @@
 public static class AppExtensions
 {
   /// <summary>
-  /// Добавить варианты использования домена приложения для поставщика OpenID "Keycloak".
+  /// Добавить варианты использования предметной области приложения для поставщика OpenID "Keycloak".
   /// </summary>
   /// <param name="services">Сервисы.</param>
   /// <param name="logger">Логгер.</param>

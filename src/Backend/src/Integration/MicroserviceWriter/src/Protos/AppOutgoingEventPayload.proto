@@ -1,0 +1,94 @@
+syntax = "proto3";
+
+option csharp_namespace = "Makc.Dummy.Integration.MicroserviceWriter.Infrastructure.Grpc.AppOutgoingEventPayload";
+
+package Writer;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/wrappers.proto";
+
+service AppOutgoingEventPayload {
+    rpc Create (AppOutgoingEventPayloadCreateGrpcRequest) returns (AppOutgoingEventPayloadGetGrpcReply);
+    rpc Delete (AppOutgoingEventPayloadDeleteGrpcRequest) returns (google.protobuf.Empty);
+    rpc Get (AppOutgoingEventPayloadGetGrpcRequest) returns (AppOutgoingEventPayloadGetGrpcReply);
+    rpc GetList (AppOutgoingEventPayloadGetListGrpcRequest) returns (AppOutgoingEventPayloadGetListGrpcReply);
+    rpc Update (AppOutgoingEventPayloadUpdateGrpcRequest) returns (AppOutgoingEventPayloadGetGrpcReply);
+}
+
+message ActionRequestSort {
+    string field = 1;
+    bool is_desc = 2;
+}
+
+message ActionRequestPage {
+    int32 number = 1;
+    int32 size = 2;
+}
+
+message AppOutgoingEventPayloadCreateGrpcRequest {
+    int64 app_outgoing_event_id = 1;
+    google.protobuf.StringValue data = 2;
+    google.protobuf.StringValue entity_concurrency_token_to_delete = 3;
+    google.protobuf.StringValue entity_concurrency_token_to_insert = 4;
+    string entity_id = 5;
+    string entity_name = 6;
+    int32 position = 7;    
+}
+
+message AppOutgoingEventPayloadDeleteGrpcRequest {
+    int64 id = 1;
+}
+
+message AppOutgoingEventPayloadGetGrpcRequest {
+    int64 id = 1;
+}
+
+message AppOutgoingEventPayloadGetGrpcReply {
+    int64 app_outgoing_event_id = 1;    
+    string data = 2;
+    google.protobuf.StringValue entity_concurrency_token_to_delete = 3;
+    google.protobuf.StringValue entity_concurrency_token_to_insert = 4;
+    string entity_id = 5;
+    string entity_name = 6;
+    int32 position = 7;
+    int64 id = 8;
+    string concurrency_token = 9;
+}
+
+message AppOutgoingEventPayloadGetListGrpcRequestFilter {
+    google.protobuf.StringValue full_text_search_query = 1;
+}
+
+message AppOutgoingEventPayloadGetListGrpcRequest {
+    ActionRequestPage page = 1;
+    ActionRequestSort sort = 2;
+    AppOutgoingEventPayloadGetListGrpcRequestFilter filter = 3;
+}
+
+message AppOutgoingEventPayloadGetListGrpcReplyItem {
+    int64 app_outgoing_event_id = 1;
+    string data = 2;
+    google.protobuf.StringValue entity_concurrency_token_to_delete = 3;
+    google.protobuf.StringValue entity_concurrency_token_to_insert = 4;
+    string entity_id = 5;
+    string entity_name = 6;
+    int32 position = 7;
+    int64 id = 8;
+    string concurrency_token = 9;
+}
+
+message AppOutgoingEventPayloadGetListGrpcReply {
+    int64 total_count = 1;
+    repeated AppOutgoingEventPayloadGetListGrpcReplyItem items = 2;
+}
+
+message AppOutgoingEventPayloadUpdateGrpcRequest {
+    int64 app_outgoing_event_id = 1;
+    string data = 2;
+    google.protobuf.StringValue entity_concurrency_token_to_delete = 3;
+    google.protobuf.StringValue entity_concurrency_token_to_insert = 4;
+    string entity_id = 5;
+    string entity_name = 6;
+    int32 position = 7;
+    int64 id = 8;
+}

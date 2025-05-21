@@ -6,7 +6,7 @@
 public static class AppExtensions
 {
   /// <summary>
-  /// Добавить модель домена приложения.
+  /// Добавить модель предметной области приложения.
   /// </summary>
   /// <param name="services">Сервисы.</param>
   /// <param name="logger">Логгер.</param>

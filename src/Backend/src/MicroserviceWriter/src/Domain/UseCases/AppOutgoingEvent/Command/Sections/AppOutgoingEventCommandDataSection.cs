@@ -1,7 +1,7 @@
 ﻿namespace Makc.Dummy.MicroserviceWriter.Domain.UseCases.AppOutgoingEvent.Command.Sections;
 
 /// <summary>
-/// Раздел данных команды фиктивного предмета.
+/// Раздел данных команды исходящего события приложения.
 /// </summary>
 /// <param name="Name">Имя.</param>
 /// <param name="PublishedAt">Дата публикации.</param>

@@ -56,6 +56,28 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.Gateway.Infrastr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.Gateway.Infrastructure.WebForMicroserviceWriter", "src\Gateway\src\Infrastructure\WebForMicroserviceWriter\Makc.Dummy.Gateway.Infrastructure.WebForMicroserviceWriter.csproj", "{FA269ADC-0A5E-46EC-A92E-D618DEB33018}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Integration", "Integration", "{C889838A-0AA3-4236-9E3E-6EF41A3C94F0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MicroserviceWriter", "MicroserviceWriter", "{FCDEE716-D47C-47BF-9DD1-E908CC9A89EC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{F13921B4-B617-4AE2-AE2D-82E47743195E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCases", "src\Integration\MicroserviceWriter\src\Domain\UseCases\Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCases.csproj", "{A668C7CE-C712-4652-82B1-7AA81AA91BD1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{23115D69-2C8C-43F7-B453-23178D19FD8A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.Integration.MicroserviceWriter.Infrastructure.GrpcClient", "src\Integration\MicroserviceWriter\src\Infrastructure\GrpcClient\Makc.Dummy.Integration.MicroserviceWriter.Infrastructure.GrpcClient.csproj", "{4ECCF2B5-137F-47C5-9CDE-F22FB36C4EFB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.Integration.MicroserviceWriter.Infrastructure.GrpcServer", "src\Integration\MicroserviceWriter\src\Infrastructure\GrpcServer\Makc.Dummy.Integration.MicroserviceWriter.Infrastructure.GrpcServer.csproj", "{1E72A181-0112-47B8-9770-DE6724BB9937}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Protos", "Protos", "{958C38C2-8545-4A8E-9375-9B370E7625E8}"
+	ProjectSection(SolutionItems) = preProject
+		src\Integration\MicroserviceWriter\src\Protos\AppOutgoingEvent.proto = src\Integration\MicroserviceWriter\src\Protos\AppOutgoingEvent.proto
+		src\Integration\MicroserviceWriter\src\Protos\AppOutgoingEventPayload.proto = src\Integration\MicroserviceWriter\src\Protos\AppOutgoingEventPayload.proto
+		src\Integration\MicroserviceWriter\src\Protos\Auth.proto = src\Integration\MicroserviceWriter\src\Protos\Auth.proto
+		src\Integration\MicroserviceWriter\src\Protos\DummyItem.proto = src\Integration\MicroserviceWriter\src\Protos\DummyItem.proto
+	EndProjectSection
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MicroserviceReader", "MicroserviceReader", "{86D0AEEE-A675-4B81-A5AE-BC08F9C92803}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Apps", "Apps", "{77C4E24B-11C3-4777-88E6-F070D4E24679}"
@@ -232,6 +254,18 @@ Global
 		{FA269ADC-0A5E-46EC-A92E-D618DEB33018}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA269ADC-0A5E-46EC-A92E-D618DEB33018}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA269ADC-0A5E-46EC-A92E-D618DEB33018}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A668C7CE-C712-4652-82B1-7AA81AA91BD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A668C7CE-C712-4652-82B1-7AA81AA91BD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A668C7CE-C712-4652-82B1-7AA81AA91BD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A668C7CE-C712-4652-82B1-7AA81AA91BD1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4ECCF2B5-137F-47C5-9CDE-F22FB36C4EFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4ECCF2B5-137F-47C5-9CDE-F22FB36C4EFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4ECCF2B5-137F-47C5-9CDE-F22FB36C4EFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4ECCF2B5-137F-47C5-9CDE-F22FB36C4EFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E72A181-0112-47B8-9770-DE6724BB9937}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E72A181-0112-47B8-9770-DE6724BB9937}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E72A181-0112-47B8-9770-DE6724BB9937}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E72A181-0112-47B8-9770-DE6724BB9937}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D2294B1F-D088-4CAD-9D71-61EF0C319C48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D2294B1F-D088-4CAD-9D71-61EF0C319C48}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2294B1F-D088-4CAD-9D71-61EF0C319C48}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -425,6 +459,14 @@ Global
 		{B6A14BA9-BC9F-408A-BD52-31D26CACE903} = {18DD0FDF-1AE5-4099-B54E-43615FB3D3D0}
 		{26D096AD-8D56-4E4C-BCF1-777CF8085F36} = {18DD0FDF-1AE5-4099-B54E-43615FB3D3D0}
 		{FA269ADC-0A5E-46EC-A92E-D618DEB33018} = {18DD0FDF-1AE5-4099-B54E-43615FB3D3D0}
+		{C889838A-0AA3-4236-9E3E-6EF41A3C94F0} = {A0BF25FD-1238-4843-8AB9-6255F514FFDE}
+		{FCDEE716-D47C-47BF-9DD1-E908CC9A89EC} = {C889838A-0AA3-4236-9E3E-6EF41A3C94F0}
+		{F13921B4-B617-4AE2-AE2D-82E47743195E} = {FCDEE716-D47C-47BF-9DD1-E908CC9A89EC}
+		{A668C7CE-C712-4652-82B1-7AA81AA91BD1} = {F13921B4-B617-4AE2-AE2D-82E47743195E}
+		{23115D69-2C8C-43F7-B453-23178D19FD8A} = {FCDEE716-D47C-47BF-9DD1-E908CC9A89EC}
+		{4ECCF2B5-137F-47C5-9CDE-F22FB36C4EFB} = {23115D69-2C8C-43F7-B453-23178D19FD8A}
+		{1E72A181-0112-47B8-9770-DE6724BB9937} = {23115D69-2C8C-43F7-B453-23178D19FD8A}
+		{958C38C2-8545-4A8E-9375-9B370E7625E8} = {FCDEE716-D47C-47BF-9DD1-E908CC9A89EC}
 		{86D0AEEE-A675-4B81-A5AE-BC08F9C92803} = {A0BF25FD-1238-4843-8AB9-6255F514FFDE}
 		{77C4E24B-11C3-4777-88E6-F070D4E24679} = {86D0AEEE-A675-4B81-A5AE-BC08F9C92803}
 		{D2294B1F-D088-4CAD-9D71-61EF0C319C48} = {77C4E24B-11C3-4777-88E6-F070D4E24679}

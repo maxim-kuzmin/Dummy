@@ -1,0 +1,24 @@
+﻿namespace Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCases.AppOutgoingEventPayload.DTOs;
+
+/// <summary>
+/// Объект передачи данных полезной нагрузки исходящего события приложения.
+/// </summary>
+/// <param name="Id">Идентификатор.</param>
+/// <param name="ConcurrencyToken">Токен параллелизма.</param>
+/// <param name="AppOutgoingEventId">Идентификатор исходящего события приложения.</param>
+/// <param name="Data">Данные.</param>
+/// <param name="EntityConcurrencyTokenToDelete">Токен параллелизма для удаления.</param>
+/// <param name="EntityConcurrencyTokenToInsert">Токен параллелизма для вставки.</param>
+/// <param name="EntityId">Идентификатор сущности.</param>
+/// <param name="EntityName">Имя сущности.</param>
+/// <param name="Position">Позиция.</param>
+public record AppOutgoingEventPayloadSingleDTO(
+  long Id,
+  string ConcurrencyToken,
+  long AppOutgoingEventId,
+  string? Data,
+  string? EntityConcurrencyTokenToDelete,
+  string? EntityConcurrencyTokenToInsert,
+  string EntityId,
+  string EntityName,
+  int Position);
