@@ -15,12 +15,18 @@ public static class AppExtensions
   /// </param>
   /// <param name="microserviceWriterEndpoint">Конечная точка микросервиса "Писатель".</param>
   /// <returns>Сервисы.</returns>
-  public static IServiceCollection AddAppInfrastructureTiedToHttpForMicroserviceWriter(
+  public static IServiceCollection AddAppIntegrationMicroserviceWriterInfrastructureTiedToHttpClient(
       this IServiceCollection services,
       ILogger logger,
       AppConfigOptionsDomainAuthSection? appConfigOptionsDomainAuthSection,
       string microserviceWriterEndpoint)
   {
+    services.AddTransient<IAppOutgoingEventCommandService, AppOutgoingEventCommandService>();
+    services.AddTransient<IAppOutgoingEventQueryService, AppOutgoingEventQueryService>();
+
+    services.AddTransient<IAppOutgoingEventPayloadCommandService, AppOutgoingEventPayloadCommandService>();
+    services.AddTransient<IAppOutgoingEventPayloadQueryService, AppOutgoingEventPayloadQueryService>();
+
     if (appConfigOptionsDomainAuthSection?.Type == AppConfigOptionsAuthenticationEnum.JWT)
     {
       services.AddTransient<IAuthCommandService, AuthCommandService>();
@@ -44,7 +50,7 @@ public static class AppExtensions
         ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
       });
 
-    logger.LogInformation("Added application infrastructure tied to Http for microservice Writer");
+    logger.LogInformation("Added application integration microservice Writer infrastructure tied to HTTP client");
 
     return services;
   }

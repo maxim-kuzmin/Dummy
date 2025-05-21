@@ -1,16 +1,16 @@
-﻿namespace Makc.Dummy.Integration.MicroserviceWriter.Infrastructure.HttpClient.DummyItem;
+﻿namespace Makc.Dummy.Integration.MicroserviceWriter.Infrastructure.HttpClient.AppOutgoingEvent;
 
 /// <summary>
-/// Расширения фиктивного предмета.
+/// Расширения исходящего события приложения.
 /// </summary>
-public static class DummyItemExtensions
+public static class AppOutgoingEventExtensions
 {
   /// <summary>
   /// Преобразовать к содержимому запроса HTTP.
   /// </summary>
   /// <param name="data">Данные.</param>
   /// <returns>Содержимое запроса HTTP.</returns>
-  public static JsonContent ToHttpRequestContent(this DummyItemCommandDataSection data)
+  public static JsonContent ToHttpRequestContent(this AppOutgoingEventCommandDataSection data)
   {
     return JsonContent.Create(data);
   }
@@ -20,9 +20,9 @@ public static class DummyItemExtensions
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <returns>URL запроса HTTP.</returns>
-  public static string ToHttpRequestUrl(this DummyItemSingleQuery query)
+  public static string ToHttpRequestUrl(this AppOutgoingEventSingleQuery query)
   {
-    return $"{DummyItemSettings.Root}/{query.Id}";
+    return $"{AppOutgoingEventSettings.Root}/{query.Id}";
   }
 
   /// <summary>
@@ -30,7 +30,7 @@ public static class DummyItemExtensions
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <returns>URL запроса HTTP.</returns>
-  public static string ToHttpRequestUrl(this DummyItemPageQuery query)
+  public static string ToHttpRequestUrl(this AppOutgoingEventPageQuery query)
   {
     var filter = query.Filter;
     var page = query.Page;
@@ -46,7 +46,7 @@ public static class DummyItemExtensions
 
     var queryString = QueryString.Create(parameters);
 
-    return $"{DummyItemSettings.Root}{queryString}";
+    return $"{AppOutgoingEventSettings.Root}{queryString}";
   }
 
   /// <summary>
@@ -54,9 +54,9 @@ public static class DummyItemExtensions
   /// </summary>
   /// <param name="command">Команда.</param>
   /// <returns>URL запроса HTTP.</returns>
-  public static string ToHttpRequestUrl(this DummyItemDeleteCommand command)
+  public static string ToHttpRequestUrl(this AppOutgoingEventDeleteCommand command)
   {
-    return $"{DummyItemSettings.Root}/{command.Id}";
+    return $"{AppOutgoingEventSettings.Root}/{command.Id}";
   }
 
   /// <summary>
@@ -64,10 +64,10 @@ public static class DummyItemExtensions
   /// </summary>
   /// <param name="command">Команда.</param>
   /// <returns>URL запроса HTTP.</returns>
-  public static string ToHttpRequestUrl(this DummyItemSaveCommand command)
+  public static string ToHttpRequestUrl(this AppOutgoingEventSaveCommand command)
   {
     return command.IsUpdate
-      ? $"{DummyItemSettings.Root}/{command.Id}"
-      : DummyItemSettings.Root;
+      ? $"{AppOutgoingEventSettings.Root}/{command.Id}"
+      : AppOutgoingEventSettings.Root;
   }
 }

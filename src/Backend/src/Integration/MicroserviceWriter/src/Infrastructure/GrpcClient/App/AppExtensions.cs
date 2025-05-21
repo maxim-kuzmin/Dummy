@@ -21,6 +21,12 @@ public static class AppExtensions
       AppConfigOptionsDomainAuthSection? domainAuthSection,
       string microserviceWriterEndpoint)
   {
+    services.AddTransient<IAppOutgoingEventCommandService, AppOutgoingEventCommandService>();
+    services.AddTransient<IAppOutgoingEventQueryService, AppOutgoingEventQueryService>();
+
+    services.AddTransient<IAppOutgoingEventPayloadCommandService, AppOutgoingEventPayloadCommandService>();
+    services.AddTransient<IAppOutgoingEventPayloadQueryService, AppOutgoingEventPayloadQueryService>();
+
     if (domainAuthSection?.Type == AppConfigOptionsAuthenticationEnum.JWT)
     {
       services.AddTransient<IAuthCommandService, AuthCommandService>();

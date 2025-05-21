@@ -1,5 +1,15 @@
 ﻿global using System.Net.Http.Json;
 global using Ardalis.Result;
+global using Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCases.AppOutgoingEvent.Command.Sections;
+global using Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCases.AppOutgoingEvent.Commands;
+global using Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCases.AppOutgoingEvent.DTOs;
+global using Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCases.AppOutgoingEvent.Queries;
+global using Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCases.AppOutgoingEvent.Services;
+global using Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCases.AppOutgoingEventPayload.Command.Sections;
+global using Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCases.AppOutgoingEventPayload.Commands;
+global using Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCases.AppOutgoingEventPayload.DTOs;
+global using Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCases.AppOutgoingEventPayload.Queries;
+global using Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCases.AppOutgoingEventPayload.Services;
 global using Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCases.Auth.Commands;
 global using Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCases.Auth.DTOs;
 global using Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCases.Auth.Services;
@@ -8,6 +18,8 @@ global using Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCases.DummyItem
 global using Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCases.DummyItem.DTOs;
 global using Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCases.DummyItem.Queries;
 global using Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCases.DummyItem.Services;
+global using Makc.Dummy.Integration.MicroserviceWriter.Infrastructure.HttpClient.AppOutgoingEvent.Services;
+global using Makc.Dummy.Integration.MicroserviceWriter.Infrastructure.HttpClient.AppOutgoingEventPayload.Services;
 global using Makc.Dummy.Integration.MicroserviceWriter.Infrastructure.HttpClient.App;
 global using Makc.Dummy.Integration.MicroserviceWriter.Infrastructure.HttpClient.Auth.Services;
 global using Makc.Dummy.Integration.MicroserviceWriter.Infrastructure.HttpClient.DummyItem.Services;

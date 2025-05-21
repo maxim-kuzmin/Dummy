@@ -26,6 +26,8 @@ global using Makc.Dummy.Integration.MicroserviceWriter.Infrastructure.Grpc.AppOu
 global using Makc.Dummy.Integration.MicroserviceWriter.Infrastructure.Grpc.AppOutgoingEventPayload;
 global using Makc.Dummy.Integration.MicroserviceWriter.Infrastructure.Grpc.Auth;
 global using Makc.Dummy.Integration.MicroserviceWriter.Infrastructure.Grpc.DummyItem;
+global using Makc.Dummy.Integration.MicroserviceWriter.Infrastructure.GrpcClient.AppOutgoingEvent.Services;
+global using Makc.Dummy.Integration.MicroserviceWriter.Infrastructure.GrpcClient.AppOutgoingEventPayload.Services;
 global using Makc.Dummy.Integration.MicroserviceWriter.Infrastructure.GrpcClient.Auth.Services;
 global using Makc.Dummy.Integration.MicroserviceWriter.Infrastructure.GrpcClient.DummyItem.Services;
 global using Makc.Dummy.Shared.Core.App;
