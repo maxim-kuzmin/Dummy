@@ -1,0 +1,101 @@
+syntax = "proto3";
+
+option csharp_namespace = "Makc.Dummy.Integration.MicroserviceReader.Infrastructure.Grpc.AppIncomingEvent";
+
+package Reader;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+service AppIncomingEvent {
+    rpc Create (AppIncomingEventCreateGrpcRequest) returns (AppIncomingEventGetGrpcReply);
+    rpc Delete (AppIncomingEventDeleteGrpcRequest) returns (google.protobuf.Empty);
+    rpc Get (AppIncomingEventGetGrpcRequest) returns (AppIncomingEventGetGrpcReply);
+    rpc GetList (AppIncomingEventGetListGrpcRequest) returns (AppIncomingEventGetListGrpcReply);
+    rpc Update (AppIncomingEventUpdateGrpcRequest) returns (AppIncomingEventGetGrpcReply);
+}
+
+message ActionRequestSort {
+    string field = 1;
+    bool is_desc = 2;
+}
+
+message ActionRequestPage {
+    int32 number = 1;
+    int32 size = 2;
+}
+
+message AppIncomingEventCreateGrpcRequest {    
+    string event_id = 1;
+    string event_name = 2;
+    google.protobuf.Timestamp last_loading_at = 3;
+    google.protobuf.StringValue last_loading_error = 4;
+    google.protobuf.Timestamp loaded_at = 5;
+    int32 payload_count = 6;
+    int32 payload_total_count = 7;
+    google.protobuf.Timestamp processed_at = 8;
+}
+
+message AppIncomingEventDeleteGrpcRequest {
+    string object_id = 1;
+}
+
+message AppIncomingEventGetGrpcRequest {
+    string object_id = 1;
+}
+
+message AppIncomingEventGetGrpcReply {
+    string event_id = 1;
+    string event_name = 2;
+    google.protobuf.Timestamp last_loading_at = 3;
+    google.protobuf.StringValue last_loading_error = 4;
+    google.protobuf.Timestamp loaded_at = 5;
+    int32 payload_count = 6;
+    int32 payload_total_count = 7;
+    google.protobuf.Timestamp processed_at = 8;
+    string object_id = 9;
+    string concurrency_token = 10;
+    google.protobuf.Timestamp created_at = 11;
+}
+
+message AppIncomingEventGetListGrpcRequestFilter {
+    google.protobuf.StringValue full_text_search_query = 1;
+}
+
+message AppIncomingEventGetListGrpcRequest {
+    ActionRequestPage page = 1;
+    ActionRequestSort sort = 2;
+    AppIncomingEventGetListGrpcRequestFilter filter = 3;
+}
+
+message AppIncomingEventGetListGrpcReplyItem {
+    string event_id = 1;
+    string event_name = 2;
+    google.protobuf.Timestamp last_loading_at = 3;
+    google.protobuf.StringValue last_loading_error = 4;
+    google.protobuf.Timestamp loaded_at = 5;
+    int32 payload_count = 6;
+    int32 payload_total_count = 7;
+    google.protobuf.Timestamp processed_at = 8;
+    string object_id = 9;
+    string concurrency_token = 10;
+    google.protobuf.Timestamp created_at = 11;
+}
+
+message AppIncomingEventGetListGrpcReply {
+    int64 total_count = 1;
+    repeated AppIncomingEventGetListGrpcReplyItem items = 2;
+}
+
+message AppIncomingEventUpdateGrpcRequest {    
+    string event_id = 1;
+    string event_name = 2;
+    google.protobuf.Timestamp last_loading_at = 3;
+    google.protobuf.StringValue last_loading_error = 4;
+    google.protobuf.Timestamp loaded_at = 5;
+    int32 payload_count = 6;
+    int32 payload_total_count = 7;
+    google.protobuf.Timestamp processed_at = 8;
+    string object_id = 9;
+}
