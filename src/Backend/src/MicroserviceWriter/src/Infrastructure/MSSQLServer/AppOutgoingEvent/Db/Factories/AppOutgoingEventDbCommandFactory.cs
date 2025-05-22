@@ -1,6 +1,4 @@
-﻿using Makc.Dummy.MicroserviceWriter.Domain.UseCases.AppOutgoingEvent.Query.Sections;
-
-namespace Makc.Dummy.MicroserviceWriter.Infrastructure.MSSQLServer.AppOutgoingEvent.Db.Factories;
+﻿namespace Makc.Dummy.MicroserviceWriter.Infrastructure.MSSQLServer.AppOutgoingEvent.Db.Factories;
 
 /// <summary>
 /// Фабрика команд базы данных полезной нагрузки исходящего события приложения.

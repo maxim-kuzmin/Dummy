@@ -8,7 +8,7 @@ public class AuthSettings
   /// <summary>
   /// Корень.
   /// </summary>
-  public const string Root = "auth";
+  public const string Root = $"{AppSettings.Root}/auth";
 
   /// <summary>
   /// URL действия по входу.

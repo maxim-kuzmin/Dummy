@@ -8,5 +8,5 @@ public class AppOutgoingEventEndpointsSettings
   /// <summary>
   /// Корень.
   /// </summary>
-  public const string Root = "/app-outgoing-events";
+  public const string Root = $"{AppSettings.Root}/app-outgoing-events";
 }

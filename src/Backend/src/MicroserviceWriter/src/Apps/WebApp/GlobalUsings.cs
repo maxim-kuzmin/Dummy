@@ -3,6 +3,7 @@ global using System.Text;
 global using Ardalis.GuardClauses;
 global using FastEndpoints;
 global using FastEndpoints.Swagger;
+global using Makc.Dummy.Integration.MicroserviceWriter.Infrastructure.GrpcServer.App;
 global using Makc.Dummy.MicroserviceWriter.Apps.WebApp.App;
 global using Makc.Dummy.MicroserviceWriter.Apps.WebApp.App.Config;
 global using Makc.Dummy.MicroserviceWriter.Apps.WebApp.App.Config.Options.Sections;
@@ -17,7 +18,6 @@ global using Makc.Dummy.MicroserviceWriter.Infrastructure.DapperForPostgreSQL.Ap
 global using Makc.Dummy.MicroserviceWriter.Infrastructure.EntityFramework.App;
 global using Makc.Dummy.MicroserviceWriter.Infrastructure.EntityFrameworkForMSSQLServer.App;
 global using Makc.Dummy.MicroserviceWriter.Infrastructure.EntityFrameworkForPostgreSQL.App;
-global using Makc.Dummy.MicroserviceWriter.Infrastructure.Grpc.App;
 global using Makc.Dummy.MicroserviceWriter.Infrastructure.MSSQLServer.App;
 global using Makc.Dummy.MicroserviceWriter.Infrastructure.PostgreSQL.App;
 global using Makc.Dummy.Shared.Core.App;

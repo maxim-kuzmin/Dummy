@@ -9,4 +9,9 @@ public class AppSettings
   /// Имя клиента HTTP.
   /// </summary>
   public const string HttpClientName = "MicroserviceWriter";
+
+  /// <summary>
+  /// Корень.
+  /// </summary>
+  public const string Root = "writer";
 }

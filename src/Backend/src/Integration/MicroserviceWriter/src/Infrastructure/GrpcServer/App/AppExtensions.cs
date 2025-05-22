@@ -12,7 +12,7 @@ public static class AppExtensions
   /// <param name="logger">Логгер.</param>
   /// <param name="appConfigOptions">Параметры конфигурации приложения.</param>
   /// <returns>Сервисы.</returns>
-  public static IServiceCollection AddAppInfrastructureTiedToGrpc(
+  public static IServiceCollection AddAppIntegrationMicroserviceWriterInfrastructureTiedToGrpcServer(
     this IServiceCollection services,
     ILogger logger)
   {

@@ -8,5 +8,5 @@ public class DummyItemEndpointsSettings
   /// <summary>
   /// Корень.
   /// </summary>
-  public const string Root = "/dummy-items";
+  public const string Root = $"{AppSettings.Root}/dummy-items";
 }

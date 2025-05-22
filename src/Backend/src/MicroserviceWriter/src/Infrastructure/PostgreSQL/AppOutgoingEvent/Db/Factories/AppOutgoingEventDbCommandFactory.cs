@@ -1,6 +1,4 @@
-﻿using Makc.Dummy.MicroserviceWriter.Domain.UseCases.AppOutgoingEvent.Query.Sections;
-
-namespace Makc.Dummy.MicroserviceWriter.Infrastructure.PostgreSQL.AppOutgoingEvent.Db.Factories;
+﻿namespace Makc.Dummy.MicroserviceWriter.Infrastructure.PostgreSQL.AppOutgoingEvent.Db.Factories;
 
 /// <summary>
 /// Фабрика команд базы данных исходящего события приложения.

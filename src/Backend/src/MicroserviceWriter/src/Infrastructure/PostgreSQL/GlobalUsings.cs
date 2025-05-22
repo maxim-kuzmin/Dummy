@@ -1,4 +1,13 @@
-﻿global using Makc.Dummy.MicroserviceWriter.Domain.Model.App.Db.SQL;
+﻿global using Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCases.AppOutgoingEvent;
+global using Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCases.AppOutgoingEvent.Queries;
+global using Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCases.AppOutgoingEvent.Query.Sections;
+global using Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCases.AppOutgoingEventPayload;
+global using Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCases.AppOutgoingEventPayload.Queries;
+global using Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCases.AppOutgoingEventPayload.Query.Sections;
+global using Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCases.DummyItem;
+global using Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCases.DummyItem.Queries;
+global using Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCases.DummyItem.Query.Sections;
+global using Makc.Dummy.MicroserviceWriter.Domain.Model.App.Db.SQL;
 global using Makc.Dummy.MicroserviceWriter.Domain.Model.App.Db.SQL.Settings;
 global using Makc.Dummy.MicroserviceWriter.Domain.Model.AppOutgoingEvent.Entity;
 global using Makc.Dummy.MicroserviceWriter.Domain.Model.AppOutgoingEvent.Entity.Db.SQL;
@@ -7,17 +16,10 @@ global using Makc.Dummy.MicroserviceWriter.Domain.Model.AppOutgoingEventPayload.
 global using Makc.Dummy.MicroserviceWriter.Domain.Model.DummyItem.Entity;
 global using Makc.Dummy.MicroserviceWriter.Domain.Model.DummyItem.Entity.Db.SQL;
 global using Makc.Dummy.MicroserviceWriter.Domain.UseCases.App.Db.SQL.Helpers;
-global using Makc.Dummy.MicroserviceWriter.Domain.UseCases.AppOutgoingEvent;
 global using Makc.Dummy.MicroserviceWriter.Domain.UseCases.AppOutgoingEvent.Db.SQL.Factories;
 global using Makc.Dummy.MicroserviceWriter.Domain.UseCases.AppOutgoingEvent.Queries;
-global using Makc.Dummy.MicroserviceWriter.Domain.UseCases.AppOutgoingEventPayload;
 global using Makc.Dummy.MicroserviceWriter.Domain.UseCases.AppOutgoingEventPayload.Db.SQL.Factories;
-global using Makc.Dummy.MicroserviceWriter.Domain.UseCases.AppOutgoingEventPayload.Queries;
-global using Makc.Dummy.MicroserviceWriter.Domain.UseCases.AppOutgoingEventPayload.Query.Sections;
-global using Makc.Dummy.MicroserviceWriter.Domain.UseCases.DummyItem;
 global using Makc.Dummy.MicroserviceWriter.Domain.UseCases.DummyItem.Db.SQL.Factories;
-global using Makc.Dummy.MicroserviceWriter.Domain.UseCases.DummyItem.Queries;
-global using Makc.Dummy.MicroserviceWriter.Domain.UseCases.DummyItem.Query.Sections;
 global using Makc.Dummy.MicroserviceWriter.Infrastructure.PostgreSQL.App.Db;
 global using Makc.Dummy.MicroserviceWriter.Infrastructure.PostgreSQL.App.Db.Helpers;
 global using Makc.Dummy.MicroserviceWriter.Infrastructure.PostgreSQL.App.Db.Settings;
@@ -33,3 +35,4 @@ global using Makc.Dummy.Shared.Domain.UseCases.Query.Sections;
 global using Makc.Dummy.Shared.Infrastructure.PostgreSQL.Db.Command;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Logging;
+

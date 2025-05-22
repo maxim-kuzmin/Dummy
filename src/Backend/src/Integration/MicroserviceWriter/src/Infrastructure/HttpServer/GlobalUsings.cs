@@ -29,6 +29,8 @@ global using Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCases.DummyItem
 global using Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCases.DummyItem.Commands;
 global using Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCases.DummyItem.DTOs;
 global using Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCases.DummyItem.Queries;
+global
+ using Makc.Dummy.Integration.MicroserviceWriter.Infrastructure.HttpServer.App;
 global using Makc.Dummy.Integration.MicroserviceWriter.Infrastructure.HttpServer.AppOutgoingEvent.Endpoints.Create;
 global using Makc.Dummy.Integration.MicroserviceWriter.Infrastructure.HttpServer.AppOutgoingEvent.Endpoints.Delete;
 global using Makc.Dummy.Integration.MicroserviceWriter.Infrastructure.HttpServer.AppOutgoingEvent.Endpoints.Get;

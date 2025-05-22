@@ -1,6 +1,4 @@
-﻿using Makc.Dummy.MicroserviceWriter.Domain.UseCases.DummyItem.Command.Sections;
-
-namespace Makc.Dummy.MicroserviceWriter.Infrastructure.EntityFramework.App.Db;
+﻿namespace Makc.Dummy.MicroserviceWriter.Infrastructure.EntityFramework.App.Db;
 
 /// <summary>
 /// Расширения базы данных.

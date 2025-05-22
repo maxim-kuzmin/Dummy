@@ -28,7 +28,7 @@ public static class AppExtensions
       .AddAppDomainModel(logger)
       .AddAppDomainUseCases(logger)
       .AddAppDomainUseCasesForMicroserviceReader(logger)
-      .AddAppDomainUseCasesForMicroserviceWriter(logger);
+      .AddAppIntegrationMicroserviceWriterDomainUseCases(logger);
 
     var domain = Guard.Against.Null(appConfigOptions.Domain);
     var infrastructure = Guard.Against.Null(appConfigOptions.Infrastructure);
@@ -71,7 +71,7 @@ public static class AppExtensions
         services.AddAppInfrastructureTiedToHttpForMicroserviceReader(
           logger,
           integrationMicroserviceReader.HttpEndpoint);
-        services.AddAppInfrastructureTiedToHttpForMicroserviceWriter(
+        services.AddAppIntegrationMicroserviceWriterInfrastructureTiedToHttpClient(
           logger,
           domainAuth,
           integrationMicroserviceWriter.HttpEndpoint);
@@ -80,7 +80,7 @@ public static class AppExtensions
         services.AddAppInfrastructureTiedToGrpcForMicroserviceReader(
           logger,
           integrationMicroserviceReader.GrpcEndpoint);
-        services.AddAppInfrastructureTiedToGrpcForMicroserviceWriter(
+        services.AddAppIntegrationMicroserviceWriterInfrastructureTiedToGrpcClient(
           logger,
           domainAuth,
           integrationMicroserviceWriter.GrpcEndpoint);
@@ -114,7 +114,7 @@ public static class AppExtensions
         options.DisableAutoDiscovery = true;
         options.Assemblies = [
           typeof(Infrastructure.WebForMicroserviceReader.DummyItem.Endpoints.DummyItemEndpointsSettings).Assembly,
-          typeof(Infrastructure.WebForMicroserviceWriter.DummyItem.Endpoints.DummyItemEndpointsSettings).Assembly
+          typeof(Integration.MicroserviceWriter.Infrastructure.HttpServer.App.AppSettings).Assembly
           ];
       })
       .AddAuthorization();    

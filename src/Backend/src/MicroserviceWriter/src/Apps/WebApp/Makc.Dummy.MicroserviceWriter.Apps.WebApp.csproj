@@ -21,6 +21,8 @@
   </ItemGroup>
   
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Integration\MicroserviceWriter\src\Infrastructure\GrpcServer\Makc.Dummy.Integration.MicroserviceWriter.Infrastructure.GrpcServer.csproj" />
+    <ProjectReference Include="..\..\..\..\Integration\MicroserviceWriter\src\Infrastructure\HttpServer\Makc.Dummy.Integration.MicroserviceWriter.Infrastructure.HttpServer.csproj" />
     <ProjectReference Include="..\..\..\..\Shared\src\Infrastructure\CoreForOpenTelemetry\Makc.Dummy.Shared.Infrastructure.CoreForOpenTelemetry.csproj" />
     <ProjectReference Include="..\..\..\..\Shared\src\Infrastructure\CoreForOpenTelemetryInWeb\Makc.Dummy.Shared.Infrastructure.CoreForOpenTelemetryInWeb.csproj" />
     <ProjectReference Include="..\..\Infrastructure\Core\Makc.Dummy.MicroserviceWriter.Infrastructure.Core.csproj" />
@@ -30,11 +32,9 @@
     <ProjectReference Include="..\..\Infrastructure\EntityFrameworkForMSSQLServer\Makc.Dummy.MicroserviceWriter.Infrastructure.EntityFrameworkForMSSQLServer.csproj" />
     <ProjectReference Include="..\..\Infrastructure\EntityFrameworkForPostgreSQL\Makc.Dummy.MicroserviceWriter.Infrastructure.EntityFrameworkForPostgreSQL.csproj" />
     <ProjectReference Include="..\..\Infrastructure\EntityFramework\Makc.Dummy.MicroserviceWriter.Infrastructure.EntityFramework.csproj" />
-    <ProjectReference Include="..\..\Infrastructure\Grpc\Makc.Dummy.MicroserviceWriter.Infrastructure.Grpc.csproj" />
     <ProjectReference Include="..\..\Infrastructure\MSSQLServer\Makc.Dummy.MicroserviceWriter.Infrastructure.MSSQLServer.csproj" />
     <ProjectReference Include="..\..\Infrastructure\PostgreSQL\Makc.Dummy.MicroserviceWriter.Infrastructure.PostgreSQL.csproj" />
     <ProjectReference Include="..\..\Infrastructure\RabbitMQ\Makc.Dummy.MicroserviceWriter.Infrastructure.RabbitMQ.csproj" />
-    <ProjectReference Include="..\..\Infrastructure\Web\Makc.Dummy.MicroserviceWriter.Infrastructure.Web.csproj" />
   </ItemGroup>
   
 </Project>

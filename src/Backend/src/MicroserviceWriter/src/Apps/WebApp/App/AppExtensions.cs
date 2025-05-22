@@ -97,7 +97,7 @@ public static class AppExtensions
 
     services
       .AddAppInfrastructureTiedToEntityFramework(logger, appDbSQLSettings, domainApp.DbQueryORM)
-      .AddAppInfrastructureTiedToGrpc(logger)
+      .AddAppIntegrationMicroserviceWriterInfrastructureTiedToGrpcServer(logger)
       .TryAddAppDomainUseCasesStubs(logger);
 
     services.Configure<CookiePolicyOptions>(options =>
@@ -109,7 +109,7 @@ public static class AppExtensions
     services.AddFastEndpoints(options => {
       options.DisableAutoDiscovery = true; options.DisableAutoDiscovery = true;
       options.Assemblies = [
-        typeof(Infrastructure.Web.DummyItem.Endpoints.DummyItemEndpointsSettings).Assembly,
+        typeof(Integration.MicroserviceWriter.Infrastructure.HttpServer.App.AppSettings).Assembly,
         ];      
     });
 
@@ -191,7 +191,7 @@ public static class AppExtensions
       .UseMiddleware<AppTracingMiddleware>()
       .UseMiddleware<AppSessionMiddleware>();
 
-    app.UseAppInfrastructureTiedToGrpc(logger);
+    app.UseAppIntegrationMicroserviceWriterInfrastructureTiedToGrpcServer(logger);
 
     app.UseFastEndpoints().UseSwaggerGen(); // Includes AddFileServer and static files middleware
 

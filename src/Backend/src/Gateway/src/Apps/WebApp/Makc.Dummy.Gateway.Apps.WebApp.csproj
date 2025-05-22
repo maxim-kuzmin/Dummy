@@ -15,15 +15,15 @@
   </ItemGroup>
 
   <ItemGroup>    
+    <ProjectReference Include="..\..\..\..\Integration\MicroserviceWriter\src\Infrastructure\GrpcClient\Makc.Dummy.Integration.MicroserviceWriter.Infrastructure.GrpcClient.csproj" />    
+    <ProjectReference Include="..\..\..\..\Integration\MicroserviceWriter\src\Infrastructure\HttpClient\Makc.Dummy.Integration.MicroserviceWriter.Infrastructure.HttpClient.csproj" />    
+    <ProjectReference Include="..\..\..\..\Integration\MicroserviceWriter\src\Infrastructure\HttpServer\Makc.Dummy.Integration.MicroserviceWriter.Infrastructure.HttpServer.csproj" />    
     <ProjectReference Include="..\..\..\..\Shared\src\Infrastructure\CoreForOpenTelemetry\Makc.Dummy.Shared.Infrastructure.CoreForOpenTelemetry.csproj" />
     <ProjectReference Include="..\..\..\..\Shared\src\Infrastructure\CoreForOpenTelemetryInWeb\Makc.Dummy.Shared.Infrastructure.CoreForOpenTelemetryInWeb.csproj" />
     <ProjectReference Include="..\..\Infrastructure\Core\Makc.Dummy.Gateway.Infrastructure.Core.csproj" />
     <ProjectReference Include="..\..\Infrastructure\GrpcForMicroserviceReader\Makc.Dummy.Gateway.Infrastructure.GrpcForMicroserviceReader.csproj" />
-    <ProjectReference Include="..\..\Infrastructure\GrpcForMicroserviceWriter\Makc.Dummy.Gateway.Infrastructure.GrpcForMicroserviceWriter.csproj" />
     <ProjectReference Include="..\..\Infrastructure\HttpForKeycloak\Makc.Dummy.Gateway.Infrastructure.HttpForKeycloak.csproj" />
     <ProjectReference Include="..\..\Infrastructure\HttpForMicroserviceReader\Makc.Dummy.Gateway.Infrastructure.HttpForMicroserviceReader.csproj" />
-    <ProjectReference Include="..\..\Infrastructure\HttpForMicroserviceWriter\Makc.Dummy.Gateway.Infrastructure.HttpForMicroserviceWriter.csproj" />
     <ProjectReference Include="..\..\Infrastructure\WebForMicroserviceReader\Makc.Dummy.Gateway.Infrastructure.WebForMicroserviceReader.csproj" />
-    <ProjectReference Include="..\..\Infrastructure\WebForMicroserviceWriter\Makc.Dummy.Gateway.Infrastructure.WebForMicroserviceWriter.csproj" />
   </ItemGroup>
 </Project>

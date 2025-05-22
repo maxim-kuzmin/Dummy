@@ -1,10 +1,10 @@
 ﻿global using System.Text.Json.Serialization;
 global using Ardalis.Result;
-global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceWriter.Auth.Commands;
-global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceWriter.Auth.DTOs;
-global using Makc.Dummy.Gateway.Domain.UseCasesForMicroserviceWriter.Auth.Services;
 global using Makc.Dummy.Gateway.Infrastructure.HttpForKeycloak.Auth;
 global using Makc.Dummy.Gateway.Infrastructure.HttpForKeycloak.Auth.Services;
+global using Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCases.Auth.Commands;
+global using Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCases.Auth.DTOs;
+global using Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCases.Auth.Services;
 global using Makc.Dummy.Shared.Core.App.Config.Options.Sections.Infrastructure;
 global using Makc.Dummy.Shared.Core.Http;
 global using Microsoft.Extensions.Configuration;

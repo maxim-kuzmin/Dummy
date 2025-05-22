@@ -8,5 +8,5 @@ public class AuthEndpointsSettings
   /// <summary>
   /// Корень.
   /// </summary>
-  public const string Root = "/auth";
+  public const string Root = $"{AppSettings.Root}/auth";
 }

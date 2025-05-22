@@ -6,43 +6,17 @@
 public static class AppOutgoingEventExtensions
 {
   /// <summary>
-  /// Преобразовать к объекту передачи данных страницы исходящих событий приложения.
-  /// </summary>
-  /// <param name="items">Элементы.</param>
-  /// <param name="totalCount">Общее количество.</param>
-  /// <returns>Объект передачи данных.</returns>
-  public static AppOutgoingEventPageDTO ToAppOutgoingEventPageDTO(
-    this List<AppOutgoingEventSingleDTO> items,
-    long totalCount)
-  {
-    return new(items, totalCount);
-  }
-
-  /// <summary>
-  /// Преобразовать к разделу сортировки в запросе исходящих событий приложения.
-  /// </summary>
-  /// <param name="field">Поле сортировки.</param>
-  /// <param name="isDesc">Сортировать по убыванию?</param>
-  /// <returns>Pаздел сортировки в запросе.</returns>
-  public static QuerySortSection ToAppOutgoingEventQuerySortSection(this string? field, bool? isDesc)
-  {
-    field = (field ?? string.Empty).Trim();
-
-    if (field == string.Empty)
-    {
-      field = AppOutgoingEventSettings.DefaultQuerySortSection.Field;
-    }
-
-    return new(field, isDesc ?? AppOutgoingEventSettings.DefaultQuerySortSection.IsDesc);
-  }
-
-  /// <summary>
   /// Преобразовать к объекту передачи данных единственного исходящего события приложения.
   /// </summary>
   /// <param name="entity">Сущность.</param>
   /// <returns>Объект передачи данных.</returns>
   public static AppOutgoingEventSingleDTO ToAppOutgoingEventSingleDTO(this AppOutgoingEventEntity entity)
   {
-    return new(entity.Id, entity.CreatedAt, entity.Name, entity.PublishedAt);
+    return new(
+      Id: entity.Id,
+      ConcurrencyToken: entity.ConcurrencyToken,
+      CreatedAt: entity.CreatedAt,
+      Name: entity.Name,
+      PublishedAt: entity.PublishedAt);
   }
 }
