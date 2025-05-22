@@ -6,13 +6,13 @@
 public static class AppExtensions
 {
   /// <summary>
-  /// Добавить инфраструктуру приложения, привязанную к Grpc для микросервиса "Читатель".
+  /// Добавить инфраструктуру интеграции микросервиса "Читатель" приложения, привязанную к клиенту Grpc.
   /// </summary>
   /// <param name="services">Сервисы.</param>
   /// <param name="logger">Логгер.</param>
   /// <param name="microserviceReaderEndpoint">Конечная точка микросервиса "Читатель".</param>
   /// <returns>Сервисы.</returns>
-  public static IServiceCollection AddAppInfrastructureTiedToGrpcForMicroserviceReader(
+  public static IServiceCollection AddAppIntegrationMicroserviceReaderInfrastructureTiedToGrpcClient(
       this IServiceCollection services,
       ILogger logger,
       string microserviceReaderEndpoint)
@@ -32,7 +32,7 @@ public static class AppExtensions
         grpcChannelOptions.UnsafeUseInsecureChannelCallCredentials = true;
       });
 
-    logger.LogInformation("Added application infrastructure tied to Grpc for microcervice Reader");
+    logger.LogInformation("Added application integration microservice Reader infrastructure tied to Grpc client");
 
     return services;
   }
