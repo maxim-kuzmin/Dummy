@@ -8,12 +8,10 @@ public class DummyItemSaveActionHandler(IDummyItemCommandService _service) :
   ICommandHandler<DummyItemSaveActionRequest, Result<DummyItemSingleDTO>>
 {
   /// <inheritdoc/>
-  public async Task<Result<DummyItemSingleDTO>> Handle(
+  public Task<Result<DummyItemSingleDTO>> Handle(
     DummyItemSaveActionRequest request,
     CancellationToken cancellationToken)
   {
-    var result = await _service.Save(request.Command, cancellationToken).ConfigureAwait(false);
-
-    return result.Data;
+    return _service.Save(request.Command, cancellationToken);
   }
 }

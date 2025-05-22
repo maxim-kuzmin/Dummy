@@ -11,7 +11,7 @@ public interface IDummyItemCommandService
   /// <param name="command">Команда.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Результат.</returns>
-  Task<AppCommandResultWithoutValue> Delete(
+  Task<Result> Delete(
     DummyItemDeleteCommand command,
     CancellationToken cancellationToken);
 
@@ -21,7 +21,7 @@ public interface IDummyItemCommandService
   /// <param name="command">Команда.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Результат.</returns>
-  Task<AppCommandResultWithValue<DummyItemSingleDTO>> Save(
+  Task<Result<DummyItemSingleDTO>> Save(
     DummyItemSaveCommand command,
     CancellationToken cancellationToken);
 }

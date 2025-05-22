@@ -8,10 +8,8 @@ public class DummyItemDeleteActionHandler(IDummyItemCommandService _service) :
   ICommandHandler<DummyItemDeleteActionRequest, Result>
 {
   /// <inheritdoc/>
-  public async Task<Result> Handle(DummyItemDeleteActionRequest request, CancellationToken cancellationToken)
+  public Task<Result> Handle(DummyItemDeleteActionRequest request, CancellationToken cancellationToken)
   {
-    var result = await _service.Delete(request.Command, cancellationToken).ConfigureAwait(false);
-
-    return result.Data;
+    return _service.Delete(request.Command, cancellationToken);
   }
 }
