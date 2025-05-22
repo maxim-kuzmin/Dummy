@@ -6,7 +6,7 @@
 /// <param name="ObjectId">Идентификатор объекта.</param>
 /// <param name="ConcurrencyToken">Токен паралеллизма.</param>
 /// <param name="CreatedAt">Дата создания.</param>
-/// <param name="AppIncomingEventId">Идентификатор входящего события приложения.</param>
+/// <param name="AppIncomingEventObjectId">Идентификатор объекта входящего события приложения.</param>
 /// <param name="Data">Данные.</param>
 /// <param name="EntityConcurrencyTokenToDelete">Токен параллелизма для удаления.</param>
 /// <param name="EntityConcurrencyTokenToInsert">Токен параллелизма для вставки.</param>
@@ -18,7 +18,7 @@ public record AppIncomingEventPayloadSingleDTO(
   string? ObjectId,
   string ConcurrencyToken,
   DateTimeOffset CreatedAt,
-  string AppIncomingEventId,
+  string AppIncomingEventObjectId,
   string? Data,
   string? EntityConcurrencyTokenToDelete,
   string? EntityConcurrencyTokenToInsert,

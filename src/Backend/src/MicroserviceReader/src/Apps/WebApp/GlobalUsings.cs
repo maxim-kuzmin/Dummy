@@ -9,7 +9,7 @@ global using Makc.Dummy.MicroserviceReader.Apps.WebApp.App.Config.Options.Sectio
 global using Makc.Dummy.MicroserviceReader.Domain.Model.App;
 global using Makc.Dummy.MicroserviceReader.Domain.UseCases.App;
 global using Makc.Dummy.MicroserviceReader.Infrastructure.Core.App;
-global using Makc.Dummy.MicroserviceReader.Infrastructure.Grpc.App;
+global using Makc.Dummy.Integration.MicroserviceReader.Infrastructure.GrpcServer;
 global using Makc.Dummy.MicroserviceReader.Infrastructure.MongoDB.App;
 global using Makc.Dummy.Shared.Core.App;
 global using Makc.Dummy.Shared.Core.App.Config.Options;

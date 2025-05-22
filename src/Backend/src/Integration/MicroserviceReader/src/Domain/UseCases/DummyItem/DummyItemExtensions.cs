@@ -13,7 +13,7 @@ public static class DummyItemExtensions
   /// <returns>Объект передачи данных.</returns>
   public static DummyItemPageDTO ToDummyItemPageDTO(this List<DummyItemSingleDTO> items, long totalCount)
   {
-    return new(items, totalCount);
+    return new(Items: items, TotalCount: totalCount);
   }
 
   /// <summary>
@@ -31,6 +31,6 @@ public static class DummyItemExtensions
       field = DummyItemSettings.DefaultQuerySortSection.Field;
     }
 
-    return new(field, isDesc ?? DummyItemSettings.DefaultQuerySortSection.IsDesc);
+    return new(Field: field, IsDesc: isDesc ?? DummyItemSettings.DefaultQuerySortSection.IsDesc);
   }
 }

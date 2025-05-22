@@ -15,7 +15,7 @@ public static class AppIncomingEventPayloadExtensions
     this List<AppIncomingEventPayloadSingleDTO> items,
     long totalCount)
   {
-    return new(items, totalCount);
+    return new(Items: items, TotalCount: totalCount);
   }
 
   /// <summary>
@@ -33,6 +33,6 @@ public static class AppIncomingEventPayloadExtensions
       field = AppIncomingEventPayloadSettings.DefaultQuerySortSection.Field;
     }
 
-    return new(field, isDesc ?? AppIncomingEventPayloadSettings.DefaultQuerySortSection.IsDesc);
+    return new(Field: field, IsDesc: isDesc ?? AppIncomingEventPayloadSettings.DefaultQuerySortSection.IsDesc);
   }
 }

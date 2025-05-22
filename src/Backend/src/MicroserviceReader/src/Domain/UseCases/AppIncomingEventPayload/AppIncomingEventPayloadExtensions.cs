@@ -6,37 +6,6 @@
 public static class AppIncomingEventPayloadExtensions
 {
   /// <summary>
-  /// Преобразовать к объекту передачи данных страницы полезных нагрузок входящего события приложения.
-  /// </summary>
-  /// <param name="items">Элементы.</param>
-  /// <param name="totalCount">Общее количество.</param>
-  /// <returns>Объект передачи данных.</returns>
-  public static AppIncomingEventPayloadPageDTO ToAppIncomingEventPayloadPageDTO(
-    this List<AppIncomingEventPayloadSingleDTO> items,
-    long totalCount)
-  {
-    return new(items, totalCount);
-  }
-
-  /// <summary>
-  /// Преобразовать к разделу сортировки в запросе полезных нагрузок входящего события приложения.
-  /// </summary>
-  /// <param name="field">Поле сортировки.</param>
-  /// <param name="isDesc">Сортировать по убыванию?</param>
-  /// <returns>Pаздел сортировки в запросе.</returns>
-  public static QuerySortSection ToAppIncomingEventPayloadQuerySortSection(this string? field, bool? isDesc)
-  {
-    field = (field ?? string.Empty).Trim();
-
-    if (field == string.Empty)
-    {
-      field = AppIncomingEventPayloadSettings.DefaultQuerySortSection.Field;
-    }
-
-    return new(field, isDesc ?? AppIncomingEventPayloadSettings.DefaultQuerySortSection.IsDesc);
-  }
-
-  /// <summary>
   /// Преобразовать к объекту передачи данных единственной полезной нагрузки входящего события приложения.
   /// </summary>
   /// <param name="entity">Сущность.</param>
@@ -45,16 +14,16 @@ public static class AppIncomingEventPayloadExtensions
     this AppIncomingEventPayloadEntity entity)
   {
     return new(
-      entity.ObjectId,
-      entity.ConcurrencyToken,
-      entity.CreatedAt,
-      entity.AppIncomingEventObjectId,
-      entity.Data,
-      entity.EntityConcurrencyTokenToDelete,
-      entity.EntityConcurrencyTokenToInsert,
-      entity.EntityId,
-      entity.EntityName,
-      entity.EventPayloadId,
-      entity.Position);
+      ObjectId: entity.ObjectId,
+      ConcurrencyToken: entity.ConcurrencyToken,
+      CreatedAt: entity.CreatedAt,
+      AppIncomingEventObjectId: entity.AppIncomingEventObjectId,
+      Data: entity.Data,
+      EntityConcurrencyTokenToDelete: entity.EntityConcurrencyTokenToDelete,
+      EntityConcurrencyTokenToInsert: entity.EntityConcurrencyTokenToInsert,
+      EntityId: entity.EntityId,
+      EntityName: entity.EntityName,
+      EventPayloadId: entity.EventPayloadId,
+      Position: entity.Position);
   }
 }

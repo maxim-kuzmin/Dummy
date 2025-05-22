@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Integration\MicroserviceReader\src\Domain\UseCases\Makc.Dummy.Integration.MicroserviceReader.Domain.UseCases.csproj" />
     <ProjectReference Include="..\..\..\..\Shared\src\Domain\UseCases\Makc.Dummy.Shared.Domain.UseCases.csproj" />
     <ProjectReference Include="..\Model\Makc.Dummy.MicroserviceReader.Domain.Model.csproj" />
   </ItemGroup>

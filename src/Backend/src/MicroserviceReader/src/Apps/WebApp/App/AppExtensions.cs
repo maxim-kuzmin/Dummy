@@ -1,4 +1,6 @@
-﻿namespace Makc.Dummy.MicroserviceReader.Apps.WebApp.App;
+﻿using Makc.Dummy.Integration.MicroserviceReader.Infrastructure.GrpcServer.App;
+
+namespace Makc.Dummy.MicroserviceReader.Apps.WebApp.App;
 
 /// <summary>
 /// Расширения приложения.
@@ -62,7 +64,7 @@ public static class AppExtensions
     services.AddAppInfrastructureTiedToMongoDB(logger, infrastructure.MongoDB, appBuilder.Configuration, out _);
 
     services
-      .AddAppInfrastructureTiedToGrpc(logger)
+      .AddAppIntegrationMicroserviceReaderInfrastructureTiedToGrpcServer(logger)
       .TryAddAppDomainUseCasesStubs(logger);
 
     services.Configure<CookiePolicyOptions>(options =>
@@ -74,7 +76,7 @@ public static class AppExtensions
     services.AddFastEndpoints(options => {
       options.DisableAutoDiscovery = true; options.DisableAutoDiscovery = true;
       options.Assemblies = [
-        typeof(Infrastructure.Web.DummyItem.Endpoints.DummyItemEndpointsSettings).Assembly,
+        typeof(Integration.MicroserviceReader.Infrastructure.HttpServer.App.AppSettings).Assembly,
         ];
     });
 
@@ -156,7 +158,7 @@ public static class AppExtensions
       .UseMiddleware<AppTracingMiddleware>()
       .UseMiddleware<AppSessionMiddleware>();
 
-    app.UseAppInfrastructureTiedToGrpc(logger);
+    app.UseAppIntegrationMicroserviceReaderInfrastructureTiedToGrpcServer(logger);
 
     app.UseFastEndpoints().UseSwaggerGen(); // Includes AddFileServer and static files middleware
 

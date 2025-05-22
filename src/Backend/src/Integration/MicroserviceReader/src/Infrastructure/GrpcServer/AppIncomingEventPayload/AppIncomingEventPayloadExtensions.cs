@@ -42,7 +42,7 @@ public static class AppIncomingEventPayloadExtensions
     return new()
     {
       ObjectId = dto.ObjectId,
-      AppIncomingEventObjectId = dto.AppIncomingEventId,
+      AppIncomingEventObjectId = dto.AppIncomingEventObjectId,
       ConcurrencyToken = dto.ConcurrencyToken,
       CreatedAt = Timestamp.FromDateTimeOffset(dto.CreatedAt),
       Data = dto.Data,
@@ -155,7 +155,7 @@ public static class AppIncomingEventPayloadExtensions
     return new()
     {
       ObjectId = dto.ObjectId,
-      AppIncomingEventObjectId = dto.AppIncomingEventId,
+      AppIncomingEventObjectId = dto.AppIncomingEventObjectId,
       ConcurrencyToken = dto.ConcurrencyToken,
       CreatedAt = Timestamp.FromDateTimeOffset(dto.CreatedAt),
       Data = dto.Data,

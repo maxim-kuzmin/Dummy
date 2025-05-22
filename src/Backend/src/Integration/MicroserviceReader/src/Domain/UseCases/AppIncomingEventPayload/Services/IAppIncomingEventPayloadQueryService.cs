@@ -6,16 +6,6 @@
 public interface IAppIncomingEventPayloadQueryService
 {
   /// <summary>
-  /// Скачать.
-  /// </summary>
-  /// <param name="query">Запрос.</param>
-  /// <param name="cancellationToken">Токен отмены.</param>
-  /// <returns>Объект списка.</returns>
-  Task<AppIncomingEventPayloadPageDTO> Download(
-      AppIncomingEventPayloadDownloadQuery query,
-      CancellationToken cancellationToken);
-
-  /// <summary>
   /// Получить количество объектов.
   /// </summary>
   /// <param name="query">Запрос.</param>
