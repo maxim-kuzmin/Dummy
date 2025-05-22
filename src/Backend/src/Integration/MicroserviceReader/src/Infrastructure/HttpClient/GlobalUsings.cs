@@ -1,0 +1,14 @@
+﻿global using System.Net.Http.Json;
+global using Ardalis.Result;
+global using Makc.Dummy.Integration.MicroserviceReader.Domain.UseCases.DummyItem.Command.Sections;
+global using Makc.Dummy.Integration.MicroserviceReader.Domain.UseCases.DummyItem.Commands;
+global using Makc.Dummy.Integration.MicroserviceReader.Domain.UseCases.DummyItem.DTOs;
+global using Makc.Dummy.Integration.MicroserviceReader.Domain.UseCases.DummyItem.Queries;
+global using Makc.Dummy.Integration.MicroserviceReader.Domain.UseCases.DummyItem.Services;
+global using Makc.Dummy.Integration.MicroserviceReader.Infrastructure.HttpClient.App;
+global using Makc.Dummy.Integration.MicroserviceReader.Infrastructure.HttpClient.DummyItem.Services;
+global using Makc.Dummy.Shared.Core.App;
+global using Makc.Dummy.Shared.Core.Http;
+global using Microsoft.AspNetCore.Http;
+global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.Extensions.Logging;
