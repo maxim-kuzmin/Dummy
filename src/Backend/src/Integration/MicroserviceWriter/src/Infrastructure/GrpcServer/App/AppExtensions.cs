@@ -10,7 +10,6 @@ public static class AppExtensions
   /// </summary>
   /// <param name="services">Сервисы.</param>
   /// <param name="logger">Логгер.</param>
-  /// <param name="appConfigOptions">Параметры конфигурации приложения.</param>
   /// <returns>Сервисы.</returns>
   public static IServiceCollection AddAppIntegrationMicroserviceWriterInfrastructureTiedToGrpcServer(
     this IServiceCollection services,
