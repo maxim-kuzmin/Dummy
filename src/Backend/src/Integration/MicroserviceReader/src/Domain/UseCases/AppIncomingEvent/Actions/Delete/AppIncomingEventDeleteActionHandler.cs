@@ -8,10 +8,8 @@ public class AppIncomingEventDeleteActionHandler(IAppIncomingEventCommandService
   ICommandHandler<AppIncomingEventDeleteActionRequest, Result>
 {
   /// <inheritdoc/>
-  public async Task<Result> Handle(AppIncomingEventDeleteActionRequest request, CancellationToken cancellationToken)
+  public Task<Result> Handle(AppIncomingEventDeleteActionRequest request, CancellationToken cancellationToken)
   {
-    var result = await _service.Delete(request.Command, cancellationToken).ConfigureAwait(false);
-
-    return result.Data;
+    return _service.Delete(request.Command, cancellationToken);
   }
 }

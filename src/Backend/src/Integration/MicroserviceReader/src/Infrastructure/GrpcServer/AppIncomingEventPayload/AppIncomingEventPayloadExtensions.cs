@@ -119,7 +119,10 @@ public static class AppIncomingEventPayloadExtensions
     AppIncomingEventPayloadSaveCommand command = new(
       IsUpdate: false,
       ObjectId: string.Empty,
-      Data: new(AppIncomingEventObjectId: request.AppIncomingEventObjectId, Payload: payload));
+      Data: new(
+        AppIncomingEventObjectId: request.AppIncomingEventObjectId,
+        EventPayloadId: request.EventPayloadId,
+        Payload: payload));
 
     return new(command);
   }
@@ -144,7 +147,10 @@ public static class AppIncomingEventPayloadExtensions
     AppIncomingEventPayloadSaveCommand command = new(
       IsUpdate: true,
       ObjectId: request.ObjectId,
-      Data: new(AppIncomingEventObjectId: request.AppIncomingEventObjectId, Payload: payload));
+      Data: new(
+        AppIncomingEventObjectId: request.AppIncomingEventObjectId,
+        EventPayloadId: request.EventPayloadId,
+        Payload: payload));
 
     return new(command);
   }

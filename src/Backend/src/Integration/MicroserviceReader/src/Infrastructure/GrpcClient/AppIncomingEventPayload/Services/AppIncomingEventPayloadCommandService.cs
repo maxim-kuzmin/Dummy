@@ -1,21 +1,21 @@
-﻿namespace Makc.Dummy.Integration.MicroserviceReader.Infrastructure.GrpcClient.DummyItem.Services;
+﻿namespace Makc.Dummy.Integration.MicroserviceReader.Infrastructure.GrpcClient.AppIncomingEventPayload.Services;
 
 /// <summary>
-/// Сервис команд фиктивного предмета.
+/// Сервис команд полезной нагрузки входящего события приложения.
 /// </summary>
 /// <param name="_grpcClient">Клиент gRPC.</param>
-public class DummyItemCommandService(
-  DummyItemGrpcClient _grpcClient) : IDummyItemCommandService
+public class AppIncomingEventPayloadCommandService(
+  AppIncomingEventPayloadGrpcClient _grpcClient) : IAppIncomingEventPayloadCommandService
 {
   /// <inheritdoc/>
   public async Task<Result> Delete(
-    DummyItemDeleteCommand command,
+    AppIncomingEventPayloadDeleteCommand command,
     CancellationToken cancellationToken)
   {
     try
     {
       var task = _grpcClient.DeleteAsync(
-        command.ToDummyItemDeleteGrpcRequest(),
+        command.ToAppIncomingEventPayloadDeleteGrpcRequest(),
         cancellationToken: cancellationToken);
 
       var reply = await task.ConfigureAwait(false);
@@ -28,23 +28,23 @@ public class DummyItemCommandService(
     }
   }
 
-  public async Task<Result<DummyItemSingleDTO>> Save(
-    DummyItemSaveCommand command,
+  public async Task<Result<AppIncomingEventPayloadSingleDTO>> Save(
+    AppIncomingEventPayloadSaveCommand command,
     CancellationToken cancellationToken)
   {
     try
     {
       var task = command.IsUpdate
         ? _grpcClient.UpdateAsync(
-          command.Data.ToDummyItemUpdateGrpcRequest(command.ObjectId),
+          command.Data.ToAppIncomingEventPayloadUpdateGrpcRequest(command.ObjectId),
           cancellationToken: cancellationToken)
         : _grpcClient.CreateAsync(
-          command.Data.ToDummyItemCreateGrpcRequest(),
+          command.Data.ToAppIncomingEventPayloadCreateGrpcRequest(),
           cancellationToken: cancellationToken);
 
       var reply = await task.ConfigureAwait(false);
 
-      return Result.Success(reply.ToDummyItemSingleDTO());
+      return Result.Success(reply.ToAppIncomingEventPayloadSingleDTO());
     }
     catch (RpcException ex)
     {

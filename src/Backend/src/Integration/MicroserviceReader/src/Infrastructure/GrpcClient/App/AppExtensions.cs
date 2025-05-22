@@ -17,6 +17,36 @@ public static class AppExtensions
       ILogger logger,
       string microserviceReaderEndpoint)
   {
+    services.AddTransient<IAppIncomingEventCommandService, AppIncomingEventCommandService>();
+    services.AddTransient<IAppIncomingEventQueryService, AppIncomingEventQueryService>();
+
+    services.AddGrpcClient<AppIncomingEventGrpcClient>(
+      AppSettings.AppIncomingEventGrpcClientName,
+      grpcOptions =>
+      {
+        grpcOptions.Address = new Uri(microserviceReaderEndpoint);
+      })
+      .AddCallCredentials((context, metadata, serviceProvider) => Task.CompletedTask)
+      .ConfigureChannel(grpcChannelOptions =>
+      {
+        grpcChannelOptions.UnsafeUseInsecureChannelCallCredentials = true;
+      });
+
+    services.AddTransient<IAppIncomingEventPayloadCommandService, AppIncomingEventPayloadCommandService>();
+    services.AddTransient<IAppIncomingEventPayloadQueryService, AppIncomingEventPayloadQueryService>();
+
+    services.AddGrpcClient<AppIncomingEventPayloadGrpcClient>(
+      AppSettings.AppIncomingEventPayloadGrpcClientName,
+      grpcOptions =>
+      {
+        grpcOptions.Address = new Uri(microserviceReaderEndpoint);
+      })
+      .AddCallCredentials((context, metadata, serviceProvider) => Task.CompletedTask)
+      .ConfigureChannel(grpcChannelOptions =>
+      {
+        grpcChannelOptions.UnsafeUseInsecureChannelCallCredentials = true;
+      });
+
     services.AddTransient<IDummyItemCommandService, DummyItemCommandService>();
     services.AddTransient<IDummyItemQueryService, DummyItemQueryService>();
 

@@ -6,6 +6,16 @@
 public class AppSettings
 {
   /// <summary>
+  /// Имя клиента gRPC исходящего события приложения.
+  /// </summary>
+  public const string AppOutgoingEventGrpcClientName = "MicroserviceWriterAppOutgoingEvent";
+
+  /// <summary>
+  /// Имя клиента gRPC полезной нагрузки исходящего события приложения.
+  /// </summary>
+  public const string AppOutgoingEventPayloadGrpcClientName = "MicroserviceWriterAppOutgoingEventPayload";
+
+  /// <summary>
   /// Имя клиента gRPC приложения.
   /// </summary>
   public const string AuthGrpcClientName = "MicroserviceWriterAuth";

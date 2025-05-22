@@ -8,12 +8,10 @@ public class AppIncomingEventGetActionHandler(IAppIncomingEventQueryService _ser
   IQueryHandler<AppIncomingEventGetActionRequest, Result<AppIncomingEventSingleDTO>>
 {
   /// <inheritdoc/>
-  public async Task<Result<AppIncomingEventSingleDTO>> Handle(
+  public Task<Result<AppIncomingEventSingleDTO>> Handle(
     AppIncomingEventGetActionRequest request,
     CancellationToken cancellationToken)
   {
-    var result = await _service.GetSingle(request.Query, cancellationToken).ConfigureAwait(false);
-
-    return result != null ? Result.Success(result) : Result.NotFound();
+    return _service.GetSingle(request.Query, cancellationToken);
   }
 }

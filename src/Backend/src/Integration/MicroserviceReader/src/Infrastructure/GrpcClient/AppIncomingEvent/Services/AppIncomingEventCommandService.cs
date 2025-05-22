@@ -1,21 +1,21 @@
-﻿namespace Makc.Dummy.Integration.MicroserviceReader.Infrastructure.GrpcClient.DummyItem.Services;
+﻿namespace Makc.Dummy.Integration.MicroserviceReader.Infrastructure.GrpcClient.AppIncomingEvent.Services;
 
 /// <summary>
-/// Сервис команд фиктивного предмета.
+/// Сервис команд входящего события приложения.
 /// </summary>
 /// <param name="_grpcClient">Клиент gRPC.</param>
-public class DummyItemCommandService(
-  DummyItemGrpcClient _grpcClient) : IDummyItemCommandService
+public class AppIncomingEventCommandService(
+  AppIncomingEventGrpcClient _grpcClient) : IAppIncomingEventCommandService
 {
   /// <inheritdoc/>
   public async Task<Result> Delete(
-    DummyItemDeleteCommand command,
+    AppIncomingEventDeleteCommand command,
     CancellationToken cancellationToken)
   {
     try
     {
       var task = _grpcClient.DeleteAsync(
-        command.ToDummyItemDeleteGrpcRequest(),
+        command.ToAppIncomingEventDeleteGrpcRequest(),
         cancellationToken: cancellationToken);
 
       var reply = await task.ConfigureAwait(false);
@@ -28,23 +28,23 @@ public class DummyItemCommandService(
     }
   }
 
-  public async Task<Result<DummyItemSingleDTO>> Save(
-    DummyItemSaveCommand command,
+  public async Task<Result<AppIncomingEventSingleDTO>> Save(
+    AppIncomingEventSaveCommand command,
     CancellationToken cancellationToken)
   {
     try
     {
       var task = command.IsUpdate
         ? _grpcClient.UpdateAsync(
-          command.Data.ToDummyItemUpdateGrpcRequest(command.ObjectId),
+          command.Data.ToAppIncomingEventUpdateGrpcRequest(command.ObjectId),
           cancellationToken: cancellationToken)
         : _grpcClient.CreateAsync(
-          command.Data.ToDummyItemCreateGrpcRequest(),
+          command.Data.ToAppIncomingEventCreateGrpcRequest(),
           cancellationToken: cancellationToken);
 
       var reply = await task.ConfigureAwait(false);
 
-      return Result.Success(reply.ToDummyItemSingleDTO());
+      return Result.Success(reply.ToAppIncomingEventSingleDTO());
     }
     catch (RpcException ex)
     {

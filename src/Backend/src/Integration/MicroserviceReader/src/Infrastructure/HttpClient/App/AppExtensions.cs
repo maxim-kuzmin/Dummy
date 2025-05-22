@@ -17,6 +17,12 @@ public static class AppExtensions
       ILogger logger,
       string microserviceReaderEndpoint)
   {
+    services.AddTransient<IAppIncomingEventCommandService, AppIncomingEventCommandService>();
+    services.AddTransient<IAppIncomingEventQueryService, AppIncomingEventQueryService>();
+
+    services.AddTransient<IAppIncomingEventPayloadCommandService, AppIncomingEventPayloadCommandService>();
+    services.AddTransient<IAppIncomingEventPayloadQueryService, AppIncomingEventPayloadQueryService>();
+
     services.AddTransient<IDummyItemCommandService, DummyItemCommandService>();
     services.AddTransient<IDummyItemQueryService, DummyItemQueryService>();
 

@@ -24,19 +24,8 @@ public static class AppExtensions
     services.AddTransient<IAppOutgoingEventCommandService, AppOutgoingEventCommandService>();
     services.AddTransient<IAppOutgoingEventQueryService, AppOutgoingEventQueryService>();
 
-    services.AddTransient<IAppOutgoingEventPayloadCommandService, AppOutgoingEventPayloadCommandService>();
-    services.AddTransient<IAppOutgoingEventPayloadQueryService, AppOutgoingEventPayloadQueryService>();
-
-    if (domainAuthSection?.Type == AppConfigOptionsAuthenticationEnum.JWT)
-    {
-      services.AddTransient<IAuthCommandService, AuthCommandService>();
-    }
-
-    services.AddTransient<IDummyItemCommandService, DummyItemCommandService>();
-    services.AddTransient<IDummyItemQueryService, DummyItemQueryService>();
-
-    services.AddGrpcClient<AuthGrpcClient>(
-      AppSettings.AuthGrpcClientName,
+    services.AddGrpcClient<AppOutgoingEventGrpcClient>(
+      AppSettings.AppOutgoingEventGrpcClientName,
       grpcOptions =>
       {
         grpcOptions.Address = new Uri(microserviceWriterEndpoint);
@@ -46,6 +35,41 @@ public static class AppExtensions
       {
         grpcChannelOptions.UnsafeUseInsecureChannelCallCredentials = true;
       });
+
+    services.AddTransient<IAppOutgoingEventPayloadCommandService, AppOutgoingEventPayloadCommandService>();
+    services.AddTransient<IAppOutgoingEventPayloadQueryService, AppOutgoingEventPayloadQueryService>();
+
+    services.AddGrpcClient<AppOutgoingEventPayloadGrpcClient>(
+      AppSettings.AppOutgoingEventPayloadGrpcClientName,
+      grpcOptions =>
+      {
+        grpcOptions.Address = new Uri(microserviceWriterEndpoint);
+      })
+      .AddCallCredentials((context, metadata, serviceProvider) => Task.CompletedTask)
+      .ConfigureChannel(grpcChannelOptions =>
+      {
+        grpcChannelOptions.UnsafeUseInsecureChannelCallCredentials = true;
+      });
+
+    if (domainAuthSection?.Type == AppConfigOptionsAuthenticationEnum.JWT)
+    {
+      services.AddTransient<IAuthCommandService, AuthCommandService>();
+
+      services.AddGrpcClient<AuthGrpcClient>(
+        AppSettings.AuthGrpcClientName,
+        grpcOptions =>
+        {
+          grpcOptions.Address = new Uri(microserviceWriterEndpoint);
+        })
+        .AddCallCredentials((context, metadata, serviceProvider) => Task.CompletedTask)
+        .ConfigureChannel(grpcChannelOptions =>
+        {
+          grpcChannelOptions.UnsafeUseInsecureChannelCallCredentials = true;
+        });
+    }
+
+    services.AddTransient<IDummyItemCommandService, DummyItemCommandService>();
+    services.AddTransient<IDummyItemQueryService, DummyItemQueryService>();
 
     services.AddGrpcClient<DummyItemGrpcClient>(
       AppSettings.DummyItemGrpcClientName,

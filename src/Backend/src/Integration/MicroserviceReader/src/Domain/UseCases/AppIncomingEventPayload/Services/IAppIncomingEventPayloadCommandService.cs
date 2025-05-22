@@ -11,18 +11,8 @@ public interface IAppIncomingEventPayloadCommandService
   /// <param name="command">Команда.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Результат.</returns>
-  Task<AppCommandResultWithoutValue> Delete(
+  Task<Result> Delete(
     AppIncomingEventPayloadDeleteCommand command,
-    CancellationToken cancellationToken);
-
-  /// <summary>
-  /// Вставить список.
-  /// </summary>
-  /// <param name="command">Команда.</param>
-  /// <param name="cancellationToken">Токен отмены.</param>
-  /// <returns>Результат.</returns>
-  Task<Result> InsertList(
-    AppIncomingEventPayloadInsertListCommand command,
     CancellationToken cancellationToken);
 
   /// <summary>
@@ -31,7 +21,7 @@ public interface IAppIncomingEventPayloadCommandService
   /// <param name="command">Команда.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Результат.</returns>
-  Task<AppCommandResultWithValue<AppIncomingEventPayloadSingleDTO>> Save(
+  Task<Result<AppIncomingEventPayloadSingleDTO>> Save(
     AppIncomingEventPayloadSaveCommand command,
     CancellationToken cancellationToken);
 }

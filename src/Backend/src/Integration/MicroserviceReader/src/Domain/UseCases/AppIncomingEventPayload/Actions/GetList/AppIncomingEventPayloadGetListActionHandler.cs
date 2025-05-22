@@ -8,12 +8,10 @@ public class AppIncomingEventPayloadGetListActionHandler(IAppIncomingEventPayloa
   IQueryHandler<AppIncomingEventPayloadGetListActionRequest, Result<AppIncomingEventPayloadPageDTO>>
 {
   /// <inheritdoc/>
-  public async Task<Result<AppIncomingEventPayloadPageDTO>> Handle(
+  public Task<Result<AppIncomingEventPayloadPageDTO>> Handle(
     AppIncomingEventPayloadGetListActionRequest request,
     CancellationToken cancellationToken)
   {
-    var result = await _service.GetPage(request.Query, cancellationToken);
-
-    return Result.Success(result);
+    return _service.GetPage(request.Query, cancellationToken);
   }
 }

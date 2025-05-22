@@ -6,7 +6,17 @@
 public class AppSettings
 {
   /// <summary>
+  /// Имя клиента gRPC входящего события приложения.
+  /// </summary>
+  public const string AppIncomingEventGrpcClientName = "MicroserviceReaderAppIncomingEvent";
+
+  /// <summary>
+  /// Имя клиента gRPC полезной нагрузки входящего события приложения.
+  /// </summary>
+  public const string AppIncomingEventPayloadGrpcClientName = "MicroserviceReaderAppIncomingEventPayload";
+
+  /// <summary>
   /// Имя клиента gRPC фиктивного предмета.
   /// </summary>
-  public const string DummyItemGrpcClientName = "ReaderDummyItem";
+  public const string DummyItemGrpcClientName = "MicroserviceReaderDummyItem";
 }

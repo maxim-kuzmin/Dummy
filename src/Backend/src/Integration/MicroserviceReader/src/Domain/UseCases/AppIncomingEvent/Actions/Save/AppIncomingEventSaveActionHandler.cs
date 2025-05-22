@@ -8,12 +8,10 @@ public class AppIncomingEventSaveActionHandler(IAppIncomingEventCommandService _
   ICommandHandler<AppIncomingEventSaveActionRequest, Result<AppIncomingEventSingleDTO>>
 {
   /// <inheritdoc/>
-  public async Task<Result<AppIncomingEventSingleDTO>> Handle(
+  public Task<Result<AppIncomingEventSingleDTO>> Handle(
     AppIncomingEventSaveActionRequest request,
     CancellationToken cancellationToken)
   {
-    var result = await _service.Save(request.Command, cancellationToken).ConfigureAwait(false);
-
-    return result.Data;
+    return _service.Save(request.Command, cancellationToken);
   }
 }
