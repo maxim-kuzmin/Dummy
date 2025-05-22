@@ -27,7 +27,7 @@ public static class AppExtensions
     var services = appBuilder.Services.Configure<AppConfigOptions>(appConfigSection)
       .AddAppDomainModel(logger)
       .AddAppDomainUseCases(logger)
-      .AddAppDomainUseCasesForMicroserviceReader(logger)
+      .AddAppIntegrationMicroserviceReaderDomainUseCases(logger)
       .AddAppIntegrationMicroserviceWriterDomainUseCases(logger);
 
     var domain = Guard.Against.Null(appConfigOptions.Domain);
@@ -68,7 +68,7 @@ public static class AppExtensions
     switch (integrationMicroserviceWriter.Protocol)
     {
       case AppConfigOptionsProtocolEnum.Http:
-        services.AddAppInfrastructureTiedToHttpForMicroserviceReader(
+        services.AddAppIntegrationMicroserviceReaderInfrastructureTiedToHttpClient(
           logger,
           integrationMicroserviceReader.HttpEndpoint);
         services.AddAppIntegrationMicroserviceWriterInfrastructureTiedToHttpClient(
@@ -77,7 +77,7 @@ public static class AppExtensions
           integrationMicroserviceWriter.HttpEndpoint);
         break;
       case AppConfigOptionsProtocolEnum.Grpc:
-        services.AddAppInfrastructureTiedToGrpcForMicroserviceReader(
+        services.AddAppIntegrationMicroserviceReaderInfrastructureTiedToGrpcClient(
           logger,
           integrationMicroserviceReader.GrpcEndpoint);
         services.AddAppIntegrationMicroserviceWriterInfrastructureTiedToGrpcClient(
@@ -96,7 +96,7 @@ public static class AppExtensions
       Guard.Against.Null(infrastructure.Keycloak);
 
       string keycloakEndpoint = Guard.Against.Null(infrastructure.Keycloak.BaseUrl);
-      
+
       services.AddAppInfrastructureTiedToHttpForKeycloak(
         logger,
         appConfigInfrastructureKeycloakSection,
@@ -110,14 +110,15 @@ public static class AppExtensions
     });
 
     services
-      .AddFastEndpoints(options => {
+      .AddFastEndpoints(options =>
+      {
         options.DisableAutoDiscovery = true;
         options.Assemblies = [
-          typeof(Infrastructure.WebForMicroserviceReader.DummyItem.Endpoints.DummyItemEndpointsSettings).Assembly,
+          typeof(Integration.MicroserviceReader.Infrastructure.HttpServer.App.AppSettings).Assembly,
           typeof(Integration.MicroserviceWriter.Infrastructure.HttpServer.App.AppSettings).Assembly
           ];
       })
-      .AddAuthorization();    
+      .AddAuthorization();
 
     switch (domainAuth.Type)
     {
