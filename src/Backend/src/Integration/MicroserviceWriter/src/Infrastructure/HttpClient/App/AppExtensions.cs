@@ -10,7 +10,7 @@ public static class AppExtensions
   /// </summary>
   /// <param name="services">Сервисы.</param>
   /// <param name="logger">Логгер.</param>
-  /// <param name="appConfigOptionsDomainAuthSection">
+  /// <param name="domainAuthSection">
   /// Раздел аутентификации в параметрах конфигурации предметной области приложения.
   /// </param>
   /// <param name="microserviceWriterEndpoint">Конечная точка микросервиса "Писатель".</param>
@@ -18,7 +18,7 @@ public static class AppExtensions
   public static IServiceCollection AddAppIntegrationMicroserviceWriterInfrastructureTiedToHttpClient(
       this IServiceCollection services,
       ILogger logger,
-      AppConfigOptionsDomainAuthSection? appConfigOptionsDomainAuthSection,
+      AppConfigOptionsDomainAuthSection? domainAuthSection,
       string microserviceWriterEndpoint)
   {
     services.AddTransient<IAppOutgoingEventCommandService, AppOutgoingEventCommandService>();
@@ -27,7 +27,7 @@ public static class AppExtensions
     services.AddTransient<IAppOutgoingEventPayloadCommandService, AppOutgoingEventPayloadCommandService>();
     services.AddTransient<IAppOutgoingEventPayloadQueryService, AppOutgoingEventPayloadQueryService>();
 
-    if (appConfigOptionsDomainAuthSection?.Type == AppConfigOptionsAuthenticationEnum.JWT)
+    if (domainAuthSection?.Type == AppConfigOptionsAuthenticationEnum.JWT)
     {
       services.AddTransient<IAuthCommandService, AuthCommandService>();
     }

@@ -1,4 +1,6 @@
-﻿namespace Makc.Dummy.MicroserviceReader.Domain.UseCases.App;
+﻿using Makc.Dummy.Shared.Core.App.Config.Options.Sections.Domain;
+
+namespace Makc.Dummy.MicroserviceReader.Domain.UseCases.App;
 
 /// <summary>
 /// Расширения приложения.
@@ -11,11 +13,19 @@ public static class AppExtensions
   /// <param name="services">Сервисы.</param>
   /// <param name="logger">Логгер.</param>
   /// <returns>Сервисы.</returns>
-  public static IServiceCollection AddAppDomainUseCases(this IServiceCollection services, ILogger logger)
+  public static IServiceCollection AddAppDomainUseCases(
+    this IServiceCollection services,
+    ILogger logger,
+    IConfigurationSection? appConfigDomainAuthSection)
   {
     services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
     services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
+
+    if (appConfigDomainAuthSection != null)
+    {
+      services.Configure<AppConfigOptionsDomainAuthSection>(appConfigDomainAuthSection);
+    }
 
     services.AddTransient<IAppInboxCommandService, AppInboxCommandService>();
 

@@ -39,7 +39,6 @@ global using Makc.Dummy.MicroserviceReader.Domain.UseCases.AppIncomingEvent.Serv
 global using Makc.Dummy.MicroserviceReader.Domain.UseCases.AppIncomingEventPayload.Commands.Insert;
 global using Makc.Dummy.MicroserviceReader.Domain.UseCases.AppIncomingEventPayload.Queries;
 global using Makc.Dummy.MicroserviceReader.Domain.UseCases.AppIncomingEventPayload.Services;
-global using Makc.Dummy.MicroserviceReader.Domain.UseCases.DummyItem.Actions.Get;
 global using Makc.Dummy.MicroserviceReader.Domain.UseCases.DummyItem.Services;
 global using Makc.Dummy.Shared.Core.App;
 global using Makc.Dummy.Shared.Core.App.Command.Results;
@@ -50,6 +49,7 @@ global using Makc.Dummy.Shared.Domain.UseCases.Db.SQL;
 global using Makc.Dummy.Shared.Domain.UseCases.Query.Sections;
 global using Makc.Dummy.Shared.Domain.UseCases.Repositories;
 global using MediatR;
+global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.DependencyInjection.Extensions;
 global using Microsoft.Extensions.Logging;

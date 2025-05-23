@@ -1,5 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
+  
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" />
+  </ItemGroup>
+  
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Integration\MicroserviceReader\src\Domain\UseCases\Makc.Dummy.Integration.MicroserviceReader.Domain.UseCases.csproj" />
     <ProjectReference Include="..\..\..\..\Shared\src\Domain\UseCases\Makc.Dummy.Shared.Domain.UseCases.csproj" />

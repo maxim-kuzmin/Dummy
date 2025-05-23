@@ -10,20 +10,22 @@ public static class AppExtensions
   /// </summary>
   /// <param name="services">Сервисы.</param>
   /// <param name="logger">Логгер.</param>
-  /// <param name="appConfigAuthenticationSection">Раздел аутентификации в конфигурации приложения.</param>
+  /// <param name="appConfigDomainAuthSection">
+  /// Раздел аутентификации в конфигурации предметной области приложения.
+  /// </param>
   /// <returns>Сервисы.</returns>
   public static IServiceCollection AddAppDomainUseCases(
     this IServiceCollection services,
     ILogger logger,
-    IConfigurationSection? appConfigAuthenticationSection)
+    IConfigurationSection? appConfigDomainAuthSection)
   {
     services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
     services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
 
-    if (appConfigAuthenticationSection != null)
+    if (appConfigDomainAuthSection != null)
     {
-      services.Configure<AppConfigOptionsDomainAuthSection>(appConfigAuthenticationSection);
+      services.Configure<AppConfigOptionsDomainAuthSection>(appConfigDomainAuthSection);
     }
 
     services.AddTransient<IAppOutboxCommandService, AppOutboxCommandService>();

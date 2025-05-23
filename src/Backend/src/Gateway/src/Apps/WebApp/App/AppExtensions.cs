@@ -15,6 +15,8 @@ public static class AppExtensions
   {
     var appConfigSection = appBuilder.Configuration.GetSection("App");
 
+    var appConfigDomainAuthSection = appConfigSection.GetSection("Domain:Auth");
+
     var appConfigInfrastructureKeycloakSection = appConfigSection.GetSection("Infrastructure:Keycloak");
 
     var appConfigOptions = new AppConfigOptions();
@@ -26,7 +28,7 @@ public static class AppExtensions
 
     var services = appBuilder.Services.Configure<AppConfigOptions>(appConfigSection)
       .AddAppDomainModel(logger)
-      .AddAppDomainUseCases(logger)
+      .AddAppDomainUseCases(logger, appConfigDomainAuthSection)
       .AddAppIntegrationMicroserviceReaderDomainUseCases(logger)
       .AddAppIntegrationMicroserviceWriterDomainUseCases(logger);
 
@@ -181,7 +183,7 @@ public static class AppExtensions
               RoleClaimType = "roles"
             };
 
-            options.RequireHttpsMetadata = false; // Only in develop environment
+            options.RequireHttpsMetadata = false; // //makc//!!!// Only in develop environment
             options.SaveToken = true;
           });
         break;

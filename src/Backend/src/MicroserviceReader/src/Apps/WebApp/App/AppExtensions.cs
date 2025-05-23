@@ -17,6 +17,8 @@ public static class AppExtensions
   {
     var appConfigSection = appBuilder.Configuration.GetSection("App");
 
+    var appConfigDomainAuthSection = appConfigSection.GetSection("Domain:Auth");
+
     var appConfigOptions = new AppConfigOptions();
 
     appConfigSection.Bind(appConfigOptions);
@@ -26,7 +28,7 @@ public static class AppExtensions
 
     var services = appBuilder.Services.Configure<AppConfigOptions>(appConfigSection)
       .AddAppDomainModel(logger)
-      .AddAppDomainUseCases(logger);
+      .AddAppDomainUseCases(logger, appConfigDomainAuthSection);
 
     var domain = Guard.Against.Null(appConfigOptions.Domain);
     var infrastructure = Guard.Against.Null(appConfigOptions.Infrastructure);

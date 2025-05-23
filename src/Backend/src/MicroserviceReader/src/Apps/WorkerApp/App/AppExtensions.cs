@@ -24,7 +24,7 @@ public static class AppExtensions
 
     var services = appBuilder.Services.Configure<AppConfigOptions>(appConfigSection)
       .AddAppDomainModel(logger)
-      .AddAppDomainUseCases(logger);
+      .AddAppDomainUseCases(logger, appConfigDomainAuthSection: null);
 
     var domain = Guard.Against.Null(appConfigOptions.Domain);
     var domainApp = Guard.Against.Null(domain.App);
