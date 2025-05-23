@@ -29,8 +29,8 @@ public static class AppExtensions
     var services = appBuilder.Services.Configure<AppConfigOptions>(appConfigSection)
       .AddAppDomainModel(logger)
       .AddAppDomainUseCases(logger, appConfigDomainAuthSection)
-      .AddAppIntegrationMicroserviceReaderDomainUseCases(logger)
-      .AddAppIntegrationMicroserviceWriterDomainUseCases(logger);
+      .AddAppIntegrationMicroserviceReaderDomainUseCasesForClient(logger)
+      .AddAppIntegrationMicroserviceWriterDomainUseCasesForClient(logger);
 
     var domain = Guard.Against.Null(appConfigOptions.Domain);
     var infrastructure = Guard.Against.Null(appConfigOptions.Infrastructure);
@@ -99,7 +99,7 @@ public static class AppExtensions
 
       string keycloakEndpoint = Guard.Against.Null(infrastructure.Keycloak.BaseUrl);
 
-      services.AddAppInfrastructureTiedToHttpForKeycloak(
+      services.AddAppInfrastructureTiedToHttpClientForKeycloak(
         logger,
         appConfigInfrastructureKeycloakSection,
         keycloakEndpoint);

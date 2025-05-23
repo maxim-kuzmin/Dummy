@@ -25,6 +25,6 @@
     <ProjectReference Include="..\..\..\..\Shared\src\Infrastructure\CoreForOpenTelemetryInWeb\Makc.Dummy.Shared.Infrastructure.CoreForOpenTelemetryInWeb.csproj" />
     <ProjectReference Include="..\..\Domain\UseCases\Makc.Dummy.Gateway.Domain.UseCases.csproj" />
     <ProjectReference Include="..\..\Infrastructure\Core\Makc.Dummy.Gateway.Infrastructure.Core.csproj" />
-    <ProjectReference Include="..\..\Infrastructure\HttpForKeycloak\Makc.Dummy.Gateway.Infrastructure.HttpForKeycloak.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\HttpClientForKeycloak\Makc.Dummy.Gateway.Infrastructure.HttpClientForKeycloak.csproj" />
   </ItemGroup>
 </Project>

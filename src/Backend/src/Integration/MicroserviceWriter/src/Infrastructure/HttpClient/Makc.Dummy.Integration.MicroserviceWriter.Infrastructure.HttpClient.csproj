@@ -6,7 +6,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Domain\UseCases\Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCases.csproj" />
+    <ProjectReference Include="..\..\Domain\UseCasesForClient\Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCasesForClient.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" />
+    <PackageReference Include="Microsoft.Extensions.Http" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Integration\MicroserviceWriter\src\Domain\UseCasesForClient\Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCasesForClient.csproj" />
+  </ItemGroup>
+
+</Project>
