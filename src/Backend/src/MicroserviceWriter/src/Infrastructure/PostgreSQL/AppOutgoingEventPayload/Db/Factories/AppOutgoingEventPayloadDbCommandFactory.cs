@@ -19,6 +19,7 @@ public class AppOutgoingEventPayloadDbCommandFactory(
     result.TextBuilder.Append($$"""
 select
   "{{sAppOutgoingEventPayload.ColumnForId}}" "Id",
+  "{{sAppOutgoingEventPayload.ColumnForConcurrencyToken}}" "ConcurrencyToken",
   "{{sAppOutgoingEventPayload.ColumnForAppOutgoingEventId}}" "AppOutgoingEventId",
   "{{sAppOutgoingEventPayload.ColumnForData}}" "Data",
   "{{sAppOutgoingEventPayload.ColumnForEntityConcurrencyTokenToDelete}}" "EntityConcurrencyTokenToDelete",
@@ -74,6 +75,7 @@ where
     result.TextBuilder.AppendLine($$"""
 select
   aep."{{sAppOutgoingEventPayload.ColumnForId}}" "Id",
+  aep."{{sAppOutgoingEventPayload.ColumnForConcurrencyToken}}" "ConcurrencyToken",
   aep."{{sAppOutgoingEventPayload.ColumnForAppOutgoingEventId}}" "AppOutgoingEventId",
   aep."{{sAppOutgoingEventPayload.ColumnForData}}" "Data",
   aep."{{sAppOutgoingEventPayload.ColumnForEntityConcurrencyTokenToDelete}}" "EntityConcurrencyTokenToDelete",

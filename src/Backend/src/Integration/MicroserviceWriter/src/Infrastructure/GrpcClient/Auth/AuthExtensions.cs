@@ -26,6 +26,10 @@ public static class AuthExtensions
   /// <returns>Объект передачи данных.</returns>
   public static AuthLoginDTO ToAuthLoginDTO(this AuthLoginGrpcReply reply)
   {
-    return new(reply.UserName, reply.AccessToken);
+    return new()
+    {
+      UserName = reply.UserName,
+      AccessToken = reply.AccessToken,
+    };
   }
 }

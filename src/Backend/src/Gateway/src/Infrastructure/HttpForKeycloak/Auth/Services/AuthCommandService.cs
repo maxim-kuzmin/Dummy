@@ -39,7 +39,11 @@ public class AuthCommandService(
     using var httpResponse = await httpResponseTask.ConfigureAwait(false);
 
     var resultTask = httpResponse.ToResultFromJsonAsync<AuthLoginDTO, TokenResponse>(
-      content => new AuthLoginDTO(command.UserName, content.AccessToken ?? string.Empty),
+      content => new AuthLoginDTO
+      {
+        UserName = command.UserName,
+        AccessToken = content.AccessToken ?? string.Empty
+      },
       cancellationToken);
 
     var result = await resultTask.ConfigureAwait(false);

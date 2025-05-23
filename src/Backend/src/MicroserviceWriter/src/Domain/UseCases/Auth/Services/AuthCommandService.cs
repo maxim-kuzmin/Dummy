@@ -14,8 +14,12 @@ public class AuthCommandService(
 
     var accessToken = authOptions.CreateAccessToken(command.UserName, null);
 
-    var dto = new AuthLoginDTO(command.UserName, accessToken ?? string.Empty);
+    AuthLoginDTO result = new()
+    {
+      UserName = command.UserName,
+      AccessToken = accessToken ?? string.Empty,
+    };
 
-    return Task.FromResult(Result.Success(dto));
+    return Task.FromResult(Result.Success(result));
   }
 }

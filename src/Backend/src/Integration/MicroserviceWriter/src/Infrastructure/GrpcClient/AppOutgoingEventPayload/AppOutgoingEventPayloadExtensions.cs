@@ -98,16 +98,18 @@ public static class AppOutgoingEventPayloadExtensions
 
     foreach (var reply in listReply.Items)
     {
-      AppOutgoingEventPayloadSingleDTO item = new(
-        Id: reply.Id,
-        ConcurrencyToken: reply.ConcurrencyToken,
-        AppOutgoingEventId: reply.AppOutgoingEventId,
-        Data: reply.Data,
-        EntityConcurrencyTokenToDelete: reply.EntityConcurrencyTokenToDelete,
-        EntityConcurrencyTokenToInsert: reply.EntityConcurrencyTokenToInsert,
-        EntityId: reply.EntityId,
-        EntityName: reply.EntityName,
-        Position: reply.Position);
+      AppOutgoingEventPayloadSingleDTO item = new()
+      {
+        Id = reply.Id,
+        ConcurrencyToken = reply.ConcurrencyToken,
+        AppOutgoingEventId = reply.AppOutgoingEventId,
+        Data = reply.Data,
+        EntityConcurrencyTokenToDelete = reply.EntityConcurrencyTokenToDelete,
+        EntityConcurrencyTokenToInsert = reply.EntityConcurrencyTokenToInsert,
+        EntityId = reply.EntityId,
+        EntityName = reply.EntityName,
+        Position = reply.Position,
+      };
 
       items.Add(item);
     }
@@ -123,16 +125,18 @@ public static class AppOutgoingEventPayloadExtensions
   public static AppOutgoingEventPayloadSingleDTO ToAppOutgoingEventPayloadSingleDTO(
     this AppOutgoingEventPayloadGetGrpcReply reply)
   {
-    return new(
-      Id: reply.Id,
-      ConcurrencyToken: reply.ConcurrencyToken,
-      AppOutgoingEventId: reply.AppOutgoingEventId,
-      Data: reply.Data,
-      EntityConcurrencyTokenToDelete: reply.EntityConcurrencyTokenToDelete,
-      EntityConcurrencyTokenToInsert: reply.EntityConcurrencyTokenToInsert,
-      EntityId: reply.EntityId,
-      EntityName: reply.EntityName,
-      Position: reply.Position);
+    return new()
+    {
+      Id = reply.Id,
+      ConcurrencyToken = reply.ConcurrencyToken,
+      AppOutgoingEventId = reply.AppOutgoingEventId,
+      Data = reply.Data,
+      EntityConcurrencyTokenToDelete = reply.EntityConcurrencyTokenToDelete,
+      EntityConcurrencyTokenToInsert = reply.EntityConcurrencyTokenToInsert,
+      EntityId = reply.EntityId,
+      EntityName = reply.EntityName,
+      Position = reply.Position,
+    };
   }
 
   /// <summary>

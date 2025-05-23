@@ -3,22 +3,50 @@
 /// <summary>
 /// Объект передачи данных полезной нагрузки исходящего события приложения.
 /// </summary>
-/// <param name="Id">Идентификатор.</param>
-/// <param name="ConcurrencyToken">Токен параллелизма.</param>
-/// <param name="AppOutgoingEventId">Идентификатор исходящего события приложения.</param>
-/// <param name="Data">Данные.</param>
-/// <param name="EntityConcurrencyTokenToDelete">Токен параллелизма для удаления.</param>
-/// <param name="EntityConcurrencyTokenToInsert">Токен параллелизма для вставки.</param>
-/// <param name="EntityId">Идентификатор сущности.</param>
-/// <param name="EntityName">Имя сущности.</param>
-/// <param name="Position">Позиция.</param>
-public record AppOutgoingEventPayloadSingleDTO(
-  long Id,
-  string ConcurrencyToken,
-  long AppOutgoingEventId,
-  string? Data,
-  string? EntityConcurrencyTokenToDelete,
-  string? EntityConcurrencyTokenToInsert,
-  string EntityId,
-  string EntityName,
-  int Position);
+public record AppOutgoingEventPayloadSingleDTO
+{
+  /// <summary>
+  /// Идентификатор.
+  /// </summary>
+  public long Id { get; set; }
+
+  /// <summary>
+  /// Токен параллелизма.
+  /// </summary>
+  public string ConcurrencyToken { get; set; } = string.Empty;
+
+  /// <summary>
+  /// Идентификатор исходящего события приложения.
+  /// </summary>
+  public long AppOutgoingEventId { get; set; }
+
+  /// <summary>
+  /// Данные.
+  /// </summary>
+  public string? Data { get; set; }
+
+  /// <summary>
+  /// Токен параллелизма для удаления.
+  /// </summary>
+  public string? EntityConcurrencyTokenToDelete { get; set; }
+
+  /// <summary>
+  /// Токен параллелизма для вставки.
+  /// </summary>
+  public string? EntityConcurrencyTokenToInsert { get; set; }
+
+  /// <summary>
+  /// Идентификатор сущности.
+  /// </summary>
+  public string EntityId { get; set; } = string.Empty;
+
+  /// <summary>
+  /// Имя сущности.
+  /// </summary>
+  public string EntityName { get; set; } = string.Empty;
+
+  /// <summary>
+  /// Позиция.
+  /// </summary>
+  public int Position { get; set; }
+}

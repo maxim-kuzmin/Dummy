@@ -19,6 +19,7 @@ public class AppOutgoingEventDbCommandFactory(
     result.TextBuilder.Append($$"""
 select
   "{{sAppOutgoingEvent.ColumnForId}}" "Id",
+  "{{sAppOutgoingEvent.ColumnForConcurrencyToken}}" "ConcurrencyToken",
   "{{sAppOutgoingEvent.ColumnForCreatedAt}}" "CreatedAt",
   "{{sAppOutgoingEvent.ColumnForName}}" "Name",
   "{{sAppOutgoingEvent.ColumnForPublishedAt}}" "PublishedAt"
@@ -119,6 +120,7 @@ where
     result.TextBuilder.AppendLine($$"""
 select
   ae."{{sAppOutgoingEvent.ColumnForId}}" "Id",
+  ae."{{sAppOutgoingEvent.ColumnForConcurrencyToken}}" "ConcurrencyToken",
   ae."{{sAppOutgoingEvent.ColumnForCreatedAt}}" "CreatedAt",  
   ae."{{sAppOutgoingEvent.ColumnForName}}" "Name",
   ae."{{sAppOutgoingEvent.ColumnForPublishedAt}}" "PublishedAt"

@@ -12,11 +12,13 @@ public static class AppOutgoingEventExtensions
   /// <returns>Объект передачи данных.</returns>
   public static AppOutgoingEventSingleDTO ToAppOutgoingEventSingleDTO(this AppOutgoingEventEntity entity)
   {
-    return new(
-      Id: entity.Id,
-      ConcurrencyToken: entity.ConcurrencyToken,
-      CreatedAt: entity.CreatedAt,
-      Name: entity.Name,
-      PublishedAt: entity.PublishedAt);
+    return new()
+    {
+      Id = entity.Id,
+      ConcurrencyToken = entity.ConcurrencyToken,
+      CreatedAt = entity.CreatedAt,
+      Name = entity.Name,
+      PublishedAt = entity.PublishedAt,
+    };
   }
 }

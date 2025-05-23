@@ -3,26 +3,60 @@
 /// <summary>
 /// Объект передачи данных одиночного входящего события приложения.
 /// </summary>
-/// <param name="ObjectId">Идентификатор объекта.</param>
-/// <param name="ConcurrencyToken">Токен паралеллизма.</param>
-/// <param name="CreatedAt">Дата создания.</param>
-/// <param name="EventId">Идентификатор события.</param>
-/// <param name="EventName">Имя события.</param>
-/// <param name="LastLoadingAt">Последняя дата загрузки.</param>
-/// <param name="LastLoadingError">Последняя ошибка загрузки.</param>
-/// <param name="LoadedAt">Дата загрузки.</param>
-/// <param name="PayloadCount">Количество полезных нагрузок.</param>
-/// <param name="PayloadTotalCount">Общее количество полезных нагрузок.</param>
-/// <param name="ProcessedAt">Дата обработки.</param>
-public record AppIncomingEventSingleDTO(
-  string? ObjectId,
-  string ConcurrencyToken,
-  DateTimeOffset CreatedAt,
-  string EventId,
-  string EventName,
-  DateTimeOffset? LastLoadingAt,
-  string? LastLoadingError,
-  DateTimeOffset? LoadedAt,
-  int PayloadCount,
-  int PayloadTotalCount,
-  DateTimeOffset? ProcessedAt);
+public record AppIncomingEventSingleDTO
+{
+  /// <summary>
+  /// Идентификатор объекта.
+  /// </summary>
+  public string? ObjectId { get; set; }
+
+  /// <summary>
+  /// Токен паралеллизма.
+  /// </summary>
+  public string ConcurrencyToken { get; set; } = string.Empty;
+
+  /// <summary>
+  /// Дата создания.
+  /// </summary>
+  public DateTimeOffset CreatedAt { get; set; }
+
+  /// <summary>
+  /// Идентификатор события.
+  /// </summary>
+  public string EventId { get; set; } = string.Empty;
+
+  /// <summary>
+  /// Имя события.
+  /// </summary>
+  public string EventName { get; set; } = string.Empty;
+
+  /// <summary>
+  /// Последняя дата загрузки.
+  /// </summary>
+  public DateTimeOffset? LastLoadingAt { get; set; }
+
+  /// <summary>
+  /// Последняя ошибка загрузки.
+  /// </summary>
+  public string? LastLoadingError { get; set; }
+
+  /// <summary>
+  /// Дата загрузки.
+  /// </summary>
+  public DateTimeOffset? LoadedAt { get; set; }
+
+  /// <summary>
+  /// Количество полезных нагрузок.
+  /// </summary>
+  public int PayloadCount { get; set; }
+
+  /// <summary>
+  /// Общее количество полезных нагрузок.
+  /// </summary>
+  public int PayloadTotalCount { get; set; }
+
+  /// <summary>
+  /// Дата обработки.
+  /// </summary>
+  public DateTimeOffset? ProcessedAt { get; set; }
+}

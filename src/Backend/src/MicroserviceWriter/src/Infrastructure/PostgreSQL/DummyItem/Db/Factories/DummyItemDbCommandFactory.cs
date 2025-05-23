@@ -19,8 +19,8 @@ public class DummyItemDbCommandFactory(
     result.TextBuilder.Append($$"""
 select
   "{{sDummyItem.ColumnForId}}" "Id",
-  "{{sDummyItem.ColumnForName}}" "Name",
-  "{{sDummyItem.ColumnForConcurrencyToken}}" "ConcurrencyToken"
+  "{{sDummyItem.ColumnForConcurrencyToken}}" "ConcurrencyToken",
+  "{{sDummyItem.ColumnForName}}" "Name"
 from
   "{{sDummyItem.Schema}}"."{{sDummyItem.Table}}"
 where
@@ -69,8 +69,8 @@ where
     result.TextBuilder.AppendLine($$"""
 select
   di."{{sDummyItem.ColumnForId}}" "Id",
-  di."{{sDummyItem.ColumnForName}}" "Name",
-  di."{{sDummyItem.ColumnForConcurrencyToken}}" "ConcurrencyToken"
+  di."{{sDummyItem.ColumnForConcurrencyToken}}" "ConcurrencyToken",
+  di."{{sDummyItem.ColumnForName}}" "Name"  
 from
   "{{sDummyItem.Schema}}"."{{sDummyItem.Table}}" di
 """);

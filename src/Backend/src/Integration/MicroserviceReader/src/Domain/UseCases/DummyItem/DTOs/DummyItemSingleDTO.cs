@@ -3,8 +3,25 @@
 /// <summary>
 /// Объект передачи данных одиночного фиктивного предмета.
 /// </summary>
-/// <param name="ObjectId">Идентификатор объекта.</param>
-/// <param name="Id">Идентификатор.</param>
-/// <param name="Name">Имя.</param>
-/// <param name="ConcurrencyToken">Токен параллелизма.</param>
-public record DummyItemSingleDTO(string? ObjectId, long Id, string Name, string ConcurrencyToken);
+public record DummyItemSingleDTO
+{
+  /// <summary>
+  /// Идентификатор объекта.
+  /// </summary>
+  public string? ObjectId { get; set; }
+
+  /// <summary>
+  /// Идентификатор.
+  /// </summary>
+  public long Id { get; set; }
+
+  /// <summary>
+  /// Токен параллелизма.
+  /// </summary>
+  public string ConcurrencyToken { get; set; } = string.Empty;
+
+  /// <summary>
+  /// Имя.
+  /// </summary>
+  public string Name { get; set; } = string.Empty;
+}

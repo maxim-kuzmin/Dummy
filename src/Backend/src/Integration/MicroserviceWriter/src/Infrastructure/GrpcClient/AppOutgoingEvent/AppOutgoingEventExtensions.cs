@@ -92,12 +92,14 @@ public static class AppOutgoingEventExtensions
     {
       var publishedAt = reply.PublishedAt.ToDateTimeOffset();
 
-      AppOutgoingEventSingleDTO item = new(
-        Id: reply.Id,
-        ConcurrencyToken: reply.ConcurrencyToken,
-        CreatedAt: reply.CreatedAt.ToDateTimeOffset(),
-        Name: reply.Name,
-        PublishedAt: publishedAt == default ? null : publishedAt);
+      AppOutgoingEventSingleDTO item = new()
+      {
+        Id = reply.Id,
+        ConcurrencyToken = reply.ConcurrencyToken,
+        CreatedAt = reply.CreatedAt.ToDateTimeOffset(),
+        Name = reply.Name,
+        PublishedAt = publishedAt == default ? null : publishedAt
+      };
 
       items.Add(item);
     }
@@ -114,12 +116,14 @@ public static class AppOutgoingEventExtensions
   {
     var publishedAt = reply.PublishedAt.ToDateTimeOffset();
 
-    return new(
-      Id: reply.Id,
-      ConcurrencyToken: reply.ConcurrencyToken,
-      CreatedAt: reply.CreatedAt.ToDateTimeOffset(),
-      Name: reply.Name,
-      PublishedAt: publishedAt == default ? null : publishedAt);
+    return new()
+    {
+      Id = reply.Id,
+      ConcurrencyToken = reply.ConcurrencyToken,
+      CreatedAt = reply.CreatedAt.ToDateTimeOffset(),
+      Name = reply.Name,
+      PublishedAt = publishedAt == default ? null : publishedAt
+    };
   }
 
   /// <summary>

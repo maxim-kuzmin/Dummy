@@ -12,17 +12,19 @@ public static class AppIncomingEventExtensions
   /// <returns>Объект передачи данных.</returns>
   public static AppIncomingEventSingleDTO ToAppIncomingEventSingleDTO(this AppIncomingEventEntity entity)
   {
-    return new(
-      ObjectId: entity.ObjectId,
-      ConcurrencyToken: entity.ConcurrencyToken,
-      CreatedAt: entity.CreatedAt,
-      EventId: entity.EventId,
-      EventName: entity.EventName,
-      LastLoadingAt: entity.LastLoadingAt,
-      LastLoadingError: entity.LastLoadingError,
-      LoadedAt: entity.LoadedAt,
-      PayloadCount: entity.PayloadCount,
-      PayloadTotalCount: entity.PayloadTotalCount,
-      ProcessedAt: entity.ProcessedAt);
+    return new()
+    {
+      ObjectId = entity.ObjectId,
+      ConcurrencyToken = entity.ConcurrencyToken,
+      CreatedAt = entity.CreatedAt,
+      EventId = entity.EventId,
+      EventName = entity.EventName,
+      LastLoadingAt = entity.LastLoadingAt,
+      LastLoadingError = entity.LastLoadingError,
+      LoadedAt = entity.LoadedAt,
+      PayloadCount = entity.PayloadCount,
+      PayloadTotalCount = entity.PayloadTotalCount,
+      ProcessedAt = entity.ProcessedAt,
+    };
   }
 }

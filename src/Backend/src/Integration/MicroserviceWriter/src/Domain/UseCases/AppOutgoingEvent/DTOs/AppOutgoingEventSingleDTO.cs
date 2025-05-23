@@ -3,14 +3,30 @@
 /// <summary>
 /// Объект передачи данных одиночного исходящего события приложения.
 /// </summary>
-/// <param name="Id">Идентификатор.</param>
-/// <param name="ConcurrencyToken">Токен параллелизма.</param>
-/// <param name="CreatedAt">Дата создания.</param>
-/// <param name="Name">Имя.</param>
-/// <param name="PublishedAt">Дата публикации.</param>
-public record AppOutgoingEventSingleDTO(
-  long Id,
-  string ConcurrencyToken,
-  DateTimeOffset CreatedAt,
-  string Name,
-  DateTimeOffset? PublishedAt);
+public record AppOutgoingEventSingleDTO
+{
+  /// <summary>
+  /// Идентификатор.
+  /// </summary>
+  public long Id { get; set; }
+
+  /// <summary>
+  /// Токен параллелизма.
+  /// </summary>
+  public string ConcurrencyToken { get; set; } = string.Empty;
+
+  /// <summary>
+  /// Дата создания.
+  /// </summary>
+  public DateTimeOffset CreatedAt { get; set; }
+
+  /// <summary>
+  /// Имя.
+  /// </summary>
+  public string Name { get; set; } = string.Empty;
+
+  /// <summary>
+  /// Дата публикации.
+  /// </summary>
+  public DateTimeOffset? PublishedAt { get; set; }
+}

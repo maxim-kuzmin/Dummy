@@ -89,11 +89,13 @@ public static class DummyItemExtensions
 
     foreach (var reply in listReply.Items)
     {
-      DummyItemSingleDTO item = new(
-        ObjectId: reply.ObjectId,
-        Id: reply.Id,
-        Name: reply.Name,
-        ConcurrencyToken: reply.ConcurrencyToken);
+      DummyItemSingleDTO item = new()
+      {
+        ObjectId = reply.ObjectId,
+        Id = reply.Id,
+        ConcurrencyToken = reply.ConcurrencyToken,
+        Name = reply.Name,
+      };
 
       items.Add(item);
     }
@@ -108,11 +110,13 @@ public static class DummyItemExtensions
   /// <returns>Объект передачи данных.</returns>
   public static DummyItemSingleDTO ToDummyItemSingleDTO(this DummyItemGetGrpcReply reply)
   {
-    return new(
-      ObjectId: reply.ObjectId,
-      Id: reply.Id,
-      Name: reply.Name,
-      ConcurrencyToken: reply.ConcurrencyToken);
+    return new()
+    {
+      ObjectId = reply.ObjectId,
+      Id = reply.Id,
+      ConcurrencyToken = reply.ConcurrencyToken,
+      Name = reply.Name,      
+    };
   }
 
   /// <summary>

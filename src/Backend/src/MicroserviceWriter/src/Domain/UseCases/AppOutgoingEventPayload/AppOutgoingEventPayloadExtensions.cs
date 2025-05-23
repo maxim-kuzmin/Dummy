@@ -13,15 +13,17 @@ public static class AppOutgoingEventPayloadExtensions
   public static AppOutgoingEventPayloadSingleDTO ToAppOutgoingEventPayloadSingleDTO(
     this AppOutgoingEventPayloadEntity entity)
   {
-    return new(
-      Id: entity.Id,
-      ConcurrencyToken: entity.ConcurrencyToken,
-      AppOutgoingEventId: entity.AppOutgoingEventId,
-      Data: entity.Data,
-      EntityConcurrencyTokenToDelete: entity.EntityConcurrencyTokenToDelete,
-      EntityConcurrencyTokenToInsert: entity.EntityConcurrencyTokenToInsert,
-      EntityId: entity.EntityId,
-      EntityName: entity.EntityName,
-      Position: entity.Position);
+    return new()
+    {
+      Id = entity.Id,
+      ConcurrencyToken = entity.ConcurrencyToken,
+      AppOutgoingEventId = entity.AppOutgoingEventId,
+      Data = entity.Data,
+      EntityConcurrencyTokenToDelete = entity.EntityConcurrencyTokenToDelete,
+      EntityConcurrencyTokenToInsert = entity.EntityConcurrencyTokenToInsert,
+      EntityId = entity.EntityId,
+      EntityName = entity.EntityName,
+      Position = entity.Position,
+    };
   }
 }

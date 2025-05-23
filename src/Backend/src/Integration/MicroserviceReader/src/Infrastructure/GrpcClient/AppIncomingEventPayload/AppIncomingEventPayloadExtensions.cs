@@ -99,18 +99,20 @@ public static class AppIncomingEventPayloadExtensions
 
     foreach (var reply in listReply.Items)
     {
-      AppIncomingEventPayloadSingleDTO item = new(
-        ObjectId: reply.ObjectId,
-        CreatedAt: reply.CreatedAt.ToDateTimeOffset(),
-        ConcurrencyToken: reply.ConcurrencyToken,
-        AppIncomingEventObjectId: reply.AppIncomingEventObjectId,
-        Data: reply.Data,
-        EntityConcurrencyTokenToDelete: reply.EntityConcurrencyTokenToDelete,
-        EntityConcurrencyTokenToInsert: reply.EntityConcurrencyTokenToInsert,
-        EntityId: reply.EntityId,
-        EntityName: reply.EntityName,
-        EventPayloadId: reply.EventPayloadId,
-        Position: reply.Position);
+      AppIncomingEventPayloadSingleDTO item = new()
+      {
+        ObjectId = reply.ObjectId,
+        CreatedAt = reply.CreatedAt.ToDateTimeOffset(),
+        ConcurrencyToken = reply.ConcurrencyToken,
+        AppIncomingEventObjectId = reply.AppIncomingEventObjectId,
+        Data = reply.Data,
+        EntityConcurrencyTokenToDelete = reply.EntityConcurrencyTokenToDelete,
+        EntityConcurrencyTokenToInsert = reply.EntityConcurrencyTokenToInsert,
+        EntityId = reply.EntityId,
+        EntityName = reply.EntityName,
+        EventPayloadId = reply.EventPayloadId,
+        Position = reply.Position,
+      };
 
       items.Add(item);
     }
@@ -126,18 +128,20 @@ public static class AppIncomingEventPayloadExtensions
   public static AppIncomingEventPayloadSingleDTO ToAppIncomingEventPayloadSingleDTO(
     this AppIncomingEventPayloadGetGrpcReply reply)
   {
-    return new(
-      ObjectId: reply.ObjectId,
-      CreatedAt: reply.CreatedAt.ToDateTimeOffset(),
-      ConcurrencyToken: reply.ConcurrencyToken,
-      AppIncomingEventObjectId: reply.AppIncomingEventObjectId,
-      Data: reply.Data,
-      EntityConcurrencyTokenToDelete: reply.EntityConcurrencyTokenToDelete,
-      EntityConcurrencyTokenToInsert: reply.EntityConcurrencyTokenToInsert,
-      EntityId: reply.EntityId,
-      EntityName: reply.EntityName,
-      EventPayloadId: reply.EventPayloadId,
-      Position: reply.Position);
+    return new()
+    {
+      ObjectId = reply.ObjectId,
+      CreatedAt = reply.CreatedAt.ToDateTimeOffset(),
+      ConcurrencyToken = reply.ConcurrencyToken,
+      AppIncomingEventObjectId = reply.AppIncomingEventObjectId,
+      Data = reply.Data,
+      EntityConcurrencyTokenToDelete = reply.EntityConcurrencyTokenToDelete,
+      EntityConcurrencyTokenToInsert = reply.EntityConcurrencyTokenToInsert,
+      EntityId = reply.EntityId,
+      EntityName = reply.EntityName,
+      EventPayloadId = reply.EventPayloadId,
+      Position = reply.Position,
+    };
   }
 
   /// <summary>

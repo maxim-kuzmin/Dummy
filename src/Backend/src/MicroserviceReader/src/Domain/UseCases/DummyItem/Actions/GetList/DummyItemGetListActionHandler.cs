@@ -8,7 +8,7 @@
 /// <param name="_service">Сервис.</param>
 public class DummyItemGetListActionHandler(
   AppSession _appSession,
-  ILogger<DummyItemGetActionHandler> _logger,
+  ILogger<DummyItemGetListActionHandler> _logger,
   IDummyItemQueryService _service) : IQueryHandler<DummyItemGetListActionRequest, Result<DummyItemPageDTO>>
 {
   /// <inheritdoc/>

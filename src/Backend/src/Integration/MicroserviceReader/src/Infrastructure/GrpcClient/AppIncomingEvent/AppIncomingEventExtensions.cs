@@ -98,18 +98,20 @@ public static class AppIncomingEventExtensions
       var loadedAt = reply.LoadedAt.ToDateTimeOffset();
       var processedAt = reply.ProcessedAt.ToDateTimeOffset();
 
-      AppIncomingEventSingleDTO item = new(
-        ObjectId: reply.ObjectId,
-        ConcurrencyToken: reply.ConcurrencyToken,
-        CreatedAt: reply.CreatedAt.ToDateTimeOffset(),
-        EventId: reply.EventId,
-        EventName: reply.EventName,
-        LastLoadingAt: lastLoadingAt == default ? null : lastLoadingAt,
-        LastLoadingError: reply.LastLoadingError,
-        LoadedAt: loadedAt == default ? null : loadedAt,
-        PayloadCount: reply.PayloadCount,
-        PayloadTotalCount: reply.PayloadTotalCount,
-        ProcessedAt: processedAt == default ? null : processedAt);
+      AppIncomingEventSingleDTO item = new()
+      {
+        ObjectId = reply.ObjectId,
+        ConcurrencyToken = reply.ConcurrencyToken,
+        CreatedAt = reply.CreatedAt.ToDateTimeOffset(),
+        EventId = reply.EventId,
+        EventName = reply.EventName,
+        LastLoadingAt = lastLoadingAt == default ? null : lastLoadingAt,
+        LastLoadingError = reply.LastLoadingError,
+        LoadedAt = loadedAt == default ? null : loadedAt,
+        PayloadCount = reply.PayloadCount,
+        PayloadTotalCount = reply.PayloadTotalCount,
+        ProcessedAt = processedAt == default ? null : processedAt,
+      };
 
       items.Add(item);
     }
@@ -128,18 +130,20 @@ public static class AppIncomingEventExtensions
     var loadedAt = reply.LoadedAt.ToDateTimeOffset();
     var processedAt = reply.ProcessedAt.ToDateTimeOffset();
 
-    return new(
-      ObjectId: reply.ObjectId,
-      ConcurrencyToken: reply.ConcurrencyToken,
-      CreatedAt: reply.CreatedAt.ToDateTimeOffset(),
-      EventId: reply.EventId,
-      EventName: reply.EventName,
-      LastLoadingAt: lastLoadingAt == default ? null : lastLoadingAt,
-      LastLoadingError: reply.LastLoadingError,
-      LoadedAt: loadedAt == default ? null : loadedAt,
-      PayloadCount: reply.PayloadCount,
-      PayloadTotalCount: reply.PayloadTotalCount,
-      ProcessedAt: processedAt == default ? null : processedAt);
+    return new()
+    {
+      ObjectId = reply.ObjectId,
+      ConcurrencyToken = reply.ConcurrencyToken,
+      CreatedAt = reply.CreatedAt.ToDateTimeOffset(),
+      EventId = reply.EventId,
+      EventName = reply.EventName,
+      LastLoadingAt = lastLoadingAt == default ? null : lastLoadingAt,
+      LastLoadingError = reply.LastLoadingError,
+      LoadedAt = loadedAt == default ? null : loadedAt,
+      PayloadCount = reply.PayloadCount,
+      PayloadTotalCount = reply.PayloadTotalCount,
+      ProcessedAt = processedAt == default ? null : processedAt,
+    };
   }
 
   /// <summary>

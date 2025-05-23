@@ -79,23 +79,25 @@ public static class DummyItemExtensions
   /// <summary>
   /// Преобразовать к объекту передачи данных страницы фиктивных предметов.
   /// </summary>
-  /// <param name="reply">Ответ.</param>
+  /// <param name="listReply">Ответ.</param>
   /// <returns>Объект передачи данных.</returns>
-  public static DummyItemPageDTO ToDummyItemPageDTO(this DummyItemGetListGrpcReply reply)
+  public static DummyItemPageDTO ToDummyItemPageDTO(this DummyItemGetListGrpcReply listReply)
   {
-    var items = new List<DummyItemSingleDTO>(reply.Items.Count);
+    var items = new List<DummyItemSingleDTO>(listReply.Items.Count);
 
-    foreach (var itemReply in reply.Items)
+    foreach (var reply in listReply.Items)
     {
-      DummyItemSingleDTO item = new(
-        Id: itemReply.Id,
-        ConcurrencyToken: itemReply.ConcurrencyToken,
-        Name: itemReply.Name);
+      DummyItemSingleDTO item = new()
+      {
+        Id = reply.Id,
+        ConcurrencyToken = reply.ConcurrencyToken,
+        Name = reply.Name,
+      };
 
       items.Add(item);
     }
 
-    return items.ToDummyItemPageDTO(reply.TotalCount);
+    return items.ToDummyItemPageDTO(listReply.TotalCount);
   }
 
   /// <summary>
@@ -105,7 +107,12 @@ public static class DummyItemExtensions
   /// <returns>Объект передачи данных.</returns>
   public static DummyItemSingleDTO ToDummyItemSingleDTO(this DummyItemGetGrpcReply reply)
   {
-    return new(reply.Id, reply.Name, reply.ConcurrencyToken);
+    return new()
+    {
+      Id = reply.Id,
+      ConcurrencyToken = reply.ConcurrencyToken,
+      Name = reply.Name,
+    };
   }
 
   /// <summary>

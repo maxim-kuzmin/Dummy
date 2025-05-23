@@ -12,9 +12,11 @@ public static class DummyItemExtensions
   /// <returns>Объект передачи данных.</returns>
   public static DummyItemSingleDTO ToDummyItemSingleDTO(this DummyItemEntity entity)
   {
-    return new(
-      Id: entity.Id,
-      ConcurrencyToken: entity.ConcurrencyToken,
-      Name: entity.Name);
+    return new()
+    {
+      Id = entity.Id,
+      ConcurrencyToken = entity.ConcurrencyToken,
+      Name = entity.Name,
+    };
   }
 }
