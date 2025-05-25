@@ -61,11 +61,37 @@ public static class AppOutgoingEventPayloadExtensions
   /// <param name="query">Запрос.</param>
   /// <returns>Запрос gRPC.</returns>
   public static AppOutgoingEventPayloadGetListGrpcRequest ToAppOutgoingEventPayloadGetListGrpcRequest(
+    this AppOutgoingEventPayloadListQuery query)
+  {
+    var sort = query.Sort;
+    var filter = query.Filter;
+
+    return new()
+    {
+      MaxCount = query.MaxCount,
+      Sort = new()
+      {
+        Field = sort?.Field ?? string.Empty,
+        IsDesc = sort?.IsDesc ?? false,
+      },
+      Filter = new()
+      {
+        FullTextSearchQuery = filter?.FullTextSearchQuery ?? string.Empty,
+      }
+    };
+  }
+
+  /// <summary>
+  /// Преобразовать к запросу gRPC получения страницы полезных нагрузок исходящего события приложения.
+  /// </summary>
+  /// <param name="query">Запрос.</param>
+  /// <returns>Запрос gRPC.</returns>
+  public static AppOutgoingEventPayloadGetPageGrpcRequest ToAppOutgoingEventPayloadGetPageGrpcRequest(
     this AppOutgoingEventPayloadPageQuery query)
   {
-    var filter = query.Filter;
     var page = query.Page;
     var sort = query.Sort;
+    var filter = query.Filter;
 
     return new()
     {
@@ -87,41 +113,34 @@ public static class AppOutgoingEventPayloadExtensions
   }
 
   /// <summary>
-  /// Преобразовать к объекту передачи данных страницы полезных нагрузок исходящего события приложения.
+  /// Преобразовать к списку полезных нагрузок исходящего события приложения.
   /// </summary>
-  /// <param name="listReply">Ответ.</param>
-  /// <returns>Объект передачи данных.</returns>
-  public static AppOutgoingEventPayloadPageDTO ToAppOutgoingEventPayloadPageDTO(
-    this AppOutgoingEventPayloadGetListGrpcReply listReply)
+  /// <param name="reply">Ответ.</param>
+  /// <returns>Список.</returns>
+  public static List<AppOutgoingEventPayloadSingleDTO> ToAppOutgoingEventPayloadListDTO(
+    this AppOutgoingEventPayloadGetListGrpcReply reply)
   {
-    var items = new List<AppOutgoingEventPayloadSingleDTO>(listReply.Items.Count);
-
-    foreach (var reply in listReply.Items)
-    {
-      AppOutgoingEventPayloadSingleDTO item = new()
-      {
-        Id = reply.Id,
-        ConcurrencyToken = reply.ConcurrencyToken,
-        AppOutgoingEventId = reply.AppOutgoingEventId,
-        Data = reply.Data,
-        EntityConcurrencyTokenToDelete = reply.EntityConcurrencyTokenToDelete,
-        EntityConcurrencyTokenToInsert = reply.EntityConcurrencyTokenToInsert,
-        EntityId = reply.EntityId,
-        EntityName = reply.EntityName,
-        Position = reply.Position,
-      };
-
-      items.Add(item);
-    }
-
-    return items.ToAppOutgoingEventPayloadPageDTO(listReply.TotalCount);
+    return reply.Items.ToAppOutgoingEventPayloadListDTO();
   }
 
   /// <summary>
-  /// Преобразовать к объекту передачи данных единственного полезной нагрузки исходящего события приложения.
+  /// Преобразовать к странице полезных нагрузок исходящего события приложения.
   /// </summary>
   /// <param name="reply">Ответ.</param>
-  /// <returns>Объект передачи данных.</returns>
+  /// <returns>Страница.</returns>
+  public static AppOutgoingEventPayloadPageDTO ToAppOutgoingEventPayloadPageDTO(
+    this AppOutgoingEventPayloadGetPageGrpcReply reply)
+  {
+    var items = reply.Items.ToAppOutgoingEventPayloadListDTO();
+
+    return items.ToAppOutgoingEventPayloadPageDTO(reply.TotalCount);
+  }
+
+  /// <summary>
+  /// Преобразовать к полезной нагрузке исходящего события приложения.
+  /// </summary>
+  /// <param name="reply">Ответ.</param>
+  /// <returns>Полезная нагрузка исходящего события приложения.</returns>
   public static AppOutgoingEventPayloadSingleDTO ToAppOutgoingEventPayloadSingleDTO(
     this AppOutgoingEventPayloadGetGrpcReply reply)
   {
@@ -161,6 +180,36 @@ public static class AppOutgoingEventPayloadExtensions
       EntityId = payload.EntityId,
       EntityName = payload.EntityName,
       Position = payload.Position
+    };
+  }
+
+  private static List<AppOutgoingEventPayloadSingleDTO> ToAppOutgoingEventPayloadListDTO(
+    this RepeatedField<AppOutgoingEventPayloadGetListGrpcReplyItem> reply)
+  {
+    var result = new List<AppOutgoingEventPayloadSingleDTO>(reply.Count);
+
+    foreach (var item in reply)
+    {
+      result.Add(item.ToAppOutgoingEventPayloadSingleDTO());
+    }
+
+    return result;
+  }
+
+  private static AppOutgoingEventPayloadSingleDTO ToAppOutgoingEventPayloadSingleDTO(
+    this AppOutgoingEventPayloadGetListGrpcReplyItem reply)
+  {
+    return new()
+    {
+      Id = reply.Id,
+      ConcurrencyToken = reply.ConcurrencyToken,
+      AppOutgoingEventId = reply.AppOutgoingEventId,
+      Data = reply.Data,
+      EntityConcurrencyTokenToDelete = reply.EntityConcurrencyTokenToDelete,
+      EntityConcurrencyTokenToInsert = reply.EntityConcurrencyTokenToInsert,
+      EntityId = reply.EntityId,
+      EntityName = reply.EntityName,
+      Position = reply.Position,
     };
   }
 }

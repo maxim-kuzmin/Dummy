@@ -39,10 +39,26 @@ public static class AppOutgoingEventEndpointsExtensions
   public static AppOutgoingEventGetListActionRequest ToAppOutgoingEventGetListActionRequest(
     this AppOutgoingEventGetListEndpointRequest request)
   {
-    AppOutgoingEventPageQuery query = new(
-      Page: new QueryPageSection(request.CurrentPage, request.ItemsPerPage),
+    AppOutgoingEventListQuery query = new(
+      MaxCount: request.MaxCount,
       Sort: request.SortField.ToAppOutgoingEventQuerySortSection(request.SortIsDesc),
-      Filter: new AppOutgoingEventQueryFilterSection(request.Query));
+      Filter: new(request.Query));
+
+    return new(query);
+  }
+
+  /// <summary>
+  /// Преобразовать к запросу действия по получению страницы исходящих событий приложения.
+  /// </summary>
+  /// <param name="request">Запрос.</param>
+  /// <returns>Запрос действия.</returns>
+  public static AppOutgoingEventGetPageActionRequest ToAppOutgoingEventGetPageActionRequest(
+    this AppOutgoingEventGetPageEndpointRequest request)
+  {
+    AppOutgoingEventPageQuery query = new(
+      Page: new(request.CurrentPage, request.ItemsPerPage),
+      Sort: request.SortField.ToAppOutgoingEventQuerySortSection(request.SortIsDesc),
+      Filter: new(request.Query));
 
     return new(query);
   }

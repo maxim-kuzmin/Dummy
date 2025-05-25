@@ -39,6 +39,22 @@ public static class DummyItemEndpointsExtensions
   public static DummyItemGetListActionRequest ToDummyItemGetListActionRequest(
     this DummyItemGetListEndpointRequest request)
   {
+    DummyItemListQuery query = new(
+      MaxCount: request.MaxCount,
+      Sort: request.SortField.ToDummyItemQuerySortSection(request.SortIsDesc),
+      Filter: new(request.Query));
+
+    return new(query);
+  }
+
+  /// <summary>
+  /// Преобразовать к запросу действия по получению страницы фиктивных предметов.
+  /// </summary>
+  /// <param name="request">Запрос.</param>
+  /// <returns>Запрос действия.</returns>
+  public static DummyItemGetPageActionRequest ToDummyItemGetPageActionRequest(
+    this DummyItemGetPageEndpointRequest request)
+  {
     DummyItemPageQuery query = new(
       Page: new(request.CurrentPage, request.ItemsPerPage),
       Sort: request.SortField.ToDummyItemQuerySortSection(request.SortIsDesc),

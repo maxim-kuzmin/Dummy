@@ -1,4 +1,5 @@
 ﻿global using Ardalis.Result;
+global using Google.Protobuf.Collections;
 global using Google.Protobuf.WellKnownTypes;
 global using Grpc.Core;
 global using Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCases.AppOutgoingEvent;

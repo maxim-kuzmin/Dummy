@@ -10,7 +10,7 @@ public class DummyItemService(IMediator _mediator) : DummyItemServiceBase
   /// Создать.
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
-  /// <param name="context"></param>
+  /// <param name="context">Контекст.</param>
   /// <returns>Отклик gRPC.</returns>
   public override async Task<DummyItemGetGrpcReply> Create(
     DummyItemCreateGrpcRequest request,
@@ -29,7 +29,7 @@ public class DummyItemService(IMediator _mediator) : DummyItemServiceBase
   /// Удалить.
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
-  /// <param name="context"></param>
+  /// <param name="context">Контекст.</param>
   /// <returns>Отклик gRPC.</returns>
   public override async Task<Empty> Delete(DummyItemDeleteGrpcRequest request, ServerCallContext context)
   {
@@ -46,7 +46,7 @@ public class DummyItemService(IMediator _mediator) : DummyItemServiceBase
   /// Получить.
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
-  /// <param name="context"></param>
+  /// <param name="context">Контекст.</param>
   /// <returns>Отклик gRPC.</returns>
   public override async Task<DummyItemGetGrpcReply> Get(
     DummyItemGetGrpcRequest request,
@@ -65,7 +65,7 @@ public class DummyItemService(IMediator _mediator) : DummyItemServiceBase
   /// Получить список.
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
-  /// <param name="context"></param>
+  /// <param name="context">Контекст.</param>
   /// <returns>Отклик gRPC.</returns>
   public override async Task<DummyItemGetListGrpcReply> GetList(
     DummyItemGetListGrpcRequest request,
@@ -84,7 +84,7 @@ public class DummyItemService(IMediator _mediator) : DummyItemServiceBase
   /// Обновить.
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
-  /// <param name="context"></param>
+  /// <param name="context">Контекст.</param>
   /// <returns>Отклик gRPC.</returns>
   public override async Task<DummyItemGetGrpcReply> Update(
     DummyItemUpdateGrpcRequest request,

@@ -10,7 +10,7 @@ public class AppOutgoingEventService(IMediator _mediator) : AppOutgoingEventServ
   /// Создать.
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
-  /// <param name="context"></param>
+  /// <param name="context">Контекст.</param>
   /// <returns>Отклик gRPC.</returns>
   public sealed override async Task<AppOutgoingEventGetGrpcReply> Create(
     AppOutgoingEventCreateGrpcRequest request,
@@ -29,7 +29,7 @@ public class AppOutgoingEventService(IMediator _mediator) : AppOutgoingEventServ
   /// Удалить.
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
-  /// <param name="context"></param>
+  /// <param name="context">Контекст.</param>
   /// <returns>Отклик gRPC.</returns>
   public sealed override async Task<Empty> Delete(
     AppOutgoingEventDeleteGrpcRequest request,
@@ -48,7 +48,7 @@ public class AppOutgoingEventService(IMediator _mediator) : AppOutgoingEventServ
   /// Получить.
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
-  /// <param name="context"></param>
+  /// <param name="context">Контекст.</param>
   /// <returns>Отклик gRPC.</returns>
   public sealed override async Task<AppOutgoingEventGetGrpcReply> Get(
     AppOutgoingEventGetGrpcRequest request,
@@ -67,7 +67,7 @@ public class AppOutgoingEventService(IMediator _mediator) : AppOutgoingEventServ
   /// Получить список.
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
-  /// <param name="context"></param>
+  /// <param name="context">Контекст.</param>
   /// <returns>Отклик gRPC.</returns>
   public sealed override async Task<AppOutgoingEventGetListGrpcReply> GetList(
     AppOutgoingEventGetListGrpcRequest request,
@@ -83,10 +83,29 @@ public class AppOutgoingEventService(IMediator _mediator) : AppOutgoingEventServ
   }
 
   /// <summary>
+  /// Получить страницу.
+  /// </summary>
+  /// <param name="request">Запрос gRPC.</param>
+  /// <param name="context">Контекст.</param>
+  /// <returns>Отклик gRPC.</returns>
+  public sealed override async Task<AppOutgoingEventGetPageGrpcReply> GetPage(
+    AppOutgoingEventGetPageGrpcRequest request,
+    ServerCallContext context)
+  {
+    var task = _mediator.Send(request.ToAppOutgoingEventGetPageActionRequest(), context.CancellationToken);
+
+    var result = await task.ConfigureAwait(false);
+
+    result.ThrowRpcExceptionIfNotSuccess();
+
+    return result.Value.ToAppOutgoingEventGetPageGrpcReply();
+  }
+
+  /// <summary>
   /// Обновить.
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
-  /// <param name="context"></param>
+  /// <param name="context">Контекст.</param>
   /// <returns>Отклик gRPC.</returns>
   public sealed override async Task<AppOutgoingEventGetGrpcReply> Update(
     AppOutgoingEventUpdateGrpcRequest request,

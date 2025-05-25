@@ -10,7 +10,7 @@ public class AppIncomingEventService(IMediator _mediator) : AppIncomingEventServ
   /// Создать.
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
-  /// <param name="context"></param>
+  /// <param name="context">Контекст.</param>
   /// <returns>Отклик gRPC.</returns>
   public override async Task<AppIncomingEventGetGrpcReply> Create(
     AppIncomingEventCreateGrpcRequest request,
@@ -29,7 +29,7 @@ public class AppIncomingEventService(IMediator _mediator) : AppIncomingEventServ
   /// Удалить.
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
-  /// <param name="context"></param>
+  /// <param name="context">Контекст.</param>
   /// <returns>Отклик gRPC.</returns>
   public override async Task<Empty> Delete(AppIncomingEventDeleteGrpcRequest request, ServerCallContext context)
   {
@@ -46,7 +46,7 @@ public class AppIncomingEventService(IMediator _mediator) : AppIncomingEventServ
   /// Получить.
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
-  /// <param name="context"></param>
+  /// <param name="context">Контекст.</param>
   /// <returns>Отклик gRPC.</returns>
   public override async Task<AppIncomingEventGetGrpcReply> Get(
     AppIncomingEventGetGrpcRequest request,
@@ -65,7 +65,7 @@ public class AppIncomingEventService(IMediator _mediator) : AppIncomingEventServ
   /// Получить список.
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
-  /// <param name="context"></param>
+  /// <param name="context">Контекст.</param>
   /// <returns>Отклик gRPC.</returns>
   public override async Task<AppIncomingEventGetListGrpcReply> GetList(
     AppIncomingEventGetListGrpcRequest request,
@@ -84,7 +84,7 @@ public class AppIncomingEventService(IMediator _mediator) : AppIncomingEventServ
   /// Обновить.
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
-  /// <param name="context"></param>
+  /// <param name="context">Контекст.</param>
   /// <returns>Отклик gRPC.</returns>
   public override async Task<AppIncomingEventGetGrpcReply> Update(
     AppIncomingEventUpdateGrpcRequest request,

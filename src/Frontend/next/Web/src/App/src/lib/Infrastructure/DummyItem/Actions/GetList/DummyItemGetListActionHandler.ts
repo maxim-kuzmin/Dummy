@@ -19,14 +19,14 @@ export function createDummyItemGetListActionHandler({
     const appApiRequest = createAppApiRequestWithBody({
       query: {
         ...(request.query.page && {
-          'currentPage': request.query.page.number,
+          //'currentPage': request.query.page.number,
           'itemsPerPage': request.query.page.size,
         }),
         ...(request.query.filter?.fullTextSearchQuery && {
           'query': request.query.filter?.fullTextSearchQuery
         }),
       },
-      endpoint: indexContext.dummyItem.actions.settings.rootPath,
+      endpoint: `${indexContext.dummyItem.actions.settings.rootPath}/page/${request.query.page?.number ?? 1}`,
       requestContext: request.context,
       errorResources: request.errorResources
     });

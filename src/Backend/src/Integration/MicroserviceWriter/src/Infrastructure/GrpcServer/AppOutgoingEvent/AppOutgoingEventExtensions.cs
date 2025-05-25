@@ -55,6 +55,22 @@ public static class AppOutgoingEventExtensions
   public static AppOutgoingEventGetListActionRequest ToAppOutgoingEventGetListActionRequest(
     this AppOutgoingEventGetListGrpcRequest request)
   {
+    AppOutgoingEventListQuery query = new(
+      MaxCount: request.MaxCount,
+      Sort: new(request.Sort.Field, request.Sort.IsDesc),
+      Filter: new(request.Filter.FullTextSearchQuery));
+
+    return new(query);
+  }
+
+  /// <summary>
+  /// Преобразовать к запросу действия по получению страницы исходящих событий приложения.
+  /// </summary>
+  /// <param name="request">Запрос gRPC.</param>
+  /// <returns>Запрос действия.</returns>
+  public static AppOutgoingEventGetPageActionRequest ToAppOutgoingEventGetPageActionRequest(
+    this AppOutgoingEventGetPageGrpcRequest request)
+  {
     AppOutgoingEventPageQuery query = new(
       Page: new(request.Page.Number, request.Page.Size),
       Sort: new(request.Sort.Field, request.Sort.IsDesc),
@@ -69,22 +85,34 @@ public static class AppOutgoingEventExtensions
   /// <param name="dto">Объект передачи данных.</param>
   /// <returns>Отклик gRPC.</returns>
   public static AppOutgoingEventGetListGrpcReply ToAppOutgoingEventGetListGrpcReply(
+    this List<AppOutgoingEventSingleDTO> dto)
+  {
+    AppOutgoingEventGetListGrpcReply result = new();
+
+    foreach (var itemDTO in dto)
+    {
+      result.Items.Add(itemDTO.ToAppOutgoingEventGetListGrpcReplyItem());
+    }
+
+    return result;
+  }
+
+  /// <summary>
+  /// Преобразовать к отклику gRPC получения страницы исходящих событий приложения.
+  /// </summary>
+  /// <param name="dto">Объект передачи данных.</param>
+  /// <returns>Отклик gRPC.</returns>
+  public static AppOutgoingEventGetPageGrpcReply ToAppOutgoingEventGetPageGrpcReply(
     this AppOutgoingEventPageDTO dto)
   {
-    AppOutgoingEventGetListGrpcReply result = new()
+    AppOutgoingEventGetPageGrpcReply result = new()
     {
       TotalCount = dto.TotalCount,
     };
 
     foreach (var itemDTO in dto.Items)
     {
-      AppOutgoingEventGetListGrpcReplyItem item = new()
-      {
-        Id = itemDTO.Id,
-        Name = itemDTO.Name,
-      };
-
-      result.Items.Add(item);
+      result.Items.Add(itemDTO.ToAppOutgoingEventGetListGrpcReplyItem());
     }
 
     return result;
@@ -124,5 +152,17 @@ public static class AppOutgoingEventExtensions
       Data: new(Name: request.Name, PublishedAt: publishedAt == default ? null : publishedAt));
 
     return new(command);
+  }
+
+  private static AppOutgoingEventGetListGrpcReplyItem ToAppOutgoingEventGetListGrpcReplyItem(
+    this AppOutgoingEventSingleDTO dto)
+  {
+    return new()
+    {
+      Id = dto.Id,
+      CreatedAt = Timestamp.FromDateTimeOffset(dto.CreatedAt),
+      Name = dto.Name,
+      PublishedAt = Timestamp.FromDateTimeOffset(dto.PublishedAt ?? default)
+    };
   }
 }

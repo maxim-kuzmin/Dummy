@@ -4,5 +4,5 @@
 /// Запрос действия по получению списка входящих событий приложения.
 /// </summary>
 /// <param name="Query">Запрос.</param>
-public record AppIncomingEventGetListActionRequest(AppIncomingEventPageQuery Query) :
-  IQuery<Result<AppIncomingEventPageDTO>>;
+public record AppIncomingEventGetListActionRequest(AppIncomingEventListQuery Query) :
+  IQuery<Result<List<AppIncomingEventSingleDTO>>>;

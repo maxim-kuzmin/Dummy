@@ -10,8 +10,8 @@ public class AppOutgoingEventPayloadQueryService(
   AppOutgoingEventPayloadGrpcClient _grpcClient) : IAppOutgoingEventPayloadQueryService
 {
   /// <inheritdoc/>
-  public async Task<Result<AppOutgoingEventPayloadPageDTO>> GetPage(
-    AppOutgoingEventPayloadPageQuery query,
+  public async Task<Result<List<AppOutgoingEventPayloadSingleDTO>>> GetList(
+    AppOutgoingEventPayloadListQuery query,
     CancellationToken cancellationToken)
   {
     try
@@ -30,6 +30,35 @@ public class AppOutgoingEventPayloadQueryService(
 
       var reply = await task.ConfigureAwait(false);
 
+      return Result.Success(reply.ToAppOutgoingEventPayloadListDTO());
+    }
+    catch (RpcException ex)
+    {
+      return ex.ToUnsuccessfulResult();
+    }
+  }
+
+  /// <inheritdoc/>
+  public async Task<Result<AppOutgoingEventPayloadPageDTO>> GetPage(
+    AppOutgoingEventPayloadPageQuery query,
+    CancellationToken cancellationToken)
+  {
+    try
+    {
+      var accessToken = _appSession.AccessToken;
+      Metadata headers = [];
+
+      headers.AddAuthorizationHeader(_appSession);
+
+      var request = query.ToAppOutgoingEventPayloadGetPageGrpcRequest();
+
+      var task = _grpcClient.GetPageAsync(
+        request,
+        headers: headers,
+        cancellationToken: cancellationToken);
+
+      var reply = await task.ConfigureAwait(false);
+
       return Result.Success(reply.ToAppOutgoingEventPayloadPageDTO());
     }
     catch (RpcException ex)
@@ -37,6 +66,7 @@ public class AppOutgoingEventPayloadQueryService(
       return ex.ToUnsuccessfulResult();
     }
   }
+
 
   /// <inheritdoc/>
   public async Task<Result<AppOutgoingEventPayloadSingleDTO>> GetSingle(

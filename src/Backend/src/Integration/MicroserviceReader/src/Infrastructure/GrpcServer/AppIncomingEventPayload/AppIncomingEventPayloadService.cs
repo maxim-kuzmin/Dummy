@@ -10,7 +10,7 @@ public class AppIncomingEventPayloadService(IMediator _mediator) : AppIncomingEv
   /// Создать.
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
-  /// <param name="context"></param>
+  /// <param name="context">Контекст.</param>
   /// <returns>Отклик gRPC.</returns>
   public override async Task<AppIncomingEventPayloadGetGrpcReply> Create(
     AppIncomingEventPayloadCreateGrpcRequest request,
@@ -29,7 +29,7 @@ public class AppIncomingEventPayloadService(IMediator _mediator) : AppIncomingEv
   /// Удалить.
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
-  /// <param name="context"></param>
+  /// <param name="context">Контекст.</param>
   /// <returns>Отклик gRPC.</returns>
   public override async Task<Empty> Delete(
     AppIncomingEventPayloadDeleteGrpcRequest request,
@@ -48,7 +48,7 @@ public class AppIncomingEventPayloadService(IMediator _mediator) : AppIncomingEv
   /// Получить.
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
-  /// <param name="context"></param>
+  /// <param name="context">Контекст.</param>
   /// <returns>Отклик gRPC.</returns>
   public override async Task<AppIncomingEventPayloadGetGrpcReply> Get(
     AppIncomingEventPayloadGetGrpcRequest request,
@@ -67,7 +67,7 @@ public class AppIncomingEventPayloadService(IMediator _mediator) : AppIncomingEv
   /// Получить список.
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
-  /// <param name="context"></param>
+  /// <param name="context">Контекст.</param>
   /// <returns>Отклик gRPC.</returns>
   public override async Task<AppIncomingEventPayloadGetListGrpcReply> GetList(
     AppIncomingEventPayloadGetListGrpcRequest request,
@@ -86,7 +86,7 @@ public class AppIncomingEventPayloadService(IMediator _mediator) : AppIncomingEv
   /// Обновить.
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>
-  /// <param name="context"></param>
+  /// <param name="context">Контекст.</param>
   /// <returns>Отклик gRPC.</returns>
   public override async Task<AppIncomingEventPayloadGetGrpcReply> Update(
     AppIncomingEventPayloadUpdateGrpcRequest request,

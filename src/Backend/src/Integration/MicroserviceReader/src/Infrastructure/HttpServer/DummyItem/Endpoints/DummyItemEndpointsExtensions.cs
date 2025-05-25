@@ -48,6 +48,22 @@ public static class DummyItemEndpointsExtensions
   }
 
   /// <summary>
+  /// Преобразовать к запросу действия по получению списка фиктивных предметов.
+  /// </summary>
+  /// <param name="request">Запрос.</param>
+  /// <returns>Запрос действия.</returns>
+  public static DummyItemGetListActionRequest ToDummyItemGetListActionRequest(
+    this DummyItemGetPageEndpointRequest request)
+  {
+    DummyItemPageQuery query = new(
+      Page: new(request.CurrentPage, request.ItemsPerPage),
+      Sort: request.SortField.ToDummyItemQuerySortSection(request.SortIsDesc),
+      Filter: new(request.Query));
+
+    return new(query);
+  }
+
+  /// <summary>
   /// Преобразовать к запросу действия по сохранению фиктивного предмета.
   /// </summary>
   /// <param name="request">Запрос.</param>

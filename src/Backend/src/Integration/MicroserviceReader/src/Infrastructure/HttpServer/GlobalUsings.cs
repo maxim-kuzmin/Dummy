@@ -39,6 +39,7 @@ global using Makc.Dummy.Integration.MicroserviceReader.Infrastructure.HttpServer
 global using Makc.Dummy.Integration.MicroserviceReader.Infrastructure.HttpServer.DummyItem.Endpoints.Delete;
 global using Makc.Dummy.Integration.MicroserviceReader.Infrastructure.HttpServer.DummyItem.Endpoints.Get;
 global using Makc.Dummy.Integration.MicroserviceReader.Infrastructure.HttpServer.DummyItem.Endpoints.GetList;
+global using Makc.Dummy.Integration.MicroserviceReader.Infrastructure.HttpServer.DummyItem.Endpoints.GetPage;
 global using Makc.Dummy.Integration.MicroserviceReader.Infrastructure.HttpServer.DummyItem.Endpoints.Update;
 global using Makc.Dummy.Shared.Core.App.Event.Payloads;
 global using MediatR;

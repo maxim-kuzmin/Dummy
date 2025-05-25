@@ -10,4 +10,4 @@ public record AppIncomingEventPageQuery(
   QueryPageSection? Page,
   QuerySortSection? Sort,
   AppIncomingEventQueryFilterSection? Filter) :
-  AppIncomingEventListQuery(Sort, Filter);
+  AppIncomingEventListQuery(Page?.Size ?? 0, Sort, Filter);

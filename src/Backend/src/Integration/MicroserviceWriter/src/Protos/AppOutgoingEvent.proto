@@ -13,6 +13,7 @@ service AppOutgoingEvent {
     rpc Delete (AppOutgoingEventDeleteGrpcRequest) returns (google.protobuf.Empty);
     rpc Get (AppOutgoingEventGetGrpcRequest) returns (AppOutgoingEventGetGrpcReply);
     rpc GetList (AppOutgoingEventGetListGrpcRequest) returns (AppOutgoingEventGetListGrpcReply);
+    rpc GetPage (AppOutgoingEventGetPageGrpcRequest) returns (AppOutgoingEventGetPageGrpcReply);
     rpc Update (AppOutgoingEventUpdateGrpcRequest) returns (AppOutgoingEventGetGrpcReply);
 }
 
@@ -52,7 +53,7 @@ message AppOutgoingEventGetListGrpcRequestFilter {
 }
 
 message AppOutgoingEventGetListGrpcRequest {
-    ActionRequestPage page = 1;
+    int32 max_count = 1;
     ActionRequestSort sort = 2;
     AppOutgoingEventGetListGrpcRequestFilter filter = 3;
 }
@@ -65,9 +66,19 @@ message AppOutgoingEventGetListGrpcReplyItem {
     string concurrency_token = 5;
 }
 
-message AppOutgoingEventGetListGrpcReply {
-    int64 total_count = 1;
-    repeated AppOutgoingEventGetListGrpcReplyItem items = 2;
+message AppOutgoingEventGetListGrpcReply {    
+    repeated AppOutgoingEventGetListGrpcReplyItem items = 1;
+}
+
+message AppOutgoingEventGetPageGrpcRequest {
+    ActionRequestPage page = 1;
+    ActionRequestSort sort = 2;
+    AppOutgoingEventGetListGrpcRequestFilter filter = 3;
+}
+
+message AppOutgoingEventGetPageGrpcReply {    
+    repeated AppOutgoingEventGetListGrpcReplyItem items = 1;
+    int64 total_count = 2;
 }
 
 message AppOutgoingEventUpdateGrpcRequest {    

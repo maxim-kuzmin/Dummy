@@ -6,6 +6,16 @@
 public interface IAppOutgoingEventPayloadQueryService
 {
   /// <summary>
+  /// Получить список объектов.
+  /// </summary>
+  /// <param name="query">Запрос.</param>
+  /// <param name="cancellationToken">Токен отмены.</param>
+  /// <returns>Результат.</returns>
+  Task<Result<List<AppOutgoingEventPayloadSingleDTO>>> GetList(
+    AppOutgoingEventPayloadListQuery query,
+    CancellationToken cancellationToken);
+
+  /// <summary>
   /// Получить страницу объектов.
   /// </summary>
   /// <param name="query">Запрос.</param>

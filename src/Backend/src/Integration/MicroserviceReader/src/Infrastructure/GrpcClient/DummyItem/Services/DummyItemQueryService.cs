@@ -1,4 +1,5 @@
-﻿namespace Makc.Dummy.Integration.MicroserviceReader.Infrastructure.GrpcClient.DummyItem.Services;
+﻿
+namespace Makc.Dummy.Integration.MicroserviceReader.Infrastructure.GrpcClient.DummyItem.Services;
 
 /// <summary>
 /// Сервис запросов фиктивного предмета.
@@ -9,6 +10,14 @@ public class DummyItemQueryService(
   AppSession _appSession,
   DummyItemGrpcClient _grpcClient) : IDummyItemQueryService
 {
+  /// <inheritdoc/>
+  public Task<Result<List<DummyItemSingleDTO>>> GetList(
+    DummyItemListQuery query,
+    CancellationToken cancellationToken)
+  {
+    throw new NotImplementedException();
+  }
+
   /// <inheritdoc/>
   public async Task<Result<DummyItemPageDTO>> GetPage(
     DummyItemPageQuery query,

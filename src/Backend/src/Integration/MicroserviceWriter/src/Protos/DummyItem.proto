@@ -12,6 +12,7 @@ service DummyItem {
     rpc Delete (DummyItemDeleteGrpcRequest) returns (google.protobuf.Empty);
     rpc Get (DummyItemGetGrpcRequest) returns (DummyItemGetGrpcReply);
     rpc GetList (DummyItemGetListGrpcRequest) returns (DummyItemGetListGrpcReply);
+    rpc GetPage (DummyItemGetPageGrpcRequest) returns (DummyItemGetPageGrpcReply);
     rpc Update (DummyItemUpdateGrpcRequest) returns (DummyItemGetGrpcReply);
 }
 
@@ -48,7 +49,7 @@ message DummyItemGetListGrpcRequestFilter {
 }
 
 message DummyItemGetListGrpcRequest {
-    ActionRequestPage page = 1;
+    int32 max_count = 1;
     ActionRequestSort sort = 2;
     DummyItemGetListGrpcRequestFilter filter = 3;
 }
@@ -59,9 +60,19 @@ message DummyItemGetListGrpcReplyItem {
     string concurrency_token = 3;    
 }
 
-message DummyItemGetListGrpcReply {
-    int64 total_count = 1;
-    repeated DummyItemGetListGrpcReplyItem items = 2;
+message DummyItemGetListGrpcReply {    
+    repeated DummyItemGetListGrpcReplyItem items = 1;
+}
+
+message DummyItemGetPageGrpcRequest {
+    ActionRequestPage page = 1;
+    ActionRequestSort sort = 2;
+    DummyItemGetListGrpcRequestFilter filter = 3;
+}
+
+message DummyItemGetPageGrpcReply {    
+    repeated DummyItemGetListGrpcReplyItem items = 1;
+    int64 total_count = 2;
 }
 
 message DummyItemUpdateGrpcRequest {    

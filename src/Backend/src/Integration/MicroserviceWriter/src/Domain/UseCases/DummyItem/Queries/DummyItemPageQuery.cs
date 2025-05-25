@@ -10,4 +10,4 @@ public record DummyItemPageQuery(
   QueryPageSection? Page,
   QuerySortSection? Sort,
   DummyItemQueryFilterSection? Filter) :
-  DummyItemListQuery(Sort, Filter);
+  DummyItemListQuery(Page?.Size ?? 0, Sort, Filter);

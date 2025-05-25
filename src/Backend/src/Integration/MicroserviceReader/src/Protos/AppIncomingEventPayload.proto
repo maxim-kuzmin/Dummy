@@ -13,6 +13,7 @@ service AppIncomingEventPayload {
     rpc Delete (AppIncomingEventPayloadDeleteGrpcRequest) returns (google.protobuf.Empty);
     rpc Get (AppIncomingEventPayloadGetGrpcRequest) returns (AppIncomingEventPayloadGetGrpcReply);
     rpc GetList (AppIncomingEventPayloadGetListGrpcRequest) returns (AppIncomingEventPayloadGetListGrpcReply);
+    rpc GetPage (AppIncomingEventPayloadGetPageGrpcRequest) returns (AppIncomingEventPayloadGetPageGrpcReply);
     rpc Update (AppIncomingEventPayloadUpdateGrpcRequest) returns (AppIncomingEventPayloadGetGrpcReply);
 }
 
@@ -64,7 +65,7 @@ message AppIncomingEventPayloadGetListGrpcRequestFilter {
 }
 
 message AppIncomingEventPayloadGetListGrpcRequest {
-    ActionRequestPage page = 1;
+    int32 max_count = 1;
     ActionRequestSort sort = 2;
     AppIncomingEventPayloadGetListGrpcRequestFilter filter = 3;
 }
@@ -83,9 +84,19 @@ message AppIncomingEventPayloadGetListGrpcReplyItem {
     google.protobuf.Timestamp created_at = 11;
 }
 
-message AppIncomingEventPayloadGetListGrpcReply {
-    int64 total_count = 1;
-    repeated AppIncomingEventPayloadGetListGrpcReplyItem items = 2;
+message AppIncomingEventPayloadGetListGrpcReply {    
+    repeated AppIncomingEventPayloadGetListGrpcReplyItem items = 1;
+}
+
+message AppIncomingEventPayloadGetPageGrpcRequest {
+    ActionRequestPage page = 1;
+    ActionRequestSort sort = 2;
+    AppIncomingEventPayloadGetListGrpcRequestFilter filter = 3;
+}
+
+message AppIncomingEventPayloadGetPageGrpcReply {    
+    repeated AppIncomingEventPayloadGetListGrpcReplyItem items = 1;
+    int64 total_count = 2;
 }
 
 message AppIncomingEventPayloadUpdateGrpcRequest {    
