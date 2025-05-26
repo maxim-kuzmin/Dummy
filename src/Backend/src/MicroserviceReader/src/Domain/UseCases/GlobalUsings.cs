@@ -2,6 +2,8 @@
 global using Ardalis.Result;
 global using Ardalis.SharedKernel;
 global using Makc.Dummy.Integration.MicroserviceReader.Domain.UseCases.AppIncomingEvent;
+global using Makc.Dummy.Integration.MicroserviceReader.Domain.UseCases.AppIncomingEvent.Actions.GetList;
+global using Makc.Dummy.Integration.MicroserviceReader.Domain.UseCases.AppIncomingEvent.Actions.GetPage;
 global using Makc.Dummy.Integration.MicroserviceReader.Domain.UseCases.AppIncomingEvent.Command.Sections;
 global using Makc.Dummy.Integration.MicroserviceReader.Domain.UseCases.AppIncomingEvent.Commands;
 global using Makc.Dummy.Integration.MicroserviceReader.Domain.UseCases.AppIncomingEvent.DTOs;
@@ -10,6 +12,7 @@ global using Makc.Dummy.Integration.MicroserviceReader.Domain.UseCases.AppIncomi
 global using Makc.Dummy.Integration.MicroserviceReader.Domain.UseCases.AppIncomingEventPayload.Actions.Delete;
 global using Makc.Dummy.Integration.MicroserviceReader.Domain.UseCases.AppIncomingEventPayload.Actions.Get;
 global using Makc.Dummy.Integration.MicroserviceReader.Domain.UseCases.AppIncomingEventPayload.Actions.GetList;
+global using Makc.Dummy.Integration.MicroserviceReader.Domain.UseCases.AppIncomingEventPayload.Actions.GetPage;
 global using Makc.Dummy.Integration.MicroserviceReader.Domain.UseCases.AppIncomingEventPayload.Actions.Save;
 global using Makc.Dummy.Integration.MicroserviceReader.Domain.UseCases.AppIncomingEventPayload.Command.Sections;
 global using Makc.Dummy.Integration.MicroserviceReader.Domain.UseCases.AppIncomingEventPayload.Commands;
@@ -19,6 +22,7 @@ global using Makc.Dummy.Integration.MicroserviceReader.Domain.UseCases.DummyItem
 global using Makc.Dummy.Integration.MicroserviceReader.Domain.UseCases.DummyItem.Actions.Delete;
 global using Makc.Dummy.Integration.MicroserviceReader.Domain.UseCases.DummyItem.Actions.Get;
 global using Makc.Dummy.Integration.MicroserviceReader.Domain.UseCases.DummyItem.Actions.GetList;
+global using Makc.Dummy.Integration.MicroserviceReader.Domain.UseCases.DummyItem.Actions.GetPage;
 global using Makc.Dummy.Integration.MicroserviceReader.Domain.UseCases.DummyItem.Actions.Save;
 global using Makc.Dummy.Integration.MicroserviceReader.Domain.UseCases.DummyItem.Command.Sections;
 global using Makc.Dummy.Integration.MicroserviceReader.Domain.UseCases.DummyItem.Commands;

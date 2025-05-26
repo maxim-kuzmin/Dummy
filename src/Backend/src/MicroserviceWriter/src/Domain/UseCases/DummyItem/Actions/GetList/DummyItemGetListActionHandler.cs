@@ -10,10 +10,10 @@ public class DummyItemGetListActionHandler(
   AppSession _appSession,
   ILogger<DummyItemGetListActionHandler> _logger,
   IDummyItemQueryService _service) :
-  IQueryHandler<DummyItemGetListActionRequest, Result<DummyItemPageDTO>>
+  IQueryHandler<DummyItemGetListActionRequest, Result<List<DummyItemSingleDTO>>>
 {
   /// <inheritdoc/>
-  public async Task<Result<DummyItemPageDTO>> Handle(
+  public async Task<Result<List<DummyItemSingleDTO>>> Handle(
     DummyItemGetListActionRequest request,
     CancellationToken cancellationToken)
   {
@@ -21,7 +21,7 @@ public class DummyItemGetListActionHandler(
 
     _logger.LogDebug("User name: {userName}", userName);
 
-    var result = await _service.GetPage(request.Query, cancellationToken);
+    var result = await _service.GetList(request.Query, cancellationToken);
 
     return Result.Success(result);
   }
