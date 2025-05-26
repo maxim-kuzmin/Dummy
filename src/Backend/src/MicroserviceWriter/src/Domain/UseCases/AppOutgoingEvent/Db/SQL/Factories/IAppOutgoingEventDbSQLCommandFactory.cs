@@ -27,19 +27,31 @@ public interface IAppOutgoingEventDbSQLCommandFactory
   DbSQLCommand CreateDbCommandForFilter(AppOutgoingEventQueryFilterSection? filter);
 
   /// <summary>
-  /// Создать базы данных для элементов.
+  /// Создать команду базы данных для элементов.
+  /// </summary>
+  /// <param name="dbCommandForFilter">Команда базы данных для фильтра.</param>
+  /// <param name="sort">Сортировка.</param>
+  /// <param name="maxCount">Максимальное количество.</param>  
+  /// <returns>Команда базы данных для элементов.</returns>
+  public DbSQLCommand CreateDbCommandForItems(
+    DbSQLCommand dbCommandForFilter,
+    QuerySortSection? sort,
+    int maxCount);
+
+  /// <summary>
+  /// Создать команду базы данных для элементов.
   /// </summary>
   /// <param name="dbCommandForFilter">Команда базы данных для фильтра.</param>
   /// <param name="sort">Сортировка.</param>
   /// <param name="page">Страница.</param>  
   /// <returns>Команда базы данных для элементов.</returns>
-  DbSQLCommand CreateDbCommandForItems(
+  public DbSQLCommand CreateDbCommandForItems(
     DbSQLCommand dbCommandForFilter,
     QuerySortSection? sort,
-    QueryPageSection? page = null);
+    QueryPageSection? page);
 
   /// <summary>
-  /// Создать базы данных для общего количества.
+  /// Создать команду базы данных для общего количества.
   /// </summary>
   /// <param name="dbCommandForFilter">Команда базы данных для фильтра.</param>
   /// <returns>Команда базы данных для общего количества.</returns>

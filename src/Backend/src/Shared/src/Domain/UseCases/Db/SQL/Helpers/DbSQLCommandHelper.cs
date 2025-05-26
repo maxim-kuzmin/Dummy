@@ -26,4 +26,7 @@ public abstract class DbSQLCommandHelper : IDbSQLCommandHelper
 
     dbCommand.TextBuilder.AppendLine($"order by {orderByField} {orderByDirection}");
   }
+
+  /// <inheritdoc/>
+  public abstract string GetMaxCountQuery(int maxCount);
 }

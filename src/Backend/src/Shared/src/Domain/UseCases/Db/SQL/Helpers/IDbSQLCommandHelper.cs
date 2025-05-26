@@ -24,4 +24,10 @@ public interface IDbSQLCommandHelper
     QuerySortSection? sort,
     QuerySortSection defaultSort,
     Func<string, string> funcToCreateOrderByField);
+
+  /// <summary>
+  /// Получить запрос макимального количества.
+  /// </summary>
+  /// <param name="maxCount">Максимальное количество.</param>
+  string GetMaxCountQuery(int maxCount);
 }

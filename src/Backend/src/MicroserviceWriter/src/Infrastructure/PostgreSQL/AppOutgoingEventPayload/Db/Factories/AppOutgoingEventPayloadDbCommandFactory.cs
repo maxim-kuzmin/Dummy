@@ -64,7 +64,51 @@ where
   public DbSQLCommand CreateDbCommandForItems(
     DbSQLCommand dbCommandForFilter,
     QuerySortSection? sort,
-    QueryPageSection? page = null)
+    int maxCount)
+  {
+    string maxCountQuery = _appDbSQLCommandHelper.GetMaxCountQuery(maxCount);
+
+    return CreateDbCommandForItems(dbCommandForFilter, sort, maxCountQuery);
+  }
+
+  /// <inheritdoc/>
+  public DbSQLCommand CreateDbCommandForItems(
+    DbSQLCommand dbCommandForFilter,
+    QuerySortSection? sort,
+    QueryPageSection? page)
+  {
+    var result = CreateDbCommandForItems(dbCommandForFilter, sort);
+
+    _appDbSQLCommandHelper.AddPagination(result, page);
+
+    return result;
+  }
+
+  /// <inheritdoc/>
+  public DbSQLCommand CreateDbCommandForTotalCount(DbSQLCommand dbCommandForFilter)
+  {
+    DbSQLCommand result = new();
+
+    dbCommandForFilter.CopyParametersTo(result);
+
+    var sAppOutgoingEventPayload = _appDbSettings.Entities.AppOutgoingEventPayload;
+
+    result.TextBuilder.AppendLine($$"""
+select
+  count(*)
+from
+  "{{sAppOutgoingEventPayload.Schema}}"."{{sAppOutgoingEventPayload.Table}}" aep
+""");
+
+    result.TextBuilder.AppendLine(dbCommandForFilter.ToString());
+
+    return result;
+  }
+
+  private DbSQLCommand CreateDbCommandForItems(
+    DbSQLCommand dbCommandForFilter,
+    QuerySortSection? sort,
+    string maxCountQuery = "")
   {
     DbSQLCommand result = new();
 
@@ -89,30 +133,16 @@ from
 
     result.TextBuilder.AppendLine(dbCommandForFilter.ToString());
 
-    _appDbSQLCommandHelper.AddSorting(result, sort, DummyItemSettings.DefaultQuerySortSection, CreateOrderByField);
+    _appDbSQLCommandHelper.AddSorting(
+      result,
+      sort,
+      AppOutgoingEventPayloadSettings.DefaultQuerySortSection,
+      CreateOrderByField);
 
-    _appDbSQLCommandHelper.AddPagination(result, page);
-
-    return result;
-  }
-
-  /// <inheritdoc/>
-  public DbSQLCommand CreateDbCommandForTotalCount(DbSQLCommand dbCommandForFilter)
-  {
-    DbSQLCommand result = new();
-
-    dbCommandForFilter.CopyParametersTo(result);
-
-    var sAppOutgoingEventPayload = _appDbSettings.Entities.AppOutgoingEventPayload;
-
-    result.TextBuilder.AppendLine($$"""
-select
-  count(*)
-from
-  "{{sAppOutgoingEventPayload.Schema}}"."{{sAppOutgoingEventPayload.Table}}" aep
-""");
-
-    result.TextBuilder.AppendLine(dbCommandForFilter.ToString());
+    if (!string.IsNullOrWhiteSpace(maxCountQuery))
+    {
+      result.TextBuilder.Append(maxCountQuery);
+    }
 
     return result;
   }

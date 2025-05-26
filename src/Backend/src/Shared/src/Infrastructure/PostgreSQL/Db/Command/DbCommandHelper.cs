@@ -1,4 +1,6 @@
-﻿namespace Makc.Dummy.Shared.Infrastructure.PostgreSQL.Db.Command;
+﻿using System.Data.Common;
+
+namespace Makc.Dummy.Shared.Infrastructure.PostgreSQL.Db.Command;
 
 /// <summary>
 /// Помощник для построения команд базы данных.
@@ -26,5 +28,11 @@ public class DbCommandHelper : DbSQLCommandHelper
 
       dbCommand.AddParameter("@PageNumber", (page.Number - 1) * page.Size);
     }
+  }
+
+  /// <inheritdoc/>
+  public sealed override string GetMaxCountQuery(int maxCount)
+  {
+    return maxCount > 0 ? $" limit {maxCount}" : string.Empty;
   }
 }

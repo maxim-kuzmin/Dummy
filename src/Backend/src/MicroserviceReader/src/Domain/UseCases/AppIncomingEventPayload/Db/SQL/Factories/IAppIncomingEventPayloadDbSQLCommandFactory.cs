@@ -20,7 +20,7 @@ public interface IAppIncomingEventPayloadDbSQLCommandFactory
   DbSQLCommand CreateDbCommandForFilter(AppIncomingEventPayloadPageQuery query);
 
   /// <summary>
-  /// Создать базы данных для элементов.
+  /// Создать команду базы данных для элементов.
   /// </summary>
   /// <param name="dbCommandForFilter">Команда базы данных для фильтра.</param>
   /// <param name="page">Страница.</param>
@@ -32,7 +32,7 @@ public interface IAppIncomingEventPayloadDbSQLCommandFactory
     QuerySortSection? sort);
 
   /// <summary>
-  /// Создать базы данных для общего количества.
+  /// Создать команду базы данных для общего количества.
   /// </summary>
   /// <param name="dbCommandForFilter">Команда базы данных для фильтра.</param>
   /// <returns>Команда базы данных для общего количества.</returns>

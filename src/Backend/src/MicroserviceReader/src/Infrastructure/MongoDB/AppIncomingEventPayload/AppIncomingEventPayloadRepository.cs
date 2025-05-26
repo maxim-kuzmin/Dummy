@@ -1,4 +1,6 @@
-﻿namespace Makc.Dummy.MicroserviceReader.Infrastructure.MongoDB.AppIncomingEventPayload;
+﻿using Makc.Dummy.Shared.Domain.UseCases.Query.Sections;
+
+namespace Makc.Dummy.MicroserviceReader.Infrastructure.MongoDB.AppIncomingEventPayload;
 
 /// <summary>
 /// Репозиторий полезной нагрузки входящего события приложения.
@@ -55,7 +57,8 @@ public class AppIncomingEventPayloadRepository(
     var filter = CreateFilter(query.Filter);
 
     var found = Collection.Find(ClientSessionHandle, filter)
-      .Sort(query.Sort, AppIncomingEventSettings.DefaultQuerySortSection, CreateSortFieldExpression);
+      .Sort(query.Sort, AppIncomingEventSettings.DefaultQuerySortSection, CreateSortFieldExpression)
+      .TakeMaxCount(query.MaxCount);
 
     var result = await found.ToListAsync(cancellationToken).ConfigureAwait(false);
 

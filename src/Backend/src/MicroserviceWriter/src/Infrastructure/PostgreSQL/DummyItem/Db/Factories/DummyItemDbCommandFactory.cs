@@ -58,26 +58,20 @@ where
   public DbSQLCommand CreateDbCommandForItems(
     DbSQLCommand dbCommandForFilter,
     QuerySortSection? sort,
-    QueryPageSection? page = null)
+    int maxCount)
   {
-    DbSQLCommand result = new();
+    string maxCountQuery = _appDbSQLCommandHelper.GetMaxCountQuery(maxCount);
 
-    dbCommandForFilter.CopyParametersTo(result);
+    return CreateDbCommandForItems(dbCommandForFilter, sort, maxCountQuery);
+  }
 
-    var sDummyItem = _appDbSettings.Entities.DummyItem;
-
-    result.TextBuilder.AppendLine($$"""
-select
-  di."{{sDummyItem.ColumnForId}}" "Id",
-  di."{{sDummyItem.ColumnForConcurrencyToken}}" "ConcurrencyToken",
-  di."{{sDummyItem.ColumnForName}}" "Name"  
-from
-  "{{sDummyItem.Schema}}"."{{sDummyItem.Table}}" di
-""");
-
-    result.TextBuilder.AppendLine(dbCommandForFilter.ToString());
-
-    _appDbSQLCommandHelper.AddSorting(result, sort, DummyItemSettings.DefaultQuerySortSection, CreateOrderByField);
+  /// <inheritdoc/>
+  public DbSQLCommand CreateDbCommandForItems(
+    DbSQLCommand dbCommandForFilter,
+    QuerySortSection? sort,
+    QueryPageSection? page)
+  {
+    var result = CreateDbCommandForItems(dbCommandForFilter, sort);
 
     _appDbSQLCommandHelper.AddPagination(result, page);
 
@@ -101,6 +95,42 @@ from
 """);
 
     result.TextBuilder.AppendLine(dbCommandForFilter.ToString());
+
+    return result;
+  }
+
+  private DbSQLCommand CreateDbCommandForItems(
+    DbSQLCommand dbCommandForFilter,
+    QuerySortSection? sort,
+    string maxCountQuery = "")
+  {
+    DbSQLCommand result = new();
+
+    dbCommandForFilter.CopyParametersTo(result);
+
+    var sDummyItem = _appDbSettings.Entities.DummyItem;
+
+    result.TextBuilder.AppendLine($$"""
+select
+  di."{{sDummyItem.ColumnForId}}" "Id",
+  di."{{sDummyItem.ColumnForConcurrencyToken}}" "ConcurrencyToken",
+  di."{{sDummyItem.ColumnForName}}" "Name"  
+from
+  "{{sDummyItem.Schema}}"."{{sDummyItem.Table}}" di
+""");
+
+    result.TextBuilder.AppendLine(dbCommandForFilter.ToString());
+
+    _appDbSQLCommandHelper.AddSorting(
+      result,
+      sort,
+      DummyItemSettings.DefaultQuerySortSection,
+      CreateOrderByField);
+
+    if (!string.IsNullOrWhiteSpace(maxCountQuery))
+    {
+      result.TextBuilder.Append(maxCountQuery);
+    }
 
     return result;
   }

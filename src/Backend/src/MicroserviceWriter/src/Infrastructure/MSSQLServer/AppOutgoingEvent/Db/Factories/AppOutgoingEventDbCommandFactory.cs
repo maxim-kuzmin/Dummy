@@ -41,7 +41,7 @@ where
 
     var sAppOutgoingEvent = _appDbSettings.Entities.AppOutgoingEvent;
 
-    string maxCountQuery = query.MaxCount > 0 ? $" top {query.MaxCount}" : string.Empty;
+    string maxCountQuery = _appDbSQLCommandHelper.GetMaxCountQuery(query.MaxCount);
 
     result.TextBuilder.AppendLine($$"""
 select{{maxCountQuery}}
@@ -109,28 +109,20 @@ where
   public DbSQLCommand CreateDbCommandForItems(
     DbSQLCommand dbCommandForFilter,
     QuerySortSection? sort,
-    QueryPageSection? page = null)
+    int maxCount)
   {
-    DbSQLCommand result = new();
+    string maxCountQuery = _appDbSQLCommandHelper.GetMaxCountQuery(maxCount);
 
-    dbCommandForFilter.CopyParametersTo(result);
+    return CreateDbCommandForItems(dbCommandForFilter, sort, maxCountQuery);
+  }
 
-    var sAppOutgoingEvent = _appDbSettings.Entities.AppOutgoingEvent;
-
-    result.TextBuilder.AppendLine($$"""
-select
-  ae."{{sAppOutgoingEvent.ColumnForId}}" "Id",
-  ae."{{sAppOutgoingEvent.ColumnForConcurrencyToken}}" "ConcurrencyToken",
-  ae."{{sAppOutgoingEvent.ColumnForCreatedAt}}" "CreatedAt",  
-  ae."{{sAppOutgoingEvent.ColumnForName}}" "Name",
-  ae."{{sAppOutgoingEvent.ColumnForPublishedAt}}" "PublishedAt"
-from
-  "{{sAppOutgoingEvent.Schema}}"."{{sAppOutgoingEvent.Table}}" ae
-""");
-
-    result.TextBuilder.AppendLine(dbCommandForFilter.ToString());
-
-    _appDbSQLCommandHelper.AddSorting(result, sort, DummyItemSettings.DefaultQuerySortSection, CreateOrderByField);
+  /// <inheritdoc/>
+  public DbSQLCommand CreateDbCommandForItems(
+    DbSQLCommand dbCommandForFilter,
+    QuerySortSection? sort,
+    QueryPageSection? page)
+  {
+    var result = CreateDbCommandForItems(dbCommandForFilter, sort);
 
     _appDbSQLCommandHelper.AddPagination(result, page);
 
@@ -154,6 +146,39 @@ from
 """);
 
     result.TextBuilder.AppendLine(dbCommandForFilter.ToString());
+
+    return result;
+  }
+
+  private DbSQLCommand CreateDbCommandForItems(
+    DbSQLCommand dbCommandForFilter,
+    QuerySortSection? sort,
+    string maxCountQuery = "")
+  {
+    DbSQLCommand result = new();
+
+    dbCommandForFilter.CopyParametersTo(result);
+
+    var sAppOutgoingEvent = _appDbSettings.Entities.AppOutgoingEvent;
+
+    result.TextBuilder.AppendLine($$"""
+select{{maxCountQuery}}
+  ae."{{sAppOutgoingEvent.ColumnForId}}" "Id",
+  ae."{{sAppOutgoingEvent.ColumnForConcurrencyToken}}" "ConcurrencyToken",
+  ae."{{sAppOutgoingEvent.ColumnForCreatedAt}}" "CreatedAt",  
+  ae."{{sAppOutgoingEvent.ColumnForName}}" "Name",
+  ae."{{sAppOutgoingEvent.ColumnForPublishedAt}}" "PublishedAt"
+from
+  "{{sAppOutgoingEvent.Schema}}"."{{sAppOutgoingEvent.Table}}" ae
+""");
+
+    result.TextBuilder.AppendLine(dbCommandForFilter.ToString());
+
+    _appDbSQLCommandHelper.AddSorting(
+      result,
+      sort,
+      AppOutgoingEventSettings.DefaultQuerySortSection,
+      CreateOrderByField);
 
     return result;
   }

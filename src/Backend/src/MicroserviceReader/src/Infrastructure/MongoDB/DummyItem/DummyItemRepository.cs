@@ -29,7 +29,8 @@ public class DummyItemRepository(
     var filter = CreateFilter(query.Filter);
 
     var found = Collection.Find(ClientSessionHandle, filter)
-      .Sort(query.Sort, DummyItemSettings.DefaultQuerySortSection, CreateSortFieldExpression);
+      .Sort(query.Sort, DummyItemSettings.DefaultQuerySortSection, CreateSortFieldExpression)
+      .TakeMaxCount(query.MaxCount);
 
     var result = await found.ToListAsync(cancellationToken).ConfigureAwait(false);
 

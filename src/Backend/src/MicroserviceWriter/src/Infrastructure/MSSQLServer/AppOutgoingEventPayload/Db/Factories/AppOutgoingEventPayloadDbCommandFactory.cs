@@ -64,32 +64,20 @@ where
   public DbSQLCommand CreateDbCommandForItems(
     DbSQLCommand dbCommandForFilter,
     QuerySortSection? sort,
-    QueryPageSection? page = null)
+    int maxCount)
   {
-    DbSQLCommand result = new();
+    string maxCountQuery = _appDbSQLCommandHelper.GetMaxCountQuery(maxCount);
 
-    dbCommandForFilter.CopyParametersTo(result);
+    return CreateDbCommandForItems(dbCommandForFilter, sort, maxCountQuery);
+  }
 
-    var sAppOutgoingEventPayload = _appDbSettings.Entities.AppOutgoingEventPayload;
-
-    result.TextBuilder.AppendLine($$"""
-select
-  aep."{{sAppOutgoingEventPayload.ColumnForId}}" "Id",
-  aep."{{sAppOutgoingEventPayload.ColumnForConcurrencyToken}}" "ConcurrencyToken",
-  aep."{{sAppOutgoingEventPayload.ColumnForAppOutgoingEventId}}" "AppOutgoingEventId",
-  aep."{{sAppOutgoingEventPayload.ColumnForData}}" "Data",
-  aep."{{sAppOutgoingEventPayload.ColumnForEntityConcurrencyTokenToDelete}}" "EntityConcurrencyTokenToDelete",
-  aep."{{sAppOutgoingEventPayload.ColumnForEntityConcurrencyTokenToInsert}}" "EntityConcurrencyTokenToInsert",
-  aep."{{sAppOutgoingEventPayload.ColumnForEntityId}}" "EntityId",
-  aep."{{sAppOutgoingEventPayload.ColumnForEntityName}}" "EntityName",
-  aep."{{sAppOutgoingEventPayload.ColumnForPosition}}" "Position"
-from
-  "{{sAppOutgoingEventPayload.Schema}}"."{{sAppOutgoingEventPayload.Table}}" aep
-""");
-
-    result.TextBuilder.AppendLine(dbCommandForFilter.ToString());
-
-    _appDbSQLCommandHelper.AddSorting(result, sort, DummyItemSettings.DefaultQuerySortSection, CreateOrderByField);
+  /// <inheritdoc/>
+  public DbSQLCommand CreateDbCommandForItems(
+    DbSQLCommand dbCommandForFilter,
+    QuerySortSection? sort,
+    QueryPageSection? page)
+  {
+    var result = CreateDbCommandForItems(dbCommandForFilter, sort);
 
     _appDbSQLCommandHelper.AddPagination(result, page);
 
@@ -113,6 +101,42 @@ from
 """);
 
     result.TextBuilder.AppendLine(dbCommandForFilter.ToString());
+
+    return result;
+  }
+
+  private DbSQLCommand CreateDbCommandForItems(
+    DbSQLCommand dbCommandForFilter,
+    QuerySortSection? sort,
+    string maxCountQuery = "")
+  {
+    DbSQLCommand result = new();
+
+    dbCommandForFilter.CopyParametersTo(result);
+
+    var sAppOutgoingEventPayload = _appDbSettings.Entities.AppOutgoingEventPayload;
+
+    result.TextBuilder.AppendLine($$"""
+select{{maxCountQuery}}
+  aep."{{sAppOutgoingEventPayload.ColumnForId}}" "Id",
+  aep."{{sAppOutgoingEventPayload.ColumnForConcurrencyToken}}" "ConcurrencyToken",
+  aep."{{sAppOutgoingEventPayload.ColumnForAppOutgoingEventId}}" "AppOutgoingEventId",
+  aep."{{sAppOutgoingEventPayload.ColumnForData}}" "Data",
+  aep."{{sAppOutgoingEventPayload.ColumnForEntityConcurrencyTokenToDelete}}" "EntityConcurrencyTokenToDelete",
+  aep."{{sAppOutgoingEventPayload.ColumnForEntityConcurrencyTokenToInsert}}" "EntityConcurrencyTokenToInsert",
+  aep."{{sAppOutgoingEventPayload.ColumnForEntityId}}" "EntityId",
+  aep."{{sAppOutgoingEventPayload.ColumnForEntityName}}" "EntityName",
+  aep."{{sAppOutgoingEventPayload.ColumnForPosition}}" "Position"
+from
+  "{{sAppOutgoingEventPayload.Schema}}"."{{sAppOutgoingEventPayload.Table}}" aep
+""");
+
+    result.TextBuilder.AppendLine(dbCommandForFilter.ToString());
+
+    _appDbSQLCommandHelper.AddSorting(
+      result,
+      sort, AppOutgoingEventPayloadSettings.DefaultQuerySortSection,
+      CreateOrderByField);
 
     return result;
   }

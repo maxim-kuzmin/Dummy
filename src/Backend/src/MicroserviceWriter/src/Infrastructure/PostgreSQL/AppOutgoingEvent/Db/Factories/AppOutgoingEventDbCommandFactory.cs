@@ -111,9 +111,33 @@ where
 
   /// <inheritdoc/>
   public DbSQLCommand CreateDbCommandForItems(
+    DbSQLCommand dbCommandForFilter,
+    QuerySortSection? sort,
+    int maxCount)
+  {
+    string maxCountQuery = _appDbSQLCommandHelper.GetMaxCountQuery(maxCount);
+
+    return CreateDbCommandForItems(dbCommandForFilter, sort, maxCountQuery);
+  }
+
+  /// <inheritdoc/>
+  public DbSQLCommand CreateDbCommandForItems(
+    DbSQLCommand dbCommandForFilter,
+    QuerySortSection? sort,
+    QueryPageSection? page)
+  {
+    var result = CreateDbCommandForItems(dbCommandForFilter, sort);
+
+    _appDbSQLCommandHelper.AddPagination(result, page);
+
+    return result;
+  }
+
+  /// <inheritdoc/>
+  public DbSQLCommand CreateDbCommandForItems(
     DbSQLCommand dbCommandForFilter,    
     QuerySortSection? sort,
-    QueryPageSection? page = null)
+    string maxCountQuery = "")
   {
     DbSQLCommand result = new();
 
@@ -134,10 +158,16 @@ from
 
     result.TextBuilder.AppendLine(dbCommandForFilter.ToString());
 
-    _appDbSQLCommandHelper.AddSorting(result, sort, DummyItemSettings.DefaultQuerySortSection, CreateOrderByField);
+    _appDbSQLCommandHelper.AddSorting(
+      result,
+      sort,
+      AppOutgoingEventSettings.DefaultQuerySortSection,
+      CreateOrderByField);
 
-    _appDbSQLCommandHelper.AddPagination(result, page);
-
+    if (!string.IsNullOrWhiteSpace(maxCountQuery))
+    {
+      result.TextBuilder.Append(maxCountQuery);
+    }
     return result;
   }
 

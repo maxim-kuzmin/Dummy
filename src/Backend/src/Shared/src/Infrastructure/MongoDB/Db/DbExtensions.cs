@@ -6,29 +6,43 @@
 public static class DbExtensions
 {
   /// <summary>
+  /// Взять максимальное количество.
+  /// </summary>
+  /// <typeparam name="TEntity">Тип сущности.</typeparam>
+  /// <param name="found">Найденное.</param>
+  /// <param name="maxCount">Максимальное количество.</param>
+  /// <returns>Найденное.</returns>
+  public static IFindFluent<TEntity, TEntity> TakeMaxCount<TEntity>(
+    this IFindFluent<TEntity, TEntity> found,
+    int maxCount)
+  {
+    if (maxCount > 0)
+    {
+      found = found.Limit(maxCount);
+    }
+
+    return found;
+  }
+
+  /// <summary>
   /// Взять страницу.
   /// </summary>
   /// <typeparam name="TEntity">Тип сущности.</typeparam>
   /// <param name="found">Найденное.</param>
   /// <param name="page">Страница.</param>
-  /// <returns>Страница найденного.</returns>
+  /// <returns>Найденное.</returns>
   public static IFindFluent<TEntity, TEntity> TakePage<TEntity>(
     this IFindFluent<TEntity, TEntity> found,
     QueryPageSection? page)
   {
-    if (page == null)
+    if (page != null)
     {
-      return found;
-    }
+      if (page.Number > 0)
+      {
+        found = found.Skip((page.Number - 1) * page.Size);
+      }
 
-    if (page.Number > 0)
-    {
-      found = found.Skip((page.Number - 1) * page.Size);
-    }
-
-    if (page.Size > 0)
-    {
-      found = found.Limit(page.Size);
+      found = found.TakeMaxCount(page.Size);
     }
 
     return found;

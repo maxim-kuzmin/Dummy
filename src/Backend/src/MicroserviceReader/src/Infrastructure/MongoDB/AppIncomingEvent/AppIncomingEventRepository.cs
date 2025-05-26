@@ -1,4 +1,6 @@
-﻿namespace Makc.Dummy.MicroserviceReader.Infrastructure.MongoDB.AppIncomingEvent;
+﻿using Makc.Dummy.Shared.Domain.UseCases.Query.Sections;
+
+namespace Makc.Dummy.MicroserviceReader.Infrastructure.MongoDB.AppIncomingEvent;
 
 /// <summary>
 /// Репозиторий входящего события приложения.
@@ -53,9 +55,10 @@ public class AppIncomingEventRepository(
     CancellationToken cancellationToken)
   {
     var filter = CreateFilter(query.Filter);
-
+      
     var found = Collection.Find(ClientSessionHandle, filter)
-      .Sort(query.Sort, AppIncomingEventSettings.DefaultQuerySortSection, CreateSortFieldExpression);
+      .Sort(query.Sort, AppIncomingEventSettings.DefaultQuerySortSection, CreateSortFieldExpression)
+      .TakeMaxCount(query.MaxCount);
 
     var result = await found.ToListAsync(cancellationToken).ConfigureAwait(false);
 

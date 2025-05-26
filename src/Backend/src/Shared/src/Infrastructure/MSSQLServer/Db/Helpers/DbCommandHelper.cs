@@ -27,4 +27,10 @@ public class DbCommandHelper : DbSQLCommandHelper
       dbCommand.AddParameter("@PageSize", page.Size);
     }
   }
+
+  /// <inheritdoc/>
+  public sealed override string GetMaxCountQuery(int maxCount)
+  {
+    return maxCount > 0 ? $" top {maxCount}" : string.Empty;
+  }
 }

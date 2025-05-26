@@ -22,7 +22,7 @@ public class DummyItemQueryService(
   {
     var dbCommandForFilter = _dbCommandFactory.CreateDbCommandForFilter(query.Filter);
 
-    var dbCommand = _dbCommandFactory.CreateDbCommandForItems(dbCommandForFilter, query.Sort);
+    var dbCommand = _dbCommandFactory.CreateDbCommandForItems(dbCommandForFilter, query.Sort, query.MaxCount);
 
     return _appDbQueryContext.GetList<DummyItemSingleDTO>(dbCommand, cancellationToken);
   }
