@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\Shared\src\Infrastructure\Web\Makc.Dummy.Shared.Infrastructure.Web.csproj" />
+    <ProjectReference Include="..\..\..\..\..\Shared\src\Infrastructure\HttpServer\Makc.Dummy.Shared.Infrastructure.HttpServer.csproj" />
     <ProjectReference Include="..\..\Domain\UseCases\Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCases.csproj" />
   </ItemGroup>
 

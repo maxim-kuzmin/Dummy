@@ -1,4 +1,4 @@
-﻿namespace Makc.Dummy.Shared.Infrastructure.Web.App.Middlewares;
+﻿namespace Makc.Dummy.Shared.Infrastructure.HttpServer.App.Middlewares;
 
 /// <summary>
 /// Промежуточный обработчик запроса для добавления заголовка с идентификатором трассировки.

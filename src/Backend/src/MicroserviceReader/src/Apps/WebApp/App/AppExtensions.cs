@@ -1,6 +1,4 @@
-﻿using Makc.Dummy.Integration.MicroserviceReader.Infrastructure.GrpcServer.App;
-
-namespace Makc.Dummy.MicroserviceReader.Apps.WebApp.App;
+﻿namespace Makc.Dummy.MicroserviceReader.Apps.WebApp.App;
 
 /// <summary>
 /// Расширения приложения.

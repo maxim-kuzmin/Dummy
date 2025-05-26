@@ -27,7 +27,7 @@ global using Makc.Dummy.Shared.Infrastructure.Core.App;
 global using Makc.Dummy.Shared.Infrastructure.Core.App.Logger.Funcs;
 global using Makc.Dummy.Shared.Infrastructure.CoreForOpenTelemetry.App;
 global using Makc.Dummy.Shared.Infrastructure.CoreForOpenTelemetryInWeb.App;
-global using Makc.Dummy.Shared.Infrastructure.Web.App.Middlewares;
+global using Makc.Dummy.Shared.Infrastructure.HttpServer.App.Middlewares;
 global using Microsoft.AspNetCore.Authentication.JwtBearer;
 global using Microsoft.Extensions.Options;
 global using Microsoft.IdentityModel.Logging;
