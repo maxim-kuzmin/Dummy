@@ -53,11 +53,36 @@ public static class DummyItemExtensions
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <returns>Запрос gRPC.</returns>
-  public static DummyItemGetListGrpcRequest ToDummyItemGetListGrpcRequest(this DummyItemPageQuery query)
+  public static DummyItemGetListGrpcRequest ToDummyItemGetListGrpcRequest(this DummyItemListQuery query)
   {
+    var sort = query.Sort;
     var filter = query.Filter;
+
+    return new()
+    {
+      MaxCount = query.MaxCount,
+      Sort = new()
+      {
+        Field = sort?.Field ?? string.Empty,
+        IsDesc = sort?.IsDesc ?? false,
+      },
+      Filter = new()
+      {
+        FullTextSearchQuery = filter?.FullTextSearchQuery ?? string.Empty,
+      }
+    };
+  }
+
+  /// <summary>
+  /// Преобразовать к запросу gRPC получения страницы фиктивных предметов.
+  /// </summary>
+  /// <param name="query">Запрос.</param>
+  /// <returns>Запрос gRPC.</returns>
+  public static DummyItemGetPageGrpcRequest ToDummyItemGetPageGrpcRequest(this DummyItemPageQuery query)
+  {
     var page = query.Page;
     var sort = query.Sort;
+    var filter = query.Filter;
 
     return new()
     {
@@ -79,35 +104,32 @@ public static class DummyItemExtensions
   }
 
   /// <summary>
-  /// Преобразовать к объекту передачи данных страницы фиктивных предметов.
+  /// Преобразовать к списку фиктивных предметов.
   /// </summary>
-  /// <param name="listReply">Ответ.</param>
-  /// <returns>Объект передачи данных.</returns>
-  public static DummyItemPageDTO ToDummyItemPageDTO(this DummyItemGetListGrpcReply listReply)
+  /// <param name="reply">Ответ.</param>
+  /// <returns>Список фиктивных предметов.</returns>
+  public static List<DummyItemSingleDTO> ToDummyItemListDTO(this DummyItemGetListGrpcReply reply)
   {
-    var items = new List<DummyItemSingleDTO>(listReply.Items.Count);
+    return reply.Items.ToDummyItemListDTO();
+  }
+  
+  /// <summary>
+  /// Преобразовать к странице фиктивных предметов.
+  /// </summary>
+  /// <param name="reply">Ответ.</param>
+  /// <returns>Страница фиктивных предметов.</returns>
+  public static DummyItemPageDTO ToDummyItemPageDTO(this DummyItemGetPageGrpcReply reply)
+  {
+    var items = reply.Items.ToDummyItemListDTO();
 
-    foreach (var reply in listReply.Items)
-    {
-      DummyItemSingleDTO item = new()
-      {
-        ObjectId = reply.ObjectId,
-        Id = reply.Id,
-        ConcurrencyToken = reply.ConcurrencyToken,
-        Name = reply.Name,
-      };
-
-      items.Add(item);
-    }
-
-    return new(items, listReply.TotalCount);
+    return items.ToDummyItemPageDTO(reply.TotalCount);
   }
 
   /// <summary>
-  /// Преобразовать к объекту передачи данных единственного фиктивного предмета.
+  /// Преобразовать к фиктивному предмету.
   /// </summary>
   /// <param name="reply">Ответ.</param>
-  /// <returns>Объект передачи данных.</returns>
+  /// <returns>Фиктивный предмет.</returns>
   public static DummyItemSingleDTO ToDummyItemSingleDTO(this DummyItemGetGrpcReply reply)
   {
     return new()
@@ -134,6 +156,29 @@ public static class DummyItemExtensions
       Id = data.Id,
       Name = data.Name,
       ConcurrencyToken = data.ConcurrencyToken
+    };
+  }
+
+  private static List<DummyItemSingleDTO> ToDummyItemListDTO(this RepeatedField<DummyItemGetListGrpcReplyItem> reply)
+  {
+    var result = new List<DummyItemSingleDTO>(reply.Count);
+
+    foreach (var item in reply)
+    {
+      result.Add(item.ToDummyItemSingleDTO());
+    }
+
+    return result;
+  }
+
+  private static DummyItemSingleDTO ToDummyItemSingleDTO(this DummyItemGetListGrpcReplyItem reply)
+  {
+    return new()
+    {
+      ObjectId = reply.ObjectId,
+      Id = reply.Id,
+      ConcurrencyToken = reply.ConcurrencyToken,
+      Name = reply.Name,
     };
   }
 }

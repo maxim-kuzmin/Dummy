@@ -76,7 +76,7 @@ message DummyItemGetPageGrpcRequest {
 
 message DummyItemGetPageGrpcReply {    
     repeated DummyItemGetListGrpcReplyItem items = 1;
-    int64 total_count = 1;
+    int64 total_count = 2;
 }
 
 message DummyItemUpdateGrpcRequest {    

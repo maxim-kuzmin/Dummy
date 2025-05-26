@@ -10,7 +10,31 @@ public class AppIncomingEventPayloadQueryService(
   IHttpClientFactory _httpClientFactory) : IAppIncomingEventPayloadQueryService
 {
   /// <inheritdoc/>
-  public async Task<Result<AppIncomingEventPayloadPageDTO>> GetPage(AppIncomingEventPayloadPageQuery query, CancellationToken cancellationToken)
+  public async Task<Result<List<AppIncomingEventPayloadSingleDTO>>> GetList(
+    AppIncomingEventPayloadListQuery query,
+    CancellationToken cancellationToken)
+  {
+    using var httpClient = _httpClientFactory.CreateClient(AppSettings.HttpClientName);
+
+    using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, query.ToHttpRequestUrl());
+
+    httpRequestMessage.AddAuthorizationHeader(_appSession);
+
+    var httpResponseTask = httpClient.SendAsync(httpRequestMessage, cancellationToken);
+
+    using var httpResponse = await httpResponseTask.ConfigureAwait(false);
+
+    var resultTask = httpResponse.ToResultFromJsonAsync<List<AppIncomingEventPayloadSingleDTO>>(cancellationToken);
+
+    var result = await resultTask.ConfigureAwait(false);
+
+    return result;
+  }
+
+  /// <inheritdoc/>
+  public async Task<Result<AppIncomingEventPayloadPageDTO>> GetPage(
+    AppIncomingEventPayloadPageQuery query,
+    CancellationToken cancellationToken)
   {
     using var httpClient = _httpClientFactory.CreateClient(AppSettings.HttpClientName);
 

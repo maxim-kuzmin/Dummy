@@ -61,6 +61,22 @@ public static class AppIncomingEventExtensions
   public static AppIncomingEventGetListActionRequest ToAppIncomingEventGetListActionRequest(
     this AppIncomingEventGetListGrpcRequest request)
   {
+    AppIncomingEventListQuery query = new(
+      MaxCount: request.MaxCount,
+      Sort: new(request.Sort.Field, request.Sort.IsDesc),
+      Filter: new(request.Filter.FullTextSearchQuery));
+
+    return new(query);
+  }
+
+  /// <summary>
+  /// Преобразовать к запросу действия по получению страницы входящих событий приложения.
+  /// </summary>
+  /// <param name="request">Запрос gRPC.</param>
+  /// <returns>Запрос действия.</returns>
+  public static AppIncomingEventGetPageActionRequest ToAppIncomingEventGetPageActionRequest(
+    this AppIncomingEventGetPageGrpcRequest request)
+  {
     AppIncomingEventPageQuery query = new(
       Page: new(request.Page.Number, request.Page.Size),
       Sort: new(request.Sort.Field, request.Sort.IsDesc),
@@ -74,23 +90,35 @@ public static class AppIncomingEventExtensions
   /// </summary>
   /// <param name="dto">Объект передачи данных.</param>
   /// <returns>Отклик gRPC.</returns>
-  public static AppIncomingEventGetListGrpcReply ToAppIncomingEventGetListGrpcReply(this AppIncomingEventPageDTO dto)
+  public static AppIncomingEventGetListGrpcReply ToAppIncomingEventGetListGrpcReply(
+    this List<AppIncomingEventSingleDTO> dto)
   {
-    AppIncomingEventGetListGrpcReply result = new()
+    AppIncomingEventGetListGrpcReply result = new();
+
+    foreach (var itemDTO in dto)
+    {
+      result.Items.Add(itemDTO.ToAppIncomingEventGetListGrpcReplyItem());
+    }
+
+    return result;
+  }
+
+  /// <summary>
+  /// Преобразовать к отклику gRPC получения страницы входящих событий приложения.
+  /// </summary>
+  /// <param name="dto">Объект передачи данных.</param>
+  /// <returns>Отклик gRPC.</returns>
+  public static AppIncomingEventGetPageGrpcReply ToAppIncomingEventGetPageGrpcReply(
+    this AppIncomingEventPageDTO dto)
+  {
+    AppIncomingEventGetPageGrpcReply result = new()
     {
       TotalCount = dto.TotalCount,
     };
 
     foreach (var itemDTO in dto.Items)
     {
-      if (itemDTO == null)
-      {
-        continue;
-      }
-
-      var item = itemDTO.ToAppIncomingEventGetListGrpcReplyItem();
-
-      result.Items.Add(item);
+      result.Items.Add(itemDTO.ToAppIncomingEventGetListGrpcReplyItem());
     }
 
     return result;

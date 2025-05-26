@@ -54,6 +54,22 @@ public static class DummyItemExtensions
   public static DummyItemGetListActionRequest ToDummyItemGetListActionRequest(
     this DummyItemGetListGrpcRequest request)
   {
+    DummyItemListQuery query = new(
+      MaxCount: request.MaxCount,
+      Sort: new(request.Sort.Field, request.Sort.IsDesc),
+      Filter: new(request.Filter.FullTextSearchQuery));
+
+    return new(query);
+  }
+
+  /// <summary>
+  /// Преобразовать к запросу действия по получению страницы фиктивных предметов.
+  /// </summary>
+  /// <param name="request">Запрос gRPC.</param>
+  /// <returns>Запрос действия.</returns>
+  public static DummyItemGetPageActionRequest ToDummyItemGetPageActionRequest(
+    this DummyItemGetPageGrpcRequest request)
+  {
     DummyItemPageQuery query = new(
       Page: new(request.Page.Number, request.Page.Size),
       Sort: new(request.Sort.Field, request.Sort.IsDesc),
@@ -67,24 +83,33 @@ public static class DummyItemExtensions
   /// </summary>
   /// <param name="dto">Объект передачи данных.</param>
   /// <returns>Отклик gRPC.</returns>
-  public static DummyItemGetListGrpcReply ToDummyItemGetListGrpcReply(this DummyItemPageDTO dto)
+  public static DummyItemGetListGrpcReply ToDummyItemGetListGrpcReply(this List<DummyItemSingleDTO> dto)
   {
-    DummyItemGetListGrpcReply result = new()
+    DummyItemGetListGrpcReply result = new();
+
+    foreach (var itemDTO in dto)
+    {
+      result.Items.Add(itemDTO.ToDummyItemGetListGrpcReplyItem());
+    }
+
+    return result;
+  }
+
+  /// <summary>
+  /// Преобразовать к отклику gRPC получения страницы фиктивных предметов.
+  /// </summary>
+  /// <param name="dto">Объект передачи данных.</param>
+  /// <returns>Отклик gRPC.</returns>
+  public static DummyItemGetPageGrpcReply ToDummyItemGetPageGrpcReply(this DummyItemPageDTO dto)
+  {
+    DummyItemGetPageGrpcReply result = new()
     {
       TotalCount = dto.TotalCount,
     };
 
     foreach (var itemDTO in dto.Items)
     {
-      DummyItemGetListGrpcReplyItem item = new()
-      {
-        ObjectId = itemDTO.ObjectId,
-        Id = itemDTO.Id,
-        Name = itemDTO.Name,
-        ConcurrencyToken = itemDTO.ConcurrencyToken
-      };
-
-      result.Items.Add(item);
+      result.Items.Add(itemDTO.ToDummyItemGetListGrpcReplyItem());
     }
 
     return result;
@@ -120,5 +145,17 @@ public static class DummyItemExtensions
       Data: new(request.Id, request.Name, request.ConcurrencyToken));
 
     return new(command);
+  }
+
+  private static DummyItemGetListGrpcReplyItem ToDummyItemGetListGrpcReplyItem(
+    this DummyItemSingleDTO dto)
+  {
+    return new()
+    {
+      ObjectId = dto.ObjectId,
+      Id = dto.Id,
+      Name = dto.Name,
+      ConcurrencyToken = dto.ConcurrencyToken
+    };
   }
 }

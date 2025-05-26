@@ -1,5 +1,4 @@
-﻿
-namespace Makc.Dummy.Integration.MicroserviceReader.Infrastructure.GrpcClient.DummyItem.Services;
+﻿namespace Makc.Dummy.Integration.MicroserviceReader.Infrastructure.GrpcClient.DummyItem.Services;
 
 /// <summary>
 /// Сервис запросов фиктивного предмета.
@@ -11,11 +10,32 @@ public class DummyItemQueryService(
   DummyItemGrpcClient _grpcClient) : IDummyItemQueryService
 {
   /// <inheritdoc/>
-  public Task<Result<List<DummyItemSingleDTO>>> GetList(
+  public async Task<Result<List<DummyItemSingleDTO>>> GetList(
     DummyItemListQuery query,
     CancellationToken cancellationToken)
   {
-    throw new NotImplementedException();
+    try
+    {
+      var accessToken = _appSession.AccessToken;
+      Metadata headers = [];
+
+      headers.AddAuthorizationHeader(_appSession);
+
+      var request = query.ToDummyItemGetListGrpcRequest();
+
+      var task = _grpcClient.GetListAsync(
+        request,
+        headers: headers,
+        cancellationToken: cancellationToken);
+
+      var reply = await task.ConfigureAwait(false);
+
+      return Result.Success(reply.ToDummyItemListDTO());
+    }
+    catch (RpcException ex)
+    {
+      return ex.ToUnsuccessfulResult();
+    }
   }
 
   /// <inheritdoc/>
@@ -30,9 +50,9 @@ public class DummyItemQueryService(
 
       headers.AddAuthorizationHeader(_appSession);
 
-      var request = query.ToDummyItemGetListGrpcRequest();
+      var request = query.ToDummyItemGetPageGrpcRequest();
 
-      var task = _grpcClient.GetListAsync(
+      var task = _grpcClient.GetPageAsync(
         request,
         headers: headers,
         cancellationToken: cancellationToken);

@@ -39,6 +39,22 @@ public static class AppIncomingEventPayloadEndpointsExtensions
   public static AppIncomingEventPayloadGetListActionRequest ToAppIncomingEventPayloadGetListActionRequest(
     this AppIncomingEventPayloadGetListEndpointRequest request)
   {
+    AppIncomingEventPayloadListQuery query = new(
+      MaxCount: request.MaxCount,
+      Sort: request.SortField.ToAppIncomingEventPayloadQuerySortSection(request.SortIsDesc),
+      Filter: new(request.Query));
+
+    return new(query);
+  }
+
+  /// <summary>
+  /// Преобразовать к запросу действия по получению страницы полезных нагрузок входящего события приложения.
+  /// </summary>
+  /// <param name="request">Запрос.</param>
+  /// <returns>Запрос действия.</returns>
+  public static AppIncomingEventPayloadGetPageActionRequest ToAppIncomingEventPayloadGetPageActionRequest(
+    this AppIncomingEventPayloadGetPageEndpointRequest request)
+  {
     AppIncomingEventPayloadPageQuery query = new(
       Page: new(request.CurrentPage, request.ItemsPerPage),
       Sort: request.SortField.ToAppIncomingEventPayloadQuerySortSection(request.SortIsDesc),

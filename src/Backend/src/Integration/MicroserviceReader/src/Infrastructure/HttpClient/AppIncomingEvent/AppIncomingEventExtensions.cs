@@ -30,15 +30,13 @@ public static class AppIncomingEventExtensions
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <returns>URL запроса HTTP.</returns>
-  public static string ToHttpRequestUrl(this AppIncomingEventPageQuery query)
+  public static string ToHttpRequestUrl(this AppIncomingEventListQuery query)
   {
-    var filter = query.Filter;
-    var page = query.Page;
     var sort = query.Sort;
+    var filter = query.Filter;
 
     IEnumerable<KeyValuePair<string, string?>> parameters = [
-      new("CurrentPage", (page?.Number ?? 0).ToString()),
-      new("ItemsPerPage", (page?.Size ?? 0).ToString()),
+      new("MaxCount", query.MaxCount.ToString()),
       new("SortField", (sort?.Field ?? string.Empty)),
       new("SortIsDesc", (sort?.IsDesc ?? false).ToString()),
       new("Query", filter?.FullTextSearchQuery ?? string.Empty)
@@ -47,6 +45,29 @@ public static class AppIncomingEventExtensions
     var queryString = QueryString.Create(parameters);
 
     return $"{AppIncomingEventSettings.Root}{queryString}";
+  }
+
+  /// <summary>
+  /// Преобразовать к URL запроса HTTP.
+  /// </summary>
+  /// <param name="query">Запрос.</param>
+  /// <returns>URL запроса HTTP.</returns>
+  public static string ToHttpRequestUrl(this AppIncomingEventPageQuery query)
+  {
+    var page = query.Page;
+    var sort = query.Sort;
+    var filter = query.Filter;
+
+    IEnumerable<KeyValuePair<string, string?>> parameters = [
+      new("ItemsPerPage", (page?.Size ?? 0).ToString()),
+      new("SortField", (sort?.Field ?? string.Empty)),
+      new("SortIsDesc", (sort?.IsDesc ?? false).ToString()),
+      new("Query", filter?.FullTextSearchQuery ?? string.Empty)
+    ];
+
+    var queryString = QueryString.Create(parameters);
+
+    return $"{AppIncomingEventSettings.Root}/page/{page?.Number ?? 1}{queryString}";
   }
 
   /// <summary>

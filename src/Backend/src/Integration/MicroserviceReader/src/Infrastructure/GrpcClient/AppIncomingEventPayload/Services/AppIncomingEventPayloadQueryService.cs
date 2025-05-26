@@ -10,8 +10,8 @@ public class AppIncomingEventPayloadQueryService(
   AppIncomingEventPayloadGrpcClient _grpcClient) : IAppIncomingEventPayloadQueryService
 {
   /// <inheritdoc/>
-  public async Task<Result<AppIncomingEventPayloadPageDTO>> GetPage(
-    AppIncomingEventPayloadPageQuery query,
+  public async Task<Result<List<AppIncomingEventPayloadSingleDTO>>> GetList(
+    AppIncomingEventPayloadListQuery query,
     CancellationToken cancellationToken)
   {
     try
@@ -24,6 +24,35 @@ public class AppIncomingEventPayloadQueryService(
       var request = query.ToAppIncomingEventPayloadGetListGrpcRequest();
 
       var task = _grpcClient.GetListAsync(
+        request,
+        headers: headers,
+        cancellationToken: cancellationToken);
+
+      var reply = await task.ConfigureAwait(false);
+
+      return Result.Success(reply.ToAppIncomingEventPayloadListDTO());
+    }
+    catch (RpcException ex)
+    {
+      return ex.ToUnsuccessfulResult();
+    }
+  }
+
+  /// <inheritdoc/>
+  public async Task<Result<AppIncomingEventPayloadPageDTO>> GetPage(
+    AppIncomingEventPayloadPageQuery query,
+    CancellationToken cancellationToken)
+  {
+    try
+    {
+      var accessToken = _appSession.AccessToken;
+      Metadata headers = [];
+
+      headers.AddAuthorizationHeader(_appSession);
+
+      var request = query.ToAppIncomingEventPayloadGetPageGrpcRequest();
+
+      var task = _grpcClient.GetPageAsync(
         request,
         headers: headers,
         cancellationToken: cancellationToken);

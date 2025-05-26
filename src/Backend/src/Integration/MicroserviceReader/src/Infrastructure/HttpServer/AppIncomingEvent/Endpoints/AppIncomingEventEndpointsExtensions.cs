@@ -39,6 +39,22 @@ public static class AppIncomingEventEndpointsExtensions
   public static AppIncomingEventGetListActionRequest ToAppIncomingEventGetListActionRequest(
     this AppIncomingEventGetListEndpointRequest request)
   {
+    AppIncomingEventListQuery query = new(
+      MaxCount: request.MaxCount,
+      Sort: request.SortField.ToAppIncomingEventQuerySortSection(request.SortIsDesc),
+      Filter: new(request.Query));
+
+    return new(query);
+  }
+
+  /// <summary>
+  /// Преобразовать к запросу действия по получению страницы входящих событий приложения.
+  /// </summary>
+  /// <param name="request">Запрос.</param>
+  /// <returns>Запрос действия.</returns>
+  public static AppIncomingEventGetPageActionRequest ToAppIncomingEventGetPageActionRequest(
+    this AppIncomingEventGetPageEndpointRequest request)
+  {
     AppIncomingEventPageQuery query = new(
       Page: new(request.CurrentPage, request.ItemsPerPage),
       Sort: request.SortField.ToAppIncomingEventQuerySortSection(request.SortIsDesc),
@@ -46,6 +62,7 @@ public static class AppIncomingEventEndpointsExtensions
 
     return new(query);
   }
+
 
   /// <summary>
   /// Преобразовать к команде действия по сохранению входящего события приложения.

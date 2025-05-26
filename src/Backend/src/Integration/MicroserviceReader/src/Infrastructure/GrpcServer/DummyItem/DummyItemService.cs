@@ -81,6 +81,25 @@ public class DummyItemService(IMediator _mediator) : DummyItemServiceBase
   }
 
   /// <summary>
+  /// Получить страницу.
+  /// </summary>
+  /// <param name="request">Запрос gRPC.</param>
+  /// <param name="context">Контекст.</param>
+  /// <returns>Отклик gRPC.</returns>
+  public override async Task<DummyItemGetPageGrpcReply> GetPage(
+    DummyItemGetPageGrpcRequest request,
+    ServerCallContext context)
+  {
+    var task = _mediator.Send(request.ToDummyItemGetPageActionRequest(), context.CancellationToken);
+
+    var result = await task.ConfigureAwait(false);
+
+    result.ThrowRpcExceptionIfNotSuccess();
+
+    return result.Value.ToDummyItemGetPageGrpcReply();
+  }
+
+  /// <summary>
   /// Обновить.
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>

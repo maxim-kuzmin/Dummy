@@ -83,6 +83,25 @@ public class AppIncomingEventPayloadService(IMediator _mediator) : AppIncomingEv
   }
 
   /// <summary>
+  /// Получить страницу.
+  /// </summary>
+  /// <param name="request">Запрос gRPC.</param>
+  /// <param name="context">Контекст.</param>
+  /// <returns>Отклик gRPC.</returns>
+  public override async Task<AppIncomingEventPayloadGetPageGrpcReply> GetPage(
+    AppIncomingEventPayloadGetPageGrpcRequest request,
+    ServerCallContext context)
+  {
+    var task = _mediator.Send(request.ToAppIncomingEventPayloadGetPageActionRequest(), context.CancellationToken);
+
+    var result = await task.ConfigureAwait(false);
+
+    result.ThrowRpcExceptionIfNotSuccess();
+
+    return result.Value.ToAppIncomingEventPayloadGetPageGrpcReply();
+  }
+
+  /// <summary>
   /// Обновить.
   /// </summary>
   /// <param name="request">Запрос gRPC.</param>

@@ -5,7 +5,7 @@
 /// </summary>
 /// <param name="_mediator">Медиатор.</param>
 public class AppOutgoingEventPayloadGetPageEndpointHandler(IMediator _mediator) :
-  Endpoint<AppOutgoingEventPayloadGetPageEndpointRequest, IEnumerable<AppOutgoingEventPayloadPageDTO>>
+  Endpoint<AppOutgoingEventPayloadGetPageEndpointRequest, AppOutgoingEventPayloadPageDTO>
 {
   /// <inheritdoc/>
   public override void Configure()
