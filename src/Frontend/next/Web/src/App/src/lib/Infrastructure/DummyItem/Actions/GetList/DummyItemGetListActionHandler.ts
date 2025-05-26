@@ -19,7 +19,6 @@ export function createDummyItemGetListActionHandler({
     const appApiRequest = createAppApiRequestWithBody({
       query: {
         ...(request.query.page && {
-          //'currentPage': request.query.page.number,
           'itemsPerPage': request.query.page.size,
         }),
         ...(request.query.filter?.fullTextSearchQuery && {

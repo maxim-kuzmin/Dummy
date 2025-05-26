@@ -8,5 +8,5 @@ public class AppIncomingEventGetPageEndpointSettings
   /// <summary>
   /// Маршрут.
   /// </summary>
-  public const string Route = $"{AppIncomingEventEndpointsSettings.Root}";
+  public const string Route = $"{AppIncomingEventEndpointsSettings.Root}/page/{{CurrentPage}}";
 }
