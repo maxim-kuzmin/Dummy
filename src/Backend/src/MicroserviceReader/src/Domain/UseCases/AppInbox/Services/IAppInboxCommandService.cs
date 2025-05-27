@@ -11,7 +11,7 @@ public interface IAppInboxCommandService
   /// <param name="command">Команда.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Результат.</returns>
-  Task<Result> Consume(AppInboxConsumeActionCommand command, CancellationToken cancellationToken);
+  Task<Result> Consume(AppInboxConsumeCommand command, CancellationToken cancellationToken);
 
   /// <summary>
   /// Загрузить.
@@ -19,5 +19,5 @@ public interface IAppInboxCommandService
   /// <param name="command">Команда.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Результат.</returns>
-  Task<Result> Load(AppInboxLoadActionCommand request, CancellationToken cancellationToken);
+  Task<Result> Load(AppInboxLoadCommand command, CancellationToken cancellationToken);
 }

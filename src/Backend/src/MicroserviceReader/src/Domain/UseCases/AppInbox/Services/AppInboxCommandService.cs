@@ -19,7 +19,7 @@ public class AppInboxCommandService(
   /// <param name="command">Команда.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Результат.</returns>
-  public Task<Result> Consume(AppInboxConsumeActionCommand command, CancellationToken cancellationToken)
+  public Task<Result> Consume(AppInboxConsumeCommand command, CancellationToken cancellationToken)
   {
     string[] eventIds = command.Message.Contains(',')
       ? command.Message.Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries)
@@ -31,9 +31,9 @@ public class AppInboxCommandService(
   }
 
   /// <inheritdoc/>
-  public async Task<Result> Load(AppInboxLoadActionCommand request, CancellationToken cancellationToken)
+  public async Task<Result> Load(AppInboxLoadCommand command, CancellationToken cancellationToken)
   {
-    var taskToGetUnloadedList = GetUnloadedAppIncomingEvents(request.EventName, request.MaxCount, cancellationToken);
+    var taskToGetUnloadedList = GetUnloadedAppIncomingEvents(command.EventName, command.MaxCount, cancellationToken);
 
     var unloadedList = await taskToGetUnloadedList.ConfigureAwait(false);
 

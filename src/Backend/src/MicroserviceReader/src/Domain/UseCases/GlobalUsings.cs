@@ -36,6 +36,7 @@ global using Makc.Dummy.MicroserviceReader.Domain.UseCases.App.Message;
 global using Makc.Dummy.MicroserviceReader.Domain.UseCases.App.Message.Stubs;
 global using Makc.Dummy.MicroserviceReader.Domain.UseCases.AppInbox.Actions.Consume;
 global using Makc.Dummy.MicroserviceReader.Domain.UseCases.AppInbox.Actions.Load;
+global using Makc.Dummy.MicroserviceReader.Domain.UseCases.AppInbox.Commands;
 global using Makc.Dummy.MicroserviceReader.Domain.UseCases.AppInbox.Services;
 global using Makc.Dummy.MicroserviceReader.Domain.UseCases.AppIncomingEvent.Commands.Insert;
 global using Makc.Dummy.MicroserviceReader.Domain.UseCases.AppIncomingEvent.Queries;

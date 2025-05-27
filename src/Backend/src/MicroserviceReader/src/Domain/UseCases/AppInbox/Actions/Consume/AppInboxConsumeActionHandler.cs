@@ -5,12 +5,12 @@
 /// </summary>
 /// <param name="_service">Сервис.</param>
 public class AppInboxConsumeActionHandler(IAppInboxCommandService _service) :
-  ICommandHandler<AppInboxConsumeActionCommand, Result>
+  ICommandHandler<AppInboxConsumeActionRequest, Result>
 {
   /// <inheritdoc/>
-  public async Task<Result> Handle(AppInboxConsumeActionCommand request, CancellationToken cancellationToken)
+  public async Task<Result> Handle(AppInboxConsumeActionRequest request, CancellationToken cancellationToken)
   {
-    var result = await _service.Consume(request, cancellationToken);
+    var result = await _service.Consume(request.Command, cancellationToken);
 
     return result.IsSuccess ? Result.NoContent() : result;
   }

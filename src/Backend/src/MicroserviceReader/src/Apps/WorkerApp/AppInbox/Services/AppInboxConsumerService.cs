@@ -1,6 +1,4 @@
-﻿using MediatR;
-
-namespace Makc.Dummy.MicroserviceReader.Apps.WorkerApp.AppInbox.Services;
+﻿namespace Makc.Dummy.MicroserviceReader.Apps.WorkerApp.AppInbox.Services;
 
 /// <summary>
 /// Сервис потребителя входящих сообщений приложения.
@@ -47,11 +45,13 @@ public class AppInboxConsumerService(
 
     _logger.LogDebug("MAKC:AppInboxConsumerService:OnMessageReceived:Consume start");
 
-    AppInboxConsumeActionCommand command = new(sender, message);
+    AppInboxConsumeCommand command = new(Sender: sender, Message: message);
 
     _logger.LogDebug("MAKC:AppInboxConsumerService:OnMessageReceived:Consume:Command: {command}", command);
 
-    await mediator.Send(command, cancellationToken).ConfigureAwait(false);
+    AppInboxConsumeActionRequest request = new(command);    
+
+    await mediator.Send(request, cancellationToken).ConfigureAwait(false);
 
     _logger.LogDebug("MAKC:AppInboxConsumerService:OnMessageReceived:Consume end");
 
