@@ -43,19 +43,49 @@ where
   {
     DbSQLCommand result = new();
 
-    if (!string.IsNullOrEmpty(filter?.FullTextSearchQuery))
+    if (filter == null)
     {
-      var sAppOutgoingEventPayload = _appDbSettings.Entities.AppOutgoingEventPayload;
+      return result;
+    }
 
-      result.TextBuilder.AppendLine($$"""
+    bool shouldBeFilteredByFullTextSearchQuery = !string.IsNullOrEmpty(filter.FullTextSearchQuery);
+    bool shouldBeFilteredByAppOutgoingEventId = filter.AppOutgoingEventId > 0;
+
+    bool shouldBeFiltered = shouldBeFilteredByFullTextSearchQuery || shouldBeFilteredByAppOutgoingEventId;
+
+    if (!shouldBeFiltered)
+    {
+      return result;
+    }
+
+    result.TextBuilder.AppendLine($$"""
 where
-  aep."{{sAppOutgoingEventPayload.ColumnForId}}" like @FullTextSearchQuery
-  or
-  aep."{{sAppOutgoingEventPayload.ColumnForData}}" like @FullTextSearchQuery
+""");
+
+    var sAppOutgoingEventPayload = _appDbSettings.Entities.AppOutgoingEventPayload;
+
+    if (shouldBeFilteredByFullTextSearchQuery)
+    {
+      result.TextBuilder.AppendLine($$"""
+  (
+    aep."{{sAppOutgoingEventPayload.ColumnForId}}" like @FullTextSearchQuery
+    or
+    aep."{{sAppOutgoingEventPayload.ColumnForData}}" like @FullTextSearchQuery
+  )
 """);
 
       result.AddParameter("@FullTextSearchQuery", $"%{filter.FullTextSearchQuery}%");
     }
+
+    if (shouldBeFilteredByAppOutgoingEventId)
+    {
+      result.TextBuilder.AppendLine($$"""
+  and
+  aep."{{sAppOutgoingEventPayload.ColumnForId}}" = @AppOutgoingEventId
+""");
+
+      result.AddParameter("@AppOutgoingEventId", filter.AppOutgoingEventId);
+    }  
 
     return result;
   }

@@ -3,15 +3,19 @@
 /// <summary>
 /// Сервис входящих сообщений приложения.
 /// </summary>
+/// <param name="_appDbExecutionContext">Контекст выполнения базы данных.</param>
 /// <param name="_appIncomingEventCommandService">Сервис команд входящего события приложения.</param>
 /// <param name="_appIncomingEventQueryService">Сервис запросов входящего события приложения.</param>
-/// <param name="_appIncomingEventPayloadQueryService">
-/// Сервис запросов полезной нагрузки входящего события приложения.
+/// <param name="_appIncomingEventPayloadCommandService">
+/// Сервис команд полезной нагрузки входящего события приложения.
 /// </param>
-public class AppInboxCommandService(
+/// <param name="_mediator">Медиатор.</param>
+public class AppInboxCommandService(  
+  IAppDbNoSQLExecutionContext _appDbExecutionContext,
   IAppIncomingEventCommandService _appIncomingEventCommandService,
   IAppIncomingEventQueryService _appIncomingEventQueryService,
-  IAppIncomingEventPayloadQueryService _appIncomingEventPayloadQueryService) : IAppInboxCommandService
+  IAppIncomingEventPayloadCommandService _appIncomingEventPayloadCommandService,
+  IMediator _mediator) : IAppInboxCommandService
 {
   /// <summary>
   /// Потребить.
@@ -39,19 +43,94 @@ public class AppInboxCommandService(
 
     foreach (var unloaded in unloadedList)
     {
-      await DownloadAppIncomingEventPayloads(unloaded.EventId, cancellationToken).ConfigureAwait(false);
+      await DownloadEventPayloads(unloaded, 100, cancellationToken).ConfigureAwait(false);
     }
 
     return Result.Success();
   }
 
-  private Task<AppIncomingEventPayloadPageDTO> DownloadAppIncomingEventPayloads(
-    string eventId,
+  private async Task DownloadEventPayloads(
+    AppIncomingEventSingleDTO dto,
+    int pageSize,
     CancellationToken cancellationToken)
   {
-    AppIncomingEventPayloadDownloadQuery query = new(eventId);
+    string appIncomingEventObjectId = Guard.Against.NullOrWhiteSpace(dto.ObjectId);
 
-    return _appIncomingEventPayloadQueryService.Download(query, cancellationToken);
+    while (dto.PayloadTotalCount == 0 || dto.PayloadCount < dto.PayloadTotalCount)
+    {
+      async Task FuncToExecute(CancellationToken cancellationToken)
+      {
+        try
+        {
+          var taskToGetPage = _mediator.Send(
+            dto.ToAppOutgoingEventPayloadGetPageActionRequest(pageSize),
+            cancellationToken);
+
+          var resultToGetPage = await taskToGetPage.ConfigureAwait(false);
+
+          resultToGetPage.ThrowExceptionIfNotSuccess();
+
+          var data = resultToGetPage.Value;
+
+          var items = data.Items;
+
+          dto.PayloadCount += items.Count;
+          dto.PayloadTotalCount = data.TotalCount;
+
+          await InsertEventPayloads(items, appIncomingEventObjectId, cancellationToken).ConfigureAwait(false);
+        }
+        catch (Exception ex)
+        {
+          dto.LastLoadingError = ex.ToString();
+        }
+
+        await SaveEvent(dto, appIncomingEventObjectId, DateTimeOffset.Now, cancellationToken).ConfigureAwait(false);
+      }
+
+      await _appDbExecutionContext.ExecuteInTransaction(FuncToExecute, cancellationToken).ConfigureAwait(false);
+    }
+  }
+
+  private Task<Result> InsertEventPayloads(
+    List<AppOutgoingEventPayloadSingleDTO> items,
+    string appIncomingEventObjectId,
+    CancellationToken cancellationToken)
+  {
+    AppIncomingEventPayloadInsertListCommand command = new(
+      [.. items.Select(x => x.ToAppIncomingEventPayloadCommandDataSection(appIncomingEventObjectId))]);
+
+    return _appIncomingEventPayloadCommandService.InsertList(
+      command,
+      cancellationToken);
+  }
+
+  private Task<AppCommandResultWithValue<AppIncomingEventSingleDTO>> SaveEvent(
+    AppIncomingEventSingleDTO dto,
+    string appIncomingEventObjectId,
+    DateTimeOffset now,
+    CancellationToken cancellationToken)
+  {
+    dto.LastLoadingAt = now;
+
+    if (dto.PayloadCount == dto.PayloadTotalCount)
+    {
+      dto.LoadedAt = now;
+    }
+
+    AppIncomingEventSaveCommand command = new(
+      IsUpdate: true,
+      ObjectId: appIncomingEventObjectId,
+      Data: new(
+        EventId: dto.EventId,
+        EventName: dto.EventName,
+        LastLoadingAt: dto.LastLoadingAt,
+        LastLoadingError: dto.LastLoadingError,
+        LoadedAt: dto.LoadedAt,
+        PayloadCount: dto.PayloadCount,
+        PayloadTotalCount: dto.PayloadTotalCount,
+        ProcessedAt: dto.ProcessedAt));
+
+    return _appIncomingEventCommandService.Save(command, cancellationToken);
   }
 
   private Task<List<AppIncomingEventSingleDTO>> GetUnloadedAppIncomingEvents(

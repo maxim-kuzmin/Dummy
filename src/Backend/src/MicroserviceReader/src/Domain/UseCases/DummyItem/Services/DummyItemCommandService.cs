@@ -3,6 +3,9 @@
 /// <summary>
 /// Сервис команд фиктивного предмета.
 /// </summary>
+/// <param name="_appDbExecutionContext">Контекст выполнения базы данных.</param>
+/// <param name="_factory">Фабрика.</param>
+/// <param name="_repository">Репозиторий.</param>
 public class DummyItemCommandService(
   IAppDbNoSQLExecutionContext _appDbExecutionContext,
   IDummyItemFactory _factory,

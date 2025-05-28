@@ -242,7 +242,7 @@ public class AppIncomingEventAggregate(
   /// Обновить количество полезной нагрузки.
   /// </summary>
   /// <param name="value">Значение.</param>
-  public void UpdatePayloadCount(int value)
+  public void UpdatePayloadCount(long value)
   {
     if (value < 0)
     {
@@ -264,7 +264,7 @@ public class AppIncomingEventAggregate(
   /// Обновить количество полезной нагрузки.
   /// </summary>
   /// <param name="value">Значение.</param>
-  public void UpdatePayloadTotalCount(int value)
+  public void UpdatePayloadTotalCount(long value)
   {
     if (value < 0)
     {

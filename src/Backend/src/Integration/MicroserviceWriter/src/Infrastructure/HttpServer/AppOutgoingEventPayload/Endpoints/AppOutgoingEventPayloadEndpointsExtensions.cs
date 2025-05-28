@@ -42,7 +42,7 @@ public static class AppOutgoingEventPayloadEndpointsExtensions
     AppOutgoingEventPayloadListQuery query = new(
       MaxCount: request.MaxCount,
       Sort: request.SortField.ToAppOutgoingEventPayloadQuerySortSection(request.SortIsDesc),
-      Filter: new(request.Query));
+      Filter: new(FullTextSearchQuery: request.Query, AppOutgoingEventId: request.EventId));
 
     return new(query);
   }
@@ -58,7 +58,7 @@ public static class AppOutgoingEventPayloadEndpointsExtensions
     AppOutgoingEventPayloadPageQuery query = new(
       Page: new(request.CurrentPage, request.ItemsPerPage),
       Sort: request.SortField.ToAppOutgoingEventPayloadQuerySortSection(request.SortIsDesc),
-      Filter: new(request.Query));
+      Filter: new(FullTextSearchQuery: request.Query, AppOutgoingEventId: request.EventId));
 
     return new(query);
   }

@@ -33,8 +33,8 @@ message AppIncomingEventCreateGrpcRequest {
     google.protobuf.Timestamp last_loading_at = 3;
     google.protobuf.StringValue last_loading_error = 4;
     google.protobuf.Timestamp loaded_at = 5;
-    int32 payload_count = 6;
-    int32 payload_total_count = 7;
+    int64 payload_count = 6;
+    int64 payload_total_count = 7;
     google.protobuf.Timestamp processed_at = 8;
 }
 
@@ -52,8 +52,8 @@ message AppIncomingEventGetGrpcReply {
     google.protobuf.Timestamp last_loading_at = 3;
     google.protobuf.StringValue last_loading_error = 4;
     google.protobuf.Timestamp loaded_at = 5;
-    int32 payload_count = 6;
-    int32 payload_total_count = 7;
+    int64 payload_count = 6;
+    int64 payload_total_count = 7;
     google.protobuf.Timestamp processed_at = 8;
     string object_id = 9;
     string concurrency_token = 10;
@@ -76,8 +76,8 @@ message AppIncomingEventGetListGrpcReplyItem {
     google.protobuf.Timestamp last_loading_at = 3;
     google.protobuf.StringValue last_loading_error = 4;
     google.protobuf.Timestamp loaded_at = 5;
-    int32 payload_count = 6;
-    int32 payload_total_count = 7;
+    int64 payload_count = 6;
+    int64 payload_total_count = 7;
     google.protobuf.Timestamp processed_at = 8;
     string object_id = 9;
     string concurrency_token = 10;
@@ -105,8 +105,8 @@ message AppIncomingEventUpdateGrpcRequest {
     google.protobuf.Timestamp last_loading_at = 3;
     google.protobuf.StringValue last_loading_error = 4;
     google.protobuf.Timestamp loaded_at = 5;
-    int32 payload_count = 6;
-    int32 payload_total_count = 7;
+    int64 payload_count = 6;
+    int64 payload_total_count = 7;
     google.protobuf.Timestamp processed_at = 8;
     string object_id = 9;
 }

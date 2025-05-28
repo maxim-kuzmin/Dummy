@@ -77,6 +77,7 @@ public static class AppOutgoingEventPayloadExtensions
       Filter = new()
       {
         FullTextSearchQuery = filter?.FullTextSearchQuery ?? string.Empty,
+        AppOutgoingEventId = filter?.AppOutgoingEventId ?? 0,
       }
     };
   }
@@ -108,6 +109,7 @@ public static class AppOutgoingEventPayloadExtensions
       Filter = new()
       {
         FullTextSearchQuery = filter?.FullTextSearchQuery ?? string.Empty,
+        AppOutgoingEventId = filter?.AppOutgoingEventId ?? 0,
       }
     };
   }

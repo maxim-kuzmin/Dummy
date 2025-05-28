@@ -8,14 +8,6 @@ public class AppIncomingEventPayloadQueryService(
   IAppIncomingEventPayloadRepository _repository) : IAppIncomingEventPayloadQueryService
 {
   /// <inheritdoc/>
-  public Task<AppIncomingEventPayloadPageDTO> Download(
-    AppIncomingEventPayloadDownloadQuery query,
-    CancellationToken cancellationToken)
-  {
-    throw new NotImplementedException();
-  }
-
-  /// <inheritdoc/>
   public Task<long> GetCount(AppIncomingEventPayloadCountQuery query, CancellationToken cancellationToken)
   {
     return _repository.GetCount(query, cancellationToken);

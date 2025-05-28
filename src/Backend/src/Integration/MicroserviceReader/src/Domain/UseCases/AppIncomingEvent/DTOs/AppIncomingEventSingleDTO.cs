@@ -48,12 +48,12 @@ public record AppIncomingEventSingleDTO
   /// <summary>
   /// Количество полезных нагрузок.
   /// </summary>
-  public int PayloadCount { get; set; }
+  public long PayloadCount { get; set; }
 
   /// <summary>
   /// Общее количество полезных нагрузок.
   /// </summary>
-  public int PayloadTotalCount { get; set; }
+  public long PayloadTotalCount { get; set; }
 
   /// <summary>
   /// Дата обработки.

@@ -3,6 +3,9 @@
 /// <summary>
 /// Сервис команд входящего события приложения.
 /// </summary>
+/// <param name="_appDbExecutionContext">Контекст выполнения базы данных.</param>
+/// <param name="_factory">Фабрика.</param>
+/// <param name="_repository">Репозиторий.</param>
 public class AppIncomingEventCommandService(
   IAppDbNoSQLExecutionContext _appDbExecutionContext,
   IAppIncomingEventFactory _factory,

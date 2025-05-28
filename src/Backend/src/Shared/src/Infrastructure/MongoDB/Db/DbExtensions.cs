@@ -39,7 +39,7 @@ public static class DbExtensions
     {
       if (page.Number > 0)
       {
-        found = found.Skip((page.Number - 1) * page.Size);
+        found = found.Skip(page.ToSkip());
       }
 
       found = found.TakeMaxCount(page.Size);

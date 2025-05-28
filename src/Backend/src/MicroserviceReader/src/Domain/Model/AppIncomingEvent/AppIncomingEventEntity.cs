@@ -48,12 +48,12 @@ public class AppIncomingEventEntity : EntityBaseWithStringPrimaryKey, IAggregate
   /// <summary>
   /// Количество полезной нагрузки.
   /// </summary>
-  public int PayloadCount { get; set; }
+  public long PayloadCount { get; set; }
 
   /// <summary>
   /// Общее количество полезной нагрузки.
   /// </summary>
-  public int PayloadTotalCount { get; set; }
+  public long PayloadTotalCount { get; set; }
 
   /// <summary>
   /// Дата обработки.

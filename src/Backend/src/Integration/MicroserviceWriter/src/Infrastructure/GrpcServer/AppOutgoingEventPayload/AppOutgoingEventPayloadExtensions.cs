@@ -63,7 +63,9 @@ public static class AppOutgoingEventPayloadExtensions
     AppOutgoingEventPayloadListQuery query = new(
       MaxCount: request.MaxCount,
       Sort: new(request.Sort.Field, request.Sort.IsDesc),
-      Filter: new(request.Filter.FullTextSearchQuery));
+      Filter: new(
+        FullTextSearchQuery: request.Filter.FullTextSearchQuery,
+        AppOutgoingEventId: request.Filter.AppOutgoingEventId));
 
     return new(query);
   }
@@ -79,7 +81,9 @@ public static class AppOutgoingEventPayloadExtensions
     AppOutgoingEventPayloadPageQuery query = new(
       Page: new(request.Page.Number, request.Page.Size),
       Sort: new(request.Sort.Field, request.Sort.IsDesc),
-      Filter: new(request.Filter.FullTextSearchQuery));
+      Filter: new(
+        FullTextSearchQuery: request.Filter.FullTextSearchQuery,
+        AppOutgoingEventId: request.Filter.AppOutgoingEventId));
 
     return new(query);
   }

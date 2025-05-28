@@ -8,9 +8,11 @@
 /// <param name="SortField">Поле сортировки.</param>
 /// <param name="SortIsDesc">Сортировка по убыванию?</param>
 /// <param name="Query">Запрос.</param>
+/// <param name="EventId">Идентификатор события.</param>
 public record AppOutgoingEventPayloadGetPageEndpointRequest(
   int CurrentPage,
   int ItemsPerPage,
   string? SortField,
   bool? SortIsDesc,
-  string? Query);
+  string? Query,
+  long EventId);

@@ -17,6 +17,6 @@ public record AppIncomingEventCommandDataSection(
   DateTimeOffset? LastLoadingAt,
   string? LastLoadingError,
   DateTimeOffset? LoadedAt,
-  int PayloadCount,
-  int PayloadTotalCount,
+  long PayloadCount,
+  long PayloadTotalCount,
   DateTimeOffset? ProcessedAt);

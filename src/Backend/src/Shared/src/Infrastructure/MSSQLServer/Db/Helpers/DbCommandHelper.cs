@@ -17,7 +17,7 @@ public class DbCommandHelper : DbSQLCommandHelper
     {
       dbCommand.TextBuilder.AppendLine("offset @PageNumber rows");
 
-      dbCommand.AddParameter("@PageNumber", (page.Number - 1) * page.Size);
+      dbCommand.AddParameter("@PageNumber", page.ToSkip());
     }
 
     if (page.Size > 0)

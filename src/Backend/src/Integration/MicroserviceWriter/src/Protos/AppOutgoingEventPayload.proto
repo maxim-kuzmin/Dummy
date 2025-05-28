@@ -58,6 +58,7 @@ message AppOutgoingEventPayloadGetGrpcReply {
 
 message AppOutgoingEventPayloadGetListGrpcRequestFilter {
     google.protobuf.StringValue full_text_search_query = 1;
+    int64 app_outgoing_event_id = 2;
 }
 
 message AppOutgoingEventPayloadGetListGrpcRequest {

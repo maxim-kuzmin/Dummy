@@ -3,6 +3,9 @@
 /// <summary>
 /// Сервиса команд полезной нагрузки входящего события приложения.
 /// </summary>
+/// <param name="_appDbExecutionContext">Контекст выполнения базы данных.</param>
+/// <param name="_factory">Фабрика.</param>
+/// <param name="_repository">Репозиторий.</param>
 public class AppIncomingEventPayloadCommandService(
   IAppDbNoSQLExecutionContext _appDbExecutionContext,
   IAppIncomingEventPayloadFactory _factory,

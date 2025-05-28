@@ -39,7 +39,8 @@ public static class AppOutgoingEventPayloadExtensions
       new("MaxCount", query.MaxCount.ToString()),
       new("SortField", (sort?.Field ?? string.Empty)),
       new("SortIsDesc", (sort?.IsDesc ?? false).ToString()),
-      new("Query", filter?.FullTextSearchQuery ?? string.Empty)
+      new("Query", filter?.FullTextSearchQuery ?? string.Empty),
+      new("EventId", filter?.AppOutgoingEventId.ToString()),
     ];
 
     var queryString = QueryString.Create(parameters);
@@ -62,7 +63,8 @@ public static class AppOutgoingEventPayloadExtensions
       new("ItemsPerPage", (page?.Size ?? 0).ToString()),
       new("SortField", (sort?.Field ?? string.Empty)),
       new("SortIsDesc", (sort?.IsDesc ?? false).ToString()),
-      new("Query", filter?.FullTextSearchQuery ?? string.Empty)
+      new("Query", filter?.FullTextSearchQuery ?? string.Empty),
+      new("EventId", filter?.AppOutgoingEventId.ToString()),
     ];
 
     var queryString = QueryString.Create(parameters);

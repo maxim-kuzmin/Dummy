@@ -1,6 +1,4 @@
-﻿using System.Data.Common;
-
-namespace Makc.Dummy.Shared.Infrastructure.PostgreSQL.Db.Command;
+﻿namespace Makc.Dummy.Shared.Infrastructure.PostgreSQL.Db.Command;
 
 /// <summary>
 /// Помощник для построения команд базы данных.
@@ -26,7 +24,7 @@ public class DbCommandHelper : DbSQLCommandHelper
     {
       dbCommand.TextBuilder.AppendLine("offset @PageNumber");
 
-      dbCommand.AddParameter("@PageNumber", (page.Number - 1) * page.Size);
+      dbCommand.AddParameter("@PageNumber", page.ToSkip());
     }
   }
 
