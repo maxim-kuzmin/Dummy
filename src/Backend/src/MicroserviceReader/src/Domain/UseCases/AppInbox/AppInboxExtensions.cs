@@ -1,7 +1,4 @@
-﻿using Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCases.AppOutgoingEventPayload.DTOs;
-using Makc.Dummy.Shared.Core.App.Event.Payloads;
-
-namespace Makc.Dummy.MicroserviceReader.Domain.UseCases.AppInbox;
+﻿namespace Makc.Dummy.MicroserviceReader.Domain.UseCases.AppInbox;
 
 /// <summary>
 /// Расширения входящих сообщений приложения.
@@ -51,5 +48,63 @@ public static class AppInboxExtensions
       AppIncomingEventObjectId: appIncomingEventObjectId,
       EventPayloadId: dto.Id.ToString(),
       Payload: payload);
+  }
+
+  /// <summary>
+  /// Преобразовать к команде вставки списка полезных нагрузок входящего события приложения.
+  /// </summary>
+  /// <param name="appOutgoingEventPayloads">Полезные нагрузки исходящего события.</param>
+  /// <param name="appIncomingEventObjectId">Идентификатор объекта исходящего события.</param>
+  /// <returns>Команда.</returns>
+  public static AppIncomingEventPayloadInsertListCommand ToAppIncomingEventPayloadInsertListCommand(
+    this IEnumerable<AppOutgoingEventPayloadSingleDTO> appOutgoingEventPayloads,
+    string appIncomingEventObjectId)
+  {
+    return new([..
+      appOutgoingEventPayloads.Select(x => x.ToAppIncomingEventPayloadCommandDataSection(appIncomingEventObjectId))
+      ]);
+  }
+
+  /// <summary>
+  /// Преобразовать к команде вставки списка входящих событий приложения.
+  /// </summary>
+  /// <param name="eventIds">Идентификаторы событий.</param>
+  /// <param name="eventName">Имя события.</param>
+  /// <returns>Команда.</returns>
+  public static AppIncomingEventInsertListCommand ToAppIncomingEventInsertListCommand(
+    this IEnumerable<string> eventIds,
+    string eventName)
+  {
+    return new([..eventIds.Select(eventId =>
+      new AppIncomingEventCommandDataSection(
+        EventId: eventId,
+        EventName: eventName,
+        LastLoadingAt: null,
+        LastLoadingError: null,
+        LoadedAt: null,
+        PayloadCount: 0,
+        PayloadTotalCount: 0,
+        ProcessedAt: null))]);
+  }
+
+  /// <summary>
+  /// Преобразовать к команде обновления входящего события приложения.
+  /// </summary>
+  /// <param name="dto">Объект передачи данных.</param>
+  /// <returns>Команда.</returns>
+  public static AppIncomingEventSaveCommand ToAppIncomingEventUpdateCommand(this AppIncomingEventSingleDTO dto)
+  {
+    return new(
+      IsUpdate: true,
+      ObjectId: dto.ObjectId,
+      Data: new(
+        EventId: dto.EventId,
+        EventName: dto.EventName,
+        LastLoadingAt: dto.LastLoadingAt,
+        LastLoadingError: dto.LastLoadingError,
+        LoadedAt: dto.LoadedAt,
+        PayloadCount: dto.PayloadCount,
+        PayloadTotalCount: dto.PayloadTotalCount,
+        ProcessedAt: dto.ProcessedAt));
   }
 }

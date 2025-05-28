@@ -49,6 +49,7 @@ global using Makc.Dummy.MicroserviceReader.Domain.UseCases.AppIncomingEventPaylo
 global using Makc.Dummy.MicroserviceReader.Domain.UseCases.DummyItem.Services;
 global using Makc.Dummy.Shared.Core.App;
 global using Makc.Dummy.Shared.Core.App.Command.Results;
+global using Makc.Dummy.Shared.Core.App.Event.Payloads;
 global using Makc.Dummy.Shared.Core.Message;
 global using Makc.Dummy.Shared.Domain.Model.Aggregate;
 global using Makc.Dummy.Shared.Domain.UseCases.Db.NoSQL.Contexts;

@@ -8,5 +8,5 @@
 /// <param name="Data">Данные.</param>
 public record DummyItemSaveCommand(
   bool IsUpdate,
-  string ObjectId,
+  string? ObjectId,
   DummyItemCommandDataSection Data);

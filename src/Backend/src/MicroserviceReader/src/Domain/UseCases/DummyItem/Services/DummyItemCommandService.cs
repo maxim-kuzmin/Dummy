@@ -69,7 +69,9 @@ public class DummyItemCommandService(
 
     if (command.IsUpdate)
     {
-      entity = await _repository.GetByObjectId(command.ObjectId, cancellationToken).ConfigureAwait(false);
+      string objectId = Guard.Against.NullOrWhiteSpace(command.ObjectId);
+
+      entity = await _repository.GetByObjectId(objectId, cancellationToken).ConfigureAwait(false);
 
       if (entity == null)
       {

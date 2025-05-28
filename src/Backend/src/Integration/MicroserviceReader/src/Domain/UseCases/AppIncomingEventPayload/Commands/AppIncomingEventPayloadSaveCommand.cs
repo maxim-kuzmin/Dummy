@@ -8,5 +8,5 @@
 /// <param name="Data">Данные.</param>
 public record AppIncomingEventPayloadSaveCommand(
   bool IsUpdate,
-  string ObjectId,
+  string? ObjectId,
   AppIncomingEventPayloadCommandDataSection Data);

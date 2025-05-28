@@ -1,4 +1,6 @@
-﻿namespace Makc.Dummy.Integration.MicroserviceReader.Infrastructure.GrpcClient.AppIncomingEvent;
+﻿using Ardalis.GuardClauses;
+
+namespace Makc.Dummy.Integration.MicroserviceReader.Infrastructure.GrpcClient.AppIncomingEvent;
 
 /// <summary>
 /// Расширения входящего события приложения.
@@ -165,11 +167,14 @@ public static class AppIncomingEventExtensions
   /// Преобразовать к запросу gRPC обновления входящего события приложения.
   /// </summary>
   /// <param name="data">Команда.</param>
+  /// <param name="objectId">Идентификатор объекта.</param>
   /// <returns>Запрос gRPC.</returns>
   public static AppIncomingEventUpdateGrpcRequest ToAppIncomingEventUpdateGrpcRequest(
     this AppIncomingEventCommandDataSection data,
-    string objectId)
+    string? objectId)
   {
+    Guard.Against.NullOrWhiteSpace(objectId);
+
     return new AppIncomingEventUpdateGrpcRequest
     {
       ObjectId = objectId,

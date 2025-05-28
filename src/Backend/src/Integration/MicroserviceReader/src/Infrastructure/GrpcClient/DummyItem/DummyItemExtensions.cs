@@ -1,4 +1,6 @@
-﻿namespace Makc.Dummy.Integration.MicroserviceReader.Infrastructure.GrpcClient.DummyItem;
+﻿using Ardalis.GuardClauses;
+
+namespace Makc.Dummy.Integration.MicroserviceReader.Infrastructure.GrpcClient.DummyItem;
 
 /// <summary>
 /// Расширения фиктивного предмета.
@@ -145,11 +147,14 @@ public static class DummyItemExtensions
   /// Преобразовать к запросу gRPC обновления фиктивного предмета.
   /// </summary>
   /// <param name="data">Команда.</param>
+  /// <param name="objectId">Идентификатор объекта.</param>
   /// <returns>Запрос gRPC.</returns>
   public static DummyItemUpdateGrpcRequest ToDummyItemUpdateGrpcRequest(
     this DummyItemCommandDataSection data,
-    string objectId)
+    string? objectId)
   {
+    Guard.Against.NullOrWhiteSpace(objectId);
+
     return new DummyItemUpdateGrpcRequest
     {
       ObjectId = objectId,
