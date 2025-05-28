@@ -11,7 +11,12 @@ public record AppConfigOptionsDomainAppInboxSection
   public AppConfigOptionsDomainAppInboxCleanerSection? Cleaner { get; set; }
 
   /// <summary>
-  /// Поставщик.
+  /// Потребитель.
   /// </summary>
   public AppConfigOptionsDomainAppInboxConsumerSection? Consumer { get; set; }
+
+  /// <summary>
+  /// Загрузчик.
+  /// </summary>
+  public AppConfigOptionsDomainAppInboxLoaderSection? Loader { get; set; }
 }

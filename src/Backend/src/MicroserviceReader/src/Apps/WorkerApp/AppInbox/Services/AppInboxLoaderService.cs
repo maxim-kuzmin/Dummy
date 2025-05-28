@@ -12,22 +12,49 @@ public class AppInboxLoaderService(
   /// <inheritdoc/>
   protected override async Task ExecuteAsync(CancellationToken stoppingToken)
   {
+    _logger.LogDebug("MAKC:AppInboxLoaderService:ExecuteAsync start");
+
     while (!stoppingToken.IsCancellationRequested)
     {
       using IServiceScope scope = _serviceScopeFactory.CreateScope();
 
       var appConfigOptionsSnapshot = scope.ServiceProvider.GetRequiredService<IOptionsSnapshot<AppConfigOptions>>();
 
-      var options = Guard.Against.Null(appConfigOptionsSnapshot.Value.Infrastructure?.MongoDB);
+      var options = Guard.Against.Null(appConfigOptionsSnapshot.Value.Domain?.AppInbox?.Loader);
 
-      _logger.LogInformation("Options: {options}", options);
+      int maxCount = options.MaxCount;
+      int timeoutToRepeat = options.TimeoutInMillisecondsToRepeat;
 
-      if (_logger.IsEnabled(LogLevel.Information))
+      var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+
+      try
       {
-        _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
+        _logger.LogDebug("MAKC:AppInboxLoaderService:ExecuteAsync:Load start");
+
+        AppInboxLoadCommand command = new(
+          EventName: AppEventNameEnum.DummyItemChanged.ToString(),
+          MaxCount: maxCount);
+
+        _logger.LogDebug("MAKC:AppInboxLoaderService:ExecuteAsync:Load:Command: {command}", command);
+
+        AppInboxLoadActionRequest request = new(command);
+
+        await mediator.Send(request, stoppingToken).ConfigureAwait(false);
+
+        _logger.LogDebug("MAKC:AppInboxLoaderService:ExecuteAsync:Load end");
+      }
+      catch (OperationCanceledException)
+      {
+        _logger.LogDebug("MAKC:AppInboxLoaderService:ExecuteAsync canceled");
+      }
+      catch (Exception ex)
+      {
+        _logger.LogError(ex, "MAKC:AppInboxLoaderService:ExecuteAsync failed");
       }
 
-      await Task.Delay(Timeout.Infinite, stoppingToken);
+      await Task.Delay(timeoutToRepeat, stoppingToken);
     }
+
+    _logger.LogDebug("MAKC:AppInboxLoaderService:ExecuteAsync end");
   }
 }
