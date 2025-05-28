@@ -10,6 +10,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Integration\MicroserviceWriter\src\Infrastructure\GrpcClient\Makc.Dummy.Integration.MicroserviceWriter.Infrastructure.GrpcClient.csproj" />
+    <ProjectReference Include="..\..\..\..\Integration\MicroserviceWriter\src\Infrastructure\HttpClient\Makc.Dummy.Integration.MicroserviceWriter.Infrastructure.HttpClient.csproj" />
     <ProjectReference Include="..\..\..\..\Shared\src\Infrastructure\CoreForOpenTelemetry\Makc.Dummy.Shared.Infrastructure.CoreForOpenTelemetry.csproj" />
     <ProjectReference Include="..\..\Infrastructure\Core\Makc.Dummy.MicroserviceReader.Infrastructure.Core.csproj" />
     <ProjectReference Include="..\..\Infrastructure\Kafka\Makc.Dummy.MicroserviceReader.Infrastructure.Kafka.csproj" />

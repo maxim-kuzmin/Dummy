@@ -19,6 +19,11 @@ public static class AppExtensions
 
     appConfigSection.Bind(appConfigOptions);
 
+    var domain = Guard.Against.Null(appConfigOptions.Domain);
+    var domainApp = Guard.Against.Null(domain.App);
+    var infrastructure = Guard.Against.Null(appConfigOptions.Infrastructure);
+    var workloads = Guard.Against.NullOrEmpty(appConfigOptions.Workloads);
+
     Thread.CurrentThread.CurrentUICulture =
       Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(appConfigOptions.DefaultLanguage);
 
@@ -26,18 +31,7 @@ public static class AppExtensions
       .AddAppDomainModel(logger)
       .AddAppDomainUseCases(logger, appConfigDomainAuthSection: null);
 
-    var domain = Guard.Against.Null(appConfigOptions.Domain);
-    var domainApp = Guard.Against.Null(domain.App);
-    var infrastructure = Guard.Against.Null(appConfigOptions.Infrastructure);
-
     bool isMeassageBrokerEnabled = false;
-
-    var workloads = appConfigOptions.Workloads ?? throw new Exception($"Workloads are null");
-
-    if (workloads.Length == 0)
-    {
-      throw new Exception($"Workloads are empty");
-    }
 
     foreach (var workload in workloads)
     {

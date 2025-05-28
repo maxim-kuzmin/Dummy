@@ -23,6 +23,13 @@ public static class AppExtensions
 
     appConfigSection.Bind(appConfigOptions);
 
+    var domain = Guard.Against.Null(appConfigOptions.Domain);
+    var infrastructure = Guard.Against.Null(appConfigOptions.Infrastructure);
+    var domainAuth = Guard.Against.Null(domain.Auth);
+    var integration = Guard.Against.Null(appConfigOptions.Integration);
+    var integrationMicroserviceReader = Guard.Against.Null(integration.MicroserviceReader);
+    var integrationMicroserviceWriter = Guard.Against.Null(integration.MicroserviceWriter);
+
     Thread.CurrentThread.CurrentUICulture =
       Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(appConfigOptions.DefaultLanguage);
 
@@ -31,9 +38,6 @@ public static class AppExtensions
       .AddAppDomainUseCases(logger, appConfigDomainAuthSection)
       .AddAppIntegrationMicroserviceReaderDomainUseCasesForClient(logger)
       .AddAppIntegrationMicroserviceWriterDomainUseCasesForClient(logger);
-
-    var domain = Guard.Against.Null(appConfigOptions.Domain);
-    var infrastructure = Guard.Against.Null(appConfigOptions.Infrastructure);
 
     List<AppLoggerFuncToConfigure> funcsToConfigureAppLogger = [];
 
@@ -63,25 +67,31 @@ public static class AppExtensions
       .AddAppSharedInfrastructureTiedToCore(logger, appBuilder.Configuration, funcsToConfigureAppLogger)
       .AddAppInfrastructureTiedToCore(logger);
 
-    var domainAuth = Guard.Against.Null(domain.Auth);
-    var integrationMicroserviceReader = Guard.Against.Null(appConfigOptions.Integration?.MicroserviceReader);
-    var integrationMicroserviceWriter = Guard.Against.Null(appConfigOptions.Integration?.MicroserviceWriter);
-
-    switch (integrationMicroserviceWriter.Protocol)
+    switch (integrationMicroserviceReader.Protocol)
     {
       case AppConfigOptionsProtocolEnum.Http:
         services.AddAppIntegrationMicroserviceReaderInfrastructureTiedToHttpClient(
           logger,
           integrationMicroserviceReader.HttpEndpoint);
+        break;
+      case AppConfigOptionsProtocolEnum.Grpc:
+        services.AddAppIntegrationMicroserviceReaderInfrastructureTiedToGrpcClient(
+          logger,
+          integrationMicroserviceReader.GrpcEndpoint);
+        break;
+      default:
+        throw new NotImplementedException();
+    }
+
+    switch (integrationMicroserviceWriter.Protocol)
+    {
+      case AppConfigOptionsProtocolEnum.Http:
         services.AddAppIntegrationMicroserviceWriterInfrastructureTiedToHttpClient(
           logger,
           domainAuth,
           integrationMicroserviceWriter.HttpEndpoint);
         break;
       case AppConfigOptionsProtocolEnum.Grpc:
-        services.AddAppIntegrationMicroserviceReaderInfrastructureTiedToGrpcClient(
-          logger,
-          integrationMicroserviceReader.GrpcEndpoint);
         services.AddAppIntegrationMicroserviceWriterInfrastructureTiedToGrpcClient(
           logger,
           domainAuth,

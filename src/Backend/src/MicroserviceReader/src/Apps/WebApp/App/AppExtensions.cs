@@ -21,15 +21,15 @@ public static class AppExtensions
 
     appConfigSection.Bind(appConfigOptions);
 
+    var domain = Guard.Against.Null(appConfigOptions.Domain);
+    var infrastructure = Guard.Against.Null(appConfigOptions.Infrastructure);
+
     Thread.CurrentThread.CurrentUICulture =
       Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(appConfigOptions.DefaultLanguage);
 
     var services = appBuilder.Services.Configure<AppConfigOptions>(appConfigSection)
       .AddAppDomainModel(logger)
       .AddAppDomainUseCases(logger, appConfigDomainAuthSection);
-
-    var domain = Guard.Against.Null(appConfigOptions.Domain);
-    var infrastructure = Guard.Against.Null(appConfigOptions.Infrastructure);
 
     List<AppLoggerFuncToConfigure> funcsToConfigureAppLogger = [];
 

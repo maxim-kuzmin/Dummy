@@ -16,6 +16,11 @@ public record AppConfigOptions : AppConfigOptionsBase
   public AppConfigOptionsInfrastructureSection? Infrastructure { get; set; }
 
   /// <summary>
+  /// Интеграция.
+  /// </summary>
+  public AppConfigOptionsIntegrationSection? Integration { get; set; }
+
+  /// <summary>
   /// Полезные нагрузки.
   /// </summary>
   public AppConfigOptionsWorkloadEnum[]? Workloads { get; set; }

@@ -75,21 +75,21 @@ public class AppInboxCommandService(
           eventDTO.PayloadCount += items.Count;
           eventDTO.PayloadTotalCount = data.TotalCount;
 
-          await InsertEventPayloads(items, eventDTO.ObjectId, cancellationToken).ConfigureAwait(false);
+          await InsertIncomingEventPayloads(items, eventDTO.ObjectId, cancellationToken).ConfigureAwait(false);
         }
         catch (Exception ex)
         {
           eventDTO.LastLoadingError = ex.ToString();
         }
 
-        await SaveEvent(eventDTO, DateTimeOffset.Now, cancellationToken).ConfigureAwait(false);
+        await SaveIncomingEvent(eventDTO, DateTimeOffset.Now, cancellationToken).ConfigureAwait(false);
       }
 
       await _appDbExecutionContext.ExecuteInTransaction(FuncToExecute, cancellationToken).ConfigureAwait(false);
     }
   }
 
-  private Task<Result> InsertEventPayloads(
+  private Task<Result> InsertIncomingEventPayloads(
     List<AppOutgoingEventPayloadSingleDTO> appOutgoingEventPayloads,
     string? appIncomingEventObjectId,
     CancellationToken cancellationToken)
@@ -104,7 +104,7 @@ public class AppInboxCommandService(
       cancellationToken);
   }
 
-  private Task<AppCommandResultWithValue<AppIncomingEventSingleDTO>> SaveEvent(
+  private Task<AppCommandResultWithValue<AppIncomingEventSingleDTO>> SaveIncomingEvent(
     AppIncomingEventSingleDTO eventDTO,
     DateTimeOffset now,
     CancellationToken cancellationToken)
@@ -139,7 +139,7 @@ public class AppInboxCommandService(
     string eventName,
     CancellationToken cancellationToken)
   {
-    AppIncomingEventInsertListCommand command = eventIds.ToAppIncomingEventInsertListCommand(eventName);
+    var command = eventIds.ToAppIncomingEventInsertListCommand(eventName);
 
     return _appIncomingEventCommandService.InsertList(command, cancellationToken);
   }

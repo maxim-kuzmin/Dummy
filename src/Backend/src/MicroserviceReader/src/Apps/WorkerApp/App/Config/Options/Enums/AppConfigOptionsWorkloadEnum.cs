@@ -13,5 +13,10 @@ public enum AppConfigOptionsWorkloadEnum
   /// <summary>
   /// Потребитель входящих сообщений приложения.
   /// </summary>
-  AppInboxConsumer
+  AppInboxConsumer,
+
+  /// <summary>
+  /// Загрузчик входящих сообщений приложения.
+  /// </summary>
+  AppInboxLoader,
 }

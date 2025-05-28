@@ -19,6 +19,13 @@ public static class AppExtensions
 
     appConfigSection.Bind(appConfigOptions);
 
+    var domain = Guard.Against.Null(appConfigOptions.Domain);
+    var domainApp = Guard.Against.Null(domain.App);
+    var infrastructure = Guard.Against.Null(appConfigOptions.Infrastructure);
+    var integration = Guard.Against.Null(appConfigOptions.Integration);
+    var integrationMicroserviceWriter = Guard.Against.Null(integration.MicroserviceWriter);
+    var workloads = Guard.Against.NullOrEmpty(appConfigOptions.Workloads);
+
     Thread.CurrentThread.CurrentUICulture =
       Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(appConfigOptions.DefaultLanguage);
 
@@ -26,18 +33,25 @@ public static class AppExtensions
       .AddAppDomainModel(logger)
       .AddAppDomainUseCases(logger, appConfigDomainAuthSection: null);
 
-    var domain = Guard.Against.Null(appConfigOptions.Domain);
-    var domainApp = Guard.Against.Null(domain.App);
-    var infrastructure = Guard.Against.Null(appConfigOptions.Infrastructure);
+    switch (integrationMicroserviceWriter.Protocol)
+    {
+      case AppConfigOptionsProtocolEnum.Http:
+        services.AddAppIntegrationMicroserviceWriterInfrastructureTiedToHttpClient(
+          logger,
+          domainAuthSection: null,
+          integrationMicroserviceWriter.HttpEndpoint);
+        break;
+      case AppConfigOptionsProtocolEnum.Grpc:
+        services.AddAppIntegrationMicroserviceWriterInfrastructureTiedToGrpcClient(
+          logger,
+          domainAuthSection: null,
+          integrationMicroserviceWriter.GrpcEndpoint);
+        break;
+      default:
+        throw new NotImplementedException();
+    }
 
     bool isMeassageBrokerEnabled = false;
-
-    var workloads = appConfigOptions.Workloads ?? throw new Exception($"Workloads are null");
-
-    if (workloads.Length == 0)
-    {
-      throw new Exception($"Workloads are empty");
-    }
 
     foreach (var workload in workloads)
     {
@@ -49,6 +63,9 @@ public static class AppExtensions
         case AppConfigOptionsWorkloadEnum.AppInboxConsumer:
           isMeassageBrokerEnabled = true;
           services.AddHostedService<AppInboxConsumerService>();
+          break;
+        case AppConfigOptionsWorkloadEnum.AppInboxLoader:
+          services.AddHostedService<AppInboxLoaderService>();
           break;
         default:
           throw new NotImplementedException($"Unknown Workload: {workload}");
