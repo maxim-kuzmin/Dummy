@@ -84,10 +84,10 @@ public class AppInboxCommandService(
 
           var items = data.Items;
 
+          await InsertIncomingEventPayloads(items, eventDTO.ObjectId, cancellationToken).ConfigureAwait(false);
+
           eventDTO.PayloadCount += items.Count;
           eventDTO.PayloadTotalCount = data.TotalCount;
-
-          await InsertIncomingEventPayloads(items, eventDTO.ObjectId, cancellationToken).ConfigureAwait(false);
         }
         catch (Exception ex)
         {
