@@ -70,6 +70,8 @@ public class AppInboxCommandService(
     {
       async Task FuncToExecute(CancellationToken cancellationToken)
       {
+        bool isLoaded = false;
+
         try
         {
           var taskToGetPage = _mediator.Send(
@@ -88,6 +90,8 @@ public class AppInboxCommandService(
 
           eventDTO.PayloadCount += items.Count;
           eventDTO.PayloadTotalCount = data.TotalCount;
+
+          isLoaded = true;
         }
         catch (Exception ex)
         {
@@ -96,7 +100,7 @@ public class AppInboxCommandService(
           _logger.LogError(ex, "MAKC:AppInboxCommandService:DownloadEventPayloads failed");
         }
 
-        await SaveIncomingEvent(eventDTO, DateTimeOffset.Now, cancellationToken).ConfigureAwait(false);
+        await SaveIncomingEvent(eventDTO, DateTimeOffset.Now, isLoaded, cancellationToken).ConfigureAwait(false);
       }
 
       await _appDbExecutionContext.ExecuteInTransaction(FuncToExecute, cancellationToken).ConfigureAwait(false);
@@ -126,11 +130,12 @@ public class AppInboxCommandService(
   private Task<AppCommandResultWithValue<AppIncomingEventSingleDTO>> SaveIncomingEvent(
     AppIncomingEventSingleDTO eventDTO,
     DateTimeOffset now,
+    bool isLoaded,
     CancellationToken cancellationToken)
   {
     eventDTO.LastLoadingAt = now;
 
-    if (eventDTO.PayloadCount == eventDTO.PayloadTotalCount)
+    if (isLoaded && eventDTO.PayloadCount == eventDTO.PayloadTotalCount)
     {
       eventDTO.LoadedAt = now;
     }
