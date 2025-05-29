@@ -1,5 +1,6 @@
 ﻿global using System.Globalization;
 global using Ardalis.GuardClauses;
+global using Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCasesForClient.App;
 global using Makc.Dummy.Integration.MicroserviceWriter.Infrastructure.GrpcClient.App;
 global using Makc.Dummy.Integration.MicroserviceWriter.Infrastructure.HttpClient.App;
 global using Makc.Dummy.MicroserviceReader.Apps.WorkerApp.App;

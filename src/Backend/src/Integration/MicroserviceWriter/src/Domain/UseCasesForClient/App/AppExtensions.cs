@@ -1,4 +1,4 @@
-﻿namespace Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCases.App;
+﻿namespace Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCasesForClient.App;
 
 /// <summary>
 /// Расширения приложения.

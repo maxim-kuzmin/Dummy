@@ -31,7 +31,8 @@ public static class AppExtensions
 
     var services = appBuilder.Services.Configure<AppConfigOptions>(appConfigSection)
       .AddAppDomainModel(logger)
-      .AddAppDomainUseCases(logger, appConfigDomainAuthSection: null);
+      .AddAppDomainUseCases(logger, appConfigDomainAuthSection: null)
+      .AddAppIntegrationMicroserviceWriterDomainUseCasesForClient(logger);
 
     switch (integrationMicroserviceWriter.Protocol)
     {
@@ -45,7 +46,7 @@ public static class AppExtensions
         services.AddAppIntegrationMicroserviceWriterInfrastructureTiedToGrpcClient(
           logger,
           domainAuthSection: null,
-          integrationMicroserviceWriter.GrpcEndpoint);
+          integrationMicroserviceWriter.GrpcEndpoint);        
         break;
       default:
         throw new NotImplementedException();

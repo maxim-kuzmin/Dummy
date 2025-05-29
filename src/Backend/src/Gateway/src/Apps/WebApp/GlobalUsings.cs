@@ -14,7 +14,7 @@ global using Makc.Dummy.Gateway.Infrastructure.HttpClientForKeycloak.App;
 global using Makc.Dummy.Integration.MicroserviceReader.Domain.UseCasesForClient.App;
 global using Makc.Dummy.Integration.MicroserviceReader.Infrastructure.GrpcClient.App;
 global using Makc.Dummy.Integration.MicroserviceReader.Infrastructure.HttpClient.App;
-global using Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCases.App;
+global using Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCasesForClient.App;
 global using Makc.Dummy.Integration.MicroserviceWriter.Infrastructure.GrpcClient.App;
 global using Makc.Dummy.Integration.MicroserviceWriter.Infrastructure.HttpClient.App;
 global using Makc.Dummy.Shared.Core.App;
