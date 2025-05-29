@@ -6,9 +6,9 @@
 public record AppConfigOptionsDomainAppOutboxProducerSection
 {
   /// <summary>
-  /// Максимальное количество событий, публикуемых за одно повторение.
+  /// Максимальное количество событий для публикации.
   /// </summary>
-  public int MaxCount { get; set; }
+  public int EventMaxCountToPublish { get; set; }
 
   /// <summary>
   /// Таймаут в миллисекундах для повторения.

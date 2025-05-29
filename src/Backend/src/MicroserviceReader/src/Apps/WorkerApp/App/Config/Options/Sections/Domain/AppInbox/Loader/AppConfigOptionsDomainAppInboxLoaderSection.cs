@@ -6,9 +6,19 @@
 public record AppConfigOptionsDomainAppInboxLoaderSection
 {
   /// <summary>
-  /// Максимальное количество событий, публикуемых за одно повторение.
+  /// Максимальное количество событий для загрузки.
   /// </summary>
-  public int MaxCount { get; set; }
+  public int EventMaxCountToLoad { get; set; }
+
+  /// <summary>
+  /// Размер страницы полезных нагрузок.
+  /// </summary>
+  public int PayloadPageSize { get; set; }
+
+  /// <summary>
+  /// Таймаут в миллисекундах для получения полезных нагрузок.
+  /// </summary>
+  public int TimeoutInMillisecondsToGetPayloads { get; set; }
 
   /// <summary>
   /// Таймаут в миллисекундах для повторения.

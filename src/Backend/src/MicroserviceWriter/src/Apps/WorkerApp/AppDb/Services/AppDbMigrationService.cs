@@ -26,9 +26,9 @@ public class AppDbMigrationService(
 
       bool shouldDbBePopulatedWithTestData = options.ShouldDbBePopulatedWithTestData;
 
-      int timeoutToRetry = options.TimeoutInMillisecondsToRetry;
+      int timeoutInMillisecondsToRetry = Guard.Against.Negative(options.TimeoutInMillisecondsToRetry);
 
-      _logger.LogDebug("MAKC:AppDbMigrationService:ExecuteAsync:ShouldDbBePopulatedWithTestData={shouldDbBePopulatedWithTestData}, TimeoutInMillisecondsToRetry={timeoutToRetry}", shouldDbBePopulatedWithTestData, timeoutToRetry);
+      _logger.LogDebug("MAKC:AppDbMigrationService:ExecuteAsync:ShouldDbBePopulatedWithTestData={shouldDbBePopulatedWithTestData}, TimeoutInMillisecondsToRetry={timeoutToRetry}", shouldDbBePopulatedWithTestData, timeoutInMillisecondsToRetry);
 
       var appDbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
@@ -49,7 +49,10 @@ public class AppDbMigrationService(
           _logger.LogError(ex, "MAKC:AppDbMigrationService:ExecuteAsync failed");
         }
 
-        await Task.Delay(timeoutToRetry, stoppingToken).ConfigureAwait(false);
+        if (timeoutInMillisecondsToRetry > 0)
+        {
+          await Task.Delay(timeoutInMillisecondsToRetry, stoppingToken).ConfigureAwait(false);
+        }
       }
 
       if (shouldDbBePopulatedWithTestData)

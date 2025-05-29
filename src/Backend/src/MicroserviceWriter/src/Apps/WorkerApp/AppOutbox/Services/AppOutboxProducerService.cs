@@ -30,8 +30,8 @@ public class AppOutboxProducerService(
 
       var options = Guard.Against.Null(appConfigOptionsSnapshot.Value.Domain?.AppOutbox?.Producer);
 
-      int maxCount = options.MaxCount;
-      int timeoutToRepeat = options.TimeoutInMillisecondsToRepeat;
+      int eventMaxCountToPublish = Guard.Against.NegativeOrZero(options.EventMaxCountToPublish);
+      int timeoutInMillisecondsToRepeat = Guard.Against.Negative(options.TimeoutInMillisecondsToRepeat);
 
       var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
 
@@ -39,7 +39,7 @@ public class AppOutboxProducerService(
       {
         _logger.LogDebug("MAKC:AppOutboxProducerService:ExecuteAsync:Produce start");
 
-        AppOutboxProduceCommand command = new(maxCount);
+        AppOutboxProduceCommand command = new(EventMaxCountToPublish: eventMaxCountToPublish);
 
         _logger.LogDebug("MAKC:AppOutboxProducerService:ExecuteAsync:Produce:Command: {command}", command);
 
@@ -58,7 +58,10 @@ public class AppOutboxProducerService(
         _logger.LogError(ex, "MAKC:AppOutboxProducerService:ExecuteAsync failed");
       }
 
-      await Task.Delay(timeoutToRepeat, stoppingToken);
+      if (timeoutInMillisecondsToRepeat > 0)
+      {
+        await Task.Delay(timeoutInMillisecondsToRepeat, stoppingToken);
+      }
     }
 
     _logger.LogDebug("MAKC:AppOutboxProducerService:ExecuteAsync end");

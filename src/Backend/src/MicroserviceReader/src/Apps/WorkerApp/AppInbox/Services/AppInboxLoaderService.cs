@@ -22,8 +22,10 @@ public class AppInboxLoaderService(
 
       var options = Guard.Against.Null(appConfigOptionsSnapshot.Value.Domain?.AppInbox?.Loader);
 
-      int maxCount = options.MaxCount;
-      int timeoutToRepeat = options.TimeoutInMillisecondsToRepeat;
+      int eventMaxCountToLoad = Guard.Against.NegativeOrZero(options.EventMaxCountToLoad);
+      int payloadPageSize = Guard.Against.NegativeOrZero(options.PayloadPageSize);
+      int timeoutInMillisecondsToGetPayloads = Guard.Against.Negative(options.TimeoutInMillisecondsToGetPayloads);
+      int timeoutInMillisecondsToRepeat = Guard.Against.Negative(options.TimeoutInMillisecondsToRepeat);
 
       var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
 
@@ -33,7 +35,10 @@ public class AppInboxLoaderService(
 
         AppInboxLoadCommand command = new(
           EventName: AppEventNameEnum.DummyItemChanged.ToString(),
-          MaxCount: maxCount);
+          EventMaxCountToLoad: eventMaxCountToLoad,
+          PayloadPageSize: payloadPageSize,
+          TimeoutInMillisecondsToGetPayloads: timeoutInMillisecondsToGetPayloads
+          );
 
         _logger.LogDebug("MAKC:AppInboxLoaderService:ExecuteAsync:Load:Command: {command}", command);
 
@@ -52,7 +57,10 @@ public class AppInboxLoaderService(
         _logger.LogError(ex, "MAKC:AppInboxLoaderService:ExecuteAsync failed");
       }
 
-      await Task.Delay(timeoutToRepeat, stoppingToken);
+      if (timeoutInMillisecondsToRepeat > 0)
+      {
+        await Task.Delay(timeoutInMillisecondsToRepeat, stoppingToken);
+      }
     }
 
     _logger.LogDebug("MAKC:AppInboxLoaderService:ExecuteAsync end");

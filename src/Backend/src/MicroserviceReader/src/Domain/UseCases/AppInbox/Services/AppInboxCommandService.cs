@@ -37,13 +37,22 @@ public class AppInboxCommandService(
   /// <inheritdoc/>
   public async Task<Result> Load(AppInboxLoadCommand command, CancellationToken cancellationToken)
   {
-    var task = GetUnloadedEvents(command.EventName, command.MaxCount, cancellationToken);
+    var taskToGetUnloadedEvents = GetUnloadedEvents(
+      command.EventName,
+      command.EventMaxCountToLoad,
+      cancellationToken);
 
-    var unloadedEvents = await task.ConfigureAwait(false);
+    var unloadedEvents = await taskToGetUnloadedEvents.ConfigureAwait(false);
 
     foreach (var unloadedEvent in unloadedEvents)
     {
-      await DownloadEventPayloads(unloadedEvent, 100, cancellationToken).ConfigureAwait(false);
+      var taskToDownloadEventPayloads = DownloadEventPayloads(
+        unloadedEvent,
+        command.PayloadPageSize,
+        command.TimeoutInMillisecondsToGetPayloads,
+        cancellationToken);
+
+      await taskToDownloadEventPayloads.ConfigureAwait(false);
     }
 
     return Result.Success();
@@ -51,7 +60,8 @@ public class AppInboxCommandService(
 
   private async Task DownloadEventPayloads(
     AppIncomingEventSingleDTO eventDTO,
-    int pageSize,
+    int payloadPageSize,
+    int timeoutInMillisecondsToGetPayloads,
     CancellationToken cancellationToken)
   {
     while (eventDTO.PayloadTotalCount == 0 || eventDTO.PayloadCount < eventDTO.PayloadTotalCount)
@@ -61,7 +71,7 @@ public class AppInboxCommandService(
         try
         {
           var taskToGetPage = _mediator.Send(
-            eventDTO.ToAppOutgoingEventPayloadGetPageActionRequest(pageSize),
+            eventDTO.ToAppOutgoingEventPayloadGetPageActionRequest(payloadPageSize),
             cancellationToken);
 
           var resultToGetPage = await taskToGetPage.ConfigureAwait(false);
@@ -86,6 +96,11 @@ public class AppInboxCommandService(
       }
 
       await _appDbExecutionContext.ExecuteInTransaction(FuncToExecute, cancellationToken).ConfigureAwait(false);
+
+      if (timeoutInMillisecondsToGetPayloads > 0)
+      {
+        await Task.Delay(timeoutInMillisecondsToGetPayloads, cancellationToken);
+      }
     }
   }
 
@@ -123,12 +138,12 @@ public class AppInboxCommandService(
 
   private Task<List<AppIncomingEventSingleDTO>> GetUnloadedEvents(
     string eventName,
-    int maxCount,
+    int eventMaxCountToLoad,
     CancellationToken cancellationToken)
   {
     AppIncomingEventUnloadedListQuery query = new(eventName)
     {
-      MaxCount = maxCount,
+      MaxCount = eventMaxCountToLoad,
     };
 
     return _appIncomingEventQueryService.GetUnloadedList(query, cancellationToken);

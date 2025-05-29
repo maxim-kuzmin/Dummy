@@ -19,7 +19,7 @@ public class AppOutboxCommandService(
   /// <inheritdoc/>
   public async Task Produce(AppOutboxProduceCommand command, CancellationToken cancellationToken)
   {
-    var ids = await GetUnpublishedAppOutgoingEventList(command.MaxCount, cancellationToken).ConfigureAwait(false);
+    var ids = await GetUnpublishedAppOutgoingEventList(command.EventMaxCountToPublish, cancellationToken).ConfigureAwait(false);
 
     if (ids.Count > 0)
     {
