@@ -50,6 +50,7 @@ public static class AppIncomingEventExtensions
       LoadedAt = Timestamp.FromDateTimeOffset(dto.LoadedAt ?? default),
       PayloadCount = dto.PayloadCount,
       PayloadTotalCount = dto.PayloadTotalCount,
+      ProcessedAt = Timestamp.FromDateTimeOffset(dto.ProcessedAt ?? default),
     };
   }
 
@@ -195,6 +196,7 @@ public static class AppIncomingEventExtensions
       LoadedAt = Timestamp.FromDateTimeOffset(dto.LoadedAt ?? default),
       PayloadCount = dto.PayloadCount,
       PayloadTotalCount = dto.PayloadTotalCount,
+      ProcessedAt = Timestamp.FromDateTimeOffset(dto.ProcessedAt ?? default),
     };
   }
 }

@@ -9,12 +9,14 @@
 /// <param name="_appIncomingEventPayloadCommandService">
 /// Сервис команд полезной нагрузки входящего события приложения.
 /// </param>
+/// <param name="_logger">Логгер.</param>
 /// <param name="_mediator">Медиатор.</param>
 public class AppInboxCommandService(  
   IAppDbNoSQLExecutionContext _appDbExecutionContext,
   IAppIncomingEventCommandService _appIncomingEventCommandService,
   IAppIncomingEventQueryService _appIncomingEventQueryService,
   IAppIncomingEventPayloadCommandService _appIncomingEventPayloadCommandService,
+  ILogger<AppInboxCommandService> _logger,
   IMediator _mediator) : IAppInboxCommandService
 {
   /// <summary>
@@ -90,6 +92,8 @@ public class AppInboxCommandService(
         catch (Exception ex)
         {
           eventDTO.LastLoadingError = ex.ToString();
+
+          _logger.LogError(ex, "MAKC:AppInboxCommandService:DownloadEventPayloads failed");
         }
 
         await SaveIncomingEvent(eventDTO, DateTimeOffset.Now, cancellationToken).ConfigureAwait(false);

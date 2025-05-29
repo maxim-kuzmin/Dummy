@@ -27,53 +27,46 @@ public class AppIncomingEventAggregate(
 
       var source = GetEntityToUpdate();
 
-      bool isEntityChanged =
+      bool[] updates = [
         PrepareChangedPropertyToUpdate(
           nameof(source.CreatedAt),
           () => target.CreatedAt != source.CreatedAt,
-          () => target.CreatedAt = source.CreatedAt)
-        ||
+          () => target.CreatedAt = source.CreatedAt),
         PrepareChangedPropertyToUpdate(
           nameof(source.EventId),
           () => target.EventId != source.EventId,
-          () => target.EventId = source.EventId)
-        ||
+          () => target.EventId = source.EventId),
         PrepareChangedPropertyToUpdate(
           nameof(source.EventName),
           () => target.EventName != source.EventName,
-          () => target.EventName = source.EventName)
-        ||
+          () => target.EventName = source.EventName),
         PrepareChangedPropertyToUpdate(
           nameof(source.LastLoadingAt),
           () => target.LastLoadingAt != source.LastLoadingAt,
-          () => target.LastLoadingAt = source.LastLoadingAt)
-        ||
+          () => target.LastLoadingAt = source.LastLoadingAt),
         PrepareChangedPropertyToUpdate(
           nameof(source.LastLoadingError),
           () => target.LastLoadingError != source.LastLoadingError,
-          () => target.LastLoadingError = source.LastLoadingError)
-        ||
+          () => target.LastLoadingError = source.LastLoadingError),
         PrepareChangedPropertyToUpdate(
           nameof(source.LoadedAt),
           () => target.LoadedAt != source.LoadedAt,
-          () => target.LoadedAt = source.LoadedAt)
-        ||
+          () => target.LoadedAt = source.LoadedAt),
         PrepareChangedPropertyToUpdate(
           nameof(source.PayloadCount),
           () => target.PayloadCount != source.PayloadCount,
-          () => target.PayloadCount = source.PayloadCount)
-        ||
+          () => target.PayloadCount = source.PayloadCount),
         PrepareChangedPropertyToUpdate(
           nameof(source.PayloadTotalCount),
           () => target.PayloadTotalCount != source.PayloadTotalCount,
-          () => target.PayloadTotalCount = source.PayloadTotalCount)
-        ||
+          () => target.PayloadTotalCount = source.PayloadTotalCount),
         PrepareChangedPropertyToUpdate(
           nameof(source.ProcessedAt),
           () => target.ProcessedAt != source.ProcessedAt,
-          () => target.ProcessedAt = source.ProcessedAt);
+          () => target.ProcessedAt = source.ProcessedAt)
+        ];
 
-      if (isEntityChanged)
+      if (updates.Any(x => x == true))
       {
         return result;
       }

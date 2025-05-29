@@ -13,6 +13,8 @@ public class AppIncomingEventPayloadEntityConfiguration : IEntityConfiguration
       classMap.AutoMap();
 
       classMap.MapIdMember(x => x.ObjectId).SetIdGenerator(StringObjectIdGenerator.Instance);
+
+      classMap.IdMemberMap.SetSerializer(new StringSerializer(BsonType.ObjectId));
     });
   }
 }

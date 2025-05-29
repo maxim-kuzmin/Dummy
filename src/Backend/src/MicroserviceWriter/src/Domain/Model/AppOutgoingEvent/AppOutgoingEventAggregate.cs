@@ -27,23 +27,22 @@ public class AppOutgoingEventAggregate(
 
       var source = GetEntityToUpdate();
 
-      bool isEntityChanged =
+      bool[] updates = [
         PrepareChangedPropertyToUpdate(
           nameof(source.CreatedAt),
           () => target.CreatedAt != source.CreatedAt,
-          () => target.CreatedAt = source.CreatedAt)
-        ||
+          () => target.CreatedAt = source.CreatedAt),
         PrepareChangedPropertyToUpdate(
           nameof(source.Name),
           () => target.Name != source.Name,
-          () => target.Name = source.Name)
-        ||
+          () => target.Name = source.Name),
         PrepareChangedPropertyToUpdate(
           nameof(source.PublishedAt),
           () => target.PublishedAt != source.PublishedAt,
-          () => target.PublishedAt = source.PublishedAt);
+          () => target.PublishedAt = source.PublishedAt)
+        ];
 
-      if (isEntityChanged)
+      if (updates.Any(x => x == true))
       {
         return result;
       }

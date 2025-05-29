@@ -27,18 +27,18 @@ public class AppOutgoingEventPayloadAggregate(
 
       var source = GetEntityToUpdate();
 
-      bool isEntityChanged =
+      bool[] updates = [
         PrepareChangedPropertyToUpdate(
           nameof(source.AppOutgoingEventId),
           () => target.AppOutgoingEventId != source.AppOutgoingEventId,
-          () => target.AppOutgoingEventId = source.AppOutgoingEventId)
-        ||
+          () => target.AppOutgoingEventId = source.AppOutgoingEventId),
         PrepareChangedPropertyToUpdate(
           nameof(source.Data),
           () => target.Data != source.Data,
-          () => target.Data = source.Data);
+          () => target.Data = source.Data)
+        ];
 
-      if (isEntityChanged)
+      if (updates.Any(x => x == true))
       {
         return result;
       }

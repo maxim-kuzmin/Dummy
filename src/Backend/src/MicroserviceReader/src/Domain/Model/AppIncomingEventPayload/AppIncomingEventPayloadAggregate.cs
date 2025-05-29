@@ -27,53 +27,46 @@ public class AppIncomingEventPayloadAggregate(
 
       var source = GetEntityToUpdate();
 
-      bool isEntityChanged =
+      bool[] updates = [
         PrepareChangedPropertyToUpdate(
           nameof(source.AppIncomingEventObjectId),
           () => target.AppIncomingEventObjectId != source.AppIncomingEventObjectId,
-          () => target.AppIncomingEventObjectId = source.AppIncomingEventObjectId)
-        ||
+          () => target.AppIncomingEventObjectId = source.AppIncomingEventObjectId),
         PrepareChangedPropertyToUpdate(
           nameof(source.CreatedAt),
           () => target.CreatedAt != source.CreatedAt,
-          () => target.CreatedAt = source.CreatedAt)
-        ||
+          () => target.CreatedAt = source.CreatedAt),
         PrepareChangedPropertyToUpdate(
           nameof(source.Data),
           () => target.Data != source.Data,
-          () => target.Data = source.Data)
-        ||
+          () => target.Data = source.Data),
         PrepareChangedPropertyToUpdate(
           nameof(source.EntityConcurrencyTokenToDelete),
           () => target.EntityConcurrencyTokenToDelete != source.EntityConcurrencyTokenToDelete,
-          () => target.EntityConcurrencyTokenToDelete = source.EntityConcurrencyTokenToDelete)
-        ||
+          () => target.EntityConcurrencyTokenToDelete = source.EntityConcurrencyTokenToDelete),
         PrepareChangedPropertyToUpdate(
           nameof(source.EntityConcurrencyTokenToInsert),
           () => target.EntityConcurrencyTokenToInsert != source.EntityConcurrencyTokenToInsert,
-          () => target.EntityConcurrencyTokenToInsert = source.EntityConcurrencyTokenToInsert)
-        ||
+          () => target.EntityConcurrencyTokenToInsert = source.EntityConcurrencyTokenToInsert),
         PrepareChangedPropertyToUpdate(
           nameof(source.EntityId),
           () => target.EntityId != source.EntityId,
-          () => target.EntityId = source.EntityId)
-        ||
+          () => target.EntityId = source.EntityId),
         PrepareChangedPropertyToUpdate(
           nameof(source.EntityName),
           () => target.EntityName != source.EntityName,
-          () => target.EntityName = source.EntityName)
-        ||
+          () => target.EntityName = source.EntityName),
         PrepareChangedPropertyToUpdate(
           nameof(source.EventPayloadId),
           () => target.EventPayloadId != source.EventPayloadId,
-          () => target.EventPayloadId = source.EventPayloadId)
-        ||
+          () => target.EventPayloadId = source.EventPayloadId),
         PrepareChangedPropertyToUpdate(
           nameof(source.Position),
           () => target.Position != source.Position,
-          () => target.Position = source.Position);
+          () => target.Position = source.Position)
+        ];
 
-      if (isEntityChanged)
+      if (updates.Any(x => x == true))
       {
         return result;
       }

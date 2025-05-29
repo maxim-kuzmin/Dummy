@@ -27,13 +27,14 @@ public class DummyItemAggregate(
 
       var source = GetEntityToUpdate();
 
-      bool isEntityChanged =
+      bool[] updates = [
         PrepareChangedPropertyToUpdate(
           nameof(source.Name),
           () => target.Name != source.Name,
-          () => target.Name = source.Name);
+          () => target.Name = source.Name)
+        ];
 
-      if (isEntityChanged)
+      if (updates.Any(x => x == true))
       {
         return result;
       }
