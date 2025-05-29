@@ -27,6 +27,5 @@ global using Makc.Dummy.Shared.Core.App;
 global using Makc.Dummy.Shared.Core.App.Config.Options.Enums;
 global using Makc.Dummy.Shared.Core.App.Config.Options.Sections.Domain;
 global using Makc.Dummy.Shared.Core.Http;
-global using Microsoft.AspNetCore.Http;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Logging;

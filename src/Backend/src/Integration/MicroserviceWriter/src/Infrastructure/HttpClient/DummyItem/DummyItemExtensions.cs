@@ -35,14 +35,30 @@ public static class DummyItemExtensions
     var sort = query.Sort;
     var filter = query.Filter;
 
+    string? sortField = null;
+    string? sortIsDesc = null;
+
+    if (sort != null)
+    {
+      sortField = sort.Field;
+      sortIsDesc = sort.IsDesc.ToString();
+    }
+
+    string? maxCount = null;
+
+    if (query.MaxCount > 0)
+    {
+      maxCount = query.MaxCount.ToString();
+    }
+
     IEnumerable<KeyValuePair<string, string?>> parameters = [
-      new("MaxCount", query.MaxCount.ToString()),
-      new("SortField", (sort?.Field ?? string.Empty)),
-      new("SortIsDesc", (sort?.IsDesc ?? false).ToString()),
-      new("Query", filter?.FullTextSearchQuery ?? string.Empty)
+      new("MaxCount", maxCount),
+      new("SortField", sortField),
+      new("SortIsDesc", sortIsDesc),
+      new("Query", filter?.FullTextSearchQuery)
     ];
 
-    var queryString = QueryString.Create(parameters);
+    var queryString = parameters.ToQueryString();
 
     return $"{DummyItemSettings.Root}{queryString}";
   }
@@ -58,16 +74,41 @@ public static class DummyItemExtensions
     var sort = query.Sort;
     var filter = query.Filter;
 
+    string? sortField = null;
+    string? sortIsDesc = null;
+
+    if (sort != null)
+    {
+      sortField = sort.Field;
+      sortIsDesc = sort.IsDesc.ToString();
+    }
+
+    string pageNumber = "1";
+    string? itemsPerPage = null;
+
+    if (page != null)
+    {
+      if (page.Number > 1)
+      {
+        pageNumber = page.Number.ToString();
+      }
+
+      if (page.Size > 0)
+      {
+        itemsPerPage = page.Size.ToString();
+      }
+    }
+
     IEnumerable<KeyValuePair<string, string?>> parameters = [
-      new("ItemsPerPage", (page?.Size ?? 0).ToString()),
-      new("SortField", (sort?.Field ?? string.Empty)),
-      new("SortIsDesc", (sort?.IsDesc ?? false).ToString()),
-      new("Query", filter?.FullTextSearchQuery ?? string.Empty)
+      new("ItemsPerPage", itemsPerPage),
+      new("SortField", sortField),
+      new("SortIsDesc", sortIsDesc),
+      new("Query", filter?.FullTextSearchQuery)
     ];
 
-    var queryString = QueryString.Create(parameters);
+    var queryString = parameters.ToQueryString();
 
-    return $"{DummyItemSettings.Root}/page/{page?.Number ?? 1}{queryString}";
+    return $"{DummyItemSettings.Root}/page/{pageNumber}{queryString}";
   }
 
   /// <summary>

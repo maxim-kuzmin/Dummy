@@ -26,6 +26,21 @@ public static class HttpExtensions
   }
 
   /// <summary>
+  /// Преобразовать к строке запроса.
+  /// </summary>
+  /// <param name="parameters">Параметры.</param>
+  /// <returns>Строка запроса.</returns>
+  public static string ToQueryString(this IEnumerable<KeyValuePair<string, string?>> parameters)
+  {
+    var uriBuilder = new UriBuilder("http://fake")
+    {
+      Query = string.Join("&", parameters.Where(x => x.Value != null).Select(x => $"{x.Key}={x.Value}"))
+    };
+
+    return uriBuilder.Uri.Query;
+  }
+
+  /// <summary>
   /// Преобразовать к результату.
   /// </summary>
   /// <param name="httpResponse">HTTP-отклик.</param>

@@ -21,6 +21,5 @@ global using Makc.Dummy.Integration.MicroserviceReader.Infrastructure.HttpClient
 global using Makc.Dummy.Integration.MicroserviceReader.Infrastructure.HttpClient.DummyItem.Services;
 global using Makc.Dummy.Shared.Core.App;
 global using Makc.Dummy.Shared.Core.Http;
-global using Microsoft.AspNetCore.Http;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Logging;

@@ -10,7 +10,6 @@
         "backend-gateway-web-app": "StartDebugging",
         "backend-microservice-reader-inbox-cleaner-app": "StartDebugging",
         "backend-microservice-reader-inbox-consumer-app": "StartDebugging",
-        "backend-microservice-reader-inbox-loader-app": "StartDebugging",
         "backend-microservice-reader-web-app": "StartDebugging",
         "backend-microservice-writer-db-migration-for-mssqlserver-app": "StartDebugging",
         "backend-microservice-writer-db-migration-for-postgres-app": "StartDebugging",
