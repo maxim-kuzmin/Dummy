@@ -64,9 +64,11 @@ where
 
     var sAppOutgoingEventPayload = _appDbSettings.Entities.AppOutgoingEventPayload;
 
+    List<string> filterParts = [];
+
     if (shouldBeFilteredByFullTextSearchQuery)
     {
-      result.TextBuilder.AppendLine($$"""
+      filterParts.Add($$"""
   (
     aep."{{sAppOutgoingEventPayload.ColumnForId}}" like @FullTextSearchQuery
     or
@@ -79,13 +81,14 @@ where
 
     if (shouldBeFilteredByAppOutgoingEventId)
     {
-      result.TextBuilder.AppendLine($$"""
-  and
+      filterParts.Add($$"""
   aep."{{sAppOutgoingEventPayload.ColumnForId}}" = @AppOutgoingEventId
 """);
 
       result.AddParameter("@AppOutgoingEventId", filter.AppOutgoingEventId);
-    }  
+    }
+
+    result.TextBuilder.AppendLine(string.Join(" and ", filterParts));
 
     return result;
   }
