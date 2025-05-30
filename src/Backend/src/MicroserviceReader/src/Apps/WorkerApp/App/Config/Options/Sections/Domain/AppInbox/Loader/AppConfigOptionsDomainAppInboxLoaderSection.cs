@@ -1,7 +1,7 @@
 ﻿namespace Makc.Dummy.MicroserviceReader.Apps.WorkerApp.App.Config.Options.Sections.Domain.AppInbox.Loader;
 
 /// <summary>
-/// Раздел поставщика исходящих сообщений приложения в параметрах конфигурации предметной области приложения.
+/// Раздел загрузчика исходящих сообщений приложения в параметрах конфигурации предметной области приложения.
 /// </summary>
 public record AppConfigOptionsDomainAppInboxLoaderSection
 {

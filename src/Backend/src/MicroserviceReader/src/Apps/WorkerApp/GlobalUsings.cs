@@ -12,6 +12,7 @@ global using Makc.Dummy.MicroserviceReader.Apps.WorkerApp.App.Config.Options.Sec
 global using Makc.Dummy.MicroserviceReader.Apps.WorkerApp.App.Config.Options.Sections.Domain.AppInbox.Cleaner;
 global using Makc.Dummy.MicroserviceReader.Apps.WorkerApp.App.Config.Options.Sections.Domain.AppInbox.Consumer;
 global using Makc.Dummy.MicroserviceReader.Apps.WorkerApp.App.Config.Options.Sections.Domain.AppInbox.Loader;
+global using Makc.Dummy.MicroserviceReader.Apps.WorkerApp.App.Config.Options.Sections.Domain.AppInbox.Processor;
 global using Makc.Dummy.MicroserviceReader.Apps.WorkerApp.AppInbox.Services;
 global using Makc.Dummy.MicroserviceReader.Domain.Model.App;
 global using Makc.Dummy.MicroserviceReader.Domain.UseCases.App;

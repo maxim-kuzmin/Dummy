@@ -12,6 +12,8 @@ public class AppInboxCleanerService(
   /// <inheritdoc/>
   protected override async Task ExecuteAsync(CancellationToken stoppingToken)
   {
+    _logger.LogDebug("MAKC:AppInboxCleanerService:ExecuteAsync start");
+
     while (!stoppingToken.IsCancellationRequested)
     {
       using IServiceScope scope = _serviceScopeFactory.CreateScope();
@@ -27,7 +29,9 @@ public class AppInboxCleanerService(
         _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
       }
 
-      await Task.Delay(Timeout.Infinite, stoppingToken);
+      await Task.Delay(Timeout.Infinite, stoppingToken).ConfigureAwait(false);
     }
+
+    _logger.LogDebug("MAKC:AppInboxCleanerService:ExecuteAsync end");
   }
 }

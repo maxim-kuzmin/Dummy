@@ -68,6 +68,9 @@ public static class AppExtensions
         case AppConfigOptionsWorkloadEnum.AppInboxLoader:
           services.AddHostedService<AppInboxLoaderService>();
           break;
+        case AppConfigOptionsWorkloadEnum.AppInboxProcessor:
+          services.AddHostedService<AppInboxProcessorService>();
+          break;
         default:
           throw new NotImplementedException($"Unknown Workload: {workload}");
       }

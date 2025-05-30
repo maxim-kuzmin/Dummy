@@ -60,7 +60,7 @@ public class AppOutboxProducerService(
 
       if (timeoutInMillisecondsToRepeat > 0)
       {
-        await Task.Delay(timeoutInMillisecondsToRepeat, stoppingToken);
+        await Task.Delay(timeoutInMillisecondsToRepeat, stoppingToken).ConfigureAwait(false);
       }
     }
 

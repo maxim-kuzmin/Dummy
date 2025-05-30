@@ -19,4 +19,9 @@ public enum AppConfigOptionsWorkloadEnum
   /// Загрузчик входящих сообщений приложения.
   /// </summary>
   AppInboxLoader,
+
+  /// <summary>
+  /// Обработчик входящих сообщений приложения.
+  /// </summary>
+  AppInboxProcessor,
 }

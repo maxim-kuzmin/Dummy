@@ -60,6 +60,14 @@ public class AppInboxCommandService(
     return Result.Success();
   }
 
+  /// <inheritdoc/>
+  public async Task<Result> Process(AppInboxProcessCommand command, CancellationToken cancellationToken)
+  {
+    await Task.Delay(0, cancellationToken).ConfigureAwait(false);
+
+    return Result.Success();
+  }
+
   private async Task DownloadEventPayloads(
     AppIncomingEventSingleDTO eventDTO,
     int payloadPageSize,
@@ -107,7 +115,7 @@ public class AppInboxCommandService(
 
       if (timeoutInMillisecondsToGetPayloads > 0)
       {
-        await Task.Delay(timeoutInMillisecondsToGetPayloads, cancellationToken);
+        await Task.Delay(timeoutInMillisecondsToGetPayloads, cancellationToken).ConfigureAwait(false);
       }
     }
   }

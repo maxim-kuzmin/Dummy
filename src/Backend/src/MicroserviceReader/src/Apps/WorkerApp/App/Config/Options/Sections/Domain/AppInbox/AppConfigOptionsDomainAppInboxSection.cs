@@ -19,4 +19,9 @@ public record AppConfigOptionsDomainAppInboxSection
   /// Загрузчик.
   /// </summary>
   public AppConfigOptionsDomainAppInboxLoaderSection? Loader { get; set; }
+
+  /// <summary>
+  /// Обработчик.
+  /// </summary>
+  public AppConfigOptionsDomainAppInboxProcessorSection? Processor { get; set; }
 }
