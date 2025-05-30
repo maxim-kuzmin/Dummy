@@ -29,7 +29,7 @@ public class AppInboxCommandService(
   {
     string[] eventIds = command.Message.Contains(',')
       ? command.Message.Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries)
-      : [];
+      : [command.Message];
 
     return eventIds.Length > 0
       ? InsertAppIncomingEvents(eventIds, command.Sender, cancellationToken)
