@@ -14,7 +14,7 @@ public class AppIncomingEventPayloadRepository(
   IMongoDatabase database) :
   AppRepositoryBase<AppIncomingEventPayloadEntity>(
     clientSessionHandle,
-    database.GetCollection<AppIncomingEventPayloadEntity>(appDbSettings.Entities.AppIncomingEvent.Collection)),
+    database.GetCollection<AppIncomingEventPayloadEntity>(appDbSettings.Entities.AppIncomingEventPayload.Collection)),
   IAppIncomingEventPayloadRepository
 {
   /// <inheritdoc/>

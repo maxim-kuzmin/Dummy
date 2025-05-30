@@ -16,7 +16,6 @@ public class DummyItemQueryService(
   {
     try
     {
-      var accessToken = _appSession.AccessToken;
       Metadata headers = [];
 
       headers.AddAuthorizationHeader(_appSession);
@@ -45,7 +44,6 @@ public class DummyItemQueryService(
   {
     try
     {
-      var accessToken = _appSession.AccessToken;
       Metadata headers = [];
 
       headers.AddAuthorizationHeader(_appSession);
