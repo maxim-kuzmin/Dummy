@@ -116,7 +116,9 @@ public static class AppExtensions
       }
     }
 
-    services.TryAddAppDomainUseCasesStubs(logger);
+    services
+      .TryAddAppDomainUseCasesStubs(logger)
+      .TryAddAppIntegrationMicroserviceWriterDomainUseCasesForClientStubs(logger);
 
     logger.LogInformation("Application is ready to build");
 

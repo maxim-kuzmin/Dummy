@@ -115,6 +115,8 @@ public static class AppExtensions
         keycloakEndpoint);
     }
 
+    services.TryAddAppIntegrationMicroserviceWriterDomainUseCasesForClientStubs(logger);
+
     services.Configure<CookiePolicyOptions>(options =>
     {
       options.CheckConsentNeeded = context => true;

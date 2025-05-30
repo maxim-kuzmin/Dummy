@@ -1,4 +1,7 @@
-﻿namespace Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCasesForClient.App;
+﻿using Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCasesForClient.Auth.Stubs;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+
+namespace Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCasesForClient.App;
 
 /// <summary>
 /// Расширения приложения.
@@ -20,6 +23,24 @@ public static class AppExtensions
     services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
 
     logger.LogInformation("Added application integration microservice Writer domain use cases for client");
+
+    return services;
+  }
+
+  /// <summary>
+  /// Попробовать добавить заглушки вариантов использования предметной области для клиента интеграции
+  /// микросервиса "Писатель" приложения.
+  /// </summary>
+  /// <param name="services">Сервисы.</param>
+  /// <param name="logger">Логгер.</param>
+  /// <returns>Сервисы.</returns>
+  public static IServiceCollection TryAddAppIntegrationMicroserviceWriterDomainUseCasesForClientStubs(
+    this IServiceCollection services,
+    ILogger logger)
+  {
+    services.TryAddTransient<IAuthCommandService, AuthCommandServiceStub>();
+
+    logger.LogInformation("Tried to add application integration microservice Writer domain use cases for client stubs");
 
     return services;
   }

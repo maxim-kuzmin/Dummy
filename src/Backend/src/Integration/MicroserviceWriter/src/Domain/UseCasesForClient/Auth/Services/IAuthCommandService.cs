@@ -1,7 +1,7 @@
 ﻿namespace Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCasesForClient.Auth.Services;
 
 /// <summary>
-/// Сервис команд аутентификации. 
+/// Интерфейс сервиса команд аутентификации. 
 /// </summary>
 /// <param name="_authOptionsSnapshot">Снимок параметров аутентификации.</param>
 public interface IAuthCommandService
