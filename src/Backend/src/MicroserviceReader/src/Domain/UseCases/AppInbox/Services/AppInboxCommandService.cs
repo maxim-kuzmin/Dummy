@@ -36,16 +36,17 @@ public class AppInboxCommandService(
       : [command.Message];
 
     return eventIds.Length > 0
-      ? InsertAppIncomingEvents(eventIds, command.Sender, cancellationToken)
+      ? _appIncomingEventCommandService.InsertList(
+        eventIds.ToAppIncomingEventInsertListCommand(command.Sender),
+        cancellationToken)
       : Task.FromResult(Result.Success());
   }
 
   /// <inheritdoc/>
   public async Task<Result> Load(AppInboxLoadCommand command, CancellationToken cancellationToken)
   {
-    var eventsGetTask = GetUnloadedEvents(
-      command.EventName,
-      command.EventMaxCountToLoad,
+    var eventsGetTask = _appIncomingEventQueryService.GetUnloadedList(
+      new(command.EventName) { MaxCount = command.EventMaxCountToLoad },
       cancellationToken);
 
     var eventDTOs = await eventsGetTask.ConfigureAwait(false);
@@ -67,9 +68,8 @@ public class AppInboxCommandService(
   /// <inheritdoc/>
   public async Task<Result> Process(AppInboxProcessCommand command, CancellationToken cancellationToken)
   {
-    var eventsGetTask = GetUnprocessedEvents(
-      command.EventName,
-      command.EventMaxCountToProcess,
+    var eventsGetTask = _appIncomingEventQueryService.GetUnprocessedList(
+      new(command.EventName) { MaxCount = command.EventMaxCountToProcess },
       cancellationToken);
 
     var eventDTOs = await eventsGetTask.ConfigureAwait(false);
@@ -135,7 +135,20 @@ public class AppInboxCommandService(
           _logger.LogError(ex, "MAKC:AppInboxCommandService:DownloadEventPayloads failed");
         }
 
-        await SaveEvent(eventDTO, DateTimeOffset.Now, isLoaded, cancellationToken).ConfigureAwait(false);
+        var now = DateTimeOffset.Now;
+
+        eventDTO.LastLoadingAt = now;
+
+        if (isLoaded && eventDTO.PayloadCount == eventDTO.PayloadTotalCount)
+        {
+          eventDTO.LoadedAt = now;
+        }
+
+        var eventSaveTask = _appIncomingEventCommandService.Save(
+          eventDTO.ToAppIncomingEventUpdateCommand(),
+          cancellationToken);
+
+        await eventSaveTask.ConfigureAwait(false);
       }
 
       await _appDbExecutionContext.ExecuteInTransaction(FuncToExecute, cancellationToken).ConfigureAwait(false);
@@ -160,28 +173,62 @@ public class AppInboxCommandService(
 
     var eventPayloadDTOs = await eventPayloadsGetListTask.ConfigureAwait(false);
 
-    foreach (var eventPayloadDTO in eventPayloadDTOs)
+    async Task FuncToExecute(CancellationToken cancellationToken)
     {
-      if (eventPayloadDTO.EntityName != "DummyItem")
+      bool isProcessed = false;
+
+      foreach (var eventPayloadDTO in eventPayloadDTOs)
       {
-        throw new NotImplementedException();
+        try
+        {
+          if (eventPayloadDTO.EntityName != "DummyItem")
+          {
+            throw new Exception($"The event payload {eventPayloadDTO.ObjectId} has unknown entity name");
+          }
+
+          bool isUnknownAction = eventPayloadDTO.EntityConcurrencyTokenToDelete == null
+            &&
+            eventPayloadDTO.EntityConcurrencyTokenToInsert == null;
+
+          if (isUnknownAction)
+          {
+            throw new Exception($"The event payload {eventPayloadDTO.ObjectId} has unknown action");
+          }
+
+          isProcessed = await ProcessEventPayload(eventPayloadDTO, cancellationToken).ConfigureAwait(false);
+        }
+        catch (Exception ex)
+        {
+          eventDTO.LastProcessingError = ex.ToString();
+        }
+
+        if (!isProcessed)
+        {
+          break;
+        }
       }
 
-      bool isUnknownAction = eventPayloadDTO.EntityConcurrencyTokenToDelete == null
-        && eventPayloadDTO.EntityConcurrencyTokenToInsert == null;
+      var now = DateTimeOffset.Now;
 
-      if (isUnknownAction)
+      eventDTO.LastProcessingAt = now;
+
+      if (isProcessed)
       {
-        throw new Exception("Unknown action");
+        eventDTO.ProcessedAt = now;
+      }
+      else
+      {
+        throw new Exception($"The event {eventDTO.ObjectId} cannot be processed");
       }
 
-      bool isProcessed = await ProcessEventPayload(eventPayloadDTO, cancellationToken).ConfigureAwait(false);
+      var eventSaveTask = _appIncomingEventCommandService.Save(
+        eventDTO.ToAppIncomingEventUpdateCommand(),
+        cancellationToken);
 
-      if (!isProcessed)
-      {
-        break;
-      }
+      await eventSaveTask.ConfigureAwait(false);
     }
+
+    await _appDbExecutionContext.ExecuteInTransaction(FuncToExecute, cancellationToken).ConfigureAwait(false);
   }
 
   private async Task<bool> ProcessEventPayload(
@@ -206,59 +253,5 @@ public class AppInboxCommandService(
     }
 
     return result;
-  }
-
-  private Task<AppCommandResultWithValue<AppIncomingEventSingleDTO>> SaveEvent(
-    AppIncomingEventSingleDTO eventDTO,
-    DateTimeOffset now,
-    bool isLoaded,
-    CancellationToken cancellationToken)
-  {
-    eventDTO.LastLoadingAt = now;
-
-    if (isLoaded && eventDTO.PayloadCount == eventDTO.PayloadTotalCount)
-    {
-      eventDTO.LoadedAt = now;
-    }
-
-    var command = eventDTO.ToAppIncomingEventUpdateCommand();
-
-    return _appIncomingEventCommandService.Save(command, cancellationToken);
-  }
-
-  private Task<List<AppIncomingEventSingleDTO>> GetUnloadedEvents(
-    string eventName,
-    int maxCount,
-    CancellationToken cancellationToken)
-  {
-    AppIncomingEventNamedListQuery query = new(eventName)
-    {
-      MaxCount = maxCount,
-    };
-
-    return _appIncomingEventQueryService.GetUnloadedList(query, cancellationToken);
-  }
-
-  private Task<List<AppIncomingEventSingleDTO>> GetUnprocessedEvents(
-    string eventName,
-    int maxCount,
-    CancellationToken cancellationToken)
-  {
-    AppIncomingEventNamedListQuery query = new(eventName)
-    {
-      MaxCount = maxCount,
-    };
-
-    return _appIncomingEventQueryService.GetUnprocessedList(query, cancellationToken);
-  }
-
-  private Task<Result> InsertAppIncomingEvents(
-    string[] eventIds,
-    string eventName,
-    CancellationToken cancellationToken)
-  {
-    var command = eventIds.ToAppIncomingEventInsertListCommand(eventName);
-
-    return _appIncomingEventCommandService.InsertList(command, cancellationToken);
   }
 }
