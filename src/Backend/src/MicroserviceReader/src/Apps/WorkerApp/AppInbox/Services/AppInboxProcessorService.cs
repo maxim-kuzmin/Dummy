@@ -20,16 +20,42 @@ public class AppInboxProcessorService(
 
       var appConfigOptionsSnapshot = scope.ServiceProvider.GetRequiredService<IOptionsSnapshot<AppConfigOptions>>();
 
-      var options = Guard.Against.Null(appConfigOptionsSnapshot.Value.Infrastructure?.MongoDB);
+      var options = Guard.Against.Null(appConfigOptionsSnapshot.Value.Domain?.AppInbox?.Processor);
 
-      _logger.LogInformation("Options: {options}", options);
+      int eventMaxCountToProcess = Guard.Against.NegativeOrZero(options.EventMaxCountToProcess);
+      int timeoutInMillisecondsToRepeat = Guard.Against.Negative(options.TimeoutInMillisecondsToRepeat);
 
-      if (_logger.IsEnabled(LogLevel.Information))
+      var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+
+      try
       {
-        _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
+        _logger.LogDebug("MAKC:AppInboxProcessorService:ExecuteAsync:Process start");
+
+        AppInboxProcessCommand command = new(
+          EventName: AppEventNameEnum.DummyItemChanged.ToString(),
+          EventMaxCountToProcess: eventMaxCountToProcess);
+
+        _logger.LogDebug("MAKC:AppInboxProcessorService:ExecuteAsync:Process:Command: {command}", command);
+
+        AppInboxProcessActionRequest request = new(command);
+
+        await mediator.Send(request, stoppingToken).ConfigureAwait(false);
+
+        _logger.LogDebug("MAKC:AppInboxProcessorService:ExecuteAsync:Process end");
+      }
+      catch (OperationCanceledException)
+      {
+        _logger.LogDebug("MAKC:AppInboxProcessorService:ExecuteAsync canceled");
+      }
+      catch (Exception ex)
+      {
+        _logger.LogError(ex, "MAKC:AppInboxProcessorService:ExecuteAsync failed");
       }
 
-      await Task.Delay(Timeout.Infinite, stoppingToken).ConfigureAwait(false);
+      if (timeoutInMillisecondsToRepeat > 0)
+      {
+        await Task.Delay(timeoutInMillisecondsToRepeat, stoppingToken).ConfigureAwait(false);
+      }
     }
 
     _logger.LogDebug("MAKC:AppInboxProcessorService:ExecuteAsync end");

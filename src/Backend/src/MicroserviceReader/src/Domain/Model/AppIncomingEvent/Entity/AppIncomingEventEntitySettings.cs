@@ -24,4 +24,9 @@ public record AppIncomingEventEntitySettings
   /// Максимальная длина для последней ошибки загрузки.
   /// </summary>
   public int MaxLengthForLastLoadingError { get; protected set; } = 0;
+
+  /// <summary>
+  /// Максимальная длина для последней ошибки обработки.
+  /// </summary>
+  public int MaxLengthForLastProcessingError { get; protected set; } = 0;
 }

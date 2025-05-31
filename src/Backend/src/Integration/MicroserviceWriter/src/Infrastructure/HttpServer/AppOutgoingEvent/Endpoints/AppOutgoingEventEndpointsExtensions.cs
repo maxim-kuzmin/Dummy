@@ -42,7 +42,7 @@ public static class AppOutgoingEventEndpointsExtensions
     AppOutgoingEventListQuery query = new(
       MaxCount: request.MaxCount,
       Sort: request.SortField.ToAppOutgoingEventQuerySortSection(request.SortIsDesc),
-      Filter: new(request.Query));
+      Filter: new(FullTextSearchQuery: request.Query));
 
     return new(query);
   }
@@ -56,9 +56,9 @@ public static class AppOutgoingEventEndpointsExtensions
     this AppOutgoingEventGetPageEndpointRequest request)
   {
     AppOutgoingEventPageQuery query = new(
-      Page: new(request.CurrentPage, request.ItemsPerPage),
+      Page: new(Number: request.CurrentPage, Size: request.ItemsPerPage),
       Sort: request.SortField.ToAppOutgoingEventQuerySortSection(request.SortIsDesc),
-      Filter: new(request.Query));
+      Filter: new(FullTextSearchQuery: request.Query));
 
     return new(query);
   }

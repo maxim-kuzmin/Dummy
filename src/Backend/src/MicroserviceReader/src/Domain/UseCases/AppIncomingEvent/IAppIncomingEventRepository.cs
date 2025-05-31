@@ -56,6 +56,16 @@ public interface IAppIncomingEventRepository : IObjectRepository<AppIncomingEven
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Список сущностей.</returns>
   Task<List<AppIncomingEventEntity>> GetUnloadedList(
-    AppIncomingEventUnloadedListQuery query,
+    AppIncomingEventNamedListQuery query,
+    CancellationToken cancellationToken);
+
+  /// <summary>
+  /// Получить список необработанных сущностей.
+  /// </summary>
+  /// <param name="query">Запрос.</param>
+  /// <param name="cancellationToken">Токен отмены.</param>
+  /// <returns>Список сущностей.</returns>
+  Task<List<AppIncomingEventEntity>> GetUnprocessedList(
+    AppIncomingEventNamedListQuery query,
     CancellationToken cancellationToken);
 }

@@ -42,7 +42,7 @@ public static class AppIncomingEventEndpointsExtensions
     AppIncomingEventListQuery query = new(
       MaxCount: request.MaxCount,
       Sort: request.SortField.ToAppIncomingEventQuerySortSection(request.SortIsDesc),
-      Filter: new(request.Query));
+      Filter: new(FullTextSearchQuery: request.Query));
 
     return new(query);
   }
@@ -56,9 +56,9 @@ public static class AppIncomingEventEndpointsExtensions
     this AppIncomingEventGetPageEndpointRequest request)
   {
     AppIncomingEventPageQuery query = new(
-      Page: new(request.CurrentPage, request.ItemsPerPage),
+      Page: new(Number: request.CurrentPage, Size: request.ItemsPerPage),
       Sort: request.SortField.ToAppIncomingEventQuerySortSection(request.SortIsDesc),
-      Filter: new(request.Query));
+      Filter: new(FullTextSearchQuery: request.Query));
 
     return new(query);
   }
@@ -80,6 +80,8 @@ public static class AppIncomingEventEndpointsExtensions
         EventName: request.EventName,
         LastLoadingAt: request.LastLoadingAt,
         LastLoadingError: request.LastLoadingError,
+        LastProcessingAt: request.LastProcessingAt,
+        LastProcessingError: request.LastProcessingError,
         LoadedAt: request.LoadedAt,
         PayloadCount: request.PayloadCount,
         PayloadTotalCount: request.PayloadTotalCount,
@@ -104,6 +106,8 @@ public static class AppIncomingEventEndpointsExtensions
         EventName: request.EventName,
         LastLoadingAt: request.LastLoadingAt,
         LastLoadingError: request.LastLoadingError,
+        LastProcessingAt: request.LastProcessingAt,
+        LastProcessingError: request.LastProcessingError,
         LoadedAt: request.LoadedAt,
         PayloadCount: request.PayloadCount,
         PayloadTotalCount: request.PayloadTotalCount,

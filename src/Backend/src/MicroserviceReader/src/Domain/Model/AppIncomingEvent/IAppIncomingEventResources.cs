@@ -51,6 +51,19 @@ public interface IAppIncomingEventResources
   string GetLastLoadingErrorIsTooLongErrorMessage(int maxLength);
 
   /// <summary>
+  /// Получить сообщение об ошибке недействительной последней даты обработки.
+  /// </summary>
+  /// <returns>Сообщение об ошибке.</returns>
+  string GetLastProcessingAtIsInvalidErrorMessage();
+
+  /// <summary>
+  /// Получить сообщение об ошибке слишком длинной последней ошибки обработки.
+  /// </summary>
+  /// <param name="maxLength">Максимальная длина.</param>
+  /// <returns>Сообщение об ошибке.</returns>
+  string GetLastProcessingErrorIsTooLongErrorMessage(int maxLength);
+
+  /// <summary>
   /// Получить сообщение об ошибке недействительной даты загрузки.
   /// </summary>
   /// <returns>Сообщение об ошибке.</returns>

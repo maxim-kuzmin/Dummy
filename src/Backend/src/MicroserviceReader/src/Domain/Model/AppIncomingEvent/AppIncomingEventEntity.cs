@@ -36,6 +36,16 @@ public class AppIncomingEventEntity : EntityBaseWithStringPrimaryKey, IAggregate
   public string? LastLoadingError { get; set; }
 
   /// <summary>
+  /// Последняя дата обработки.
+  /// </summary>
+  public DateTimeOffset? LastProcessingAt { get; set; }
+
+  /// <summary>
+  /// Последняя ошибка обработки.
+  /// </summary>
+  public string? LastProcessingError { get; set; }
+
+  /// <summary>
   /// Дата загрузки.
   /// </summary>
   public DateTimeOffset? LoadedAt { get; set; }

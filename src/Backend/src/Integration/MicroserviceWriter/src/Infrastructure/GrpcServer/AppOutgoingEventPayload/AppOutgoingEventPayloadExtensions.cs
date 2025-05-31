@@ -62,7 +62,7 @@ public static class AppOutgoingEventPayloadExtensions
   {
     AppOutgoingEventPayloadListQuery query = new(
       MaxCount: request.MaxCount,
-      Sort: new(request.Sort.Field, request.Sort.IsDesc),
+      Sort: new(Field: request.Sort.Field, IsDesc: request.Sort.IsDesc),
       Filter: new(
         FullTextSearchQuery: request.Filter.FullTextSearchQuery,
         AppOutgoingEventId: request.Filter.AppOutgoingEventId));
@@ -79,8 +79,8 @@ public static class AppOutgoingEventPayloadExtensions
     this AppOutgoingEventPayloadGetPageGrpcRequest request)
   {
     AppOutgoingEventPayloadPageQuery query = new(
-      Page: new(request.Page.Number, request.Page.Size),
-      Sort: new(request.Sort.Field, request.Sort.IsDesc),
+      Page: new(Number: request.Page.Number, Size: request.Page.Size),
+      Sort: new(Field:request.Sort.Field, IsDesc: request.Sort.IsDesc),
       Filter: new(
         FullTextSearchQuery: request.Filter.FullTextSearchQuery,
         AppOutgoingEventId: request.Filter.AppOutgoingEventId));

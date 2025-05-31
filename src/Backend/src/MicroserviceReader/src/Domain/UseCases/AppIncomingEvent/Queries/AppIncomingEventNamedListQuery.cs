@@ -1,10 +1,10 @@
 ﻿namespace Makc.Dummy.MicroserviceReader.Domain.UseCases.AppIncomingEvent.Queries;
 
 /// <summary>
-/// Запрос списка незагруженных входящих событий приложения.
+/// Запрос списка именованных входящих событий приложения.
 /// </summary>
 /// <param name="EventName">Имя события.</param>
-public record AppIncomingEventUnloadedListQuery(string EventName)
+public record AppIncomingEventNamedListQuery(string EventName)
 {
   /// <summary>
   /// Идентификаторы объектов.

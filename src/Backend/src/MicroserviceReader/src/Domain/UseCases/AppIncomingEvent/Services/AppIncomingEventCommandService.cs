@@ -168,6 +168,8 @@ public class AppIncomingEventCommandService(
     aggregate.UpdateEventName(data.EventName);
     aggregate.UpdateLastLoadingAt(data.LastLoadingAt);
     aggregate.UpdateLastLoadingError(data.LastLoadingError);
+    aggregate.UpdateLastProcessingAt(data.LastProcessingAt);
+    aggregate.UpdateLastProcessingError(data.LastProcessingError);
     aggregate.UpdateLoadedAt(data.LoadedAt);
     aggregate.UpdatePayloadCount(data.PayloadCount);
     aggregate.UpdatePayloadTotalCount(data.PayloadTotalCount);

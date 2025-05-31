@@ -5,4 +5,13 @@
 /// </summary>
 public record AppConfigOptionsDomainAppInboxProcessorSection
 {
+  /// <summary>
+  /// Максимальное количество событий для обработки.
+  /// </summary>
+  public int EventMaxCountToProcess { get; set; }
+
+  /// <summary>
+  /// Таймаут в миллисекундах для повторения.
+  /// </summary>
+  public int TimeoutInMillisecondsToRepeat { get; set; }
 }

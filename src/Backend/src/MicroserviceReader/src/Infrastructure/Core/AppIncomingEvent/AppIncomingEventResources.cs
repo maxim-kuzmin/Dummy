@@ -50,6 +50,18 @@ public class AppIncomingEventResources(
   }
 
   /// <inheritdoc/>
+  public string GetLastProcessingAtIsInvalidErrorMessage()
+  {
+    return _stringLocalizer["Error:LastProcessingAtIsInvalid"];
+  }
+
+  /// <inheritdoc/>
+  public string GetLastProcessingErrorIsTooLongErrorMessage(int maxLength)
+  {
+    return _stringLocalizer["Error:LastProcessingErrorIsTooLong:Format", maxLength];
+  }
+
+  /// <inheritdoc/>
   public string GetLoadedAtIsInvalidErrorMessage()
   {
     return _stringLocalizer["Error:LoadedAtIsInvalid"];

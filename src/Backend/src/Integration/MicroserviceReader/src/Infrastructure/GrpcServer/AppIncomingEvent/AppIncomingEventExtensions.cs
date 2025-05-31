@@ -64,8 +64,8 @@ public static class AppIncomingEventExtensions
   {
     AppIncomingEventListQuery query = new(
       MaxCount: request.MaxCount,
-      Sort: new(request.Sort.Field, request.Sort.IsDesc),
-      Filter: new(request.Filter.FullTextSearchQuery));
+      Sort: new(Field: request.Sort.Field, IsDesc: request.Sort.IsDesc),
+      Filter: new(FullTextSearchQuery: request.Filter.FullTextSearchQuery));
 
     return new(query);
   }
@@ -79,9 +79,9 @@ public static class AppIncomingEventExtensions
     this AppIncomingEventGetPageGrpcRequest request)
   {
     AppIncomingEventPageQuery query = new(
-      Page: new(request.Page.Number, request.Page.Size),
-      Sort: new(request.Sort.Field, request.Sort.IsDesc),
-      Filter: new(request.Filter.FullTextSearchQuery));
+      Page: new(Number: request.Page.Number, Size: request.Page.Size),
+      Sort: new(Field: request.Sort.Field, IsDesc: request.Sort.IsDesc),
+      Filter: new(FullTextSearchQuery: request.Filter.FullTextSearchQuery));
 
     return new(query);
   }
@@ -134,6 +134,7 @@ public static class AppIncomingEventExtensions
     this AppIncomingEventCreateGrpcRequest request)
   {
     var lastLoadingAt = request.LastLoadingAt.ToDateTimeOffset();
+    var lastProcessingAt = request.LastProcessingAt.ToDateTimeOffset();
     var loadedAt = request.LoadedAt.ToDateTimeOffset();
     var processedAt = request.ProcessedAt.ToDateTimeOffset();
 
@@ -145,6 +146,8 @@ public static class AppIncomingEventExtensions
         EventName: request.EventName,
         LastLoadingAt: lastLoadingAt == default ? null : lastLoadingAt,
         LastLoadingError:request.LastLoadingError,
+        LastProcessingAt: lastProcessingAt == default ? null : lastProcessingAt,
+        LastProcessingError: request.LastProcessingError,
         LoadedAt: loadedAt == default ? null : loadedAt,
         PayloadCount: request.PayloadCount,
         PayloadTotalCount: request.PayloadTotalCount,
@@ -162,6 +165,7 @@ public static class AppIncomingEventExtensions
     this AppIncomingEventUpdateGrpcRequest request)
   {
     var lastLoadingAt = request.LastLoadingAt.ToDateTimeOffset();
+    var lastProcessingAt = request.LastProcessingAt.ToDateTimeOffset();
     var loadedAt = request.LoadedAt.ToDateTimeOffset();
     var processedAt = request.ProcessedAt.ToDateTimeOffset();
 
@@ -173,6 +177,8 @@ public static class AppIncomingEventExtensions
         EventName: request.EventName,
         LastLoadingAt: lastLoadingAt == default ? null : lastLoadingAt,
         LastLoadingError: request.LastLoadingError,
+        LastProcessingAt: lastProcessingAt == default ? null : lastProcessingAt,
+        LastProcessingError: request.LastProcessingError,
         LoadedAt: loadedAt == default ? null : loadedAt,
         PayloadCount: request.PayloadCount,
         PayloadTotalCount: request.PayloadTotalCount,

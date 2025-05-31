@@ -19,6 +19,7 @@ global using Makc.Dummy.MicroserviceReader.Domain.UseCases.App;
 global using Makc.Dummy.MicroserviceReader.Domain.UseCases.App.Message;
 global using Makc.Dummy.MicroserviceReader.Domain.UseCases.AppInbox.Actions.Consume;
 global using Makc.Dummy.MicroserviceReader.Domain.UseCases.AppInbox.Actions.Load;
+global using Makc.Dummy.MicroserviceReader.Domain.UseCases.AppInbox.Actions.Process;
 global using Makc.Dummy.MicroserviceReader.Domain.UseCases.AppInbox.Commands;
 global using Makc.Dummy.MicroserviceReader.Infrastructure.Core.App;
 global using Makc.Dummy.MicroserviceReader.Infrastructure.Kafka.App;

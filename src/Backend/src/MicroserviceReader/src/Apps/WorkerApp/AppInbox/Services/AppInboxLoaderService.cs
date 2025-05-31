@@ -37,8 +37,7 @@ public class AppInboxLoaderService(
           EventName: AppEventNameEnum.DummyItemChanged.ToString(),
           EventMaxCountToLoad: eventMaxCountToLoad,
           PayloadPageSize: payloadPageSize,
-          TimeoutInMillisecondsToGetPayloads: timeoutInMillisecondsToGetPayloads
-          );
+          TimeoutInMillisecondsToGetPayloads: timeoutInMillisecondsToGetPayloads);
 
         _logger.LogDebug("MAKC:AppInboxLoaderService:ExecuteAsync:Load:Command: {command}", command);
 

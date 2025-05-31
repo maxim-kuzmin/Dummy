@@ -6,6 +6,8 @@
   "Error:EventNameIsTooLong:Format": "Event identifier length exceeds the maximum allowed value of {0} characters",
   "Error:LastLoadingAtIsInvalid": "Last loading date is invalid",
   "Error:LastLoadingErrorIsTooLong:Format": "Last loading error length exceeds the maximum allowed value of {0} characters",
+  "Error:LastProcessingAtIsInvalid": "Last processing date is invalid",
+  "Error:LastProcessingErrorIsTooLong:Format": "Last processing error length exceeds the maximum allowed value of {0} characters",
   "Error:LoadedAtIsInvalid": "Download completion date is invalid",
   "Error:PayloadCountIsNegative": "Payload count is negative",
   "Error:PayloadTotalCountIsNegative": "Payload total count is negative",

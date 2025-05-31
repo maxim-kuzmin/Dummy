@@ -66,7 +66,7 @@ public static class AppIncomingEventPayloadExtensions
     AppIncomingEventPayloadListQuery query = new(
       MaxCount: request.MaxCount,
       Sort: new(request.Sort.Field, request.Sort.IsDesc),
-      Filter: new(request.Filter.FullTextSearchQuery));
+      Filter: new(FullTextSearchQuery: request.Filter.FullTextSearchQuery, AppIncomingEventObjectId: null));
 
     return new(query);
   }
@@ -80,9 +80,9 @@ public static class AppIncomingEventPayloadExtensions
     this AppIncomingEventPayloadGetPageGrpcRequest request)
   {
     AppIncomingEventPayloadPageQuery query = new(
-      Page: new(request.Page.Number, request.Page.Size),
-      Sort: new(request.Sort.Field, request.Sort.IsDesc),
-      Filter: new(request.Filter.FullTextSearchQuery));
+      Page: new(Number: request.Page.Number, Size: request.Page.Size),
+      Sort: new(Field: request.Sort.Field, IsDesc: request.Sort.IsDesc),
+      Filter: new(FullTextSearchQuery: request.Filter.FullTextSearchQuery, AppIncomingEventObjectId: null));
 
     return new(query);
   }

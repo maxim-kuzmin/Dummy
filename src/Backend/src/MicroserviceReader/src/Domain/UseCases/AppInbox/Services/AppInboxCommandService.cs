@@ -9,13 +9,17 @@
 /// <param name="_appIncomingEventPayloadCommandService">
 /// Сервис команд полезной нагрузки входящего события приложения.
 /// </param>
+/// <param name="_appIncomingEventPayloadQueryService">
+/// Сервис запросов полезной нагрузки входящего события приложения.
+/// </param>
 /// <param name="_logger">Логгер.</param>
 /// <param name="_mediator">Медиатор.</param>
-public class AppInboxCommandService(  
+public class AppInboxCommandService(
   IAppDbNoSQLExecutionContext _appDbExecutionContext,
   IAppIncomingEventCommandService _appIncomingEventCommandService,
   IAppIncomingEventQueryService _appIncomingEventQueryService,
   IAppIncomingEventPayloadCommandService _appIncomingEventPayloadCommandService,
+  IAppIncomingEventPayloadQueryService _appIncomingEventPayloadQueryService,
   ILogger<AppInboxCommandService> _logger,
   IMediator _mediator) : IAppInboxCommandService
 {
@@ -39,22 +43,22 @@ public class AppInboxCommandService(
   /// <inheritdoc/>
   public async Task<Result> Load(AppInboxLoadCommand command, CancellationToken cancellationToken)
   {
-    var unloadedEventsGetTask = GetUnloadedEvents(
+    var eventsGetTask = GetUnloadedEvents(
       command.EventName,
       command.EventMaxCountToLoad,
       cancellationToken);
 
-    var unloadedEvents = await unloadedEventsGetTask.ConfigureAwait(false);
+    var eventDTOs = await eventsGetTask.ConfigureAwait(false);
 
-    foreach (var unloadedEvent in unloadedEvents)
+    foreach (var eventDTO in eventDTOs)
     {
-      var eventPayloadsDownloadTask = DownloadEventPayloads(
-        unloadedEvent,
+      var eventPayloadsLoadTask = LoadEventPayloads(
+        eventDTO,
         command.PayloadPageSize,
         command.TimeoutInMillisecondsToGetPayloads,
         cancellationToken);
 
-      await eventPayloadsDownloadTask.ConfigureAwait(false);
+      await eventPayloadsLoadTask.ConfigureAwait(false);
     }
 
     return Result.Success();
@@ -63,12 +67,35 @@ public class AppInboxCommandService(
   /// <inheritdoc/>
   public async Task<Result> Process(AppInboxProcessCommand command, CancellationToken cancellationToken)
   {
-    await Task.Delay(0, cancellationToken).ConfigureAwait(false);
+    var eventsGetTask = GetUnprocessedEvents(
+      command.EventName,
+      command.EventMaxCountToProcess,
+      cancellationToken);
+
+    var eventDTOs = await eventsGetTask.ConfigureAwait(false);
+
+    foreach (var eventDTO in eventDTOs)
+    {
+      await ProcessEventPayloads(eventDTO, cancellationToken).ConfigureAwait(false);
+    }
 
     return Result.Success();
   }
 
-  private async Task DownloadEventPayloads(
+  private Task<Result> InsertEventPayloads(
+    List<AppOutgoingEventPayloadSingleDTO> appOutgoingEventPayloads,
+    string? appIncomingEventObjectId,
+    CancellationToken cancellationToken)
+  {
+    Guard.Against.NullOrWhiteSpace(appIncomingEventObjectId);
+
+    var command = appOutgoingEventPayloads.ToAppIncomingEventPayloadInsertListCommand(
+      appIncomingEventObjectId);
+
+    return _appIncomingEventPayloadCommandService.InsertList(command, cancellationToken);
+  }
+
+  private async Task LoadEventPayloads(
     AppIncomingEventSingleDTO eventDTO,
     int payloadPageSize,
     int timeoutInMillisecondsToGetPayloads,
@@ -94,7 +121,7 @@ public class AppInboxCommandService(
 
           var items = data.Items;
 
-          await InsertIncomingEventPayloads(items, eventDTO.ObjectId, cancellationToken).ConfigureAwait(false);
+          await InsertEventPayloads(items, eventDTO.ObjectId, cancellationToken).ConfigureAwait(false);
 
           eventDTO.PayloadCount += items.Count;
           eventDTO.PayloadTotalCount = data.TotalCount;
@@ -108,7 +135,7 @@ public class AppInboxCommandService(
           _logger.LogError(ex, "MAKC:AppInboxCommandService:DownloadEventPayloads failed");
         }
 
-        await SaveIncomingEvent(eventDTO, DateTimeOffset.Now, isLoaded, cancellationToken).ConfigureAwait(false);
+        await SaveEvent(eventDTO, DateTimeOffset.Now, isLoaded, cancellationToken).ConfigureAwait(false);
       }
 
       await _appDbExecutionContext.ExecuteInTransaction(FuncToExecute, cancellationToken).ConfigureAwait(false);
@@ -120,22 +147,68 @@ public class AppInboxCommandService(
     }
   }
 
-  private Task<Result> InsertIncomingEventPayloads(
-    List<AppOutgoingEventPayloadSingleDTO> appOutgoingEventPayloads,
-    string? appIncomingEventObjectId,
-    CancellationToken cancellationToken)
+  private async Task ProcessEventPayloads(AppIncomingEventSingleDTO eventDTO, CancellationToken cancellationToken)
   {
-    Guard.Against.NullOrWhiteSpace(appIncomingEventObjectId);
+    string appIncomingEventObjectId = Guard.Against.NullOrWhiteSpace(eventDTO.ObjectId);
 
-    var command = appOutgoingEventPayloads.ToAppIncomingEventPayloadInsertListCommand(
-      appIncomingEventObjectId);
+    AppIncomingEventPayloadListQuery query = new(
+      MaxCount: 0,
+      Filter: new(FullTextSearchQuery: null, AppIncomingEventObjectId: appIncomingEventObjectId),
+      Sort: new(Field: AppIncomingEventPayloadSettings.SortFieldForPosition, IsDesc: false));
 
-    return _appIncomingEventPayloadCommandService.InsertList(
-      command,
-      cancellationToken);
+    var eventPayloadsGetListTask = _appIncomingEventPayloadQueryService.GetList(query, cancellationToken);
+
+    var eventPayloadDTOs = await eventPayloadsGetListTask.ConfigureAwait(false);
+
+    foreach (var eventPayloadDTO in eventPayloadDTOs)
+    {
+      if (eventPayloadDTO.EntityName != "DummyItem")
+      {
+        throw new NotImplementedException();
+      }
+
+      bool isUnknownAction = eventPayloadDTO.EntityConcurrencyTokenToDelete == null
+        && eventPayloadDTO.EntityConcurrencyTokenToInsert == null;
+
+      if (isUnknownAction)
+      {
+        throw new Exception("Unknown action");
+      }
+
+      bool isProcessed = await ProcessEventPayload(eventPayloadDTO, cancellationToken).ConfigureAwait(false);
+
+      if (!isProcessed)
+      {
+        break;
+      }
+    }
   }
 
-  private Task<AppCommandResultWithValue<AppIncomingEventSingleDTO>> SaveIncomingEvent(
+  private async Task<bool> ProcessEventPayload(
+    AppIncomingEventPayloadSingleDTO eventPayloadDTO,
+    CancellationToken cancellationToken)
+  {
+    await Task.Delay(0, cancellationToken).ConfigureAwait(false);
+
+    bool result = false;
+
+    if (eventPayloadDTO.EntityConcurrencyTokenToDelete == null)
+    {
+      //вставляем
+    }
+    else if (eventPayloadDTO.EntityConcurrencyTokenToInsert == null)
+    {
+      //удаляем
+    }
+    else
+    {
+      //изменяем
+    }
+
+    return result;
+  }
+
+  private Task<AppCommandResultWithValue<AppIncomingEventSingleDTO>> SaveEvent(
     AppIncomingEventSingleDTO eventDTO,
     DateTimeOffset now,
     bool isLoaded,
@@ -155,15 +228,28 @@ public class AppInboxCommandService(
 
   private Task<List<AppIncomingEventSingleDTO>> GetUnloadedEvents(
     string eventName,
-    int eventMaxCountToLoad,
+    int maxCount,
     CancellationToken cancellationToken)
   {
-    AppIncomingEventUnloadedListQuery query = new(eventName)
+    AppIncomingEventNamedListQuery query = new(eventName)
     {
-      MaxCount = eventMaxCountToLoad,
+      MaxCount = maxCount,
     };
 
     return _appIncomingEventQueryService.GetUnloadedList(query, cancellationToken);
+  }
+
+  private Task<List<AppIncomingEventSingleDTO>> GetUnprocessedEvents(
+    string eventName,
+    int maxCount,
+    CancellationToken cancellationToken)
+  {
+    AppIncomingEventNamedListQuery query = new(eventName)
+    {
+      MaxCount = maxCount,
+    };
+
+    return _appIncomingEventQueryService.GetUnprocessedList(query, cancellationToken);
   }
 
   private Task<Result> InsertAppIncomingEvents(

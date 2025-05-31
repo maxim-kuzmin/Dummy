@@ -42,7 +42,7 @@ public static class DummyItemEndpointsExtensions
     DummyItemListQuery query = new(
       MaxCount: request.MaxCount,
       Sort: request.SortField.ToDummyItemQuerySortSection(request.SortIsDesc),
-      Filter: new(request.Query));
+      Filter: new(FullTextSearchQuery: request.Query));
 
     return new(query);
   }
@@ -56,9 +56,9 @@ public static class DummyItemEndpointsExtensions
     this DummyItemGetPageEndpointRequest request)
   {
     DummyItemPageQuery query = new(
-      Page: new(request.CurrentPage, request.ItemsPerPage),
+      Page: new(Number: request.CurrentPage, Size: request.ItemsPerPage),
       Sort: request.SortField.ToDummyItemQuerySortSection(request.SortIsDesc),
-      Filter: new(request.Query));
+      Filter: new(FullTextSearchQuery: request.Query));
 
     return new(query);
   }

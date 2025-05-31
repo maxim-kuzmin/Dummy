@@ -56,7 +56,7 @@ public static class AppOutgoingEventPayloadEndpointsExtensions
     this AppOutgoingEventPayloadGetPageEndpointRequest request)
   {
     AppOutgoingEventPayloadPageQuery query = new(
-      Page: new(request.CurrentPage, request.ItemsPerPage),
+      Page: new(Number: request.CurrentPage, Size: request.ItemsPerPage),
       Sort: request.SortField.ToAppOutgoingEventPayloadQuerySortSection(request.SortIsDesc),
       Filter: new(FullTextSearchQuery: request.Query, AppOutgoingEventId: request.EventId));
 

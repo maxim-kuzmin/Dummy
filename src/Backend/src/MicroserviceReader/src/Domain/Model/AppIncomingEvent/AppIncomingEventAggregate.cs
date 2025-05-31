@@ -61,6 +61,14 @@ public class AppIncomingEventAggregate(
           () => target.PayloadTotalCount != source.PayloadTotalCount,
           () => target.PayloadTotalCount = source.PayloadTotalCount),
         PrepareChangedPropertyToUpdate(
+          nameof(source.LastProcessingAt),
+          () => target.LastProcessingAt != source.LastProcessingAt,
+          () => target.LastProcessingAt = source.LastProcessingAt),
+        PrepareChangedPropertyToUpdate(
+          nameof(source.LastProcessingError),
+          () => target.LastProcessingError != source.LastProcessingError,
+          () => target.LastProcessingError = source.LastProcessingError),
+        PrepareChangedPropertyToUpdate(
           nameof(source.ProcessedAt),
           () => target.ProcessedAt != source.ProcessedAt,
           () => target.ProcessedAt = source.ProcessedAt)
@@ -207,6 +215,52 @@ public class AppIncomingEventAggregate(
     entity.LastLoadingError = value;
 
     AddChangedProperty(nameof(entity.LastLoadingError), entity.LastLoadingError);
+  }
+
+  /// <summary>
+  /// Обновить последнюю дату обработки.
+  /// </summary>
+  /// <param name="value">Значение.</param>
+  public void UpdateLastProcessingAt(DateTimeOffset? value)
+  {
+    if (value == default(DateTimeOffset))
+    {
+      string errorMessage = _resources.GetLastProcessingAtIsInvalidErrorMessage();
+
+      var appError = AppIncomingEventErrorEnum.LastProcessingAtIsInvalid.ToAppError(errorMessage);
+
+      UpdateErrors.Add(appError);
+    }
+
+    var entity = GetEntityToUpdate();
+
+    entity.LastProcessingAt = value;
+
+    AddChangedProperty(nameof(entity.LastProcessingAt), entity.LastProcessingAt?.ToString("O"));
+  }
+
+  /// <summary>
+  /// Обновить последнюю ошибку обработки.
+  /// </summary>
+  /// <param name="value">Значение.</param>
+  public void UpdateLastProcessingError(string? value)
+  {
+    int maxLength = _settings.MaxLengthForLastProcessingError;
+
+    if (maxLength > 0 && value?.Length > maxLength)
+    {
+      string errorMessage = _resources.GetLastProcessingErrorIsTooLongErrorMessage(maxLength);
+
+      var appError = AppIncomingEventErrorEnum.LastProcessingErrorIsTooLong.ToAppError(errorMessage);
+
+      UpdateErrors.Add(appError);
+    }
+
+    var entity = GetEntityToUpdate();
+
+    entity.LastProcessingError = value;
+
+    AddChangedProperty(nameof(entity.LastProcessingError), entity.LastProcessingError);
   }
 
   /// <summary>

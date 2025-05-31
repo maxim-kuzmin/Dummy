@@ -6,6 +6,8 @@
   "Error:EventNameIsTooLong:Format": "Длина идентификатора события превышает максимально допустимое значение {0} символов",
   "Error:LastLoadingAtIsInvalid": "Дата последней загрузки недействительна",
   "Error:LastLoadingErrorIsTooLong:Format": "Длина ошибки последней загрузки превышает максимально допустимое значение {0} символов",
+  "Error:LastProcessingAtIsInvalid": "Дата последней обработки недействительна",
+  "Error:LastProcessingErrorIsTooLong:Format": "Длина ошибки последней обработки превышает максимально допустимое значение {0} символов",
   "Error:LoadedAtIsInvalid": "Дата завершения загрузки недействительна",
   "Error:PayloadCountIsNegative": "Количество полезных данных отрицательно",
   "Error:PayloadTotalCountIsNegative": "Общее количество полезной нагрузки отрицательно",

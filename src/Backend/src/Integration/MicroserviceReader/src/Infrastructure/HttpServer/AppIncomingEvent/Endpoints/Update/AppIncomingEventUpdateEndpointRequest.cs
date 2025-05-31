@@ -8,6 +8,8 @@
 /// <param name="EventName">Имя события.</param>
 /// <param name="LastLoadingAt">Последняя дата загрузки.</param>
 /// <param name="LastLoadingError">Последняя ошибка загрузки.</param>
+/// <param name="LastProcessingAt">Последняя дата обработки.</param>
+/// <param name="LastProcessingError">Последняя ошибка обработки.</param>
 /// <param name="LoadedAt">Дата загрузки.</param>
 /// <param name="PayloadCount">Количество полезной нагрузки.</param>
 /// <param name="PayloadTotalCount">Общее количество полезной нагрузки.</param>
@@ -18,6 +20,8 @@ public record AppIncomingEventUpdateEndpointRequest(
   string EventName,
   DateTimeOffset? LastLoadingAt,
   string? LastLoadingError,
+  DateTimeOffset? LastProcessingAt,
+  string? LastProcessingError,
   DateTimeOffset? LoadedAt,
   int PayloadCount,
   int PayloadTotalCount,

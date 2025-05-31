@@ -41,6 +41,16 @@ public enum AppIncomingEventErrorEnum
   LastLoadingErrorIsTooLong,
 
   /// <summary>
+  /// Последняя дата обработки недействительна.
+  /// </summary>
+  LastProcessingAtIsInvalid,
+
+  /// <summary>
+  /// Последняя ошибка обработки слишком длинная.
+  /// </summary>
+  LastProcessingErrorIsTooLong,
+
+  /// <summary>
   /// Дата загрузки недействительна.
   /// </summary>
   LoadedAtIsInvalid,

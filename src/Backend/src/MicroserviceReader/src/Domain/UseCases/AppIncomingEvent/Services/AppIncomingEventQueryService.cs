@@ -58,10 +58,19 @@ public class AppIncomingEventQueryService(
 
   /// <inheritdoc/>
   public async Task<List<AppIncomingEventSingleDTO>> GetUnloadedList(
-    AppIncomingEventUnloadedListQuery query,
+    AppIncomingEventNamedListQuery query,
     CancellationToken cancellationToken)
   {
     var entities = await _repository.GetUnloadedList(query, cancellationToken).ConfigureAwait(false);
+
+    return [.. entities.Select(x => x.ToAppIncomingEventSingleDTO())];
+  }
+
+  public async Task<List<AppIncomingEventSingleDTO>> GetUnprocessedList(
+    AppIncomingEventNamedListQuery query,
+    CancellationToken cancellationToken)
+  {
+    var entities = await _repository.GetUnprocessedList(query, cancellationToken).ConfigureAwait(false);
 
     return [.. entities.Select(x => x.ToAppIncomingEventSingleDTO())];
   }

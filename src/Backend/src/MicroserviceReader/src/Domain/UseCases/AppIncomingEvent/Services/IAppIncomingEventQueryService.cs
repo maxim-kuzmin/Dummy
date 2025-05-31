@@ -42,8 +42,18 @@ public interface IAppIncomingEventQueryService
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
-  /// <returns>Список незагруженных объектов.</returns>
+  /// <returns>Список объектов.</returns>
   Task<List<AppIncomingEventSingleDTO>> GetUnloadedList(
-      AppIncomingEventUnloadedListQuery query,
+      AppIncomingEventNamedListQuery query,
+      CancellationToken cancellationToken);
+
+  /// <summary>
+  /// Получить список необработанных объектов.
+  /// </summary>
+  /// <param name="query">Запрос.</param>
+  /// <param name="cancellationToken">Токен отмены.</param>
+  /// <returns>Список объектов.</returns>
+  Task<List<AppIncomingEventSingleDTO>> GetUnprocessedList(
+      AppIncomingEventNamedListQuery query,
       CancellationToken cancellationToken);
 }

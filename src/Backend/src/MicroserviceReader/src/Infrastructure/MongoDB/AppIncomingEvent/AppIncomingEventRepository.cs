@@ -101,36 +101,23 @@ public class AppIncomingEventRepository(
   }
 
   /// <inheritdoc/>
-  public async Task<List<AppIncomingEventEntity>> GetUnloadedList(
-    AppIncomingEventUnloadedListQuery query,
+  public Task<List<AppIncomingEventEntity>> GetUnloadedList(
+    AppIncomingEventNamedListQuery query,
     CancellationToken cancellationToken)
   {
     var filterBuilder = Builders<AppIncomingEventEntity>.Filter;
 
-    List<FilterDefinition<AppIncomingEventEntity>> filterDefinitions = [
-      filterBuilder.Eq(x => x.LoadedAt, null),
-      filterBuilder.Eq(x => x.EventName, query.EventName)
-    ];
+    return GetNamedList(query, filterBuilder.Eq(x => x.LoadedAt, null), cancellationToken);
+  }
 
-    if (query.ObjectIds.Count > 0)
-    {
-      filterDefinitions.Add(filterBuilder.In(x => x.ObjectId, query.ObjectIds));
-    }
+  /// <inheritdoc/>
+  public Task<List<AppIncomingEventEntity>> GetUnprocessedList(
+    AppIncomingEventNamedListQuery query,
+    CancellationToken cancellationToken)
+  {
+    var filterBuilder = Builders<AppIncomingEventEntity>.Filter;
 
-    var filter = filterBuilder.And(filterDefinitions);
-
-    IFindFluent<AppIncomingEventEntity, AppIncomingEventEntity> found = Collection
-      .Find(ClientSessionHandle, filter)
-      .SortBy(x => x.EventId);
-
-    if (query.MaxCount > 0)
-    {
-      found = found.Limit(query.MaxCount);
-    }
-
-    var result = await found.ToListAsync(cancellationToken).ConfigureAwait(false);
-
-    return result;
+    return GetNamedList(query, filterBuilder.Eq(x => x.ProcessedAt, null), cancellationToken);
   }
 
   /// <inheritdoc/>
@@ -178,4 +165,38 @@ public class AppIncomingEventRepository(
 
     return result;
   }
+
+  private async Task<List<AppIncomingEventEntity>> GetNamedList(
+    AppIncomingEventNamedListQuery query,
+    FilterDefinition<AppIncomingEventEntity> filterDefinition,
+    CancellationToken cancellationToken)
+  {
+    var filterBuilder = Builders<AppIncomingEventEntity>.Filter;
+
+    List<FilterDefinition<AppIncomingEventEntity>> filterDefinitions = [
+      filterDefinition,
+      filterBuilder.Eq(x => x.EventName, query.EventName)
+    ];
+
+    if (query.ObjectIds.Count > 0)
+    {
+      filterDefinitions.Add(filterBuilder.In(x => x.ObjectId, query.ObjectIds));
+    }
+
+    var filter = filterBuilder.And(filterDefinitions);
+
+    IFindFluent<AppIncomingEventEntity, AppIncomingEventEntity> found = Collection
+      .Find(ClientSessionHandle, filter)
+      .SortBy(x => x.EventId);
+
+    if (query.MaxCount > 0)
+    {
+      found = found.Limit(query.MaxCount);
+    }
+
+    var result = await found.ToListAsync(cancellationToken).ConfigureAwait(false);
+
+    return result;
+  }
+
 }
