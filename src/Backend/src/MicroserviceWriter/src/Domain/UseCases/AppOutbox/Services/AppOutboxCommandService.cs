@@ -38,29 +38,29 @@ public class AppOutboxCommandService(
 
     async Task FuncToExecute(CancellationToken cancellationToken)
     {
-      var taskForAppOutgoingEvent = _appOutgoingEventCommandService.Save(
+      var eventSaveTask = _appOutgoingEventCommandService.Save(
         command.ToAppOutgoingEventSaveCommand(),
         cancellationToken);
 
-      var resultForAppOutgoingEvent = await taskForAppOutgoingEvent.ConfigureAwait(false);
+      var eventSaveResult = await eventSaveTask.ConfigureAwait(false);
 
-      resultForAppOutgoingEvent.Data.ThrowExceptionIfNotSuccess();
+      eventSaveResult.Data.ThrowExceptionIfNotSuccess();
 
-      payloads.AddRange(resultForAppOutgoingEvent.Payloads);
+      payloads.AddRange(eventSaveResult.Payloads);
 
-      long appOutgoingEventId = resultForAppOutgoingEvent.Data.Value.Id;
+      long appOutgoingEventId = eventSaveResult.Data.Value.Id;
 
       foreach (var payload in command.Payloads)
       {
-        var taskForAppOutgoingEventPayload = _appOutgoingEventPayloadCommandService.Save(
+        var eventPayloadSaveTask = _appOutgoingEventPayloadCommandService.Save(
           payload.ToAppOutgoingEventPayloadSaveCommand(appOutgoingEventId),
           cancellationToken);
 
-        var resultForAppOutgoingEventPayload = await taskForAppOutgoingEventPayload.ConfigureAwait(false);
+        var eventPayloadSaveResult = await eventPayloadSaveTask.ConfigureAwait(false);
 
-        resultForAppOutgoingEventPayload.Data.ThrowExceptionIfNotSuccess();
+        eventPayloadSaveResult.Data.ThrowExceptionIfNotSuccess();
 
-        payloads.AddRange(resultForAppOutgoingEventPayload.Payloads);
+        payloads.AddRange(eventPayloadSaveResult.Payloads);
       }
     }
 

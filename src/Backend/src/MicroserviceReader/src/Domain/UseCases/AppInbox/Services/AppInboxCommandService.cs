@@ -39,22 +39,22 @@ public class AppInboxCommandService(
   /// <inheritdoc/>
   public async Task<Result> Load(AppInboxLoadCommand command, CancellationToken cancellationToken)
   {
-    var taskToGetUnloadedEvents = GetUnloadedEvents(
+    var unloadedEventsGetTask = GetUnloadedEvents(
       command.EventName,
       command.EventMaxCountToLoad,
       cancellationToken);
 
-    var unloadedEvents = await taskToGetUnloadedEvents.ConfigureAwait(false);
+    var unloadedEvents = await unloadedEventsGetTask.ConfigureAwait(false);
 
     foreach (var unloadedEvent in unloadedEvents)
     {
-      var taskToDownloadEventPayloads = DownloadEventPayloads(
+      var eventPayloadsDownloadTask = DownloadEventPayloads(
         unloadedEvent,
         command.PayloadPageSize,
         command.TimeoutInMillisecondsToGetPayloads,
         cancellationToken);
 
-      await taskToDownloadEventPayloads.ConfigureAwait(false);
+      await eventPayloadsDownloadTask.ConfigureAwait(false);
     }
 
     return Result.Success();
@@ -82,15 +82,15 @@ public class AppInboxCommandService(
 
         try
         {
-          var taskToGetPage = _mediator.Send(
+          var eventPayloadGetPageTask = _mediator.Send(
             eventDTO.ToAppOutgoingEventPayloadGetPageActionRequest(payloadPageSize),
             cancellationToken);
 
-          var resultToGetPage = await taskToGetPage.ConfigureAwait(false);
+          var eventPayloadGetPageResult = await eventPayloadGetPageTask.ConfigureAwait(false);
 
-          resultToGetPage.ThrowExceptionIfNotSuccess();
+          eventPayloadGetPageResult.ThrowExceptionIfNotSuccess();
 
-          var data = resultToGetPage.Value;
+          var data = eventPayloadGetPageResult.Value;
 
           var items = data.Items;
 
