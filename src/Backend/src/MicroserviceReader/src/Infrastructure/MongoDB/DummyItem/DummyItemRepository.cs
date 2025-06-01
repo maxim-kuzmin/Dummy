@@ -54,12 +54,16 @@ public class DummyItemRepository(
   /// <inheritdoc/>
   public async Task<DummyItemEntity?> GetSingle(DummyItemSingleQuery query, CancellationToken cancellationToken)
   {
-    if (query.ObjectId == null)
+    if (query.ObjectId == null && query.Id < 1)
     {
       return null;
     }
 
-    var filter = Builders<DummyItemEntity>.Filter.Eq(x => x.ObjectId, query.ObjectId);
+    var filterBuilder = Builders<DummyItemEntity>.Filter;
+
+    var filter = !string.IsNullOrWhiteSpace(query.ObjectId)
+      ? filterBuilder.Eq(x => x.ObjectId, query.ObjectId)
+      : filterBuilder.Eq(x => x.Id, query.Id);
 
     var task = Collection.Find(ClientSessionHandle, filter).FirstOrDefaultAsync(cancellationToken);
 

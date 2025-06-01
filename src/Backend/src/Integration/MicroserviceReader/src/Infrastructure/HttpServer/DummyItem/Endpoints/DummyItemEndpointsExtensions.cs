@@ -26,7 +26,7 @@ public static class DummyItemEndpointsExtensions
   public static DummyItemGetActionRequest ToDummyItemGetActionRequest(
     this DummyItemGetEndpointRequest request)
   {
-    DummyItemSingleQuery query = new(request.ObjectId);
+    DummyItemSingleQuery query = new(ObjectId: request.ObjectId, Id: 0);
 
     return new(query);
   }

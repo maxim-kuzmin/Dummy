@@ -4,4 +4,5 @@
 /// Запрос единственного фиктивного предмета.
 /// </summary>
 /// <param name="ObjectId">Идентификатор объекта.</param>
-public record DummyItemSingleQuery(string? ObjectId);
+/// <param name="Id">Идентификатор.</param>
+public record DummyItemSingleQuery(string? ObjectId, long Id);

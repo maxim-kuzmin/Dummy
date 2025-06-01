@@ -12,6 +12,8 @@
 /// <param name="_appIncomingEventPayloadQueryService">
 /// Сервис запросов полезной нагрузки входящего события приложения.
 /// </param>
+/// <param name="_dummyItemCommandService">Сервис команд фиктивного предмета.</param>
+/// <param name="_dummyItemQueryService">Сервис запросов фиктивного предмета.</param>
 /// <param name="_logger">Логгер.</param>
 /// <param name="_mediator">Медиатор.</param>
 public class AppInboxCommandService(
@@ -20,6 +22,8 @@ public class AppInboxCommandService(
   IAppIncomingEventQueryService _appIncomingEventQueryService,
   IAppIncomingEventPayloadCommandService _appIncomingEventPayloadCommandService,
   IAppIncomingEventPayloadQueryService _appIncomingEventPayloadQueryService,
+  IDummyItemCommandService _dummyItemCommandService,
+  IDummyItemQueryService _dummyItemQueryService,
   ILogger<AppInboxCommandService> _logger,
   IMediator _mediator) : IAppInboxCommandService
 {
@@ -237,10 +241,6 @@ public class AppInboxCommandService(
     AppIncomingEventSingleDTO eventDTO,
     CancellationToken cancellationToken)
   {
-    await Task.Delay(0, cancellationToken).ConfigureAwait(false);
-
-    bool result = false;
-
     eventDTO.LastProcessingError = null;
 
     try
@@ -259,26 +259,124 @@ public class AppInboxCommandService(
         throw new Exception($"The event payload {eventPayloadDTO.ObjectId} action is unknown ");
       }
 
+      long entityId = long.Parse(eventPayloadDTO.EntityId);
+
+      DummyItemSingleQuery query = new(ObjectId: null, Id: entityId);
+
+      var entityDTO = await _dummyItemQueryService.GetSingle(query, cancellationToken).ConfigureAwait(false);
+
       if (eventPayloadDTO.EntityConcurrencyTokenToDelete == null)
       {
-        //вставляем
+        if (entityDTO != null)
+        {
+          return entityDTO.ConcurrencyToken == eventPayloadDTO.EntityConcurrencyTokenToInsert;
+        }
+
+        var data = CreateDataToSave(eventPayloadDTO, entityDTO, entityId);
+
+        if (data == null)
+        {
+          return false;
+        }
+
+        DummyItemSaveCommand command = new(IsUpdate: false, ObjectId: null, Data: data);
+
+        await _dummyItemCommandService.Save(command, cancellationToken).ConfigureAwait(false);
       }
       else if (eventPayloadDTO.EntityConcurrencyTokenToInsert == null)
       {
-        //удаляем
+        if (entityDTO == null || entityDTO.ConcurrencyToken != eventPayloadDTO.EntityConcurrencyTokenToDelete)
+        {
+          return false;
+        }
+
+        DummyItemDeleteCommand command = new(ObjectId: entityDTO.ObjectId!);
+
+        await _dummyItemCommandService.Delete(command, cancellationToken).ConfigureAwait(false);
       }
       else
       {
-        //изменяем
+        if (entityDTO == null || entityDTO.ConcurrencyToken != eventPayloadDTO.EntityConcurrencyTokenToDelete)
+        {
+          return false;
+        }
+
+        var data = CreateDataToSave(eventPayloadDTO, entityDTO, entityId);
+
+        if (data == null)
+        {
+          return false;
+        }
+
+        DummyItemSaveCommand command = new(IsUpdate: true, ObjectId: entityDTO.ObjectId, Data: data);
+
+        await _dummyItemCommandService.Save(command, cancellationToken).ConfigureAwait(false);
       }
 
-      result = true;
+      return true;
     }
     catch (Exception ex)
     {
       eventDTO.LastProcessingError = ex.ToString();
+
+      return false;
+    }
+  }
+
+  private static DummyItemCommandDataSection? CreateDataToSave(
+    AppIncomingEventPayloadSingleDTO eventPayloadDTO,
+    DummyItemSingleDTO? entityDTO,
+    long entityId)
+  {
+    if (eventPayloadDTO.EntityConcurrencyTokenToInsert == null)
+    {
+      return null;
     }
 
-    return result;
+    var data = eventPayloadDTO.Data.ToAppEventPayloadDataAsDictionary();
+
+    if (data == null)
+    {
+      return null;
+    }
+
+    bool isNamePropertyFound = TryToFindNameProperty(data, out string name);
+
+    if (entityDTO != null)
+    {
+      if (!isNamePropertyFound)
+      {
+        name = entityDTO.Name;
+      }
+    }
+    else
+    {
+      if (!isNamePropertyFound)
+      {
+        return null;
+      }
+    }
+
+    return new(
+      Id: entityId,
+      Name: name,
+      ConcurrencyToken: eventPayloadDTO.EntityConcurrencyTokenToInsert);
+  }
+
+  private static bool TryToFindNameProperty(Dictionary<string, string?> data, out string value)
+  {
+    value = string.Empty;
+
+    if (!data.TryGetValue("Name", out string? stringValue))
+    {
+      return false;
+    }
+
+    if (stringValue != null)
+    {
+      value = stringValue;
+    }
+
+    return true;
   }
 }

@@ -25,7 +25,7 @@ public static class DummyItemExtensions
   /// <returns>Запрос действия.</returns>
   public static DummyItemGetActionRequest ToDummyItemGetActionRequest(this DummyItemGetGrpcRequest request)
   {
-    DummyItemSingleQuery query = new(request.ObjectId);
+    DummyItemSingleQuery query = new(ObjectId: request.ObjectId, Id: 0);
 
     return new(query);
   }
