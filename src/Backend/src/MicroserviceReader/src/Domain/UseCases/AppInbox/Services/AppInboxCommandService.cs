@@ -105,7 +105,7 @@ public class AppInboxCommandService(
     {
       async Task FuncToExecute(CancellationToken cancellationToken)
       {
-        bool isLoaded = false;
+        eventDTO.LastLoadingError = null;
 
         try
         {
@@ -124,9 +124,7 @@ public class AppInboxCommandService(
           await InsertEventPayloads(items, eventDTO.ObjectId, cancellationToken).ConfigureAwait(false);
 
           eventDTO.PayloadCount += items.Count;
-          eventDTO.PayloadTotalCount = data.TotalCount;
-
-          isLoaded = true;
+          eventDTO.PayloadTotalCount = data.TotalCount;          
         }
         catch (Exception ex)
         {
@@ -139,7 +137,7 @@ public class AppInboxCommandService(
 
         eventDTO.LastLoadingAt = now;
 
-        if (isLoaded && eventDTO.PayloadCount == eventDTO.PayloadTotalCount)
+        if (eventDTO.LastLoadingError == null && eventDTO.PayloadCount == eventDTO.PayloadTotalCount)
         {
           eventDTO.LoadedAt = now;
         }
@@ -173,83 +171,112 @@ public class AppInboxCommandService(
 
     var eventPayloadDTOs = await eventPayloadsGetListTask.ConfigureAwait(false);
 
-    async Task FuncToExecute(CancellationToken cancellationToken)
+    bool isTransactionCancelled = false;
+
+    try
     {
-      bool isProcessed = false;
-
-      foreach (var eventPayloadDTO in eventPayloadDTOs)
+      async Task FuncToExecute(CancellationToken cancellationToken)
       {
-        try
+        bool isProcessed = false;
+
+        foreach (var eventPayloadDTO in eventPayloadDTOs)
         {
-          if (eventPayloadDTO.EntityName != "DummyItem")
+          var eventPayloadProcessTask = ProcessEventPayload(eventPayloadDTO, eventDTO, cancellationToken);
+
+          isProcessed = await eventPayloadProcessTask.ConfigureAwait(false);
+
+          if (!isProcessed)
           {
-            throw new Exception($"The event payload {eventPayloadDTO.ObjectId} has unknown entity name");
+            break;
           }
-
-          bool isUnknownAction = eventPayloadDTO.EntityConcurrencyTokenToDelete == null
-            &&
-            eventPayloadDTO.EntityConcurrencyTokenToInsert == null;
-
-          if (isUnknownAction)
-          {
-            throw new Exception($"The event payload {eventPayloadDTO.ObjectId} has unknown action");
-          }
-
-          isProcessed = await ProcessEventPayload(eventPayloadDTO, cancellationToken).ConfigureAwait(false);
-        }
-        catch (Exception ex)
-        {
-          eventDTO.LastProcessingError = ex.ToString();
         }
 
-        if (!isProcessed)
+        var now = DateTimeOffset.Now;
+
+        eventDTO.LastProcessingAt = now;
+
+        if (isProcessed)
         {
-          break;
+          eventDTO.ProcessedAt = now;
+
+          var eventSaveTask = _appIncomingEventCommandService.Save(
+            eventDTO.ToAppIncomingEventUpdateCommand(),
+            cancellationToken);
+
+          await eventSaveTask.ConfigureAwait(false);
+        }
+        else
+        {
+          isTransactionCancelled = true;
+          
+          throw new Exception();
         }
       }
 
-      var now = DateTimeOffset.Now;
-
-      eventDTO.LastProcessingAt = now;
-
-      if (isProcessed)
+      await _appDbExecutionContext.ExecuteInTransaction(FuncToExecute, cancellationToken).ConfigureAwait(false);
+    }
+    catch
+    {
+      if (isTransactionCancelled)
       {
-        eventDTO.ProcessedAt = now;
+        var eventSaveTask = _appIncomingEventCommandService.Save(
+          eventDTO.ToAppIncomingEventUpdateCommand(),
+          cancellationToken);
+
+        await eventSaveTask.ConfigureAwait(false);
       }
       else
       {
-        throw new Exception($"The event {eventDTO.ObjectId} cannot be processed");
+        throw;
       }
-
-      var eventSaveTask = _appIncomingEventCommandService.Save(
-        eventDTO.ToAppIncomingEventUpdateCommand(),
-        cancellationToken);
-
-      await eventSaveTask.ConfigureAwait(false);
     }
-
-    await _appDbExecutionContext.ExecuteInTransaction(FuncToExecute, cancellationToken).ConfigureAwait(false);
   }
 
   private async Task<bool> ProcessEventPayload(
     AppIncomingEventPayloadSingleDTO eventPayloadDTO,
+    AppIncomingEventSingleDTO eventDTO,
     CancellationToken cancellationToken)
   {
     await Task.Delay(0, cancellationToken).ConfigureAwait(false);
 
     bool result = false;
 
-    if (eventPayloadDTO.EntityConcurrencyTokenToDelete == null)
+    eventDTO.LastProcessingError = null;
+
+    try
     {
-      //вставляем
+      if (eventPayloadDTO.EntityName != "DummyItem")
+      {
+        throw new Exception($"The event payload {eventPayloadDTO.ObjectId} entity name {eventPayloadDTO.EntityName} is unknown");
+      }
+
+      bool isUnknownAction = eventPayloadDTO.EntityConcurrencyTokenToDelete == null
+        &&
+        eventPayloadDTO.EntityConcurrencyTokenToInsert == null;
+
+      if (isUnknownAction)
+      {
+        throw new Exception($"The event payload {eventPayloadDTO.ObjectId} action is unknown ");
+      }
+
+      if (eventPayloadDTO.EntityConcurrencyTokenToDelete == null)
+      {
+        //вставляем
+      }
+      else if (eventPayloadDTO.EntityConcurrencyTokenToInsert == null)
+      {
+        //удаляем
+      }
+      else
+      {
+        //изменяем
+      }
+
+      result = true;
     }
-    else if (eventPayloadDTO.EntityConcurrencyTokenToInsert == null)
+    catch (Exception ex)
     {
-      //удаляем
-    }
-    else
-    {
-      //изменяем
+      eventDTO.LastProcessingError = ex.ToString();
     }
 
     return result;
