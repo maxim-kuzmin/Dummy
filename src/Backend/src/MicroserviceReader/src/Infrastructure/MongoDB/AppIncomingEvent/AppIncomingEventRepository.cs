@@ -105,9 +105,11 @@ public class AppIncomingEventRepository(
     AppIncomingEventNamedListQuery query,
     CancellationToken cancellationToken)
   {
-    var filterBuilder = Builders<AppIncomingEventEntity>.Filter;
-
-    return GetNamedList(query, filterBuilder.Eq(x => x.LoadedAt, null), cancellationToken);
+    return GetNamedList(
+      query,
+      Builders<AppIncomingEventEntity>.Filter.Eq(x => x.LoadedAt, null),
+      Builders<AppIncomingEventEntity>.Sort.Ascending(x => x.LastLoadingAt),
+      cancellationToken);
   }
 
   /// <inheritdoc/>
@@ -115,9 +117,11 @@ public class AppIncomingEventRepository(
     AppIncomingEventNamedListQuery query,
     CancellationToken cancellationToken)
   {
-    var filterBuilder = Builders<AppIncomingEventEntity>.Filter;
-
-    return GetNamedList(query, filterBuilder.Eq(x => x.ProcessedAt, null), cancellationToken);
+    return GetNamedList(
+      query,
+      Builders<AppIncomingEventEntity>.Filter.Eq(x => x.ProcessedAt, null),
+      Builders<AppIncomingEventEntity>.Sort.Ascending(x => x.LastProcessingAt),
+      cancellationToken);
   }
 
   /// <inheritdoc/>
@@ -169,6 +173,7 @@ public class AppIncomingEventRepository(
   private async Task<List<AppIncomingEventEntity>> GetNamedList(
     AppIncomingEventNamedListQuery query,
     FilterDefinition<AppIncomingEventEntity> filterDefinition,
+    SortDefinition<AppIncomingEventEntity> sortDefinition,
     CancellationToken cancellationToken)
   {
     var filterBuilder = Builders<AppIncomingEventEntity>.Filter;
@@ -187,7 +192,7 @@ public class AppIncomingEventRepository(
 
     IFindFluent<AppIncomingEventEntity, AppIncomingEventEntity> found = Collection
       .Find(ClientSessionHandle, filter)
-      .SortBy(x => x.EventId);
+      .Sort(sortDefinition.Ascending(x => x.EventId));
 
     if (query.MaxCount > 0)
     {
