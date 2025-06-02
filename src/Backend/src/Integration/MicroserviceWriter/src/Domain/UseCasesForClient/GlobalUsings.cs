@@ -31,7 +31,9 @@ global using Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCases.DummyItem
 global using Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCasesForClient.AppOutgoingEvent.Services;
 global using Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCasesForClient.AppOutgoingEventPayload.Services;
 global using Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCasesForClient.Auth.Services;
+global using Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCasesForClient.Auth.Stubs;
 global using Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCasesForClient.DummyItem.Services;
 global using MediatR;
 global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.Extensions.DependencyInjection.Extensions;
 global using Microsoft.Extensions.Logging;

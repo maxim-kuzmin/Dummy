@@ -1,6 +1,4 @@
-﻿using Makc.Dummy.MicroserviceWriter.Domain.UseCases.AppOutgoingEvent.Commands;
-
-namespace Makc.Dummy.MicroserviceWriter.Domain.UseCases.AppOutbox.Services;
+﻿namespace Makc.Dummy.MicroserviceWriter.Domain.UseCases.AppOutbox.Services;
 
 /// <summary>
 /// Сервис исходящего сообщения приложения.

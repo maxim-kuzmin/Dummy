@@ -1,6 +1,4 @@
-﻿using Makc.Dummy.Shared.Core.App.Config.Options.Sections.Infrastructure;
-
-namespace Makc.Dummy.MicroserviceWriter.Infrastructure.Kafka.App.Config.Options.Sections;
+﻿namespace Makc.Dummy.MicroserviceWriter.Infrastructure.Kafka.App.Config.Options.Sections;
 
 /// <summary>
 /// Раздел брокера сообщений в параметрах конфигурации приложения.

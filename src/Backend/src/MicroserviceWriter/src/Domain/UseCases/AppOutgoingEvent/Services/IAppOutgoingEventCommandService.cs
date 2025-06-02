@@ -1,6 +1,4 @@
-﻿using Makc.Dummy.MicroserviceWriter.Domain.UseCases.AppOutgoingEvent.Commands;
-
-namespace Makc.Dummy.MicroserviceWriter.Domain.UseCases.AppOutgoingEvent.Services;
+﻿namespace Makc.Dummy.MicroserviceWriter.Domain.UseCases.AppOutgoingEvent.Services;
 
 /// <summary>
 /// Интерфейс сервиса команд исходящего события приложения.

@@ -1,6 +1,4 @@
-﻿using Makc.Dummy.Shared.Core.App.Config.Options.Sections.Domain;
-
-namespace Makc.Dummy.MicroserviceWriter.Apps.WebApp.App.Config.Options.Sections;
+﻿namespace Makc.Dummy.MicroserviceWriter.Apps.WebApp.App.Config.Options.Sections;
 
 /// <summary>
 /// Раздел параметров конфигурации предметной области приложения.

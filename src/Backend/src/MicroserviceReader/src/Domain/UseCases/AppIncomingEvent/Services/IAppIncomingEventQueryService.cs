@@ -35,7 +35,7 @@ public interface IAppIncomingEventQueryService
   /// <param name="query">Запрос.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Идентификаторы объектов.</returns>
-  Task<List<string>> GetProcessedIds(AppIncomingEventProcessedListQuery query, CancellationToken cancellationToken);
+  Task<List<string>> GetProcessedObjectIds(AppIncomingEventProcessedListQuery query, CancellationToken cancellationToken);
 
   /// <summary>
   /// Получить единственный объект.

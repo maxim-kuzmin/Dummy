@@ -16,6 +16,14 @@ public interface IAppIncomingEventCommandService
     CancellationToken cancellationToken);
 
   /// <summary>
+  /// Удалить список.
+  /// </summary>
+  /// <param name="command">Команда.</param>
+  /// <param name="cancellationToken">Токен отмены.</param>
+  /// <returns>Результат.</returns>
+  Task<Result> DeleteList(AppIncomingEventDeleteListCommand command, CancellationToken cancellationToken);
+
+  /// <summary>
   /// Вставить список.
   /// </summary>
   /// <param name="command">Команда.</param>

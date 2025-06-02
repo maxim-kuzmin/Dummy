@@ -1,4 +1,6 @@
-﻿using Makc.Dummy.Shared.Domain.UseCases.Query.Sections;
+﻿using Makc.Dummy.MicroserviceReader.Domain.UseCases.AppIncomingEvent.Commands;
+using Makc.Dummy.MicroserviceReader.Domain.UseCases.AppIncomingEventPayload.Commands;
+using MongoDB.Driver;
 
 namespace Makc.Dummy.MicroserviceReader.Infrastructure.MongoDB.AppIncomingEventPayload;
 
@@ -39,6 +41,30 @@ public class AppIncomingEventPayloadRepository(
     { IsUpsert = true });
 
     return Collection.BulkWriteAsync(requests, cancellationToken: cancellationToken);
+  }
+
+  /// <inheritdoc/>
+  public Task DeleteList(AppIncomingEventPayloadDeleteListCommand command, CancellationToken cancellationToken)
+  {
+    var filterBuilder = Builders<AppIncomingEventPayloadEntity>.Filter;
+
+    var filter = filterBuilder.Empty;
+
+    if (command.ObjectIds?.Count > 0)
+    {
+      filter = filterBuilder.And(
+        filter,
+        filterBuilder.Where(x => x.ObjectId != null && command.ObjectIds.Contains(x.ObjectId)));
+    }
+    
+    if (command.AppIncomingEventObjectIds?.Count > 0)
+    {
+      filter = filterBuilder.And(
+        filter,
+        filterBuilder.Where(x => command.AppIncomingEventObjectIds.Contains(x.AppIncomingEventObjectId)));
+    }
+
+    return Collection.DeleteManyAsync(ClientSessionHandle, filter, cancellationToken: cancellationToken);
   }
 
   /// <inheritdoc/>

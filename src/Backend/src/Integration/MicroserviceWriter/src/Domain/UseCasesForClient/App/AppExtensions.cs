@@ -1,7 +1,4 @@
-﻿using Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCasesForClient.Auth.Stubs;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-
-namespace Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCasesForClient.App;
+﻿namespace Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCasesForClient.App;
 
 /// <summary>
 /// Расширения приложения.

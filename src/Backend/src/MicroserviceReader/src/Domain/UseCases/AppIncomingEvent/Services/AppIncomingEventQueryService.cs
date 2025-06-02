@@ -47,11 +47,11 @@ public class AppIncomingEventQueryService(
   }
 
   /// <inheritdoc/>
-  public Task<List<string>> GetProcessedIds(
+  public Task<List<string>> GetProcessedObjectIds(
     AppIncomingEventProcessedListQuery query,
     CancellationToken cancellationToken)
   {
-    return _repository.GetProcessedIds(query, cancellationToken);
+    return _repository.GetProcessedObjectIds(query, cancellationToken);
   }
 
   /// <inheritdoc/>

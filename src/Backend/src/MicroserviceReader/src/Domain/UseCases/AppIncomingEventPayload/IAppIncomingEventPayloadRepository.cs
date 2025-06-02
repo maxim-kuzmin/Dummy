@@ -16,6 +16,14 @@ public interface IAppIncomingEventPayloadRepository : IObjectRepository<AppIncom
     CancellationToken cancellationToken);
 
   /// <summary>
+  /// Удалить список.
+  /// </summary>
+  /// <param name="command">Команда.</param>
+  /// <param name="cancellationToken">Токен отмены.</param>
+  /// <returns>Задача.</returns>
+  Task DeleteList(AppIncomingEventPayloadDeleteListCommand command, CancellationToken cancellationToken);
+
+  /// <summary>
   /// Получить количество сущностей.
   /// </summary>
   /// <param name="query">Запрос.</param>

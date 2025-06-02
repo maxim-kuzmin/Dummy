@@ -37,13 +37,37 @@ public class AppInboxCommandService(
       maxDate = DateTimeOffset.Now.AddMinutes(-command.ProcessedEventsLifetimeInMinutes);
     }
 
-    AppIncomingEventProcessedListQuery publishedEventIdsQuery = new(MaxDate: maxDate);
+    AppIncomingEventProcessedListQuery processedEventIdsQuery = new(MaxDate: maxDate);
 
-    var publishedEventIdsGetTask = _appIncomingEventQueryService.GetProcessedIds(
-      publishedEventIdsQuery,
+    var processedEventObjectIdsGetTask = _appIncomingEventQueryService.GetProcessedObjectIds(
+      processedEventIdsQuery,
       cancellationToken);
 
-    var publishedEventIds = await publishedEventIdsGetTask.ConfigureAwait(false);
+    var processedEventObjectIds = await processedEventObjectIdsGetTask.ConfigureAwait(false);
+
+    if (processedEventObjectIds.Count > 0)
+    {
+      async Task FuncToExecute(CancellationToken cancellationToken)
+      {
+        AppIncomingEventDeleteListCommand eventsDeleteCommand = new(ObjectIds: processedEventObjectIds);
+
+        var eventsDeleteTask = _appIncomingEventCommandService.DeleteList(eventsDeleteCommand, cancellationToken);
+
+        await eventsDeleteTask.ConfigureAwait(false);
+
+        AppIncomingEventPayloadDeleteListCommand eventPayloadsDeleteCommand = new(
+          ObjectIds: null,
+          AppIncomingEventObjectIds: processedEventObjectIds);
+
+        var eventPayloadsDeleteTask = _appIncomingEventPayloadCommandService.DeleteList(
+          eventPayloadsDeleteCommand,
+          cancellationToken);
+
+        await eventPayloadsDeleteTask.ConfigureAwait(false);
+      }
+
+      await _appDbExecutionContext.ExecuteInTransaction(FuncToExecute, cancellationToken).ConfigureAwait(false);
+    }
 
     return Result.Success();
   }

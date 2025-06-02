@@ -1,8 +1,4 @@
-﻿using Makc.Dummy.Shared.Core.App.Config.Options.Sections.Infrastructure;
-using Makc.Dummy.Shared.Core.App.Config.Options.Sections.Infrastructure.Db.MSSQLServer;
-using Makc.Dummy.Shared.Core.App.Config.Options.Sections.Infrastructure.Db.PostgreSQL;
-
-namespace Makc.Dummy.MicroserviceWriter.Apps.WebApp.App.Config.Options.Sections;
+﻿namespace Makc.Dummy.MicroserviceWriter.Apps.WebApp.App.Config.Options.Sections;
 
 /// <summary>
 /// Раздел параметров конфигурации инфраструктуры приложения.

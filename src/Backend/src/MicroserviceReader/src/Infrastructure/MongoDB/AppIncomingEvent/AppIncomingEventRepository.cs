@@ -1,4 +1,4 @@
-﻿using Makc.Dummy.Shared.Domain.UseCases.Query.Sections;
+﻿using Makc.Dummy.MicroserviceReader.Domain.UseCases.AppIncomingEvent.Commands;
 
 namespace Makc.Dummy.MicroserviceReader.Infrastructure.MongoDB.AppIncomingEvent;
 
@@ -42,6 +42,21 @@ public class AppIncomingEventRepository(
   }
 
   /// <inheritdoc/>
+  public Task DeleteList(AppIncomingEventDeleteListCommand command, CancellationToken cancellationToken)
+  {
+    var filterBuilder = Builders<AppIncomingEventEntity>.Filter;
+
+    var filter = filterBuilder.Empty;
+
+    if (command.ObjectIds?.Count > 0)
+    {
+      filter = filterBuilder.Where(x => x.ObjectId != null && command.ObjectIds.Contains(x.ObjectId));
+    }
+
+    return Collection.DeleteManyAsync(ClientSessionHandle, filter, cancellationToken: cancellationToken);
+  }
+
+  /// <inheritdoc/>
   public Task<long> GetCount(AppIncomingEventCountQuery query, CancellationToken cancellationToken)
   {
     var filter = CreateFilter(query.Filter);
@@ -55,7 +70,7 @@ public class AppIncomingEventRepository(
     CancellationToken cancellationToken)
   {
     var filter = CreateFilter(query.Filter);
-      
+
     var found = Collection.Find(ClientSessionHandle, filter)
       .Sort(query.Sort, AppIncomingEventSettings.DefaultQuerySortSection, CreateSortFieldExpression)
       .TakeMaxCount(query.MaxCount);
@@ -64,7 +79,7 @@ public class AppIncomingEventRepository(
 
     return result;
   }
-  
+
   /// <inheritdoc/>
   public async Task<List<AppIncomingEventEntity>> GetPageItems(
     AppIncomingEventPageQuery query,
@@ -82,7 +97,7 @@ public class AppIncomingEventRepository(
   }
 
   /// <inheritdoc/>
-  public Task<List<string>> GetProcessedIds(
+  public Task<List<string>> GetProcessedObjectIds(
     AppIncomingEventProcessedListQuery query,
     CancellationToken cancellationToken)
   {
@@ -166,7 +181,7 @@ public class AppIncomingEventRepository(
 
     return result;
   }
-  
+
   private static Expression<Func<AppIncomingEventEntity, object>> CreateSortFieldExpression(string field)
   {
     Expression<Func<AppIncomingEventEntity, object>> result;

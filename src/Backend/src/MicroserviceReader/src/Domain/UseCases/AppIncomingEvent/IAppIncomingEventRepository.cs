@@ -14,12 +14,22 @@ public interface IAppIncomingEventRepository : IObjectRepository<AppIncomingEven
   Task AddNotFoundByEvent(IEnumerable<AppIncomingEventEntity> entities, CancellationToken cancellationToken);
 
   /// <summary>
-  /// Получить идентификаторы обработанных сущностей.
+  /// Удалить список.
+  /// </summary>
+  /// <param name="command">Команда.</param>
+  /// <param name="cancellationToken">Токен отмены.</param>
+  /// <returns>Задача.</returns>
+  Task DeleteList(AppIncomingEventDeleteListCommand command, CancellationToken cancellationToken);
+
+  /// <summary>
+  /// Получить идентификаторы обработанных объектов.
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
-  /// <returns>Список идентификаторов.</returns>
-  Task<List<string>> GetProcessedIds(AppIncomingEventProcessedListQuery query, CancellationToken cancellationToken);
+  /// <returns>Список идентификаторов объектов.</returns>
+  Task<List<string>> GetProcessedObjectIds(
+    AppIncomingEventProcessedListQuery query,
+    CancellationToken cancellationToken);
 
   /// <summary>
   /// Получить количество сущностей.

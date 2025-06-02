@@ -1,6 +1,4 @@
-﻿using Makc.Dummy.Shared.Core.App.Config.Options.Sections.Domain;
-
-namespace Makc.Dummy.MicroserviceReader.Domain.UseCases.App;
+﻿namespace Makc.Dummy.MicroserviceReader.Domain.UseCases.App;
 
 /// <summary>
 /// Расширения приложения.

@@ -1,6 +1,4 @@
-﻿using Makc.Dummy.Shared.Core.App.Config.Options.Sections.Infrastructure;
-
-namespace Makc.Dummy.Shared.Infrastructure.RabbitMQ.Message;
+﻿namespace Makc.Dummy.Shared.Infrastructure.RabbitMQ.Message;
 
 /// <summary>
 /// Брокер сообщений.

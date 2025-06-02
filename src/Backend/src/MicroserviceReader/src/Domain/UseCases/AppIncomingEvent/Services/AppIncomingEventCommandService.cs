@@ -61,6 +61,14 @@ public class AppIncomingEventCommandService(
   }
 
   /// <inheritdoc/>
+  public async Task<Result> DeleteList(AppIncomingEventDeleteListCommand command, CancellationToken cancellationToken)
+  {
+    await _repository.DeleteList(command, cancellationToken).ConfigureAwait(false);
+
+    return Result.Success();
+  }
+
+  /// <inheritdoc/>
   public async Task<Result> InsertList(AppIncomingEventInsertListCommand command, CancellationToken cancellationToken)
   {
     List<AppIncomingEventEntity> entities = new(command.Items.Count);
