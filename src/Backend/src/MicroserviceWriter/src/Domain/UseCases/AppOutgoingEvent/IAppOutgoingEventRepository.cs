@@ -1,4 +1,6 @@
-﻿namespace Makc.Dummy.MicroserviceWriter.Domain.UseCases.AppOutgoingEvent;
+﻿using Makc.Dummy.MicroserviceWriter.Domain.UseCases.AppOutgoingEvent.Commands;
+
+namespace Makc.Dummy.MicroserviceWriter.Domain.UseCases.AppOutgoingEvent;
 
 /// <summary>
 /// Интерфейс репозитория исходящего события приложения.

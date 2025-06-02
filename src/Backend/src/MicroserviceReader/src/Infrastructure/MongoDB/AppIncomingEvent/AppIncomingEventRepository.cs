@@ -82,6 +82,23 @@ public class AppIncomingEventRepository(
   }
 
   /// <inheritdoc/>
+  public Task<List<string>> GetProcessedIds(
+    AppIncomingEventProcessedListQuery query,
+    CancellationToken cancellationToken)
+  {
+    var filterBuilder = Builders<AppIncomingEventEntity>.Filter;
+
+    var filter = filterBuilder.Where(x => x.ProcessedAt.HasValue);
+
+    if (query.MaxDate.HasValue)
+    {
+      filter = filterBuilder.And(filter, filterBuilder.Where(x => x.ProcessedAt < query.MaxDate.Value));
+    }
+
+    return Collection.Find(ClientSessionHandle, filter).Project(x => x.ObjectId!).ToListAsync(cancellationToken);
+  }
+
+  /// <inheritdoc/>
   public async Task<AppIncomingEventEntity?> GetSingle(
     AppIncomingEventSingleQuery query,
     CancellationToken cancellationToken)

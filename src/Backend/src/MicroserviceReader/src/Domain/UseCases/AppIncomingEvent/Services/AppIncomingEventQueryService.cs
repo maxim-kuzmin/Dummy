@@ -47,6 +47,14 @@ public class AppIncomingEventQueryService(
   }
 
   /// <inheritdoc/>
+  public Task<List<string>> GetProcessedIds(
+    AppIncomingEventProcessedListQuery query,
+    CancellationToken cancellationToken)
+  {
+    return _repository.GetProcessedIds(query, cancellationToken);
+  }
+
+  /// <inheritdoc/>
   public async Task<AppIncomingEventSingleDTO?> GetSingle(
     AppIncomingEventSingleQuery query,
     CancellationToken cancellationToken)

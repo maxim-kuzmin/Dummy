@@ -28,9 +28,24 @@ public class AppInboxCommandService(
   IMediator _mediator) : IAppInboxCommandService
 {
   /// <inheritdoc/>
-  public Task<Result> Clear(AppInboxClearCommand command, CancellationToken cancellationToken)
+  public async Task<Result> Clear(AppInboxClearCommand command, CancellationToken cancellationToken)
   {
-    throw new NotImplementedException();
+    DateTimeOffset? maxDate = null;
+
+    if (command.ProcessedEventsLifetimeInMinutes > 0)
+    {
+      maxDate = DateTimeOffset.Now.AddMinutes(-command.ProcessedEventsLifetimeInMinutes);
+    }
+
+    AppIncomingEventProcessedListQuery publishedEventIdsQuery = new(MaxDate: maxDate);
+
+    var publishedEventIdsGetTask = _appIncomingEventQueryService.GetProcessedIds(
+      publishedEventIdsQuery,
+      cancellationToken);
+
+    var publishedEventIds = await publishedEventIdsGetTask.ConfigureAwait(false);
+
+    return Result.Success();
   }
 
   /// <inheritdoc/>

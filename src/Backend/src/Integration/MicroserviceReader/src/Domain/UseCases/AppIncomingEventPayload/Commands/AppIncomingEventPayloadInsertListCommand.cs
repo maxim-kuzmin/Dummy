@@ -1,4 +1,4 @@
-﻿namespace Makc.Dummy.MicroserviceReader.Domain.UseCases.AppIncomingEventPayload.Commands.Insert;
+﻿namespace Makc.Dummy.Integration.MicroserviceReader.Domain.UseCases.AppIncomingEventPayload.Commands;
 
 /// <summary>
 /// Команда вставки списка полезных нагрузок входящего события приложения.

@@ -46,7 +46,6 @@ global using Makc.Dummy.MicroserviceWriter.Domain.UseCases.App.Message.Stubs;
 global using Makc.Dummy.MicroserviceWriter.Domain.UseCases.AppOutbox;
 global using Makc.Dummy.MicroserviceWriter.Domain.UseCases.AppOutbox.Commands;
 global using Makc.Dummy.MicroserviceWriter.Domain.UseCases.AppOutbox.Services;
-global using Makc.Dummy.MicroserviceWriter.Domain.UseCases.AppOutgoingEvent.Commands;
 global using Makc.Dummy.MicroserviceWriter.Domain.UseCases.AppOutgoingEvent.Db.SQL.Factories;
 global using Makc.Dummy.MicroserviceWriter.Domain.UseCases.AppOutgoingEvent.Queries;
 global using Makc.Dummy.MicroserviceWriter.Domain.UseCases.AppOutgoingEvent.Services;

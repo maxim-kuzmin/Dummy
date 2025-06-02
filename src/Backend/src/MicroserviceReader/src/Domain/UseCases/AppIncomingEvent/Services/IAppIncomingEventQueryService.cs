@@ -30,6 +30,14 @@ public interface IAppIncomingEventQueryService
   Task<AppIncomingEventPageDTO> GetPage(AppIncomingEventPageQuery query, CancellationToken cancellationToken);
 
   /// <summary>
+  /// Получить идентификаторы обработанных объектов.
+  /// </summary>
+  /// <param name="query">Запрос.</param>
+  /// <param name="cancellationToken">Токен отмены.</param>
+  /// <returns>Идентификаторы объектов.</returns>
+  Task<List<string>> GetProcessedIds(AppIncomingEventProcessedListQuery query, CancellationToken cancellationToken);
+
+  /// <summary>
   /// Получить единственный объект.
   /// </summary>
   /// <param name="query">Запрос.</param>

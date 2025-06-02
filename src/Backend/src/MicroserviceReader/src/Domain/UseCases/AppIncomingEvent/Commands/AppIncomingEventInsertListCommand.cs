@@ -1,4 +1,4 @@
-﻿namespace Makc.Dummy.MicroserviceReader.Domain.UseCases.AppIncomingEvent.Commands.Insert;
+﻿namespace Makc.Dummy.MicroserviceReader.Domain.UseCases.AppIncomingEvent.Commands;
 
 /// <summary>
 /// Команда вставки списка входящих событий приложения.

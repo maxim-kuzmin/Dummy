@@ -11,9 +11,15 @@ public interface IAppIncomingEventRepository : IObjectRepository<AppIncomingEven
   /// <param name="entities">Сущности.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Задача.</returns>
-  Task AddNotFoundByEvent(
-    IEnumerable<AppIncomingEventEntity> entities,
-    CancellationToken cancellationToken);
+  Task AddNotFoundByEvent(IEnumerable<AppIncomingEventEntity> entities, CancellationToken cancellationToken);
+
+  /// <summary>
+  /// Получить идентификаторы обработанных сущностей.
+  /// </summary>
+  /// <param name="query">Запрос.</param>
+  /// <param name="cancellationToken">Токен отмены.</param>
+  /// <returns>Список идентификаторов.</returns>
+  Task<List<string>> GetProcessedIds(AppIncomingEventProcessedListQuery query, CancellationToken cancellationToken);
 
   /// <summary>
   /// Получить количество сущностей.

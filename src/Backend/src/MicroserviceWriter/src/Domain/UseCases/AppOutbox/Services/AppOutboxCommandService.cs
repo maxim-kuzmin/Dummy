@@ -1,4 +1,6 @@
-﻿namespace Makc.Dummy.MicroserviceWriter.Domain.UseCases.AppOutbox.Services;
+﻿using Makc.Dummy.MicroserviceWriter.Domain.UseCases.AppOutgoingEvent.Commands;
+
+namespace Makc.Dummy.MicroserviceWriter.Domain.UseCases.AppOutbox.Services;
 
 /// <summary>
 /// Сервис исходящего сообщения приложения.
@@ -17,61 +19,58 @@ public class AppOutboxCommandService(
   IAppOutgoingEventPayloadCommandService _appOutgoingEventPayloadCommandService) : IAppOutboxCommandService
 {
   /// <inheritdoc/>
-  public async Task Clear(AppOutboxClearCommand command, CancellationToken cancellationToken)
+  public Task Clear(AppOutboxClearCommand command, CancellationToken cancellationToken)
   {
-    async Task FuncToExecute(CancellationToken cancellationToken)
+    DateTimeOffset? maxDate = null;
+
+    if (command.PublishedEventsLifetimeInMinutes > 0)
     {
-      DateTimeOffset? maxDate = null;
-
-      if (command.PublishedEventsLifetimeInMinutes > 0)
-      {
-        maxDate = DateTimeOffset.Now.AddMinutes(-command.PublishedEventsLifetimeInMinutes);
-      }
-
-      AppOutgoingEventDeletePublishedCommand publishedEventsDeleteCommand = new(MaxDate: maxDate);
-
-      await _appOutgoingEventCommandService.DeletePublished(publishedEventsDeleteCommand, cancellationToken);
+      maxDate = DateTimeOffset.Now.AddMinutes(-command.PublishedEventsLifetimeInMinutes);
     }
 
-    await _appDbExecutionContext.Execute(FuncToExecute, cancellationToken).ConfigureAwait(false);
+    AppOutgoingEventDeletePublishedCommand publishedEventsDeleteCommand = new(MaxDate: maxDate);
+
+    return _appOutgoingEventCommandService.DeletePublished(publishedEventsDeleteCommand, cancellationToken);
   }
 
   /// <inheritdoc/>
   public async Task Produce(AppOutboxProduceCommand command, CancellationToken cancellationToken)
   {
+    AppOutgoingEventUnpublishedListQuery unpublishedEventsQuery = new(
+      Ids: null,
+      MaxCount: command.EventMaxCountToPublish);
+
+    var unpublishedEventsTask = _appOutgoingEventQueryService.GetUnpublishedList(
+      unpublishedEventsQuery,
+      cancellationToken);
+
+    var unpublishedEvents = await unpublishedEventsTask.ConfigureAwait(false);
+
+    if (unpublishedEvents.Count == 0)
+    {
+      return;
+    }
+
     async Task FuncToExecute(CancellationToken cancellationToken)
     {
-      AppOutgoingEventUnpublishedListQuery unpublishedEventsQuery = new(
-        Ids: null,
-        MaxCount: command.EventMaxCountToPublish);
+      var idsLookup = unpublishedEvents.ToLookup(x => x.Name, x => x.Id);
 
-      var unpublishedEventsTask = _appOutgoingEventQueryService.GetUnpublishedList(
-        unpublishedEventsQuery,
+      foreach (var ids in idsLookup)
+      {
+        MessageSending sending = new(ids.Key, string.Join(",", ids.AsEnumerable()));
+
+        await _appMessageProducer.Publish(sending, cancellationToken).ConfigureAwait(false);
+      }
+
+      AppOutgoingEventMarkAsPublishedCommand eventMarkAsPublishedCommand = new(
+        Ids: unpublishedEvents.Select(x => x.Id),
+        PublishedAt: DateTimeOffset.Now);
+
+      var eventMarkAsPublishedTask = _appOutgoingEventCommandService.MarkAsPublished(
+        eventMarkAsPublishedCommand,
         cancellationToken);
 
-      var unpublishedEvents = await unpublishedEventsTask.ConfigureAwait(false);
-
-      if (unpublishedEvents.Count > 0)
-      {
-        var idsLookup = unpublishedEvents.ToLookup(x => x.Name, x => x.Id);
-
-        foreach (var ids in idsLookup)
-        {
-          MessageSending sending = new(ids.Key, string.Join(",", ids.AsEnumerable()));
-
-          await _appMessageProducer.Publish(sending, cancellationToken).ConfigureAwait(false);
-        }
-
-        AppOutgoingEventMarkAsPublishedCommand eventMarkAsPublishedCommand = new(
-          Ids: unpublishedEvents.Select(x => x.Id),
-          PublishedAt: DateTimeOffset.Now);
-
-        var eventMarkAsPublishedTask = _appOutgoingEventCommandService.MarkAsPublished(
-          eventMarkAsPublishedCommand,
-          cancellationToken);
-
-        await eventMarkAsPublishedTask.ConfigureAwait(false);
-      }
+      await eventMarkAsPublishedTask.ConfigureAwait(false);
     }
 
     await _appDbExecutionContext.ExecuteInTransaction(FuncToExecute, cancellationToken).ConfigureAwait(false);

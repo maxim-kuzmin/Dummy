@@ -1,4 +1,6 @@
-﻿namespace Makc.Dummy.MicroserviceWriter.Domain.UseCases.AppOutgoingEvent.Services;
+﻿using Makc.Dummy.MicroserviceWriter.Domain.UseCases.AppOutgoingEvent.Commands;
+
+namespace Makc.Dummy.MicroserviceWriter.Domain.UseCases.AppOutgoingEvent.Services;
 
 /// <summary>
 /// Сервис команд исходящего события приложения.
@@ -58,14 +60,9 @@ public class AppOutgoingEventCommandService(
   }
 
   /// <inheritdoc/>
-  public async Task DeletePublished(AppOutgoingEventDeletePublishedCommand command, CancellationToken cancellationToken)
+  public Task DeletePublished(AppOutgoingEventDeletePublishedCommand command, CancellationToken cancellationToken)
   {
-    async Task FuncToExecute(CancellationToken cancellationToken)
-    {
-      await _repository.DeletePublished(command, cancellationToken).ConfigureAwait(false);
-    }
-
-    await _appDbExecutionContext.Execute(FuncToExecute, cancellationToken).ConfigureAwait(false);
+    return _repository.DeletePublished(command, cancellationToken);
   }
 
   /// <inheritdoc/>
@@ -119,7 +116,7 @@ public class AppOutgoingEventCommandService(
         entity = await _repository.AddAsync(entity, cancellationToken).ConfigureAwait(false);
 
         payload.EntityId = entity.GetPrimaryKeyAsString();
-      }        
+      }
     }
 
     await _appDbExecutionContext.Execute(FuncToExecute, cancellationToken).ConfigureAwait(false);
@@ -134,14 +131,9 @@ public class AppOutgoingEventCommandService(
   }
 
   /// <inheritdoc/>
-  public async Task MarkAsPublished(AppOutgoingEventMarkAsPublishedCommand command, CancellationToken cancellationToken)
+  public Task MarkAsPublished(AppOutgoingEventMarkAsPublishedCommand command, CancellationToken cancellationToken)
   {
-    async Task FuncToExecute(CancellationToken cancellationToken)
-    {
-      await _repository.MarkAsPublished(command, cancellationToken).ConfigureAwait(false);
-    }
-
-    await _appDbExecutionContext.Execute(FuncToExecute, cancellationToken).ConfigureAwait(false);
+    return _repository.MarkAsPublished(command, cancellationToken);
   }
 
   private AggregateResult<AppOutgoingEventEntity> GetAggregateResultToDelete(AppOutgoingEventEntity entity)

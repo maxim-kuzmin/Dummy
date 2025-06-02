@@ -11,7 +11,6 @@ global using Makc.Dummy.MicroserviceWriter.Domain.Model.AppOutgoingEventPayload;
 global using Makc.Dummy.MicroserviceWriter.Domain.Model.DummyItem;
 global using Makc.Dummy.MicroserviceWriter.Domain.UseCases.App.Db.SQL.Contexts;
 global using Makc.Dummy.MicroserviceWriter.Domain.UseCases.AppOutgoingEvent;
-global using Makc.Dummy.MicroserviceWriter.Domain.UseCases.AppOutgoingEvent.Commands;
 global using Makc.Dummy.MicroserviceWriter.Domain.UseCases.AppOutgoingEventPayload;
 global using Makc.Dummy.MicroserviceWriter.Domain.UseCases.DummyItem;
 global using Makc.Dummy.MicroserviceWriter.Infrastructure.EntityFramework.App.Db;
