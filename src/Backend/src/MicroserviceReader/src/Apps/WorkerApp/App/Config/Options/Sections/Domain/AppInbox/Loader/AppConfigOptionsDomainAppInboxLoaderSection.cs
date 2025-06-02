@@ -11,6 +11,11 @@ public record AppConfigOptionsDomainAppInboxLoaderSection
   public int EventMaxCountToLoad { get; set; }
 
   /// <summary>
+  /// Имена событий.
+  /// </summary>
+  public AppEventNameEnum[]? EventNames { get; set; }
+
+  /// <summary>
   /// Размер страницы полезных нагрузок.
   /// </summary>
   public int PayloadPageSize { get; set; }

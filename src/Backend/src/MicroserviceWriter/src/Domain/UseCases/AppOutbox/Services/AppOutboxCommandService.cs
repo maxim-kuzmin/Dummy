@@ -19,13 +19,13 @@ public class AppOutboxCommandService(
   /// <inheritdoc/>
   public async Task Produce(AppOutboxProduceCommand command, CancellationToken cancellationToken)
   {
-    var ids = await GetUnpublishedAppOutgoingEventList(command.EventMaxCountToPublish, cancellationToken).ConfigureAwait(false);
+    var events = await GetUnpublishedEvents(command.EventMaxCountToPublish, cancellationToken).ConfigureAwait(false);
 
-    if (ids.Count > 0)
+    if (events.Count > 0)
     {
-      await PublishAppOutgoingEvents(ids, cancellationToken).ConfigureAwait(false);
+      await PublishEvents(events, cancellationToken).ConfigureAwait(false);
 
-      await MarkAppOutgoingEventsAsPublished(ids, cancellationToken).ConfigureAwait(false);
+      await MarkEventsAsPublished(events, cancellationToken).ConfigureAwait(false);
     }
   }
 
@@ -73,27 +73,38 @@ public class AppOutboxCommandService(
     return result;
   }
 
-  private Task<List<long>> GetUnpublishedAppOutgoingEventList(int maxCount, CancellationToken cancellationToken)
+  private Task<List<AppOutgoingEventSingleDTO>> GetUnpublishedEvents(
+    int maxCount,
+    CancellationToken cancellationToken)
   {
     AppOutgoingEventUnpublishedListQuery query = new()
     {
       MaxCount = maxCount,
     };
 
-    return _appOutgoingEventQueryService.GetUnpublishedIdList(query, cancellationToken);
+    return _appOutgoingEventQueryService.GetUnpublishedList(query, cancellationToken);
   }
 
-  private Task MarkAppOutgoingEventsAsPublished(IEnumerable<long> ids, CancellationToken cancellationToken)
+  private Task MarkEventsAsPublished(
+    IEnumerable<AppOutgoingEventSingleDTO> events,
+    CancellationToken cancellationToken)
   {
-    AppOutgoingEventMarkAsPublishedCommand command = new(ids, DateTimeOffset.Now);
+    AppOutgoingEventMarkAsPublishedCommand command = new(events.Select(x => x.Id), DateTimeOffset.Now);
 
     return _appOutgoingEventCommandService.MarkAsPublished(command, cancellationToken);
   }
 
-  private ValueTask PublishAppOutgoingEvents(IEnumerable<long> ids, CancellationToken cancellationToken)
+  private async ValueTask PublishEvents(
+    IEnumerable<AppOutgoingEventSingleDTO> events,
+    CancellationToken cancellationToken)
   {
-    MessageSending sending = new(AppEventNameEnum.DummyItemChanged.ToString(), string.Join(",", ids));
+    var idsLookup = events.ToLookup(x => x.Name, x => x.Id);
 
-    return _appMessageProducer.Publish(sending, cancellationToken);
+    foreach (var ids in idsLookup)
+    {
+      MessageSending sending = new(ids.Key, string.Join(",", ids.AsEnumerable()));
+
+      await _appMessageProducer.Publish(sending, cancellationToken).ConfigureAwait(false);
+    }
   }
 }

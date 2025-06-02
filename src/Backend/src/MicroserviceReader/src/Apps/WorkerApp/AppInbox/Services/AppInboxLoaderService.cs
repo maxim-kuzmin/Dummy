@@ -3,9 +3,11 @@
 /// <summary>
 /// Сервис загрузчика входящих сообщений приложения.
 /// </summary>
+/// <param name="_eventName">Имя события.</param>
 /// <param name="_logger">Логгер.</param>
 /// <param name="_serviceScopeFactory">Фабрика области видимости сервисов.</param>
 public class AppInboxLoaderService(
+  AppEventNameEnum _eventName,
   ILogger<AppInboxLoaderService> _logger,
   IServiceScopeFactory _serviceScopeFactory) : BackgroundService
 {
@@ -34,7 +36,7 @@ public class AppInboxLoaderService(
         _logger.LogDebug("MAKC:AppInboxLoaderService:ExecuteAsync:Load start");
 
         AppInboxLoadCommand command = new(
-          EventName: AppEventNameEnum.DummyItemChanged.ToString(),
+          EventName: _eventName.ToString(),
           EventMaxCountToLoad: eventMaxCountToLoad,
           PayloadPageSize: payloadPageSize,
           TimeoutInMillisecondsToGetPayloads: timeoutInMillisecondsToGetPayloads);

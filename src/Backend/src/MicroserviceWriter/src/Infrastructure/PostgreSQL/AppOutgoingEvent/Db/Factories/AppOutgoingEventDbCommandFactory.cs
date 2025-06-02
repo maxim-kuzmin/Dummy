@@ -115,7 +115,7 @@ where
     QuerySortSection? sort,
     int maxCount)
   {
-    string maxCountQuery = _appDbSQLCommandHelper.GetMaxCountQuery(maxCount);
+    string maxCountQuery = _appDbSQLCommandHelper.CreateMaxCountSQL(maxCount);
 
     return CreateDbCommandForItems(dbCommandForFilter, sort, maxCountQuery);
   }

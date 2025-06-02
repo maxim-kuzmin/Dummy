@@ -13,7 +13,7 @@ public abstract class DbSQLCommandHelper : IDbSQLCommandHelper
     DbSQLCommand dbCommand,
     QuerySortSection? sort,
     QuerySortSection defaultSort,
-    Func<string, string> funcToCreateOrderByField)
+    Func<string, string> funcToCreateOrderByFieldSQL)
   {
     if (sort == null)
     {
@@ -22,11 +22,11 @@ public abstract class DbSQLCommandHelper : IDbSQLCommandHelper
 
     var orderByDirection = sort.IsDesc ? "desc" : "asc";
 
-    var orderByField = funcToCreateOrderByField.Invoke(sort.Field);
+    var orderByFieldSQL = funcToCreateOrderByFieldSQL.Invoke(sort.Field);
 
-    dbCommand.TextBuilder.AppendLine($"order by {orderByField} {orderByDirection}");
+    dbCommand.TextBuilder.AppendLine($"order by {orderByFieldSQL} {orderByDirection}");
   }
 
   /// <inheritdoc/>
-  public abstract string GetMaxCountQuery(int maxCount);
+  public abstract string CreateMaxCountSQL(int maxCount);
 }

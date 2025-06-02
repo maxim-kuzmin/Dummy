@@ -5,4 +5,8 @@
 /// </summary>
 public record AppConfigOptionsDomainAppInboxConsumerSection
 {
+  /// <summary>
+  /// Имена событий.
+  /// </summary>
+  public AppEventNameEnum[]? EventNames { get; set; }
 }

@@ -38,12 +38,12 @@ public interface IAppOutgoingEventQueryService
   Task<AppOutgoingEventSingleDTO?> GetSingle(AppOutgoingEventSingleQuery query, CancellationToken cancellationToken);
 
   /// <summary>
-  /// Получить список неопубликованных идентификаторов.
+  /// Получить список неопубликованных объектов.
   /// </summary>
   /// <param name="query">Запрос.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
-  /// <returns>Список неопубликованных идентификаторов.</returns>
-  Task<List<long>> GetUnpublishedIdList(
+  /// <returns>Список неопубликованных объектов.</returns>
+  Task<List<AppOutgoingEventSingleDTO>> GetUnpublishedList(
     AppOutgoingEventUnpublishedListQuery query,
     CancellationToken cancellationToken);
 }

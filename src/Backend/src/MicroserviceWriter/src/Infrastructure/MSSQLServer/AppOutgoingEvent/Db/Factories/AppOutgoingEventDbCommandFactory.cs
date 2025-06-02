@@ -16,13 +16,11 @@ public class AppOutgoingEventDbCommandFactory(
 
     var sAppOutgoingEvent = _appDbSettings.Entities.AppOutgoingEvent;
 
+    string fieldsSQL = CretateFieldsSQL();
+
     result.TextBuilder.Append($$"""
 select
-  "{{sAppOutgoingEvent.ColumnForId}}" "Id",
-  "{{sAppOutgoingEvent.ColumnForConcurrencyToken}}" "ConcurrencyToken",
-  "{{sAppOutgoingEvent.ColumnForCreatedAt}}" "CreatedAt",
-  "{{sAppOutgoingEvent.ColumnForName}}" "Name",
-  "{{sAppOutgoingEvent.ColumnForPublishedAt}}" "PublishedAt"
+  {{fieldsSQL}}
 from
   "{{sAppOutgoingEvent.Schema}}"."{{sAppOutgoingEvent.Table}}"
 where
@@ -41,11 +39,13 @@ where
 
     var sAppOutgoingEvent = _appDbSettings.Entities.AppOutgoingEvent;
 
-    string maxCountQuery = _appDbSQLCommandHelper.GetMaxCountQuery(query.MaxCount);
+    string maxCountSQL = _appDbSQLCommandHelper.CreateMaxCountSQL(query.MaxCount);
+
+    string fieldsSQL = CretateFieldsSQL();
 
     result.TextBuilder.AppendLine($$"""
-select{{maxCountQuery}}
-  "{{sAppOutgoingEvent.ColumnForId}}" "Id"
+select{{maxCountSQL}}
+  {{fieldsSQL}}
 from
   "{{sAppOutgoingEvent.Schema}}"."{{sAppOutgoingEvent.Table}}"
 where
@@ -111,9 +111,9 @@ where
     QuerySortSection? sort,
     int maxCount)
   {
-    string maxCountQuery = _appDbSQLCommandHelper.GetMaxCountQuery(maxCount);
+    string maxCountSQL = _appDbSQLCommandHelper.CreateMaxCountSQL(maxCount);
 
-    return CreateDbCommandForItems(dbCommandForFilter, sort, maxCountQuery);
+    return CreateDbCommandForItems(dbCommandForFilter, sort, maxCountSQL);
   }
 
   /// <inheritdoc/>
@@ -153,7 +153,7 @@ from
   private DbSQLCommand CreateDbCommandForItems(
     DbSQLCommand dbCommandForFilter,
     QuerySortSection? sort,
-    string maxCountQuery = "")
+    string maxCountSQL = "")
   {
     DbSQLCommand result = new();
 
@@ -161,13 +161,11 @@ from
 
     var sAppOutgoingEvent = _appDbSettings.Entities.AppOutgoingEvent;
 
+    string fieldsSQL = CretateFieldsSQL("ae.");
+
     result.TextBuilder.AppendLine($$"""
-select{{maxCountQuery}}
-  ae."{{sAppOutgoingEvent.ColumnForId}}" "Id",
-  ae."{{sAppOutgoingEvent.ColumnForConcurrencyToken}}" "ConcurrencyToken",
-  ae."{{sAppOutgoingEvent.ColumnForCreatedAt}}" "CreatedAt",  
-  ae."{{sAppOutgoingEvent.ColumnForName}}" "Name",
-  ae."{{sAppOutgoingEvent.ColumnForPublishedAt}}" "PublishedAt"
+select{{maxCountSQL}}
+  {{fieldsSQL}}
 from
   "{{sAppOutgoingEvent.Schema}}"."{{sAppOutgoingEvent.Table}}" ae
 """);
@@ -178,12 +176,25 @@ from
       result,
       sort,
       AppOutgoingEventSettings.DefaultQuerySortSection,
-      CreateOrderByField);
+      CreateOrderByFieldSQL);
 
     return result;
   }
 
-  private string CreateOrderByField(string field)
+  private string CretateFieldsSQL(string prefix = "")
+  {
+    var sAppOutgoingEvent = _appDbSettings.Entities.AppOutgoingEvent;
+
+    return $$"""
+  "{{prefix}}{{sAppOutgoingEvent.ColumnForId}}" "Id",
+  "{{prefix}}{{sAppOutgoingEvent.ColumnForConcurrencyToken}}" "ConcurrencyToken",
+  "{{prefix}}{{sAppOutgoingEvent.ColumnForCreatedAt}}" "CreatedAt",
+  "{{prefix}}{{sAppOutgoingEvent.ColumnForName}}" "Name",
+  "{{prefix}}{{sAppOutgoingEvent.ColumnForPublishedAt}}" "PublishedAt"
+""";
+  }
+
+  private string CreateOrderByFieldSQL(string field)
   {
     string result;
 

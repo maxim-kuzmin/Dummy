@@ -11,6 +11,11 @@ public record AppConfigOptionsDomainAppInboxProcessorSection
   public int EventMaxCountToProcess { get; set; }
 
   /// <summary>
+  /// Имена событий.
+  /// </summary>
+  public AppEventNameEnum[]? EventNames { get; set; }
+
+  /// <summary>
   /// Таймаут в миллисекундах для повторения.
   /// </summary>
   public int TimeoutInMillisecondsToRepeat { get; set; }

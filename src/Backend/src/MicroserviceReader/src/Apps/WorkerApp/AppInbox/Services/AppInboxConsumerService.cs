@@ -3,11 +3,13 @@
 /// <summary>
 /// Сервис потребителя входящих сообщений приложения.
 /// </summary>
+/// <param name="_eventName">Имя события.</param>
 /// <param name="_appMessageBroker">Брокер сообщений приложения.</param>
 /// <param name="_appMessageConsumer">Потребитель сообщений приложения.</param>
 /// <param name="_logger">Логгер.</param>
 /// <param name="_serviceScopeFactory">Фабрика области видимости сервисов.</param>
 public class AppInboxConsumerService(
+  AppEventNameEnum _eventName,
   IAppMessageBroker _appMessageBroker,
   IAppMessageConsumer _appMessageConsumer,
   ILogger<AppInboxConsumerService> _logger,
@@ -23,7 +25,7 @@ public class AppInboxConsumerService(
       return;
     }
 
-    MessageReceiving receiving = new(AppEventNameEnum.DummyItemChanged.ToString(), OnMessageReceived);
+    MessageReceiving receiving = new(_eventName.ToString(), OnMessageReceived);
 
     await _appMessageConsumer.Subscribe(receiving, stoppingToken).ConfigureAwait(false);
 

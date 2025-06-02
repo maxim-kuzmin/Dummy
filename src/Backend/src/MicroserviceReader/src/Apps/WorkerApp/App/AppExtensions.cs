@@ -1,4 +1,6 @@
-﻿namespace Makc.Dummy.MicroserviceReader.Apps.WorkerApp.App;
+﻿using Microsoft.Extensions.DependencyInjection;
+
+namespace Makc.Dummy.MicroserviceReader.Apps.WorkerApp.App;
 
 /// <summary>
 /// Расширения приложения.
@@ -62,14 +64,47 @@ public static class AppExtensions
           services.AddHostedService<AppInboxCleanerService>();
           break;
         case AppConfigOptionsWorkloadEnum.AppInboxConsumer:
-          isMeassageBrokerEnabled = true;
-          services.AddHostedService<AppInboxConsumerService>();
+          {
+            isMeassageBrokerEnabled = true;
+
+            var eventNames = Guard.Against.NullOrEmpty(domain.AppInbox?.Consumer?.EventNames);
+            
+            foreach (var eventName in eventNames)
+            {
+              services.AddHostedService(x => new AppInboxConsumerService(
+                eventName,
+                x.GetRequiredService<IAppMessageBroker>(),
+                x.GetRequiredService<IAppMessageConsumer>(),
+                x.GetRequiredService<ILogger<AppInboxConsumerService>>(),
+                x.GetRequiredService<IServiceScopeFactory>()));
+            }
+          }
           break;
         case AppConfigOptionsWorkloadEnum.AppInboxLoader:
-          services.AddHostedService<AppInboxLoaderService>();
+          {
+            var eventNames = Guard.Against.NullOrEmpty(domain.AppInbox?.Loader?.EventNames);
+
+            foreach (var eventName in eventNames)
+            {
+              services.AddHostedService(x => new AppInboxLoaderService(
+                eventName,
+                x.GetRequiredService<ILogger<AppInboxLoaderService>>(),
+                x.GetRequiredService<IServiceScopeFactory>()));
+            }
+          }
           break;
         case AppConfigOptionsWorkloadEnum.AppInboxProcessor:
-          services.AddHostedService<AppInboxProcessorService>();
+          {
+            var eventNames = Guard.Against.NullOrEmpty(domain.AppInbox?.Processor?.EventNames);
+
+            foreach (var eventName in eventNames)
+            {
+              services.AddHostedService(x => new AppInboxProcessorService(
+                eventName,
+                x.GetRequiredService<ILogger<AppInboxProcessorService>>(),
+                x.GetRequiredService<IServiceScopeFactory>()));
+            }
+          }
           break;
         default:
           throw new NotImplementedException($"Unknown Workload: {workload}");

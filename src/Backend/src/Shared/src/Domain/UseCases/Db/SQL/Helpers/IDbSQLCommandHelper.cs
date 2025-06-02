@@ -18,16 +18,16 @@ public interface IDbSQLCommandHelper
   /// <param name="dbCommand">Команда базы данных.</param>
   /// <param name="sort">Сортировка.</param>
   /// <param name="defaultSort">Сортировка по умолчанию.</param>
-  /// <param name="funcToCreateOrderByField">Функция для создания поля в выражении "order by".</param>
+  /// <param name="funcToCreateOrderByFieldSQL">Функция для создания SQL-pапроса поля в выражении "order by".</param>
   void AddSorting(
     DbSQLCommand dbCommand,
     QuerySortSection? sort,
     QuerySortSection defaultSort,
-    Func<string, string> funcToCreateOrderByField);
+    Func<string, string> funcToCreateOrderByFieldSQL);
 
   /// <summary>
-  /// Получить запрос макимального количества.
+  /// Создать SQL-запрос макимального количества.
   /// </summary>
   /// <param name="maxCount">Максимальное количество.</param>
-  string GetMaxCountQuery(int maxCount);
+  string CreateMaxCountSQL(int maxCount);
 }

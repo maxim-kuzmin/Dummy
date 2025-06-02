@@ -29,7 +29,7 @@ public class DbCommandHelper : DbSQLCommandHelper
   }
 
   /// <inheritdoc/>
-  public sealed override string GetMaxCountQuery(int maxCount)
+  public sealed override string CreateMaxCountSQL(int maxCount)
   {
     return maxCount > 0 ? $" limit {maxCount}" : string.Empty;
   }

@@ -3,9 +3,11 @@
 /// <summary>
 /// Сервис обработчика входящих сообщений приложения.
 /// </summary>
+/// <param name="_eventName">Имя события.</param>
 /// <param name="_logger">Логгер.</param>
 /// <param name="_serviceScopeFactory">Фабрика области видимости сервисов.</param>
 public class AppInboxProcessorService(
+  AppEventNameEnum _eventName,
   ILogger<AppInboxProcessorService> _logger,
   IServiceScopeFactory _serviceScopeFactory) : BackgroundService
 {
@@ -32,7 +34,7 @@ public class AppInboxProcessorService(
         _logger.LogDebug("MAKC:AppInboxProcessorService:ExecuteAsync:Process start");
 
         AppInboxProcessCommand command = new(
-          EventName: AppEventNameEnum.DummyItemChanged.ToString(),
+          EventName: _eventName.ToString(),
           EventMaxCountToProcess: eventMaxCountToProcess);
 
         _logger.LogDebug("MAKC:AppInboxProcessorService:ExecuteAsync:Process:Command: {command}", command);

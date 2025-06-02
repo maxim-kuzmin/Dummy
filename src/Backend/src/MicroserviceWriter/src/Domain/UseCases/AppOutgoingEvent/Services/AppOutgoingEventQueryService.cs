@@ -67,13 +67,13 @@ public class AppOutgoingEventQueryService(
   }
 
   /// <inheritdoc/>
-  public Task<List<long>> GetUnpublishedIdList(
+  public Task<List<AppOutgoingEventSingleDTO>> GetUnpublishedList(
     AppOutgoingEventUnpublishedListQuery query,
     CancellationToken cancellationToken)
   {
     var dbCommand = _dbCommandFactory.CreateDbCommand(query);
 
-    return _appDbQueryContext.GetList<long>(dbCommand, cancellationToken);
+    return _appDbQueryContext.GetList<AppOutgoingEventSingleDTO>(dbCommand, cancellationToken);
   }
 
   private async Task<long> GetCount(DbSQLCommand dbCommandForFilter, CancellationToken cancellationToken)
