@@ -10,7 +10,7 @@ public class AppInboxProcessActionHandler(IAppInboxCommandService _service) :
   /// <inheritdoc/>
   public async Task<Result> Handle(AppInboxProcessActionRequest request, CancellationToken cancellationToken)
   {
-    var result = await _service.Process(request.Command, cancellationToken);
+    var result = await _service.Process(request.Command, cancellationToken).ConfigureAwait(false);
 
     return result.IsSuccess ? Result.NoContent() : result;
   }

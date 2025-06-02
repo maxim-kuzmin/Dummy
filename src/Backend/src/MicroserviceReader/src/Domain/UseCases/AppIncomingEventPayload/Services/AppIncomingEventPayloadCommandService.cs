@@ -81,7 +81,7 @@ public class AppIncomingEventPayloadCommandService(
       entities.Add(entity);
     }
 
-    await _repository.AddNotFoundByEventPayload(entities, cancellationToken);
+    await _repository.AddNotFoundByEventPayload(entities, cancellationToken).ConfigureAwait(false);
 
     return Result.Success();
   }

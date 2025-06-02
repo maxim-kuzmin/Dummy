@@ -12,7 +12,7 @@ public class AppIncomingEventGetPageActionHandler(IAppIncomingEventQueryService 
     AppIncomingEventGetPageActionRequest request,
     CancellationToken cancellationToken)
   {
-    var result = await _service.GetPage(request.Query, cancellationToken);
+    var result = await _service.GetPage(request.Query, cancellationToken).ConfigureAwait(false);
 
     return Result.Success(result);
   }

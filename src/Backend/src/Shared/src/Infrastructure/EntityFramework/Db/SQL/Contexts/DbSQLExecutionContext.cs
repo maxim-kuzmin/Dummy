@@ -119,7 +119,7 @@ public class DbSQLExecutionContext : IDbSQLExecutionContext
         {
           if (_transaction != null)
           {
-            await _transaction.DisposeAsync();
+            await _transaction.DisposeAsync().ConfigureAwait(false);
           }
         }
       }

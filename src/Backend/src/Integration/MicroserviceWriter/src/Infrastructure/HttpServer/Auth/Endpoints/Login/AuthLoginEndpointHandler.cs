@@ -21,6 +21,6 @@ public class AuthLoginEndpointHandler(IMediator _mediator) :
 
     var result = await task.ConfigureAwait(false);
 
-    await SendResultAsync(result.ToMinimalApiResult());
+    await SendResultAsync(result.ToMinimalApiResult()).ConfigureAwait(false);
   }
 }

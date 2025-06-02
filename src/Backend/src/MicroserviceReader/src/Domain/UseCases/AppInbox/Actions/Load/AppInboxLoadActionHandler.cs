@@ -10,7 +10,7 @@ public class AppInboxLoadActionHandler(IAppInboxCommandService _service) :
   /// <inheritdoc/>
   public async Task<Result> Handle(AppInboxLoadActionRequest request, CancellationToken cancellationToken)
   {
-    var result = await _service.Load(request.Command, cancellationToken);
+    var result = await _service.Load(request.Command, cancellationToken).ConfigureAwait(false);
 
     return result.IsSuccess ? Result.NoContent() : result;
   }

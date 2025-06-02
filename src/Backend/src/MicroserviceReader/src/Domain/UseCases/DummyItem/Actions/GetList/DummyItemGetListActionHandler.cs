@@ -20,7 +20,7 @@ public class DummyItemGetListActionHandler(
 
     _logger.LogDebug("User name: {userName}", userName);
 
-    var result = await _service.GetList(request.Query, cancellationToken);
+    var result = await _service.GetList(request.Query, cancellationToken).ConfigureAwait(false);
 
     return Result.Success(result);
   }

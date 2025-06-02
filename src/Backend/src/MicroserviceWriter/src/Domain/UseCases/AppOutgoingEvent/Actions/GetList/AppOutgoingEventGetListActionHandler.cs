@@ -12,7 +12,7 @@ public class AppOutgoingEventGetListActionHandler(IAppOutgoingEventQueryService 
     AppOutgoingEventGetListActionRequest request,
     CancellationToken cancellationToken)
   {
-    var result = await _service.GetList(request.Query, cancellationToken);
+    var result = await _service.GetList(request.Query, cancellationToken).ConfigureAwait(false);
 
     return Result.Success(result);
   }

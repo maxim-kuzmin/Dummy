@@ -79,7 +79,12 @@ public class AppIncomingEventCommandService(
       entities.Add(entity);
     }
 
-    await _repository.AddNotFoundByEvent(entities, cancellationToken);
+    async Task FuncToExecute(CancellationToken cancellationToken)
+    {
+      await _repository.AddNotFoundByEvent(entities, cancellationToken).ConfigureAwait(false);
+    }
+
+    await _appDbExecutionContext.ExecuteInTransaction(FuncToExecute, cancellationToken).ConfigureAwait(false);
 
     return Result.Success();
   }

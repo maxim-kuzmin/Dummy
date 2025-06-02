@@ -21,7 +21,7 @@ public class AppTracingMiddleware(RequestDelegate _next)
     {
       httpContext.Response.Headers.Append(key, traceId);
 
-      await _next(httpContext);
+      await _next(httpContext).ConfigureAwait(false);
     }
   }
 }

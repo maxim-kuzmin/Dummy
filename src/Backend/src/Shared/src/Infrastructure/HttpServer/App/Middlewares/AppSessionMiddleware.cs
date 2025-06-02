@@ -20,7 +20,7 @@ public class AppSessionMiddleware(RequestDelegate _next)
   {
     var options = optionsSnapshot.Value;
 
-    string? accessToken = await httpContext.GetTokenAsync("access_token");
+    string? accessToken = await httpContext.GetTokenAsync("access_token").ConfigureAwait(false);
 
     var user = httpContext.User;
 
@@ -34,6 +34,6 @@ public class AppSessionMiddleware(RequestDelegate _next)
     appSession.AccessToken = accessToken;
     appSession.User = user;
 
-    await _next(httpContext);
+    await _next(httpContext).ConfigureAwait(false);
   }
 }

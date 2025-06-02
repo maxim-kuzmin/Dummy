@@ -10,7 +10,7 @@ public class AppOutboxProduceActionHandler(IAppOutboxCommandService _service) :
   /// <inheritdoc/>
   public async Task<Result> Handle(AppOutboxProduceActionRequest request, CancellationToken cancellationToken)
   {
-    await _service.Produce(request.Command, cancellationToken);
+    await _service.Produce(request.Command, cancellationToken).ConfigureAwait(false);
 
     return Result.NoContent();
   }
