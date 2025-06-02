@@ -16,17 +16,11 @@ public class AppOutgoingEventPayloadDbCommandFactory(
 
     var sAppOutgoingEventPayload = _appDbSettings.Entities.AppOutgoingEventPayload;
 
+    string fieldsSQL = CretateFieldsSQL();
+
     result.TextBuilder.Append($$"""
 select
-  "{{sAppOutgoingEventPayload.ColumnForId}}" "Id",
-  "{{sAppOutgoingEventPayload.ColumnForConcurrencyToken}}" "ConcurrencyToken",
-  "{{sAppOutgoingEventPayload.ColumnForAppOutgoingEventId}}" "AppOutgoingEventId",
-  "{{sAppOutgoingEventPayload.ColumnForData}}" "Data",
-  "{{sAppOutgoingEventPayload.ColumnForEntityConcurrencyTokenToDelete}}" "EntityConcurrencyTokenToDelete",
-  "{{sAppOutgoingEventPayload.ColumnForEntityConcurrencyTokenToInsert}}" "EntityConcurrencyTokenToInsert",
-  "{{sAppOutgoingEventPayload.ColumnForEntityId}}" "EntityId",
-  "{{sAppOutgoingEventPayload.ColumnForEntityName}}" "EntityName",
-  "{{sAppOutgoingEventPayload.ColumnForPosition}}" "Position"
+  {{fieldsSQL}}
 from
   "{{sAppOutgoingEventPayload.Schema}}"."{{sAppOutgoingEventPayload.Table}}"
 where
@@ -99,9 +93,9 @@ where
     QuerySortSection? sort,
     int maxCount)
   {
-    string maxCountQuery = _appDbSQLCommandHelper.CreateMaxCountSQL(maxCount);
+    string maxCountSQL = _appDbSQLCommandHelper.CreateMaxCountSQL(maxCount);
 
-    return CreateDbCommandForItems(dbCommandForFilter, sort, maxCountQuery);
+    return CreateDbCommandForItems(dbCommandForFilter, sort, maxCountSQL);
   }
 
   /// <inheritdoc/>
@@ -141,7 +135,7 @@ from
   private DbSQLCommand CreateDbCommandForItems(
     DbSQLCommand dbCommandForFilter,
     QuerySortSection? sort,
-    string maxCountQuery = "")
+    string maxCountSQL = "")
   {
     DbSQLCommand result = new();
 
@@ -149,17 +143,11 @@ from
 
     var sAppOutgoingEventPayload = _appDbSettings.Entities.AppOutgoingEventPayload;
 
+    string fieldsSQL = CretateFieldsSQL("aep.");
+
     result.TextBuilder.AppendLine($$"""
-select{{maxCountQuery}}
-  aep."{{sAppOutgoingEventPayload.ColumnForId}}" "Id",
-  aep."{{sAppOutgoingEventPayload.ColumnForConcurrencyToken}}" "ConcurrencyToken",
-  aep."{{sAppOutgoingEventPayload.ColumnForAppOutgoingEventId}}" "AppOutgoingEventId",
-  aep."{{sAppOutgoingEventPayload.ColumnForData}}" "Data",
-  aep."{{sAppOutgoingEventPayload.ColumnForEntityConcurrencyTokenToDelete}}" "EntityConcurrencyTokenToDelete",
-  aep."{{sAppOutgoingEventPayload.ColumnForEntityConcurrencyTokenToInsert}}" "EntityConcurrencyTokenToInsert",
-  aep."{{sAppOutgoingEventPayload.ColumnForEntityId}}" "EntityId",
-  aep."{{sAppOutgoingEventPayload.ColumnForEntityName}}" "EntityName",
-  aep."{{sAppOutgoingEventPayload.ColumnForPosition}}" "Position"
+select{{maxCountSQL}}
+  {{fieldsSQL}}
 from
   "{{sAppOutgoingEventPayload.Schema}}"."{{sAppOutgoingEventPayload.Table}}" aep
 """);
@@ -169,12 +157,29 @@ from
     _appDbSQLCommandHelper.AddSorting(
       result,
       sort, AppOutgoingEventPayloadSettings.DefaultQuerySortSection,
-      CreateOrderByField);
+      CreateOrderByFieldSQL);
 
     return result;
   }
 
-  private string CreateOrderByField(string field)
+  private string CretateFieldsSQL(string prefix = "")
+  {
+    var sAppOutgoingEventPayload = _appDbSettings.Entities.AppOutgoingEventPayload;
+
+    return $$"""
+  {{prefix}}"{{sAppOutgoingEventPayload.ColumnForId}}" "Id",
+  {{prefix}}"{{sAppOutgoingEventPayload.ColumnForConcurrencyToken}}" "ConcurrencyToken",
+  {{prefix}}"{{sAppOutgoingEventPayload.ColumnForAppOutgoingEventId}}" "AppOutgoingEventId",
+  {{prefix}}"{{sAppOutgoingEventPayload.ColumnForData}}" "Data",
+  {{prefix}}"{{sAppOutgoingEventPayload.ColumnForEntityConcurrencyTokenToDelete}}" "EntityConcurrencyTokenToDelete",
+  {{prefix}}"{{sAppOutgoingEventPayload.ColumnForEntityConcurrencyTokenToInsert}}" "EntityConcurrencyTokenToInsert",
+  {{prefix}}"{{sAppOutgoingEventPayload.ColumnForEntityId}}" "EntityId",
+  {{prefix}}"{{sAppOutgoingEventPayload.ColumnForEntityName}}" "EntityName",
+  {{prefix}}"{{sAppOutgoingEventPayload.ColumnForPosition}}" "Position"
+""";
+  }
+
+  private string CreateOrderByFieldSQL(string field)
   {
     string result;
 

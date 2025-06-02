@@ -16,11 +16,11 @@ public class DummyItemDbCommandFactory(
 
     var sDummyItem = _appDbSettings.Entities.DummyItem;
 
+    string fieldsSQL = CretateFieldsSQL();
+
     result.TextBuilder.Append($$"""
 select
-  "{{sDummyItem.ColumnForId}}" "Id",
-  "{{sDummyItem.ColumnForConcurrencyToken}}" "ConcurrencyToken",
-  "{{sDummyItem.ColumnForName}}" "Name"
+  {{fieldsSQL}}
 from
   "{{sDummyItem.Schema}}"."{{sDummyItem.Table}}"
 where
@@ -60,9 +60,9 @@ where
     QuerySortSection? sort,
     int maxCount)
   {
-    string maxCountQuery = _appDbSQLCommandHelper.CreateMaxCountSQL(maxCount);
+    string maxCountSQL = _appDbSQLCommandHelper.CreateMaxCountSQL(maxCount);
 
-    return CreateDbCommandForItems(dbCommandForFilter, sort, maxCountQuery);
+    return CreateDbCommandForItems(dbCommandForFilter, sort, maxCountSQL);
   }
 
   /// <inheritdoc/>
@@ -102,7 +102,7 @@ from
   private DbSQLCommand CreateDbCommandForItems(
     DbSQLCommand dbCommandForFilter,
     QuerySortSection? sort,
-    string maxCountQuery = "")
+    string maxCountSQL = "")
   {
     DbSQLCommand result = new();
 
@@ -110,11 +110,11 @@ from
 
     var sDummyItem = _appDbSettings.Entities.DummyItem;
 
+    string fieldsSQL = CretateFieldsSQL("di.");
+
     result.TextBuilder.AppendLine($$"""
 select
-  di."{{sDummyItem.ColumnForId}}" "Id",
-  di."{{sDummyItem.ColumnForConcurrencyToken}}" "ConcurrencyToken",
-  di."{{sDummyItem.ColumnForName}}" "Name"  
+  {{fieldsSQL}}
 from
   "{{sDummyItem.Schema}}"."{{sDummyItem.Table}}" di
 """);
@@ -127,12 +127,23 @@ from
       DummyItemSettings.DefaultQuerySortSection,
       CreateOrderByField);
 
-    if (!string.IsNullOrWhiteSpace(maxCountQuery))
+    if (!string.IsNullOrWhiteSpace(maxCountSQL))
     {
-      result.TextBuilder.Append(maxCountQuery);
+      result.TextBuilder.Append(maxCountSQL);
     }
 
     return result;
+  }
+
+  private string CretateFieldsSQL(string prefix = "")
+  {
+    var sDummyItem = _appDbSettings.Entities.DummyItem;
+
+    return $$"""
+  {{prefix}}"{{sDummyItem.ColumnForId}}" "Id",
+  {{prefix}}"{{sDummyItem.ColumnForConcurrencyToken}}" "ConcurrencyToken",
+  {{prefix}}"{{sDummyItem.ColumnForName}}" "Name"
+""";
   }
 
   private string CreateOrderByField(string field)

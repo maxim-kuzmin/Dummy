@@ -16,11 +16,11 @@ public class DummyItemDbCommandFactory(
 
     var sDummyItem = _appDbSettings.Entities.DummyItem;
 
+    string fieldsSQL = CretateFieldsSQL();
+
     result.TextBuilder.Append($$"""
 select
-  "{{sDummyItem.ColumnForId}}" "Id",
-  "{{sDummyItem.ColumnForConcurrencyToken}}" "ConcurrencyToken",
-  "{{sDummyItem.ColumnForName}}" "Name"  
+  {{fieldsSQL}}
 from
   "{{sDummyItem.Schema}}"."{{sDummyItem.Table}}"
 where
@@ -110,11 +110,11 @@ from
 
     var sDummyItem = _appDbSettings.Entities.DummyItem;
 
+    string fieldsSQL = CretateFieldsSQL("di.");
+
     result.TextBuilder.AppendLine($$"""
 select{{maxCountQuery}}
-  di."{{sDummyItem.ColumnForId}}" "Id",
-  di."{{sDummyItem.ColumnForConcurrencyToken}}" "ConcurrencyToken",
-  di."{{sDummyItem.ColumnForName}}" "Name"
+  {{fieldsSQL}}
 from
   "{{sDummyItem.Schema}}"."{{sDummyItem.Table}}" di
 """);
@@ -125,12 +125,23 @@ from
       result,
       sort,
       DummyItemSettings.DefaultQuerySortSection,
-      CreateOrderByField);
+      CreateOrderByFieldSQL);
 
     return result;
   }
 
-  private string CreateOrderByField(string field)
+  private string CretateFieldsSQL(string prefix = "")
+  {
+    var sDummyItem = _appDbSettings.Entities.DummyItem;
+
+    return $$"""
+  {{prefix}}"{{sDummyItem.ColumnForId}}" "Id",
+  {{prefix}}"{{sDummyItem.ColumnForConcurrencyToken}}" "ConcurrencyToken",
+  {{prefix}}"{{sDummyItem.ColumnForName}}" "Name"
+""";
+  }
+
+  private string CreateOrderByFieldSQL(string field)
   {
     string result;
 

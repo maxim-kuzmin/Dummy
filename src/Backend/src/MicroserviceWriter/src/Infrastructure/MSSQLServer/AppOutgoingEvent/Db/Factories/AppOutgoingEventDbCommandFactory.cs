@@ -186,11 +186,11 @@ from
     var sAppOutgoingEvent = _appDbSettings.Entities.AppOutgoingEvent;
 
     return $$"""
-  "{{prefix}}{{sAppOutgoingEvent.ColumnForId}}" "Id",
-  "{{prefix}}{{sAppOutgoingEvent.ColumnForConcurrencyToken}}" "ConcurrencyToken",
-  "{{prefix}}{{sAppOutgoingEvent.ColumnForCreatedAt}}" "CreatedAt",
-  "{{prefix}}{{sAppOutgoingEvent.ColumnForName}}" "Name",
-  "{{prefix}}{{sAppOutgoingEvent.ColumnForPublishedAt}}" "PublishedAt"
+  {{prefix}}"{{sAppOutgoingEvent.ColumnForId}}" "Id",
+  {{prefix}}"{{sAppOutgoingEvent.ColumnForConcurrencyToken}}" "ConcurrencyToken",
+  {{prefix}}"{{sAppOutgoingEvent.ColumnForCreatedAt}}" "CreatedAt",
+  {{prefix}}"{{sAppOutgoingEvent.ColumnForName}}" "Name",
+  {{prefix}}"{{sAppOutgoingEvent.ColumnForPublishedAt}}" "PublishedAt"
 """;
   }
 
