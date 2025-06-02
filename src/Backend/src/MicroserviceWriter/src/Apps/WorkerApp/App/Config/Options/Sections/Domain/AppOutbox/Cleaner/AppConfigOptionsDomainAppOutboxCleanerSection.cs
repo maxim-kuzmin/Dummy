@@ -5,4 +5,18 @@
 /// </summary>
 public record AppConfigOptionsDomainAppOutboxCleanerSection
 {
+  /// <summary>
+  /// Время жизни опубликованных сообщений в минутах.
+  /// </summary>
+  public int PublishedEventsLifetimeInMinutes { get; set; }
+
+  /// <summary>
+  /// Таймаут в миллисекундах для повторения.
+  /// </summary>
+  public int TimeoutInMillisecondsToRepeat { get; set; }
+
+  /// <summary>
+  /// Таймаут в миллисекундах для старта.
+  /// </summary>
+  public int TimeoutInMillisecondsToStart { get; set; }
 }

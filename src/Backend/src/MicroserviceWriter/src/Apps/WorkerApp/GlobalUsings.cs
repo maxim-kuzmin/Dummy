@@ -17,6 +17,7 @@ global using Makc.Dummy.MicroserviceWriter.Domain.Model.App.Db.SQL;
 global using Makc.Dummy.MicroserviceWriter.Domain.UseCases.App;
 global using Makc.Dummy.MicroserviceWriter.Domain.UseCases.App.Db.SQL.Contexts;
 global using Makc.Dummy.MicroserviceWriter.Domain.UseCases.App.Message;
+global using Makc.Dummy.MicroserviceWriter.Domain.UseCases.AppOutbox.Actions.Clear;
 global using Makc.Dummy.MicroserviceWriter.Domain.UseCases.AppOutbox.Actions.Produce;
 global using Makc.Dummy.MicroserviceWriter.Domain.UseCases.AppOutbox.Commands;
 global using Makc.Dummy.MicroserviceWriter.Infrastructure.Core.App;

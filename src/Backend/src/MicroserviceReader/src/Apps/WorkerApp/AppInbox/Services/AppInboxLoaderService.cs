@@ -16,6 +16,8 @@ public class AppInboxLoaderService(
   {
     _logger.LogDebug("MAKC:AppInboxLoaderService:ExecuteAsync start");
 
+    bool isStarted = false;
+
     while (!stoppingToken.IsCancellationRequested)
     {
       using IServiceScope scope = _serviceScopeFactory.CreateScope();
@@ -28,6 +30,14 @@ public class AppInboxLoaderService(
       int payloadPageSize = Guard.Against.NegativeOrZero(options.PayloadPageSize);
       int timeoutInMillisecondsToGetPayloads = Guard.Against.Negative(options.TimeoutInMillisecondsToGetPayloads);
       int timeoutInMillisecondsToRepeat = Guard.Against.Negative(options.TimeoutInMillisecondsToRepeat);
+      int timeoutInMillisecondsToStart = Guard.Against.Negative(options.TimeoutInMillisecondsToStart);
+
+      if (!isStarted && timeoutInMillisecondsToStart > 0)
+      {
+        await Task.Delay(timeoutInMillisecondsToStart, stoppingToken).ConfigureAwait(false);
+
+        isStarted = true;
+      }
 
       var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
 

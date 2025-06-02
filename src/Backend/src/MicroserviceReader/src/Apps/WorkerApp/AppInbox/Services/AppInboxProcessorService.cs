@@ -16,6 +16,8 @@ public class AppInboxProcessorService(
   {
     _logger.LogDebug("MAKC:AppInboxProcessorService:ExecuteAsync start");
 
+    bool isStarted = false;
+
     while (!stoppingToken.IsCancellationRequested)
     {
       using IServiceScope scope = _serviceScopeFactory.CreateScope();
@@ -26,6 +28,14 @@ public class AppInboxProcessorService(
 
       int eventMaxCountToProcess = Guard.Against.NegativeOrZero(options.EventMaxCountToProcess);
       int timeoutInMillisecondsToRepeat = Guard.Against.Negative(options.TimeoutInMillisecondsToRepeat);
+      int timeoutInMillisecondsToStart = Guard.Against.Negative(options.TimeoutInMillisecondsToStart);
+
+      if (!isStarted && timeoutInMillisecondsToStart > 0)
+      {
+        await Task.Delay(timeoutInMillisecondsToStart, stoppingToken).ConfigureAwait(false);
+
+        isStarted = true;
+      }
 
       var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
 

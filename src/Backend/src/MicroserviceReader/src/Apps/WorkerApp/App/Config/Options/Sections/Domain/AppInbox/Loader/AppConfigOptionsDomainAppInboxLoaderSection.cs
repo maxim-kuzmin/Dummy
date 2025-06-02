@@ -26,6 +26,11 @@ public record AppConfigOptionsDomainAppInboxLoaderSection
   public int TimeoutInMillisecondsToGetPayloads { get; set; }
 
   /// <summary>
+  /// Таймаут в миллисекундах для старта.
+  /// </summary>
+  public int TimeoutInMillisecondsToStart { get; set; }
+
+  /// <summary>
   /// Таймаут в миллисекундах для повторения.
   /// </summary>
   public int TimeoutInMillisecondsToRepeat { get; set; }

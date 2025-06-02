@@ -20,11 +20,6 @@ public class AppInboxConsumerService(
   {
     await _appMessageBroker.Connect(stoppingToken).ConfigureAwait(false);
 
-    if (stoppingToken.IsCancellationRequested)
-    {
-      return;
-    }
-
     MessageReceiving receiving = new(_eventName.ToString(), OnMessageReceived);
 
     await _appMessageConsumer.Subscribe(receiving, stoppingToken).ConfigureAwait(false);

@@ -12,22 +12,60 @@ public class AppOutboxCleanerService(
   /// <inheritdoc/>
   protected override async Task ExecuteAsync(CancellationToken stoppingToken)
   {
+    _logger.LogDebug("MAKC:AppOutboxCleanerService:ExecuteAsync start");
+
+    bool isStarted = false;
+
     while (!stoppingToken.IsCancellationRequested)
     {
-      using var scope = _serviceScopeFactory.CreateScope();
+      using IServiceScope scope = _serviceScopeFactory.CreateScope();
 
       var appConfigOptionsSnapshot = scope.ServiceProvider.GetRequiredService<IOptionsSnapshot<AppConfigOptions>>();
 
-      var options = Guard.Against.Null(appConfigOptionsSnapshot.Value.Infrastructure?.PostgreSQL);
+      var options = Guard.Against.Null(appConfigOptionsSnapshot.Value.Domain?.AppOutbox?.Cleaner);
 
-      _logger.LogInformation("Options: {options}", options);
+      int publishedEventsLifetimeInMinutes = Guard.Against.Negative(options.PublishedEventsLifetimeInMinutes);
+      int timeoutInMillisecondsToRepeat = Guard.Against.Negative(options.TimeoutInMillisecondsToRepeat);
+      int timeoutInMillisecondsToStart = Guard.Against.Negative(options.TimeoutInMillisecondsToStart);
 
-      if (_logger.IsEnabled(LogLevel.Information))
+      if (!isStarted && timeoutInMillisecondsToStart > 0)
       {
-        _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
+        await Task.Delay(timeoutInMillisecondsToStart, stoppingToken).ConfigureAwait(false);
+
+        isStarted = true;
       }
 
-      await Task.Delay(Timeout.Infinite, stoppingToken).ConfigureAwait(false);
+      var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+
+      try
+      {
+        _logger.LogDebug("MAKC:AppOutboxCleanerService:ExecuteAsync:Load start");
+
+        AppOutboxClearCommand command = new(PublishedEventsLifetimeInMinutes: publishedEventsLifetimeInMinutes);
+
+        _logger.LogDebug("MAKC:AppOutboxCleanerService:ExecuteAsync:Load:Command: {command}", command);
+
+        AppOutboxClearActionRequest request = new(command);
+
+        await mediator.Send(request, stoppingToken).ConfigureAwait(false);
+
+        _logger.LogDebug("MAKC:AppOutboxCleanerService:ExecuteAsync:Load end");
+      }
+      catch (OperationCanceledException)
+      {
+        _logger.LogDebug("MAKC:AppOutboxCleanerService:ExecuteAsync canceled");
+      }
+      catch (Exception ex)
+      {
+        _logger.LogError(ex, "MAKC:AppOutboxCleanerService:ExecuteAsync failed");
+      }
+
+      if (timeoutInMillisecondsToRepeat > 0)
+      {
+        await Task.Delay(timeoutInMillisecondsToRepeat, stoppingToken).ConfigureAwait(false);
+      }
     }
+
+    _logger.LogDebug("MAKC:AppOutboxCleanerService:ExecuteAsync end");
   }
 }

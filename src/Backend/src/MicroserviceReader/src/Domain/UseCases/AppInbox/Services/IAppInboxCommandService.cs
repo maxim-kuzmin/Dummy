@@ -6,6 +6,14 @@
 public interface IAppInboxCommandService
 {
   /// <summary>
+  /// Очистить.
+  /// </summary>
+  /// <param name="command">Команда.</param>
+  /// <param name="cancellationToken">Токен отмены.</param>
+  /// <returns>Результат.</returns>
+  Task<Result> Clear(AppInboxClearCommand command, CancellationToken cancellationToken);
+
+  /// <summary>
   /// Потребить.
   /// </summary>
   /// <param name="command">Команда.</param>

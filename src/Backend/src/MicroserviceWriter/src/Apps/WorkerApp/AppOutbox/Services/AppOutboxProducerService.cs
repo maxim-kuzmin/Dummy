@@ -16,6 +16,8 @@ public class AppOutboxProducerService(
   {
     _logger.LogDebug("MAKC:AppOutboxProducerService:ExecuteAsync start");
 
+    bool isStarted = false;
+
     _logger.LogDebug("MAKC:AppOutboxProducerService:ExecuteAsync:Connect start");
 
     await _appMessageBroker.Connect(stoppingToken).ConfigureAwait(false);
@@ -32,6 +34,14 @@ public class AppOutboxProducerService(
 
       int eventMaxCountToPublish = Guard.Against.NegativeOrZero(options.EventMaxCountToPublish);
       int timeoutInMillisecondsToRepeat = Guard.Against.Negative(options.TimeoutInMillisecondsToRepeat);
+      int timeoutInMillisecondsToStart = Guard.Against.Negative(options.TimeoutInMillisecondsToStart);
+
+      if (!isStarted && timeoutInMillisecondsToStart > 0)
+      {
+        await Task.Delay(timeoutInMillisecondsToStart, stoppingToken).ConfigureAwait(false);
+
+        isStarted = true;
+      }
 
       var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
 

@@ -5,4 +5,18 @@
 /// </summary>
 public record AppConfigOptionsDomainAppInboxCleanerSection
 {
+  /// <summary>
+  /// Время жизни обработанных сообщений в минутах.
+  /// </summary>
+  public int ProcessedEventsLifetimeInMinutes { get; set; }
+
+  /// <summary>
+  /// Таймаут в миллисекундах для повторения.
+  /// </summary>
+  public int TimeoutInMillisecondsToRepeat { get; set; }
+
+  /// <summary>
+  /// Таймаут в миллисекундах для старта.
+  /// </summary>
+  public int TimeoutInMillisecondsToStart { get; set; }
 }

@@ -27,12 +27,13 @@ public class AppInboxCommandService(
   ILogger<AppInboxCommandService> _logger,
   IMediator _mediator) : IAppInboxCommandService
 {
-  /// <summary>
-  /// Потребить.
-  /// </summary>
-  /// <param name="command">Команда.</param>
-  /// <param name="cancellationToken">Токен отмены.</param>
-  /// <returns>Результат.</returns>
+  /// <inheritdoc/>
+  public Task<Result> Clear(AppInboxClearCommand command, CancellationToken cancellationToken)
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <inheritdoc/>
   public Task<Result> Consume(AppInboxConsumeCommand command, CancellationToken cancellationToken)
   {
     string[] eventIds = command.Message.Contains(',')

@@ -17,6 +17,7 @@ global using Makc.Dummy.MicroserviceReader.Apps.WorkerApp.AppInbox.Services;
 global using Makc.Dummy.MicroserviceReader.Domain.Model.App;
 global using Makc.Dummy.MicroserviceReader.Domain.UseCases.App;
 global using Makc.Dummy.MicroserviceReader.Domain.UseCases.App.Message;
+global using Makc.Dummy.MicroserviceReader.Domain.UseCases.AppInbox.Actions.Clear;
 global using Makc.Dummy.MicroserviceReader.Domain.UseCases.AppInbox.Actions.Consume;
 global using Makc.Dummy.MicroserviceReader.Domain.UseCases.AppInbox.Actions.Load;
 global using Makc.Dummy.MicroserviceReader.Domain.UseCases.AppInbox.Actions.Process;
