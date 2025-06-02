@@ -58,6 +58,17 @@ public class AppOutgoingEventCommandService(
   }
 
   /// <inheritdoc/>
+  public async Task DeletePublished(AppOutgoingEventDeletePublishedCommand command, CancellationToken cancellationToken)
+  {
+    async Task FuncToExecute(CancellationToken cancellationToken)
+    {
+      await _repository.DeletePublished(command, cancellationToken).ConfigureAwait(false);
+    }
+
+    await _appDbExecutionContext.Execute(FuncToExecute, cancellationToken).ConfigureAwait(false);
+  }
+
+  /// <inheritdoc/>
   public async Task<AppCommandResultWithValue<AppOutgoingEventSingleDTO>> Save(
     AppOutgoingEventSaveCommand command,
     CancellationToken cancellationToken)
@@ -123,9 +134,14 @@ public class AppOutgoingEventCommandService(
   }
 
   /// <inheritdoc/>
-  public Task MarkAsPublished(AppOutgoingEventMarkAsPublishedCommand command, CancellationToken cancellationToken)
+  public async Task MarkAsPublished(AppOutgoingEventMarkAsPublishedCommand command, CancellationToken cancellationToken)
   {
-    return _repository.UpdatePublishedAt(command, cancellationToken);
+    async Task FuncToExecute(CancellationToken cancellationToken)
+    {
+      await _repository.MarkAsPublished(command, cancellationToken).ConfigureAwait(false);
+    }
+
+    await _appDbExecutionContext.Execute(FuncToExecute, cancellationToken).ConfigureAwait(false);
   }
 
   private AggregateResult<AppOutgoingEventEntity> GetAggregateResultToDelete(AppOutgoingEventEntity entity)

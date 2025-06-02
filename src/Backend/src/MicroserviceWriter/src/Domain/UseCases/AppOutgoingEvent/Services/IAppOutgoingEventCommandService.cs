@@ -16,6 +16,14 @@ public interface IAppOutgoingEventCommandService
     CancellationToken cancellationToken);
 
   /// <summary>
+  /// Удалить опубликованное.
+  /// </summary>
+  /// <param name="command">Команда.</param>
+  /// <param name="cancellationToken">Токен отмены.</param>
+  /// <returns>Задача.</returns>
+  Task DeletePublished(AppOutgoingEventDeletePublishedCommand command, CancellationToken cancellationToken);
+
+  /// <summary>
   /// Сохранить.
   /// </summary>
   /// <param name="command">Команда.</param>

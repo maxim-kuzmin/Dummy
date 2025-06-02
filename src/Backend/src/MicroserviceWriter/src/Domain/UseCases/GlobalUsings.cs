@@ -63,7 +63,6 @@ global using Makc.Dummy.Shared.Core.App.Event;
 global using Makc.Dummy.Shared.Core.App.Event.Payloads;
 global using Makc.Dummy.Shared.Core.Message;
 global using Makc.Dummy.Shared.Domain.Model.Aggregate;
-global using Makc.Dummy.Shared.Domain.UseCases.Commands;
 global using Makc.Dummy.Shared.Domain.UseCases.Db.SQL;
 global using Makc.Dummy.Shared.Domain.UseCases.Db.SQL.Contexts;
 global using Makc.Dummy.Shared.Domain.UseCases.Db.SQL.Helpers;

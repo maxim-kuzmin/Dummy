@@ -7,12 +7,18 @@ public interface IAppOutgoingEventRepository : IReadRepository<AppOutgoingEventE
   IRepository<AppOutgoingEventEntity>
 {
   /// <summary>
-  /// Обновить дату публикации.
+  /// Удалить опубликованное.
   /// </summary>
   /// <param name="command">Команда.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Задача.</returns>
-  Task UpdatePublishedAt(
-    AppOutgoingEventUpdatePropertyByIdsCommand<DateTimeOffset> command,
-    CancellationToken cancellationToken);
+  Task DeletePublished(AppOutgoingEventDeletePublishedCommand command, CancellationToken cancellationToken);
+
+  /// <summary>
+  /// Пометить как опубликованное.
+  /// </summary>
+  /// <param name="command">Команда.</param>
+  /// <param name="cancellationToken">Токен отмены.</param>
+  /// <returns>Задача.</returns>
+  Task MarkAsPublished(AppOutgoingEventMarkAsPublishedCommand command, CancellationToken cancellationToken);
 }

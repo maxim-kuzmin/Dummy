@@ -17,16 +17,64 @@ public class AppOutboxCommandService(
   IAppOutgoingEventPayloadCommandService _appOutgoingEventPayloadCommandService) : IAppOutboxCommandService
 {
   /// <inheritdoc/>
+  public async Task Clear(AppOutboxClearCommand command, CancellationToken cancellationToken)
+  {
+    async Task FuncToExecute(CancellationToken cancellationToken)
+    {
+      DateTimeOffset? maxDate = null;
+
+      if (command.PublishedEventsLifetimeInMinutes > 0)
+      {
+        maxDate = DateTimeOffset.Now.AddMinutes(-command.PublishedEventsLifetimeInMinutes);
+      }
+
+      AppOutgoingEventDeletePublishedCommand publishedEventsDeleteCommand = new(MaxDate: maxDate);
+
+      await _appOutgoingEventCommandService.DeletePublished(publishedEventsDeleteCommand, cancellationToken);
+    }
+
+    await _appDbExecutionContext.Execute(FuncToExecute, cancellationToken).ConfigureAwait(false);
+  }
+
+  /// <inheritdoc/>
   public async Task Produce(AppOutboxProduceCommand command, CancellationToken cancellationToken)
   {
-    var events = await GetUnpublishedEvents(command.EventMaxCountToPublish, cancellationToken).ConfigureAwait(false);
-
-    if (events.Count > 0)
+    async Task FuncToExecute(CancellationToken cancellationToken)
     {
-      await PublishEvents(events, cancellationToken).ConfigureAwait(false);
+      AppOutgoingEventUnpublishedListQuery unpublishedEventsQuery = new(
+        Ids: null,
+        MaxCount: command.EventMaxCountToPublish);
 
-      await MarkEventsAsPublished(events, cancellationToken).ConfigureAwait(false);
+      var unpublishedEventsTask = _appOutgoingEventQueryService.GetUnpublishedList(
+        unpublishedEventsQuery,
+        cancellationToken);
+
+      var unpublishedEvents = await unpublishedEventsTask.ConfigureAwait(false);
+
+      if (unpublishedEvents.Count > 0)
+      {
+        var idsLookup = unpublishedEvents.ToLookup(x => x.Name, x => x.Id);
+
+        foreach (var ids in idsLookup)
+        {
+          MessageSending sending = new(ids.Key, string.Join(",", ids.AsEnumerable()));
+
+          await _appMessageProducer.Publish(sending, cancellationToken).ConfigureAwait(false);
+        }
+
+        AppOutgoingEventMarkAsPublishedCommand eventMarkAsPublishedCommand = new(
+          Ids: unpublishedEvents.Select(x => x.Id),
+          PublishedAt: DateTimeOffset.Now);
+
+        var eventMarkAsPublishedTask = _appOutgoingEventCommandService.MarkAsPublished(
+          eventMarkAsPublishedCommand,
+          cancellationToken);
+
+        await eventMarkAsPublishedTask.ConfigureAwait(false);
+      }
     }
+
+    await _appDbExecutionContext.ExecuteInTransaction(FuncToExecute, cancellationToken).ConfigureAwait(false);
   }
 
   /// <inheritdoc/>
@@ -71,40 +119,5 @@ public class AppOutboxCommandService(
     result.Payloads.AddRange(payloads);
 
     return result;
-  }
-
-  private Task<List<AppOutgoingEventSingleDTO>> GetUnpublishedEvents(
-    int maxCount,
-    CancellationToken cancellationToken)
-  {
-    AppOutgoingEventUnpublishedListQuery query = new()
-    {
-      MaxCount = maxCount,
-    };
-
-    return _appOutgoingEventQueryService.GetUnpublishedList(query, cancellationToken);
-  }
-
-  private Task MarkEventsAsPublished(
-    IEnumerable<AppOutgoingEventSingleDTO> events,
-    CancellationToken cancellationToken)
-  {
-    AppOutgoingEventMarkAsPublishedCommand command = new(events.Select(x => x.Id), DateTimeOffset.Now);
-
-    return _appOutgoingEventCommandService.MarkAsPublished(command, cancellationToken);
-  }
-
-  private async ValueTask PublishEvents(
-    IEnumerable<AppOutgoingEventSingleDTO> events,
-    CancellationToken cancellationToken)
-  {
-    var idsLookup = events.ToLookup(x => x.Name, x => x.Id);
-
-    foreach (var ids in idsLookup)
-    {
-      MessageSending sending = new(ids.Key, string.Join(",", ids.AsEnumerable()));
-
-      await _appMessageProducer.Publish(sending, cancellationToken).ConfigureAwait(false);
-    }
   }
 }

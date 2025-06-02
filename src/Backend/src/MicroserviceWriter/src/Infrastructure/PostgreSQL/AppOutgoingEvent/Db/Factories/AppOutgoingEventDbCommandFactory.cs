@@ -51,7 +51,7 @@ where
   "{{sAppOutgoingEvent.ColumnForPublishedAt}}" is null
 """);
 
-    if (query.Ids.Count > 0)
+    if (query.Ids?.Count > 0)
     {
       List<string> parameterNames = new(query.Ids.Count);
 
