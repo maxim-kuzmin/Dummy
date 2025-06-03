@@ -142,7 +142,7 @@ public class AppOutgoingEventPayloadCommandService(
     aggregate.UpdateEntityConcurrencyTokenToDelete(payload.EntityConcurrencyTokenToDelete);
     aggregate.UpdateEntityConcurrencyTokenToInsert(payload.EntityConcurrencyTokenToInsert);
     aggregate.UpdateEntityId(payload.EntityId);
-    aggregate.UpdateEntityName(payload.EntityName.ToString());
+    aggregate.UpdateEntityName(payload.EntityName);
     aggregate.UpdatePosition(payload.Position);
 
     return entity != null ? aggregate.GetResultToUpdate() : aggregate.GetResultToCreate();

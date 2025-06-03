@@ -184,6 +184,7 @@ public class AppIncomingEventPayloadCommandService(
     aggregate.UpdateEntityConcurrencyTokenToInsert(payload.EntityConcurrencyTokenToInsert);
     aggregate.UpdateEntityId(payload.EntityId);
     aggregate.UpdateEntityName(payload.EntityName);
+    aggregate.UpdateEventPayloadId(data.EventPayloadId);
     aggregate.UpdatePosition(payload.Position);
 
     return entity != null ? aggregate.GetResultToUpdate() : aggregate.GetResultToCreate();

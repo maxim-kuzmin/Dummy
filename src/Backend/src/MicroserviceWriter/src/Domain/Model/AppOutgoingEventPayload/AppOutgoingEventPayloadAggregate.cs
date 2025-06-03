@@ -33,9 +33,29 @@ public class AppOutgoingEventPayloadAggregate(
           () => target.AppOutgoingEventId != source.AppOutgoingEventId,
           () => target.AppOutgoingEventId = source.AppOutgoingEventId),
         PrepareChangedPropertyToUpdate(
+          nameof(source.EntityConcurrencyTokenToDelete),
+          () => target.EntityConcurrencyTokenToDelete != source.EntityConcurrencyTokenToDelete,
+          () => target.EntityConcurrencyTokenToDelete = source.EntityConcurrencyTokenToDelete),
+        PrepareChangedPropertyToUpdate(
+          nameof(source.EntityConcurrencyTokenToInsert),
+          () => target.EntityConcurrencyTokenToInsert != source.EntityConcurrencyTokenToInsert,
+          () => target.EntityConcurrencyTokenToInsert = source.EntityConcurrencyTokenToInsert),
+        PrepareChangedPropertyToUpdate(
           nameof(source.Data),
           () => target.Data != source.Data,
-          () => target.Data = source.Data)
+          () => target.Data = source.Data),
+        PrepareChangedPropertyToUpdate(
+          nameof(source.EntityId),
+          () => target.EntityId != source.EntityId,
+          () => target.EntityId = source.EntityId),
+        PrepareChangedPropertyToUpdate(
+          nameof(source.EntityName),
+          () => target.EntityName != source.EntityName,
+          () => target.EntityName = source.EntityName),
+        PrepareChangedPropertyToUpdate(
+          nameof(source.Position),
+          () => target.Position != source.Position,
+          () => target.Position = source.Position)
         ];
 
       if (updates.Any(x => x == true))

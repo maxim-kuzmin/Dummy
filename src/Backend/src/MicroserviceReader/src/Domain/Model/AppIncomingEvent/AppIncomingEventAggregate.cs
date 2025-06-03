@@ -49,6 +49,14 @@ public class AppIncomingEventAggregate(
           () => target.LastLoadingError != source.LastLoadingError,
           () => target.LastLoadingError = source.LastLoadingError),
         PrepareChangedPropertyToUpdate(
+          nameof(source.LastProcessingAt),
+          () => target.LastProcessingAt != source.LastProcessingAt,
+          () => target.LastProcessingAt = source.LastProcessingAt),
+        PrepareChangedPropertyToUpdate(
+          nameof(source.LastProcessingError),
+          () => target.LastProcessingError != source.LastProcessingError,
+          () => target.LastProcessingError = source.LastProcessingError),
+        PrepareChangedPropertyToUpdate(
           nameof(source.LoadedAt),
           () => target.LoadedAt != source.LoadedAt,
           () => target.LoadedAt = source.LoadedAt),
@@ -60,14 +68,6 @@ public class AppIncomingEventAggregate(
           nameof(source.PayloadTotalCount),
           () => target.PayloadTotalCount != source.PayloadTotalCount,
           () => target.PayloadTotalCount = source.PayloadTotalCount),
-        PrepareChangedPropertyToUpdate(
-          nameof(source.LastProcessingAt),
-          () => target.LastProcessingAt != source.LastProcessingAt,
-          () => target.LastProcessingAt = source.LastProcessingAt),
-        PrepareChangedPropertyToUpdate(
-          nameof(source.LastProcessingError),
-          () => target.LastProcessingError != source.LastProcessingError,
-          () => target.LastProcessingError = source.LastProcessingError),
         PrepareChangedPropertyToUpdate(
           nameof(source.ProcessedAt),
           () => target.ProcessedAt != source.ProcessedAt,

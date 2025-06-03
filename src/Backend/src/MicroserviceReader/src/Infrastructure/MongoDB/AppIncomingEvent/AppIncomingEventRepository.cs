@@ -144,7 +144,7 @@ public class AppIncomingEventRepository(
   {
     return GetNamedList(
       query,
-      Builders<AppIncomingEventEntity>.Filter.Eq(x => x.LoadedAt, null),
+      Builders<AppIncomingEventEntity>.Filter.Where(x => x.LoadedAt == null),
       Builders<AppIncomingEventEntity>.Sort.Ascending(x => x.LastLoadingAt),
       cancellationToken);
   }
@@ -156,7 +156,7 @@ public class AppIncomingEventRepository(
   {
     return GetNamedList(
       query,
-      Builders<AppIncomingEventEntity>.Filter.Eq(x => x.ProcessedAt, null),
+      Builders<AppIncomingEventEntity>.Filter.Where(x => x.LoadedAt != null && x.ProcessedAt == null),
       Builders<AppIncomingEventEntity>.Sort.Ascending(x => x.LastProcessingAt),
       cancellationToken);
   }

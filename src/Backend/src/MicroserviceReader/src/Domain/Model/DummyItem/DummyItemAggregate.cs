@@ -29,6 +29,14 @@ public class DummyItemAggregate(
 
       bool[] updates = [
         PrepareChangedPropertyToUpdate(
+          nameof(source.ConcurrencyToken),
+          () => target.ConcurrencyToken != source.ConcurrencyToken,
+          () => target.ConcurrencyToken = source.ConcurrencyToken),
+        PrepareChangedPropertyToUpdate(
+          nameof(source.Id),
+          () => target.Id != source.Id,
+          () => target.Id = source.Id),
+        PrepareChangedPropertyToUpdate(
           nameof(source.Name),
           () => target.Name != source.Name,
           () => target.Name = source.Name)
