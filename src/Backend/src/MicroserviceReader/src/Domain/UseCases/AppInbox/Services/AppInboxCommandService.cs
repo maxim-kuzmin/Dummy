@@ -309,9 +309,9 @@ public class AppInboxCommandService(
         throw new Exception($"The event payload {eventPayloadDTO.ObjectId} entity name {eventPayloadDTO.EntityName} is unknown");
       }
 
-      bool isUnknownAction = eventPayloadDTO.EntityConcurrencyTokenToDelete == null
+      bool isUnknownAction = string.IsNullOrWhiteSpace(eventPayloadDTO.EntityConcurrencyTokenToDelete)
         &&
-        eventPayloadDTO.EntityConcurrencyTokenToInsert == null;
+        string.IsNullOrWhiteSpace(eventPayloadDTO.EntityConcurrencyTokenToInsert);
 
       if (isUnknownAction)
       {
@@ -324,7 +324,7 @@ public class AppInboxCommandService(
 
       var entityDTO = await _dummyItemQueryService.GetSingle(query, cancellationToken).ConfigureAwait(false);
 
-      if (eventPayloadDTO.EntityConcurrencyTokenToDelete == null)
+      if (string.IsNullOrWhiteSpace(eventPayloadDTO.EntityConcurrencyTokenToDelete))
       {
         if (entityDTO != null)
         {
@@ -342,7 +342,7 @@ public class AppInboxCommandService(
 
         await _dummyItemCommandService.Save(command, cancellationToken).ConfigureAwait(false);
       }
-      else if (eventPayloadDTO.EntityConcurrencyTokenToInsert == null)
+      else if (string.IsNullOrWhiteSpace(eventPayloadDTO.EntityConcurrencyTokenToInsert))
       {
         if (entityDTO == null || entityDTO.ConcurrencyToken != eventPayloadDTO.EntityConcurrencyTokenToDelete)
         {
@@ -387,7 +387,7 @@ public class AppInboxCommandService(
     DummyItemSingleDTO? entityDTO,
     long entityId)
   {
-    if (eventPayloadDTO.EntityConcurrencyTokenToInsert == null)
+    if (string.IsNullOrWhiteSpace(eventPayloadDTO.EntityConcurrencyTokenToInsert))
     {
       return null;
     }

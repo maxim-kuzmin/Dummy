@@ -149,6 +149,13 @@ public class AppIncomingEventPayloadRepository(
         filterBuilder.Regex(x => x.EntityName, re));
     }
 
+    if (!string.IsNullOrEmpty(filterSection?.AppIncomingEventObjectId))
+    {
+      result = filterBuilder.And(
+        result,
+        filterBuilder.Where(x => x.AppIncomingEventObjectId == filterSection.AppIncomingEventObjectId));
+    }
+
     return result;
   }
   
