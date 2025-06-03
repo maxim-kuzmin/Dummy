@@ -6,9 +6,14 @@
 public class AppIncomingEventPayloadSettings
 {
   /// <summary>
-  /// Поле сортировки для идентификатора входящего события приложения.
+  /// Поле сортировки для идентификатора объекта.
   /// </summary>
-  public const string SortFieldForAppIncomingEventId = "AppIncomingEventId";
+  public const string SortFieldForObjectId = "ObjectId";
+
+  /// <summary>
+  /// Поле сортировки для идентификатора объекта входящего события приложения.
+  /// </summary>
+  public const string SortFieldForAppIncomingEventObjectId = "AppIncomingEventObjectId";
 
   /// <summary>
   /// Поле сортировки для данных.
@@ -36,11 +41,6 @@ public class AppIncomingEventPayloadSettings
   public const string SortFieldForEntityName = "EntityName";
 
   /// <summary>
-  /// Поле сортировки для идентификатора.
-  /// </summary>
-  public const string SortFieldForId = "Id";
-
-  /// <summary>
   /// Поле сортировки для позиции.
   /// </summary>
   public const string SortFieldForPosition = "Position";
@@ -55,6 +55,6 @@ public class AppIncomingEventPayloadSettings
   /// </summary>
   static AppIncomingEventPayloadSettings()
   {
-    DefaultQuerySortSection = new(SortFieldForId, true);
+    DefaultQuerySortSection = new(SortFieldForObjectId, true);
   }
 }

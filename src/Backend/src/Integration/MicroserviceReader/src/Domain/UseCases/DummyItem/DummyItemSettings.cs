@@ -6,6 +6,11 @@
 public class DummyItemSettings
 {
   /// <summary>
+  /// Поле сортировки для идентификатора объекта.
+  /// </summary>
+  public const string SortFieldForObjectId = "ObjectId";
+
+  /// <summary>
   /// Поле сортировки для идентификатора.
   /// </summary>
   public const string SortFieldForId = "Id";
@@ -25,6 +30,6 @@ public class DummyItemSettings
   /// </summary>
   static DummyItemSettings()
   {
-    DefaultQuerySortSection = new(SortFieldForId, true);
+    DefaultQuerySortSection = new(Field: SortFieldForObjectId, IsDesc: true);
   }
 }

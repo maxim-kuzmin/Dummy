@@ -6,14 +6,19 @@
 public class AppIncomingEventSettings
 {
   /// <summary>
-  /// Поле сортировки для идентификатора.
+  /// Поле сортировки для идентификатора объекта.
   /// </summary>
-  public const string SortFieldForId = "Id";
+  public const string SortFieldForObjectId = "ObjectId";
 
   /// <summary>
-  /// Поле сортировки для имени.
+  /// Поле сортировки для идентификатора события.
   /// </summary>
-  public const string SortFieldForName = "Name";
+  public const string SortFieldForEventId = "EventId";
+
+  /// <summary>
+  /// Поле сортировки для имени события.
+  /// </summary>
+  public const string SortFieldForEventName = "EventName";
 
   /// <summary>
   /// Раздел сортировки по умолчанию в запросе.
@@ -25,6 +30,6 @@ public class AppIncomingEventSettings
   /// </summary>
   static AppIncomingEventSettings()
   {
-    DefaultQuerySortSection = new(SortFieldForId, true);
+    DefaultQuerySortSection = new(Field: SortFieldForObjectId, IsDesc: true);
   }
 }

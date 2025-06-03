@@ -86,7 +86,7 @@ public class AppIncomingEventRepository(
     var filter = CreateFilter(query.Filter);
 
     var found = Collection.Find(ClientSessionHandle, filter)
-      .Sort(query.Sort, DummyItemSettings.DefaultQuerySortSection, CreateSortFieldExpression)
+      .Sort(query.Sort, AppIncomingEventSettings.DefaultQuerySortSection, CreateSortFieldExpression)
       .TakePage(query.Page);
 
     var result = await found.ToListAsync(cancellationToken).ConfigureAwait(false);
@@ -187,15 +187,19 @@ public class AppIncomingEventRepository(
     return result;
   }
 
-  private static Expression<Func<AppIncomingEventEntity, object>> CreateSortFieldExpression(string field)
+  private static Expression<Func<AppIncomingEventEntity, object?>> CreateSortFieldExpression(string field)
   {
-    Expression<Func<AppIncomingEventEntity, object>> result;
+    Expression<Func<AppIncomingEventEntity, object?>> result;
 
-    if (field.EqualsToSortField(AppIncomingEventSettings.SortFieldForId))
+    if (field.EqualsToSortField(AppIncomingEventSettings.SortFieldForObjectId))
+    {
+      result = x => x.ObjectId;
+    }
+    else if (field.EqualsToSortField(AppIncomingEventSettings.SortFieldForEventId))
     {
       result = x => x.EventId;
     }
-    else if (field.EqualsToSortField(AppIncomingEventSettings.SortFieldForName))
+    else if (field.EqualsToSortField(AppIncomingEventSettings.SortFieldForEventName))
     {
       result = x => x.EventName;
     }

@@ -61,7 +61,7 @@ public static class DbExtensions
     this IFindFluent<TEntity, TEntity> found,
     QuerySortSection? sort,
     QuerySortSection defaultSort,
-    Func<string, Expression<Func<TEntity, object>>> funcToCreateSortFieldExpression
+    Func<string, Expression<Func<TEntity, object?>>> funcToCreateSortFieldExpression
     )
   {
     if (sort == null)

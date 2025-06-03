@@ -96,11 +96,15 @@ public class DummyItemRepository(
     return result;
   }
   
-  private static Expression<Func<DummyItemEntity, object>> CreateSortFieldExpression(string field)
+  private static Expression<Func<DummyItemEntity, object?>> CreateSortFieldExpression(string field)
   {
-    Expression<Func<DummyItemEntity, object>> result;
+    Expression<Func<DummyItemEntity, object?>> result;
 
-    if (field.EqualsToSortField(DummyItemSettings.SortFieldForId))
+    if (field.EqualsToSortField(DummyItemSettings.SortFieldForObjectId))
+    {
+      result = x => x.ObjectId;
+    }
+    else if (field.EqualsToSortField(DummyItemSettings.SortFieldForId))
     {
       result = x => x.Id;
     }

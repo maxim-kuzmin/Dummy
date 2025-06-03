@@ -83,7 +83,7 @@ public class AppIncomingEventPayloadRepository(
     var filter = CreateFilter(query.Filter);
 
     var found = Collection.Find(ClientSessionHandle, filter)
-      .Sort(query.Sort, AppIncomingEventSettings.DefaultQuerySortSection, CreateSortFieldExpression)
+      .Sort(query.Sort, AppIncomingEventPayloadSettings.DefaultQuerySortSection, CreateSortFieldExpression)
       .TakeMaxCount(query.MaxCount);
 
     var result = await found.ToListAsync(cancellationToken).ConfigureAwait(false);
@@ -152,17 +152,41 @@ public class AppIncomingEventPayloadRepository(
     return result;
   }
   
-  private static Expression<Func<AppIncomingEventPayloadEntity, object>> CreateSortFieldExpression(string field)
+  private static Expression<Func<AppIncomingEventPayloadEntity, object?>> CreateSortFieldExpression(string field)
   {
-    Expression<Func<AppIncomingEventPayloadEntity, object>> result;
+    Expression<Func<AppIncomingEventPayloadEntity, object?>> result;
 
-    if (field.EqualsToSortField(AppIncomingEventSettings.SortFieldForId))
+    if (field.EqualsToSortField(AppIncomingEventPayloadSettings.SortFieldForObjectId))
+    {
+      result = x => x.ObjectId;
+    }
+    else if (field.EqualsToSortField(AppIncomingEventPayloadSettings.SortFieldForAppIncomingEventObjectId))
+    {
+      result = x => x.AppIncomingEventObjectId;
+    }
+    else if (field.EqualsToSortField(AppIncomingEventPayloadSettings.SortFieldForData))
+    {
+      result = x => x.Data;
+    }
+    else if (field.EqualsToSortField(AppIncomingEventPayloadSettings.SortFieldForEntityConcurrencyTokenToDelete))
+    {
+      result = x => x.EntityConcurrencyTokenToDelete;
+    }
+    else if (field.EqualsToSortField(AppIncomingEventPayloadSettings.SortFieldForEntityConcurrencyTokenToInsert))
+    {
+      result = x => x.EntityConcurrencyTokenToInsert;
+    }
+    else if (field.EqualsToSortField(AppIncomingEventPayloadSettings.SortFieldForEntityId))
     {
       result = x => x.EntityId;
     }
-    else if (field.EqualsToSortField(AppIncomingEventSettings.SortFieldForName))
+    else if (field.EqualsToSortField(AppIncomingEventPayloadSettings.SortFieldForEntityName))
     {
       result = x => x.EntityName;
+    }
+    else if (field.EqualsToSortField(AppIncomingEventPayloadSettings.SortFieldForPosition))
+    {
+      result = x => x.Position;
     }
     else
     {
