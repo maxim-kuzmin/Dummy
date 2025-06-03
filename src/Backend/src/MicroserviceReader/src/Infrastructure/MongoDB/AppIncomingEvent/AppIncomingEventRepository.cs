@@ -1,6 +1,4 @@
-﻿using Makc.Dummy.MicroserviceReader.Domain.UseCases.AppIncomingEvent.Commands;
-
-namespace Makc.Dummy.MicroserviceReader.Infrastructure.MongoDB.AppIncomingEvent;
+﻿namespace Makc.Dummy.MicroserviceReader.Infrastructure.MongoDB.AppIncomingEvent;
 
 /// <summary>
 /// Репозиторий входящего события приложения.
@@ -110,7 +108,14 @@ public class AppIncomingEventRepository(
       filter = filterBuilder.And(filter, filterBuilder.Where(x => x.ProcessedAt < query.MaxDate.Value));
     }
 
-    return Collection.Find(ClientSessionHandle, filter).Project(x => x.ObjectId!).ToListAsync(cancellationToken);
+    var found = Collection.Find(ClientSessionHandle, filter).Project(x => x.ObjectId!);
+
+    if (query.MaxCount > 0)
+    {
+      found = found.Limit(query.MaxCount);
+    }
+
+    return found.ToListAsync(cancellationToken);
   }
 
   /// <inheritdoc/>
@@ -215,7 +220,7 @@ public class AppIncomingEventRepository(
       filterBuilder.Eq(x => x.EventName, query.EventName)
     ];
 
-    if (query.ObjectIds.Count > 0)
+    if (query.ObjectIds?.Count > 0)
     {
       filterDefinitions.Add(filterBuilder.In(x => x.ObjectId, query.ObjectIds));
     }

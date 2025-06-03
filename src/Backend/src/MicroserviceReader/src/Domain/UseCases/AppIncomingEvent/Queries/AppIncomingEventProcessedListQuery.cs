@@ -3,5 +3,6 @@
 /// <summary>
 /// Запрос списка обработанных.
 /// </summary>
+/// <param name="MaxCount">Максимальное количество.</param>
 /// <param name="MaxDate">Максимальная дата.</param>
-public record AppIncomingEventProcessedListQuery(DateTimeOffset? MaxDate);
+public record AppIncomingEventProcessedListQuery(int MaxCount, DateTimeOffset? MaxDate);

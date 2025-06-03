@@ -3,5 +3,10 @@
 /// <summary>
 /// Команда выдачи исходящего сообщения приложения.
 /// </summary>
+/// <param name="EventMaxCountToClear">Максимальное количество событий для очистки.</param>
 /// <param name="ProcessedEventsLifetimeInMinutes">Время жизни обработанных сообщений в минутах.</param>
-public record AppInboxClearCommand(int ProcessedEventsLifetimeInMinutes) : ICommand<Result>;
+/// <param name="TimeoutInMillisecondsToGetEvents">Таймаут в миллисекундах для получения событий.</param>
+public record AppInboxClearCommand(
+  int EventMaxCountToClear,
+  int ProcessedEventsLifetimeInMinutes,
+  int TimeoutInMillisecondsToGetEvents) : ICommand<Result>;

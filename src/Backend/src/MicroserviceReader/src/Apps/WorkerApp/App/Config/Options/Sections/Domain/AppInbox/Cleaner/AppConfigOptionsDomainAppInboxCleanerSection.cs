@@ -6,9 +6,19 @@
 public record AppConfigOptionsDomainAppInboxCleanerSection
 {
   /// <summary>
+  /// Максимальное количество событий для очистки.
+  /// </summary>
+  public int EventMaxCountToClear { get; set; }
+
+  /// <summary>
   /// Время жизни обработанных сообщений в минутах.
   /// </summary>
   public int ProcessedEventsLifetimeInMinutes { get; set; }
+  
+  /// <summary>
+  /// Таймаут в миллисекундах для получения событий.
+  /// </summary>
+  public int TimeoutInMillisecondsToGetEvents { get; set; }
 
   /// <summary>
   /// Таймаут в миллисекундах для повторения.

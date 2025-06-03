@@ -4,15 +4,6 @@
 /// Запрос списка именованных входящих событий приложения.
 /// </summary>
 /// <param name="EventName">Имя события.</param>
-public record AppIncomingEventNamedListQuery(string EventName)
-{
-  /// <summary>
-  /// Идентификаторы объектов.
-  /// </summary>
-  public List<string> ObjectIds { get; } = [];
-
-  /// <summary>
-  /// Максимальное количество.
-  /// </summary>
-  public int MaxCount { get; set; }
-}
+/// <param name="MaxCount">Максимальное количество.</param>
+/// <param name="ObjectIds">Идентификаторы объектов.</param>
+public record AppIncomingEventNamedListQuery( string EventName, int MaxCount, List<string>? ObjectIds = null);

@@ -23,6 +23,7 @@ global using Makc.Dummy.MicroserviceReader.Domain.Model.DummyItem.Entity;
 global using Makc.Dummy.MicroserviceReader.Domain.Model.DummyItem.Entity.Db.NoSQL;
 global using Makc.Dummy.MicroserviceReader.Domain.UseCases.App.Db.NoSQL.Contexts;
 global using Makc.Dummy.MicroserviceReader.Domain.UseCases.AppIncomingEvent;
+global using Makc.Dummy.MicroserviceReader.Domain.UseCases.AppIncomingEvent.Commands;
 global using Makc.Dummy.MicroserviceReader.Domain.UseCases.AppIncomingEvent.Queries;
 global using Makc.Dummy.MicroserviceReader.Domain.UseCases.AppIncomingEventPayload;
 global using Makc.Dummy.MicroserviceReader.Domain.UseCases.DummyItem;

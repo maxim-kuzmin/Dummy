@@ -28,7 +28,10 @@ public class AppInboxLoaderService(
 
       int eventMaxCountToLoad = Guard.Against.NegativeOrZero(options.EventMaxCountToLoad);
       int payloadPageSize = Guard.Against.NegativeOrZero(options.PayloadPageSize);
-      int timeoutInMillisecondsToGetPayloads = Guard.Against.Negative(options.TimeoutInMillisecondsToGetPayloads);
+
+      int timeoutInMillisecondsToGetEventPayloads = Guard.Against.Negative(
+        options.TimeoutInMillisecondsToGetEventPayloads);
+      
       int timeoutInMillisecondsToRepeat = Guard.Against.Negative(options.TimeoutInMillisecondsToRepeat);
       int timeoutInMillisecondsToStart = Guard.Against.Negative(options.TimeoutInMillisecondsToStart);
 
@@ -49,7 +52,7 @@ public class AppInboxLoaderService(
           EventName: _eventName.ToString(),
           EventMaxCountToLoad: eventMaxCountToLoad,
           PayloadPageSize: payloadPageSize,
-          TimeoutInMillisecondsToGetPayloads: timeoutInMillisecondsToGetPayloads);
+          TimeoutInMillisecondsToGetEventPayloads: timeoutInMillisecondsToGetEventPayloads);
 
         _logger.LogDebug("MAKC:AppInboxLoaderService:ExecuteAsync:Load:Command: {command}", command);
 

@@ -24,7 +24,9 @@ public class AppInboxCleanerService(
 
       var options = Guard.Against.Null(appConfigOptionsSnapshot.Value.Domain?.AppInbox?.Cleaner);
 
+      int eventMaxCountToClear = Guard.Against.Negative(options.EventMaxCountToClear);
       int processedEventsLifetimeInMinutes = Guard.Against.Negative(options.ProcessedEventsLifetimeInMinutes);
+      int timeoutInMillisecondsToGetEvents = Guard.Against.Negative(options.TimeoutInMillisecondsToGetEvents);
       int timeoutInMillisecondsToRepeat = Guard.Against.Negative(options.TimeoutInMillisecondsToRepeat);
       int timeoutInMillisecondsToStart = Guard.Against.Negative(options.TimeoutInMillisecondsToStart);
 
@@ -41,7 +43,10 @@ public class AppInboxCleanerService(
       {
         _logger.LogDebug("MAKC:AppInboxCleanerService:ExecuteAsync:Load start");
 
-        AppInboxClearCommand command = new(ProcessedEventsLifetimeInMinutes: processedEventsLifetimeInMinutes);
+        AppInboxClearCommand command = new(
+          EventMaxCountToClear: eventMaxCountToClear,
+          ProcessedEventsLifetimeInMinutes: processedEventsLifetimeInMinutes,
+          TimeoutInMillisecondsToGetEvents: timeoutInMillisecondsToGetEvents);
 
         _logger.LogDebug("MAKC:AppInboxCleanerService:ExecuteAsync:Load:Command: {command}", command);
 

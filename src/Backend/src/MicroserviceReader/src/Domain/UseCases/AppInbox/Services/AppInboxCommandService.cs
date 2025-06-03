@@ -37,37 +37,52 @@ public class AppInboxCommandService(
       maxDate = DateTimeOffset.Now.AddMinutes(-command.ProcessedEventsLifetimeInMinutes);
     }
 
-    AppIncomingEventProcessedListQuery processedEventIdsQuery = new(MaxDate: maxDate);
+    AppIncomingEventProcessedListQuery processedEventListQuery = new(
+      MaxCount: command.EventMaxCountToClear,
+      MaxDate: maxDate);
 
-    var processedEventObjectIdsGetTask = _appIncomingEventQueryService.GetProcessedObjectIds(
-      processedEventIdsQuery,
-      cancellationToken);
+    int count = 0;
 
-    var processedEventObjectIds = await processedEventObjectIdsGetTask.ConfigureAwait(false);
-
-    if (processedEventObjectIds.Count > 0)
+    do
     {
-      async Task FuncToExecute(CancellationToken cancellationToken)
+      var processedEventObjectIdsGetTask = _appIncomingEventQueryService.GetProcessedObjectIds(
+        processedEventListQuery,
+        cancellationToken);
+
+      var processedEventObjectIds = await processedEventObjectIdsGetTask.ConfigureAwait(false);
+
+      count = processedEventObjectIds.Count;
+
+      if (count > 0)
       {
-        AppIncomingEventDeleteListCommand eventsDeleteCommand = new(ObjectIds: processedEventObjectIds);
+        async Task FuncToExecute(CancellationToken cancellationToken)
+        {
+          AppIncomingEventDeleteListCommand eventsDeleteCommand = new(ObjectIds: processedEventObjectIds);
 
-        var eventsDeleteTask = _appIncomingEventCommandService.DeleteList(eventsDeleteCommand, cancellationToken);
+          var eventsDeleteTask = _appIncomingEventCommandService.DeleteList(eventsDeleteCommand, cancellationToken);
 
-        await eventsDeleteTask.ConfigureAwait(false);
+          await eventsDeleteTask.ConfigureAwait(false);
 
-        AppIncomingEventPayloadDeleteListCommand eventPayloadsDeleteCommand = new(
-          ObjectIds: null,
-          AppIncomingEventObjectIds: processedEventObjectIds);
+          AppIncomingEventPayloadDeleteListCommand eventPayloadsDeleteCommand = new(
+            ObjectIds: null,
+            AppIncomingEventObjectIds: processedEventObjectIds);
 
-        var eventPayloadsDeleteTask = _appIncomingEventPayloadCommandService.DeleteList(
-          eventPayloadsDeleteCommand,
-          cancellationToken);
+          var eventPayloadsDeleteTask = _appIncomingEventPayloadCommandService.DeleteList(
+            eventPayloadsDeleteCommand,
+            cancellationToken);
 
-        await eventPayloadsDeleteTask.ConfigureAwait(false);
+          await eventPayloadsDeleteTask.ConfigureAwait(false);
+        }
+
+        await _appDbExecutionContext.ExecuteInTransaction(FuncToExecute, cancellationToken).ConfigureAwait(false);
       }
 
-      await _appDbExecutionContext.ExecuteInTransaction(FuncToExecute, cancellationToken).ConfigureAwait(false);
+      if (command.TimeoutInMillisecondsToGetEvents > 0)
+      {
+        await Task.Delay(command.TimeoutInMillisecondsToGetEvents, cancellationToken).ConfigureAwait(false);
+      }
     }
+    while (count > 0 && !cancellationToken.IsCancellationRequested);
 
     return Result.Success();
   }
@@ -89,9 +104,11 @@ public class AppInboxCommandService(
   /// <inheritdoc/>
   public async Task<Result> Load(AppInboxLoadCommand command, CancellationToken cancellationToken)
   {
-    var eventsGetTask = _appIncomingEventQueryService.GetUnloadedList(
-      new(command.EventName) { MaxCount = command.EventMaxCountToLoad },
-      cancellationToken);
+    AppIncomingEventNamedListQuery query = new(
+      EventName: command.EventName,
+      MaxCount: command.EventMaxCountToLoad);
+
+    var eventsGetTask = _appIncomingEventQueryService.GetUnloadedList(query, cancellationToken);
 
     var eventDTOs = await eventsGetTask.ConfigureAwait(false);
 
@@ -100,7 +117,7 @@ public class AppInboxCommandService(
       var eventPayloadsLoadTask = LoadEventPayloads(
         eventDTO,
         command.PayloadPageSize,
-        command.TimeoutInMillisecondsToGetPayloads,
+        command.TimeoutInMillisecondsToGetEventPayloads,
         cancellationToken);
 
       await eventPayloadsLoadTask.ConfigureAwait(false);
@@ -112,9 +129,11 @@ public class AppInboxCommandService(
   /// <inheritdoc/>
   public async Task<Result> Process(AppInboxProcessCommand command, CancellationToken cancellationToken)
   {
-    var eventsGetTask = _appIncomingEventQueryService.GetUnprocessedList(
-      new(command.EventName) { MaxCount = command.EventMaxCountToProcess },
-      cancellationToken);
+    AppIncomingEventNamedListQuery query = new(
+      EventName: command.EventName,
+      MaxCount: command.EventMaxCountToProcess);
+
+    var eventsGetTask = _appIncomingEventQueryService.GetUnprocessedList(query, cancellationToken);
 
     var eventDTOs = await eventsGetTask.ConfigureAwait(false);
 
@@ -142,7 +161,7 @@ public class AppInboxCommandService(
   private async Task LoadEventPayloads(
     AppIncomingEventSingleDTO eventDTO,
     int payloadPageSize,
-    int timeoutInMillisecondsToGetPayloads,
+    int timeoutInMillisecondsToGetEventPayloads,
     CancellationToken cancellationToken)
   {
     while (eventDTO.PayloadTotalCount == 0 || eventDTO.PayloadCount < eventDTO.PayloadTotalCount)
@@ -195,9 +214,9 @@ public class AppInboxCommandService(
 
       await _appDbExecutionContext.ExecuteInTransaction(FuncToExecute, cancellationToken).ConfigureAwait(false);
 
-      if (timeoutInMillisecondsToGetPayloads > 0)
+      if (timeoutInMillisecondsToGetEventPayloads > 0)
       {
-        await Task.Delay(timeoutInMillisecondsToGetPayloads, cancellationToken).ConfigureAwait(false);
+        await Task.Delay(timeoutInMillisecondsToGetEventPayloads, cancellationToken).ConfigureAwait(false);
       }
     }
   }

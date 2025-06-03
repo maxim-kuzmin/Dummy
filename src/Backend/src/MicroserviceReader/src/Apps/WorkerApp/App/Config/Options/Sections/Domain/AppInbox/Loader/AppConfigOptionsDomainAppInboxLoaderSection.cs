@@ -21,9 +21,9 @@ public record AppConfigOptionsDomainAppInboxLoaderSection
   public int PayloadPageSize { get; set; }
 
   /// <summary>
-  /// Таймаут в миллисекундах для получения полезных нагрузок.
+  /// Таймаут в миллисекундах для получения полезных нагрузок события.
   /// </summary>
-  public int TimeoutInMillisecondsToGetPayloads { get; set; }
+  public int TimeoutInMillisecondsToGetEventPayloads { get; set; }
 
   /// <summary>
   /// Таймаут в миллисекундах для старта.
