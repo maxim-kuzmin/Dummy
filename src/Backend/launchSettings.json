@@ -8,16 +8,16 @@
       "composeLaunchUrl": "{Scheme}://localhost:{ServicePort}/swagger",
       "serviceActions": {
         "backend-gateway-web-app": "StartDebugging",
-        "backend-microservice-reader-inbox-cleaner-app": "StartDebugging",
-        "backend-microservice-reader-inbox-consumer-app": "StartDebugging",
-        "backend-microservice-reader-inbox-loader-app": "StartDebugging",
-        "backend-microservice-reader-inbox-processor-app": "StartDebugging",
-        "backend-microservice-reader-web-app": "StartDebugging",
-        "backend-microservice-writer-db-migration-for-mssqlserver-app": "StartDebugging",
-        "backend-microservice-writer-db-migration-for-postgres-app": "StartDebugging",
-        "backend-microservice-writer-outbox-cleaner-app": "StartDebugging",
-        "backend-microservice-writer-outbox-producer-app": "StartDebugging",
-        "backend-microservice-writer-web-app": "StartDebugging"
+        "backend-microservice-reader-via-nosql-inbox-cleaner-app": "StartDebugging",
+        "backend-microservice-reader-via-nosql-inbox-consumer-app": "StartDebugging",
+        "backend-microservice-reader-via-nosql-inbox-loader-app": "StartDebugging",
+        "backend-microservice-reader-via-nosql-inbox-processor-app": "StartDebugging",
+        "backend-microservice-reader-via-nosql-web-app": "StartDebugging",
+        "backend-microservice-writer-via-sql-db-migration-for-mssqlserver-app": "StartDebugging",
+        "backend-microservice-writer-via-sql-db-migration-for-postgres-app": "StartDebugging",
+        "backend-microservice-writer-via-sql-outbox-cleaner-app": "StartDebugging",
+        "backend-microservice-writer-via-sql-outbox-producer-app": "StartDebugging",
+        "backend-microservice-writer-via-sql-web-app": "StartDebugging"
       }
     }
   }

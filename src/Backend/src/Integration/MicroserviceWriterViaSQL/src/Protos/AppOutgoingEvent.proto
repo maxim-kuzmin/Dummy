@@ -1,0 +1,88 @@
+syntax = "proto3";
+
+option csharp_namespace = "Makc.Dummy.Integration.MicroserviceWriterViaSQL.Infrastructure.Grpc.AppOutgoingEvent";
+
+package Writer;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+service AppOutgoingEvent {
+    rpc Create (AppOutgoingEventCreateGrpcRequest) returns (AppOutgoingEventGetGrpcReply);
+    rpc Delete (AppOutgoingEventDeleteGrpcRequest) returns (google.protobuf.Empty);
+    rpc Get (AppOutgoingEventGetGrpcRequest) returns (AppOutgoingEventGetGrpcReply);
+    rpc GetList (AppOutgoingEventGetListGrpcRequest) returns (AppOutgoingEventGetListGrpcReply);
+    rpc GetPage (AppOutgoingEventGetPageGrpcRequest) returns (AppOutgoingEventGetPageGrpcReply);
+    rpc Update (AppOutgoingEventUpdateGrpcRequest) returns (AppOutgoingEventGetGrpcReply);
+}
+
+message ActionRequestSort {
+    string field = 1;
+    bool is_desc = 2;
+}
+
+message ActionRequestPage {
+    int32 number = 1;
+    int32 size = 2;
+}
+
+message AppOutgoingEventCreateGrpcRequest {
+    string name = 1;
+    google.protobuf.Timestamp published_at = 2;
+}
+
+message AppOutgoingEventDeleteGrpcRequest {
+    int64 id = 1;
+}
+
+message AppOutgoingEventGetGrpcRequest {
+    int64 id = 1;
+}
+
+message AppOutgoingEventGetGrpcReply {
+    int64 id = 1;    
+    google.protobuf.Timestamp created_at = 2;
+    string name = 3;
+    google.protobuf.Timestamp published_at = 4;
+    string concurrency_token = 5;
+}
+
+message AppOutgoingEventGetListGrpcRequestFilter {
+    google.protobuf.StringValue full_text_search_query = 1;
+}
+
+message AppOutgoingEventGetListGrpcRequest {
+    int32 max_count = 1;
+    ActionRequestSort sort = 2;
+    AppOutgoingEventGetListGrpcRequestFilter filter = 3;
+}
+
+message AppOutgoingEventGetListGrpcReplyItem {
+    int64 id = 1;    
+    google.protobuf.Timestamp created_at = 2;
+    string name = 3;
+    google.protobuf.Timestamp published_at = 4;
+    string concurrency_token = 5;
+}
+
+message AppOutgoingEventGetListGrpcReply {    
+    repeated AppOutgoingEventGetListGrpcReplyItem items = 1;
+}
+
+message AppOutgoingEventGetPageGrpcRequest {
+    ActionRequestPage page = 1;
+    ActionRequestSort sort = 2;
+    AppOutgoingEventGetListGrpcRequestFilter filter = 3;
+}
+
+message AppOutgoingEventGetPageGrpcReply {    
+    repeated AppOutgoingEventGetListGrpcReplyItem items = 1;
+    int64 total_count = 2;
+}
+
+message AppOutgoingEventUpdateGrpcRequest {    
+    string name = 1;
+    google.protobuf.Timestamp published_at = 2;
+    int64 id = 3;
+}

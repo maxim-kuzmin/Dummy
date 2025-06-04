@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <PackageReference Include="Google.Protobuf" />
+    <PackageReference Include="Grpc.Net.ClientFactory" />
+    <PackageReference Include="Grpc.Tools">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\Shared\src\Infrastructure\Grpc\Makc.Dummy.Shared.Infrastructure.Grpc.csproj" />
+    <ProjectReference Include="..\..\Domain\UseCasesForClient\Makc.Dummy.Integration.MicroserviceWriterViaSQL.Domain.UseCasesForClient.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf Include="..\..\Protos\AppOutgoingEvent.proto" GrpcServices="Client" />
+    <Protobuf Include="..\..\Protos\AppOutgoingEventPayload.proto" GrpcServices="Client" />
+    <Protobuf Include="..\..\Protos\Auth.proto" GrpcServices="Client" />
+    <Protobuf Include="..\..\Protos\DummyItem.proto" GrpcServices="Client" />
+  </ItemGroup>
+
+</Project>

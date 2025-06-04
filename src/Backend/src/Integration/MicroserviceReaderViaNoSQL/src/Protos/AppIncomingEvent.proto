@@ -1,0 +1,120 @@
+syntax = "proto3";
+
+option csharp_namespace = "Makc.Dummy.Integration.MicroserviceReaderViaNoSQL.Infrastructure.Grpc.AppIncomingEvent";
+
+package Reader;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+service AppIncomingEvent {
+    rpc Create (AppIncomingEventCreateGrpcRequest) returns (AppIncomingEventGetGrpcReply);
+    rpc Delete (AppIncomingEventDeleteGrpcRequest) returns (google.protobuf.Empty);
+    rpc Get (AppIncomingEventGetGrpcRequest) returns (AppIncomingEventGetGrpcReply);
+    rpc GetList (AppIncomingEventGetListGrpcRequest) returns (AppIncomingEventGetListGrpcReply);
+    rpc GetPage (AppIncomingEventGetPageGrpcRequest) returns (AppIncomingEventGetPageGrpcReply);
+    rpc Update (AppIncomingEventUpdateGrpcRequest) returns (AppIncomingEventGetGrpcReply);
+}
+
+message ActionRequestSort {
+    string field = 1;
+    bool is_desc = 2;
+}
+
+message ActionRequestPage {
+    int32 number = 1;
+    int32 size = 2;
+}
+
+message AppIncomingEventCreateGrpcRequest {    
+    string event_id = 1;
+    string event_name = 2;
+    google.protobuf.Timestamp last_loading_at = 3;
+    google.protobuf.StringValue last_loading_error = 4;
+    google.protobuf.Timestamp last_processing_at = 5;
+    google.protobuf.StringValue last_processing_error = 6;
+    google.protobuf.Timestamp loaded_at = 7;
+    int64 payload_count = 8;
+    int64 payload_total_count = 9;
+    google.protobuf.Timestamp processed_at = 10;
+}
+
+message AppIncomingEventDeleteGrpcRequest {
+    string object_id = 1;
+}
+
+message AppIncomingEventGetGrpcRequest {
+    string object_id = 1;
+}
+
+message AppIncomingEventGetGrpcReply {
+    string event_id = 1;
+    string event_name = 2;
+    google.protobuf.Timestamp last_loading_at = 3;
+    google.protobuf.StringValue last_loading_error = 4;
+    google.protobuf.Timestamp last_processing_at = 5;
+    google.protobuf.StringValue last_processing_error = 6;
+    google.protobuf.Timestamp loaded_at = 7;
+    int64 payload_count = 8;
+    int64 payload_total_count = 9;
+    google.protobuf.Timestamp processed_at = 10;
+    string object_id = 11;
+    string concurrency_token = 12;
+    google.protobuf.Timestamp created_at = 13;
+}
+
+message AppIncomingEventGetListGrpcRequestFilter {
+    google.protobuf.StringValue full_text_search_query = 1;
+}
+
+message AppIncomingEventGetListGrpcRequest {
+    int32 max_count = 1;
+    ActionRequestSort sort = 2;
+    AppIncomingEventGetListGrpcRequestFilter filter = 3;
+}
+
+message AppIncomingEventGetListGrpcReplyItem {
+    string event_id = 1;
+    string event_name = 2;
+    google.protobuf.Timestamp last_loading_at = 3;
+    google.protobuf.StringValue last_loading_error = 4;
+    google.protobuf.Timestamp last_processing_at = 5;
+    google.protobuf.StringValue last_processing_error = 6;
+    google.protobuf.Timestamp loaded_at = 7;
+    int64 payload_count = 8;
+    int64 payload_total_count = 9;
+    google.protobuf.Timestamp processed_at = 10;
+    string object_id = 11;
+    string concurrency_token = 12;
+    google.protobuf.Timestamp created_at = 13;
+}
+
+message AppIncomingEventGetListGrpcReply {    
+    repeated AppIncomingEventGetListGrpcReplyItem items = 1;
+}
+
+message AppIncomingEventGetPageGrpcRequest {
+    ActionRequestPage page = 1;
+    ActionRequestSort sort = 2;
+    AppIncomingEventGetListGrpcRequestFilter filter = 3;
+}
+
+message AppIncomingEventGetPageGrpcReply {    
+    repeated AppIncomingEventGetListGrpcReplyItem items = 1;
+    int64 total_count = 2;
+}
+
+message AppIncomingEventUpdateGrpcRequest {    
+    string event_id = 1;
+    string event_name = 2;
+    google.protobuf.Timestamp last_loading_at = 3;
+    google.protobuf.StringValue last_loading_error = 4;
+    google.protobuf.Timestamp last_processing_at = 5;
+    google.protobuf.StringValue last_processing_error = 6;
+    google.protobuf.Timestamp loaded_at = 7;
+    int64 payload_count = 8;
+    int64 payload_total_count = 9;
+    google.protobuf.Timestamp processed_at = 10;
+    string object_id = 11;
+}

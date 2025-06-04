@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Integration\MicroserviceReaderViaNoSQL\src\Domain\UseCases\Makc.Dummy.Integration.MicroserviceReaderViaNoSQL.Domain.UseCases.csproj" />
+    <ProjectReference Include="..\..\..\..\Integration\MicroserviceWriterViaSQL\src\Domain\UseCases\Makc.Dummy.Integration.MicroserviceWriterViaSQL.Domain.UseCases.csproj" />
+    <ProjectReference Include="..\..\..\..\Shared\src\Domain\UseCases\Makc.Dummy.Shared.Domain.UseCases.csproj" />
+    <ProjectReference Include="..\Model\Makc.Dummy.MicroserviceReaderViaNoSQL.Domain.Model.csproj" />
+  </ItemGroup>
+
+</Project>

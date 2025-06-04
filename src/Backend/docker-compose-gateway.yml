@@ -8,12 +8,12 @@ services:
       - App__Infrastructure__Keycloak__ClientSecret=${MY_SERVICE_BACKEND_GATEWAY_WEB_APP_CONFIG_INFRASTRUCTURE_KEYCLOAK_CLIENT_SECRET}
       - App__Infrastructure__Observability__CollectorGrpcEndpoint=${MY_SERVICE_BACKEND_GATEWAY_WEB_APP_CONFIG_INFRASTRUCTURE_OBSERVABILITY_COLLECTOR_GRPC_ENDPOINT}
       - App__Infrastructure__Observability__CollectorHttpEndpoint=${MY_SERVICE_BACKEND_GATEWAY_WEB_APP_CONFIG_INFRASTRUCTURE_OBSERVABILITY_COLLECTOR_HTTP_ENDPOINT}
-      - App__Integration__MicroserviceReader__GrpcEndpoint=${MY_SERVICE_BACKEND_GATEWAY_WEB_APP_CONFIG_INTEGRATION_MICROSERVICE_READER_GRPC_ENDPOINT}
-      - App__Integration__MicroserviceReader__HttpEndpoint=${MY_SERVICE_BACKEND_GATEWAY_WEB_APP_CONFIG_INTEGRATION_MICROSERVICE_READER_HTTP_ENDPOINT}
-      - App__Integration__MicroserviceWriter__GrpcEndpoint=${MY_SERVICE_BACKEND_GATEWAY_WEB_APP_CONFIG_INTEGRATION_MICROSERVICE_WRITER_GRPC_ENDPOINT}
-      - App__Integration__MicroserviceWriter__HttpEndpoint=${MY_SERVICE_BACKEND_GATEWAY_WEB_APP_CONFIG_INTEGRATION_MICROSERVICE_WRITER_HTTP_ENDPOINT}
+      - App__Integration__MicroserviceReaderViaNoSQL__GrpcEndpoint=${MY_SERVICE_BACKEND_GATEWAY_WEB_APP_CONFIG_INTEGRATION_MICROSERVICE_READER_VIA_NOSQL_GRPC_ENDPOINT}
+      - App__Integration__MicroserviceReaderViaNoSQL__HttpEndpoint=${MY_SERVICE_BACKEND_GATEWAY_WEB_APP_CONFIG_INTEGRATION_MICROSERVICE_READER_VIA_NOSQL_HTTP_ENDPOINT}
+      - App__Integration__MicroserviceWriterViaSQL__GrpcEndpoint=${MY_SERVICE_BACKEND_GATEWAY_WEB_APP_CONFIG_INTEGRATION_MICROSERVICE_WRITER_VIA_SQL_GRPC_ENDPOINT}
+      - App__Integration__MicroserviceWriterViaSQL__HttpEndpoint=${MY_SERVICE_BACKEND_GATEWAY_WEB_APP_CONFIG_INTEGRATION_MICROSERVICE_WRITER_VIA_SQL_HTTP_ENDPOINT}
     networks:
       - network-backend
     depends_on:
-      backend-microservice-writer-web-app:
+      backend-microservice-writer-via-sql-web-app:
         condition: service_started

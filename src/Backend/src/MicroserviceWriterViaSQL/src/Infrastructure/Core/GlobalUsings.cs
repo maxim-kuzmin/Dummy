@@ -1,0 +1,11 @@
+﻿global using Makc.Dummy.Shared.Core.App.Config.Options.Sections;
+global using Makc.Dummy.MicroserviceWriterViaSQL.Domain.Model.AppOutgoingEvent;
+global using Makc.Dummy.MicroserviceWriterViaSQL.Domain.Model.AppOutgoingEventPayload;
+global using Makc.Dummy.MicroserviceWriterViaSQL.Domain.Model.DummyItem;
+global using Makc.Dummy.MicroserviceWriterViaSQL.Infrastructure.Core.AppOutgoingEvent;
+global using Makc.Dummy.MicroserviceWriterViaSQL.Infrastructure.Core.AppOutgoingEventPayload;
+global using Makc.Dummy.MicroserviceWriterViaSQL.Infrastructure.Core.DummyItem;
+global using Microsoft.Extensions.Configuration;
+global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.Extensions.Localization;
+global using Microsoft.Extensions.Logging;

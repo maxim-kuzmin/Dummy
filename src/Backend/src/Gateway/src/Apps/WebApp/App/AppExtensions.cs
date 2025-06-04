@@ -27,8 +27,8 @@ public static class AppExtensions
     var infrastructure = Guard.Against.Null(appConfigOptions.Infrastructure);
     var domainAuth = Guard.Against.Null(domain.Auth);
     var integration = Guard.Against.Null(appConfigOptions.Integration);
-    var integrationMicroserviceReader = Guard.Against.Null(integration.MicroserviceReader);
-    var integrationMicroserviceWriter = Guard.Against.Null(integration.MicroserviceWriter);
+    var integrationMicroserviceReaderViaNoSQL = Guard.Against.Null(integration.MicroserviceReaderViaNoSQL);
+    var integrationMicroserviceWriterViaSQL = Guard.Against.Null(integration.MicroserviceWriterViaSQL);
 
     Thread.CurrentThread.CurrentUICulture =
       Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(appConfigOptions.DefaultLanguage);
@@ -36,8 +36,8 @@ public static class AppExtensions
     var services = appBuilder.Services.Configure<AppConfigOptions>(appConfigSection)
       .AddAppDomainModel(logger)
       .AddAppDomainUseCases(logger, appConfigDomainAuthSection)
-      .AddAppIntegrationMicroserviceReaderDomainUseCasesForClient(logger)
-      .AddAppIntegrationMicroserviceWriterDomainUseCasesForClient(logger);
+      .AddAppIntegrationMicroserviceReaderViaNoSQLDomainUseCasesForClient(logger)
+      .AddAppIntegrationMicroserviceWriterViaSQLDomainUseCasesForClient(logger);
 
     List<AppLoggerFuncToConfigure> funcsToConfigureAppLogger = [];
 
@@ -67,35 +67,35 @@ public static class AppExtensions
       .AddAppSharedInfrastructureTiedToCore(logger, appBuilder.Configuration, funcsToConfigureAppLogger)
       .AddAppInfrastructureTiedToCore(logger);
 
-    switch (integrationMicroserviceReader.Protocol)
+    switch (integrationMicroserviceReaderViaNoSQL.Protocol)
     {
       case AppConfigOptionsProtocolEnum.Http:
-        services.AddAppIntegrationMicroserviceReaderInfrastructureTiedToHttpClient(
+        services.AddAppIntegrationMicroserviceReaderViaNoSQLInfrastructureTiedToHttpClient(
           logger,
-          integrationMicroserviceReader.HttpEndpoint);
+          integrationMicroserviceReaderViaNoSQL.HttpEndpoint);
         break;
       case AppConfigOptionsProtocolEnum.Grpc:
-        services.AddAppIntegrationMicroserviceReaderInfrastructureTiedToGrpcClient(
+        services.AddAppIntegrationMicroserviceReaderViaNoSQLInfrastructureTiedToGrpcClient(
           logger,
-          integrationMicroserviceReader.GrpcEndpoint);
+          integrationMicroserviceReaderViaNoSQL.GrpcEndpoint);
         break;
       default:
         throw new NotImplementedException();
     }
 
-    switch (integrationMicroserviceWriter.Protocol)
+    switch (integrationMicroserviceWriterViaSQL.Protocol)
     {
       case AppConfigOptionsProtocolEnum.Http:
-        services.AddAppIntegrationMicroserviceWriterInfrastructureTiedToHttpClient(
+        services.AddAppIntegrationMicroserviceWriterViaSQLInfrastructureTiedToHttpClient(
           logger,
           domainAuth,
-          integrationMicroserviceWriter.HttpEndpoint);
+          integrationMicroserviceWriterViaSQL.HttpEndpoint);
         break;
       case AppConfigOptionsProtocolEnum.Grpc:
-        services.AddAppIntegrationMicroserviceWriterInfrastructureTiedToGrpcClient(
+        services.AddAppIntegrationMicroserviceWriterViaSQLInfrastructureTiedToGrpcClient(
           logger,
           domainAuth,
-          integrationMicroserviceWriter.GrpcEndpoint);
+          integrationMicroserviceWriterViaSQL.GrpcEndpoint);
         break;
       default:
         throw new NotImplementedException();
@@ -115,7 +115,7 @@ public static class AppExtensions
         keycloakEndpoint);
     }
 
-    services.TryAddAppIntegrationMicroserviceWriterDomainUseCasesForClientStubs(logger);
+    services.TryAddAppIntegrationMicroserviceWriterViaSQLDomainUseCasesForClientStubs(logger);
 
     services.Configure<CookiePolicyOptions>(options =>
     {
@@ -128,8 +128,8 @@ public static class AppExtensions
       {
         options.DisableAutoDiscovery = true;
         options.Assemblies = [
-          typeof(Integration.MicroserviceReader.Infrastructure.HttpServer.App.AppSettings).Assembly,
-          typeof(Integration.MicroserviceWriter.Infrastructure.HttpServer.App.AppSettings).Assembly
+          typeof(Integration.MicroserviceReaderViaNoSQL.Infrastructure.HttpServer.App.AppSettings).Assembly,
+          typeof(Integration.MicroserviceWriterViaSQL.Infrastructure.HttpServer.App.AppSettings).Assembly
           ];
       })
       .AddAuthorization();

@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <EmbeddedResource Include="**/*.en.json" />
+    <EmbeddedResource Include="**/*.ru.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Shared\src\Infrastructure\Core\Makc.Dummy.Shared.Infrastructure.Core.csproj" />
+    <ProjectReference Include="..\..\Domain\UseCases\Makc.Dummy.MicroserviceWriterViaSQL.Domain.UseCases.csproj" />
+  </ItemGroup>
+  
+</Project>

@@ -3,6 +3,6 @@
 /// <summary>
 /// Раздел микросервиса "Читатель" в параметрах конфигурации интеграции приложения.
 /// </summary>
-public record AppConfigOptionsIntegrationMicroserviceReaderSection : AppConfigOptionsIntegrationMicroserviceSection
+public record AppConfigOptionsIntegrationMicroserviceReaderViaNoSQLSection : AppConfigOptionsIntegrationMicroserviceSection
 {
 }

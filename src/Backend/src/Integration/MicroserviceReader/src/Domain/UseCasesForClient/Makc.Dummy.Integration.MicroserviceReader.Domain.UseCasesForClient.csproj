@@ -1,7 +1,0 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
-  <ItemGroup>
-    <ProjectReference Include="..\UseCases\Makc.Dummy.Integration.MicroserviceReader.Domain.UseCases.csproj" />
-  </ItemGroup>
-
-</Project>

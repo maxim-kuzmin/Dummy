@@ -8,10 +8,10 @@ public record AppConfigOptionsIntegrationSection
   /// <summary>
   /// Микросервис "Читатель".
   /// </summary>
-  public AppConfigOptionsIntegrationMicroserviceReaderSection? MicroserviceReader { get; set; }
+  public AppConfigOptionsIntegrationMicroserviceReaderViaNoSQLSection? MicroserviceReaderViaNoSQL { get; set; }
 
   /// <summary>
   /// Микросервис "Писатель".
   /// </summary>
-  public AppConfigOptionsIntegrationMicrocerviceWriterSection? MicroserviceWriter { get; set; }
+  public AppConfigOptionsIntegrationMicrocerviceWriterSection? MicroserviceWriterViaSQL { get; set; }
 }

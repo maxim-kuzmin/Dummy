@@ -18,14 +18,14 @@
       <DependentUpon>docker-compose-gateway.yml</DependentUpon>
     </None>
     <None Include="docker-compose-gateway.yml" />
-    <None Include="docker-compose-microservice-reader.override.yml">
-      <DependentUpon>docker-compose-microservice-reader.yml</DependentUpon>
+    <None Include="docker-compose-microservice-reader-via-nosql.override.yml">
+      <DependentUpon>docker-compose-microservice-reader-via-nosql.yml</DependentUpon>
     </None>
-    <None Include="docker-compose-microservice-reader.yml" />
-    <None Include="docker-compose-microservice-writer.override.yml">
-      <DependentUpon>docker-compose-microservice-writer.yml</DependentUpon>
+    <None Include="docker-compose-microservice-reader-via-nosql.yml" />
+    <None Include="docker-compose-microservice-writer-via-sql.override.yml">
+      <DependentUpon>docker-compose-microservice-writer-via-sql.yml</DependentUpon>
     </None>
-    <None Include="docker-compose-microservice-writer.yml" />
+    <None Include="docker-compose-microservice-writer-via-sql.yml" />
     <None Include="docker-compose.override.yml">
       <DependentUpon>docker-compose.yml</DependentUpon>
     </None>

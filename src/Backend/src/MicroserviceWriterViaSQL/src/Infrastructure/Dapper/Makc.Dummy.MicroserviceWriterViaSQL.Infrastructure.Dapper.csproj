@@ -1,0 +1,8 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Shared\src\Infrastructure\Dapper\Makc.Dummy.Shared.Infrastructure.Dapper.csproj" />
+    <ProjectReference Include="..\..\Domain\UseCases\Makc.Dummy.MicroserviceWriterViaSQL.Domain.UseCases.csproj" />
+  </ItemGroup>
+
+</Project>

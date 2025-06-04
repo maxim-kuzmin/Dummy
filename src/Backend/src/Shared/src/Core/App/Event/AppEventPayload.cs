@@ -18,7 +18,7 @@ public record AppEventPayload
   /// <summary>
   /// Токен параллелизма сущности для удаления.
   /// </summary>
-  public string? EntityConcurrencyTokenToDelete { get; set; } = string.Empty;
+  public string? EntityConcurrencyTokenToDelete { get; set; }
 
   /// <summary>
   /// Токен параллелизма сущности для вставки.
@@ -29,4 +29,33 @@ public record AppEventPayload
   /// Позиция.
   /// </summary>
   public int Position { get; set; }
+
+  /// <summary>
+  /// Получить действие события.
+  /// </summary>
+  /// <returns>Действие события.</returns>
+  public AppEventActionEnum GetEventAction()
+  {
+    bool isUnknownAction = string.IsNullOrWhiteSpace(EntityConcurrencyTokenToDelete)
+      &&
+      string.IsNullOrWhiteSpace(EntityConcurrencyTokenToInsert);
+
+    if (isUnknownAction)
+    {
+      return AppEventActionEnum.Unknown;
+    }
+
+    if (string.IsNullOrWhiteSpace(EntityConcurrencyTokenToDelete))
+    {
+      return AppEventActionEnum.Insert;
+    }
+    else if (string.IsNullOrWhiteSpace(EntityConcurrencyTokenToInsert))
+    {
+      return AppEventActionEnum.Delete;
+    }
+    else
+    {
+      return AppEventActionEnum.Update;
+    }
+  }
 }

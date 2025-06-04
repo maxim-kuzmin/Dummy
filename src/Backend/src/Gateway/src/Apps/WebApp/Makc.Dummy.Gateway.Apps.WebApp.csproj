@@ -15,12 +15,12 @@
   </ItemGroup>
 
   <ItemGroup>    
-    <ProjectReference Include="..\..\..\..\Integration\MicroserviceReader\src\Infrastructure\GrpcClient\Makc.Dummy.Integration.MicroserviceReader.Infrastructure.GrpcClient.csproj" />    
-    <ProjectReference Include="..\..\..\..\Integration\MicroserviceReader\src\Infrastructure\HttpClient\Makc.Dummy.Integration.MicroserviceReader.Infrastructure.HttpClient.csproj" />    
-    <ProjectReference Include="..\..\..\..\Integration\MicroserviceReader\src\Infrastructure\HttpServer\Makc.Dummy.Integration.MicroserviceReader.Infrastructure.HttpServer.csproj" />    
-    <ProjectReference Include="..\..\..\..\Integration\MicroserviceWriter\src\Infrastructure\GrpcClient\Makc.Dummy.Integration.MicroserviceWriter.Infrastructure.GrpcClient.csproj" />    
-    <ProjectReference Include="..\..\..\..\Integration\MicroserviceWriter\src\Infrastructure\HttpClient\Makc.Dummy.Integration.MicroserviceWriter.Infrastructure.HttpClient.csproj" />    
-    <ProjectReference Include="..\..\..\..\Integration\MicroserviceWriter\src\Infrastructure\HttpServer\Makc.Dummy.Integration.MicroserviceWriter.Infrastructure.HttpServer.csproj" />    
+    <ProjectReference Include="..\..\..\..\Integration\MicroserviceReaderViaNoSQL\src\Infrastructure\GrpcClient\Makc.Dummy.Integration.MicroserviceReaderViaNoSQL.Infrastructure.GrpcClient.csproj" />    
+    <ProjectReference Include="..\..\..\..\Integration\MicroserviceReaderViaNoSQL\src\Infrastructure\HttpClient\Makc.Dummy.Integration.MicroserviceReaderViaNoSQL.Infrastructure.HttpClient.csproj" />    
+    <ProjectReference Include="..\..\..\..\Integration\MicroserviceReaderViaNoSQL\src\Infrastructure\HttpServer\Makc.Dummy.Integration.MicroserviceReaderViaNoSQL.Infrastructure.HttpServer.csproj" />    
+    <ProjectReference Include="..\..\..\..\Integration\MicroserviceWriterViaSQL\src\Infrastructure\GrpcClient\Makc.Dummy.Integration.MicroserviceWriterViaSQL.Infrastructure.GrpcClient.csproj" />    
+    <ProjectReference Include="..\..\..\..\Integration\MicroserviceWriterViaSQL\src\Infrastructure\HttpClient\Makc.Dummy.Integration.MicroserviceWriterViaSQL.Infrastructure.HttpClient.csproj" />    
+    <ProjectReference Include="..\..\..\..\Integration\MicroserviceWriterViaSQL\src\Infrastructure\HttpServer\Makc.Dummy.Integration.MicroserviceWriterViaSQL.Infrastructure.HttpServer.csproj" />    
     <ProjectReference Include="..\..\..\..\Shared\src\Infrastructure\CoreForOpenTelemetry\Makc.Dummy.Shared.Infrastructure.CoreForOpenTelemetry.csproj" />
     <ProjectReference Include="..\..\..\..\Shared\src\Infrastructure\CoreForOpenTelemetryInWeb\Makc.Dummy.Shared.Infrastructure.CoreForOpenTelemetryInWeb.csproj" />
     <ProjectReference Include="..\..\Domain\UseCases\Makc.Dummy.Gateway.Domain.UseCases.csproj" />

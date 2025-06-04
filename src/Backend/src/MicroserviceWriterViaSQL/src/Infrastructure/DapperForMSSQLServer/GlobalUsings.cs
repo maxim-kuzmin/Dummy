@@ -1,0 +1,10 @@
+﻿global using System.Data;
+global using Ardalis.GuardClauses;
+global using Makc.Dummy.Shared.Core.App.Config.Options.Sections.Infrastructure.Db.MSSQLServer;
+global using Makc.Dummy.Shared.Infrastructure.Dapper.Db;
+global using Makc.Dummy.MicroserviceWriterViaSQL.Infrastructure.Dapper.App.Db;
+global using Makc.Dummy.MicroserviceWriterViaSQL.Infrastructure.DapperForMSSQLServer.App.Db;
+global using Microsoft.Data.SqlClient;
+global using Microsoft.Extensions.Configuration;
+global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.Extensions.Logging;

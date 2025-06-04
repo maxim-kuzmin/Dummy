@@ -1,9 +1,0 @@
-﻿global using Makc.Dummy.MicroserviceReader.Domain.Model.AppIncomingEvent;
-global using Makc.Dummy.MicroserviceReader.Domain.Model.AppIncomingEventPayload;
-global using Makc.Dummy.MicroserviceReader.Domain.Model.DummyItem;
-global using Makc.Dummy.MicroserviceReader.Infrastructure.Core.AppIncomingEvent;
-global using Makc.Dummy.MicroserviceReader.Infrastructure.Core.AppIncomingEventPayload;
-global using Makc.Dummy.MicroserviceReader.Infrastructure.Core.DummyItem;
-global using Microsoft.Extensions.DependencyInjection;
-global using Microsoft.Extensions.Localization;
-global using Microsoft.Extensions.Logging;

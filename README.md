@@ -14,23 +14,23 @@
 
 Направляет запросы и команды от клиентов другим микросервисам
 
-2. Writer - Писатель
+2. MicroserviceWriterViaSQL - Микросервис "Писатель" через SQL
 
 Изменяет (добавляет, обновляет, удаляет) и читает сущности
 
-3. Reader - Читатель
+3. MicroserviceReaderViaNoSQL - Микросервис "Читатель" через NoSQL
 
 Читает сущности
 
 ## Взаимодействие микросервисов
 
-1. Для изменения данных клиент отправляет запрос в микросервис Gateway, а тот отправляет команду в микросервис Writer
+1. Для изменения данных клиент отправляет запрос в Gateway, а тот отправляет команду в MicroserviceWriterViaSQL
 
-2. Для чтения данных клиент отправляет запрос в микросервис Gateway, а тот отправляет запрос в микросервис Reader
+2. Для чтения данных клиент отправляет запрос в Gateway, а тот отправляет запрос в MicroserviceReaderViaNoSQL
 
-3. После изменения данных микросервис Writer отправляет событие изменения данных в очередь
+3. После изменения данных MicroserviceWriterViaSQL отправляет сообщение о событии изменения данных в очередь
 
-4. Микросервис Reader извлекает из очереди сообщение о событии изменения данных и обрабатывает его
+4. Микросервис MicroserviceReaderViaNoSQL извлекает из очереди сообщение о событии изменения данных и обрабатывает его
 
 ## Сертификат
 
@@ -73,7 +73,7 @@ dotnet dev-certs https --trust
 1. Добавить миграцию с именем InitialCreate:
 
 ```
-cd .\src\Backend\src\MicroserviceWriter\src\Infrastructure\EntityFrameworkForMSSQLServer
+cd .\src\Backend\src\MicroserviceWriterViaSQL\src\Infrastructure\EntityFrameworkForMSSQLServer
 
 dotnet ef migrations add InitialCreate --startup-project ../../Apps/WebApp --output-dir ./App/Db/Migrations
 ```
@@ -81,7 +81,7 @@ dotnet ef migrations add InitialCreate --startup-project ../../Apps/WebApp --out
 2. Применить все миграции:
 
 ```
-cd .\src\Backend\src\MicroserviceWriter\src\Infrastructure\EntityFrameworkForMSSQLServer
+cd .\src\Backend\src\MicroserviceWriterViaSQL\src\Infrastructure\EntityFrameworkForMSSQLServer
 
 dotnet ef database update --startup-project ../../Apps/WebApp
 ```
@@ -91,7 +91,7 @@ dotnet ef database update --startup-project ../../Apps/WebApp
 1. Добавить миграцию с именем InitialCreate:
 
 ```
-cd .\src\Backend\src\MicroserviceWriter\src\Infrastructure\EntityFrameworkForPostgreSQL
+cd .\src\Backend\src\MicroserviceWriterViaSQL\src\Infrastructure\EntityFrameworkForPostgreSQL
 
 dotnet ef migrations add InitialCreate --startup-project ../../Apps/WebApp --output-dir ./App/Db/Migrations
 ```
@@ -99,7 +99,7 @@ dotnet ef migrations add InitialCreate --startup-project ../../Apps/WebApp --out
 2. Применить все миграции:
 
 ```
-cd .\src\Backend\src\MicroserviceWriter\src\Infrastructure\EntityFrameworkForPostgreSQL
+cd .\src\Backend\src\MicroserviceWriterViaSQL\src\Infrastructure\EntityFrameworkForPostgreSQL
 
 dotnet ef database update --startup-project ../../Apps/WebApp
 ```

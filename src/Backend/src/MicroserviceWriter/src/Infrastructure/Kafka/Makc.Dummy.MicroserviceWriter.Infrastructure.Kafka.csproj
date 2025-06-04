@@ -1,8 +1,0 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Shared\src\Infrastructure\Kafka\Makc.Dummy.Shared.Infrastructure.Kafka.csproj" />
-    <ProjectReference Include="..\..\Domain\UseCases\Makc.Dummy.MicroserviceWriter.Domain.UseCases.csproj" />
-  </ItemGroup>
-
-</Project>

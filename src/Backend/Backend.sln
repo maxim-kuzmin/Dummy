@@ -42,118 +42,118 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.Gateway.Infrastr
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Integration", "Integration", "{C889838A-0AA3-4236-9E3E-6EF41A3C94F0}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MicroserviceReader", "MicroserviceReader", "{CE91CE36-C5A3-4422-9DAC-FD3A76664972}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MicroserviceReaderViaNoSQL", "MicroserviceReaderViaNoSQL", "{CE91CE36-C5A3-4422-9DAC-FD3A76664972}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{9513CF17-B73A-4DCE-A110-CD703D4E95D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.Integration.MicroserviceReader.Domain.UseCases", "src\Integration\MicroserviceReader\src\Domain\UseCases\Makc.Dummy.Integration.MicroserviceReader.Domain.UseCases.csproj", "{12DE6A66-DC56-42BB-B6FA-0FAFC1C71D76}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.Integration.MicroserviceReaderViaNoSQL.Domain.UseCases", "src\Integration\MicroserviceReaderViaNoSQL\src\Domain\UseCases\Makc.Dummy.Integration.MicroserviceReaderViaNoSQL.Domain.UseCases.csproj", "{12DE6A66-DC56-42BB-B6FA-0FAFC1C71D76}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.Integration.MicroserviceReader.Domain.UseCasesForClient", "src\Integration\MicroserviceReader\src\Domain\UseCasesForClient\Makc.Dummy.Integration.MicroserviceReader.Domain.UseCasesForClient.csproj", "{88DF673E-7A73-46FA-B10F-3FC46A908DF1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.Integration.MicroserviceReaderViaNoSQL.Domain.UseCasesForClient", "src\Integration\MicroserviceReaderViaNoSQL\src\Domain\UseCasesForClient\Makc.Dummy.Integration.MicroserviceReaderViaNoSQL.Domain.UseCasesForClient.csproj", "{88DF673E-7A73-46FA-B10F-3FC46A908DF1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{7978F9A7-3A68-4BA4-AFBF-F9DD593706B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.Integration.MicroserviceReader.Infrastructure.GrpcClient", "src\Integration\MicroserviceReader\src\Infrastructure\GrpcClient\Makc.Dummy.Integration.MicroserviceReader.Infrastructure.GrpcClient.csproj", "{03873B12-7922-40EE-834C-5AB34CD3F445}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.Integration.MicroserviceReaderViaNoSQL.Infrastructure.GrpcClient", "src\Integration\MicroserviceReaderViaNoSQL\src\Infrastructure\GrpcClient\Makc.Dummy.Integration.MicroserviceReaderViaNoSQL.Infrastructure.GrpcClient.csproj", "{03873B12-7922-40EE-834C-5AB34CD3F445}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.Integration.MicroserviceReader.Infrastructure.GrpcServer", "src\Integration\MicroserviceReader\src\Infrastructure\GrpcServer\Makc.Dummy.Integration.MicroserviceReader.Infrastructure.GrpcServer.csproj", "{E34618BA-D100-441E-90D2-A616D4F4D3EC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.Integration.MicroserviceReaderViaNoSQL.Infrastructure.GrpcServer", "src\Integration\MicroserviceReaderViaNoSQL\src\Infrastructure\GrpcServer\Makc.Dummy.Integration.MicroserviceReaderViaNoSQL.Infrastructure.GrpcServer.csproj", "{E34618BA-D100-441E-90D2-A616D4F4D3EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.Integration.MicroserviceReader.Infrastructure.HttpClient", "src\Integration\MicroserviceReader\src\Infrastructure\HttpClient\Makc.Dummy.Integration.MicroserviceReader.Infrastructure.HttpClient.csproj", "{E0CF2FCD-413E-4032-A4E7-BC4D50C2B86F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.Integration.MicroserviceReaderViaNoSQL.Infrastructure.HttpClient", "src\Integration\MicroserviceReaderViaNoSQL\src\Infrastructure\HttpClient\Makc.Dummy.Integration.MicroserviceReaderViaNoSQL.Infrastructure.HttpClient.csproj", "{E0CF2FCD-413E-4032-A4E7-BC4D50C2B86F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.Integration.MicroserviceReader.Infrastructure.HttpServer", "src\Integration\MicroserviceReader\src\Infrastructure\HttpServer\Makc.Dummy.Integration.MicroserviceReader.Infrastructure.HttpServer.csproj", "{77C3CB0E-CA68-4587-AD26-2D7DC18F25F4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.Integration.MicroserviceReaderViaNoSQL.Infrastructure.HttpServer", "src\Integration\MicroserviceReaderViaNoSQL\src\Infrastructure\HttpServer\Makc.Dummy.Integration.MicroserviceReaderViaNoSQL.Infrastructure.HttpServer.csproj", "{77C3CB0E-CA68-4587-AD26-2D7DC18F25F4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Protos", "Protos", "{C14659AD-86E4-4572-ACCB-52BE9544E4F3}"
 	ProjectSection(SolutionItems) = preProject
-		src\Integration\MicroserviceReader\src\Protos\AppIncomingEvent.proto = src\Integration\MicroserviceReader\src\Protos\AppIncomingEvent.proto
-		src\Integration\MicroserviceReader\src\Protos\AppIncomingEventPayload.proto = src\Integration\MicroserviceReader\src\Protos\AppIncomingEventPayload.proto
-		src\Integration\MicroserviceReader\src\Protos\DummyItem.proto = src\Integration\MicroserviceReader\src\Protos\DummyItem.proto
+		src\Integration\MicroserviceReaderViaNoSQL\src\Protos\AppIncomingEvent.proto = src\Integration\MicroserviceReaderViaNoSQL\src\Protos\AppIncomingEvent.proto
+		src\Integration\MicroserviceReaderViaNoSQL\src\Protos\AppIncomingEventPayload.proto = src\Integration\MicroserviceReaderViaNoSQL\src\Protos\AppIncomingEventPayload.proto
+		src\Integration\MicroserviceReaderViaNoSQL\src\Protos\DummyItem.proto = src\Integration\MicroserviceReaderViaNoSQL\src\Protos\DummyItem.proto
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MicroserviceWriter", "MicroserviceWriter", "{FCDEE716-D47C-47BF-9DD1-E908CC9A89EC}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MicroserviceWriterViaSQL", "MicroserviceWriterViaSQL", "{FCDEE716-D47C-47BF-9DD1-E908CC9A89EC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{F13921B4-B617-4AE2-AE2D-82E47743195E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCases", "src\Integration\MicroserviceWriter\src\Domain\UseCases\Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCases.csproj", "{A668C7CE-C712-4652-82B1-7AA81AA91BD1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.Integration.MicroserviceWriterViaSQL.Domain.UseCases", "src\Integration\MicroserviceWriterViaSQL\src\Domain\UseCases\Makc.Dummy.Integration.MicroserviceWriterViaSQL.Domain.UseCases.csproj", "{A668C7CE-C712-4652-82B1-7AA81AA91BD1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCasesForClient", "src\Integration\MicroserviceWriter\src\Domain\UseCasesForClient\Makc.Dummy.Integration.MicroserviceWriter.Domain.UseCasesForClient.csproj", "{F5ACC894-825F-4349-90DD-BCE8AF05E704}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.Integration.MicroserviceWriterViaSQL.Domain.UseCasesForClient", "src\Integration\MicroserviceWriterViaSQL\src\Domain\UseCasesForClient\Makc.Dummy.Integration.MicroserviceWriterViaSQL.Domain.UseCasesForClient.csproj", "{F5ACC894-825F-4349-90DD-BCE8AF05E704}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{23115D69-2C8C-43F7-B453-23178D19FD8A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.Integration.MicroserviceWriter.Infrastructure.GrpcClient", "src\Integration\MicroserviceWriter\src\Infrastructure\GrpcClient\Makc.Dummy.Integration.MicroserviceWriter.Infrastructure.GrpcClient.csproj", "{4ECCF2B5-137F-47C5-9CDE-F22FB36C4EFB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.Integration.MicroserviceWriterViaSQL.Infrastructure.GrpcClient", "src\Integration\MicroserviceWriterViaSQL\src\Infrastructure\GrpcClient\Makc.Dummy.Integration.MicroserviceWriterViaSQL.Infrastructure.GrpcClient.csproj", "{4ECCF2B5-137F-47C5-9CDE-F22FB36C4EFB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.Integration.MicroserviceWriter.Infrastructure.GrpcServer", "src\Integration\MicroserviceWriter\src\Infrastructure\GrpcServer\Makc.Dummy.Integration.MicroserviceWriter.Infrastructure.GrpcServer.csproj", "{1E72A181-0112-47B8-9770-DE6724BB9937}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.Integration.MicroserviceWriterViaSQL.Infrastructure.GrpcServer", "src\Integration\MicroserviceWriterViaSQL\src\Infrastructure\GrpcServer\Makc.Dummy.Integration.MicroserviceWriterViaSQL.Infrastructure.GrpcServer.csproj", "{1E72A181-0112-47B8-9770-DE6724BB9937}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.Integration.MicroserviceWriter.Infrastructure.HttpClient", "src\Integration\MicroserviceWriter\src\Infrastructure\HttpClient\Makc.Dummy.Integration.MicroserviceWriter.Infrastructure.HttpClient.csproj", "{CF04FFFA-29C6-42B5-8BB7-A5D92833C030}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.Integration.MicroserviceWriterViaSQL.Infrastructure.HttpClient", "src\Integration\MicroserviceWriterViaSQL\src\Infrastructure\HttpClient\Makc.Dummy.Integration.MicroserviceWriterViaSQL.Infrastructure.HttpClient.csproj", "{CF04FFFA-29C6-42B5-8BB7-A5D92833C030}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.Integration.MicroserviceWriter.Infrastructure.HttpServer", "src\Integration\MicroserviceWriter\src\Infrastructure\HttpServer\Makc.Dummy.Integration.MicroserviceWriter.Infrastructure.HttpServer.csproj", "{4CCE0AE4-6D1F-4CD2-8A63-949285059675}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.Integration.MicroserviceWriterViaSQL.Infrastructure.HttpServer", "src\Integration\MicroserviceWriterViaSQL\src\Infrastructure\HttpServer\Makc.Dummy.Integration.MicroserviceWriterViaSQL.Infrastructure.HttpServer.csproj", "{4CCE0AE4-6D1F-4CD2-8A63-949285059675}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Protos", "Protos", "{958C38C2-8545-4A8E-9375-9B370E7625E8}"
 	ProjectSection(SolutionItems) = preProject
-		src\Integration\MicroserviceWriter\src\Protos\AppOutgoingEvent.proto = src\Integration\MicroserviceWriter\src\Protos\AppOutgoingEvent.proto
-		src\Integration\MicroserviceWriter\src\Protos\AppOutgoingEventPayload.proto = src\Integration\MicroserviceWriter\src\Protos\AppOutgoingEventPayload.proto
-		src\Integration\MicroserviceWriter\src\Protos\Auth.proto = src\Integration\MicroserviceWriter\src\Protos\Auth.proto
-		src\Integration\MicroserviceWriter\src\Protos\DummyItem.proto = src\Integration\MicroserviceWriter\src\Protos\DummyItem.proto
+		src\Integration\MicroserviceWriterViaSQL\src\Protos\AppOutgoingEvent.proto = src\Integration\MicroserviceWriterViaSQL\src\Protos\AppOutgoingEvent.proto
+		src\Integration\MicroserviceWriterViaSQL\src\Protos\AppOutgoingEventPayload.proto = src\Integration\MicroserviceWriterViaSQL\src\Protos\AppOutgoingEventPayload.proto
+		src\Integration\MicroserviceWriterViaSQL\src\Protos\Auth.proto = src\Integration\MicroserviceWriterViaSQL\src\Protos\Auth.proto
+		src\Integration\MicroserviceWriterViaSQL\src\Protos\DummyItem.proto = src\Integration\MicroserviceWriterViaSQL\src\Protos\DummyItem.proto
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MicroserviceReader", "MicroserviceReader", "{86D0AEEE-A675-4B81-A5AE-BC08F9C92803}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MicroserviceReaderViaNoSQL", "MicroserviceReaderViaNoSQL", "{86D0AEEE-A675-4B81-A5AE-BC08F9C92803}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Apps", "Apps", "{77C4E24B-11C3-4777-88E6-F070D4E24679}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.MicroserviceReader.Apps.WebApp", "src\MicroserviceReader\src\Apps\WebApp\Makc.Dummy.MicroserviceReader.Apps.WebApp.csproj", "{D2294B1F-D088-4CAD-9D71-61EF0C319C48}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.MicroserviceReaderViaNoSQL.Apps.WebApp", "src\MicroserviceReaderViaNoSQL\src\Apps\WebApp\Makc.Dummy.MicroserviceReaderViaNoSQL.Apps.WebApp.csproj", "{D2294B1F-D088-4CAD-9D71-61EF0C319C48}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.MicroserviceReader.Apps.WorkerApp", "src\MicroserviceReader\src\Apps\WorkerApp\Makc.Dummy.MicroserviceReader.Apps.WorkerApp.csproj", "{F4869ED2-5E54-4052-9211-E83A7F08E190}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.MicroserviceReaderViaNoSQL.Apps.WorkerApp", "src\MicroserviceReaderViaNoSQL\src\Apps\WorkerApp\Makc.Dummy.MicroserviceReaderViaNoSQL.Apps.WorkerApp.csproj", "{F4869ED2-5E54-4052-9211-E83A7F08E190}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{40E143DA-539C-4D77-AA6F-5D9875B569ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.MicroserviceReader.Domain.Model", "src\MicroserviceReader\src\Domain\Model\Makc.Dummy.MicroserviceReader.Domain.Model.csproj", "{2553E8A2-FE66-42DC-B257-777132F21B56}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.MicroserviceReaderViaNoSQL.Domain.Model", "src\MicroserviceReaderViaNoSQL\src\Domain\Model\Makc.Dummy.MicroserviceReaderViaNoSQL.Domain.Model.csproj", "{2553E8A2-FE66-42DC-B257-777132F21B56}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.MicroserviceReader.Domain.UseCases", "src\MicroserviceReader\src\Domain\UseCases\Makc.Dummy.MicroserviceReader.Domain.UseCases.csproj", "{637649B5-DF75-4F47-8417-A1AE0E774122}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.MicroserviceReaderViaNoSQL.Domain.UseCases", "src\MicroserviceReaderViaNoSQL\src\Domain\UseCases\Makc.Dummy.MicroserviceReaderViaNoSQL.Domain.UseCases.csproj", "{637649B5-DF75-4F47-8417-A1AE0E774122}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{A082CE35-1DA2-45DB-B3C3-C79FE26E3182}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.MicroserviceReader.Infrastructure.Core", "src\MicroserviceReader\src\Infrastructure\Core\Makc.Dummy.MicroserviceReader.Infrastructure.Core.csproj", "{D6C2A47B-1105-4534-A3F5-06602C872DB5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.MicroserviceReaderViaNoSQL.Infrastructure.Core", "src\MicroserviceReaderViaNoSQL\src\Infrastructure\Core\Makc.Dummy.MicroserviceReaderViaNoSQL.Infrastructure.Core.csproj", "{D6C2A47B-1105-4534-A3F5-06602C872DB5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.MicroserviceReader.Infrastructure.Kafka", "src\MicroserviceReader\src\Infrastructure\Kafka\Makc.Dummy.MicroserviceReader.Infrastructure.Kafka.csproj", "{07FC0CE3-C064-4663-9962-1A06CD8BD544}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.MicroserviceReaderViaNoSQL.Infrastructure.Kafka", "src\MicroserviceReaderViaNoSQL\src\Infrastructure\Kafka\Makc.Dummy.MicroserviceReaderViaNoSQL.Infrastructure.Kafka.csproj", "{07FC0CE3-C064-4663-9962-1A06CD8BD544}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.MicroserviceReader.Infrastructure.MongoDB", "src\MicroserviceReader\src\Infrastructure\MongoDB\Makc.Dummy.MicroserviceReader.Infrastructure.MongoDB.csproj", "{C61BBE7F-A556-44A4-8F3E-FA47445B9217}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.MicroserviceReaderViaNoSQL.Infrastructure.MongoDB", "src\MicroserviceReaderViaNoSQL\src\Infrastructure\MongoDB\Makc.Dummy.MicroserviceReaderViaNoSQL.Infrastructure.MongoDB.csproj", "{C61BBE7F-A556-44A4-8F3E-FA47445B9217}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.MicroserviceReader.Infrastructure.RabbitMQ", "src\MicroserviceReader\src\Infrastructure\RabbitMQ\Makc.Dummy.MicroserviceReader.Infrastructure.RabbitMQ.csproj", "{C65F2CCD-464C-44A9-910D-09F170A4AA65}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.MicroserviceReaderViaNoSQL.Infrastructure.RabbitMQ", "src\MicroserviceReaderViaNoSQL\src\Infrastructure\RabbitMQ\Makc.Dummy.MicroserviceReaderViaNoSQL.Infrastructure.RabbitMQ.csproj", "{C65F2CCD-464C-44A9-910D-09F170A4AA65}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MicroserviceWriter", "MicroserviceWriter", "{79303FD3-E3EE-4B57-BBDC-AFF7EBC56AFD}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MicroserviceWriterViaSQL", "MicroserviceWriterViaSQL", "{79303FD3-E3EE-4B57-BBDC-AFF7EBC56AFD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Apps", "Apps", "{0DBD4A79-928C-47E4-9CE0-9237938BBBDF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Makc.Dummy.MicroserviceWriter.Apps.WebApp", "src\MicroserviceWriter\src\Apps\WebApp\Makc.Dummy.MicroserviceWriter.Apps.WebApp.csproj", "{A1A8A57C-A1DB-4862-A04D-05453EF42BAC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Makc.Dummy.MicroserviceWriterViaSQL.Apps.WebApp", "src\MicroserviceWriterViaSQL\src\Apps\WebApp\Makc.Dummy.MicroserviceWriterViaSQL.Apps.WebApp.csproj", "{A1A8A57C-A1DB-4862-A04D-05453EF42BAC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.MicroserviceWriter.Apps.WorkerApp", "src\MicroserviceWriter\src\Apps\WorkerApp\Makc.Dummy.MicroserviceWriter.Apps.WorkerApp.csproj", "{84185C67-7F7B-409C-AEE2-0870AE4AE57C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.MicroserviceWriterViaSQL.Apps.WorkerApp", "src\MicroserviceWriterViaSQL\src\Apps\WorkerApp\Makc.Dummy.MicroserviceWriterViaSQL.Apps.WorkerApp.csproj", "{84185C67-7F7B-409C-AEE2-0870AE4AE57C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{F202DB36-F8BA-4059-B792-FC69A918E2E6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Makc.Dummy.MicroserviceWriter.Domain.Model", "src\MicroserviceWriter\src\Domain\Model\Makc.Dummy.MicroserviceWriter.Domain.Model.csproj", "{2F81EAA0-6B77-4304-8E38-FE3C28CE79E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Makc.Dummy.MicroserviceWriterViaSQL.Domain.Model", "src\MicroserviceWriterViaSQL\src\Domain\Model\Makc.Dummy.MicroserviceWriterViaSQL.Domain.Model.csproj", "{2F81EAA0-6B77-4304-8E38-FE3C28CE79E0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Makc.Dummy.MicroserviceWriter.Domain.UseCases", "src\MicroserviceWriter\src\Domain\UseCases\Makc.Dummy.MicroserviceWriter.Domain.UseCases.csproj", "{43031B59-296A-46B7-B778-AF0066EB77B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Makc.Dummy.MicroserviceWriterViaSQL.Domain.UseCases", "src\MicroserviceWriterViaSQL\src\Domain\UseCases\Makc.Dummy.MicroserviceWriterViaSQL.Domain.UseCases.csproj", "{43031B59-296A-46B7-B778-AF0066EB77B7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{ACCAAED2-3AF2-4CF0-BF6B-AF420E9841B5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Makc.Dummy.MicroserviceWriter.Infrastructure.Core", "src\MicroserviceWriter\src\Infrastructure\Core\Makc.Dummy.MicroserviceWriter.Infrastructure.Core.csproj", "{7CD43BF7-23DD-4415-AE73-9D847B0DE0AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Makc.Dummy.MicroserviceWriterViaSQL.Infrastructure.Core", "src\MicroserviceWriterViaSQL\src\Infrastructure\Core\Makc.Dummy.MicroserviceWriterViaSQL.Infrastructure.Core.csproj", "{7CD43BF7-23DD-4415-AE73-9D847B0DE0AA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.MicroserviceWriter.Infrastructure.Dapper", "src\MicroserviceWriter\src\Infrastructure\Dapper\Makc.Dummy.MicroserviceWriter.Infrastructure.Dapper.csproj", "{E6CFB882-3D64-4EC3-B5F8-D61751A294FB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.MicroserviceWriterViaSQL.Infrastructure.Dapper", "src\MicroserviceWriterViaSQL\src\Infrastructure\Dapper\Makc.Dummy.MicroserviceWriterViaSQL.Infrastructure.Dapper.csproj", "{E6CFB882-3D64-4EC3-B5F8-D61751A294FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.MicroserviceWriter.Infrastructure.DapperForMSSQLServer", "src\MicroserviceWriter\src\Infrastructure\DapperForMSSQLServer\Makc.Dummy.MicroserviceWriter.Infrastructure.DapperForMSSQLServer.csproj", "{B0736D6B-0832-4B59-B5FE-5AB778D6D8E3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.MicroserviceWriterViaSQL.Infrastructure.DapperForMSSQLServer", "src\MicroserviceWriterViaSQL\src\Infrastructure\DapperForMSSQLServer\Makc.Dummy.MicroserviceWriterViaSQL.Infrastructure.DapperForMSSQLServer.csproj", "{B0736D6B-0832-4B59-B5FE-5AB778D6D8E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.MicroserviceWriter.Infrastructure.DapperForPostgreSQL", "src\MicroserviceWriter\src\Infrastructure\DapperForPostgreSQL\Makc.Dummy.MicroserviceWriter.Infrastructure.DapperForPostgreSQL.csproj", "{EE2DA5B5-3543-4F6A-968C-5F0DE66EEB8E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.MicroserviceWriterViaSQL.Infrastructure.DapperForPostgreSQL", "src\MicroserviceWriterViaSQL\src\Infrastructure\DapperForPostgreSQL\Makc.Dummy.MicroserviceWriterViaSQL.Infrastructure.DapperForPostgreSQL.csproj", "{EE2DA5B5-3543-4F6A-968C-5F0DE66EEB8E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.MicroserviceWriter.Infrastructure.EntityFramework", "src\MicroserviceWriter\src\Infrastructure\EntityFramework\Makc.Dummy.MicroserviceWriter.Infrastructure.EntityFramework.csproj", "{1FF14C5E-2AB3-4E26-9CA6-2E5C1103DD8C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.MicroserviceWriterViaSQL.Infrastructure.EntityFramework", "src\MicroserviceWriterViaSQL\src\Infrastructure\EntityFramework\Makc.Dummy.MicroserviceWriterViaSQL.Infrastructure.EntityFramework.csproj", "{1FF14C5E-2AB3-4E26-9CA6-2E5C1103DD8C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.MicroserviceWriter.Infrastructure.EntityFrameworkForMSSQLServer", "src\MicroserviceWriter\src\Infrastructure\EntityFrameworkForMSSQLServer\Makc.Dummy.MicroserviceWriter.Infrastructure.EntityFrameworkForMSSQLServer.csproj", "{2A46BAE0-998A-4557-BB82-45518FBEBDD9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.MicroserviceWriterViaSQL.Infrastructure.EntityFrameworkForMSSQLServer", "src\MicroserviceWriterViaSQL\src\Infrastructure\EntityFrameworkForMSSQLServer\Makc.Dummy.MicroserviceWriterViaSQL.Infrastructure.EntityFrameworkForMSSQLServer.csproj", "{2A46BAE0-998A-4557-BB82-45518FBEBDD9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.MicroserviceWriter.Infrastructure.EntityFrameworkForPostgreSQL", "src\MicroserviceWriter\src\Infrastructure\EntityFrameworkForPostgreSQL\Makc.Dummy.MicroserviceWriter.Infrastructure.EntityFrameworkForPostgreSQL.csproj", "{CA0AF742-9ED5-4C74-9B4B-BF2B0AC8BA4F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.MicroserviceWriterViaSQL.Infrastructure.EntityFrameworkForPostgreSQL", "src\MicroserviceWriterViaSQL\src\Infrastructure\EntityFrameworkForPostgreSQL\Makc.Dummy.MicroserviceWriterViaSQL.Infrastructure.EntityFrameworkForPostgreSQL.csproj", "{CA0AF742-9ED5-4C74-9B4B-BF2B0AC8BA4F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.MicroserviceWriter.Infrastructure.Kafka", "src\MicroserviceWriter\src\Infrastructure\Kafka\Makc.Dummy.MicroserviceWriter.Infrastructure.Kafka.csproj", "{86CDF2B9-426F-487F-BD45-D415869C85EF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.MicroserviceWriterViaSQL.Infrastructure.Kafka", "src\MicroserviceWriterViaSQL\src\Infrastructure\Kafka\Makc.Dummy.MicroserviceWriterViaSQL.Infrastructure.Kafka.csproj", "{86CDF2B9-426F-487F-BD45-D415869C85EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.MicroserviceWriter.Infrastructure.MSSQLServer", "src\MicroserviceWriter\src\Infrastructure\MSSQLServer\Makc.Dummy.MicroserviceWriter.Infrastructure.MSSQLServer.csproj", "{CAEA771E-9ACA-4F12-BF12-5867398B3F0E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.MicroserviceWriterViaSQL.Infrastructure.MSSQLServer", "src\MicroserviceWriterViaSQL\src\Infrastructure\MSSQLServer\Makc.Dummy.MicroserviceWriterViaSQL.Infrastructure.MSSQLServer.csproj", "{CAEA771E-9ACA-4F12-BF12-5867398B3F0E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.MicroserviceWriter.Infrastructure.PostgreSQL", "src\MicroserviceWriter\src\Infrastructure\PostgreSQL\Makc.Dummy.MicroserviceWriter.Infrastructure.PostgreSQL.csproj", "{1AD73FB2-E435-424C-B8D7-198699F3BBBC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.MicroserviceWriterViaSQL.Infrastructure.PostgreSQL", "src\MicroserviceWriterViaSQL\src\Infrastructure\PostgreSQL\Makc.Dummy.MicroserviceWriterViaSQL.Infrastructure.PostgreSQL.csproj", "{1AD73FB2-E435-424C-B8D7-198699F3BBBC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.MicroserviceWriter.Infrastructure.RabbitMQ", "src\MicroserviceWriter\src\Infrastructure\RabbitMQ\Makc.Dummy.MicroserviceWriter.Infrastructure.RabbitMQ.csproj", "{24B21428-536B-4ED5-BF13-6BAC6A06FB80}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makc.Dummy.MicroserviceWriterViaSQL.Infrastructure.RabbitMQ", "src\MicroserviceWriterViaSQL\src\Infrastructure\RabbitMQ\Makc.Dummy.MicroserviceWriterViaSQL.Infrastructure.RabbitMQ.csproj", "{24B21428-536B-4ED5-BF13-6BAC6A06FB80}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{B73144DE-9449-42F1-A63D-86D609EA6C52}"
 EndProject

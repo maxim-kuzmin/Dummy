@@ -1,4 +1,4 @@
 include:
   - docker-compose-gateway.override.yml
-  - docker-compose-microservice-reader.override.yml
-  - docker-compose-microservice-writer.override.yml
+  - docker-compose-microservice-reader-via-nosql.override.yml
+  - docker-compose-microservice-writer-via-sql.override.yml

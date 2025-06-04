@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <PackageReference Include="Grpc.AspNetCore" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\Shared\src\Infrastructure\Grpc\Makc.Dummy.Shared.Infrastructure.Grpc.csproj" />
+    <ProjectReference Include="..\..\Domain\UseCases\Makc.Dummy.Integration.MicroserviceReaderViaNoSQL.Domain.UseCases.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf Include="..\..\Protos\AppIncomingEvent.proto" GrpcServices="Server" />
+    <Protobuf Include="..\..\Protos\AppIncomingEventPayload.proto" GrpcServices="Server" />
+    <Protobuf Include="..\..\Protos\DummyItem.proto" GrpcServices="Server" />
+  </ItemGroup>
+  
+</Project>
