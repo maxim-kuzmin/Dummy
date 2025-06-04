@@ -3,7 +3,7 @@
 /// <summary>
 /// Объект передачи данных полезной нагрузки исходящего события приложения.
 /// </summary>
-public record AppOutgoingEventPayloadSingleDTO
+public record AppOutgoingEventPayloadSingleDTO : AppEventPayload
 {
   /// <summary>
   /// Идентификатор.
@@ -24,29 +24,4 @@ public record AppOutgoingEventPayloadSingleDTO
   /// Данные.
   /// </summary>
   public string? Data { get; set; }
-
-  /// <summary>
-  /// Токен параллелизма для удаления.
-  /// </summary>
-  public string? EntityConcurrencyTokenToDelete { get; set; }
-
-  /// <summary>
-  /// Токен параллелизма для вставки.
-  /// </summary>
-  public string? EntityConcurrencyTokenToInsert { get; set; }
-
-  /// <summary>
-  /// Идентификатор сущности.
-  /// </summary>
-  public string EntityId { get; set; } = string.Empty;
-
-  /// <summary>
-  /// Имя сущности.
-  /// </summary>
-  public string EntityName { get; set; } = string.Empty;
-
-  /// <summary>
-  /// Позиция.
-  /// </summary>
-  public int Position { get; set; }
 }

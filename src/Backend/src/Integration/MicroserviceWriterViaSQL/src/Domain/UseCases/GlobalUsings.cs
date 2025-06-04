@@ -17,6 +17,7 @@ global using Makc.Dummy.Integration.MicroserviceWriterViaSQL.Domain.UseCases.Dum
 global using Makc.Dummy.Integration.MicroserviceWriterViaSQL.Domain.UseCases.DummyItem.DTOs;
 global using Makc.Dummy.Integration.MicroserviceWriterViaSQL.Domain.UseCases.DummyItem.Queries;
 global using Makc.Dummy.Integration.MicroserviceWriterViaSQL.Domain.UseCases.DummyItem.Query.Sections;
+global using Makc.Dummy.Shared.Core.App.Event;
 global using Makc.Dummy.Shared.Core.App.Event.Payloads;
 global using Makc.Dummy.Shared.Domain.UseCases.DTOs;
 global using Makc.Dummy.Shared.Domain.UseCases.Query.Sections;
