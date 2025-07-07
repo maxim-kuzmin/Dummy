@@ -1,4 +1,5 @@
 /*! tailwindcss v4.1.11 | MIT License | https://tailwindcss.com */
+@layer properties;
 @layer tailwind, app;
 @layer tailwind {
   @layer theme, base, components, utilities;
@@ -10,6 +11,15 @@
       "Courier New", monospace;
       --default-font-family: var(--font-sans);
       --default-mono-font-family: var(--font-mono);
+      --color-bg-body: var(--color-bg-body);
+      --color-bg-header: var(--color-bg-header);
+      --color-bg-footer: var(--color-bg-footer);
+      --color-bg-main: var(--color-bg-main);
+      --color-bg-nav: var(--color-bg-nav);
+      --color-txt-header: var(--color-txt-header);
+      --color-txt-footer: var(--color-txt-footer);
+      --color-txt-main: var(--color-txt-main);
+      --color-txt-nav: var(--color-txt-nav);
     }
   }
   @layer base {
@@ -158,51 +168,67 @@
     }
   }
   @layer utilities {
-    .grid {
+    .block {
+      display: block;
+    }
+    .table {
+      display: table;
+    }
+    .border-collapse {
+      border-collapse: collapse;
+    }
+    .resize {
+      resize: both;
+    }
+    .border {
+      border-style: var(--tw-border-style);
+      border-width: 1px;
+    }
+    .underline {
+      text-decoration-line: underline;
+    }
+    .outline {
+      outline-style: var(--tw-outline-style);
+      outline-width: 1px;
+    }
+  }
+  @layer components {
+    .app-body {
+      grid-template: "header" auto "nav" auto "main" 1fr "footer" auto;
+      @media (width >= 40rem) {
+        grid-template: "header header" auto "nav main" 1fr "footer footer" auto / auto 1fr;
+      }
       display: grid;
+      min-height: 100vh;
+      background-color: var(--color-bg-body);
     }
-    .\[grid-area\:footer\] {
+    .app-footer {
       grid-area: footer;
+      background-color: var(--color-bg-footer);
+      color: var(--color-txt-footer);
     }
-    .\[grid-area\:header\] {
+    .app-header {
       grid-area: header;
+      background-color: var(--color-bg-header);
+      color: var(--color-txt-header);
     }
-    .\[grid-area\:main\] {
-      grid-area: main;
-    }
-    .\[grid-area\:nav\] {
+    .app-nav {
       grid-area: nav;
+      background-color: var(--color-bg-nav);
+      color: var(--color-txt-nav);
     }
-    .\[grid-template\:\'header\'_auto_\'nav\'_auto_\'main\'_1fr_\'footer\'_auto\] {
-      grid-template: 'header' auto 'nav' auto 'main' 1fr 'footer' auto;
+    .app-main {
+      grid-area: main;
+      background-color: var(--color-bg-main);
+      color: var(--color-txt-main);
     }
   }
 }
 @layer app {
   @layer theme, base;
   @layer base {
-    body {
-      background-color: var(--color-bg-body);
-      min-height: 100vh;
-    }
-    body>* {
+    body > * {
       padding: 1rem;
-    }
-    header {
-      background-color: var(--color-bg-header);
-      color: var(--color-txt-header);
-    }
-    main {
-      background-color: var(--color-bg-main);
-      color: var(--color-txt-main);
-    }
-    footer {
-      background-color: var(--color-bg-footer);
-      color: var(--color-txt-footer);
-    }
-    nav {
-      background-color: var(--color-bg-nav);
-      color: var(--color-txt-nav);
     }
     nav li {
       font-weight: normal;
@@ -229,11 +255,6 @@
     nav li[selected] > ul {
       display: block !important;
     }
-    @media screen and (min-width: 640px) {
-      body {
-        grid-template: "header header" auto "nav main" 1fr "footer footer" auto / auto 1fr;
-      }
-    }
   }
   @layer theme {
     :root, :host {
@@ -246,6 +267,24 @@
       --color-txt-footer: white;
       --color-txt-main: white;
       --color-txt-nav: black;
+    }
+  }
+}
+@property --tw-border-style {
+  syntax: "*";
+  inherits: false;
+  initial-value: solid;
+}
+@property --tw-outline-style {
+  syntax: "*";
+  inherits: false;
+  initial-value: solid;
+}
+@layer properties {
+  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
+    *, ::before, ::after, ::backdrop {
+      --tw-border-style: solid;
+      --tw-outline-style: solid;
     }
   }
 }

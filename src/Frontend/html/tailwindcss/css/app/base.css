@@ -1,45 +1,11 @@
 @layer base {
-  body {
-    background-color: var(--color-bg-body);
-    /* display: grid;
-    grid-template: 
-      "header" auto
-      "main" 1fr
-      "footer" auto; */
-    min-height: 100vh
-  }
-
-  body>* {
+  body > * {
     padding: 1rem;
-  }
-
-  header {
-    background-color: var(--color-bg-header);
-    color: var(--color-txt-header);
-    /* grid-area: header; */
-  }
-
-  main {
-    background-color: var(--color-bg-main);
-    color: var(--color-txt-main);
-    /* grid-area: main; */
-  }
-
-  footer {
-    background-color: var(--color-bg-footer);
-    color: var(--color-txt-footer);
-    /* grid-area: footer; */
-  }
-
-  nav {
-    background-color: var(--color-bg-nav);
-    color: var(--color-txt-nav);
-    /* grid-area: nav; */
   }
 
   nav li {
     font-weight: normal;
-    padding-top: 1rem;  
+    padding-top: 1rem;
   }
 
   nav > ul > li:first-child {
@@ -69,13 +35,4 @@
   nav li[selected] > ul {
     display: block !important;
   }
-
-  @media screen and (min-width: 640px) {
-    body {
-      grid-template:
-        "header header" auto
-        "nav main" 1fr
-        "footer footer" auto / auto 1fr;
-    }
-  }  
 }

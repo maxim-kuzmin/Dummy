@@ -1,4 +1,4 @@
 @layer tailwind, app;
 
-@import "./tailwind.css" layer(tailwind);
+@import "./tailwind/all.css" layer(tailwind);
 @import "./app/all.css" layer(app);

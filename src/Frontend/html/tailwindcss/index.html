@@ -4,12 +4,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tailwindcss</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="grid [grid-template:'header'_auto_'nav'_auto_'main'_1fr_'footer'_auto]">
-  <header class="[grid-area:header]">11111111</header>
-  <nav class="[grid-area:nav]">
+<body class="app-body">
+  <header class="app-header">11111111</header>
+  <nav class="app-nav">
     <ul>
       <li><a href="#">11111</a>
         <ul>
@@ -35,7 +36,8 @@
           <li><a href="#">11111-4</a></li>
           <li><a href="#">11111-5</a></li>
         </ul>
-      </a></li>
+        </a>
+      </li>
       <li><a href="#">22222</a>
         <ul>
           <li><a href="#">22222-1</a></li>
@@ -68,14 +70,15 @@
           <li><a href="#">22222-4</a></li>
           <li><a href="#">22222-5</a></li>
         </ul>
-      </a></li>
+        </a>
+      </li>
       <li><a href="#">33333</a></li>
       <li><a href="#">44444</a></li>
       <li><a href="#">55555</a></li>
     </ul>
-  </nav>  
-  <main class="[grid-area:main]">2222222</main>
-  <footer class="[grid-area:footer]">33333333</footer>
+  </nav>
+  <main class="app-main">2222222</main>
+  <footer class="app-footer">33333333</footer>
 </body>
 
 </html>
