@@ -7,7 +7,10 @@
       "nav" auto
       "main" 1fr
       "footer" auto;
-    min-height: 100vh
+    min-height: 100vh;
+    & > * {
+      padding: 1rem;
+    }
   }
 
   @media (width >= 40rem) {
@@ -41,5 +44,30 @@
     background-color: var(--color-bg-nav);
     color: var(--color-txt-nav);
     grid-area: nav;
+    & li {
+      font-weight: normal;
+      padding-top: 1rem;
+    }
+    & > ul > li:first-child {
+      padding-top: 0;
+    }
+    & li[selected] {
+      font-weight: bold;
+    }
+    & li[selected] ul ul {
+      display: none;
+    }
+    & li ul {
+      margin-left: 1rem;
+    }
+    & li:has(li[selected]) {
+      font-weight: bold;
+    }
+    & li:not(:has(li[selected])) ul {
+      display: none;
+    }
+    & li[selected] > ul {
+      display: block !important;
+    }
   }
 }

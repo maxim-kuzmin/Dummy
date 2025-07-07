@@ -1,4 +1,3 @@
-@layer theme, base;
+@layer theme;
 
-@import "./base.css";
 @import "./theme.css";

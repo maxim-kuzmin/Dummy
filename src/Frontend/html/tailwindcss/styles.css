@@ -9,6 +9,9 @@
       "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
       --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
+      --spacing: 0.25rem;
+      --font-weight-normal: 400;
+      --font-weight-bold: 700;
       --default-font-family: var(--font-sans);
       --default-mono-font-family: var(--font-mono);
       --color-bg-body: var(--color-bg-body);
@@ -201,6 +204,9 @@
       display: grid;
       min-height: 100vh;
       background-color: var(--color-bg-body);
+      :is(& > *) {
+        padding: 1rem;
+      }
     }
     .app-footer {
       grid-area: footer;
@@ -212,50 +218,52 @@
       background-color: var(--color-bg-header);
       color: var(--color-txt-header);
     }
-    .app-nav {
-      grid-area: nav;
-      background-color: var(--color-bg-nav);
-      color: var(--color-txt-nav);
-    }
     .app-main {
       grid-area: main;
       background-color: var(--color-bg-main);
       color: var(--color-txt-main);
     }
+    .app-nav {
+      grid-area: nav;
+      background-color: var(--color-bg-nav);
+      color: var(--color-txt-nav);
+      & > ul > li {
+        &:first-child {
+          padding-top: calc(var(--spacing) * 0);
+        }
+      }
+      & li {
+        padding-top: 1rem;
+      }
+      & li {
+        --tw-font-weight: var(--font-weight-normal);
+        font-weight: var(--font-weight-normal);
+      }
+      & li ul {
+        margin-left: 1rem;
+      }
+      & li:has(li[selected]) {
+        --tw-font-weight: var(--font-weight-bold);
+        font-weight: var(--font-weight-bold);
+      }
+      & li:not(:has(li[selected])) ul {
+        display: none;
+      }
+      & li[selected] {
+        --tw-font-weight: var(--font-weight-bold);
+        font-weight: var(--font-weight-bold);
+      }
+      & li[selected] > ul {
+        display: block !important;
+      }
+      & li[selected] ul ul {
+        display: none;
+      }
+    }
   }
 }
 @layer app {
-  @layer theme, base;
-  @layer base {
-    body > * {
-      padding: 1rem;
-    }
-    nav li {
-      font-weight: normal;
-      padding-top: 1rem;
-    }
-    nav > ul > li:first-child {
-      padding-top: 0;
-    }
-    nav li[selected] {
-      font-weight: bold;
-    }
-    nav li[selected] ul ul {
-      display: none;
-    }
-    nav li ul {
-      margin-left: 1rem;
-    }
-    nav li:has(li[selected]) {
-      font-weight: bold;
-    }
-    nav li:not(:has(li[selected])) ul {
-      display: none;
-    }
-    nav li[selected] > ul {
-      display: block !important;
-    }
-  }
+  @layer theme;
   @layer theme {
     :root, :host {
       --color-bg-body: gray;
@@ -280,11 +288,16 @@
   inherits: false;
   initial-value: solid;
 }
+@property --tw-font-weight {
+  syntax: "*";
+  inherits: false;
+}
 @layer properties {
   @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
     *, ::before, ::after, ::backdrop {
       --tw-border-style: solid;
       --tw-outline-style: solid;
+      --tw-font-weight: initial;
     }
   }
 }
