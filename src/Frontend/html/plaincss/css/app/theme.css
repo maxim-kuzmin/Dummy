@@ -1,0 +1,13 @@
+@layer theme {
+  :root, :host {
+    --color-bg-body: gray;
+    --color-bg-header: white;
+    --color-bg-footer: red;
+    --color-bg-main: blue;
+    --color-bg-nav: yellow;
+    --color-txt-header: black;
+    --color-txt-footer: white;
+    --color-txt-main: white;
+    --color-txt-nav: black;
+  }
+}
