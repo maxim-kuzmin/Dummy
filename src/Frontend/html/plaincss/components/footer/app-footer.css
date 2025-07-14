@@ -1,5 +1,5 @@
 @layer components {
-  :host {
+  .app-footer {
     background-color: var(--color-bg-footer);
     color: var(--color-txt-footer);
     grid-area: footer;

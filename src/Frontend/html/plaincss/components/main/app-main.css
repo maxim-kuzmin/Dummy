@@ -1,5 +1,5 @@
 @layer components {
-  :host {
+  .app-main {
     background-color: var(--color-bg-main);
     color: var(--color-txt-main);
     grid-area: main;

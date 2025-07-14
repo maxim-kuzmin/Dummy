@@ -1,5 +1,5 @@
 @layer components {
-  :host {
+  .app-header {
     background-color: var(--color-bg-header);
     color: var(--color-txt-header);
     grid-area: header;

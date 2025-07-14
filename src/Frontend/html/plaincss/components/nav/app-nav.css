@@ -1,5 +1,5 @@
 @layer components {
-  :host {
+  .app-nav {
     background-color: var(--color-bg-nav);
     color: var(--color-txt-nav);
     grid-area: nav;
