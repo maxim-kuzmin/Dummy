@@ -1,0 +1,24 @@
+@layer components {
+  :host {
+    background-color: var(--color-bg-body);
+    display: grid;
+    grid-template:
+      "header" auto
+      "nav" auto
+      "main" 1fr
+      "footer" auto;
+    min-height: 100vh;
+    & > * {
+      padding: var(--padding-default);
+    }
+  }
+
+  @media (width >= 40rem) {
+    :host {
+      grid-template:
+        "header header" auto
+        "nav main" 1fr
+        "footer footer" auto / auto 1fr;
+    }
+  }  
+}

@@ -1,0 +1,8 @@
+<script src="components/main/app-main.js"></script>
+<template id="tpl-app-main">  
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    @import "components/main/app-main.css" layer(app);
+  </style>
+  <main class="app-main">2222222</main>
+</template>

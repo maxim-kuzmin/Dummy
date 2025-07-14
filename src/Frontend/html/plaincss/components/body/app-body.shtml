@@ -1,0 +1,11 @@
+<script src="components/body/app-body.js"></script>
+<template id="tpl-app-body">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    @import "components/body/app-body.css" layer(app);
+  </style>
+  <app-header></app-header>
+  <app-nav></app-nav>
+  <app-main></app-main>
+  <app-footer></app-footer>
+</template>

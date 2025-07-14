@@ -9,5 +9,6 @@
     --color-txt-footer: white;
     --color-txt-main: white;
     --color-txt-nav: black;
+    --padding-default: 1rem;
   }
 }

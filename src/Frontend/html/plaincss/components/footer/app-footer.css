@@ -1,0 +1,7 @@
+@layer components {
+  :host {
+    background-color: var(--color-bg-footer);
+    color: var(--color-txt-footer);
+    grid-area: footer;
+  }
+}
