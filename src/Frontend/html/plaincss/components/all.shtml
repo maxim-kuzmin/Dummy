@@ -1,5 +1,4 @@
-  <!--#include file="./body/app-body.shtml" -->
-  <!--#include file="./footer/app-footer.shtml" -->
-  <!--#include file="./header/app-header.shtml" -->
-  <!--#include file="./main/app-main.shtml" -->
-  <!--#include file="./nav/app-nav.shtml" -->
+<!--#include file="./footer/app-footer.shtml" -->
+<!--#include file="./header/app-header.shtml" -->
+<!--#include file="./main/app-main.shtml" -->
+<!--#include file="./nav/app-nav.shtml" -->
