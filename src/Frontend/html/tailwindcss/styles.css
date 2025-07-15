@@ -170,36 +170,7 @@
       display: none !important;
     }
   }
-  @layer utilities {
-    .grid {
-      display: grid;
-    }
-    .min-h-screen {
-      min-height: 100vh;
-    }
-    .bg-bg-body {
-      background-color: var(--color-bg-body);
-    }
-    .\*\:p-\[1rem\] {
-      :is(& > *) {
-        padding: 1rem;
-      }
-    }
-  }
-  @layer components {
-    .app-body {
-      grid-template: "header" auto "nav" auto "main" 1fr "footer" auto;
-      @media (width >= 40rem) {
-        grid-template: "header header" auto "nav main" 1fr "footer footer" auto / auto 1fr;
-      }
-      display: grid;
-      min-height: 100vh;
-      background-color: var(--color-bg-body);
-      :is(& > *) {
-        padding: 1rem;
-      }
-    }
-  }
+  @layer utilities;
   @layer components {
     .app-footer {
       grid-area: footer;
@@ -212,6 +183,20 @@
       grid-area: header;
       background-color: var(--color-bg-header);
       color: var(--color-txt-header);
+    }
+  }
+  @layer components {
+    .app-layout {
+      grid-template: "header" auto "nav" auto "main" 1fr "footer" auto;
+      @media (width >= 40rem) {
+        grid-template: "header header" auto "nav main" 1fr "footer footer" auto / auto 1fr;
+      }
+      display: grid;
+      min-height: 100vh;
+      background-color: var(--color-bg-body);
+      :is(& > *) {
+        padding: 1rem;
+      }
     }
   }
   @layer components {
@@ -257,20 +242,6 @@
       }
       & li[selected] ul ul {
         display: none;
-      }
-    }
-  }
-  @layer components {
-    .app-page-root {
-      grid-template: "header" auto "nav" auto "main" 1fr "footer" auto;
-      @media (width >= 40rem) {
-        grid-template: "header header" auto "nav main" 1fr "footer footer" auto / auto 1fr;
-      }
-      display: grid;
-      min-height: 100vh;
-      background-color: var(--color-bg-body);
-      :is(& > *) {
-        padding: 1rem;
       }
     }
   }

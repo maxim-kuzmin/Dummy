@@ -1,6 +1,6 @@
-<script src="pages/root/app-page-root.js"></script>
-<template id="tpl-app-page-root">
-  <div class="app-page-root">
+<script src="components/layout/app-layout.js"></script>
+<template id="tpl-app-layout">
+  <div class="app-layout">
     <app-header></app-header>
     <app-nav></app-nav>
     <app-main></app-main>
