@@ -1,0 +1,4 @@
+<script src="components/app/main/index.js"></script>
+<template id="tpl-app-main">
+  <main class="app-main">2222222</main>
+</template>

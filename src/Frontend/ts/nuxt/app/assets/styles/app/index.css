@@ -1,0 +1,5 @@
+@layer theme, components;
+
+@import '../../../components/index.css';
+
+@import "./theme.css";

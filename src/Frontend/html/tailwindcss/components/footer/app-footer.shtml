@@ -1,4 +1,0 @@
-<script src="components/footer/app-footer.js"></script>
-<template id="tpl-app-footer">  
-  <footer class="app-footer">33333333</footer>
-</template>

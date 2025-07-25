@@ -1,0 +1,16 @@
+@layer components {
+  .app-nav {
+    grid-area: nav;
+    @apply bg-bg-nav
+      text-txt-nav
+      [&_li]:font-normal
+      [&_li]:pt-[1rem]
+      [&_>_ul_>_li]:first:pt-0
+      [&_li[data-selected]]:font-bold
+      [&_li[data-selected]_ul_ul]:hidden
+      [&_li_ul]:ml-[1rem]
+      [&_li:has(li[data-selected])]:font-bold
+      [&_li:not(:has(li[data-selected]))_ul]:hidden
+      [&_li[data-selected]_>_ul]:!block;
+  }
+}

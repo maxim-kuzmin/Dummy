@@ -1,0 +1,11 @@
+@theme inline {
+  --color-bg-body: var(--color-bg-body);
+  --color-bg-header: var(--color-bg-header);
+  --color-bg-footer: var(--color-bg-footer);
+  --color-bg-main: var(--color-bg-main);
+  --color-bg-nav: var(--color-bg-nav);
+  --color-txt-header: var(--color-txt-header);
+  --color-txt-footer: var(--color-txt-footer);
+  --color-txt-main: var(--color-txt-main);
+  --color-txt-nav: var(--color-txt-nav);
+}

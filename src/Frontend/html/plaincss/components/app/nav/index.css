@@ -1,0 +1,32 @@
+@layer components {
+  .app-nav {
+    background-color: var(--color-bg-nav);
+    color: var(--color-txt-nav);
+    grid-area: nav;
+    & li {
+      font-weight: normal;
+      padding-top: var(--padding-default);
+    }
+    & > ul > li:first-child {
+      padding-top: 0;
+    }
+    & li[data-selected] {
+      font-weight: bold;
+    }
+    & li[data-selected] ul ul {
+      display: none;
+    }
+    & li ul {
+      margin-left: var(--padding-default);
+    }
+    & li:has(li[data-selected]) {
+      font-weight: bold;
+    }
+    & li:not(:has(li[data-selected])) ul {
+      display: none;
+    }
+    & li[data-selected] > ul {
+      display: block !important;
+    }
+  }
+}

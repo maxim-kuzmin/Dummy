@@ -1,9 +1,0 @@
-<script src="components/layout/app-layout.js"></script>
-<template id="tpl-app-layout">
-  <div class="app-layout">
-    <app-header></app-header>
-    <app-nav></app-nav>
-    <app-main></app-main>
-    <app-footer></app-footer>
-  </div>
-</template>

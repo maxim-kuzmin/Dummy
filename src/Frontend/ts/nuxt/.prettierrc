@@ -1,0 +1,10 @@
+{
+  "semi": false,
+  "trailingComma": "all",
+  "useTabs": true,
+  "singleQuote": true,
+  "tabWidth": 2,
+  "vueIndentScriptAndStyle": true,
+  //"plugins": ["prettier-plugin-tailwindcss"],
+  "tailwindStylesheet": "./app/assets/styles/index.css"
+}

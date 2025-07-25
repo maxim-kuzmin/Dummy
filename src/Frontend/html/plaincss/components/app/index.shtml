@@ -1,0 +1,5 @@
+<!--#include file="./footer/index.shtml" -->
+<!--#include file="./header/index.shtml" -->
+<!--#include file="./layout/index.shtml" -->
+<!--#include file="./main/index.shtml" -->
+<!--#include file="./nav/index.shtml" -->

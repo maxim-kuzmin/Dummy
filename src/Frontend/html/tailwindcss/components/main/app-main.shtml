@@ -1,4 +1,0 @@
-<script src="components/main/app-main.js"></script>
-<template id="tpl-app-main">
-  <main class="app-main">2222222</main>
-</template>

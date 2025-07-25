@@ -1,0 +1,5 @@
+@layer tailwind, app;
+
+@import "./app/index.css" layer(app);
+
+@import "./tailwind/index.css" layer(tailwind);

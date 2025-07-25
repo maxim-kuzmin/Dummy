@@ -1,0 +1,4 @@
+<script src="components/app/header/index.js"></script>
+<template id="tpl-app-header">
+  <header class="app-header">11111111</header>
+</template>
