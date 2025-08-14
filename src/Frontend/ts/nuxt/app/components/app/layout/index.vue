@@ -2,7 +2,7 @@
 	<div class="app-layout">
 		<AppHeader />
 		<AppNav />
-		<AppMain />
+		<AppMain><slot/></AppMain>
 		<AppFooter />
 	</div>
 </template>

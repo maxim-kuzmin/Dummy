@@ -4,4 +4,26 @@
     color: var(--color-txt-main);
     grid-area: main;
   }
+
+  .app-main .popover-container {
+    position: relative;
+  }
+
+  .app-main .popover-container #my-popover {
+    visibility: visible;
+    position: absolute;
+    color: var(--color-txt-nav);
+    background-color: var(--color-bg-nav);
+    left: anchor(left);
+    top: anchor(-100%);
+  }
+
+  .app-main .popover-container #my-popover[popover]:popover-open {
+    position: absolute;
+    visibility: visible;
+  }
+
+  [popover]:not(:popover-open):not(dialog[open]) {
+    visibility: hidden;
+  }
 }

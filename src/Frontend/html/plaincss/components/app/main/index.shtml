@@ -1,4 +1,11 @@
 <script src="components/app/main/index.js"></script>
 <template id="tpl-app-main">
-  <main class="app-main">2222222</main>
+  <main class="app-main">2222222
+    <div class="popover-container" id="my-popover-anchor">
+      <button type="button" popovertarget="my-popover" popovertargetaction="toggle">Open popover</button>
+      <div id="my-popover" anchor="my-popover-anchor" popover>
+        POPOVER
+      </div>
+    </div>
+  </main>
 </template>

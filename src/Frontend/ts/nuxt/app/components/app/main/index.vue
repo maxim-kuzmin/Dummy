@@ -1,3 +1,3 @@
 <template>
-  <main class="app-main">2222222</main>
+  <main class="app-main">2222222<slot/></main>
 </template>

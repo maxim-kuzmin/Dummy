@@ -1,87 +1,42 @@
+<script setup lang="ts">
+import { computed, reactive, ref, toRefs, watch, watchEffect } from 'vue'
+
+interface Named {
+  name: string
+}
+
+const a: Named = { name: '1111111111' }
+
+const e = reactive<Named>(a)
+
+console.log('Named', e)
+
+const props = defineProps<{ name: string }>()
+
+console.log('props', props)
+
+const { name } = toRefs(props) // 1
+//const name = computed(() => props.name) // 2
+//const name = ref(props.name) // 3
+
+const title = ref('2222222')
+
+watchEffect(() => {
+  console.log('watchEffect:props.name', props.name)
+  console.log('watchEffect:title', title.value)
+})
+
+watch(name, () => {
+  console.log('watch:name', name.value)
+})
+
+watch(title, () => {
+  console.log('watch:title', title.value)
+})
+</script>
 <template>
-  <div class="item">
-    <i>
-      <slot name="icon"></slot>
-    </i>
-    <div class="details">
-      <h3>
-        <slot name="heading"></slot>
-      </h3>
-      <slot></slot>
-    </div>
-  </div>
+  <h1>name: {{ name }}</h1>
+  <h1>title: {{ title }}</h1>
+  <label for="title">title:</label>
+  <input id="title" type="text" v-model="title" />
 </template>
-
-<style scoped>
-.item {
-  margin-top: 2rem;
-  display: flex;
-  position: relative;
-}
-
-.details {
-  flex: 1;
-  margin-left: 1rem;
-}
-
-i {
-  display: flex;
-  place-items: center;
-  place-content: center;
-  width: 32px;
-  height: 32px;
-
-  color: var(--color-text);
-}
-
-h3 {
-  font-size: 1.2rem;
-  font-weight: 500;
-  margin-bottom: 0.4rem;
-  color: var(--color-heading);
-}
-
-@media (min-width: 1024px) {
-  .item {
-    margin-top: 0;
-    padding: 0.4rem 0 1rem calc(var(--section-gap) / 2);
-  }
-
-  i {
-    top: calc(50% - 25px);
-    left: -26px;
-    position: absolute;
-    border: 1px solid var(--color-border);
-    background: var(--color-background);
-    border-radius: 8px;
-    width: 50px;
-    height: 50px;
-  }
-
-  .item:before {
-    content: ' ';
-    border-left: 1px solid var(--color-border);
-    position: absolute;
-    left: 0;
-    bottom: calc(50% + 25px);
-    height: calc(50% - 25px);
-  }
-
-  .item:after {
-    content: ' ';
-    border-left: 1px solid var(--color-border);
-    position: absolute;
-    left: 0;
-    top: calc(50% + 25px);
-    height: calc(50% - 25px);
-  }
-
-  .item:first-of-type:before {
-    display: none;
-  }
-
-  .item:last-of-type:after {
-    display: none;
-  }
-}
-</style>
