@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { AppLayout } from "../components/app/layout/index.component";
 
@@ -7,4 +7,6 @@ import { AppLayout } from "../components/app/layout/index.component";
   imports: [RouterOutlet, AppLayout],
   templateUrl: './app.html',
 })
-export class App {}
+export class App {
+  protected readonly title = signal('dummy');
+}
