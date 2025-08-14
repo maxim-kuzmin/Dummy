@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular": {
+    "dummy": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -65,13 +65,13 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "angular:build:production"
+              "buildTarget": "dummy:build:production"
             },
             "development": {
-              "buildTarget": "angular:build:development"
+              "buildTarget": "dummy:build:development"
             },
             "ru": {
-              "buildTarget": "angular:build:development,ru"
+              "buildTarget": "dummy:build:development,ru"
             }
           },
           "defaultConfiguration": "development"
