@@ -4,6 +4,6 @@ customElements.define('app-main', class extends HTMLElement {
   }
 
   connectedCallback() {
-    this.outerHTML = document.querySelector('#tpl-app-main').innerHTML;
+    app.component.render.call(this, '#tpl-app-main');
   }
 });

@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-  <file source-language="ru" datatype="plaintext" original="ng2.template">
+  <file source-language="en-x-source" datatype="plaintext" original="ng2.template">
     <body>
+      <trans-unit id="3708256764437218933" datatype="html">
+        <source>@@greeting <x id="PH" equiv-text="this.name1"/><x id="PH_1" equiv-text="this.name2"/><x id="PH_2" equiv-text="this.name1"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.ts</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="1337836614169652655" datatype="html">
         <source>@@footer</source>
         <context-group purpose="location">

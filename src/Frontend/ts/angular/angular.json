@@ -57,6 +57,9 @@
             },
             "ru": {
               "localize": ["ru"]
+            },
+            "en": {
+              "localize": ["en"]
             }
           },
           "defaultConfiguration": "production"
@@ -72,6 +75,9 @@
             },
             "ru": {
               "buildTarget": "dummy:build:development,ru"
+            },
+            "en": {
+              "buildTarget": "dummy:build:development,en"
             }
           },
           "defaultConfiguration": "development"
@@ -99,10 +105,15 @@
         }
       },
       "i18n": {
-        "sourceLocale": "en",
+        "sourceLocale": "en-x-source",
         "locales": {
           "ru": {
-            "translation": "src/locale/messages.ru.xlf"
+            "translation": "src/locale/messages.ru.xlf",
+            "subPath": ""
+          },
+          "en": {
+            "translation": "src/locale/messages.en.xlf",
+            "subPath": "en"
           }
         }
       }

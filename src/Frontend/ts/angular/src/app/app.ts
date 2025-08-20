@@ -8,5 +8,8 @@ import { AppLayout } from "../components/app/layout/index.component";
   templateUrl: './app.html',
 })
 export class App {
-  protected readonly title = signal('dummy');
+  private name1 = '"';
+  private name2 = 'Dummy';
+
+  protected readonly title = signal($localize`@@greeting ${this.name1}${this.name2}${this.name1}`);
 }

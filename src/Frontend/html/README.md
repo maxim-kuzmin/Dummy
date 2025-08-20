@@ -4,8 +4,7 @@
 
 1. cd ../../../Docker2023/1
 
-2. docker compose --file ./maxim-kuzmin/docker-compose.yml --project-name="1_maxim-kuzmin_1" --env-file ../.env  up -d
-
+2. docker compose --file ./maxim-kuzmin/docker-compose.yml --project-name="1_maxim-kuzmin_1" --env-file ../.env up -d
 
 ## Tailwindcss
 
@@ -13,7 +12,7 @@
 
 2. npm install tailwindcss @tailwindcss/cli
 
-3. npx @tailwindcss/cli -i ./tailwindcss/assets/styles/index.css -o ./tailwindcss/styles.css --watch
+3. npx @tailwindcss/cli -i ./assets/styles/index.css -o ./styles.css --watch
 
 ## Links
 

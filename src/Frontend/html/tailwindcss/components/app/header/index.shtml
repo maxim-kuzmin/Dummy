@@ -1,4 +1,7 @@
 <script src="components/app/header/index.js"></script>
 <template id="tpl-app-header">
-  <header class="app-header">11111111</header>
+  <header class="app-header" id="{{ID}}">
+    <div>Шапка</div>
+    <app-language id="{{ID}}-language"></app-language>
+  </header>
 </template>

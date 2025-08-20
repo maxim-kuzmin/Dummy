@@ -1,0 +1,14 @@
+<script src="components/app/language/index.js"></script>
+<template id="tpl-app-language">
+  <nav class="app-language" id="{{ID}}">
+    <button type="button">Русский</button>
+    <ul style="visibility: hidden;">
+      <li data-selected>
+        <a href="#ru">Русский</a>
+      </li>
+      <li>
+        <a href="#en">English</a>
+      </li>
+    </ul>
+  </nav>
+</template>

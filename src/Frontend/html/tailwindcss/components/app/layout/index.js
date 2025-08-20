@@ -4,6 +4,6 @@ customElements.define('app-layout', class extends HTMLElement {
   }
 
   connectedCallback() {
-    this.outerHTML = document.querySelector('#tpl-app-layout').innerHTML;
+    app.component.render.call(this, '#tpl-app-layout');
   }
 });

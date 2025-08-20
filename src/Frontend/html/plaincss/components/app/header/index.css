@@ -3,5 +3,11 @@
     background-color: var(--color-bg-header);
     color: var(--color-txt-header);
     grid-area: header;
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-start;
+    & > :last-child {
+      margin-left: auto;
+    }
   }
 }

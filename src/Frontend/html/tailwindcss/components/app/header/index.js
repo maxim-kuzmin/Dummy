@@ -4,6 +4,6 @@ customElements.define('app-header', class extends HTMLElement {
   }
 
   connectedCallback() {
-    this.outerHTML = document.querySelector('#tpl-app-header').innerHTML;
+    app.component.render.call(this, '#tpl-app-header');
   }
 });

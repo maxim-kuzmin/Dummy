@@ -4,6 +4,6 @@ customElements.define('app-footer', class extends HTMLElement {
   }
 
   connectedCallback() {
-    this.outerHTML = document.querySelector('#tpl-app-footer').innerHTML;
+    app.component.render.call(this, '#tpl-app-footer');
   }
 });

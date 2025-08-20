@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: docker-angular-sample
+    image: maxim-kuzmin.makc_dummy_production_frontend_web_angular
     ports:
       - "8080:8080"
 
@@ -11,6 +11,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
+    image: maxim-kuzmin.makc_dummy_development_frontend_web_angular
     ports:
       - "4200:4200"
     develop:

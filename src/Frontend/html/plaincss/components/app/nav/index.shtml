@@ -1,6 +1,6 @@
 <script src="components/app/nav/index.js"></script>
 <template id="tpl-app-nav">
-  <nav class="app-nav">
+  <nav class="app-nav" id="{{ID}}">
     <ul>
       <li><a href="#">11111</a>
         <ul>
