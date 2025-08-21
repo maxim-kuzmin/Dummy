@@ -1,9 +1,0 @@
-<script src="components/app/layout/index.js"></script>
-<template id="tpl-app-layout">
-  <div class="app-layout" id="{{ID}}">
-    <app-header id="{{ID}}-header"></app-header>
-    <app-nav id="{{ID}}-nav"></app-nav>
-    <app-main id="{{ID}}-main"></app-main>
-    <app-footer id="{{ID}}-footer"></app-footer>
-  </div>
-</template>

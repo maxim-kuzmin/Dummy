@@ -1,4 +1,0 @@
-<script src="components/app/footer/index.js"></script>
-<template id="tpl-app-footer">
-  <footer class="app-footer" id="{{ID}}">Подвал</footer>
-</template>

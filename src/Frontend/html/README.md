@@ -16,6 +16,6 @@
 
 ## Links
 
-1. http://localhost:50000/plaincss/
+1. http://localhost:50000/content/plaincss/
 
-2. http://localhost:50000/tailwindcss/
+2. http://localhost:50000/content/tailwindcss/
