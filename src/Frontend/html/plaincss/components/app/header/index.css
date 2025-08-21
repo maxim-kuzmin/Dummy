@@ -6,8 +6,10 @@
     display: flex;
     gap: 1rem;
     justify-content: flex-start;
-    & > :last-child {
-      margin-left: auto;
+    & > * {
+      &:last-child {
+        margin-left: auto;
+      }
     }
   }
 }

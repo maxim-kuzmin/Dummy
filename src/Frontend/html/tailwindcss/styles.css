@@ -18,40 +18,49 @@
       gap: 1rem;
       background-color: var(--color-bg-header);
       color: var(--color-txt-header);
-      & > :last-child {
-        margin-left: auto;
+      & > * {
+        &:last-child {
+          margin-left: auto;
+        }
       }
     }
   }
   @layer components {
     .app-language {
-      background-color: var(--color-bg-body);
-      border-radius: 1rem;
-      color: var(--color-txt-body);
       position: relative;
-      & li[data-selected] {
-        font-weight: bold;
-      }
+      border-radius: 1rem;
+      background-color: var(--color-bg-body);
+      color: var(--color-txt-body);
       & button {
         cursor: pointer;
         padding: 1rem;
         &:hover {
-          color: var(--color-txt-body-hover);
+          @media (hover: hover) {
+            color: var(--color-txt-body-hover);
+          }
         }
       }
       & ul {
-        align-items: start;
-        background-color: var(--color-bg-body);
-        border-radius: 1rem;
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-        margin-top: 1rem;
-        padding: 1rem;
         position: absolute;
         z-index: 1;
-        & li:hover {
-          color: var(--color-txt-body-hover);
+        margin-top: 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+        border-radius: 1rem;
+        background-color: var(--color-bg-body);
+        padding: 1rem;
+        & li {
+          &:hover {
+            @media (hover: hover) {
+              color: var(--color-txt-body-hover);
+            }
+          }
+          &[data-selected] {
+            --tw-font-weight: var(--font-weight-bold);
+            font-weight: var(--font-weight-bold);
+          }
         }
       }
     }
@@ -82,37 +91,43 @@
       grid-area: nav;
       background-color: var(--color-bg-nav);
       color: var(--color-txt-nav);
-      & > ul > li {
-        &:first-child {
-          padding-top: calc(var(--spacing) * 0);
+      & ul {
+        & li {
+          padding-top: 1rem;
+          --tw-font-weight: var(--font-weight-normal);
+          font-weight: var(--font-weight-normal);
+          & ul {
+            margin-left: 1rem;
+          }
+          &[data-selected] {
+            --tw-font-weight: var(--font-weight-bold);
+            font-weight: var(--font-weight-bold);
+            & ul {
+              & ul {
+                display: none;
+              }
+            }
+            & > ul {
+              display: block !important;
+            }
+          }
+          &:has(li[data-selected]) {
+            --tw-font-weight: var(--font-weight-bold);
+            font-weight: var(--font-weight-bold);
+          }
+          &:not(:has(li[data-selected])) {
+            & ul {
+              display: none;
+            }
+          }
         }
       }
-      & li {
-        padding-top: 1rem;
-      }
-      & li {
-        --tw-font-weight: var(--font-weight-normal);
-        font-weight: var(--font-weight-normal);
-      }
-      & li ul {
-        margin-left: 1rem;
-      }
-      & li:has(li[data-selected]) {
-        --tw-font-weight: var(--font-weight-bold);
-        font-weight: var(--font-weight-bold);
-      }
-      & li:not(:has(li[data-selected])) ul {
-        display: none;
-      }
-      & li[data-selected] {
-        --tw-font-weight: var(--font-weight-bold);
-        font-weight: var(--font-weight-bold);
-      }
-      & li[data-selected] > ul {
-        display: block !important;
-      }
-      & li[data-selected] ul ul {
-        display: none;
+      & > ul {
+        & > li {
+          &:first-child {
+            padding-top: calc(var(--spacing) * 0);
+          }
+        }
       }
     }
   }

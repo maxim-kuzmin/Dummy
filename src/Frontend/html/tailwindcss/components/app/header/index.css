@@ -5,7 +5,11 @@
       flex
       gap-[1rem]
       justify-start
-      text-txt-header
-      [&_>_:last-child]:ml-auto;
+      text-txt-header;
+    & > * {
+      &:last-child {
+        @apply ml-auto;
+      }
+    }
   }
 }

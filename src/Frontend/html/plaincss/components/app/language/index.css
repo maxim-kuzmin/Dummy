@@ -4,9 +4,6 @@
     border-radius: 1rem;
     color: var(--color-txt-body);
     position: relative;
-    & li[data-selected] {
-      font-weight: bold;
-    }
     & button {
       cursor: pointer;
       padding: 1rem;
@@ -15,7 +12,7 @@
       }
     }
     & ul {
-      align-items: start;
+      align-items: flex-start;
       background-color: var(--color-bg-body);
       border-radius: 1rem;
       display: flex;
@@ -25,8 +22,13 @@
       padding: 1rem;
       position: absolute;
       z-index: 1;
-      & li:hover {
-        color: var(--color-txt-body-hover);
+      & li {
+        &:hover {
+          color: var(--color-txt-body-hover);
+        }
+        &[data-selected] {
+          font-weight: bold;
+        }
       }
     }
   }

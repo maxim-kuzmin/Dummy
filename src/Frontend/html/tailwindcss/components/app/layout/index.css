@@ -11,10 +11,9 @@
         "nav main" 1fr
         "footer footer" auto / auto 1fr;
     }
-    @apply
-      bg-bg-body
+    @apply bg-bg-body
       grid
       *:p-[1rem]
-      min-h-screen
+      min-h-screen;
   }
 }
