@@ -1,5 +1,6 @@
-@import './footer/index.css';
-@import './header/index.css';
-@import './layout/index.css';
-@import './main/index.css';
-@import './nav/index.css';
+@import "./footer/index.css";
+@import "./header/index.css";
+@import "./language/index.css";
+@import "./layout/index.css";
+@import "./main/index.css";
+@import "./nav/index.css";

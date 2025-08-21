@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'footer[app-footer]',
+  selector: 'nav[app-language]',
   templateUrl: './index.component.html',
 })
-export class AppFooter {}
+export class AppLanguage {}
