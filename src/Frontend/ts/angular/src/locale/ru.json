@@ -1,0 +1,11 @@
+{
+  "locale": "en-x-source",
+  "translations": {
+    "page.about.title": "О нас",
+    "page.fake.title": "Фальшивка",
+    "page.index.title": "Главное",
+    "page.not-found.title": "Не найдено",
+    "component.app-footer.link.index.text": "Подвал",
+    "component.app-header.link.index.text": "Перейти на главную страницу"
+  }
+}

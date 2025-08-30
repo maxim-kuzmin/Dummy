@@ -10,7 +10,7 @@ export class AppNotFoundPage {
   private pageService = inject(PageService);
 
   constructor() {
-    this.pageService.title.set($localize`@@page.not-found.title`);
+    this.pageService.title.set($localize`:@@page.not-found.title:@@`);
     this.pageService.key.set(PageKeyEnum.NotFound);
   }
 }

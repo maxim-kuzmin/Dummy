@@ -10,7 +10,7 @@ export class AppAboutPage {
   private pageService = inject(PageService);
 
   constructor() {
-    this.pageService.title.set($localize`@@page.about.title`);
+    this.pageService.title.set($localize`:@@page.about.title:@@`);
     this.pageService.key.set(PageKeyEnum.About);
   }
 }

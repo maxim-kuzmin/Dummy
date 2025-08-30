@@ -10,7 +10,7 @@ export class AppIndexPage {
   private pageService = inject(PageService);
 
   constructor() {
-    this.pageService.title.set($localize`@@page.index.title`);
+    this.pageService.title.set($localize`:@@page.index.title:@@`);
     this.pageService.key.set(PageKeyEnum.Index);
   }
 }
