@@ -1,0 +1,40 @@
+@layer components {
+  .app-nav {
+    grid-area: nav;
+    @apply bg-bg-nav
+      text-txt-nav;
+    & ul {
+      & li {
+        @apply font-normal
+        pt-[1rem];
+        & ul {
+          @apply ml-[1rem];
+        }
+        &[data-selected] {
+          @apply font-bold;
+          & ul {
+            & ul {
+              @apply hidden;
+            }
+          }
+          & > ul {
+            @apply !block;
+          }
+        }
+        &:has(li[data-selected]) {
+          @apply font-bold;
+        }
+        &:not(:has(li[data-selected])) {
+          & ul {
+            @apply hidden;
+          }
+        }
+      }
+    }
+    & > ul {
+      & > li {
+        @apply first:pt-0;
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+@layer components {
+  .app-header {
+    grid-area: header;
+    @apply bg-bg-header
+      flex
+      gap-[1rem]
+      justify-start
+      text-txt-header;
+    & > * {
+      &:last-child {
+        @apply ml-auto;
+      }
+    }
+  }
+}

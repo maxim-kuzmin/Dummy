@@ -1,5 +1,6 @@
 @layer theme {
-  :root, :host {
+  :root,
+  :host {
     --color-bg-body: gray;
     --color-bg-header: white;
     --color-bg-footer: red;
