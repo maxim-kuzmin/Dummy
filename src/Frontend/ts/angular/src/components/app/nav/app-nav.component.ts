@@ -13,11 +13,7 @@ export class AppNav {
   private readonly router = inject(ActivatedRoute);
   private readonly pageService = inject(PageService);
 
-  protected readonly items;
-
-  constructor() {
-    this.items = signal<Item[]>(createFakeData(''));
-  }
+  protected readonly items = signal<Item[]>(createFakeData(''));
 }
 
 function createFakeData(url: string): Item[] {
