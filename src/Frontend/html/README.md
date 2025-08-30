@@ -12,7 +12,7 @@
 
 2. npm install tailwindcss @tailwindcss/cli
 
-3. npx @tailwindcss/cli -i ./assets/styles/index.css -o ./styles.css --watch
+3. npx @tailwindcss/cli -i ./assets/styles/styles.css -o ./styles.css --watch
 
 ## Links
 

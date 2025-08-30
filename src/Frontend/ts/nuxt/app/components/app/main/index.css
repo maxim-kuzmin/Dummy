@@ -1,8 +1,0 @@
-@layer components {
-  .app-main {
-    grid-area: main;
-    @apply
-      bg-bg-main
-      text-txt-main
-  }
-}

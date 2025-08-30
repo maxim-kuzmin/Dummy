@@ -1,0 +1,10 @@
+<button type="button" (click)="toggleMenu()">
+  {{ currentLanguage }}
+</button>
+<ul [style]="menuStyle()">
+  @for (language of languages; track language.key) {
+  <li>
+    <a [href]="languageService.getUrl(language.key)">{{ language.value }}</a>
+  </li>
+  }
+</ul>

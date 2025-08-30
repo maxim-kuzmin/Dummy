@@ -1,8 +1,0 @@
-@layer components {
-  .app-footer {
-    grid-area: footer;
-    @apply
-      bg-bg-footer
-      text-txt-footer
-  }
-}

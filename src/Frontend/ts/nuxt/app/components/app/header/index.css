@@ -1,8 +1,0 @@
-@layer components {
-  .app-header {
-    grid-area: header;
-    @apply
-      bg-bg-header
-      text-txt-header 
-  }
-}

@@ -23,7 +23,7 @@
               }
             ],
             "styles": [
-              "src/assets/styles/index.css"
+              "src/assets/styles/styles.css"
             ],
             "server": "src/main.server.ts",
             "outputMode": "server",
@@ -96,7 +96,7 @@
               }
             ],
             "styles": [
-              "src/assets/styles/index.css"
+              "src/assets/styles/styles.css"
             ],
             "polyfills": [
               "@angular/localize/init"

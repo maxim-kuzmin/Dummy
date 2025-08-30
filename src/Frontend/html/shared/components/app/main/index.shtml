@@ -1,4 +1,0 @@
-<script src="/shared/components/app/main/index.js"></script>
-<template id="tpl-app-main">
-  <main class="app-main" id="{{ID}}">Главное</main>
-</template>

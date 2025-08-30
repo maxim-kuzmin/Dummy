@@ -3,16 +3,15 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@app/*": ["src/app/*"],
+      "@components/*": ["src/components/*"],
+      "@services/*": ["src/services/*"]
+    },
     "outDir": "./out-tsc/app",
-    "types": [
-      "node",
-      "@angular/localize"
-    ]
+    "types": ["node", "@angular/localize"]
   },
-  "include": [
-    "src/**/*.ts"
-  ],
-  "exclude": [
-    "src/**/*.spec.ts"
-  ]
+  "include": ["src/**/*.ts"],
+  "exclude": ["src/**/*.spec.ts"]
 }
