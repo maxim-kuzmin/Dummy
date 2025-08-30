@@ -1,10 +1,10 @@
-<button type="button" (click)="toggleMenu()">
-  {{ currentLanguage }}
+<button #button type="button">
+  {{ currentLanguageValue }}
 </button>
-<ul [style]="menuStyle()">
-  @for (language of languages; track language.key) {
-  <li>
-    <a [href]="languageService.getUrl(language.key)">{{ language.value }}</a>
+<ul #menu [style]="menuStyle()">
+  @for (language of languages(); track language.key) {
+  <li [attr.data-selected]="language.selected || null">
+    <a [href]="language.url">{{ language.value }}</a>
   </li>
   }
 </ul>

@@ -1,0 +1,4 @@
+<a [routerLink]="data().url">{{ data().text }}</a>
+@if (data().children.length > 0) {
+<ul app-nav-items [data]="data().children"></ul>
+}

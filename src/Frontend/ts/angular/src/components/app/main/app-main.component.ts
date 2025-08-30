@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { PageService } from '@services/page.service';
+import { PageService } from '~shared/page/page.service';
 
 @Component({
   selector: 'main[app-main]',

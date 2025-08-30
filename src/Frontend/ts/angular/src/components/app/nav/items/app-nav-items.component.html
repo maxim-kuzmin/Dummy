@@ -1,0 +1,3 @@
+@for (item of data(); track item.key) {
+<li app-nav-item [data]="item" [attr.data-selected]="item.selected || null"></li>
+}

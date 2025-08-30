@@ -1,0 +1,11 @@
+{
+  "locale": "en-x-source",
+  "translations": {
+    "642874161285930399": "@@page.about.title",
+    "page.fake.title": "@@",
+    "6831772480088395004": "@@page.index.title",
+    "7013370901839111313": "@@page.not-found.title",
+    "1337836614169652655": "@@footer",
+    "1486953654962178995": "@@component.app-header.link.index.text"
+  }
+}

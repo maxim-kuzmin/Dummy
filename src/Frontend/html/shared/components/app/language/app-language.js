@@ -58,11 +58,15 @@ customElements.define(
         menuItemElement.addEventListener("click", this.handleMenuItemClick);
       }
 
-      window.addEventListener("click", this.handleWindowClick);
+      if (globalThis.addEventListener) {
+        globalThis.addEventListener("click", this.handleWindowClick);
+      }
     }
 
     disconnectedCallback() {
-      window.removeEventListener("click", this.handleWindowClick);
+      if (globalThis.removeEventListener) {
+        globalThis.removeEventListener("click", this.handleWindowClick);
+      }
     }
   }
 );

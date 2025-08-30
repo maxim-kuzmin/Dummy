@@ -3,14 +3,14 @@ import { PageService } from '~shared/page/page.service';
 import { PageKeyEnum } from '~shared/page/page.types';
 
 @Component({
-  selector: 'div[app-index-page]',
-  templateUrl: './app-index-page.component.html',
+  selector: 'div[app-not-found-page]',
+  templateUrl: './app-not-found-page.component.html',
 })
-export class AppIndexPage {
+export class AppNotFoundPage {
   private pageService = inject(PageService);
 
   constructor() {
-    this.pageService.title.set($localize`@@page.index.title`);
-    this.pageService.key.set(PageKeyEnum.Index);
+    this.pageService.title.set($localize`@@page.not-found.title`);
+    this.pageService.key.set(PageKeyEnum.NotFound);
   }
 }
