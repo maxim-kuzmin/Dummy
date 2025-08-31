@@ -4,19 +4,15 @@ import { LOCALE_ID, Injectable, inject } from '@angular/core';
   providedIn: 'root',
 })
 export class LanguageService {
-  private localeId = inject(LOCALE_ID);
+  private readonly localeId = inject(LOCALE_ID);
 
-  ruLanguageKey = 'ru';
-  enLanguageKey = 'en';
+  readonly ruLanguageKey = 'ru';
+  readonly enLanguageKey = 'en';
 
-  private languageLookup;
-
-  constructor() {
-    this.languageLookup = new Map([
+  private readonly languageLookup = new Map([
       [this.enLanguageKey, 'English'],
       [this.ruLanguageKey, 'Русский'],
     ]);
-  }
 
   getCurrentLanguageKey(): string {
     return this.localeId;

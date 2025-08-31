@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { AppHeader } from "../header/app-header.component";
-import { AppNav } from "../nav/app-nav.component";
-import { AppMain } from "../main/app-main.component";
-import { AppFooter } from "../footer/app-footer.component";
+import { AppHeader } from '../header/app-header.component';
+import { AppNav } from '../nav/app-nav.component';
+import { AppMain } from '../main/app-main.component';
+import { AppFooter } from '../footer/app-footer.component';
 
 @Component({
   selector: 'div[app-layout]',

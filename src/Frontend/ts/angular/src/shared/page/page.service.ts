@@ -4,6 +4,6 @@ import { Injectable, signal } from '@angular/core';
   providedIn: 'root',
 })
 export class PageService {
-  key = signal('');
-  title = signal('');
+  readonly key = signal('');
+  readonly title = signal('');
 }

@@ -2,7 +2,7 @@ import { WritableSignal } from '@angular/core';
 
 export interface ComponentData {
   currentLanguageValue: string;
-  languages: WritableSignal<Language[]>;
+  readonly languages: WritableSignal<Language[]>;
 }
 
 export interface Language {
