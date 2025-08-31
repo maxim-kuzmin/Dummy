@@ -9,9 +9,9 @@ import { PageData } from './app-fake.types';
 export class AppFakeService {
   private readonly pageService = inject(PageService);
 
-  readonly pageData = computed<PageData>(() => ({
-    key: this.pageService.key(),
-  }));
+  readonly pageData: PageData = {
+    key: computed(() => this.pageService.key()),
+  };
 
   createPageKey(id: string): string {
     return `Fake:${id}`;

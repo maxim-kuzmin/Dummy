@@ -12,17 +12,16 @@ export class AppNavService {
   private readonly appAboutService = inject(AppAboutService);
   private readonly appFakeService = inject(AppFakeService);
 
-  readonly componentData = signal<ComponentData>({
-    items: [],
-  });
+  readonly componentData = {
+    items: signal([]),
+  } as ComponentData;
 
   loadComponentData() {
-    this.componentData.set(this.createFakeComponentData());
+    this.componentData.items.set(this.createFakeItems());
   }
 
-  private createFakeComponentData(): ComponentData {
-    return {
-      items: [
+  private createFakeItems(): Item[] {
+    return [
         this.createItemForAboutPage(),
         this.createItemForFakePage('11111', [
           this.createItemForFakePage('11111-1'),
@@ -47,8 +46,7 @@ export class AppNavService {
         this.createItemForFakePage('33333'),
         this.createItemForFakePage('44444'),
         this.createItemForFakePage('55555'),
-      ],
-    };
+      ];
   }
 
   private createItemForAboutPage(): Item {

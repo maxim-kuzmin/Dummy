@@ -7,6 +7,7 @@ import {
 import { ActivatedRoute } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { AppFakeService } from '../app-fake.service';
+import { PageParameters } from '../app-fake.types';
 
 @Component({
   selector: 'div[app-fake-page]',
@@ -20,13 +21,15 @@ export class AppFakePage {
     requireSync: true,
   });
 
-  private readonly id = computed(() => String(this.routeParams()['id']));
+  private readonly parameters = {
+      id: computed(() => String(this.routeParams()['id']))
+  } as PageParameters;
 
-  protected readonly data = computed(() => this.service.pageData());
+  protected readonly data = this.service.pageData;
 
   constructor() {
     effect(() => {
-      this.service.loadPageData(this.id());
+      this.service.loadPageData(this.parameters.id());
     });
   }
 }

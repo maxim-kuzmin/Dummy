@@ -1,5 +1,7 @@
+import { WritableSignal } from "@angular/core";
+
 export interface ComponentData {
-  items: Item[];
+  items: WritableSignal<Item[]>;
 }
 
 export interface Item {

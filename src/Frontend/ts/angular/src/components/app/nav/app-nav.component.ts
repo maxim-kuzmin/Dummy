@@ -10,7 +10,7 @@ import { AppNavService } from './app-nav.service';
 export class AppNav {
   private readonly service = inject(AppNavService);
 
-  protected readonly data = computed(() => this.service.componentData());
+  protected readonly data = this.service.componentData;
 
   constructor() {
     effect(() => {

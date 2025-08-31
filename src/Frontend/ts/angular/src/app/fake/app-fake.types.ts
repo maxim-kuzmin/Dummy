@@ -1,3 +1,9 @@
+import { Signal } from "@angular/core";
+
 export interface PageData {
-  key: string;
+  readonly key: Signal<string>;
+}
+
+export interface PageParameters {
+  readonly id: Signal<string>;
 }
