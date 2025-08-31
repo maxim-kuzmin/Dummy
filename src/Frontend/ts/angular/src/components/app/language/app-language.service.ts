@@ -5,15 +5,17 @@ import { LanguageService } from '~shared/language/language.service';
 @Injectable({
   providedIn: 'root',
 })
-export class AppNavService {
+export class AppLanguageService {
   private readonly languageService = inject(LanguageService);
 
   readonly componentData = {
-    currentLanguageValue: this.languageService.getCurrentLanguageValue(),
+    currentLanguageValue: '',
     languages: signal([]),
   } as ComponentData;
 
   loadComponentData(currentUrl: string) {
+    this.componentData.currentLanguageValue = this.languageService.getCurrentLanguageValue();
+
     this.componentData.languages.set(this.createLanguages(currentUrl));
   }
 
