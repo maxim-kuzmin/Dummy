@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { AppLanguage } from "../language/app-language.component";
-import { RouterLink } from "@angular/router";
+import { AppLanguage } from '../language/app-language.component';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'header[app-header]',
