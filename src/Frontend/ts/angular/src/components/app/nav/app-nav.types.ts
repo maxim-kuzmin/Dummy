@@ -1,5 +1,9 @@
+export interface ComponentData {
+  items: Item[];
+}
+
 export interface Item {
-  key: number;
+  key: string;
   url: string;
   text: string;
   children: Item[];

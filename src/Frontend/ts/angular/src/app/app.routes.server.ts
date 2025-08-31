@@ -1,12 +1,13 @@
 import { RenderMode, ServerRoute } from '@angular/ssr';
+import { defaultPath, fakePagePath } from './app.paths';
 
 export const serverRoutes: ServerRoute[] = [
   {
-    path: 'fake/:id',
-    renderMode: RenderMode.Server
+    path: fakePagePath,
+    renderMode: RenderMode.Server,
   },
   {
-    path: '**',
-    renderMode: RenderMode.Prerender
-  }
+    path: defaultPath,
+    renderMode: RenderMode.Prerender,
+  },
 ];

@@ -1,25 +1,32 @@
-import { Component, computed, inject } from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  inject,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { PageService } from '~shared/page/page.service';
-import { PageKeyEnum } from '~shared/page/page.types';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { AppFakeService } from '../app-fake.service';
 
 @Component({
   selector: 'div[app-fake-page]',
   templateUrl: './app-fake-page.component.html',
 })
 export class AppFakePage {
-  private readonly pageService = inject(PageService);
+  private readonly service = inject(AppFakeService);
   private readonly activatedRoute = inject(ActivatedRoute);
 
   private readonly routeParams = toSignal(this.activatedRoute.params, {
     requireSync: true,
   });
 
-  protected readonly id = computed(() => this.routeParams()['id']);
+  private readonly id = computed(() => String(this.routeParams()['id']));
+
+  protected readonly data = computed(() => this.service.pageData());
 
   constructor() {
-    this.pageService.title.set($localize`:@@page.fake.title:@@`);
-    this.pageService.key.set(PageKeyEnum.Fake);
+    effect(() => {
+      this.service.loadPageData(this.id());
+    });
   }
 }
