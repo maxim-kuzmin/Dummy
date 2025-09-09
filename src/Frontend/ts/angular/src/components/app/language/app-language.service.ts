@@ -9,45 +9,45 @@ export class AppLanguageService {
   private readonly languageService = inject(LanguageService);
 
   readonly componentData = {
-    currentLanguageValue: '',
+    currentLanguageName: '',
     languages: signal([]),
   } as ComponentData;
 
   loadComponentData(currentUrl: string) {
-    this.componentData.currentLanguageValue = this.languageService.getCurrentLanguageValue();
+    this.componentData.currentLanguageName = this.languageService.getCurrentLanguageName();
 
     this.componentData.languages.set(this.createLanguages(currentUrl));
   }
 
   private createLanguage(
-    key: string,
-    currentLanguageKey: string,
+    code: string,
+    currentLanguageCode: string,
     currentUrl: string
   ): Language {
-    const value = this.languageService.getLanguageValueByKey(key);
-    const url = this.languageService.createLocalizedUrl(key, currentUrl);
-    const selected = key === currentLanguageKey;
+    const name = this.languageService.getLanguageNameByCode(code);
+    const url = this.languageService.createLocalizedUrl(code, currentUrl);
+    const selected = code === currentLanguageCode;
 
     return {
-      key,
-      value,
+      code,
+      name,
       url,
       selected,
     } as Language;
   }
 
   private createLanguages(currentUrl: string): Language[] {
-    const currentLanguageKey = this.languageService.getCurrentLanguageKey();
+    const currentLanguageCode = this.languageService.getCurrentLanguageCode();
 
     return [
       this.createLanguage(
-        this.languageService.ruLanguageKey,
-        currentLanguageKey,
+        this.languageService.ruLanguageCode,
+        currentLanguageCode,
         currentUrl
       ),
       this.createLanguage(
-        this.languageService.enLanguageKey,
-        currentLanguageKey,
+        this.languageService.enLanguageCode,
+        currentLanguageCode,
         currentUrl
       ),
     ];

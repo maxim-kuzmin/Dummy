@@ -6,27 +6,27 @@ import { LOCALE_ID, Injectable, inject } from '@angular/core';
 export class LanguageService {
   private readonly localeId = inject(LOCALE_ID);
 
-  readonly ruLanguageKey = 'ru';
-  readonly enLanguageKey = 'en';
+  readonly ruLanguageCode = 'ru';
+  readonly enLanguageCode = 'en';
 
-  private readonly languageLookup = new Map([
-      [this.enLanguageKey, 'English'],
-      [this.ruLanguageKey, 'Русский'],
+  private readonly languageNameLookup = new Map([
+      [this.enLanguageCode, 'English'],
+      [this.ruLanguageCode, 'Русский'],
     ]);
 
-  getCurrentLanguageKey(): string {
+  getCurrentLanguageCode(): string {
     return this.localeId;
   }
 
-  getCurrentLanguageValue(): string {
-    return this.getLanguageValueByKey(this.getCurrentLanguageKey());
+  getCurrentLanguageName(): string {
+    return this.getLanguageNameByCode(this.getCurrentLanguageCode());
   }
 
-  getLanguageValueByKey(languageKey: string): string {
-    return this.languageLookup.get(languageKey)!;
+  getLanguageNameByCode(code: string): string {
+    return this.languageNameLookup.get(code)!;
   }
 
-  createLocalizedUrl(languageKey: string, url: string): string {
-    return languageKey === this.ruLanguageKey ? url : `/${languageKey}${url}`;
+  createLocalizedUrl(code: string, url: string): string {
+    return code === this.ruLanguageCode ? url : `/${code}${url}`;
   }
 }
