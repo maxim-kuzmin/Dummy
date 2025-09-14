@@ -1,6 +1,6 @@
 import { computed, inject, Injectable } from '@angular/core';
-import { fakePagePath } from '#app/app.paths';
-import { PageService } from '#utils/shared/page/page.service';
+import { fakePagePath } from '~/app/app.paths';
+import { PageService } from '~/utils/shared/page/page.service';
 import { PageData } from './app-fake-page.types';
 
 @Injectable({

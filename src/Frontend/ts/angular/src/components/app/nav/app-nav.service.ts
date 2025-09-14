@@ -1,8 +1,8 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { ComponentData, Item } from './app-nav.types';
-import { PageService } from '#utils/shared/page/page.service';
-import { AppAboutPageService } from '#utils/pages/about/app-about-page.service';
-import { AppFakePageService } from '#utils/pages/fake/app-fake-page.service';
+import { PageService } from '~/utils/shared/page/page.service';
+import { AppAboutPageService } from '~/utils/pages/about/app-about-page.service';
+import { AppFakePageService } from '~/utils/pages/fake/app-fake-page.service';
 
 @Injectable({
   providedIn: 'root',

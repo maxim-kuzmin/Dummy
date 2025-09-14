@@ -5,9 +5,7 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "#app/*": ["src/app/*"],
-      "#components/*": ["src/components/*"],
-      "#utils/*": ["src/utils/*"]
+      "~/*": ["src/*"]
     },
     "outDir": "./out-tsc/app",
     "types": ["node", "@angular/localize"]
