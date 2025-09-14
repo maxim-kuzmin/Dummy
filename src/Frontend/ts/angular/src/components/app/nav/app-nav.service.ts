@@ -16,7 +16,7 @@ export class AppNavService {
     items: signal([]),
   } as ComponentData;
 
-  loadComponentData() {
+  loadComponentData(): void {
     this.componentData.items.set(this.createFakeItems());
   }
 
@@ -58,8 +58,8 @@ export class AppNavService {
   }
 
   private createItemForFakePage(text: string, children: Item[] = []): Item {
-    const key = this.appFakePageService.createPageKey(text);
-    const url = this.appFakePageService.createPageUrl(text);
+    const key = this.appFakePageService.createPageKey({id: text});
+    const url = this.appFakePageService.createPageUrl({id: text});
 
     return this.createItem(key, url, text, children);
   }

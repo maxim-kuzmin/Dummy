@@ -1,8 +1,11 @@
+@let currentLanguageName = data.currentLanguageName;
+@let languages = data.languages();
+
 <button #button type="button">
-  {{ data.currentLanguageName }}
+  {{ currentLanguageName }}
 </button>
 <ul #menu [style]="menuStyle()">
-  @for (language of data.languages(); track language.code) {
+  @for (language of languages; track language.code) {
   <li [attr.data-selected]="language.selected || null">
     <a [href]="language.url">{{ language.name }}</a>
   </li>

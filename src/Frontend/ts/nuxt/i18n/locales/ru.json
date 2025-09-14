@@ -1,6 +1,6 @@
 {
   "page.about.title": "О нас",
-  "page.fake.title": "Фальшивка",
+  "page.fake.title": "Фальшивка {0}",
   "page.index.title": "Главное",
   "page.not-found.title": "Не найдено",
   "component.app-footer.link.index.text": "Подвал",

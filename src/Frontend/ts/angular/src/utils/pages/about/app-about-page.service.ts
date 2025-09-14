@@ -15,7 +15,7 @@ export class AppAboutPageService {
     return '/about';
   }
 
-  loadPageData() {
+  loadPageData(): void {
     this.pageService.key.set(this.createPageKey());
 
     this.pageService.title.set($localize`:@@page.about.title:@@`);

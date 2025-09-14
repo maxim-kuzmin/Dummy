@@ -1,13 +1,13 @@
 import type { RouteParamsRawGeneric } from 'vue-router'
 import { getPageService } from '~/utils/shared/page/page.service'
 
-export class AppAboutPageService {
+export class AppIndexPageService {
   private readonly pageService = getPageService()
 
-  readonly routeName = 'about'
+  readonly routeName = 'index'
 
   createPageKey(): string {
-    return 'About'
+    return 'Index'
   }
 
   createRouteParams(): RouteParamsRawGeneric | undefined {
@@ -17,12 +17,12 @@ export class AppAboutPageService {
   loadPageData(translate: (key: string, list?: unknown[]) => string): void {
     this.pageService.key.value = this.createPageKey()
 
-    this.pageService.title.value = translate('page.about.title')
+    this.pageService.title.value = translate('page.index.title')
   }
 }
 
-const instanceOfAppAboutPageService = new AppAboutPageService()
+const instanceOfAppIndexPageService = new AppIndexPageService()
 
-export function getAppAboutPageService(): AppAboutPageService {
-  return instanceOfAppAboutPageService
+export function getAppIndexPageService(): AppIndexPageService {
+  return instanceOfAppIndexPageService
 }

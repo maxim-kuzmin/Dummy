@@ -12,10 +12,10 @@ export class AppIndexPageService {
   }
 
   createPageUrl(): string {
-    return '/index';
+    return '/';
   }
 
-  loadPageData() {
+  loadPageData(): void {
     this.pageService.key.set(this.createPageKey());
 
     this.pageService.title.set($localize`:@@page.index.title:@@`);

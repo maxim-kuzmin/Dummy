@@ -1,11 +1,9 @@
-import { Signal } from "@angular/core";
-
 export interface PageData {
-  readonly key: Signal<string>;
+  readonly key: globalThis.Ref<string>;
 }
 
 export interface PageParameters {
-  readonly id: Signal<string>;
+  readonly id: globalThis.Ref<string>;
 }
 
 export interface PageRouteParams {

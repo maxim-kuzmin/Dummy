@@ -3,8 +3,8 @@ export class PageService {
   readonly title = ref('');
 }
 
-const pageService = new PageService();
+const instanceOfPageService = new PageService();
 
 export function getPageService(): PageService {
-  return pageService;
+  return instanceOfPageService;
 }

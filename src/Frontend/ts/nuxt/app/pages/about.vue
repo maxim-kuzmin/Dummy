@@ -1,3 +1,23 @@
+<script setup lang="ts">
+import { getAppAboutPageService } from '~/utils/pages/about/app-about-page.service';
+
+const _this = (function(i18n, service) {
+  const { t: translate } = i18n;
+
+  return {
+    translate,
+    service
+  }
+})(
+  useI18n(),
+  getAppAboutPageService()
+)
+
+watchEffect(() => {
+  _this.service.loadPageData(_this.translate);
+})
+</script>
+
 <template>
   <div>
     <section>

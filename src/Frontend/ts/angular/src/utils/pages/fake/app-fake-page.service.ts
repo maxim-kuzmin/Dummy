@@ -1,7 +1,7 @@
 import { computed, inject, Injectable } from '@angular/core';
 import { fakePagePath } from '~/app/app.paths';
 import { PageService } from '~/utils/shared/page/page.service';
-import { PageData } from './app-fake-page.types';
+import { PageData, PageRouteParams } from './app-fake-page.types';
 
 @Injectable({
   providedIn: 'root',
@@ -13,16 +13,16 @@ export class AppFakePageService {
     key: computed(() => this.pageService.key()),
   };
 
-  createPageKey(id: string): string {
-    return `Fake:${id}`;
+  createPageKey(params: PageRouteParams): string {
+    return `Fake:${params.id}`;
   }
 
-  createPageUrl(id: string): string {
-    return `/${fakePagePath.replace(':id', id)}`;
+  createPageUrl(params: PageRouteParams): string {
+    return `/${fakePagePath.replace(':id', params.id)}`;
   }
 
   loadPageData(id: string): void {
-    this.pageService.key.set(this.createPageKey(id));
+    this.pageService.key.set(this.createPageKey({ id }));
 
     this.pageService.title.set(`${$localize`:@@page.fake.title:@@`} ${id}`);
   }

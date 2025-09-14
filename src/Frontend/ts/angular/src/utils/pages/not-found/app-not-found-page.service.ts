@@ -11,7 +11,7 @@ export class AppNotFoundPageService {
     return 'NotFound';
   }
 
-  loadPageData() {
+  loadPageData(): void {
     this.pageService.key.set(this.createPageKey());
 
     this.pageService.title.set($localize`:@@page.not-found.title:@@`);

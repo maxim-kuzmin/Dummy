@@ -2,6 +2,12 @@
   <nav class="app-nav">
     <ul>
       <li>
+        <NuxtLink to="/fake/1">Fake1</NuxtLink>
+      </li>
+      <li>
+        <NuxtLink to="/fake/2">Fake2</NuxtLink>
+      </li>
+      <li>
         <a href="#">11111</a>
         <ul>
           <li><a href="#">11111-1</a></li>

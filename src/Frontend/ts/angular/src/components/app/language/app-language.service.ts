@@ -13,7 +13,7 @@ export class AppLanguageService {
     languages: signal([]),
   } as ComponentData;
 
-  loadComponentData(currentUrl: string) {
+  loadComponentData(currentUrl: string): void {
     this.componentData.currentLanguageName = this.languageService.getCurrentLanguageName();
 
     this.componentData.languages.set(this.createLanguages(currentUrl));
