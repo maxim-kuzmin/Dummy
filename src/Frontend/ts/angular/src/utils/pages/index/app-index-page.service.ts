@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { PageService } from '#utils/page/page.service';
+import { PageService } from '#utils/shared/page/page.service';
 
 @Injectable({
   providedIn: 'root',
