@@ -1,3 +1,3 @@
 <template>
-    <AppLayout/>
+    <AppLayout><slot/></AppLayout>
 </template>

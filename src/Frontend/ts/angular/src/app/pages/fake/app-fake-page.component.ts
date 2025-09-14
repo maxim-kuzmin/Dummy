@@ -6,15 +6,15 @@ import {
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { AppFakeService } from '../app-fake.service';
-import { PageParameters } from '../app-fake.types';
+import { AppFakePageService } from './app-fake-page.service';
+import { PageParameters } from './app-fake-page.types';
 
 @Component({
   selector: 'div[app-fake-page]',
   templateUrl: './app-fake-page.component.html',
 })
 export class AppFakePage {
-  private readonly service = inject(AppFakeService);
+  private readonly service = inject(AppFakePageService);
   private readonly activatedRoute = inject(ActivatedRoute);
 
   private readonly routeParams = toSignal(this.activatedRoute.params, {

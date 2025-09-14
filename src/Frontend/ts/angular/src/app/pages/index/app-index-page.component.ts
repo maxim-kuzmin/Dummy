@@ -1,12 +1,12 @@
 import { Component, effect, inject } from '@angular/core';
-import { AppIndexService } from '../app-index.service';
+import { AppIndexPageService } from './app-index-page.service';
 
 @Component({
   selector: 'div[app-index-page]',
   templateUrl: './app-index-page.component.html',
 })
 export class AppIndexPage {
-  private service = inject(AppIndexService);
+  private service = inject(AppIndexPageService);
 
   constructor() {
     effect(() => {

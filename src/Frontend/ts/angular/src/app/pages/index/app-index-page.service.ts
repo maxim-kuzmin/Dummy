@@ -1,19 +1,23 @@
 import { inject, Injectable } from '@angular/core';
-import { PageService } from '~shared/page/page.service';
+import { PageService } from '#utils/page/page.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AppNotFoundService {
+export class AppIndexPageService {
   private readonly pageService = inject(PageService);
 
   createPageKey(): string {
-    return 'NotFound';
+    return 'Index';
+  }
+
+  createPageUrl(): string {
+    return '/index';
   }
 
   loadPageData() {
     this.pageService.key.set(this.createPageKey());
 
-    this.pageService.title.set($localize`:@@page.not-found.title:@@`);
+    this.pageService.title.set($localize`:@@page.index.title:@@`);
   }
 }

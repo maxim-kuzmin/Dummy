@@ -6,9 +6,12 @@
     --color-bg-footer: red;
     --color-bg-main: blue;
     --color-bg-nav: yellow;
+    --color-txt-body: white;
+    --color-txt-body-hover: yellow;
     --color-txt-header: black;
     --color-txt-footer: white;
     --color-txt-main: white;
     --color-txt-nav: black;
+    --padding-default: 1rem;
   }
 }

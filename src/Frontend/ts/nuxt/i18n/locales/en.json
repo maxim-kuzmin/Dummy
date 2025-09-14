@@ -1,0 +1,8 @@
+{
+  "page.about.title": "About",
+  "page.fake.title": "Fake",
+  "page.index.title": "Index",
+  "page.not-found.title": "Not found",
+  "component.app-footer.link.index.text": "Footer",
+  "component.app-header.link.index.text": "Go to index page"
+}

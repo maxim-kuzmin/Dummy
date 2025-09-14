@@ -10,26 +10,26 @@ export const routes: Routes = [
   {
     path: aboutPagePath,
     loadComponent: () =>
-      import('./about/page/app-about-page.component').then(
+      import('./pages/about/app-about-page.component').then(
         (m) => m.AppAboutPage
       ),
   },
   {
     path: fakePagePath,
     loadComponent: () =>
-      import('./fake/page/app-fake-page.component').then((m) => m.AppFakePage),
+      import('./pages/fake/app-fake-page.component').then((m) => m.AppFakePage),
   },
   {
     path: indexPagePath,
     loadComponent: () =>
-      import('./index/page/app-index-page.component').then(
+      import('./pages/index/app-index-page.component').then(
         (m) => m.AppIndexPage
       ),
   },
   {
     path: defaultPath,
     loadComponent: () =>
-      import('./not-found/page/app-not-found-page.component').then(
+      import('./pages/not-found/app-not-found-page.component').then(
         (m) => m.AppNotFoundPage
       ),
   },

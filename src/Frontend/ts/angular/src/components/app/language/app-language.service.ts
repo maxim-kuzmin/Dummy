@@ -1,6 +1,6 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { ComponentData, Language } from './app-language.types';
-import { LanguageService } from '~shared/language/language.service';
+import { LanguageService } from '#utils/language/language.service';
 
 @Injectable({
   providedIn: 'root',

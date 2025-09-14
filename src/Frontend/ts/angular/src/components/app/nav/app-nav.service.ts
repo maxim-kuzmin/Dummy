@@ -1,16 +1,16 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { ComponentData, Item } from './app-nav.types';
-import { PageService } from '~shared/page/page.service';
-import { AppAboutService } from '~app/about/app-about.service';
-import { AppFakeService } from '~app/fake/app-fake.service';
+import { PageService } from '#utils/page/page.service';
+import { AppAboutPageService } from '#app/pages/about/app-about-page.service';
+import { AppFakePageService } from '#app/pages/fake/app-fake-page.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AppNavService {
   private readonly pageService = inject(PageService);
-  private readonly appAboutService = inject(AppAboutService);
-  private readonly appFakeService = inject(AppFakeService);
+  private readonly appAboutPageService = inject(AppAboutPageService);
+  private readonly appFakePageService = inject(AppFakePageService);
 
   readonly componentData = {
     items: signal([]),
@@ -51,15 +51,15 @@ export class AppNavService {
 
   private createItemForAboutPage(): Item {
     const text = $localize`:@@page.about.title:@@`;
-    const key = this.appAboutService.createPageKey();
-    const url = this.appAboutService.createPageUrl();
+    const key = this.appAboutPageService.createPageKey();
+    const url = this.appAboutPageService.createPageUrl();
 
     return this.createItem(key, url, text);
   }
 
   private createItemForFakePage(text: string, children: Item[] = []): Item {
-    const key = this.appFakeService.createPageKey(text);
-    const url = this.appFakeService.createPageUrl(text);
+    const key = this.appFakePageService.createPageKey(text);
+    const url = this.appFakePageService.createPageUrl(text);
 
     return this.createItem(key, url, text, children);
   }

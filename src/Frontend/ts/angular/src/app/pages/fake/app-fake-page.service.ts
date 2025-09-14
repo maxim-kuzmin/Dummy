@@ -1,12 +1,12 @@
 import { computed, inject, Injectable } from '@angular/core';
-import { fakePagePath } from '~app/app.paths';
-import { PageService } from '~shared/page/page.service';
-import { PageData } from './app-fake.types';
+import { fakePagePath } from '#app/app.paths';
+import { PageService } from '#utils/page/page.service';
+import { PageData } from './app-fake-page.types';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AppFakeService {
+export class AppFakePageService {
   private readonly pageService = inject(PageService);
 
   readonly pageData: PageData = {

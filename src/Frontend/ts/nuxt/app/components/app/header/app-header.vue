@@ -1,3 +1,6 @@
 <template>
-  <header class="app-header">11111111</header>
+  <header class="app-header">
+    <NuxtLink :to="$localePath('index')">{{ $t('component.app-header.link.index.text') }}</NuxtLink>
+    <AppLanguage/>
+  </header>
 </template>
