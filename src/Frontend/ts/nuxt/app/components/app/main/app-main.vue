@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getAppMainService } from './app-main.service';
+import { getAppMainService } from '~/utils/app/components/main/app-main.service';
 
 const _this = (function(service) {
   return {

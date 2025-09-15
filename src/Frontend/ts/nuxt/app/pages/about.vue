@@ -1,20 +1,32 @@
 <script setup lang="ts">
-  import { getAppAboutPageService } from '~/utils/pages/about/app-about-page.service'
+  import { getAppAboutPageService } from '~/utils/app/pages/about/app-about-page.service'
+  import type {
+    AppAboutPagePayload,
+    AppAboutPageResources,
+  } from '~/utils/app/pages/about/app-about-page.types'
 
   const _this = (function (i18n, service) {
-    const { t: translate } = i18n
+    const { t } = i18n
+
+    function createPayload(): AppAboutPagePayload {
+      const resources = {
+        title: t('page.about.title'),
+      } as AppAboutPageResources
+
+      return { resources }
+    }
 
     return {
-      translate,
+      load(): void {
+        const payload = createPayload()
+
+        service.loadPageData(payload)
+      },
       service,
     }
   })(useI18n(), getAppAboutPageService())
 
-  watchEffect(() => {
-    const title = _this.translate('page.about.title')
-
-    _this.service.loadPageData({ title })
-  })
+  watchEffect(_this.load)
 </script>
 
 <template>

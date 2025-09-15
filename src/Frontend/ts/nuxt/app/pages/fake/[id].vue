@@ -1,29 +1,48 @@
 <script setup lang="ts">
-  import { getAppFakePageService } from '~/utils/pages/fake/app-fake-page.service'
-  import type { AppFakePageParameters } from '~/utils/pages/fake/app-fake-page.types'
+  import type { AppAboutPageResources } from '~/utils/app/pages/about/app-about-page.types'
+  import { getAppFakePageService } from '~/utils/app/pages/fake/app-fake-page.service'
+  import type {
+    AppFakePageDataQuery,
+    AppFakePageParameters,
+    AppFakePagePayload,
+  } from '~/utils/app/pages/fake/app-fake-page.types'
 
   const _this = (function (i18n, service, route) {
-    const { t: translate } = i18n
+    const { t } = i18n
 
     const parameters = {
-      id: computed(() => route.params.id),
+      id: computed(() => route.params[service.parameterNames.id]),
+      pageNumber: computed(() =>
+        Number(route.query[service.parameterNames.pageNumber] ?? 1),
+      ),
     } as AppFakePageParameters
 
+    function createPayload(): AppFakePagePayload {
+      const dataQuery = {
+        id: parameters.id.value,
+        pageNumber: parameters.pageNumber.value,
+      } as AppFakePageDataQuery
+
+      const resources = {
+        title: t('page.fake.title', [dataQuery.id]),
+      } as AppAboutPageResources
+
+      return { dataQuery, resources }
+    }
+
     return {
-      translate,
-      service,
-      parameters,
+      data: service.pageData,
+      load(): void {
+        const payload = createPayload()
+
+        service.loadPageData(payload)
+      },
     }
   })(useI18n(), getAppFakePageService(), useRoute())
 
-  const key = _this.service.pageData.key
+  watchEffect(_this.load)
 
-  watchEffect(() => {
-    const id = _this.parameters.id.value
-    const title = _this.translate('page.fake.title', [id])
-
-    _this.service.loadPageData({ id, title })
-  })
+  const key = _this.data.key
 </script>
 
 <template>

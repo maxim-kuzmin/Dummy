@@ -1,6 +1,6 @@
 import { getPageService } from '~/utils/shared/page/page.service'
 import type { PageUrlOptions } from '~/utils/shared/page/page.types'
-import type { AppIndexPageDataLoadCommand } from './app-index-page.types'
+import type { AppIndexPagePayload } from './app-index-page.types'
 
 export class AppIndexPageService {
   private readonly pageService = getPageService()
@@ -15,11 +15,13 @@ export class AppIndexPageService {
     }
   }
 
-  loadPageData(command: AppIndexPageDataLoadCommand): void {
+  loadPageData(payload: AppIndexPagePayload): void {
+    const { resources } = payload
+
     const pageKey = this.createPageKey()
 
     this.pageService.key.value = pageKey
-    this.pageService.title.value = command.title
+    this.pageService.title.value = resources.title
   }
 }
 

@@ -1,80 +1,81 @@
 <script setup lang="ts">
   import type { CSSProperties } from 'vue'
-  import type { Language } from './app-language.types'
+  import type { AppLanguageData, AppLanguageItem } from '~/utils/app/components/language/app-language.types'
 
-  const _this = (function(
+  const _this = (function (
     switchLocalePath,
     i18n,
     buttonElementRef,
     menuElementRef,
-    isMenuOpen) {
-    const { locale, locales} = i18n;
+    isMenuOpen,
+  ) {
+    const data = {
+      currentLanguageName: computed(
+        () =>
+          i18n.locales.value.find((locale) => locale.code === i18n.locale.value)
+            ?.name,
+      ),
+      items: computed(() =>
+        i18n.locales.value.map(
+          (locale) =>
+            ({
+              code: locale.code,
+              name: locale.name,
+              url: switchLocalePath(locale.code),
+              selected: locale.code === i18n.locale.value,
+            }) as AppLanguageItem,
+        ),
+      ),
+      menuStyle: computed(
+        () =>
+          ({
+            visibility: isMenuOpen.value ? 'visible' : 'hidden',
+          }) as CSSProperties,
+      ),
+    } as AppLanguageData
 
     function handleWindowClick(ev: MouseEvent): void {
-      const buttonElement = _this.buttonElementRef.value
-      const menuElement = _this.menuElementRef.value
+      const buttonElement = buttonElementRef.value
+      const menuElement = menuElementRef.value
 
       if (!buttonElement || !menuElement) {
         return
       }
 
       if (ev.target === buttonElement) {
-        _this.isMenuOpen.value = !_this.isMenuOpen.value
+        isMenuOpen.value = !isMenuOpen.value
       } else if (ev.target !== menuElement) {
-        _this.isMenuOpen.value = false
+        isMenuOpen.value = false
       }
     }
 
     return {
-      switchLocalePath,
-      locale,
-      locales,
-      buttonElementRef,
-      menuElementRef,
-      isMenuOpen,
-      handleWindowClick
+      data,
+      onMounted() {
+        if (globalThis.addEventListener) {
+          globalThis.addEventListener('click', handleWindowClick)
+        }
+      },
+      onUnmounted() {
+        if (globalThis.removeEventListener) {
+          globalThis.removeEventListener('click', handleWindowClick)
+        }
+      },
     }
   })(
     useSwitchLocalePath(),
     useI18n(),
     useTemplateRef('button'),
     useTemplateRef('menu'),
-    ref(false))
-
-  const currentLanguageName = computed(
-    () => _this.locales.value.find((locale) => locale.code === _this.locale.value)?.name,
+    ref(false),
   )
 
-  const languages = computed(() =>
-    _this.locales.value.map(
-      (locale) =>
-        ({
-          code: locale.code,
-          name: locale.name,
-          url: _this.switchLocalePath(locale.code),
-          selected: locale.code === _this.locale.value,
-        }) as Language,
-    ),
-  )
+  onMounted(_this.onMounted)
+  onUnmounted(_this.onUnmounted)
 
-  const menuStyle = computed(
-    () =>
-      ({
-        visibility: _this.isMenuOpen.value ? 'visible' : 'hidden',
-      }) as CSSProperties,
-  )
-
-  onMounted(() => {
-    if (globalThis.addEventListener) {
-      globalThis.addEventListener('click', _this.handleWindowClick)
-    }
-  })
-
-  onUnmounted(() => {
-    if (globalThis.removeEventListener) {
-      globalThis.removeEventListener('click', _this.handleWindowClick)
-    }
-  })
+  const currentLanguageName = _this.data.currentLanguageName
+  const items = _this.data.items
+  const menuStyle = _this.data.menuStyle
 </script>
 
 <template>
@@ -84,11 +85,11 @@
     </button>
     <ul ref="menu" :style="menuStyle">
       <li
-        v-for="language in languages"
-        :key="language.code"
-        :data-selected="language.selected || null"
+        v-for="item in items"
+        :key="item.code"
+        :data-selected="item.selected || null"
       >
-        <NuxtLink :to="language.url">{{ language.name }}</NuxtLink>
+        <NuxtLink :to="item.url">{{ item.name }}</NuxtLink>
       </li>
     </ul>
   </nav>

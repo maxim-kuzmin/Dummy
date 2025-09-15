@@ -1,24 +1,36 @@
 <script setup lang="ts">
-  import { getAppFakePageService } from '~/utils/pages/fake/app-fake-page.service'
+  import { getAppAboutPageService } from '~/utils/app/pages/about/app-about-page.service'
+import { getAppFakePageService } from '~/utils/app/pages/fake/app-fake-page.service'
 
-  const _this = (function (appFakePageService, i18n) {
-    const { t: translate } = i18n
-
+  const _this = (function (appAboutPageService, appFakePageService) {
     return {
+      appAboutPageService,
       appFakePageService,
-      translate,
     }
-  })(getAppFakePageService(), useI18n())
+  })(getAppAboutPageService(), getAppFakePageService())
 
-  const fakeUrl1 = usePageUrl(
+  const aboutPageUrl = usePageUrl(
+    _this.appAboutPageService.createPageUrlOptions(),
+  )
+
+  const fakePageUrl1 = usePageUrl(
     _this.appFakePageService.createPageUrlOptions({
       id: '1',
+      pageNumber: 1
     }),
   )
 
-  const fakeUrl2 = usePageUrl(
+  const fakePageUrl1pn2 = usePageUrl(
+    _this.appFakePageService.createPageUrlOptions({
+      id: '1',
+      pageNumber: 2
+    }),
+  )
+
+  const fakePageUrl2 = usePageUrl(
     _this.appFakePageService.createPageUrlOptions({
       id: '2',
+      pageNumber: 1
     }),
   )
 </script>
@@ -27,10 +39,16 @@
   <nav class="app-nav">
     <ul>
       <li>
-        <NuxtLink :to="fakeUrl1">Fake1</NuxtLink>
+        <NuxtLink :to="aboutPageUrl">About</NuxtLink>
       </li>
       <li>
-        <NuxtLink :to="fakeUrl2">Fake2</NuxtLink>
+        <NuxtLink :to="fakePageUrl1">Fake1</NuxtLink>
+      </li>
+      <li>
+        <NuxtLink :to="fakePageUrl1pn2">Fake1pn2</NuxtLink>
+      </li>
+      <li>
+        <NuxtLink :to="fakePageUrl2">Fake2</NuxtLink>
       </li>
       <li>
         <a href="#">11111</a>
