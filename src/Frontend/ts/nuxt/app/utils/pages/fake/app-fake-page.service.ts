@@ -1,32 +1,36 @@
-import type { RouteParamsRawGeneric } from 'vue-router'
 import { getPageService } from '~/utils/shared/page/page.service'
-import type { PageData, PageRouteParams } from './app-fake-page.types'
+import type { PageUrlOptions } from '~/utils/shared/page/page.types'
+import {
+  AppFakePageData,
+  type AppFakePageDataLoadCommand,
+  type AppFakePageDataQuery,
+} from './app-fake-page.types'
 
 export class AppFakePageService {
   private readonly pageService = getPageService()
 
-  readonly routeName = 'fake-id'
+  readonly pageData = new AppFakePageData()
 
-  readonly pageData: PageData = {
-    key: this.pageService.key,
-  }
-
-  createPageKey(params: PageRouteParams): string {
+  createPageKey(params: AppFakePageDataQuery): string {
     return `Fake:${params.id}`
   }
 
-  createRouteParams(
-    params: PageRouteParams,
-  ): RouteParamsRawGeneric | undefined {
+  createPageUrlOptions(query: AppFakePageDataQuery): PageUrlOptions {
     return {
-      id: params.id,
+      routeName: 'fake-id',
+      routeParams: {
+        id: query.id,
+      },
     }
   }
 
-  loadPageData(id: string, translate: (key: string, list?: unknown[]) => string): void {
-    this.pageService.key.value = this.createPageKey({ id })
+  loadPageData(command: AppFakePageDataLoadCommand): void {
+    const pageKey = this.createPageKey({ id: command.id })
 
-    this.pageService.title.value = translate('page.fake.title', [id])
+    this.pageService.key.value = pageKey
+    this.pageService.title.value = command.title
+
+    this.pageData.key.value = pageKey
   }
 }
 

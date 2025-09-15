@@ -1,11 +1,15 @@
-export interface PageData {
-  readonly key: globalThis.Ref<string>;
+export interface AppFakePageParameters {
+  readonly id: globalThis.Ref<string>
 }
 
-export interface PageParameters {
-  readonly id: globalThis.Ref<string>;
+export interface AppFakePageDataQuery {
+  readonly id: string
 }
 
-export interface PageRouteParams {
-  id: string;
+export interface AppFakePageDataLoadCommand extends AppFakePageDataQuery {
+  readonly title: string
+}
+
+export class AppFakePageData {
+  readonly key = ref('')
 }

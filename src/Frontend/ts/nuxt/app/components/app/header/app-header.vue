@@ -1,22 +1,18 @@
 <script setup lang="ts">
   import { getAppIndexPageService } from '~/utils/pages/index/app-index-page.service'
 
-  const _this = (function (localePath, appIndexPageService, i18n) {
+  const _this = (function (appIndexPageService, i18n) {
     const { t: translate } = i18n
 
     return {
-      localePath,
       appIndexPageService,
       translate,
     }
-  })(useLocalePath(), getAppIndexPageService(), useI18n())
+  })(getAppIndexPageService(), useI18n())
+
+  const indexPageUrl = usePageUrl(_this.appIndexPageService.createPageUrlOptions())
 
   const indexPageName = computed(() => _this.translate('component.app-header.link.index.text'))
-
-  const indexPageUrl = computed(() => _this.localePath({
-      name: _this.appIndexPageService.routeName,
-      params: _this.appIndexPageService.createRouteParams(),
-    }))
 </script>
 
 <template>

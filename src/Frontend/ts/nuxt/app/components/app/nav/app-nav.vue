@@ -1,11 +1,36 @@
+<script setup lang="ts">
+  import { getAppFakePageService } from '~/utils/pages/fake/app-fake-page.service'
+
+  const _this = (function (appFakePageService, i18n) {
+    const { t: translate } = i18n
+
+    return {
+      appFakePageService,
+      translate,
+    }
+  })(getAppFakePageService(), useI18n())
+
+  const fakeUrl1 = usePageUrl(
+    _this.appFakePageService.createPageUrlOptions({
+      id: '1',
+    }),
+  )
+
+  const fakeUrl2 = usePageUrl(
+    _this.appFakePageService.createPageUrlOptions({
+      id: '2',
+    }),
+  )
+</script>
+
 <template>
   <nav class="app-nav">
     <ul>
       <li>
-        <NuxtLink to="/fake/1">Fake1</NuxtLink>
+        <NuxtLink :to="fakeUrl1">Fake1</NuxtLink>
       </li>
       <li>
-        <NuxtLink to="/fake/2">Fake2</NuxtLink>
+        <NuxtLink :to="fakeUrl2">Fake2</NuxtLink>
       </li>
       <li>
         <a href="#">11111</a>

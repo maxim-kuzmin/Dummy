@@ -1,21 +1,20 @@
 <script setup lang="ts">
-import { getAppIndexPageService } from '~/utils/pages/index/app-index-page.service';
+  import { getAppIndexPageService } from '~/utils/pages/index/app-index-page.service'
 
-const _this = (function(i18n, service) {
-  const { t: translate } = i18n;
+  const _this = (function (i18n, service) {
+    const { t: translate } = i18n
 
-  return {
-    translate,
-    service
-  }
-})(
-  useI18n(),
-  getAppIndexPageService()
-)
+    return {
+      translate,
+      service,
+    }
+  })(useI18n(), getAppIndexPageService())
 
-watchEffect(() => {
-  _this.service.loadPageData(_this.translate);
-})
+  watchEffect(() => {
+    const title = _this.translate('page.index.title')
+
+    _this.service.loadPageData({ title })
+  })
 </script>
 
 <template>

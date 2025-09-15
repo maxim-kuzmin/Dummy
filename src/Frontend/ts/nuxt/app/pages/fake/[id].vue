@@ -1,13 +1,13 @@
 <script setup lang="ts">
   import { getAppFakePageService } from '~/utils/pages/fake/app-fake-page.service'
-  import type { PageParameters } from '~/utils/pages/fake/app-fake-page.types'
+  import type { AppFakePageParameters } from '~/utils/pages/fake/app-fake-page.types'
 
   const _this = (function (i18n, service, route) {
     const { t: translate } = i18n
 
     const parameters = {
       id: computed(() => route.params.id),
-    } as PageParameters
+    } as AppFakePageParameters
 
     return {
       translate,
@@ -19,7 +19,10 @@
   const key = _this.service.pageData.key
 
   watchEffect(() => {
-    _this.service.loadPageData(_this.parameters.id.value, _this.translate)
+    const id = _this.parameters.id.value
+    const title = _this.translate('page.fake.title', [id])
+
+    _this.service.loadPageData({ id, title })
   })
 </script>
 

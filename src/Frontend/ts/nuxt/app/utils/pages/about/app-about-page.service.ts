@@ -1,23 +1,25 @@
-import type { RouteParamsRawGeneric } from 'vue-router'
 import { getPageService } from '~/utils/shared/page/page.service'
+import type { PageUrlOptions } from '~/utils/shared/page/page.types'
+import type { AppAboutPageDataLoadCommand } from './app-about-page.types'
 
 export class AppAboutPageService {
   private readonly pageService = getPageService()
-
-  readonly routeName = 'about'
 
   createPageKey(): string {
     return 'About'
   }
 
-  createRouteParams(): RouteParamsRawGeneric | undefined {
-    return undefined
+  createPageUrlOptions(): PageUrlOptions {
+    return {
+      routeName: 'about',
+    }
   }
 
-  loadPageData(translate: (key: string, list?: unknown[]) => string): void {
-    this.pageService.key.value = this.createPageKey()
+  loadPageData(command: AppAboutPageDataLoadCommand): void {
+    const pageKey = this.createPageKey()
 
-    this.pageService.title.value = translate('page.about.title')
+    this.pageService.key.value = pageKey
+    this.pageService.title.value = command.title
   }
 }
 
