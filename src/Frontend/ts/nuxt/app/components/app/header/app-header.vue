@@ -1,6 +1,7 @@
 <script setup lang="ts">
   import type { AppHeaderData } from '~/utils/app/components/header/app-header.types'
   import { getAppIndexPageService } from '~/utils/app/pages/index/app-index-page.service'
+  import { usePageUrl } from '~/utils/shared/page/page.composables'
 
   const _this = (function (appIndexPageService, i18n) {
     const { t } = i18n
