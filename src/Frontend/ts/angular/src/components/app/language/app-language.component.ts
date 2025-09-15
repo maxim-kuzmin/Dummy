@@ -12,7 +12,7 @@ import {
 
 import { NavigationEnd, Router } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { AppLanguageService } from './app-language.service';
+import { AppLanguageService } from '~/utils/app/components/language/app-language.service';
 
 @Component({
   selector: 'nav[app-language]',

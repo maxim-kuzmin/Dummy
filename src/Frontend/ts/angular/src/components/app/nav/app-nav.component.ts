@@ -1,6 +1,6 @@
 import { Component, computed, effect, inject } from '@angular/core';
 import { AppNavItems } from './items/app-nav-items.component';
-import { AppNavService } from './app-nav.service';
+import { AppNavService } from '~/utils/app/components/nav/app-nav.service';
 
 @Component({
   selector: 'nav[app-nav]',

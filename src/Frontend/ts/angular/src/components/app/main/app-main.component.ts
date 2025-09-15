@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { AppMainService } from './app-main.service';
+import { AppMainService } from '~/utils/app/components/main/app-main.service';
 
 @Component({
   selector: 'main[app-main]',

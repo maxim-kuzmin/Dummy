@@ -1,5 +1,5 @@
 import { Component, effect, inject } from '@angular/core';
-import { AppAboutPageService } from '~/utils/pages/about/app-about-page.service';
+import { AppAboutPageService } from '~/utils/app/pages/about/app-about-page.service';
 
 @Component({
   selector: 'div[app-about-page]',

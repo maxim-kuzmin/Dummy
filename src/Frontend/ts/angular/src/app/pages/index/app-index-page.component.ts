@@ -1,5 +1,5 @@
 import { Component, effect, inject } from '@angular/core';
-import { AppIndexPageService } from '~/utils/pages/index/app-index-page.service';
+import { AppIndexPageService } from '~/utils/app/pages/index/app-index-page.service';
 
 @Component({
   selector: 'div[app-index-page]',

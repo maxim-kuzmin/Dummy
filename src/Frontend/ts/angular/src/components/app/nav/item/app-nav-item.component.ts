@@ -1,8 +1,8 @@
 import { Component, forwardRef, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Item } from '../app-nav.types';
+import { Item } from '~/utils/app/components/nav/app-nav.types';
+import { ItemComponentData } from '~/utils/app/components/nav/item/app-nav-item.types';
 import { AppNavItems } from '../items/app-nav-items.component';
-import { ItemComponentData } from './app-nav-item.types';
 
 @Component({
   selector: 'li[app-nav-item]',
