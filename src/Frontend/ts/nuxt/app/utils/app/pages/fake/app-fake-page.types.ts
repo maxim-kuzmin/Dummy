@@ -13,15 +13,11 @@ export interface AppFakePageParameterNames {
   readonly pageNumber: string
 }
 
-export interface AppFakePageResources {
-  readonly title: string
-}
-
-export interface AppFakePagePayload {
-  readonly dataQuery: AppFakePageDataQuery
-  readonly resources: AppFakePageResources
-}
-
 export class AppFakePageData {
   readonly key = ref('')
+  readonly clickCount = ref(0)
+}
+
+export type AppFakePageModel = AppFakePageData & {
+  click(): void;
 }

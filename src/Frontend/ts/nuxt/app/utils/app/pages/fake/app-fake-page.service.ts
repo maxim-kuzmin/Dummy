@@ -1,21 +1,14 @@
-import { getPageService } from '~/utils/shared/page/page.service'
-import type { PageUrlOptions } from '~/utils/shared/page/url/page-url.types'
-import {
-  AppFakePageData,
-  type AppFakePagePayload,
-  type AppFakePageDataQuery,
-  type AppFakePageParameterNames,
-} from './app-fake-page.types'
 import type { LocationQueryRaw } from 'vue-router'
+import type { PageUrlOptions } from '~/utils/shared/page/url/page-url.types'
+import type {
+  AppFakePageDataQuery,
+  AppFakePageParameterNames,
+} from './app-fake-page.types'
 
 export class AppFakePageService {
-  private readonly pageService = getPageService()
-
-  readonly data = new AppFakePageData()
-
   readonly parameterNames = {
     id: 'id',
-    pageNumber: 'pn'
+    pageNumber: 'pn',
   } as AppFakePageParameterNames
 
   createPageKey(query: AppFakePageDataQuery): string {
@@ -43,21 +36,10 @@ export class AppFakePageService {
       locationQuery,
     }
   }
-
-  load(payload: AppFakePagePayload): void {
-    const { dataQuery, resources } = payload
-
-    const pageKey = this.createPageKey(dataQuery)
-
-    this.pageService.key.value = pageKey
-    this.pageService.title.value = resources.title
-
-    this.data.key.value = pageKey
-  }
 }
 
-const instanceOfAppFakePageService = new AppFakePageService()
+const appFakePageService = new AppFakePageService()
 
 export function getAppFakePageService(): AppFakePageService {
-  return instanceOfAppFakePageService
+  return appFakePageService
 }

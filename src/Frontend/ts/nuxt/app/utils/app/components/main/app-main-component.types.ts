@@ -2,4 +2,4 @@ export class AppMainComponentData {
   readonly title = ref('')
 }
 
-export type AppMainComponentService = AppMainComponentData
+export type AppMainComponentModel = AppMainComponentData

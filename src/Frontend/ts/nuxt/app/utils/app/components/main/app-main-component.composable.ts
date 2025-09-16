@@ -1,10 +1,10 @@
 import { getPageService } from '~/utils/shared/page/page.service'
 import {
   AppMainComponentData,
-  type AppMainComponentService,
+  type AppMainComponentModel,
 } from './app-main-component.types'
 
-export const useAppMainComponentService = (): AppMainComponentService => {
+export const useAppMainComponent = (): AppMainComponentModel => {
   const pageService = getPageService()
 
   const data = new AppMainComponentData()

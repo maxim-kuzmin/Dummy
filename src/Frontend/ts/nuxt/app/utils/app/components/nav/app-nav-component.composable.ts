@@ -3,18 +3,18 @@ import { getAppFakePageService } from '~/utils/app/pages/fake/app-fake-page.serv
 import { usePageUrl } from '~/utils/shared/page/url/page-url.composable'
 import {
   AppNavComponentData,
-  type AppNavComponentService,
+  type AppNavComponentModel,
 } from './app-nav-component.types'
 
-export const useAppNavComponentService = (): AppNavComponentService => {
-  const appIndexPageService = getAppAboutPageService()
+export const useAppNavComponent = (): AppNavComponentModel => {
+  const appAboutPageService = getAppAboutPageService()
   const appFakePageService = getAppFakePageService()
 
   const data = new AppNavComponentData()
 
   watchEffect(() => {
     data.aboutPageUrl.value = usePageUrl(
-      appIndexPageService.createPageUrlOptions(),
+      appAboutPageService.createPageUrlOptions(),
     )
 
     data.fakePageUrl1.value = usePageUrl(

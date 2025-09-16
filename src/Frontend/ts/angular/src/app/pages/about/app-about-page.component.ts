@@ -10,7 +10,7 @@ export class AppAboutPage {
 
   constructor() {
     effect(() => {
-      this.service.loadPageData();
+      this.service.load();
     });
   }
 }

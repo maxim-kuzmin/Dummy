@@ -2,10 +2,10 @@ import { usePageUrl } from '~/utils/shared/page/url/page-url.composable'
 import { getAppIndexPageService } from '~/utils/app/pages/index/app-index-page.service'
 import {
   AppHeaderComponentData,
-  type AppHeaderComponentService,
+  type AppHeaderComponentModel,
 } from './app-header-component.types'
 
-export const useAppHeaderComponentService = (): AppHeaderComponentService => {
+export const useAppHeaderComponent = (): AppHeaderComponentModel => {
   const { t } = useI18n()
 
   const appIndexPageService = getAppIndexPageService()
@@ -20,10 +20,5 @@ export const useAppHeaderComponentService = (): AppHeaderComponentService => {
     )
   })
 
-  return {
-    ...data,
-    click() {
-      console.log('MAKC:click')
-    },
-  }
+  return { ...data }
 }

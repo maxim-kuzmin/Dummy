@@ -15,9 +15,10 @@ export class AppAboutPageService {
     return '/about';
   }
 
-  loadPageData(): void {
-    this.pageService.key.set(this.createPageKey());
+  load(): void {
+    const pageKey = this.createPageKey()
 
+    this.pageService.key.set(pageKey);
     this.pageService.title.set($localize`:@@page.about.title:@@`);
   }
 }

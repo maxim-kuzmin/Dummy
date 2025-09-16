@@ -13,4 +13,4 @@ export class AppLanguageComponentData {
   readonly title = ref('')
 }
 
-export type AppLanguageComponentService = AppLanguageComponentData
+export type AppLanguageComponentModel = AppLanguageComponentData

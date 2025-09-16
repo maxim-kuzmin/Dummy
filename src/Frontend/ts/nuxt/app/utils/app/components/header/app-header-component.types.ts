@@ -3,6 +3,4 @@ export class AppHeaderComponentData {
   readonly indexPageUrl = ref('')
 }
 
-export type AppHeaderComponentService = AppHeaderComponentData & {
-  click(): void;
-}
+export type AppHeaderComponentModel = AppHeaderComponentData

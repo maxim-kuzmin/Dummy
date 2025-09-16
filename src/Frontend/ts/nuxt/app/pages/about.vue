@@ -1,32 +1,7 @@
 <script setup lang="ts">
-  import { getAppAboutPageService } from '~/utils/app/pages/about/app-about-page.service'
-  import type {
-    AppAboutPagePayload,
-    AppAboutPageResources,
-  } from '~/utils/app/pages/about/app-about-page.types'
+  import { useAppAboutPage } from '~/utils/app/pages/about/app-about-page.composable'
 
-  const _this = (function (i18n, service) {
-    const { t } = i18n
-
-    function createPayload(): AppAboutPagePayload {
-      const resources = {
-        title: t('page.about.title'),
-      } as AppAboutPageResources
-
-      return { resources }
-    }
-
-    return {
-      load(): void {
-        const payload = createPayload()
-
-        service.loadPageData(payload)
-      },
-      service,
-    }
-  })(useI18n(), getAppAboutPageService())
-
-  watchEffect(_this.load)
+  useAppAboutPage()
 </script>
 
 <template>

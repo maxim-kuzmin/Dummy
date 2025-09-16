@@ -5,4 +5,4 @@ export class AppNavComponentData {
   readonly fakePageUrl2 = ref('')
 }
 
-export type AppNavComponentService = AppNavComponentData
+export type AppNavComponentModel = AppNavComponentData

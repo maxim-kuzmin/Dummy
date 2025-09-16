@@ -1,32 +1,7 @@
 <script setup lang="ts">
-  import { getAppIndexPageService } from '~/utils/app/pages/index/app-index-page.service'
-  import type {
-    AppIndexPagePayload,
-    AppIndexPageResources,
-  } from '~/utils/app/pages/index/app-index-page.types'
+  import { useAppIndexPage } from '~/utils/app/pages/index/app-index-page.composable'
 
-  const _this = (function (i18n, service) {
-    const { t } = i18n
-
-    function createPayload(): AppIndexPagePayload {
-      const resources = {
-        title: t('page.index.title'),
-      } as AppIndexPageResources
-
-      return { resources }
-    }
-
-    return {
-      load(): void {
-        const payload = createPayload()
-
-        service.loadPageData(payload)
-      },
-      service,
-    }
-  })(useI18n(), getAppIndexPageService())
-
-  watchEffect(_this.load)
+  useAppIndexPage()
 </script>
 
 <template>

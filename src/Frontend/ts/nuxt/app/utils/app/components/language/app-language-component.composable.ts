@@ -1,10 +1,10 @@
 import {
   AppLanguageComponentData,
   type AppLanguageComponentItem,
-  type AppLanguageComponentService,
+  type AppLanguageComponentModel,
 } from './app-language-component.types'
 
-export const useAppLanguageComponentService = (): AppLanguageComponentService => {
+export const useAppLanguageComponent = (): AppLanguageComponentModel => {
   const i18n = useI18n()
   const switchLocalePath = useSwitchLocalePath()
 
