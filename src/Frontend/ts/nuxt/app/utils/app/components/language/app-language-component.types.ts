@@ -12,3 +12,5 @@ export class AppLanguageComponentData {
   readonly menuStyle = ref<CSSProperties>({ visibility: 'hidden' })
   readonly title = ref('')
 }
+
+export type AppLanguageComponentService = AppLanguageComponentData

@@ -1,9 +1,12 @@
 import { getAppAboutPageService } from '~/utils/app/pages/about/app-about-page.service'
 import { getAppFakePageService } from '~/utils/app/pages/fake/app-fake-page.service'
 import { usePageUrl } from '~/utils/shared/page/url/page-url.composable'
-import { AppNavComponentData } from './app-nav-component.types'
+import {
+  AppNavComponentData,
+  type AppNavComponentService,
+} from './app-nav-component.types'
 
-export const useAppNavComponent = () => {
+export const useAppNavComponentService = () => {
   const appIndexPageService = getAppAboutPageService()
   const appFakePageService = getAppFakePageService()
 
@@ -36,18 +39,5 @@ export const useAppNavComponent = () => {
     )
   })
 
-  return {
-    get aboutPageUrl() {
-      return data.aboutPageUrl
-    },
-    get fakePageUrl1() {
-      return data.fakePageUrl1
-    },
-    get fakePageUrl1pn2() {
-      return data.fakePageUrl1pn2
-    },
-    get fakePageUrl2() {
-      return data.fakePageUrl2
-    },
-  }
+  return { ...data } as AppNavComponentService
 }

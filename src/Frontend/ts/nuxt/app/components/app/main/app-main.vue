@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { useAppMainComponent } from '~/utils/app/components/main/app-main-component.composable';
+import { useAppMainComponentService } from '~/utils/app/components/main/app-main-component.composable';
 
-const { title } = useAppMainComponent();
+const { title } = useAppMainComponentService();
 </script>
 
 <template>

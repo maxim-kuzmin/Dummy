@@ -1,7 +1,7 @@
 <script setup lang="ts">
-  import { useAppLanguageComponent } from '~/utils/app/components/language/app-language-component.composable'
+  import { useAppLanguageComponentService } from '~/utils/app/components/language/app-language-component.composable'
 
-  const { items, menuStyle, title } = useAppLanguageComponent()
+  const { items, menuStyle, title } = useAppLanguageComponentService()
 </script>
 
 <template>

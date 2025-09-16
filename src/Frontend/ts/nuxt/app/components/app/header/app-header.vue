@@ -1,7 +1,7 @@
 <script setup lang="ts">
-  import { useAppHeaderComponent } from '~/utils/app/components/header/app-header-component.composable'
+  import { useAppHeaderComponentService } from '~/utils/app/components/header/app-header-component.composable'
 
-  const { indexPageName, indexPageUrl } = useAppHeaderComponent()
+  const { indexPageName, indexPageUrl } = useAppHeaderComponentService()
 </script>
 
 <template>

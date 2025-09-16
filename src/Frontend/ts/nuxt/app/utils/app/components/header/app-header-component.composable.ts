@@ -1,8 +1,11 @@
 import { usePageUrl } from '~/utils/shared/page/url/page-url.composable'
 import { getAppIndexPageService } from '~/utils/app/pages/index/app-index-page.service'
-import { AppHeaderComponentData } from './app-header-component.types'
+import {
+  AppHeaderComponentData,
+  type AppHeaderComponentService,
+} from './app-header-component.types'
 
-export const useAppHeaderComponent = () => {
+export const useAppHeaderComponentService = () => {
   const { t } = useI18n()
 
   const appIndexPageService = getAppIndexPageService()
@@ -17,12 +20,5 @@ export const useAppHeaderComponent = () => {
     )
   })
 
-  return {
-    get indexPageName() {
-      return data.indexPageName
-    },
-    get indexPageUrl() {
-      return data.indexPageUrl
-    },
-  }
+  return { ...data } as AppHeaderComponentService
 }
