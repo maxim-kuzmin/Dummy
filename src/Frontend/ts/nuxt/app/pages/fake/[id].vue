@@ -31,11 +31,11 @@
     }
 
     return {
-      data: service.pageData,
+      data: service.data,
       load(): void {
         const payload = createPayload()
 
-        service.loadPageData(payload)
+        service.load(payload)
       },
     }
   })(useI18n(), getAppFakePageService(), useRoute())

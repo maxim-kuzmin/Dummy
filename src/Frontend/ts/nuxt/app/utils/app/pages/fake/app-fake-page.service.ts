@@ -11,7 +11,7 @@ import type { LocationQueryRaw } from 'vue-router'
 export class AppFakePageService {
   private readonly pageService = getPageService()
 
-  readonly pageData = new AppFakePageData()
+  readonly data = new AppFakePageData()
 
   readonly parameterNames = {
     id: 'id',
@@ -44,7 +44,7 @@ export class AppFakePageService {
     }
   }
 
-  loadPageData(payload: AppFakePagePayload): void {
+  load(payload: AppFakePagePayload): void {
     const { dataQuery, resources } = payload
 
     const pageKey = this.createPageKey(dataQuery)
@@ -52,7 +52,7 @@ export class AppFakePageService {
     this.pageService.key.value = pageKey
     this.pageService.title.value = resources.title
 
-    this.pageData.key.value = pageKey
+    this.data.key.value = pageKey
   }
 }
 

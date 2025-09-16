@@ -1,13 +1,14 @@
 @let currentLanguageName = data.currentLanguageName;
-@let languages = data.languages();
+@let items = data.items();
+@let menuStyle = data.menuStyle();
 
 <button #button type="button">
   {{ currentLanguageName }}
 </button>
-<ul #menu [style]="menuStyle()">
-  @for (language of languages; track language.code) {
-  <li [attr.data-selected]="language.selected || null">
-    <a [href]="language.url">{{ language.name }}</a>
+<ul #menu [style]="menuStyle">
+  @for (item of items; track item.code) {
+  <li [attr.data-selected]="item.selected || null">
+    <a [href]="item.url">{{ item.name }}</a>
   </li>
   }
 </ul>

@@ -2,25 +2,25 @@ import { inject, Injectable, signal } from '@angular/core';
 import { PageService } from '~/utils/shared/page/page.service';
 import { AppAboutPageService } from '~/utils/app/pages/about/app-about-page.service';
 import { AppFakePageService } from '~/utils/app/pages/fake/app-fake-page.service';
-import { ComponentData, Item } from './app-nav.types';
+import { AppNavComponentData, AppNavComponentItem } from './app-nav-component.types';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AppNavService {
+export class AppNavComponentService {
   private readonly pageService = inject(PageService);
   private readonly appAboutPageService = inject(AppAboutPageService);
   private readonly appFakePageService = inject(AppFakePageService);
 
   readonly componentData = {
     items: signal([]),
-  } as ComponentData;
+  } as AppNavComponentData;
 
   loadComponentData(): void {
     this.componentData.items.set(this.createFakeItems());
   }
 
-  private createFakeItems(): Item[] {
+  private createFakeItems(): AppNavComponentItem[] {
     return [
         this.createItemForAboutPage(),
         this.createItemForFakePage('11111', [
@@ -49,7 +49,7 @@ export class AppNavService {
       ];
   }
 
-  private createItemForAboutPage(): Item {
+  private createItemForAboutPage(): AppNavComponentItem {
     const text = $localize`:@@page.about.title:@@`;
     const key = this.appAboutPageService.createPageKey();
     const url = this.appAboutPageService.createPageUrl();
@@ -57,14 +57,14 @@ export class AppNavService {
     return this.createItem(key, url, text);
   }
 
-  private createItemForFakePage(text: string, children: Item[] = []): Item {
+  private createItemForFakePage(text: string, children: AppNavComponentItem[] = []): AppNavComponentItem {
     const key = this.appFakePageService.createPageKey({id: text});
     const url = this.appFakePageService.createPageUrl({id: text});
 
     return this.createItem(key, url, text, children);
   }
 
-  private createItem(key: string, url: string, text: string, children: Item[] = []): Item {
+  private createItem(key: string, url: string, text: string, children: AppNavComponentItem[] = []): AppNavComponentItem {
     const selected = this.pageService.key() === key;
 
     return {
@@ -73,6 +73,6 @@ export class AppNavService {
       url,
       children,
       selected,
-    } as Item;
+    } as AppNavComponentItem;
   }
 }

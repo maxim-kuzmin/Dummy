@@ -1,14 +1,15 @@
 <script setup lang="ts">
   import type { CSSProperties } from 'vue'
-  import type { AppLanguageData, AppLanguageItem } from '~/utils/app/components/language/app-language.types'
+  import type { AppLanguageComponentData, AppLanguageComponentItem } from '~/utils/app/components/language/app-language-component.types'
 
   const _this = (function (
     switchLocalePath,
     i18n,
     buttonElementRef,
-    menuElementRef,
-    isMenuOpen,
+    menuElementRef
   ) {
+    const isMenuOpen = ref(false)
+
     const data = {
       currentLanguageName: computed(
         () =>
@@ -23,7 +24,7 @@
               name: locale.name,
               url: switchLocalePath(locale.code),
               selected: locale.code === i18n.locale.value,
-            }) as AppLanguageItem,
+            }) as AppLanguageComponentItem,
         ),
       ),
       menuStyle: computed(
@@ -32,7 +33,7 @@
             visibility: isMenuOpen.value ? 'visible' : 'hidden',
           }) as CSSProperties,
       ),
-    } as AppLanguageData
+    } as AppLanguageComponentData
 
     function handleWindowClick(ev: MouseEvent): void {
       const buttonElement = buttonElementRef.value
@@ -66,8 +67,7 @@
     useSwitchLocalePath(),
     useI18n(),
     useTemplateRef('button'),
-    useTemplateRef('menu'),
-    ref(false),
+    useTemplateRef('menu')
   )
 
   onMounted(_this.onMounted)

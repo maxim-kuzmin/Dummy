@@ -1,24 +1,7 @@
 <script setup lang="ts">
-  import type { AppHeaderData } from '~/utils/app/components/header/app-header.types'
-  import { getAppIndexPageService } from '~/utils/app/pages/index/app-index-page.service'
-  import { usePageUrl } from '~/utils/shared/page/page.composables'
+  import { useAppHeaderComponent } from '~/utils/app/components/header/app-header-component.composables'
 
-  const _this = (function (appIndexPageService, i18n) {
-    const { t } = i18n
-
-    const data = {
-      indexPageName: computed(() => t('component.app-header.link.index.text')),
-    } as AppHeaderData
-
-    return {
-      appIndexPageService,
-      data,
-    }
-  })(getAppIndexPageService(), useI18n())
-
-  _this.data.indexPageUrl = usePageUrl(
-    _this.appIndexPageService.createPageUrlOptions(),
-  )
+  const _this = useAppHeaderComponent()
 
   const indexPageName = _this.data.indexPageName
   const indexPageUrl = _this.data.indexPageUrl

@@ -1,5 +1,5 @@
 import { Signal } from "@angular/core";
 
-export interface ComponentData {
+export interface AppMainComponentData {
   readonly title: Signal<string>;
 }

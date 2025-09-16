@@ -1,7 +1,7 @@
 import { Component, forwardRef, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Item } from '~/utils/app/components/nav/app-nav.types';
-import { ItemComponentData } from '~/utils/app/components/nav/item/app-nav-item.types';
+import { AppNavComponentItem } from '~/utils/app/components/nav/app-nav-component.types';
+import { AppNavItemComponentData } from '~/utils/app/components/nav/item/app-nav-item-component.types';
 import { AppNavItems } from '../items/app-nav-items.component';
 
 @Component({
@@ -10,9 +10,9 @@ import { AppNavItems } from '../items/app-nav-items.component';
   imports: [RouterLink, forwardRef(() => AppNavItems)],
 })
 export class AppNavItem {
-  readonly item = input.required<Item>();
+  readonly item = input.required<AppNavComponentItem>();
 
   protected readonly data = {
     item: this.item,
-  } as ItemComponentData;
+  } as AppNavItemComponentData;
 }

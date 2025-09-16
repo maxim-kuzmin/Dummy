@@ -1,7 +1,7 @@
 import { computed, inject, Injectable } from '@angular/core';
 import { fakePagePath } from '~/app/app.paths';
 import { PageService } from '~/utils/shared/page/page.service';
-import { PageData, PageRouteParams } from './app-fake-page.types';
+import { AppFakePageData, AppFakePageRouteParams } from './app-fake-page.types';
 
 @Injectable({
   providedIn: 'root',
@@ -9,15 +9,15 @@ import { PageData, PageRouteParams } from './app-fake-page.types';
 export class AppFakePageService {
   private readonly pageService = inject(PageService);
 
-  readonly pageData: PageData = {
+  readonly pageData: AppFakePageData = {
     key: computed(() => this.pageService.key()),
   };
 
-  createPageKey(params: PageRouteParams): string {
+  createPageKey(params: AppFakePageRouteParams): string {
     return `Fake:${params.id}`;
   }
 
-  createPageUrl(params: PageRouteParams): string {
+  createPageUrl(params: AppFakePageRouteParams): string {
     return `/${fakePagePath.replace(':id', params.id)}`;
   }
 

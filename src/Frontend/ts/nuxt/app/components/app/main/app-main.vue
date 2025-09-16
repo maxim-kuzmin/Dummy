@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { getAppMainService } from '~/utils/app/components/main/app-main.service';
+import { getAppMainComponentService } from '~/utils/app/components/main/app-main-component.service';
 
 const _this = (function(service) {
   return {
     service
   }
 })(
-  getAppMainService()
+  getAppMainComponentService()
 )
 const { title } = _this.service;
 </script>

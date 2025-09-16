@@ -1,6 +1,6 @@
 import { Component, input } from '@angular/core';
-import { Item } from '~/utils/app/components/nav/app-nav.types';
-import { ItemsComponentData } from '~/utils/app/components/nav/items/app-nav-items.types';
+import { AppNavComponentItem } from '~/utils/app/components/nav/app-nav-component.types';
+import { AppNavItemsComponentData } from '~/utils/app/components/nav/items/app-nav-items-component.types';
 import { AppNavItem } from '../item/app-nav-item.component';
 
 @Component({
@@ -9,9 +9,9 @@ import { AppNavItem } from '../item/app-nav-item.component';
   imports: [AppNavItem],
 })
 export class AppNavItems {
-  readonly items = input.required<Item[]>();
+  readonly items = input.required<AppNavComponentItem[]>();
 
   protected readonly data = {
     items: this.items,
-  } as ItemsComponentData;
+  } as AppNavItemsComponentData;
 }
