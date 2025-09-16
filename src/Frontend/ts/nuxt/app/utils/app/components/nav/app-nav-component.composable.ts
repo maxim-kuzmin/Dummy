@@ -6,7 +6,7 @@ import {
   type AppNavComponentService,
 } from './app-nav-component.types'
 
-export const useAppNavComponentService = () => {
+export const useAppNavComponentService = (): AppNavComponentService => {
   const appIndexPageService = getAppAboutPageService()
   const appFakePageService = getAppFakePageService()
 
@@ -39,5 +39,5 @@ export const useAppNavComponentService = () => {
     )
   })
 
-  return { ...data } as AppNavComponentService
+  return { ...data }
 }

@@ -4,7 +4,7 @@ import {
   type AppMainComponentService,
 } from './app-main-component.types'
 
-export const useAppMainComponentService = () => {
+export const useAppMainComponentService = (): AppMainComponentService => {
   const pageService = getPageService()
 
   const data = new AppMainComponentData()
@@ -13,5 +13,5 @@ export const useAppMainComponentService = () => {
     data.title.value = pageService.title.value
   })
 
-  return { ...data } as AppMainComponentService
+  return { ...data }
 }

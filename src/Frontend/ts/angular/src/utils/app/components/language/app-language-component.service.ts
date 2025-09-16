@@ -7,10 +7,7 @@ import {
   signal,
 } from '@angular/core';
 import { LanguageService } from '~/utils/shared/language/language.service';
-import {
-  AppLanguageComponentData,
-  AppLanguageComponentItem,
-} from './app-language-component.types';
+import { AppLanguageComponentItem } from './app-language-component.types';
 import { NavigationEnd, Router } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 
@@ -36,19 +33,9 @@ export class AppLanguageComponentService {
       : '/';
   });
 
-  private readonly data = new AppLanguageComponentData();
-
-  get items() {
-    return this.data.items;
-  }
-
-  get menuStyle() {
-    return this.data.menuStyle;
-  }
-
-  get title() {
-    return this.data.title;
-  }
+  readonly items = signal<AppLanguageComponentItem[]>([]);
+  readonly menuStyle = signal({ visibility: 'hidden' });
+  title = '';
 
   constructor() {
     this.handleWindowClick = this.handleWindowClick.bind(this);
@@ -78,7 +65,7 @@ export class AppLanguageComponentService {
     const currentLanguageCode = this.languageService.getCurrentLanguageCode();
     const currentUrl = this.currentUrl();
 
-    this.data.items.set(
+    this.items.set(
       [
         this.languageService.ruLanguageCode,
         this.languageService.enLanguageCode,
@@ -93,11 +80,11 @@ export class AppLanguageComponentService {
       )
     );
 
-    this.data.menuStyle.set({
+    this.menuStyle.set({
       visibility: this.isMenuOpen() ? 'visible' : 'hidden',
     });
 
-    this.data.title = this.languageService.getCurrentLanguageName();
+    this.title = this.languageService.getCurrentLanguageName();
   }
 
   private handleWindowClick(ev: MouseEvent): void {

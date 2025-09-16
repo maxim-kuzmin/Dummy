@@ -5,7 +5,7 @@ import {
   type AppHeaderComponentService,
 } from './app-header-component.types'
 
-export const useAppHeaderComponentService = () => {
+export const useAppHeaderComponentService = (): AppHeaderComponentService => {
   const { t } = useI18n()
 
   const appIndexPageService = getAppIndexPageService()
@@ -20,5 +20,10 @@ export const useAppHeaderComponentService = () => {
     )
   })
 
-  return { ...data } as AppHeaderComponentService
+  return {
+    ...data,
+    click() {
+      console.log('MAKC:click')
+    },
+  }
 }

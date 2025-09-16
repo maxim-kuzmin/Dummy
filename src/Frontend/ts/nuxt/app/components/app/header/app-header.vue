@@ -1,7 +1,9 @@
 <script setup lang="ts">
   import { useAppHeaderComponentService } from '~/utils/app/components/header/app-header-component.composable'
 
-  const { indexPageName, indexPageUrl } = useAppHeaderComponentService()
+  const { indexPageName, indexPageUrl, click } = useAppHeaderComponentService()
+
+  click()
 </script>
 
 <template>

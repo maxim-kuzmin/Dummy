@@ -4,7 +4,7 @@ import {
   type AppLanguageComponentService,
 } from './app-language-component.types'
 
-export const useAppLanguageComponentService = () => {
+export const useAppLanguageComponentService = (): AppLanguageComponentService => {
   const i18n = useI18n()
   const switchLocalePath = useSwitchLocalePath()
 
@@ -64,5 +64,5 @@ export const useAppLanguageComponentService = () => {
     }
   }
 
-  return { ...data } as AppLanguageComponentService
+  return { ...data }
 }
