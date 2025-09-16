@@ -1,12 +1,9 @@
-import { AppLanguageComponentService } from './app-language-component.service'
-import type {
-  AppLanguageComponentItem,
-  AppLanguageComponentPayload,
+import {
+  AppLanguageComponentData,
+  type AppLanguageComponentItem,
 } from './app-language-component.types'
 
-export const useAppLanguageComponentService = () => {
-  const result = new AppLanguageComponentService()
-
+export const useAppLanguageComponent = () => {
   const i18n = useI18n()
   const switchLocalePath = useSwitchLocalePath()
 
@@ -14,6 +11,30 @@ export const useAppLanguageComponentService = () => {
 
   const buttonElementRef = useTemplateRef('button')
   const menuElementRef = useTemplateRef('menu')
+
+  const data = new AppLanguageComponentData()
+
+  watchEffect(() => {
+    const currentLocale = i18n.locales.value.find(
+      (locale) => locale.code === i18n.locale.value,
+    )
+
+    data.items.value = i18n.locales.value.map(
+      (locale) =>
+        ({
+          code: locale.code,
+          name: locale.name,
+          selected: locale.code === i18n.locale.value,
+          url: switchLocalePath(locale.code),
+        }) as AppLanguageComponentItem,
+    )
+
+    data.menuStyle.value = {
+      visibility: isMenuOpen.value ? 'visible' : 'hidden',
+    }
+
+    data.title.value = currentLocale?.name ?? ''
+  })
 
   onMounted(() => {
     if (globalThis.addEventListener) {
@@ -25,30 +46,6 @@ export const useAppLanguageComponentService = () => {
     if (globalThis.removeEventListener) {
       globalThis.removeEventListener('click', handleWindowClick)
     }
-  })
-
-  watchEffect(() => {
-    const currentLocale = i18n.locales.value.find(
-      (locale) => locale.code === i18n.locale.value,
-    )
-
-    const payload = {
-      items: i18n.locales.value.map(
-        (locale) =>
-          ({
-            code: locale.code,
-            name: locale.name,
-            selected: locale.code === i18n.locale.value,
-            url: switchLocalePath(locale.code),
-          }) as AppLanguageComponentItem,
-      ),
-      menuStyle: {
-        visibility: isMenuOpen.value ? 'visible' : 'hidden',
-      },
-      title: currentLocale?.name ?? '',
-    } as AppLanguageComponentPayload
-
-    result.load(payload)
   })
 
   function handleWindowClick(ev: MouseEvent): void {
@@ -66,5 +63,15 @@ export const useAppLanguageComponentService = () => {
     }
   }
 
-  return result
+  return {
+    get items() {
+      return data.items
+    },
+    get menuStyle() {
+      return data.menuStyle
+    },
+    get title() {
+      return data.title
+    },
+  }
 }

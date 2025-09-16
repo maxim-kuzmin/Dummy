@@ -1,19 +1,18 @@
 import { getPageService } from '~/utils/shared/page/page.service'
-import { AppMainComponentService } from './app-main-component.service'
-import type { AppMainComponentPayload } from './app-main-component.types'
+import { AppMainComponentData } from './app-main-component.types'
 
-export const useAppMainComponentService = () => {
-  const result = new AppMainComponentService()
-
+export const useAppMainComponent = () => {
   const pageService = getPageService()
 
-  watchEffect(() => {
-    const payload = {
-      title: pageService.title.value
-    } as AppMainComponentPayload
+  const data = new AppMainComponentData()
 
-    result.load(payload)
+  watchEffect(() => {
+    data.title.value = pageService.title.value
   })
 
-  return result
+  return {
+    get title() {
+      return data.title
+    },
+  }
 }
