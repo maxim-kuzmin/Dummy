@@ -2,7 +2,7 @@ import { inject, Injectable, signal } from '@angular/core';
 import { PageService } from '~/utils/shared/page/page.service';
 import { AppAboutPageService } from '~/utils/app/pages/about/app-about-page.service';
 import { AppFakePageService } from '~/utils/app/pages/fake/app-fake-page.service';
-import { AppNavComponentData, AppNavComponentItem } from './app-nav-component.types';
+import { AppNavComponentItem } from './app-nav-component.types';
 
 @Injectable({
   providedIn: 'root',
@@ -12,12 +12,10 @@ export class AppNavComponentService {
   private readonly appAboutPageService = inject(AppAboutPageService);
   private readonly appFakePageService = inject(AppFakePageService);
 
-  readonly componentData = {
-    items: signal([]),
-  } as AppNavComponentData;
+  readonly items = signal<AppNavComponentItem[]>([]);
 
-  loadComponentData(): void {
-    this.componentData.items.set(this.createFakeItems());
+  load(): void {
+    this.items.set(this.createFakeItems());
   }
 
   private createFakeItems(): AppNavComponentItem[] {

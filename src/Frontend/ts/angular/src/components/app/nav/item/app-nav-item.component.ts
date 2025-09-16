@@ -1,7 +1,8 @@
 import { Component, forwardRef, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { AppNavItemComponentInput } from '~/utils/app/components/nav/item/app-nav-item-component.types';
+import { AppNavItemsComponentInput } from '~/utils/app/components/nav/items/app-nav-items-component.types';
 import { AppNavComponentItem } from '~/utils/app/components/nav/app-nav-component.types';
-import { AppNavItemComponentData } from '~/utils/app/components/nav/item/app-nav-item-component.types';
 import { AppNavItems } from '../items/app-nav-items.component';
 
 @Component({
@@ -10,9 +11,15 @@ import { AppNavItems } from '../items/app-nav-items.component';
   imports: [RouterLink, forwardRef(() => AppNavItems)],
 })
 export class AppNavItem {
-  readonly item = input.required<AppNavComponentItem>();
+  readonly input = input.required<AppNavItemComponentInput>();
 
-  protected readonly data = {
-    item: this.item,
-  } as AppNavItemComponentData;
+  protected get item() {
+    return this.input().item;
+  }
+
+  protected createItemsComponentInput(
+    item: AppNavComponentItem
+  ): AppNavItemsComponentInput {
+    return { items: item.children };
+  }
 }

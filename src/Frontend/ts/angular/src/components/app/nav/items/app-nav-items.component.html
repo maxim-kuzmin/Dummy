@@ -1,5 +1,3 @@
-@let items = data.items();
-
 @for (item of items; track item.key) {
-<li app-nav-item [item]="item" [attr.data-selected]="item.selected || null"></li>
+<li app-nav-item [input]="createItemComponentInput(item)" [attr.data-selected]="item.selected || null"></li>
 }

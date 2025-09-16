@@ -1,6 +1,4 @@
-@let item = data.item();
-
 <a [routerLink]="item.url">{{ item.text }}</a>
 @if (item.children.length > 0) {
-<ul app-nav-items [items]="item.children"></ul>
+<ul app-nav-items [input]="createItemsComponentInput(item)"></ul>
 }

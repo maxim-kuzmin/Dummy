@@ -1,6 +1,7 @@
 import { Component, input } from '@angular/core';
+import { AppNavItemComponentInput } from '~/utils/app/components/nav/item/app-nav-item-component.types';
+import { AppNavItemsComponentInput } from '~/utils/app/components/nav/items/app-nav-items-component.types';
 import { AppNavComponentItem } from '~/utils/app/components/nav/app-nav-component.types';
-import { AppNavItemsComponentData } from '~/utils/app/components/nav/items/app-nav-items-component.types';
 import { AppNavItem } from '../item/app-nav-item.component';
 
 @Component({
@@ -9,9 +10,15 @@ import { AppNavItem } from '../item/app-nav-item.component';
   imports: [AppNavItem],
 })
 export class AppNavItems {
-  readonly items = input.required<AppNavComponentItem[]>();
+  readonly input = input.required<AppNavItemsComponentInput>();
 
-  protected readonly data = {
-    items: this.items,
-  } as AppNavItemsComponentData;
+  protected get items() {
+    return this.input().items;
+  }
+
+  protected createItemComponentInput(
+    item: AppNavComponentItem
+  ): AppNavItemComponentInput {
+    return { item };
+  }
 }
