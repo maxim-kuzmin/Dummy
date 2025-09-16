@@ -1,40 +1,40 @@
 import { getAppAboutPageService } from '~/utils/app/pages/about/app-about-page.service'
 import { getAppFakePageService } from '~/utils/app/pages/fake/app-fake-page.service'
 import { usePageUrl } from '~/utils/shared/page/url/page-url.composable'
-import { AppNavComponentData } from './app-nav-component.types'
+import { AppNavComponentService } from './app-nav-component.service'
+import type { AppNavComponentPayload } from './app-nav-component.types'
 
-export const useAppNavComponent = () => {
+export const useAppNavComponentService = () => {
+  const result = new AppNavComponentService()
+
   const appIndexPageService = getAppAboutPageService()
   const appFakePageService = getAppFakePageService()
 
-  const data = new AppNavComponentData()
-
   watchEffect(() => {
-    data.aboutPageUrl.value = usePageUrl(
-      appIndexPageService.createPageUrlOptions(),
-    )
+    const payload = {
+      aboutPageUrl: usePageUrl(appIndexPageService.createPageUrlOptions()),
+      fakePageUrl1: usePageUrl(
+        appFakePageService.createPageUrlOptions({
+          id: '1',
+          pageNumber: 1,
+        }),
+      ),
+      fakePageUrl1pn2: usePageUrl(
+        appFakePageService.createPageUrlOptions({
+          id: '1',
+          pageNumber: 2,
+        }),
+      ),
+      fakePageUrl2: usePageUrl(
+        appFakePageService.createPageUrlOptions({
+          id: '2',
+          pageNumber: 1,
+        }),
+      ),
+    } as AppNavComponentPayload
 
-    data.fakePageUrl1.value = usePageUrl(
-      appFakePageService.createPageUrlOptions({
-        id: '1',
-        pageNumber: 1,
-      }),
-    )
-
-    data.fakePageUrl1pn2.value = usePageUrl(
-      appFakePageService.createPageUrlOptions({
-        id: '1',
-        pageNumber: 2,
-      }),
-    )
-
-    data.fakePageUrl2.value = usePageUrl(
-      appFakePageService.createPageUrlOptions({
-        id: '2',
-        pageNumber: 1,
-      }),
-    )
+    result.load(payload)
   })
 
-  return { data }
+  return result
 }

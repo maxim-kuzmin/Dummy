@@ -1,9 +1,5 @@
-@let currentLanguageName = data.currentLanguageName;
-@let items = data.items();
-@let menuStyle = data.menuStyle();
-
 <button #button type="button">
-  {{ currentLanguageName }}
+  {{ title }}
 </button>
 <ul #menu [style]="menuStyle">
   @for (item of items; track item.code) {

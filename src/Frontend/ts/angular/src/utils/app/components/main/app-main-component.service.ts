@@ -8,7 +8,13 @@ import { AppMainComponentData } from './app-main-component.types';
 export class AppMainComponentService {
   private readonly pageService = inject(PageService);
 
-  readonly componentData = {
-    title: this.pageService.title,
-  } as AppMainComponentData;
+  private readonly data = new AppMainComponentData();
+
+  get title() {
+    return this.data.title;
+  }
+
+  load() {
+    this.data.title.set(this.pageService.title())
+  }
 }

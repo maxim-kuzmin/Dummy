@@ -1,20 +1,20 @@
-import type { CSSProperties } from "vue"
+import type { CSSProperties } from 'vue'
 
 export interface AppLanguageComponentItem {
   code: 'ru' | 'en'
   name: string
-  url: string
   selected: boolean
+  url: string
 }
 
-export interface AppLanguageComponentData {
-  readonly currentLanguageName: globalThis.Ref<string>
-  readonly items: globalThis.Ref<AppLanguageComponentItem[]>
-  readonly menuStyle: globalThis.Ref<CSSProperties>
+export interface AppLanguageComponentPayload {
+  readonly items: AppLanguageComponentItem[]
+  readonly menuStyle: CSSProperties
+  readonly title: string
 }
 
-export class AppLanguageComponentData1 {
-  readonly currentLanguageName = ref('')
+export class AppLanguageComponentData {
   readonly items = ref<AppLanguageComponentItem[]>([])
-  readonly menuStyle = ref<CSSProperties>({})
+  readonly menuStyle = ref<CSSProperties>({ visibility: 'hidden' })
+  readonly title = ref('')
 }

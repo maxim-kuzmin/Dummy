@@ -1,14 +1,14 @@
-import { Signal, WritableSignal } from '@angular/core';
+import { signal } from '@angular/core';
 
 export interface AppLanguageComponentItem {
   code: string;
   name: string;
-  url: string;
   selected: boolean;
+  url: string;
 }
 
-export interface AppLanguageComponentData {
-  currentLanguageName: string;
-  readonly items: WritableSignal<AppLanguageComponentItem[]>;
-  readonly menuStyle: Signal<{ visibility: string }>;
+export class AppLanguageComponentData {
+  readonly items = signal<AppLanguageComponentItem[]>([]);
+  readonly menuStyle = signal({ visibility: 'hidden' });
+  title = '';
 }

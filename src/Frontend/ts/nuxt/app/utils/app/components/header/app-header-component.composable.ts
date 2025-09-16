@@ -1,18 +1,23 @@
 import { usePageUrl } from '~/utils/shared/page/url/page-url.composable'
 import { getAppIndexPageService } from '~/utils/app/pages/index/app-index-page.service'
-import { AppHeaderComponentData } from './app-header-component.types'
+import { AppHeaderComponentService } from './app-header-component.service'
+import type { AppHeaderComponentPayload } from './app-header-component.types'
 
-export const useAppHeaderComponent = () => {
-  const appIndexPageService = getAppIndexPageService()
+export const useAppHeaderComponentService = () => {
+  const result = new AppHeaderComponentService()
 
   const { t } = useI18n()
 
-  const data = new AppHeaderComponentData()
+  const appIndexPageService = getAppIndexPageService()
 
   watchEffect(() => {
-    data.indexPageName.value = t('component.app-header.link.index.text')
-    data.indexPageUrl.value = usePageUrl(appIndexPageService.createPageUrlOptions())
+    const payload = {
+      indexPageName: t('component.app-header.link.index.text'),
+      indexPageUrl: usePageUrl(appIndexPageService.createPageUrlOptions())
+    } as AppHeaderComponentPayload
+
+    result.load(payload)
   })
 
-  return { data }
+  return result
 }

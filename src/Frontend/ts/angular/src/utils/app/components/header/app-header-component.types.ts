@@ -1,4 +1,4 @@
-export interface AppHeaderComponentData {
-  readonly indexPageName: string
-  indexPageUrl: string
+export class AppHeaderComponentData {
+  indexPageName = ''
+  indexPageUrl = ''
 }

@@ -1,13 +1,13 @@
-import { getPageService } from '~/utils/shared/page/page.service'
+import { AppMainComponentData, type AppMainComponentPayload } from './app-main-component.types'
 
 export class AppMainComponentService {
-  private readonly pageService = getPageService()
+  private readonly data = new AppMainComponentData()
 
-  readonly title = this.pageService.title
-}
+  get title() {
+    return this.data.title
+  }
 
-const instanceOfAppMainComponentService = new AppMainComponentService()
-
-export function getAppMainComponentService(): AppMainComponentService {
-  return instanceOfAppMainComponentService
+  load(payload: AppMainComponentPayload) {
+    this.data.title.value = payload.title
+  }
 }

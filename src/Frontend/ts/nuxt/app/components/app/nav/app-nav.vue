@@ -1,12 +1,8 @@
 <script setup lang="ts">
-  import { useAppNavComponent } from '~/utils/app/components/nav/app-nav-component.composable'
+  import { useAppNavComponentService } from '~/utils/app/components/nav/app-nav-component.composable'
 
-  const _this = useAppNavComponent()
-
-  const aboutPageUrl = _this.data.aboutPageUrl
-  const fakePageUrl1 = _this.data.fakePageUrl1
-  const fakePageUrl1pn2 = _this.data.fakePageUrl1pn2
-  const fakePageUrl2 = _this.data.fakePageUrl2
+  const { aboutPageUrl, fakePageUrl1, fakePageUrl1pn2, fakePageUrl2 } =
+    useAppNavComponentService()
 </script>
 
 <template>

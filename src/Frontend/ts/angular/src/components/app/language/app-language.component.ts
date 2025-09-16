@@ -24,7 +24,17 @@ export class AppLanguage implements OnInit, OnDestroy, AfterViewInit {
   private readonly menuElementRef =
     viewChild<ElementRef<HTMLUListElement>>('menu');
 
-  protected readonly data = this.service.data;
+  protected get items() {
+    return this.service.items();
+  }
+
+  protected get menuStyle() {
+    return this.service.menuStyle();
+  }
+
+  protected get title() {
+    return this.service.title;
+  }
 
   constructor() {
     effect(() => {
@@ -33,14 +43,14 @@ export class AppLanguage implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.service.onAfterViewInit(this.buttonElementRef, this.menuElementRef);
+    this.service.initView(this.buttonElementRef, this.menuElementRef);
   }
 
   ngOnDestroy(): void {
-    this.service.onDestroy();
+    this.service.destroy();
   }
 
   ngOnInit(): void {
-    this.service.onInit();
+    this.service.init();
   }
 }

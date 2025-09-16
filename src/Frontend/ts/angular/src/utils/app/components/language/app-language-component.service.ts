@@ -22,7 +22,11 @@ export class AppLanguageComponentService {
   private readonly router = inject(Router);
 
   private readonly isMenuOpen = signal(false);
+
   private readonly routerEvents = toSignal(this.router.events);
+
+  private buttonElementRef!: Signal<ElementRef<HTMLButtonElement> | undefined>;
+  private menuElementRef!: Signal<ElementRef<HTMLUListElement> | undefined>;
 
   private readonly currentUrl = computed(() => {
     const routerEvent = this.routerEvents();
@@ -32,29 +36,37 @@ export class AppLanguageComponentService {
       : '/';
   });
 
-  private buttonElementRef!: Signal<ElementRef<HTMLButtonElement> | undefined>;
-  private menuElementRef!: Signal<ElementRef<HTMLUListElement> | undefined>;
+  private readonly data = new AppLanguageComponentData();
 
-  readonly data = {
-    currentLanguageName: '',
-    items: signal([]),
-    menuStyle: computed(() => ({
-      visibility: this.isMenuOpen() ? 'visible' : 'hidden',
-    })),
-  } as AppLanguageComponentData;
+  get items() {
+    return this.data.items;
+  }
+
+  get menuStyle() {
+    return this.data.menuStyle;
+  }
+
+  get title() {
+    return this.data.title;
+  }
 
   constructor() {
     this.handleWindowClick = this.handleWindowClick.bind(this);
   }
 
-  load(): void {
-    this.data.currentLanguageName =
-      this.languageService.getCurrentLanguageName();
-
-    this.data.items.set(this.createLanguages());
+  destroy(): void {
+    if (globalThis.removeEventListener) {
+      globalThis.removeEventListener('click', this.handleWindowClick);
+    }
   }
 
-  onAfterViewInit(
+  init(): void {
+    if (globalThis.addEventListener) {
+      globalThis.addEventListener('click', this.handleWindowClick);
+    }
+  }
+
+  initView(
     buttonElementRef: Signal<ElementRef<HTMLButtonElement> | undefined>,
     menuElementRef: Signal<ElementRef<HTMLUListElement> | undefined>
   ): void {
@@ -62,16 +74,30 @@ export class AppLanguageComponentService {
     this.menuElementRef = menuElementRef;
   }
 
-  onDestroy(): void {
-    if (globalThis.removeEventListener) {
-      globalThis.removeEventListener('click', this.handleWindowClick);
-    }
-  }
+  load(): void {
+    const currentLanguageCode = this.languageService.getCurrentLanguageCode();
+    const currentUrl = this.currentUrl();
 
-  onInit(): void {
-    if (globalThis.addEventListener) {
-      globalThis.addEventListener('click', this.handleWindowClick);
-    }
+    this.data.items.set(
+      [
+        this.languageService.ruLanguageCode,
+        this.languageService.enLanguageCode,
+      ].map(
+        (code) =>
+          ({
+            code,
+            name: this.languageService.getLanguageNameByCode(code),
+            selected: code === currentLanguageCode,
+            url: this.languageService.createLocalizedUrl(code, currentUrl),
+          } as AppLanguageComponentItem)
+      )
+    );
+
+    this.data.menuStyle.set({
+      visibility: this.isMenuOpen() ? 'visible' : 'hidden',
+    });
+
+    this.data.title = this.languageService.getCurrentLanguageName();
   }
 
   private handleWindowClick(ev: MouseEvent): void {
@@ -87,40 +113,5 @@ export class AppLanguageComponentService {
     } else if (ev.target !== menuElement) {
       this.isMenuOpen.set(false);
     }
-  }
-
-  private createLanguage(
-    code: string,
-    currentLanguageCode: string,
-    currentUrl: string
-  ): AppLanguageComponentItem {
-    const name = this.languageService.getLanguageNameByCode(code);
-    const url = this.languageService.createLocalizedUrl(code, currentUrl);
-    const selected = code === currentLanguageCode;
-
-    return {
-      code,
-      name,
-      url,
-      selected,
-    } as AppLanguageComponentItem;
-  }
-
-  private createLanguages(): AppLanguageComponentItem[] {
-    const currentUrl = this.currentUrl();
-    const currentLanguageCode = this.languageService.getCurrentLanguageCode();
-
-    return [
-      this.createLanguage(
-        this.languageService.ruLanguageCode,
-        currentLanguageCode,
-        currentUrl
-      ),
-      this.createLanguage(
-        this.languageService.enLanguageCode,
-        currentLanguageCode,
-        currentUrl
-      ),
-    ];
   }
 }
