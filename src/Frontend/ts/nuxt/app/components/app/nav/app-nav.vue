@@ -1,39 +1,12 @@
 <script setup lang="ts">
-  import { getAppAboutPageService } from '~/utils/app/pages/about/app-about-page.service'
-  import { getAppFakePageService } from '~/utils/app/pages/fake/app-fake-page.service'
-  import { usePageUrl } from '~/utils/shared/page/page.composables'
+  import { useAppNavComponent } from '~/utils/app/components/nav/app-nav-component.composable'
 
-  const _this = (function (appAboutPageService, appFakePageService) {
-    return {
-      appAboutPageService,
-      appFakePageService,
-    }
-  })(getAppAboutPageService(), getAppFakePageService())
+  const _this = useAppNavComponent()
 
-  const aboutPageUrl = usePageUrl(
-    _this.appAboutPageService.createPageUrlOptions(),
-  )
-
-  const fakePageUrl1 = usePageUrl(
-    _this.appFakePageService.createPageUrlOptions({
-      id: '1',
-      pageNumber: 1,
-    }),
-  )
-
-  const fakePageUrl1pn2 = usePageUrl(
-    _this.appFakePageService.createPageUrlOptions({
-      id: '1',
-      pageNumber: 2,
-    }),
-  )
-
-  const fakePageUrl2 = usePageUrl(
-    _this.appFakePageService.createPageUrlOptions({
-      id: '2',
-      pageNumber: 1,
-    }),
-  )
+  const aboutPageUrl = _this.data.aboutPageUrl
+  const fakePageUrl1 = _this.data.fakePageUrl1
+  const fakePageUrl1pn2 = _this.data.fakePageUrl1pn2
+  const fakePageUrl2 = _this.data.fakePageUrl2
 </script>
 
 <template>

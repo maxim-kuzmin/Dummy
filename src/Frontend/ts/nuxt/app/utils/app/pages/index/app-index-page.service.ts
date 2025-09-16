@@ -1,5 +1,5 @@
 import { getPageService } from '~/utils/shared/page/page.service'
-import type { PageUrlOptions } from '~/utils/shared/page/page.types'
+import type { PageUrlOptions } from '~/utils/shared/page/url/page-url.types'
 import type { AppIndexPagePayload } from './app-index-page.types'
 
 export class AppIndexPageService {

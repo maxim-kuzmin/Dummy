@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { useAppHeaderComponent } from '~/utils/app/components/header/app-header-component.composables'
+  import { useAppHeaderComponent } from '~/utils/app/components/header/app-header-component.composable'
 
   const _this = useAppHeaderComponent()
 

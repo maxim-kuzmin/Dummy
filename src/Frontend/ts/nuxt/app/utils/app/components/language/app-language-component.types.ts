@@ -12,3 +12,9 @@ export interface AppLanguageComponentData {
   readonly items: globalThis.Ref<AppLanguageComponentItem[]>
   readonly menuStyle: globalThis.Ref<CSSProperties>
 }
+
+export class AppLanguageComponentData1 {
+  readonly currentLanguageName = ref('')
+  readonly items = ref<AppLanguageComponentItem[]>([])
+  readonly menuStyle = ref<CSSProperties>({})
+}

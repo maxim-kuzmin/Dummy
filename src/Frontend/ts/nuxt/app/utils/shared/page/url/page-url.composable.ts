@@ -1,12 +1,11 @@
-import type { PageUrlOptions } from "./page.types"
+import type { PageUrlOptions } from "./page-url.types"
 
 export const usePageUrl = (options: PageUrlOptions) => {
   const localePath = useLocalePath()
 
-  const result = computed(() => localePath({
+  return localePath({
       name: options.routeName,
       params: options.routeParams,
       query: options.locationQuery,
-    }))
-  return result
+    })
 }

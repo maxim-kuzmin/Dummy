@@ -1,4 +1,4 @@
-export interface AppHeaderComponentData {
-  readonly indexPageName: globalThis.Ref<string>
-  indexPageUrl?: globalThis.Ref<string>
+export class AppHeaderComponentData {
+  readonly indexPageName = ref('')
+  readonly indexPageUrl = ref('')
 }
