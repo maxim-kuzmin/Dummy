@@ -1,29 +1,45 @@
-import { computed, inject, Injectable } from '@angular/core';
-import { fakePagePath } from '~/app/app.paths';
-import { PageService } from '~/utils/shared/page/page.service';
-import { AppFakePageData, AppFakePageRouteParams } from './app-fake-page.types';
+import { inject, Injectable } from '@angular/core';
+import { HttpParams } from '@angular/common/http';
+import { Router, UrlTree } from '@angular/router';
+import { paths } from '~/utils/app/app.types';
+import { LanguageService } from '~/utils/shared/language/language.service';
+import {
+  AppFakePageDataQuery,
+  appFakePageParameters,
+} from './app-fake-page.types';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AppFakePageService {
-  private readonly pageService = inject(PageService);
+  private readonly router = inject(Router);
+  private readonly languageService = inject(LanguageService);
 
-  readonly pageData: AppFakePageData = {
-    key: computed(() => this.pageService.key()),
-  };
-
-  createPageKey(params: AppFakePageRouteParams): string {
-    return `Fake:${params.id}`;
+  createPageKey(dataQuery: AppFakePageDataQuery): string {
+    return `Fake:${dataQuery.id},${dataQuery.pageNumber}`;
   }
 
-  createPageUrl(params: AppFakePageRouteParams): string {
-    return `/${fakePagePath.replace(':id', params.id)}`;
+  createPageUrl(dataQuery: AppFakePageDataQuery): string {
+    let locationQuery = new HttpParams();
+
+    if (dataQuery.pageNumber > appFakePageParameters.pageNumber.defaultValue) {
+      locationQuery = locationQuery.append(
+        appFakePageParameters.pageNumber.name,
+        dataQuery.pageNumber
+      );
+    }
+
+    const queryString = locationQuery.keys().length > 0 ? `?${locationQuery}` : '';
+
+    const path = paths.fake.replace(`:${appFakePageParameters.id.name}`, dataQuery.id);
+
+    return this.languageService.createLocalizedUrl(
+      this.languageService.getCurrentLanguageCode(),
+      `/${path}${queryString}`
+    );
   }
 
-  loadPageData(id: string): void {
-    this.pageService.key.set(this.createPageKey({ id }));
-
-    this.pageService.title.set(`${$localize`:@@page.fake.title:@@`} ${id}`);
+  createPageUrlTree(dataQuery: AppFakePageDataQuery): UrlTree {
+    return this.router.parseUrl(this.createPageUrl(dataQuery))
   }
 }

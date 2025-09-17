@@ -1,16 +1,13 @@
+import { PageParameter } from '~/utils/shared/page/page.types'
+
 export interface AppFakePageDataQuery {
   readonly id: string
   readonly pageNumber: number
 }
 
-export interface AppFakePageParameters {
-  readonly id: globalThis.Ref<string>
-  readonly pageNumber: globalThis.Ref<number>
-}
-
-export interface AppFakePageParameterNames {
-  readonly id: string
-  readonly pageNumber: string
+export class AppFakePageParameters {
+  readonly id = new PageParameter('id', '')
+  readonly pageNumber = new PageParameter('pn', 1)
 }
 
 export class AppFakePageData {
@@ -19,5 +16,5 @@ export class AppFakePageData {
 }
 
 export type AppFakePageModel = AppFakePageData & {
-  click(): void;
+  click(): void
 }

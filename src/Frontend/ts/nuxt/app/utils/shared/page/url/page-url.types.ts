@@ -1,4 +1,4 @@
-import type { LocationQueryRaw, RouteParamsRawGeneric } from "vue-router"
+import type { LocationQueryRaw, RouteParamsRawGeneric } from 'vue-router'
 
 export interface PageUrlOptions {
   readonly routeName: string

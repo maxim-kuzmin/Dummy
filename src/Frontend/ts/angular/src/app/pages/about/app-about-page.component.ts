@@ -1,16 +1,17 @@
 import { Component, effect, inject } from '@angular/core';
-import { AppAboutPageService } from '~/utils/app/pages/about/app-about-page.service';
+import { AppAboutPageModel } from '~/utils/app/pages/about/app-about-page.model';
 
 @Component({
   selector: 'div[app-about-page]',
   templateUrl: './app-about-page.component.html',
+  providers: [AppAboutPageModel]
 })
 export class AppAboutPage {
-  private service = inject(AppAboutPageService);
+  private model = inject(AppAboutPageModel);
 
   constructor() {
     effect(() => {
-      this.service.load();
+      this.model.load();
     });
   }
 }

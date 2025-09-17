@@ -1,24 +1,15 @@
-import { inject, Injectable } from '@angular/core';
-import { PageService } from '~/utils/shared/page/page.service';
+import { Injectable } from '@angular/core';
+import { paths } from '~/utils/app/app.types';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AppAboutPageService {
-  private readonly pageService = inject(PageService);
-
   createPageKey(): string {
     return 'About';
   }
 
   createPageUrl(): string {
-    return '/about';
-  }
-
-  load(): void {
-    const pageKey = this.createPageKey()
-
-    this.pageService.key.set(pageKey);
-    this.pageService.title.set($localize`:@@page.about.title:@@`);
+    return `/${paths.about}`;
   }
 }

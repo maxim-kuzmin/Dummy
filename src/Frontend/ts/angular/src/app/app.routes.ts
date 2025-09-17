@@ -1,33 +1,28 @@
 import { Routes } from '@angular/router';
-import {
-  aboutPagePath,
-  defaultPath,
-  fakePagePath,
-  indexPagePath,
-} from './app.paths';
+import { paths } from '~/utils/app/app.types';
 
 export const routes: Routes = [
   {
-    path: aboutPagePath,
+    path: paths.about,
     loadComponent: () =>
       import('./pages/about/app-about-page.component').then(
         (m) => m.AppAboutPage
       ),
   },
   {
-    path: fakePagePath,
+    path: paths.fake,
     loadComponent: () =>
       import('./pages/fake/app-fake-page.component').then((m) => m.AppFakePage),
   },
   {
-    path: indexPagePath,
+    path: paths.index,
     loadComponent: () =>
       import('./pages/index/app-index-page.component').then(
         (m) => m.AppIndexPage
       ),
   },
   {
-    path: defaultPath,
+    path: paths.default,
     loadComponent: () =>
       import('./pages/not-found/app-not-found-page.component').then(
         (m) => m.AppNotFoundPage

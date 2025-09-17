@@ -1,4 +1,4 @@
-import { LOCALE_ID, Injectable, inject } from '@angular/core';
+import { LOCALE_ID, Injectable, inject, isDevMode } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
@@ -10,9 +10,9 @@ export class LanguageService {
   readonly enLanguageCode = 'en';
 
   private readonly languageNameLookup = new Map([
-      [this.enLanguageCode, 'English'],
-      [this.ruLanguageCode, 'Русский'],
-    ]);
+    [this.enLanguageCode, 'English'],
+    [this.ruLanguageCode, 'Русский'],
+  ]);
 
   getCurrentLanguageCode(): string {
     return this.localeId;
@@ -27,6 +27,10 @@ export class LanguageService {
   }
 
   createLocalizedUrl(code: string, url: string): string {
-    return code === this.ruLanguageCode ? url : `/${code}${url}`;
+    if (isDevMode()) {
+      return url;
+    } else {
+      return code === this.ruLanguageCode ? url : `/${code}${url}`;
+    }
   }
 }

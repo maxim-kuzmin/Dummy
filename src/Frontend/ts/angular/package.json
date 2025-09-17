@@ -4,8 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "start:ru": "ng serve --configuration=ru",
-    "start:en": "ng serve --configuration=en",
+    "start:ru": "ng serve --configuration=ru --open",
+    "start:en": "ng serve --configuration=en --open",
     "exptact-i18n": "ng extract-i18n --output-path src/locale --format json --out-file @@.json",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",

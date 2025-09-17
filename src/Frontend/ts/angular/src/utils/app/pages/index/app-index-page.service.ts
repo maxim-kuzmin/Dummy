@@ -1,4 +1,5 @@
 import { inject, Injectable } from '@angular/core';
+import { paths } from '~/utils/app/app.types';
 import { PageService } from '~/utils/shared/page/page.service';
 
 @Injectable({
@@ -12,7 +13,7 @@ export class AppIndexPageService {
   }
 
   createPageUrl(): string {
-    return '/';
+    return `/${paths.index}`;
   }
 
   loadPageData(): void {
