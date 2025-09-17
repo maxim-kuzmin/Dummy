@@ -6,6 +6,6 @@ export const usePageUrl = (options: PageUrlOptions): string => {
   return localePath({
       name: options.routeName,
       params: options.routeParams,
-      query: options.locationQuery,
+      query: options.queryParams,
     })
 }

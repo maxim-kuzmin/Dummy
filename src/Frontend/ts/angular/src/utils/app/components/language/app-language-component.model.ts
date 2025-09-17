@@ -1,20 +1,10 @@
-import {
-  computed,
-  ElementRef,
-  inject,
-  Injectable,
-  Signal,
-  signal,
-} from '@angular/core';
+import { computed, ElementRef, inject, Signal, signal } from '@angular/core';
 import { LanguageService } from '~/utils/shared/language/language.service';
 import { AppLanguageComponentItem } from './app-language-component.types';
 import { NavigationEnd, Router } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class AppLanguageComponentService {
+export class AppLanguageComponentModel {
   private readonly languageService = inject(LanguageService);
   private readonly router = inject(Router);
 

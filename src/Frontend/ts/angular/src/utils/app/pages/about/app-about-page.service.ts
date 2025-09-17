@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { paths } from '~/utils/app/app.types';
+import { PageUrlOptions } from '~/utils/shared/page/url/page-url.types';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +9,9 @@ export class AppAboutPageService {
     return 'About';
   }
 
-  createPageUrl(): string {
-    return `/${paths.about}`;
+  createPageUrlOptions(): PageUrlOptions {
+    return {
+      routeParams: ['/about'],
+    };
   }
 }

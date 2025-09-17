@@ -7,10 +7,10 @@ import { AppFakePageModel } from '~/utils/app/pages/fake/app-fake-page.model';
   providers: [AppFakePageModel],
 })
 export class AppFakePage {
-  private model = inject(AppFakePageModel);
+  private model = inject(AppFakePageModel, { self: true });
 
   protected get key() {
-    return this.model.key()
+    return this.model.key();
   }
 
   constructor() {

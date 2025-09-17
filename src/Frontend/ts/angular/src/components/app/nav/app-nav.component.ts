@@ -1,25 +1,26 @@
 import { Component, effect, inject } from '@angular/core';
 import { AppNavItemsComponentInput } from '~/utils/app/components/nav/items/app-nav-items-component.types';
-import { AppNavComponentService } from '~/utils/app/components/nav/app-nav-component.service';
+import { AppNavComponentModel } from '~/utils/app/components/nav/app-nav-component.model';
 import { AppNavItems } from './items/app-nav-items.component';
 
 @Component({
   selector: 'nav[app-nav]',
   templateUrl: './app-nav.component.html',
   imports: [AppNavItems],
+  providers: [AppNavComponentModel],
 })
 export class AppNav {
-  private readonly service = inject(AppNavComponentService);
+  private readonly model = inject(AppNavComponentModel, { self: true });
 
-  protected get itemsComponentInput():AppNavItemsComponentInput {
+  protected get itemsComponentInput(): AppNavItemsComponentInput {
     return {
-      items: this.service.items()
-    }
+      items: this.model.items(),
+    };
   }
 
   constructor() {
     effect(() => {
-      this.service.load();
+      this.model.load();
     });
   }
 }

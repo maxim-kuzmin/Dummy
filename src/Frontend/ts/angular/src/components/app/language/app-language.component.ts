@@ -9,14 +9,15 @@ import {
   viewChild,
 } from '@angular/core';
 
-import { AppLanguageComponentService } from '~/utils/app/components/language/app-language-component.service';
+import { AppLanguageComponentModel } from '~/utils/app/components/language/app-language-component.model';
 
 @Component({
   selector: 'nav[app-language]',
   templateUrl: './app-language.component.html',
+  providers: [AppLanguageComponentModel],
 })
 export class AppLanguage implements OnInit, OnDestroy, AfterViewInit {
-  private readonly service = inject(AppLanguageComponentService);
+  private readonly model = inject(AppLanguageComponentModel, { self: true });
 
   private readonly buttonElementRef =
     viewChild<ElementRef<HTMLButtonElement>>('button');
@@ -25,32 +26,32 @@ export class AppLanguage implements OnInit, OnDestroy, AfterViewInit {
     viewChild<ElementRef<HTMLUListElement>>('menu');
 
   protected get items() {
-    return this.service.items();
+    return this.model.items();
   }
 
   protected get menuStyle() {
-    return this.service.menuStyle();
+    return this.model.menuStyle();
   }
 
   protected get title() {
-    return this.service.title;
+    return this.model.title;
   }
 
   constructor() {
     effect(() => {
-      this.service.load();
+      this.model.load();
     });
   }
 
   ngAfterViewInit(): void {
-    this.service.initView(this.buttonElementRef, this.menuElementRef);
+    this.model.initView(this.buttonElementRef, this.menuElementRef);
   }
 
   ngOnDestroy(): void {
-    this.service.destroy();
+    this.model.destroy();
   }
 
   ngOnInit(): void {
-    this.service.init();
+    this.model.init();
   }
 }

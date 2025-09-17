@@ -1,6 +1,10 @@
 import { getPageService } from '~/utils/shared/page/page.service'
 import { getAppFakePageService } from './app-fake-page.service'
-import { AppFakePageData, type AppFakePageModel } from './app-fake-page.types'
+import {
+  AppFakePageData,
+  appFakePageParameters,
+  type AppFakePageModel,
+} from './app-fake-page.types'
 
 export const useAppFakePage = (): AppFakePageModel => {
   const { t } = useI18n()
@@ -12,13 +16,11 @@ export const useAppFakePage = (): AppFakePageModel => {
   const data = new AppFakePageData()
 
   watchEffect(() => {
-    const idParameter = appFakePageService.parameters.id
-    const pageNumberParameter = appFakePageService.parameters.pageNumber
-
-    const id = String(route.params[idParameter.name])
+    const id = String(route.params[appFakePageParameters.id.name])
 
     const pageNumber = Number(
-      route.query[pageNumberParameter.name] ?? pageNumberParameter.defaultValue,
+      route.query[appFakePageParameters.pageNumber.name] ??
+        appFakePageParameters.pageNumber.defaultValue,
     )
 
     const pageKey = appFakePageService.createPageKey({ id, pageNumber })

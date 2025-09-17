@@ -1,16 +1,17 @@
 import { Component, effect, inject } from '@angular/core';
-import { AppNotFoundPageService } from '~/utils/app/pages/not-found/app-not-found-page.service';
+import { AppNotFoundPageModel } from '~/utils/app/pages/not-found/app-not-found-page.model';
 
 @Component({
   selector: 'div[app-not-found-page]',
   templateUrl: './app-not-found-page.component.html',
+  providers: [AppNotFoundPageModel],
 })
 export class AppNotFoundPage {
-  private service = inject(AppNotFoundPageService);
+  private model = inject(AppNotFoundPageModel, { self: true });
 
   constructor() {
     effect(() => {
-      this.service.loadPageData();
+      this.model.load();
     });
   }
 }

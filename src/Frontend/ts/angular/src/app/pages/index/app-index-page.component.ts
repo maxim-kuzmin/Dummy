@@ -1,16 +1,17 @@
 import { Component, effect, inject } from '@angular/core';
-import { AppIndexPageService } from '~/utils/app/pages/index/app-index-page.service';
+import { AppIndexPageModel } from '~/utils/app/pages/index/app-index-page.model';
 
 @Component({
   selector: 'div[app-index-page]',
   templateUrl: './app-index-page.component.html',
+  providers: [AppIndexPageModel],
 })
 export class AppIndexPage {
-  private service = inject(AppIndexPageService);
+  private model = inject(AppIndexPageModel, { self: true });
 
   constructor() {
     effect(() => {
-      this.service.loadPageData();
+      this.model.load();
     });
   }
 }

@@ -1,3 +1,4 @@
+import { parameterNames } from '~/utils/app/app.types';
 import { PageParameter } from '~/utils/shared/page/page.types'
 
 export interface AppFakePageDataQuery {
@@ -5,10 +6,10 @@ export interface AppFakePageDataQuery {
   readonly pageNumber: number
 }
 
-export class AppFakePageParameters {
-  readonly id = new PageParameter('id', '')
-  readonly pageNumber = new PageParameter('pn', 1)
-}
+export const appFakePageParameters = {
+  id: new PageParameter(parameterNames.id, ''),
+  pageNumber: new PageParameter(parameterNames.pageNumber, 1),
+};
 
 export class AppFakePageData {
   readonly key = ref('')

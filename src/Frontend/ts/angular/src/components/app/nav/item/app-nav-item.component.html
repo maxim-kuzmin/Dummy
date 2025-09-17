@@ -1,4 +1,4 @@
-<a [href]="item.url">{{ item.text }}</a>
+<a [routerLink]="item.urlTree">{{ item.text }}</a>
 @if (item.children.length > 0) {
 <ul app-nav-items [input]="createItemsComponentInput(item)"></ul>
 }

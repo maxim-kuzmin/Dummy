@@ -1,10 +1,7 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { inject, signal } from '@angular/core';
 import { PageService } from '~/utils/shared/page/page.service';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class AppMainComponentService {
+export class AppMainComponentModel {
   private readonly pageService = inject(PageService);
 
   readonly title = signal('');

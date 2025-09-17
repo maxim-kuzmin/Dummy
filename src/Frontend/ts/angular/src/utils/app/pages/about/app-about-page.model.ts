@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject } from '@angular/core';
 import { PageService } from '~/utils/shared/page/page.service';
 import { AppAboutPageService } from './app-about-page.service';
 
