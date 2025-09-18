@@ -3,6 +3,7 @@ import { LanguageService } from '~/utils/shared/language/language.service';
 import { AppLanguageComponentItem } from './app-language-component.types';
 import { NavigationEnd, Router } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { languages } from '~/utils/shared/language/language.types';
 
 export class AppLanguageComponentModel {
   private readonly languageService = inject(LanguageService);
@@ -52,20 +53,20 @@ export class AppLanguageComponentModel {
   }
 
   load(): void {
-    const currentLanguageCode = this.languageService.getCurrentLanguageCode();
+    const currentLanguage = this.languageService.getCurrentLanguage();
     const currentUrl = this.currentUrl();
 
     this.items.set(
-      [
-        this.languageService.ruLanguageCode,
-        this.languageService.enLanguageCode,
-      ].map(
-        (code) =>
+      [languages.russian, languages.english].map(
+        (language) =>
           ({
-            code,
-            name: this.languageService.getLanguageNameByCode(code),
-            selected: code === currentLanguageCode,
-            url: this.languageService.createLocalizedUrl(code, currentUrl),
+            code: language.code,
+            name: language.name,
+            selected: language.code === currentLanguage.code,
+            url: this.languageService.createLocalizedUrl(
+              language.code,
+              currentUrl
+            ),
           } as AppLanguageComponentItem)
       )
     );
@@ -74,7 +75,7 @@ export class AppLanguageComponentModel {
       visibility: this.isMenuOpen() ? 'visible' : 'hidden',
     });
 
-    this.title = this.languageService.getCurrentLanguageName();
+    this.title = currentLanguage.name;
   }
 
   private handleWindowClick(ev: MouseEvent): void {

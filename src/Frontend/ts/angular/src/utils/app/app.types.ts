@@ -1,4 +1,4 @@
-export const parameterNames = {
+export const AppParameterNames = {
   id: 'id',
   pageNumber: 'pn',
 } as const;
@@ -6,6 +6,6 @@ export const parameterNames = {
 export const paths = {
   about: 'about',
   default: '**',
-  fake: `fake/:${parameterNames.id}`,
+  fake: `fake/:${AppParameterNames.id}`,
   index: '',
 } as const;

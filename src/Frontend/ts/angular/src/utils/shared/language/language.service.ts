@@ -1,4 +1,5 @@
 import { LOCALE_ID, Injectable, inject, isDevMode } from '@angular/core';
+import { Language, LanguageCode, languages } from './language.types';
 
 @Injectable({
   providedIn: 'root',
@@ -6,31 +7,21 @@ import { LOCALE_ID, Injectable, inject, isDevMode } from '@angular/core';
 export class LanguageService {
   private readonly localeId = inject(LOCALE_ID);
 
-  readonly ruLanguageCode = 'ru';
-  readonly enLanguageCode = 'en';
-
-  private readonly languageNameLookup = new Map([
-    [this.enLanguageCode, 'English'],
-    [this.ruLanguageCode, 'Русский'],
-  ]);
-
-  getCurrentLanguageCode(): string {
-    return this.localeId;
-  }
-
-  getCurrentLanguageName(): string {
-    return this.getLanguageNameByCode(this.getCurrentLanguageCode());
-  }
-
-  getLanguageNameByCode(code: string): string {
-    return this.languageNameLookup.get(code)!;
-  }
-
-  createLocalizedUrl(code: string, url: string): string {
+  createLocalizedUrl(code: LanguageCode, url: string): string {
     if (isDevMode()) {
       return url;
     } else {
-      return code === this.ruLanguageCode ? url : `/${code}${url}`;
+      return code === languages.russian.code ? url : `/${code}${url}`;
+    }
+  }
+
+  getCurrentLanguage(): Language {
+    switch (this.localeId) {
+      case languages.english.code:
+        return languages.english;
+      case languages.russian.code:
+      default:
+        return languages.russian;
     }
   }
 }

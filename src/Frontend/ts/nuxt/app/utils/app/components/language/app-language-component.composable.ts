@@ -1,3 +1,5 @@
+import { useLanguage } from '~/utils/shared/language/language.composable'
+import { languages } from '~/utils/shared/language/language.types'
 import {
   AppLanguageComponentData,
   type AppLanguageComponentItem,
@@ -5,8 +7,7 @@ import {
 } from './app-language-component.types'
 
 export const useAppLanguageComponent = (): AppLanguageComponentModel => {
-  const i18n = useI18n()
-  const switchLocalePath = useSwitchLocalePath()
+  const languageModel = useLanguage()
 
   const isMenuOpen = ref(false)
 
@@ -16,17 +17,15 @@ export const useAppLanguageComponent = (): AppLanguageComponentModel => {
   const data = new AppLanguageComponentData()
 
   watchEffect(() => {
-    const currentLocale = i18n.locales.value.find(
-      (locale) => locale.code === i18n.locale.value,
-    )
+    const currentLanguage = languageModel.getCurrentLanguage()
 
-    data.items.value = i18n.locales.value.map(
-      (locale) =>
+    data.items.value = [languages.russian, languages.english].map(
+      (language) =>
         ({
-          code: locale.code,
-          name: locale.name,
-          selected: locale.code === i18n.locale.value,
-          url: switchLocalePath(locale.code),
+          code: language.code,
+          name: language.name,
+          selected: language.code === currentLanguage.code,
+          url: languageModel.createLocalizedUrl(language.code),
         }) as AppLanguageComponentItem,
     )
 
@@ -34,7 +33,7 @@ export const useAppLanguageComponent = (): AppLanguageComponentModel => {
       visibility: isMenuOpen.value ? 'visible' : 'hidden',
     }
 
-    data.title.value = currentLocale?.name ?? ''
+    data.title.value = currentLanguage.name
   })
 
   onMounted(() => {

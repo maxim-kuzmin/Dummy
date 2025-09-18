@@ -1,4 +1,4 @@
-import { parameterNames } from '~/utils/app/app.types';
+import { AppParameterNames } from '~/utils/app/app.types';
 import { PageParameter } from '~/utils/shared/page/page.types';
 
 export interface AppFakePageDataQuery {
@@ -7,6 +7,6 @@ export interface AppFakePageDataQuery {
 }
 
 export const appFakePageParameters = {
-  id: new PageParameter(parameterNames.id, ''),
-  pageNumber: new PageParameter(parameterNames.pageNumber, 1),
+  id: new PageParameter(AppParameterNames.id, ''),
+  pageNumber: new PageParameter(AppParameterNames.pageNumber, 1),
 };
