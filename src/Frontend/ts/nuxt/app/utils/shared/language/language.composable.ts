@@ -1,6 +1,11 @@
-import { languages, type Language, type LanguageCode } from './language.types'
+import {
+  languages,
+  type Language,
+  type LanguageCode,
+  type LanguageModel,
+} from './language.types'
 
-export const useLanguage = () => {
+export const useLanguage = (): LanguageModel => {
   const i18n = useI18n()
   const switchLocalePath = useSwitchLocalePath()
 
