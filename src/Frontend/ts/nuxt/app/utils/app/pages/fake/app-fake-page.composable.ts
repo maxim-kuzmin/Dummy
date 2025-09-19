@@ -5,9 +5,10 @@ import {
   appFakePageParameters,
   type AppFakePageModel,
 } from './app-fake-page.types'
+import { useAppFakePageResources } from './resources/app-fake-page-resources.composable'
 
 export const useAppFakePage = (): AppFakePageModel => {
-  const { t } = useI18n()
+  const appFakePageResourcesModel = useAppFakePageResources()
   const route = useRoute()
 
   const appFakePageService = getAppFakePageService()
@@ -26,7 +27,7 @@ export const useAppFakePage = (): AppFakePageModel => {
     const pageKey = appFakePageService.createPageKey({ id, pageNumber })
 
     pageService.key.value = pageKey
-    pageService.title.value = t('page.fake.title', [id])
+    pageService.title.value = appFakePageResourcesModel.getTitle(id)
 
     data.key.value = pageKey
   })

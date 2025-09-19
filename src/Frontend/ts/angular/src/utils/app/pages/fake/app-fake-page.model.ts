@@ -2,11 +2,13 @@ import { inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { PageService } from '~/utils/shared/page/page.service';
+import { AppFakePageResourcesService } from './resources/app-fake-page-resources.service';
 import { AppFakePageService } from './app-fake-page.service';
 import { appFakePageParameters } from './app-fake-page.types';
 
 export class AppFakePageModel {
   private readonly appFakePageService = inject(AppFakePageService);
+  private readonly appFakePageResourcesService = inject(AppFakePageResourcesService)
   private readonly pageService = inject(PageService);
 
   private readonly activatedRoute = inject(ActivatedRoute);
@@ -32,7 +34,7 @@ export class AppFakePageModel {
     const pageKey = this.appFakePageService.createPageKey({ id, pageNumber });
 
     this.pageService.key.set(pageKey);
-    this.pageService.title.set(`${$localize`:@@page.fake.title:@@`} ${id}`);
+    this.pageService.title.set(this.appFakePageResourcesService.getTitle(id));
 
     this.key.set(pageKey);
   }

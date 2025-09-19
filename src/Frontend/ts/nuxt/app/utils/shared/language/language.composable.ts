@@ -6,7 +6,7 @@ import {
 } from './language.types'
 
 export const useLanguage = (): LanguageModel => {
-  const i18n = useI18n()
+  const { locale, t } = useI18n()
   const switchLocalePath = useSwitchLocalePath()
 
   return {
@@ -14,7 +14,7 @@ export const useLanguage = (): LanguageModel => {
       return switchLocalePath(code)
     },
     getCurrentLanguage(): Language {
-      switch (i18n.locale.value) {
+      switch (locale.value) {
         case languages.english.code:
           return languages.english
         case languages.russian.code:
@@ -22,5 +22,6 @@ export const useLanguage = (): LanguageModel => {
           return languages.russian
       }
     },
+    translate: t
   }
 }
