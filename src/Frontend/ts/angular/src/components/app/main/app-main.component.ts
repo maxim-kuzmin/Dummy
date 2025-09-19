@@ -1,5 +1,5 @@
 import { Component, effect, inject } from '@angular/core';
-import { AppMainComponentModel } from '~/utils/app/components/main/app-main-component.model';
+import { AppMainComponentModel } from '~/utils/domain-use-cases/app/components/main/app-main-component.model';
 
 @Component({
   selector: 'main[app-main]',

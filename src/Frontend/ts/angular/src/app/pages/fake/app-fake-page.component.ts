@@ -1,5 +1,5 @@
 import { Component, effect, inject } from '@angular/core';
-import { AppFakePageModel } from '~/utils/app/pages/fake/app-fake-page.model';
+import { AppFakePageModel } from '~/utils/domain-use-cases/app/pages/fake/app-fake-page.model';
 
 @Component({
   selector: 'div[app-fake-page]',

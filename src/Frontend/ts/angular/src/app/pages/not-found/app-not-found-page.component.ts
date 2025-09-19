@@ -1,5 +1,5 @@
 import { Component, effect, inject } from '@angular/core';
-import { AppNotFoundPageModel } from '~/utils/app/pages/not-found/app-not-found-page.model';
+import { AppNotFoundPageModel } from '~/utils/domain-use-cases/app/pages/not-found/app-not-found-page.model';
 
 @Component({
   selector: 'div[app-not-found-page]',

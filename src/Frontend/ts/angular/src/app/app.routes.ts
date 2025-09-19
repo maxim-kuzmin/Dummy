@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { paths } from '~/utils/app/app.types';
+import { paths } from '~/utils/domain-use-cases/app/app.types';
 
 export const routes: Routes = [
   {

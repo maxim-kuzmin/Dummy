@@ -1,5 +1,5 @@
 import { RenderMode, ServerRoute } from '@angular/ssr';
-import { paths } from '../utils/app/app.types';
+import { paths } from '../utils/domain-use-cases/app/app.types';
 
 export const serverRoutes: ServerRoute[] = [
   {

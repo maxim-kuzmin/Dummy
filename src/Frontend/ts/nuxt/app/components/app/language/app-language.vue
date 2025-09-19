@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { useAppLanguageComponent } from '~/utils/app/components/language/app-language-component.composable'
+  import { useAppLanguageComponent } from '~/utils/domain-use-cases/app/components/language/app-language-component.composable'
 
   const { items, menuStyle, title } = useAppLanguageComponent()
 </script>

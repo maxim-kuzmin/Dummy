@@ -9,8 +9,7 @@ export class Language {
 
 export interface LanguageModel {
   createLocalizedUrl(code: LanguageCode): string
-  getCurrentLanguage(): Language,
-  translate(text: string, list?: unknown[]): string
+  getCurrentLanguage(): Language
 }
 
 export const languages = {

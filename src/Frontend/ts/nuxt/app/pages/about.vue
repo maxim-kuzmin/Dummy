@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { useAppAboutPage } from '~/utils/app/pages/about/app-about-page.composable'
+  import { useAppAboutPage } from '~/utils/domain-use-cases/app/pages/about/app-about-page.composable'
 
   useAppAboutPage()
 </script>

@@ -1,7 +1,7 @@
 import { Component, input } from '@angular/core';
-import { AppNavItemComponentInput } from '~/utils/app/components/nav/item/app-nav-item-component.types';
-import { AppNavItemsComponentInput } from '~/utils/app/components/nav/items/app-nav-items-component.types';
-import { AppNavComponentItem } from '~/utils/app/components/nav/app-nav-component.types';
+import { AppNavItemComponentInput } from '~/utils/domain-use-cases/app/components/nav/item/app-nav-item-component.types';
+import { AppNavItemsComponentInput } from '~/utils/domain-use-cases/app/components/nav/items/app-nav-items-component.types';
+import { AppNavComponentItem } from '~/utils/domain-use-cases/app/components/nav/app-nav-component.types';
 import { AppNavItem } from '../item/app-nav-item.component';
 
 @Component({

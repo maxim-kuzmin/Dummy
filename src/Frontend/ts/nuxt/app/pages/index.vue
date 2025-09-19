@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { useAppIndexPage } from '~/utils/app/pages/index/app-index-page.composable'
+  import { useAppIndexPage } from '~/utils/domain-use-cases/app/pages/index/app-index-page.composable'
 
   useAppIndexPage()
 </script>
