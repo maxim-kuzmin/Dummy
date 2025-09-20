@@ -6,10 +6,10 @@ import { Injectable } from "@angular/core";
 export class ResourcesService {
   translate(key: string, list?: unknown[]): string {
     switch(key) {
-      case 'page.fake.title': {
+      case 'app.pages.app-fake-page.title': {
         const id = list ? String(list[0]) : ''
 
-        return `${$localize`:@@page.fake.title:@@`} ${id}`;
+        return `${$localize`:@@app.pages.app-fake-page.title:@@`} ${id}`;
       }
       default:
         throw Error(`ResourcesService: Unknown resource key: "${key}"`)

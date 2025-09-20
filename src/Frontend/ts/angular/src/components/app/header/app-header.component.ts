@@ -1,6 +1,6 @@
 import { Component, effect, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { AppHeaderComponentModel } from '~/utils/domain-use-cases/app/components/header/app-header-component.model';
+import { AppHeaderComponentModel } from '~/utils/domain/app/components/header/app-header-component.model';
 import { AppLanguage } from '../language/app-language.component';
 
 @Component({

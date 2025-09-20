@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useAppMainComponent } from '~/utils/domain-use-cases/app/components/main/app-main-component.composable';
+import { useAppMainComponent } from '~/utils/domain/app/components/main/app-main-component.composable';
 
 const { title } = useAppMainComponent();
 </script>

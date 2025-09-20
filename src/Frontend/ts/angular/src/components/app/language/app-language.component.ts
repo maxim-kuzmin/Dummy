@@ -9,7 +9,7 @@ import {
   viewChild,
 } from '@angular/core';
 
-import { AppLanguageComponentModel } from '~/utils/domain-use-cases/app/components/language/app-language-component.model';
+import { AppLanguageComponentModel } from '~/utils/domain/app/components/language/app-language-component.model';
 
 @Component({
   selector: 'nav[app-language]',
