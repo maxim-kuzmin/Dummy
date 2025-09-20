@@ -7,8 +7,8 @@ import { AppFakePageService } from './app-fake-page.service';
 import { appFakePageParameters } from './app-fake-page.types';
 
 export class AppFakePageModel {
-  private readonly appFakePageService = inject(AppFakePageService);
   private readonly appFakePageResourcesService = inject(AppFakePageResourcesService)
+  private readonly appFakePageService = inject(AppFakePageService);
   private readonly pageStoreService = inject(PageStoreService);
 
   private readonly activatedRoute = inject(ActivatedRoute);
@@ -36,11 +36,10 @@ export class AppFakePageModel {
         appFakePageParameters.pageNumber.defaultValue
     );
 
-    const pageKey = this.appFakePageService.createPageKey({ id, pageNumber });
+    this.pageStoreService.pageKey.set(this.appFakePageService.createPageKey({ id, pageNumber }));
 
-    this.pageStoreService.pageKey.set(pageKey);
     this.pageStoreService.pageTitle.set(this.appFakePageResourcesService.getTitle(id));
 
-    this.pageKey.set(pageKey);
+    this.pageKey.set(this.pageStoreService.pageKey());
   }
 }

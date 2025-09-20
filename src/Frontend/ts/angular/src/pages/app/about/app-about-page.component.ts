@@ -2,6 +2,7 @@ import { Component, effect, inject } from '@angular/core';
 import { AppAboutPageModel } from '~/utils/domain/app/pages/about/app-about-page.model';
 
 @Component({
+  selector: 'div[app-about-page]',
   templateUrl: './app-about-page.component.html',
   providers: [AppAboutPageModel],
 })
