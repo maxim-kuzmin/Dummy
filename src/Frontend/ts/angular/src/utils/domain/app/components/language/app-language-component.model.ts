@@ -1,6 +1,6 @@
 import { computed, ElementRef, inject, Signal, signal } from '@angular/core';
 import { LanguageService } from '~/utils/infrastructure/language/language.service';
-import { AppLanguageComponentItem } from './app-language-component.types';
+import { AppLanguageComponentItem, AppLanguageComponentMenuStyle } from './app-language-component.types';
 import { NavigationEnd, Router } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { languages } from '~/utils/shared/language/language.types';
@@ -25,7 +25,7 @@ export class AppLanguageComponentModel {
   });
 
   readonly items = signal<AppLanguageComponentItem[]>([]);
-  readonly menuStyle = signal({ visibility: 'hidden' });
+  readonly menuStyle = signal<AppLanguageComponentMenuStyle>({ visibility: 'hidden' });
   title = '';
 
   constructor() {

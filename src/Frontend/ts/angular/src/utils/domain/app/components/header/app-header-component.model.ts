@@ -11,7 +11,7 @@ export class AppHeaderComponentModel {
   indexPageUrlTree = new UrlTree();
 
   load() {
-    this.indexPageName = $localize`:@@component.app-header.link.index.text:@@`;
+    this.indexPageName = $localize`:@@app.components.app-header-component.title:@@`;
     this.indexPageUrlTree = this.pageUrlService.createPageUrlTree(
       this.appIndexPageService.createPageUrlOptions()
     );

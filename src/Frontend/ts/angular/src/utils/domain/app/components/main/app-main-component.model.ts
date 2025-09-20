@@ -1,12 +1,12 @@
 import { inject, signal } from '@angular/core';
-import { PageService } from '~/utils/infrastructure/page/page.service';
+import { PageStoreService } from '~/utils/infrastructure/page/store/page-store.service';
 
 export class AppMainComponentModel {
-  private readonly pageService = inject(PageService);
+  private readonly pageStoreService = inject(PageStoreService);
 
   readonly title = signal('');
 
   load() {
-    this.title.set(this.pageService.title());
+    this.title.set(this.pageStoreService.pageTitle());
   }
 }

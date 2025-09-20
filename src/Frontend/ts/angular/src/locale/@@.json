@@ -1,11 +1,11 @@
 {
   "locale": "en-x-source",
   "translations": {
+    "app.components.app-footer-component.title": "@@",
+    "app.components.app-header-component.title": "@@",
     "app.pages.app-about-page.title": "@@",
     "app.pages.app-fake-page.title": "@@",
     "app.pages.app-index-page.title": "@@",
-    "app.pages.app-not-found-page.title": "@@",
-    "component.app-footer.link.index.text": "@@",
-    "component.app-header.link.index.text": "@@"
+    "app.pages.app-not-found-page.title": "@@"
   }
 }

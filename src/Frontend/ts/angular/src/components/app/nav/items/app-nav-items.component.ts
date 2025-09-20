@@ -12,7 +12,7 @@ import { AppNavItem } from '../item/app-nav-item.component';
 export class AppNavItems {
   readonly input = input.required<AppNavItemsComponentInput>();
 
-  protected get items() {
+  protected get items(): AppNavComponentItem[] {
     return this.input().items;
   }
 

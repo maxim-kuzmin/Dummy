@@ -10,6 +10,10 @@ import {
 } from '@angular/core';
 
 import { AppLanguageComponentModel } from '~/utils/domain/app/components/language/app-language-component.model';
+import {
+  AppLanguageComponentItem,
+  AppLanguageComponentMenuStyle,
+} from '~/utils/domain/app/components/language/app-language-component.types';
 
 @Component({
   selector: 'nav[app-language]',
@@ -25,15 +29,15 @@ export class AppLanguage implements OnInit, OnDestroy, AfterViewInit {
   private readonly menuElementRef =
     viewChild<ElementRef<HTMLUListElement>>('menu');
 
-  protected get items() {
+  protected get items(): AppLanguageComponentItem[] {
     return this.model.items();
   }
 
-  protected get menuStyle() {
+  protected get menuStyle(): AppLanguageComponentMenuStyle {
     return this.model.menuStyle();
   }
 
-  protected get title() {
+  protected get title(): string {
     return this.model.title;
   }
 

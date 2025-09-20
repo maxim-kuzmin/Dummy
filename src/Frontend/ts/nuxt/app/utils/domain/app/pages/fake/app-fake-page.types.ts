@@ -12,8 +12,8 @@ export const AppFakePageParameters = {
 }
 
 export class AppFakePageData {
-  readonly key = ref('')
   readonly clickCount = ref(0)
+  readonly pageKey = ref('')
 }
 
 export type AppFakePageModel = AppFakePageData & {

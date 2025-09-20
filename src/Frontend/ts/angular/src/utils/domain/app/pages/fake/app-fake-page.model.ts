@@ -1,7 +1,7 @@
 import { inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
-import { PageService } from '~/utils/infrastructure/page/page.service';
+import { PageStoreService } from '~/utils/infrastructure/page/store/page-store.service';
 import { AppFakePageResourcesService } from './resources/app-fake-page-resources.service';
 import { AppFakePageService } from './app-fake-page.service';
 import { appFakePageParameters } from './app-fake-page.types';
@@ -9,7 +9,7 @@ import { appFakePageParameters } from './app-fake-page.types';
 export class AppFakePageModel {
   private readonly appFakePageService = inject(AppFakePageService);
   private readonly appFakePageResourcesService = inject(AppFakePageResourcesService)
-  private readonly pageService = inject(PageService);
+  private readonly pageStoreService = inject(PageStoreService);
 
   private readonly activatedRoute = inject(ActivatedRoute);
 
@@ -21,7 +21,12 @@ export class AppFakePageModel {
     requireSync: true,
   });
 
-  readonly key = signal('');
+  readonly clickCount = signal(0)
+  readonly pageKey = signal('');
+
+  click() {
+    this.clickCount.set(this.clickCount() + 1)
+  }
 
   load(): void {
     const id = String(this.routeParams()[appFakePageParameters.id.name]);
@@ -33,9 +38,9 @@ export class AppFakePageModel {
 
     const pageKey = this.appFakePageService.createPageKey({ id, pageNumber });
 
-    this.pageService.key.set(pageKey);
-    this.pageService.title.set(this.appFakePageResourcesService.getTitle(id));
+    this.pageStoreService.pageKey.set(pageKey);
+    this.pageStoreService.pageTitle.set(this.appFakePageResourcesService.getTitle(id));
 
-    this.key.set(pageKey);
+    this.pageKey.set(pageKey);
   }
 }

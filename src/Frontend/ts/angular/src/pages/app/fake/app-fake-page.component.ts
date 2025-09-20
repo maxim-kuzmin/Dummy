@@ -8,8 +8,16 @@ import { AppFakePageModel } from '~/utils/domain/app/pages/fake/app-fake-page.mo
 export class AppFakePage {
   private model = inject(AppFakePageModel, { self: true });
 
-  protected get key() {
-    return this.model.key();
+  protected get clickCount(): number {
+    return this.model.clickCount();
+  }
+
+  protected get pageKey(): string {
+    return this.model.pageKey();
+  }
+
+  protected click(): void {
+    this.model.click();
   }
 
   constructor() {

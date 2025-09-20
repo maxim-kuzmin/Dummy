@@ -1,16 +1,16 @@
-import { getPageService } from '~/utils/infrastructure/page/page.service'
+import { getPageStoreService } from '~/utils/infrastructure/page/store/page-store.service'
 import {
   AppMainComponentData,
   type AppMainComponentModel,
 } from './app-main-component.types'
 
 export const useAppMainComponent = (): AppMainComponentModel => {
-  const pageService = getPageService()
+  const pageStoreService = getPageStoreService()
 
   const data = new AppMainComponentData()
 
   watchEffect(() => {
-    data.title.value = pageService.title.value
+    data.title.value = pageStoreService.pageTitle
   })
 
   return { ...data }

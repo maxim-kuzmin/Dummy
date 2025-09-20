@@ -1,5 +1,5 @@
 import { inject, signal } from '@angular/core';
-import { PageService } from '~/utils/infrastructure/page/page.service';
+import { PageStoreService } from '~/utils/infrastructure/page/store/page-store.service';
 import { AppAboutPageService } from '~/utils/domain/app/pages/about/app-about-page.service';
 import { AppFakePageService } from '~/utils/domain/app/pages/fake/app-fake-page.service';
 import { AppFakePageDataQuery } from '~/utils/domain/app/pages/fake/app-fake-page.types';
@@ -8,10 +8,10 @@ import { UrlTree } from '@angular/router';
 import { PageUrlService } from '~/utils/infrastructure/page/url/page-url.service';
 
 export class AppNavComponentModel {
-  private readonly pageService = inject(PageService);
-  private readonly pageUrlService = inject(PageUrlService);
   private readonly appAboutPageService = inject(AppAboutPageService);
   private readonly appFakePageService = inject(AppFakePageService);
+  private readonly pageStoreService = inject(PageStoreService);
+  private readonly pageUrlService = inject(PageUrlService);
 
   readonly items = signal<AppNavComponentItem[]>([]);
 
@@ -91,7 +91,7 @@ export class AppNavComponentModel {
     text: string,
     children: AppNavComponentItem[] = []
   ): AppNavComponentItem {
-    const selected = this.pageService.key() === key;
+    const selected = this.pageStoreService.pageKey() === key;
 
     return {
       key,

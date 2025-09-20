@@ -1,5 +1,5 @@
 import { Component, effect, inject } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { RouterLink, UrlTree } from '@angular/router';
 import { AppHeaderComponentModel } from '~/utils/domain/app/components/header/app-header-component.model';
 import { AppLanguage } from '../language/app-language.component';
 
@@ -12,11 +12,11 @@ import { AppLanguage } from '../language/app-language.component';
 export class AppHeader {
   private readonly model = inject(AppHeaderComponentModel, { self: true });
 
-  protected get indexPageName() {
+  protected get indexPageName(): string {
     return this.model.indexPageName;
   }
 
-  protected get indexPageUrlTree() {
+  protected get indexPageUrlTree(): UrlTree {
     return this.model.indexPageUrlTree;
   }
 

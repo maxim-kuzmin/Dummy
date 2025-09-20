@@ -1,11 +1,11 @@
 {
-  "locale": "en-x-source",
+  "locale": "ru",
   "translations": {
+    "app.components.app-footer-component.title": "Подвал",
+    "app.components.app-header-component.title": "Шапка",
     "app.pages.app-about-page.title": "О нас",
     "app.pages.app-fake-page.title": "Фальшивка",
     "app.pages.app-index-page.title": "Главное",
-    "app.pages.app-not-found-page.title": "Не найдено",
-    "component.app-footer.link.index.text": "Подвал",
-    "component.app-header.link.index.text": "Перейти на главную страницу"
+    "app.pages.app-not-found-page.title": "Не найдено"
   }
 }

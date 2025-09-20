@@ -9,7 +9,7 @@ import { AppMainComponentModel } from '~/utils/domain/app/components/main/app-ma
 export class AppMain {
   private readonly model = inject(AppMainComponentModel, { self: true });
 
-  protected get title() {
+  protected get title(): string {
     return this.model.title();
   }
 

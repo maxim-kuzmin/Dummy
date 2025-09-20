@@ -13,7 +13,7 @@ import { AppNavItems } from '../items/app-nav-items.component';
 export class AppNavItem {
   readonly input = input.required<AppNavItemComponentInput>();
 
-  protected get item() {
+  protected get item(): AppNavComponentItem {
     return this.input().item;
   }
 

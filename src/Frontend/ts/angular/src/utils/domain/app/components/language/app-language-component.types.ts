@@ -4,3 +4,7 @@ export interface AppLanguageComponentItem {
   selected: boolean;
   url: string;
 }
+
+export interface AppLanguageComponentMenuStyle {
+  readonly visibility: 'hidden'| 'visible';
+}
