@@ -1,18 +1,18 @@
-import { usePageStore } from '~/utils/infrastructure/page/store/page-store.composable'
+import { usePage } from '~/utils/infrastructure/page/page.composable'
 import { useAppIndexPageResources } from './resources/app-index-page-resources.composable'
 import { getAppIndexPageService } from './app-index-page.service'
 
 export const useAppIndexPage = (): void => {
   const appIndexPageResourcesModel = useAppIndexPageResources()
-  const pageStoreModel = usePageStore()
+  const pageModel = usePage()
 
   const appIndexPageService = getAppIndexPageService()
 
   watchEffect(load)
 
   function load() {
-    pageStoreModel.pageKey.value = appIndexPageService.createPageKey()
+    pageModel.pageKey.value = appIndexPageService.createPageKey()
 
-    pageStoreModel.pageTitle.value = appIndexPageResourcesModel.getTitle()
+    pageModel.pageTitle.value = appIndexPageResourcesModel.getTitle()
   }
 }

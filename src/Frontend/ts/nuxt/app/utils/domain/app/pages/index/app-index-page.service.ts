@@ -1,11 +1,11 @@
-import type { PageUrlOptions } from '~/utils/infrastructure/page/url/page-url.types'
+import type { UrlOptions } from '~/utils/infrastructure/url/url.types'
 
 export class AppIndexPageService {
   createPageKey(): string {
     return 'Index'
   }
 
-  createPageUrlOptions(): PageUrlOptions {
+  createPageUrlOptions(): UrlOptions {
     return {
       routeName: 'index',
     }

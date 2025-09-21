@@ -1,5 +1,5 @@
 import { getAppIndexPageService } from '~/utils/domain/app/pages/index/app-index-page.service'
-import { usePageUrl } from '~/utils/infrastructure/page/url/page-url.composable'
+import { useUrl } from '~/utils/infrastructure/url/url.composable'
 import { useAppHeaderComponentResources } from './resources/app-header-component-resources.composable'
 import type { AppHeaderComponentModel } from './app-header-component.types'
 
@@ -18,7 +18,7 @@ export const useAppHeaderComponent = (): AppHeaderComponentModel => {
   function load(): void {
     indexPageName.value = appHeaderComponentResourcesModel.getTitle()
 
-    indexPageUrl.value = usePageUrl(appIndexPageService.createPageUrlOptions())
+    indexPageUrl.value = useUrl(appIndexPageService.createPageUrlOptions())
   }
 
   return { indexPageName, indexPageUrl }

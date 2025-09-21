@@ -1,7 +1,7 @@
 import { getAppAboutPageService } from '~/utils/domain/app/pages/about/app-about-page.service'
 import { getAppFakePageService } from '~/utils/domain/app/pages/fake/app-fake-page.service'
-import { usePageUrl } from '~/utils/infrastructure/page/url/page-url.composable'
-import { usePageStore } from '~/utils/infrastructure/page/store/page-store.composable'
+import { useUrl } from '~/utils/infrastructure/url/url.composable'
+import { usePage } from '~/utils/infrastructure/page/page.composable'
 import type { AppFakePageDataQuery } from '../../pages/fake/app-fake-page.types'
 import { useAppAboutPageResources } from '../../pages/about/resources/app-about-page-resources.composable'
 import type { AppNavComponentItem, AppNavComponentModel } from './app-nav-component.types'
@@ -10,7 +10,7 @@ const storeKey = 'app-nav-component'
 
 export const useAppNavComponent = (): AppNavComponentModel => {
   const appAboutPageResourcesModel = useAppAboutPageResources()
-  const pageStoreModel = usePageStore()
+  const pageModel = usePage()
 
   const appAboutPageService = getAppAboutPageService()
   const appFakePageService = getAppFakePageService()
@@ -24,7 +24,7 @@ export const useAppNavComponent = (): AppNavComponentModel => {
   watchEffect(load)
 
   function load() {
-    const pageKey = pageStoreModel.pageKey.value
+    const pageKey = pageModel.pageKey.value
 
     selectItem(pageKey, items.value)
   }
@@ -66,7 +66,7 @@ export const useAppNavComponent = (): AppNavComponentModel => {
 
     const key = appAboutPageService.createPageKey()
 
-    const url = usePageUrl(appAboutPageService.createPageUrlOptions())
+    const url = useUrl(appAboutPageService.createPageUrlOptions())
 
     return createItem(key, url, text)
   }
@@ -79,7 +79,7 @@ export const useAppNavComponent = (): AppNavComponentModel => {
 
     const key = appFakePageService.createPageKey(dataQuery)
 
-    const url = usePageUrl(appFakePageService.createPageUrlOptions(dataQuery))
+    const url = useUrl(appFakePageService.createPageUrlOptions(dataQuery))
 
     return createItem(key, url, text, children)
   }
@@ -90,7 +90,7 @@ export const useAppNavComponent = (): AppNavComponentModel => {
   ): AppNavComponentItem {
     const key = appFakePageService.createPageKey(dataQuery)
 
-    const url = usePageUrl(appFakePageService.createPageUrlOptions(dataQuery))
+    const url = useUrl(appFakePageService.createPageUrlOptions(dataQuery))
 
     return createItem(key, url, key, children)
   }

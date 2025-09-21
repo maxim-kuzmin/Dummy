@@ -1,8 +1,8 @@
-import type { PageStoreModel } from "./page-store.types"
+import type { PageModel } from "./page.types"
 
-const storeKey = 'page-store'
+const storeKey = 'page'
 
-export const usePageStore = (): PageStoreModel => {
+export const usePage = (): PageModel => {
   const pageKey = useState(`${storeKey}.pageKey`, () => '')
   const pageTitle = useState(`${storeKey}.pageTitle`, () => '')
 

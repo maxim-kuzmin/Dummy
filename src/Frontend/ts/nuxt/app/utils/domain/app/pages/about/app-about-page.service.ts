@@ -1,11 +1,11 @@
-import type { PageUrlOptions } from '~/utils/infrastructure/page/url/page-url.types'
+import type { UrlOptions } from '~/utils/infrastructure/url/url.types'
 
 export class AppAboutPageService {
   createPageKey(): string {
     return 'About'
   }
 
-  createPageUrlOptions(): PageUrlOptions {
+  createPageUrlOptions(): UrlOptions {
     return {
       routeName: 'about',
     }
