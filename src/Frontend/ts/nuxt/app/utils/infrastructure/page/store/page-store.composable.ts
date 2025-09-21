@@ -1,8 +1,10 @@
-import type { PageStoreData } from "./page-store.types"
+import type { PageStoreModel } from "./page-store.types"
 
-export const usePageStore = (): globalThis.Ref<PageStoreData> => {
-  return useState<PageStoreData>('page-store', () => ({
-    pageKey: '',
-    pageTitle: ''
-  }))
+const storeKey = 'page-store'
+
+export const usePageStore = (): PageStoreModel => {
+  const pageKey = useState(`${storeKey}.pageKey`, () => '')
+  const pageTitle = useState(`${storeKey}.pageTitle`, () => '')
+
+  return { pageKey, pageTitle }
 }

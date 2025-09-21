@@ -1,4 +1,4 @@
-export interface PageStoreData {
-  pageKey: string
-  pageTitle: string
+export interface PageStoreModel {
+  readonly pageKey: globalThis.Ref<string>
+  readonly pageTitle: globalThis.Ref<string>
 }

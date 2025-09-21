@@ -3,17 +3,16 @@ import { useAppIndexPageResources } from './resources/app-index-page-resources.c
 import { getAppIndexPageService } from './app-index-page.service'
 
 export const useAppIndexPage = (): void => {
-  const appIndexPageResources = useAppIndexPageResources()
-  const pageStore = usePageStore()
+  const appIndexPageResourcesModel = useAppIndexPageResources()
+  const pageStoreModel = usePageStore()
 
   const appIndexPageService = getAppIndexPageService()
 
   watchEffect(load)
 
   function load() {
-    pageStore.value = {
-      pageKey: appIndexPageService.createPageKey(),
-      pageTitle: appIndexPageResources.getTitle(),
-    }
+    pageStoreModel.pageKey.value = appIndexPageService.createPageKey()
+
+    pageStoreModel.pageTitle.value = appIndexPageResourcesModel.getTitle()
   }
 }

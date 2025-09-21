@@ -10,7 +10,7 @@ const storeKey = 'app-nav-component'
 
 export const useAppNavComponent = (): AppNavComponentModel => {
   const appAboutPageResourcesModel = useAppAboutPageResources()
-  const pageStore = usePageStore()
+  const pageStoreModel = usePageStore()
 
   const appAboutPageService = getAppAboutPageService()
   const appFakePageService = getAppFakePageService()
@@ -24,7 +24,7 @@ export const useAppNavComponent = (): AppNavComponentModel => {
   watchEffect(load)
 
   function load() {
-    const pageKey = pageStore.value.pageKey
+    const pageKey = pageStoreModel.pageKey.value
 
     selectItem(pageKey, items.value)
   }

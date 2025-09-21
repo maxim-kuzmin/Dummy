@@ -3,17 +3,16 @@ import { useAppAboutPageResources } from './resources/app-about-page-resources.c
 import { getAppAboutPageService } from './app-about-page.service'
 
 export const useAppAboutPage = (): void => {
-  const appAboutPageResources = useAppAboutPageResources()
-  const pageStore = usePageStore()
+  const appAboutPageResourcesModel = useAppAboutPageResources()
+  const pageStoreModel = usePageStore()
 
   const appAboutPageService = getAppAboutPageService()
 
   watchEffect(load)
 
   function load() {
-    pageStore.value = {
-      pageKey: appAboutPageService.createPageKey(),
-      pageTitle: appAboutPageResources.getTitle(),
-    }
+    pageStoreModel.pageKey.value = appAboutPageService.createPageKey()
+
+    pageStoreModel.pageTitle.value = appAboutPageResourcesModel.getTitle()
   }
 }

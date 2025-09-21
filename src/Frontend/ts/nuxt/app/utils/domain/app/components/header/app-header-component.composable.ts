@@ -6,7 +6,7 @@ import type { AppHeaderComponentModel } from './app-header-component.types'
 const storeKey = 'app-header-component'
 
 export const useAppHeaderComponent = (): AppHeaderComponentModel => {
-  const appHeaderComponentResources = useAppHeaderComponentResources()
+  const appHeaderComponentResourcesModel = useAppHeaderComponentResources()
 
   const appIndexPageService = getAppIndexPageService()
 
@@ -16,7 +16,7 @@ export const useAppHeaderComponent = (): AppHeaderComponentModel => {
   watchEffect(load)
 
   function load(): void {
-    indexPageName.value = appHeaderComponentResources.getTitle()
+    indexPageName.value = appHeaderComponentResourcesModel.getTitle()
 
     indexPageUrl.value = usePageUrl(appIndexPageService.createPageUrlOptions())
   }

@@ -4,14 +4,14 @@ import { useAppFooterComponentResources } from './resources/app-footer-component
 const storeKey = 'app-footer-component'
 
 export const useAppFooterComponent = (): AppFooterComponentModel => {
-  const appFooterComponentResources = useAppFooterComponentResources()
+  const appFooterComponentResourcesModel = useAppFooterComponentResources()
 
   const title = useState(`${storeKey}.title`, () => '')
 
   watchEffect(load)
 
   function load() {
-    title.value = appFooterComponentResources.getTitle()
+    title.value = appFooterComponentResourcesModel.getTitle()
   }
   return { title }
 }

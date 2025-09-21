@@ -2,15 +2,16 @@ import { getAppFakePageService } from './app-fake-page.service'
 import { useAppFakePageResources } from './resources/app-fake-page-resources.composable'
 import {
   AppFakePageParameters,
-   type AppFakePageModel,
+  type AppFakePageModel,
 } from './app-fake-page.types'
 import { usePageStore } from '~/utils/infrastructure/page/store/page-store.composable'
 
 const storeKey = 'app-fake-page'
 
 export const useAppFakePage = (): AppFakePageModel => {
-  const appFakePageResources = useAppFakePageResources()
-  const pageStore = usePageStore()
+  const appFakePageResourcesModel = useAppFakePageResources()
+  const pageStoreModel = usePageStore()
+
   const route = useRoute()
 
   const appFakePageService = getAppFakePageService()
@@ -28,12 +29,14 @@ export const useAppFakePage = (): AppFakePageModel => {
         AppFakePageParameters.pageNumber.defaultValue,
     )
 
-    pageStore.value = {
-      pageKey: appFakePageService.createPageKey({ id, pageNumber }),
-      pageTitle: appFakePageResources.getTitle(id)
-    }
+    pageStoreModel.pageKey.value = appFakePageService.createPageKey({
+      id,
+      pageNumber,
+    })
 
-    pageKey.value = pageStore.value.pageKey
+    pageStoreModel.pageTitle.value = appFakePageResourcesModel.getTitle(id)
+
+    pageKey.value = pageStoreModel.pageKey.value
   }
 
   return {
