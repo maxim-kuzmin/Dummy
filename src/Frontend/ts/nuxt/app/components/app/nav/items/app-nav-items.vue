@@ -11,7 +11,7 @@
     item: AppNavComponentItem,
   ): AppNavItemComponentInput {
     return {
-      item,
+      item: ref(item),
     }
   }
 </script>

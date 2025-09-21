@@ -19,33 +19,12 @@ export const useAppNavComponent = (): AppNavComponentModel => {
 
   const data = new AppNavComponentData()
 
+  data.items.value = createFakeItems()
+
   watchEffect(() => {
-    data.aboutPageUrl.value = usePageUrl(
-      appAboutPageService.createPageUrlOptions(),
-    )
+    const pageKey = pageStoreService.pageKey.value
 
-    data.fakePageUrl1.value = usePageUrl(
-      appFakePageService.createPageUrlOptions({
-        id: '1',
-        pageNumber: 1,
-      }),
-    )
-
-    data.fakePageUrl1pn2.value = usePageUrl(
-      appFakePageService.createPageUrlOptions({
-        id: '1',
-        pageNumber: 2,
-      }),
-    )
-
-    data.fakePageUrl2.value = usePageUrl(
-      appFakePageService.createPageUrlOptions({
-        id: '2',
-        pageNumber: 1,
-      }),
-    )
-
-    data.items.value = createFakeItems()
+    selectItem(pageKey, data.items.value)
   })
 
   function createFakeItems(): AppNavComponentItem[] {
@@ -98,11 +77,9 @@ export const useAppNavComponent = (): AppNavComponentModel => {
 
     const key = appFakePageService.createPageKey(dataQuery)
 
-    const urlTree = usePageUrl(
-      appFakePageService.createPageUrlOptions(dataQuery),
-    )
+    const url = usePageUrl(appFakePageService.createPageUrlOptions(dataQuery))
 
-    return createItem(key, urlTree, text, children)
+    return createItem(key, url, text, children)
   }
 
   function createItemForFakePageByDataQuery(
@@ -121,15 +98,23 @@ export const useAppNavComponent = (): AppNavComponentModel => {
     text: string,
     children: AppNavComponentItem[] = [],
   ): AppNavComponentItem {
-    const selected = pageStoreService.pageKey.value === key
-
     return {
       key,
       text,
       url,
       children,
-      selected,
+      selected: false,
     } as AppNavComponentItem
+  }
+
+  function selectItem(pageKey: string, items: AppNavComponentItem[]) {
+    items.forEach(item => {
+      item.selected = item.key === pageKey
+
+      if (item.children) {
+        selectItem(pageKey, item.children)
+      }
+    });
   }
 
   return { ...data }

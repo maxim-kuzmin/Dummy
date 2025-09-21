@@ -5,7 +5,7 @@
   const { items } = useAppNavComponent()
 
   const itemsComponentInput = {
-    items: items.value,
+    items,
   } as AppNavItemsComponentInput
 </script>
 
