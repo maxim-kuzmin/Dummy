@@ -17,7 +17,7 @@ export const useAppNavComponent = (): AppNavComponentModel => {
 
   const items = useState<AppNavComponentItem[]>(`${storeKey}.items`, () => [])
 
-  onServerPrefetch(load)
+  //onServerPrefetch(load)
 
   watchEffect(load)
 

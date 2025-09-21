@@ -6,5 +6,8 @@ export const usePage = (): PageModel => {
   const pageKey = useState(`${storeKey}.pageKey`, () => '')
   const pageTitle = useState(`${storeKey}.pageTitle`, () => '')
 
-  return { pageKey, pageTitle }
+  return {
+    pageKey,
+    pageTitle
+  }
 }
