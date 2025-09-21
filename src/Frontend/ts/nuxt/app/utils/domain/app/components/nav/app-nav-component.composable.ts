@@ -6,26 +6,30 @@ import {
   type AppNavComponentItem,
   type AppNavComponentModel,
 } from './app-nav-component.types'
-import { getPageStoreService } from '~/utils/infrastructure/page/store/page-store.service'
+import { usePageStore } from '~/utils/infrastructure/page/store/page-store.composable'
 import type { AppFakePageDataQuery } from '../../pages/fake/app-fake-page.types'
 import { useAppAboutPageResources } from '../../pages/about/resources/app-about-page-resources.composable'
 
 export const useAppNavComponent = (): AppNavComponentModel => {
   const appAboutPageResourcesModel = useAppAboutPageResources()
+  const pageStore = usePageStore()
 
   const appAboutPageService = getAppAboutPageService()
   const appFakePageService = getAppFakePageService()
-  const pageStoreService = getPageStoreService()
 
   const data = new AppNavComponentData()
 
   data.items.value = createFakeItems()
 
-  watchEffect(() => {
-    const pageKey = pageStoreService.pageKey.value
+  onServerPrefetch(load)
+
+  watchEffect(load)
+
+  function load() {
+    const pageKey = pageStore.value.pageKey
 
     selectItem(pageKey, data.items.value)
-  })
+  }
 
   function createFakeItems(): AppNavComponentItem[] {
     return [
@@ -87,6 +91,7 @@ export const useAppNavComponent = (): AppNavComponentModel => {
     children: AppNavComponentItem[] = [],
   ): AppNavComponentItem {
     const key = appFakePageService.createPageKey(dataQuery)
+
     const url = usePageUrl(appFakePageService.createPageUrlOptions(dataQuery))
 
     return createItem(key, url, key, children)
@@ -111,7 +116,7 @@ export const useAppNavComponent = (): AppNavComponentModel => {
     items.forEach(item => {
       item.selected = item.key === pageKey
 
-      if (item.children) {
+      if (item.children.length > 0) {
         selectItem(pageKey, item.children)
       }
     });

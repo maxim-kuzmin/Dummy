@@ -1,17 +1,19 @@
-import { getPageStoreService } from '~/utils/infrastructure/page/store/page-store.service'
+import { usePageStore } from '~/utils/infrastructure/page/store/page-store.composable'
 import {
   AppMainComponentData,
   type AppMainComponentModel,
 } from './app-main-component.types'
 
 export const useAppMainComponent = (): AppMainComponentModel => {
-  const pageStoreService = getPageStoreService()
+  const pageStore = usePageStore()
 
   const data = new AppMainComponentData()
 
-  watchEffect(() => {
-    data.title.value = pageStoreService.pageTitle
-  })
+  watchEffect(load)
 
-  return { ...data }
+  function load() {
+    data.title.value = pageStore.value.pageTitle
+  }
+
+  return { ...data, refresh: load }
 }
