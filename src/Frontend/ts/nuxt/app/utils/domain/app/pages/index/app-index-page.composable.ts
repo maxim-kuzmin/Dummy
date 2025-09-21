@@ -14,7 +14,5 @@ export const useAppIndexPage = (): void => {
     pageModel.pageKey.value = appIndexPageService.createPageKey()
 
     pageModel.pageTitle.value = appIndexPageResourcesModel.getTitle()
-
-    console.log('MAKC:useAppIndexPage:load', pageModel.pageTitle.value)
   }
 }
