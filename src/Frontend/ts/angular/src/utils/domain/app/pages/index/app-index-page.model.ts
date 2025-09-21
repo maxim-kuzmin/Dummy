@@ -1,5 +1,5 @@
 import { inject } from '@angular/core';
-import { PageStoreService } from '~/utils/infrastructure/page/store/page-store.service';
+import { PageService } from '~/utils/infrastructure/page/page.service';
 import { AppIndexPageResourcesService } from './resources/app-index-page-resources.service';
 import { AppIndexPageService } from './app-index-page.service';
 
@@ -9,12 +9,12 @@ export class AppIndexPageModel {
   );
 
   private readonly appIndexPageService = inject(AppIndexPageService);
-  private readonly pageStoreService = inject(PageStoreService);
+  private readonly pageService = inject(PageService);
 
   load(): void {
-    this.pageStoreService.pageKey.set(this.appIndexPageService.createPageKey());
+    this.pageService.pageKey.set(this.appIndexPageService.createPageKey());
 
-    this.pageStoreService.pageTitle.set(
+    this.pageService.pageTitle.set(
       this.appIndexPageResourcesService.getTitle()
     );
   }

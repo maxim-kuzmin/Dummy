@@ -1,7 +1,7 @@
 import { inject, signal } from '@angular/core';
 import { UrlTree } from '@angular/router';
-import { PageStoreService } from '~/utils/infrastructure/page/store/page-store.service';
-import { PageUrlService } from '~/utils/infrastructure/page/url/page-url.service';
+import { PageService } from '~/utils/infrastructure/page/page.service';
+import { UrlService } from '~/utils/infrastructure/url/url.service';
 import { AppAboutPageService } from '~/utils/domain/app/pages/about/app-about-page.service';
 import { AppFakePageService } from '~/utils/domain/app/pages/fake/app-fake-page.service';
 import { AppFakePageDataQuery } from '~/utils/domain/app/pages/fake/app-fake-page.types';
@@ -10,8 +10,8 @@ import { AppNavComponentItem } from './app-nav-component.types';
 export class AppNavComponentModel {
   private readonly appAboutPageService = inject(AppAboutPageService);
   private readonly appFakePageService = inject(AppFakePageService);
-  private readonly pageStoreService = inject(PageStoreService);
-  private readonly pageUrlService = inject(PageUrlService);
+  private readonly pageService = inject(PageService);
+  private readonly urlService = inject(UrlService);
 
   readonly items = signal<AppNavComponentItem[]>([]);
 
@@ -56,7 +56,7 @@ export class AppNavComponentModel {
 
     const key = this.appAboutPageService.createPageKey();
 
-    const urlTree = this.pageUrlService.createPageUrlTree(
+    const urlTree = this.urlService.createUrlTree(
       this.appAboutPageService.createPageUrlOptions()
     );
 
@@ -71,7 +71,7 @@ export class AppNavComponentModel {
 
     const key = this.appFakePageService.createPageKey(dataQuery);
 
-    const urlTree = this.pageUrlService.createPageUrlTree(
+    const urlTree = this.urlService.createUrlTree(
       this.appFakePageService.createPageUrlOptions(dataQuery)
     );
 
@@ -83,7 +83,7 @@ export class AppNavComponentModel {
     children: AppNavComponentItem[] = []
   ): AppNavComponentItem {
     const key = this.appFakePageService.createPageKey(dataQuery);
-    const urlTree = this.pageUrlService.createPageUrlTree(
+    const urlTree = this.urlService.createUrlTree(
       this.appFakePageService.createPageUrlOptions(dataQuery)
     );
 
@@ -96,7 +96,7 @@ export class AppNavComponentModel {
     text: string,
     children: AppNavComponentItem[] = []
   ): AppNavComponentItem {
-    const selected = this.pageStoreService.pageKey() === key;
+    const selected = this.pageService.pageKey() === key;
 
     return {
       key,

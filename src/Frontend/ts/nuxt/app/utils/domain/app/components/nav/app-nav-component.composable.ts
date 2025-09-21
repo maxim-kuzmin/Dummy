@@ -17,16 +17,15 @@ export const useAppNavComponent = (): AppNavComponentModel => {
 
   const items = useState<AppNavComponentItem[]>(`${storeKey}.items`, () => [])
 
-  items.value = createFakeItems()
-
   onServerPrefetch(load)
 
   watchEffect(load)
 
   function load() {
-    const pageKey = pageModel.pageKey.value
+    //const pageKey = pageModel.pageKey.value
 
-    selectItem(pageKey, items.value)
+    items.value = createFakeItems()
+    //selectItem(pageKey, items.value)
   }
 
   function createFakeItems(): AppNavComponentItem[] {
@@ -106,19 +105,19 @@ export const useAppNavComponent = (): AppNavComponentModel => {
       text,
       url,
       children,
-      selected: false,
+      selected: key === pageModel.pageKey.value,
     } as AppNavComponentItem
   }
 
-  function selectItem(pageKey: string, items: AppNavComponentItem[]) {
-    items.forEach(item => {
-      item.selected = item.key === pageKey
+  // function selectItem(pageKey: string, items: AppNavComponentItem[]) {
+  //   items.forEach(item => {
+  //     item.selected = item.key === pageKey
 
-      if (item.children.length > 0) {
-        selectItem(pageKey, item.children)
-      }
-    });
-  }
+  //     if (item.children.length > 0) {
+  //       selectItem(pageKey, item.children)
+  //     }
+  //   });
+  // }
 
   return { items }
 }

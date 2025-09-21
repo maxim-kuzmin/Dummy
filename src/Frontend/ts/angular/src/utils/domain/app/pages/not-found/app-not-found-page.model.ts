@@ -1,5 +1,5 @@
 import { inject } from '@angular/core';
-import { PageStoreService } from '~/utils/infrastructure/page/store/page-store.service';
+import { PageService } from '~/utils/infrastructure/page/page.service';
 import { AppNotFoundPageResourcesService } from './resources/app-not-found-page-resources.service';
 import { AppNotFoundPageService } from './app-not-found-page.service';
 
@@ -9,11 +9,11 @@ export class AppNotFoundPageModel {
   );
 
   private readonly appNotFoundPageService = inject(AppNotFoundPageService);
-  private readonly pageStoreService = inject(PageStoreService);
+  private readonly pageService = inject(PageService);
 
   load(): void {
-    this.pageStoreService.pageKey.set(this.appNotFoundPageService.createPageKey());
+    this.pageService.pageKey.set(this.appNotFoundPageService.createPageKey());
 
-    this.pageStoreService.pageTitle.set(this.appNotFoundPageResourcesService.getTitle());
+    this.pageService.pageTitle.set(this.appNotFoundPageResourcesService.getTitle());
   }
 }
