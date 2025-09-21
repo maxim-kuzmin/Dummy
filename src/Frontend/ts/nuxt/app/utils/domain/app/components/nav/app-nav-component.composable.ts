@@ -1,14 +1,12 @@
 import { getAppAboutPageService } from '~/utils/domain/app/pages/about/app-about-page.service'
 import { getAppFakePageService } from '~/utils/domain/app/pages/fake/app-fake-page.service'
 import { usePageUrl } from '~/utils/infrastructure/page/url/page-url.composable'
-import {
-  AppNavComponentData,
-  type AppNavComponentItem,
-  type AppNavComponentModel,
-} from './app-nav-component.types'
 import { usePageStore } from '~/utils/infrastructure/page/store/page-store.composable'
 import type { AppFakePageDataQuery } from '../../pages/fake/app-fake-page.types'
 import { useAppAboutPageResources } from '../../pages/about/resources/app-about-page-resources.composable'
+import type { AppNavComponentItem, AppNavComponentModel } from './app-nav-component.types'
+
+const storeKey = 'app-nav-component'
 
 export const useAppNavComponent = (): AppNavComponentModel => {
   const appAboutPageResourcesModel = useAppAboutPageResources()
@@ -17,9 +15,9 @@ export const useAppNavComponent = (): AppNavComponentModel => {
   const appAboutPageService = getAppAboutPageService()
   const appFakePageService = getAppFakePageService()
 
-  const data = new AppNavComponentData()
+  const items = useState<AppNavComponentItem[]>(`${storeKey}.items`, () => [])
 
-  data.items.value = createFakeItems()
+  items.value = createFakeItems()
 
   onServerPrefetch(load)
 
@@ -28,7 +26,7 @@ export const useAppNavComponent = (): AppNavComponentModel => {
   function load() {
     const pageKey = pageStore.value.pageKey
 
-    selectItem(pageKey, data.items.value)
+    selectItem(pageKey, items.value)
   }
 
   function createFakeItems(): AppNavComponentItem[] {
@@ -122,5 +120,5 @@ export const useAppNavComponent = (): AppNavComponentModel => {
     });
   }
 
-  return { ...data }
+  return { items }
 }

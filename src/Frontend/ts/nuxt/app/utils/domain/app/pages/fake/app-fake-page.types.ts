@@ -11,11 +11,8 @@ export const AppFakePageParameters = {
   pageNumber: new PageParameter(AppParameterNames.pageNumber, 1),
 }
 
-export class AppFakePageData {
-  readonly clickCount = ref(0)
-  readonly pageKey = ref('')
-}
-
-export type AppFakePageModel = AppFakePageData & {
+export interface AppFakePageModel {
+  readonly clickCount: globalThis.Ref<number>
+  readonly pageKey: globalThis.Ref<string>
   click(): void
 }

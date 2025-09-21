@@ -7,10 +7,8 @@ export interface AppLanguageComponentItem {
   url: string
 }
 
-export class AppLanguageComponentData {
-  readonly items = ref<AppLanguageComponentItem[]>([])
-  readonly menuStyle = ref<CSSProperties>({ visibility: 'hidden' })
-  readonly title = ref('')
+export interface AppLanguageComponentModel {
+  readonly items: globalThis.Ref<AppLanguageComponentItem[]>
+  readonly menuStyle: globalThis.Ref<CSSProperties>
+  readonly title: globalThis.Ref<string>
 }
-
-export type AppLanguageComponentModel = AppLanguageComponentData

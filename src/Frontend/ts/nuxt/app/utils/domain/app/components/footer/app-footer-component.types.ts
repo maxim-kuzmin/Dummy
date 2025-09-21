@@ -1,5 +1,3 @@
-export class AppFooterComponentData {
-  readonly title = ref('')
+export interface AppFooterComponentModel {
+  readonly title: globalThis.Ref<string>
 }
-
-export type AppFooterComponentModel = AppFooterComponentData

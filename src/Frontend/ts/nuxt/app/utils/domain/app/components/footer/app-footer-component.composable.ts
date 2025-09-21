@@ -1,17 +1,17 @@
+import type { AppFooterComponentModel } from './app-footer-component.types'
 import { useAppFooterComponentResources } from './resources/app-footer-component-resources.composable'
-import {
-  AppFooterComponentData,
-  type AppFooterComponentModel,
-} from './app-footer-component.types'
+
+const storeKey = 'app-footer-component'
 
 export const useAppFooterComponent = (): AppFooterComponentModel => {
   const appFooterComponentResources = useAppFooterComponentResources()
 
-  const data = new AppFooterComponentData()
+  const title = useState(`${storeKey}.title`, () => '')
 
-  watchEffect(() => {
-    data.title.value = appFooterComponentResources.getTitle()
-  })
+  watchEffect(load)
 
-  return { ...data }
+  function load() {
+    title.value = appFooterComponentResources.getTitle()
+  }
+  return { title }
 }

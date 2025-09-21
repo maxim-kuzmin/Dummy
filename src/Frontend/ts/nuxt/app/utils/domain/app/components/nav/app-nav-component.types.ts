@@ -1,7 +1,3 @@
-export class AppNavComponentData {
-  readonly items = ref<AppNavComponentItem[]>([])
-}
-
 export interface AppNavComponentItem {
   children: AppNavComponentItem[];
   key: string;
@@ -10,4 +6,6 @@ export interface AppNavComponentItem {
   url: string;
 }
 
-export type AppNavComponentModel = AppNavComponentData
+export interface AppNavComponentModel {
+  readonly items: globalThis.Ref<AppNavComponentItem[]>
+}

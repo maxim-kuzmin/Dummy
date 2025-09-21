@@ -1,11 +1,12 @@
 import { getAppFakePageService } from './app-fake-page.service'
 import { useAppFakePageResources } from './resources/app-fake-page-resources.composable'
 import {
-  AppFakePageData,
   AppFakePageParameters,
-  type AppFakePageModel,
+   type AppFakePageModel,
 } from './app-fake-page.types'
 import { usePageStore } from '~/utils/infrastructure/page/store/page-store.composable'
+
+const storeKey = 'app-fake-page'
 
 export const useAppFakePage = (): AppFakePageModel => {
   const appFakePageResources = useAppFakePageResources()
@@ -14,7 +15,8 @@ export const useAppFakePage = (): AppFakePageModel => {
 
   const appFakePageService = getAppFakePageService()
 
-  const data = new AppFakePageData()
+  const clickCount = useState(`${storeKey}.clickCount`, () => 0)
+  const pageKey = useState(`${storeKey}.pageKey`, () => '')
 
   watchEffect(load)
 
@@ -26,20 +28,19 @@ export const useAppFakePage = (): AppFakePageModel => {
         AppFakePageParameters.pageNumber.defaultValue,
     )
 
-    const pageKey = appFakePageService.createPageKey({ id, pageNumber })
-
     pageStore.value = {
-      pageKey,
+      pageKey: appFakePageService.createPageKey({ id, pageNumber }),
       pageTitle: appFakePageResources.getTitle(id)
     }
 
-    data.pageKey.value = pageKey
+    pageKey.value = pageStore.value.pageKey
   }
 
   return {
-    ...data,
+    clickCount,
+    pageKey,
     click() {
-      data.clickCount.value++
+      clickCount.value++
     },
   }
 }

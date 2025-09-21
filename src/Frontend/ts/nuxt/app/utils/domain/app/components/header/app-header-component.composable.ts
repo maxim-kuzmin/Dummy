@@ -1,25 +1,25 @@
 import { getAppIndexPageService } from '~/utils/domain/app/pages/index/app-index-page.service'
 import { usePageUrl } from '~/utils/infrastructure/page/url/page-url.composable'
 import { useAppHeaderComponentResources } from './resources/app-header-component-resources.composable'
-import {
-  AppHeaderComponentData,
-  type AppHeaderComponentModel,
-} from './app-header-component.types'
+import type { AppHeaderComponentModel } from './app-header-component.types'
+
+const storeKey = 'app-header-component'
 
 export const useAppHeaderComponent = (): AppHeaderComponentModel => {
   const appHeaderComponentResources = useAppHeaderComponentResources()
 
   const appIndexPageService = getAppIndexPageService()
 
-  const data = new AppHeaderComponentData()
+  const indexPageName = useState(`${storeKey}.indexPageName`, () => '')
+  const indexPageUrl = useState(`${storeKey}.indexPageUrl`, () => '')
 
-  watchEffect(() => {
-    data.indexPageName.value = appHeaderComponentResources.getTitle()
+  watchEffect(load)
 
-    data.indexPageUrl.value = usePageUrl(
-      appIndexPageService.createPageUrlOptions(),
-    )
-  })
+  function load(): void {
+    indexPageName.value = appHeaderComponentResources.getTitle()
 
-  return { ...data }
+    indexPageUrl.value = usePageUrl(appIndexPageService.createPageUrlOptions())
+  }
+
+  return { indexPageName, indexPageUrl }
 }

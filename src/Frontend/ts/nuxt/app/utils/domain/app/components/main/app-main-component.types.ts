@@ -1,7 +1,3 @@
-export class AppMainComponentData {
-  readonly title = ref('')
-}
-
-export type AppMainComponentModel = AppMainComponentData & {
-  refresh(): void
+export interface AppMainComponentModel {
+  readonly title: globalThis.Ref<string>
 }
