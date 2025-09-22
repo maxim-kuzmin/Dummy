@@ -2,16 +2,17 @@ import { getAppAboutPageService } from '~/utils/domain/app/pages/about/app-about
 import { getAppFakePageService } from '~/utils/domain/app/pages/fake/app-fake-page.service'
 import { usePageUrl } from '~/utils/infrastructure/page/url/page-url.composable'
 import { usePageStore } from '~/utils/infrastructure/page/store/page-store.composable'
+import { useClientResources } from '~/utils/infrastructure/resources/client-resources.composable'
 import type { AppFakePageDataQuery } from '../../pages/fake/app-fake-page.types'
 import { useAppAboutPageResources } from '../../pages/about/resources/app-about-page-resources.composable'
 import type { AppNavComponentItem, AppNavComponentModel } from './app-nav-component.types'
-import { getLanguageService } from '~/utils/infrastructure/language/language.service'
 import { useLanguage } from '~/utils/infrastructure/language/language.composable'
 
 const storeKey = 'app-nav-component'
 
 export const useAppNavComponent = (): AppNavComponentModel => {
-  const appAboutPageResourcesModel = useAppAboutPageResources()
+  const resourcesModel = useClientResources()
+  const appAboutPageResourcesModel = useAppAboutPageResources(resourcesModel)
   const languageModel = useLanguage()
   const pageStoreModel = usePageStore()
 
@@ -20,7 +21,7 @@ export const useAppNavComponent = (): AppNavComponentModel => {
 
   const items = useState<AppNavComponentItem[]>(`${storeKey}.items`, () => [])
 
-  //onServerPrefetch(load)
+  const languageCode = languageModel.getCurrentLanguage().code
 
   watchEffect(load)
 
@@ -32,13 +33,11 @@ export const useAppNavComponent = (): AppNavComponentModel => {
   }
 
   function createFakeItems(): AppNavComponentItem[] {
-    const locale = languageModel.getCurrentLanguage().code
-
     return [
       createItemForAboutPage(),
-      createItemForFakePageByDataQuery({ id: '1', locale, pageNumber: 1 }),
-      createItemForFakePageByDataQuery({ id: '1', locale, pageNumber: 2 }),
-      createItemForFakePageByDataQuery({ id: '2', locale, pageNumber: 1 }),
+      createItemForFakePageByDataQuery({ id: '1', pageNumber: 1 }),
+      createItemForFakePageByDataQuery({ id: '1', pageNumber: 2 }),
+      createItemForFakePageByDataQuery({ id: '2', pageNumber: 1 }),
       createItemForFakePage('11111', [
         createItemForFakePage('11111-1'),
         createItemForFakePage('11111-2'),
@@ -81,7 +80,7 @@ export const useAppNavComponent = (): AppNavComponentModel => {
   ): AppNavComponentItem {
     const dataQuery = { id: text, pageNumber: 1 } as AppFakePageDataQuery
 
-    const key = appFakePageService.createPageKey(dataQuery)
+    const key = appFakePageService.createPageKey(dataQuery, languageCode)
 
     const url = usePageUrl(appFakePageService.createPageUrlOptions(dataQuery))
 
@@ -92,7 +91,7 @@ export const useAppNavComponent = (): AppNavComponentModel => {
     dataQuery: AppFakePageDataQuery,
     children: AppNavComponentItem[] = [],
   ): AppNavComponentItem {
-    const key = appFakePageService.createPageKey(dataQuery)
+    const key = appFakePageService.createPageKey(dataQuery, languageCode)
 
     const url = usePageUrl(appFakePageService.createPageUrlOptions(dataQuery))
 

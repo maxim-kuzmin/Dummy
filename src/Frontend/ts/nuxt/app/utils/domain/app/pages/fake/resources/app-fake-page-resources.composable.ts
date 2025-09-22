@@ -1,12 +1,15 @@
-import { useResources } from '~/utils/infrastructure/resources/resources.composable'
 import type { AppFakePageResourcesModel } from './app-fake-page-resources.types'
+import type { ResourcesModel } from '~/utils/shared/resources/resources.types'
 
-export const useAppFakePageResources = (): AppFakePageResourcesModel => {
-  const { translate } = useResources()
+export const useAppFakePageResources = (resourcesModel: ResourcesModel): AppFakePageResourcesModel => {
+  const { translate } = resourcesModel
 
   return {
-    getTitle(id: string): string {
-      return translate('app.pages.app-fake-page.title', {id: `{${id}}`})
+    getTitle(id: string, pageNumber: number): string {
+      return translate('app.pages.app-fake-page.title', {
+        id: `{${id}}`,
+        pageNumber,
+      })
     },
   }
 }

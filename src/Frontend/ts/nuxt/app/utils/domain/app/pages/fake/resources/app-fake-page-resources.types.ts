@@ -1,3 +1,3 @@
 export interface AppFakePageResourcesModel {
-  getTitle(id: string): string
+  getTitle(id: string, pageNumber: number): string
 }

@@ -1,25 +1,38 @@
 import type { EventHandlerRequest, H3Event } from 'h3'
 import {
+  HttpCookieNames,
+  HttpHeaderNames,
+  HttpParameterNames,
+} from '~/utils/shared/http/http.types'
+import {
   defaultLanguage,
   languages,
   type LanguageCode,
 } from '~/utils/shared/language/language.types'
 
 export class LanguageService {
-  getLanguageCodeFromH3Event(event: H3Event<EventHandlerRequest>): LanguageCode {
-    const query = tryQueryLocale(event, { lang: '', name: 'locale' })
+  getLanguageCodeFromH3Event(
+    event: H3Event<EventHandlerRequest>,
+  ): LanguageCode {
+    const query = tryQueryLocale(event, {
+      lang: '',
+      name: HttpParameterNames.locale,
+    })
 
     if (query) {
       return query.toString() as LanguageCode
     }
 
-    const cookie = tryCookieLocale(event, { lang: '', name: 'i18n_locale' })
+    const cookie = tryCookieLocale(event, {
+      lang: '',
+      name: HttpCookieNames.locale,
+    })
 
     if (cookie) {
       return cookie.toString() as LanguageCode
     }
 
-    const header = tryHeaderLocale(event, { lang: '', name: 'Accept-Language' })
+    const header = getRequestHeader(event, HttpHeaderNames.locale)
 
     if (header) {
       return header.toString() as LanguageCode
@@ -29,7 +42,10 @@ export class LanguageService {
   }
 
   getLanguageCodeFromPath(path: string): LanguageCode {
-    const englishLanguageCode = this.getLanguageCode(path, languages.english.code)
+    const englishLanguageCode = this.getLanguageCode(
+      path,
+      languages.english.code,
+    )
 
     if (englishLanguageCode) {
       return englishLanguageCode

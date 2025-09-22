@@ -6,10 +6,11 @@ import {
   AppFakePageParameters,
   type AppFakePageDataQuery,
 } from './app-fake-page.types'
+import type { LanguageCode } from '~/utils/shared/language/language.types'
 
 export class AppFakePageService {
-  createPageKey(dataQuery: AppFakePageDataQuery): string {
-    return `Fake:${dataQuery.locale},${dataQuery.id},${dataQuery.pageNumber}`
+  createPageKey(dataQuery: AppFakePageDataQuery, languageCode: LanguageCode): string {
+    return `Fake:${languageCode},${dataQuery.id},${dataQuery.pageNumber}`
   }
 
   createPageUrlOptions(dataQuery: AppFakePageDataQuery): UrlOptions {

@@ -1,12 +1,16 @@
 import { getAppIndexPageService } from '~/utils/domain/app/pages/index/app-index-page.service'
 import { usePageUrl } from '~/utils/infrastructure/page/url/page-url.composable'
+import { useClientResources } from '~/utils/infrastructure/resources/client-resources.composable'
 import { useAppHeaderComponentResources } from './resources/app-header-component-resources.composable'
 import type { AppHeaderComponentModel } from './app-header-component.types'
 
 const storeKey = 'app-header-component'
 
 export const useAppHeaderComponent = (): AppHeaderComponentModel => {
-  const appHeaderComponentResourcesModel = useAppHeaderComponentResources()
+  const resourcesModel = useClientResources()
+
+  const appHeaderComponentResourcesModel =
+    useAppHeaderComponentResources(resourcesModel)
 
   const appIndexPageService = getAppIndexPageService()
 

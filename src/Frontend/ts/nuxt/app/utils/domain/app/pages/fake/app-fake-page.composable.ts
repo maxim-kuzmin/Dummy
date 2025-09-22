@@ -23,7 +23,7 @@ export const useAppFakePage = (): AppFakePageModel => {
         AppFakePageParameters.pageNumber.defaultValue,
     )
 
-    await appFakePageStoreModel.load({ id, locale, pageNumber })
+    await appFakePageStoreModel.load({ id, pageNumber }, { locale })
   }
 
   return { ...appFakePageStoreModel }

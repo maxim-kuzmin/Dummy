@@ -1,8 +1,10 @@
-import { useResources } from '~/utils/infrastructure/resources/resources.composable'
+import type { ResourcesModel } from '~/utils/shared/resources/resources.types'
 import type { AppNotFoundPageResourcesModel } from './app-not-found-page-resources.types'
 
-export const useAppNotFoundPageResources = (): AppNotFoundPageResourcesModel => {
-  const { translate } = useResources()
+export const useAppNotFoundPageResources = (
+  resourcesModel: ResourcesModel,
+): AppNotFoundPageResourcesModel => {
+  const { translate } = resourcesModel
 
   return {
     getTitle(): string {

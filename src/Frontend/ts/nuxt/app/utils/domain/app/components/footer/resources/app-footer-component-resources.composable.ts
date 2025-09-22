@@ -1,8 +1,10 @@
-import { useResources } from '~/utils/infrastructure/resources/resources.composable'
+import type { ResourcesModel } from '~/utils/shared/resources/resources.types'
 import type { AppFooterComponentResourcesModel } from './app-footer-component-resources.types'
 
-export const useAppFooterComponentResources = (): AppFooterComponentResourcesModel => {
-  const { translate } = useResources()
+export const useAppFooterComponentResources = (
+  resourcesModel: ResourcesModel,
+): AppFooterComponentResourcesModel => {
+  const { translate } = resourcesModel
 
   return {
     getTitle(): string {

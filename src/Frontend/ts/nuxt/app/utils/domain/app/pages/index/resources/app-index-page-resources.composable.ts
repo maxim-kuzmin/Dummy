@@ -1,8 +1,10 @@
-import { useResources } from '~/utils/infrastructure/resources/resources.composable'
+import type { ResourcesModel } from '~/utils/shared/resources/resources.types'
 import type { AppIndexPageResourcesModel } from './app-index-page-resources.types'
 
-export const useAppIndexPageResources = (): AppIndexPageResourcesModel => {
-  const { translate } = useResources()
+export const useAppIndexPageResources = (
+  resourcesModel: ResourcesModel,
+): AppIndexPageResourcesModel => {
+  const { translate } = resourcesModel
 
   return {
     getTitle(): string {

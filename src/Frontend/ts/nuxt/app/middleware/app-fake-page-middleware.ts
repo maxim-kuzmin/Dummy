@@ -22,5 +22,5 @@ export default defineNuxtRouteMiddleware(async (to) => {
       AppFakePageParameters.pageNumber.defaultValue,
   )
 
-  await appFakePageStoreModel.load({ id, locale, pageNumber })
+  await appFakePageStoreModel.load({ id, pageNumber }, { locale })
 })

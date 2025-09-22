@@ -1,12 +1,12 @@
-import { getAppFakePageService } from '~/utils/domain/app/pages/fake/app-fake-page.service'
+import { useAppFakePageResources } from '~/utils/domain/app/pages/fake/resources/app-fake-page-resources.composable'
 import { AppFakePageParameters } from '~/utils/domain/app/pages/fake/app-fake-page.types'
-import type { LanguageCode } from '~/utils/shared/language/language.types'
+import { useServerResources } from '~/utils/infrastructure/resources/server-resources.composable'
 import type { PageData } from '~/utils/shared/page/page.types'
 
 export default defineEventHandler(async (event) => {
-  const t = await useTranslation(event)
+  const resourcesModel = await useServerResources(event)
 
-  const appFakePageService = getAppFakePageService()
+  const appFakePageResourcesModel = useAppFakePageResources(resourcesModel)
 
   const queryParams = getQuery(event)
 
@@ -15,18 +15,12 @@ export default defineEventHandler(async (event) => {
       AppFakePageParameters.id.defaultValue,
   )
 
-  const locale = String(
-    queryParams[AppFakePageParameters.locale.name] ??
-      AppFakePageParameters.locale.defaultValue,
-  ) as LanguageCode
-
   const pageNumber = Number(
     queryParams[AppFakePageParameters.pageNumber.name] ??
       AppFakePageParameters.pageNumber.defaultValue,
   )
 
   return {
-    pageKey: appFakePageService.createPageKey({ id, locale, pageNumber }),
-    pageTitle: t('app.pages.app-fake-page.title', { id: `{${id}}` }),
+    pageTitle: appFakePageResourcesModel.getTitle(id, pageNumber),
   } as PageData
 })
