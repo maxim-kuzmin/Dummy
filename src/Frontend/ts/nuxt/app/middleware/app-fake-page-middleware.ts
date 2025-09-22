@@ -7,10 +7,13 @@ export default defineNuxtRouteMiddleware(async (to) => {
 
   const languageService = getLanguageService()
 
-  const routeParams = to.params;
+  const routeParams = to.params
   const queryParams = to.query
 
-  const id = String(routeParams[AppFakePageParameters.id.name] ?? '')
+  const id = String(
+    routeParams[AppFakePageParameters.id.name] ??
+      AppFakePageParameters.id.defaultValue,
+  )
 
   const locale = languageService.getLanguageCodeByPath(to.path)
 
