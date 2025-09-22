@@ -1,6 +1,6 @@
 import { AppFakePageParameters } from '~/utils/domain/app/pages/fake/app-fake-page.types'
 import { useAppFakePageStore } from '~/utils/domain/app/pages/fake/store/app-fake-page-store.composable'
-import { getLanguageService } from '~/utils/shared/language/language.service'
+import { getLanguageService } from '~/utils/infrastructure/language/language.service'
 
 export default defineNuxtRouteMiddleware(async (to) => {
   const appFakePageStoreModel = useAppFakePageStore()
@@ -15,7 +15,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
       AppFakePageParameters.id.defaultValue,
   )
 
-  const locale = languageService.getLanguageCodeByPath(to.path)
+  const locale = languageService.getLanguageCodeFromPath(to.path)
 
   const pageNumber = Number(
     queryParams[AppFakePageParameters.pageNumber.name] ??

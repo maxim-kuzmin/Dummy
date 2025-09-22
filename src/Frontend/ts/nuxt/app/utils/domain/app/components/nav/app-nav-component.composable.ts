@@ -5,7 +5,7 @@ import { usePageStore } from '~/utils/infrastructure/page/store/page-store.compo
 import type { AppFakePageDataQuery } from '../../pages/fake/app-fake-page.types'
 import { useAppAboutPageResources } from '../../pages/about/resources/app-about-page-resources.composable'
 import type { AppNavComponentItem, AppNavComponentModel } from './app-nav-component.types'
-import { getLanguageService } from '~/utils/shared/language/language.service'
+import { getLanguageService } from '~/utils/infrastructure/language/language.service'
 import { useLanguage } from '~/utils/infrastructure/language/language.composable'
 
 const storeKey = 'app-nav-component'
