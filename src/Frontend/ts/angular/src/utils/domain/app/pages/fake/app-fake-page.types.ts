@@ -1,4 +1,4 @@
-import { AppParameterNames } from '~/utils/domain/app/app.types';
+import { HttpParameterNames } from '~/utils/shared/http/http.types';
 import { PageDataQuery, PageParameter } from '~/utils/shared/page/page.types';
 
 export interface AppFakePageDataQuery extends PageDataQuery {
@@ -7,6 +7,6 @@ export interface AppFakePageDataQuery extends PageDataQuery {
 }
 
 export const appFakePageParameters = {
-  id: new PageParameter(AppParameterNames.id, ''),
-  pageNumber: new PageParameter(AppParameterNames.pageNumber, 1),
+  id: new PageParameter(HttpParameterNames.id, ''),
+  pageNumber: new PageParameter(HttpParameterNames.pageNumber, 1),
 };

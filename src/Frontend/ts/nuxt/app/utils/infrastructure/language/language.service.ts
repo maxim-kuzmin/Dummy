@@ -32,7 +32,7 @@ export class LanguageService {
       return cookie.toString() as LanguageCode
     }
 
-    const header = getRequestHeader(event, HttpHeaderNames.locale)
+    const header = tryHeaderLocale(event, {lang: '', name: HttpHeaderNames.locale})
 
     if (header) {
       return header.toString() as LanguageCode

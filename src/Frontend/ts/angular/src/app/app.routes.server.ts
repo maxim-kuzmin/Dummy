@@ -1,13 +1,13 @@
 import { RenderMode, ServerRoute } from '@angular/ssr';
-import { AppRouterPaths } from '../utils/domain/app/app.types';
+import { RouterPaths } from '../utils/infrastructure/router/router.types';
 
 export const serverRoutes: ServerRoute[] = [
   {
-    path: AppRouterPaths.app.fake,
+    path: RouterPaths.app.fake,
     renderMode: RenderMode.Server,
   },
   {
-    path: AppRouterPaths.app.notFound,
+    path: RouterPaths.app.notFound,
     renderMode: RenderMode.Prerender,
   },
 ];

@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
+import { ResourcesModel } from '~/utils/shared/resources/resources.types';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ResourcesService {
+export class ResourcesService implements ResourcesModel {
   translate(key: string, parameters?: unknown[] | Record<string, unknown>): string {
     switch (key) {
       case 'app.components.app-footer-component.title':
