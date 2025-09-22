@@ -1,11 +1,13 @@
 import { AppParameterNames } from '~/utils/domain/app/app.types'
-import { PageParameter } from '~/utils/shared/page/page.types'
+import {
+  PageParameter,
+  type PageDataQuery,
+} from '~/utils/shared/page/page.types'
 import type { AppFakePageStoreModel } from './store/app-fake-page-store.types'
-import { defaultLanguage, type LanguageCode } from '~/utils/shared/language/language.types'
+import { defaultLanguage } from '~/utils/shared/language/language.types'
 
-export interface AppFakePageDataQuery {
+export interface AppFakePageDataQuery extends PageDataQuery {
   readonly id: string
-  readonly locale: LanguageCode
   readonly pageNumber: number
 }
 
