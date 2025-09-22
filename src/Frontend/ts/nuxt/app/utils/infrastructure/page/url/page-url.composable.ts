@@ -1,6 +1,6 @@
-import type { UrlOptions } from "./url.types"
+import type { UrlOptions } from "./page-url.types"
 
-export const useUrl = (options: UrlOptions): string => {
+export const usePageUrl = (options: UrlOptions): string => {
   const localePath = useLocalePath()
 
   return localePath({

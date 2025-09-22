@@ -1,7 +1,7 @@
 import type {
   UrlOptions,
-  UrlQueryParams,
-} from '~/utils/infrastructure/url/url.types'
+  PageUrlQueryParams,
+} from '~/utils/infrastructure/page/url/page-url.types'
 import {
   AppFakePageParameters,
   type AppFakePageDataQuery,
@@ -9,11 +9,11 @@ import {
 
 export class AppFakePageService {
   createPageKey(dataQuery: AppFakePageDataQuery): string {
-    return `Fake:${dataQuery.id},${dataQuery.pageNumber}`
+    return `Fake:${dataQuery.locale},${dataQuery.id},${dataQuery.pageNumber}`
   }
 
   createPageUrlOptions(dataQuery: AppFakePageDataQuery): UrlOptions {
-    const queryParams = {} as UrlQueryParams
+    const queryParams = {} as PageUrlQueryParams
 
     if (dataQuery.pageNumber > AppFakePageParameters.pageNumber.defaultValue) {
       queryParams[AppFakePageParameters.pageNumber.name] = dataQuery.pageNumber

@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
 import { UrlTree } from '@angular/router';
 import { AppIndexPageService } from '~/utils/domain/app/pages/index/app-index-page.service';
-import { UrlService } from '~/utils/infrastructure/url/url.service';
+import { PageUrlService } from '~/utils/infrastructure/page/url/page-url.service';
 import { AppHeaderComponentResourcesService } from './resources/app-header-component-resources.service';
 
 export class AppHeaderComponentModel {
@@ -10,7 +10,7 @@ export class AppHeaderComponentModel {
   );
 
   private readonly appIndexPageService = inject(AppIndexPageService);
-  private readonly urlService = inject(UrlService);
+  private readonly pageUrlService = inject(PageUrlService);
 
   indexPageName = '';
   indexPageUrlTree = new UrlTree();
@@ -18,7 +18,7 @@ export class AppHeaderComponentModel {
   load() {
     this.indexPageName = this.appHeaderComponentResourcesService.getTitle();
 
-    this.indexPageUrlTree = this.urlService.createUrlTree(
+    this.indexPageUrlTree = this.pageUrlService.createUrlTree(
       this.appIndexPageService.createPageUrlOptions()
     );
   }

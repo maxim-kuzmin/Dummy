@@ -16,3 +16,5 @@ export const languages = {
   english: new Language('en', 'English'),
   russian: new Language('ru', 'Русский'),
 }
+
+export const defaultLanguage = languages.russian

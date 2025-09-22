@@ -1,5 +1,5 @@
 import tailwindcss from '@tailwindcss/vite'
-import { languages } from './app/utils/shared/language/language.types'
+import { languages, defaultLanguage } from './app/utils/shared/language/language.types'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -20,7 +20,7 @@ export default defineNuxtConfig({
     plugins: [tailwindcss()],
   },
   i18n: {
-    defaultLocale: 'ru',
+    defaultLocale: defaultLanguage.code,
     locales: [
       {
         code: languages.russian.code,

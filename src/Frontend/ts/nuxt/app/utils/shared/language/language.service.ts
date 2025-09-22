@@ -1,11 +1,11 @@
-import type { LanguageCode } from './language.types'
+import  {type LanguageCode, defaultLanguage } from './language.types'
 
 export class LanguageService {
   getLanguageCodeByPath(path: string): LanguageCode {
     let result = this.getLanguageCode(path, 'en')
 
     if (!result) {
-      result = 'ru'
+      result = defaultLanguage.code
     }
 
     return result

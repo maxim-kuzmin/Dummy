@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { UrlOptions } from '~/utils/infrastructure/url/url.types';
+import { PageUrlOptions } from '~/utils/infrastructure/page/url/page-url.types';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +9,7 @@ export class AppIndexPageService {
     return 'Index';
   }
 
-  createPageUrlOptions(): UrlOptions {
+  createPageUrlOptions(): PageUrlOptions {
     return {
       routeParams: ['/'],
     };

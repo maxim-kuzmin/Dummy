@@ -11,7 +11,7 @@
 <template>
   <div>
     {{ pageKey }}
-    <br />
+    <br >
     [<button @click="click">Clicked {{ clickCount }} times</button>]
   </div>
 </template>

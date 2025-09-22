@@ -1,19 +1,19 @@
 import { inject, Injectable } from '@angular/core';
 import { Router, UrlSerializer, UrlTree } from '@angular/router';
-import { UrlOptions } from './url.types';
+import { PageUrlOptions } from './page-url.types';
 
 @Injectable({
   providedIn: 'root',
 })
-export class UrlService {
+export class PageUrlService {
   private readonly router = inject(Router);
   private readonly urlSerializer = inject(UrlSerializer);
 
-  createUrl(options: UrlOptions): string {
+  createUrl(options: PageUrlOptions): string {
     return this.urlSerializer.serialize(this.createUrlTree(options));
   }
 
-  createUrlTree(options: UrlOptions): UrlTree {
+  createUrlTree(options: PageUrlOptions): UrlTree {
     return this.router.createUrlTree(options.routeParams, {
       queryParams: options.queryParams,
     });

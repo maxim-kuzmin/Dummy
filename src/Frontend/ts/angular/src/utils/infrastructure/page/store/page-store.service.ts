@@ -3,7 +3,7 @@ import { Injectable, signal } from '@angular/core';
 @Injectable({
   providedIn: 'root',
 })
-export class PageService {
+export class PageStoreService {
   readonly pageKey = signal('');
   readonly pageTitle = signal('');
 }

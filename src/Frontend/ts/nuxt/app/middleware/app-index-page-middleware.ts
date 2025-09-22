@@ -1,9 +1,9 @@
-import { usePage } from '~/utils/infrastructure/page/page.composable'
+import { usePageStore } from '~/utils/infrastructure/page/store/page-store.composable'
 import { getLanguageService } from '~/utils/shared/language/language.service'
 import type { PageData } from '~/utils/shared/page/page.types'
 
 export default defineNuxtRouteMiddleware(async (to) => {
-  const pageModel = usePage()
+  const pageStoreModel = usePageStore()
 
   const languageService = getLanguageService()
 
@@ -18,6 +18,6 @@ export default defineNuxtRouteMiddleware(async (to) => {
 
   const { pageKey, pageTitle } = res.data.value!
 
-  pageModel.pageKey.value = pageKey
-  pageModel.pageTitle.value = pageTitle
+  pageStoreModel.pageKey.value = pageKey
+  pageStoreModel.pageTitle.value = pageTitle
 })

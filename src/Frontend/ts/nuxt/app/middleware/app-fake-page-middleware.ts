@@ -1,23 +1,23 @@
-import { usePage } from '~/utils/infrastructure/page/page.composable'
+import { AppFakePageParameters } from '~/utils/domain/app/pages/fake/app-fake-page.types'
+import { useAppFakePageStore } from '~/utils/domain/app/pages/fake/store/app-fake-page-store.composable'
 import { getLanguageService } from '~/utils/shared/language/language.service'
-import type { PageData } from '~/utils/shared/page/page.types'
 
 export default defineNuxtRouteMiddleware(async (to) => {
-  const pageModel = usePage()
+  const appFakePageStoreModel = useAppFakePageStore()
 
   const languageService = getLanguageService()
 
+  const routeParams = to.params;
+  const queryParams = to.query
+
+  const id = String(routeParams[AppFakePageParameters.id.name] ?? '')
+
   const locale = languageService.getLanguageCodeByPath(to.path)
 
-  const res = await useFetch<PageData>(
-    '/api/app-fake-page-api',
-    {
-      query: { locale },
-    },
+  const pageNumber = Number(
+    queryParams[AppFakePageParameters.pageNumber.name] ??
+      AppFakePageParameters.pageNumber.defaultValue,
   )
 
-  const { pageKey, pageTitle } = res.data.value!
-
-  pageModel.pageKey.value = pageKey
-  pageModel.pageTitle.value = pageTitle
+  await appFakePageStoreModel.load({ id, locale, pageNumber })
 })

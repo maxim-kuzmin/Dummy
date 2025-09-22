@@ -1,4 +1,4 @@
-import type { UrlOptions } from '~/utils/infrastructure/url/url.types'
+import type { UrlOptions } from '~/utils/infrastructure/page/url/page-url.types'
 
 export class AppIndexPageService {
   createPageKey(): string {
