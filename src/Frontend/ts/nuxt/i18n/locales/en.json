@@ -2,7 +2,7 @@
   "app.components.app-footer-component.title": "Footer",
   "app.components.app-header-component.title": "Header",
   "app.pages.app-about-page.title": "About",
-  "app.pages.app-fake-page.title": "Fake {0}",
+  "app.pages.app-fake-page.title": "Fake {id}",
   "app.pages.app-index-page.title": "Index",
   "app.pages.app-not-found-page.title": "Not found"
 }

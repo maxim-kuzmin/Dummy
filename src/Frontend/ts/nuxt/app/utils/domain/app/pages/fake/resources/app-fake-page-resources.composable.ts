@@ -6,7 +6,7 @@ export const useAppFakePageResources = (): AppFakePageResourcesModel => {
 
   return {
     getTitle(id: string): string {
-      return translate('app.pages.app-fake-page.title', [id])
+      return translate('app.pages.app-fake-page.title', {id: `{${id}}`})
     },
   }
 }

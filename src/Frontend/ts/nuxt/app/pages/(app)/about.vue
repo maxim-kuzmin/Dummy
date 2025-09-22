@@ -1,6 +1,10 @@
 <script setup lang="ts">
   import { useAppAboutPage } from '~/utils/domain/app/pages/about/app-about-page.composable'
 
+  definePageMeta({
+    middleware: ['app-about-page-middleware'],
+  })
+
   useAppAboutPage()
 </script>
 

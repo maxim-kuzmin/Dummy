@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class ResourcesService {
-  translate(key: string, list?: unknown[]): string {
+  translate(key: string, parameters?: unknown[] | Record<string, unknown>): string {
     switch (key) {
       case 'app.components.app-footer-component.title':
         return $localize`:@@app.components.app-footer-component.title:@@`;
@@ -13,9 +13,9 @@ export class ResourcesService {
       case 'app.pages.app-about-page.title':
         return $localize`:@@app.pages.app-about-page.title:@@`;
       case 'app.pages.app-fake-page.title': {
-        const id = list ? String(list[0]) : '';
+        const id = this.getParameter('id', 0, parameters);
 
-        return `${$localize`:@@app.pages.app-fake-page.title:@@`} ${id}`;
+        return `${$localize`:@@app.pages.app-fake-page.title[0]:@@`} ${id}`;
       }
       case 'app.pages.app-index-page.title':
         return $localize`:@@app.pages.app-index-page.title:@@`;
@@ -23,6 +23,30 @@ export class ResourcesService {
         return $localize`:@@app.pages.app-not-found-page.title:@@`;
       default:
         throw Error(`ResourcesService: Unknown resource key: "${key}"`);
+    }
+  }
+
+  private getParameter(
+    name: string,
+    index: number,
+    parameters?: unknown[] | Record<string, unknown>
+  ): string {
+    if (parameters) {
+      if (Array.isArray(parameters)) {
+        if (parameters.length > index) {
+          return String(parameters[index])
+        } else {
+          throw Error(`ResourcesService: Parameter index ${index} is not present in parameters array`)
+        }
+      } else {
+        if (name in parameters) {
+          return String(parameters[name])
+        } else {
+          throw Error(`ResourcesService: Parameter name "${name}" is not present in parameters record`)
+        }
+      }
+    } else {
+      throw Error(`ResourcesService: No parameters specified`)
     }
   }
 }

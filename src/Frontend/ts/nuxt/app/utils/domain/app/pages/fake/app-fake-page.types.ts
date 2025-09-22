@@ -1,5 +1,6 @@
 import { AppParameterNames } from '~/utils/domain/app/app.types'
 import { PageParameter } from '~/utils/shared/page/page.types'
+import type { AppFakePageStoreModel } from './store/app-fake-page-store.types'
 
 export interface AppFakePageDataQuery {
   readonly id: string
@@ -11,8 +12,4 @@ export const AppFakePageParameters = {
   pageNumber: new PageParameter(AppParameterNames.pageNumber, 1),
 }
 
-export interface AppFakePageModel {
-  readonly clickCount: globalThis.Ref<number>
-  readonly pageKey: globalThis.Ref<string>
-  click(): void
-}
+export type AppFakePageModel = AppFakePageStoreModel

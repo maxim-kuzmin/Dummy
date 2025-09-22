@@ -8,6 +8,6 @@ export class AppFakePageResourcesService {
   private readonly resourcesService = inject(ResourcesService)
 
   getTitle(id: string) {
-    return this.resourcesService.translate('app.pages.app-fake-page.title', [id]);
+    return this.resourcesService.translate('app.pages.app-fake-page.title', {id: `{${id}}`});
   }
 }

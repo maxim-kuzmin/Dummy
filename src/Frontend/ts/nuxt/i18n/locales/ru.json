@@ -2,7 +2,7 @@
   "app.components.app-footer-component.title": "Подвал",
   "app.components.app-header-component.title": "Шапка",
   "app.pages.app-about-page.title": "О нас",
-  "app.pages.app-fake-page.title": "Фальшивка {0}",
+  "app.pages.app-fake-page.title": "Фальшивка {id}",
   "app.pages.app-index-page.title": "Главное",
   "app.pages.app-not-found-page.title": "Не найдено"
 }
