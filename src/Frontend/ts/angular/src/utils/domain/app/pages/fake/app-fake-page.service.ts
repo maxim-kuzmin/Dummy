@@ -13,7 +13,7 @@ import {
 })
 export class AppFakePageService {
   createPageKey(dataQuery: AppFakePageDataQuery): string {
-    return `Fake:${dataQuery.id},${dataQuery.pageNumber}`;
+    return `Fake:${dataQuery.locale},${dataQuery.id},${dataQuery.pageNumber}`;
   }
 
   createPageUrlOptions(dataQuery: AppFakePageDataQuery): PageUrlOptions {

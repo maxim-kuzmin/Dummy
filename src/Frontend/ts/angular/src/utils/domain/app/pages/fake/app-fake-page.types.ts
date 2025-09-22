@@ -1,7 +1,7 @@
 import { AppParameterNames } from '~/utils/domain/app/app.types';
-import { PageParameter } from '~/utils/shared/page/page.types';
+import { PageDataQuery, PageParameter } from '~/utils/shared/page/page.types';
 
-export interface AppFakePageDataQuery {
+export interface AppFakePageDataQuery extends PageDataQuery {
   readonly id: string;
   readonly pageNumber: number;
 }

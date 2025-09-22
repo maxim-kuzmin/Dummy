@@ -2,6 +2,7 @@ import { inject, signal } from '@angular/core';
 import { UrlTree } from '@angular/router';
 import { PageStoreService } from '~/utils/infrastructure/page/store/page-store.service';
 import { PageUrlService } from '~/utils/infrastructure/page/url/page-url.service';
+import { LanguageService } from '~/utils/infrastructure/language/language.service';
 import { AppAboutPageService } from '~/utils/domain/app/pages/about/app-about-page.service';
 import { AppFakePageService } from '~/utils/domain/app/pages/fake/app-fake-page.service';
 import { AppFakePageDataQuery } from '~/utils/domain/app/pages/fake/app-fake-page.types';
@@ -10,6 +11,7 @@ import { AppNavComponentItem } from './app-nav-component.types';
 export class AppNavComponentModel {
   private readonly appAboutPageService = inject(AppAboutPageService);
   private readonly appFakePageService = inject(AppFakePageService);
+  private readonly languageService = inject(LanguageService);
   private readonly pageStoreService = inject(PageStoreService);
   private readonly pageUrlService = inject(PageUrlService);
 
@@ -20,11 +22,13 @@ export class AppNavComponentModel {
   }
 
   private createFakeItems(): AppNavComponentItem[] {
+    const locale = this.languageService.getCurrentLanguage().code;
+
     return [
       this.createItemForAboutPage(),
-      this.createItemForFakePageByDataQuery({ id: '1', pageNumber: 1 }),
-      this.createItemForFakePageByDataQuery({ id: '1', pageNumber: 2 }),
-      this.createItemForFakePageByDataQuery({ id: '2', pageNumber: 1 }),
+      this.createItemForFakePageByDataQuery({ id: '1', locale, pageNumber: 1 }),
+      this.createItemForFakePageByDataQuery({ id: '1', locale, pageNumber: 2 }),
+      this.createItemForFakePageByDataQuery({ id: '2', locale, pageNumber: 1 }),
       this.createItemForFakePage('11111', [
         this.createItemForFakePage('11111-1'),
         this.createItemForFakePage('11111-2'),
@@ -67,7 +71,13 @@ export class AppNavComponentModel {
     text: string,
     children: AppNavComponentItem[] = []
   ): AppNavComponentItem {
-    const dataQuery = { id: text, pageNumber: 1 } as AppFakePageDataQuery;
+    const locale = this.languageService.getCurrentLanguage().code;
+
+    const dataQuery = {
+      id: text,
+      locale,
+      pageNumber: 1,
+    } as AppFakePageDataQuery;
 
     const key = this.appFakePageService.createPageKey(dataQuery);
 
