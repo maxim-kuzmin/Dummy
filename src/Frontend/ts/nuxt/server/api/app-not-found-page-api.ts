@@ -1,13 +1,13 @@
-import { getAppNotFoundPageService } from '~/utils/domain/app/pages/not-found/app-not-found-page.service'
-import type { PageData } from '~/utils/shared/page/page.types'
+import { useAppNotFoundPageResources } from '~/utils/domain/app/pages/not-found/resources/app-not-found-page-resources.composable'
+import type { AppNotFoundPageData } from '~/utils/domain/app/pages/not-found/app-not-found-page.types'
+import { useServerResources } from '~/utils/infrastructure/resources/server-resources.composable'
 
 export default defineEventHandler(async (event) => {
-  const t = await useTranslation(event)
+  const resourcesModel = await useServerResources(event)
 
-  const appNotFoundPageService = getAppNotFoundPageService()
+  const appNotFoundPageResourcesModel = useAppNotFoundPageResources(resourcesModel)
 
   return {
-    pageKey: appNotFoundPageService.createPageKey(),
-    pageTitle: t('app.pages.app-not-found-page.title')
-  } as PageData
+    pageTitle: appNotFoundPageResourcesModel.getTitle(),
+  } as AppNotFoundPageData
 })

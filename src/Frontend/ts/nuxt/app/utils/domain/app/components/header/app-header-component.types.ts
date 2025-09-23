@@ -1,4 +1,3 @@
-export interface AppHeaderComponentModel {
-  readonly indexPageName: globalThis.Ref<string>
-  readonly indexPageUrl: globalThis.Ref<string>
-}
+import type { AppHeaderComponentStoreData } from "./store/app-header-component-store.types";
+
+export type AppHeaderComponentModel = AppHeaderComponentStoreData

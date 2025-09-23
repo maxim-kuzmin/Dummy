@@ -1,21 +1,12 @@
-import { useClientResources } from '~/utils/infrastructure/resources/client-resources.composable'
+import { useAppFooterComponentStore } from './store/app-footer-component-store.composable'
 import type { AppFooterComponentModel } from './app-footer-component.types'
-import { useAppFooterComponentResources } from './resources/app-footer-component-resources.composable'
-
-const storeKey = 'app-footer-component'
 
 export const useAppFooterComponent = (): AppFooterComponentModel => {
-  const resourcesModel = useClientResources()
+  const appFooterComponentStoreModel = useAppFooterComponentStore()
 
-  const appFooterComponentResourcesModel = useAppFooterComponentResources(resourcesModel)
+  watchEffect(() => {
+    appFooterComponentStoreModel.load()
+  })
 
-  const title = useState(`${storeKey}.title`, () => '')
-
-  watchEffect(load)
-
-  function load() {
-    title.value = appFooterComponentResourcesModel.getTitle()
-  }
-
-  return { title }
+  return { ...appFooterComponentStoreModel }
 }

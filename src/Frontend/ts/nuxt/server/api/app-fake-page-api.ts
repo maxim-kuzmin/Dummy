@@ -1,7 +1,9 @@
 import { useAppFakePageResources } from '~/utils/domain/app/pages/fake/resources/app-fake-page-resources.composable'
-import { AppFakePageParameters } from '~/utils/domain/app/pages/fake/app-fake-page.types'
+import {
+  type AppFakePageData,
+  AppFakePageParameters,
+} from '~/utils/domain/app/pages/fake/app-fake-page.types'
 import { useServerResources } from '~/utils/infrastructure/resources/server-resources.composable'
-import type { PageData } from '~/utils/shared/page/page.types'
 
 export default defineEventHandler(async (event) => {
   const resourcesModel = await useServerResources(event)
@@ -22,5 +24,5 @@ export default defineEventHandler(async (event) => {
 
   return {
     pageTitle: appFakePageResourcesModel.getTitle(id, pageNumber),
-  } as PageData
+  } as AppFakePageData
 })

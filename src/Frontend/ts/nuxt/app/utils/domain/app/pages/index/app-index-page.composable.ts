@@ -1,20 +1,13 @@
-import { usePageStore } from '~/utils/infrastructure/page/store/page-store.composable'
-import { useClientResources } from '~/utils/infrastructure/resources/client-resources.composable'
-import { useAppIndexPageResources } from './resources/app-index-page-resources.composable'
-import { getAppIndexPageService } from './app-index-page.service'
+import { useLanguage } from '~/utils/infrastructure/language/language.composable'
+import { useAppIndexPageStore } from './store/app-index-page-store.composable'
 
 export const useAppIndexPage = (): void => {
-  const resourcesModel = useClientResources()
-  const appIndexPageResourcesModel = useAppIndexPageResources(resourcesModel)
-  const pageStoreModel = usePageStore()
+  const appIndexPageStoreModel = useAppIndexPageStore()
+  const languageModel = useLanguage()
 
-  const appIndexPageService = getAppIndexPageService()
+  watchEffect(async () => {
+    const locale = languageModel.getCurrentLanguage().code
 
-  watchEffect(load)
-
-  function load() {
-    pageStoreModel.pageKey.value = appIndexPageService.createPageKey()
-
-    pageStoreModel.pageTitle.value = appIndexPageResourcesModel.getTitle()
-  }
+    await appIndexPageStoreModel.load({ locale })
+  })
 }

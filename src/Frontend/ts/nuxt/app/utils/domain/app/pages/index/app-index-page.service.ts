@@ -1,8 +1,9 @@
 import type { UrlOptions } from '~/utils/infrastructure/page/url/page-url.types'
+import type { LanguageCode } from '~/utils/shared/language/language.types'
 
 export class AppIndexPageService {
-  createPageKey(): string {
-    return 'Index'
+  createPageKey(languageCode: LanguageCode): string {
+    return `Index:${languageCode}`
   }
 
   createPageUrlOptions(): UrlOptions {

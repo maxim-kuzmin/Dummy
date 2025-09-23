@@ -1,18 +1,13 @@
-import { usePageStore } from '~/utils/infrastructure/page/store/page-store.composable'
-import { useAppAboutPageResources } from './resources/app-about-page-resources.composable'
-import { getAppAboutPageService } from './app-about-page.service'
+import { useLanguage } from '~/utils/infrastructure/language/language.composable'
+import { useAppAboutPageStore } from './store/app-about-page-store.composable'
 
 export const useAppAboutPage = (): void => {
-  const appAboutPageResourcesModel = useAppAboutPageResources()
-  const pageStoreModel = usePageStore()
+  const appAboutPageStoreModel = useAppAboutPageStore()
+  const languageModel = useLanguage()
 
-  const appAboutPageService = getAppAboutPageService()
+  watchEffect(async () => {
+    const locale = languageModel.getCurrentLanguage().code
 
-  watchEffect(load)
-
-  function load() {
-    pageStoreModel.pageKey.value = appAboutPageService.createPageKey()
-
-    pageStoreModel.pageTitle.value = appAboutPageResourcesModel.getTitle()
-  }
+    await appAboutPageStoreModel.load({ locale })
+  })
 }

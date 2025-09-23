@@ -1,23 +1,12 @@
-import { usePageStore } from '~/utils/infrastructure/page/store/page-store.composable'
+import { useAppNotFoundPageStore } from '~/utils/domain/app/pages/not-found/store/app-not-found-page-store.composable'
 import { getLanguageService } from '~/utils/infrastructure/language/language.service'
-import type { PageData } from '~/utils/shared/page/page.types'
 
 export default defineNuxtRouteMiddleware(async (to) => {
-  const pageStoreModel = usePageStore()
+  const appNotFoundPageStoreModel = useAppNotFoundPageStore()
 
   const languageService = getLanguageService()
 
   const locale = languageService.getLanguageCodeFromPath(to.path)
 
-  const res = await useFetch<PageData>(
-    '/api/app-not-found-page-api',
-    {
-      query: { locale },
-    },
-  )
-
-  const { pageKey, pageTitle } = res.data.value!
-
-  pageStoreModel.pageKey.value = pageKey
-  pageStoreModel.pageTitle.value = pageTitle
+  await appNotFoundPageStoreModel.load({ locale })
 })

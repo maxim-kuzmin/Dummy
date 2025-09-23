@@ -1,8 +1,8 @@
 <script setup lang="ts">
-  import { useAppNavComponent } from '~/utils/domain/app/components/nav/app-nav-component.composable'
+  import { useAppNavIndexComponent } from '~/utils/domain/app/components/nav/index/app-nav-index-component.composable'
   import type { AppNavItemsComponentInput } from '~/utils/domain/app/components/nav/items/app-nav-items-component.types'
 
-  const { items } = useAppNavComponent()
+  const { items } = useAppNavIndexComponent()
 
   const itemsComponentInput = {
     items: items.value,

@@ -1,9 +1,8 @@
 import { usePageStore } from '~/utils/infrastructure/page/store/page-store.composable'
-import type { PageData } from '~/utils/shared/page/page.types'
-import { AppFakePageParameters, type AppFakePageDataQuery } from '../app-fake-page.types'
-import type { AppFakePageStoreModel } from './app-fake-page-store.types'
 import { HttpHeaderNames, type HttpRequestOptions } from '~/utils/shared/http/http.types'
 import { getAppFakePageService } from '../app-fake-page.service'
+import { AppFakePageParameters, type AppFakePageData, type AppFakePageDataQuery } from '../app-fake-page.types'
+import type { AppFakePageStoreModel } from './app-fake-page-store.types'
 
 const storeKey = 'app-fake-page'
 const storeUrl = '/api/app-fake-page-api'
@@ -19,13 +18,13 @@ export const useAppFakePageStore = (): AppFakePageStoreModel => {
   return {
     clickCount,
     pageKey,
-    click(): void {
+    incrementClickCount(): void {
       clickCount.value++
     },
     async load(dataQuery: AppFakePageDataQuery, options: HttpRequestOptions): Promise<void> {
-      pageKey.value = appFakePageService.createPageKey(dataQuery, options.locale)
+      const appFakePageKey = appFakePageService.createPageKey(dataQuery, options.locale)
 
-      pageStoreModel.pageKey.value = pageKey.value
+      pageStoreModel.pageKey.value = appFakePageKey
 
       const query = {
         [AppFakePageParameters.id.name]: dataQuery.id,
@@ -36,11 +35,13 @@ export const useAppFakePageStore = (): AppFakePageStoreModel => {
         [HttpHeaderNames.locale]: options.locale
       }
 
-      const res = await useFetch<PageData>(storeUrl, { query, headers, key: pageKey.value })
+      const res = await useFetch<AppFakePageData>(storeUrl, { query, headers, key: appFakePageKey })
 
       const value = res.data.value!
 
       pageStoreModel.pageTitle.value = value.pageTitle
+
+      pageKey.value = appFakePageKey
     },
   }
 }

@@ -5,7 +5,3 @@ export interface AppNavComponentItem {
   text: string;
   url: string;
 }
-
-export interface AppNavComponentModel {
-  readonly items: globalThis.Ref<AppNavComponentItem[]>
-}

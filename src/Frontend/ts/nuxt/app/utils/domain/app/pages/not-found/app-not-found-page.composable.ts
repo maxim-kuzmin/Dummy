@@ -1,21 +1,13 @@
-import { usePageStore } from '~/utils/infrastructure/page/store/page-store.composable'
-import { useClientResources } from '~/utils/infrastructure/resources/client-resources.composable'
-import { getAppNotFoundPageService } from './app-not-found-page.service'
-import { useAppNotFoundPageResources } from './resources/app-not-found-page-resources.composable'
+import { useLanguage } from '~/utils/infrastructure/language/language.composable'
+import { useAppNotFoundPageStore } from './store/app-not-found-page-store.composable'
 
-export const useAppNotFoundPage = () => {
-  const resourcesModel = useClientResources()
-  const appNotFoundPageResourcesModel =
-    useAppNotFoundPageResources(resourcesModel)
-  const pageStoreModel = usePageStore()
+export const useAppNotFoundPage = (): void => {
+  const appNotFoundPageStoreModel = useAppNotFoundPageStore()
+  const languageModel = useLanguage()
 
-  const appNotFoundPageService = getAppNotFoundPageService()
+  watchEffect(async () => {
+    const locale = languageModel.getCurrentLanguage().code
 
-  watchEffect(load)
-
-  function load() {
-    pageStoreModel.pageKey.value = appNotFoundPageService.createPageKey()
-
-    pageStoreModel.pageTitle.value = appNotFoundPageResourcesModel.getTitle()
-  }
+    await appNotFoundPageStoreModel.load({ locale })
+  })
 }

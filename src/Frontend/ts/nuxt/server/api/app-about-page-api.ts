@@ -1,13 +1,13 @@
-import { getAppAboutPageService } from '~/utils/domain/app/pages/about/app-about-page.service'
-import type { PageData } from '~/utils/shared/page/page.types'
+import { useAppAboutPageResources } from '~/utils/domain/app/pages/about/resources/app-about-page-resources.composable'
+import type { AppAboutPageData } from '~/utils/domain/app/pages/about/app-about-page.types'
+import { useServerResources } from '~/utils/infrastructure/resources/server-resources.composable'
 
 export default defineEventHandler(async (event) => {
-  const t = await useTranslation(event)
+  const resourcesModel = await useServerResources(event)
 
-  const appAboutPageService = getAppAboutPageService()
+  const appAboutPageResourcesModel = useAppAboutPageResources(resourcesModel)
 
   return {
-    pageKey: appAboutPageService.createPageKey(),
-    pageTitle: t('app.pages.app-about-page.title')
-  } as PageData
+    pageTitle: appAboutPageResourcesModel.getTitle(),
+  } as AppAboutPageData
 })

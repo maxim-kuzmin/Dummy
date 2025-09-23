@@ -1,18 +1,12 @@
-import { usePageStore } from '~/utils/infrastructure/page/store/page-store.composable'
+import { useAppMainComponentStore } from './store/app-main-component-store.composable'
 import type { AppMainComponentModel } from './app-main-component.types'
 
-const storeKey = 'app-main-component'
-
 export const useAppMainComponent = (): AppMainComponentModel => {
-  const pageStoreModel = usePageStore()
+  const appMainComponentStoreModel = useAppMainComponentStore()
 
-  const title = useState(`${storeKey}.title`, () => '')
+  watchEffect(() => {
+    appMainComponentStoreModel.load()
+  })
 
-  watchEffect(load)
-
-  function load(): void {
-    title.value = pageStoreModel.pageTitle.value
-  }
-
-  return { title }
+  return { ...appMainComponentStoreModel }
 }

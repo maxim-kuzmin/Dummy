@@ -1,14 +1,11 @@
-import type { CSSProperties } from 'vue'
+import type { LanguageCode } from '~/utils/shared/language/language.types'
+import type { AppLanguageComponentStoreData } from './store/app-language-component-store.types'
 
 export interface AppLanguageComponentItem {
-  code: 'ru' | 'en'
+  code: LanguageCode
   name: string
   selected: boolean
   url: string
 }
 
-export interface AppLanguageComponentModel {
-  readonly items: globalThis.Ref<AppLanguageComponentItem[]>
-  readonly menuStyle: globalThis.Ref<CSSProperties>
-  readonly title: globalThis.Ref<string>
-}
+export type AppLanguageComponentModel = AppLanguageComponentStoreData

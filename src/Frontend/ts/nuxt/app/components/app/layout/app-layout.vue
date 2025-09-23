@@ -1,7 +1,7 @@
 <template>
   <div class="app-layout">
     <AppHeader />
-    <AppNav />
+    <AppNavIndex />
     <AppMain><slot /></AppMain>
     <AppFooter />
   </div>

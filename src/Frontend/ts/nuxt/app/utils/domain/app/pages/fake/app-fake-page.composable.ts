@@ -11,9 +11,7 @@ export const useAppFakePage = (): AppFakePageModel => {
 
   const route = useRoute()
 
-  watchEffect(load)
-
-  async function load() {
+  watchEffect(async () => {
     const id = String(route.params[AppFakePageParameters.id.name])
 
     const locale = languageModel.getCurrentLanguage().code
@@ -24,7 +22,12 @@ export const useAppFakePage = (): AppFakePageModel => {
     )
 
     await appFakePageStoreModel.load({ id, pageNumber }, { locale })
-  }
+  })
 
-  return { ...appFakePageStoreModel }
+  return {
+    ...appFakePageStoreModel,
+    click(): void {
+      appFakePageStoreModel.incrementClickCount()
+    },
+  }
 }

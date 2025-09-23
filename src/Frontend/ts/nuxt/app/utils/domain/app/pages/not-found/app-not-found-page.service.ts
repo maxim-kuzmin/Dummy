@@ -1,6 +1,8 @@
+import type { LanguageCode } from "~/utils/shared/language/language.types"
+
 export class AppNotFoundPageService {
-  createPageKey(): string {
-    return 'NotFound'
+  createPageKey(languageCode: LanguageCode): string {
+    return `NotFound:${languageCode}`
   }
 }
 
