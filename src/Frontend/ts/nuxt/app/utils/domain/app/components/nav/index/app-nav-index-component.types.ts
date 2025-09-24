@@ -1,5 +1,3 @@
-import type { AppNavComponentItem } from "../app-nav-component.types";
+import type { AppNavIndexComponentStoreData } from './store/app-nav-index-component-store.types'
 
-export interface AppNavIndexComponentModel {
-  readonly items: globalThis.Ref<AppNavComponentItem[]>
-}
+export type AppNavIndexComponentModel = AppNavIndexComponentStoreData

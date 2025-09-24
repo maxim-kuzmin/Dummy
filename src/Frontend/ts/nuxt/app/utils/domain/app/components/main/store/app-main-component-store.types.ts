@@ -1,5 +1,5 @@
 export interface AppMainComponentStoreData {
-  readonly title: globalThis.Ref<string>
+  readonly title: Readonly<Ref<string>>
 }
 
 export interface AppMainComponentStoreModel extends AppMainComponentStoreData {

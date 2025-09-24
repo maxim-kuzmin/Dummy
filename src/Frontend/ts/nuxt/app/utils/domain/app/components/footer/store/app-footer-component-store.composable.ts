@@ -13,7 +13,7 @@ export const useAppFooterComponentStore = (): AppFooterComponentStoreModel => {
   const title = useState(`${storeKey}.title`, () => '')
 
   return {
-    title,
+    title: readonly(title),
     load(): void {
       title.value = appFooterComponentResourcesModel.getTitle()
     },

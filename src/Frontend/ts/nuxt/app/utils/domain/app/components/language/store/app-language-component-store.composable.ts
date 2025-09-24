@@ -22,9 +22,9 @@ export const useAppLanguageComponentStore =
     const title = useState(`${storeKey}.title`, () => '')
 
     return {
-      items,
-      menuStyle,
-      title,
+      items: readonly(items) as Readonly<Ref<AppLanguageComponentItem[]>>,
+      menuStyle: readonly(menuStyle),
+      title: readonly(title),
       load(isMenuOpen: boolean): void {
         const currentLanguage = languageModel.getCurrentLanguage()
 

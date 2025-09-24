@@ -9,7 +9,7 @@ export const useAppMainComponentStore = (): AppMainComponentStoreModel => {
   const title = useState(`${storeKey}.title`, () => '')
 
   return {
-    title,
+    title: readonly(title),
     load(): void {
       title.value = pageStoreModel.pageTitle.value
     },

@@ -2,9 +2,9 @@ import type { CSSProperties } from 'vue'
 import type { AppLanguageComponentItem } from '../app-language-component.types'
 
 export interface AppLanguageComponentStoreData {
-  readonly items: globalThis.Ref<AppLanguageComponentItem[]>
-  readonly menuStyle: globalThis.Ref<CSSProperties>
-  readonly title: globalThis.Ref<string>
+  readonly items: Readonly<Ref<AppLanguageComponentItem[]>>
+  readonly menuStyle: Readonly<Ref<CSSProperties>>
+  readonly title: Readonly<Ref<string>>
 }
 
 export interface AppLanguageComponentStoreModel

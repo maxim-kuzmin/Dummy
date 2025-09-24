@@ -1,10 +1,10 @@
 import { getAppAboutPageService } from '~/utils/domain/app/pages/about/app-about-page.service'
+import type { AppFakePageApiDataQuery } from '~/utils/domain/app/pages/fake/api/app-fake-page-api.types'
 import { getAppFakePageService } from '~/utils/domain/app/pages/fake/app-fake-page.service'
 import { useLanguage } from '~/utils/infrastructure/language/language.composable'
 import { usePageUrl } from '~/utils/infrastructure/page/url/page-url.composable'
 import { usePageStore } from '~/utils/infrastructure/page/store/page-store.composable'
 import { useClientResources } from '~/utils/infrastructure/resources/client-resources.composable'
-import type { AppFakePageDataQuery } from '~/utils/domain/app/pages/fake/app-fake-page.types'
 import { useAppAboutPageResources } from '~/utils/domain/app/pages/about/resources/app-about-page-resources.composable'
 import type { AppNavComponentItem } from '../../app-nav-component.types'
 import type { AppNavIndexComponentStoreModel } from './app-nav-index-component-store.types'
@@ -71,7 +71,7 @@ export const useAppNavIndexComponentStore =
       text: string,
       children: AppNavComponentItem[] = [],
     ): AppNavComponentItem {
-      const dataQuery = { id: text, pageNumber: 1 } as AppFakePageDataQuery
+      const dataQuery = { id: text, pageNumber: 1 } as AppFakePageApiDataQuery
 
       const key = appFakePageService.createPageKey(dataQuery, languageCode)
 
@@ -81,7 +81,7 @@ export const useAppNavIndexComponentStore =
     }
 
     function createItemForFakePageByDataQuery(
-      dataQuery: AppFakePageDataQuery,
+      dataQuery: AppFakePageApiDataQuery,
       children: AppNavComponentItem[] = [],
     ): AppNavComponentItem {
       const key = appFakePageService.createPageKey(dataQuery, languageCode)
@@ -117,7 +117,7 @@ export const useAppNavIndexComponentStore =
     // }
 
     return {
-      items,
+      items: readonly(items) as Readonly<Ref<AppNavComponentItem[]>>,
       load():void {
         items.value = createFakeItems()
       },

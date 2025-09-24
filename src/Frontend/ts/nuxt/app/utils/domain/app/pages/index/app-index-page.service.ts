@@ -1,4 +1,4 @@
-import type { UrlOptions } from '~/utils/infrastructure/page/url/page-url.types'
+import type { PageUrlOptions } from '~/utils/infrastructure/page/url/page-url.types'
 import type { LanguageCode } from '~/utils/shared/language/language.types'
 
 export class AppIndexPageService {
@@ -6,7 +6,7 @@ export class AppIndexPageService {
     return `Index:${languageCode}`
   }
 
-  createPageUrlOptions(): UrlOptions {
+  createPageUrlOptions(): PageUrlOptions {
     return {
       routeName: 'index',
     }

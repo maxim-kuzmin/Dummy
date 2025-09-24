@@ -1,26 +1,16 @@
-import { AppFakePageParameters } from '~/utils/domain/app/pages/fake/app-fake-page.types'
+import type { RouteLocationNormalizedGeneric } from 'vue-router'
+import { getAppFakePageApiService } from '~/utils/domain/app/pages/fake/api/app-fake-page-api.service'
 import { useAppFakePageStore } from '~/utils/domain/app/pages/fake/store/app-fake-page-store.composable'
 import { getLanguageService } from '~/utils/infrastructure/language/language.service'
 
-export default defineNuxtRouteMiddleware(async (to) => {
+export default defineNuxtRouteMiddleware(async (to: RouteLocationNormalizedGeneric) => {
   const appFakePageStoreModel = useAppFakePageStore()
 
+  const appFakePageApiService = getAppFakePageApiService()
   const languageService = getLanguageService()
 
-  const routeParams = to.params
-  const queryParams = to.query
-
-  const id = String(
-    routeParams[AppFakePageParameters.id.name] ??
-      AppFakePageParameters.id.defaultValue,
-  )
-
+  const dataQuery = appFakePageApiService.getDataQueryFromRouteLocation(to)
   const locale = languageService.getLanguageCodeFromPath(to.path)
 
-  const pageNumber = Number(
-    queryParams[AppFakePageParameters.pageNumber.name] ??
-      AppFakePageParameters.pageNumber.defaultValue,
-  )
-
-  await appFakePageStoreModel.load({ id, pageNumber }, { locale })
+  await appFakePageStoreModel.load(dataQuery, { locale })
 })

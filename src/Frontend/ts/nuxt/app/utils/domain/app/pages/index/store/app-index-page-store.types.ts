@@ -1,5 +1,5 @@
-import type { HttpRequestOptions } from '~/utils/shared/http/http.types'
+import type { AppIndexPageApiDataOptions } from "../api/app-index-page-api.types";
 
 export interface AppIndexPageStoreModel {
-  load(options: HttpRequestOptions): Promise<void>
+  load(dataOptions: AppIndexPageApiDataOptions): Promise<void>
 }

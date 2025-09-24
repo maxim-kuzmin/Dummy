@@ -1,5 +1,5 @@
 export interface PageData {
-  readonly pageTitle: string
+  get pageTitle(): string
 }
 
 export class PageParameter<TDefaultValue> {

@@ -1,14 +1,17 @@
-import type { HttpRequestOptions } from '~/utils/shared/http/http.types'
-import type { AppFakePageDataQuery } from '../app-fake-page.types'
+import type {
+  AppFakePageApiDataOptions,
+  AppFakePageApiDataQuery,
+} from '../api/app-fake-page-api.types'
 
 export interface AppFakePageStoreData {
-  readonly clickCount: globalThis.Ref<number>
-  readonly pageKey: globalThis.Ref<string>
+  readonly clickCount: Readonly<Ref<number>>
+  readonly pageKey: Readonly<Ref<string>>
 }
 
 export interface AppFakePageStoreModel extends AppFakePageStoreData {
-  readonly clickCount: globalThis.Ref<number>
-  readonly pageKey: globalThis.Ref<string>
   incrementClickCount(): void
-  load(dataQuery: AppFakePageDataQuery, options: HttpRequestOptions): Promise<void>
+  load(
+    dataQuery: AppFakePageApiDataQuery,
+    dataOptions: AppFakePageApiDataOptions,
+  ): Promise<void>
 }

@@ -1,5 +1,5 @@
-import type { HttpRequestOptions } from '~/utils/shared/http/http.types'
+import type { AppNotFoundPageApiDataOptions } from '../api/app-not-found-page-api.types'
 
 export interface AppNotFoundPageStoreModel {
-  load(options: HttpRequestOptions): Promise<void>
+  load(dataOptions: AppNotFoundPageApiDataOptions): Promise<void>
 }

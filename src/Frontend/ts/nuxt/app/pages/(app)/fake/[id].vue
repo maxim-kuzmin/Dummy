@@ -5,7 +5,7 @@
     middleware: ['app-fake-page-middleware'],
   })
 
-  const { pageKey: pageKey, click, clickCount } = useAppFakePage()
+  const { pageKey, click, clickCount } = useAppFakePage()
 </script>
 
 <template>

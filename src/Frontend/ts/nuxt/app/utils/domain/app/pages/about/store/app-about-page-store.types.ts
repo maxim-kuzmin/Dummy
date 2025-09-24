@@ -1,5 +1,5 @@
-import type { HttpRequestOptions } from '~/utils/shared/http/http.types'
+import type { AppAboutPageApiDataOptions } from '../api/app-about-page-api.types'
 
 export interface AppAboutPageStoreModel {
-  load(options: HttpRequestOptions): Promise<void>
+  load(dataOptions: AppAboutPageApiDataOptions): Promise<void>
 }

@@ -18,8 +18,8 @@ export const useAppHeaderComponentStore = (): AppHeaderComponentStoreModel => {
   const indexPageUrl = useState(`${storeKey}.indexPageUrl`, () => '')
 
   return {
-    indexPageName,
-    indexPageUrl,
+    indexPageName: readonly(indexPageName),
+    indexPageUrl: readonly(indexPageUrl),
     load(): void {
       indexPageName.value = appHeaderComponentResourcesModel.getTitle()
 
