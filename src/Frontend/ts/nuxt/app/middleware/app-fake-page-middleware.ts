@@ -9,7 +9,7 @@ export default defineNuxtRouteMiddleware(async (to: RouteLocationNormalizedGener
   const appFakePageApiService = getAppFakePageApiService()
   const languageService = getLanguageService()
 
-  const dataQuery = appFakePageApiService.getDataQueryFromRouteLocation(to)
+  const dataQuery = appFakePageApiService.getDataQueryFromRoute(to)
   const locale = languageService.getLanguageCodeFromPath(to.path)
 
   await appFakePageStoreModel.load(dataQuery, { locale })

@@ -1,11 +1,7 @@
 <script setup lang="ts">
-  import { useAppIndexPage } from '~/utils/domain/app/pages/index/app-index-page.composable'
-
   definePageMeta({
     middleware: ['app-index-page-middleware'],
   })
-
-  useAppIndexPage()
 </script>
 
 <template>

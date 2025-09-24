@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
   const appFakePageResourcesModel = useAppFakePageResources(resourcesModel)
   const appFakePageApiService = getAppFakePageApiService()
 
-  const dataQuery = appFakePageApiService.getDataQueryFromH3Event(event)
+  const dataQuery = appFakePageApiService.getDataQueryFromRequest(event)
 
   return {
     pageTitle: appFakePageResourcesModel.getTitle(dataQuery.id, dataQuery.pageNumber),

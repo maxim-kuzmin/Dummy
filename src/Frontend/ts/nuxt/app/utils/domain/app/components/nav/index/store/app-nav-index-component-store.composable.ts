@@ -6,6 +6,7 @@ import { usePageUrl } from '~/utils/infrastructure/page/url/page-url.composable'
 import { usePageStore } from '~/utils/infrastructure/page/store/page-store.composable'
 import { useClientResources } from '~/utils/infrastructure/resources/client-resources.composable'
 import { useAppAboutPageResources } from '~/utils/domain/app/pages/about/resources/app-about-page-resources.composable'
+import { useAppFakePageResources } from '~/utils/domain/app/pages/fake/resources/app-fake-page-resources.composable'
 import type { AppNavComponentItem } from '../../app-nav-component.types'
 import type { AppNavIndexComponentStoreModel } from './app-nav-index-component-store.types'
 
@@ -15,6 +16,7 @@ export const useAppNavIndexComponentStore =
   (): AppNavIndexComponentStoreModel => {
     const resourcesModel = useClientResources()
     const appAboutPageResourcesModel = useAppAboutPageResources(resourcesModel)
+    const appFakePageResourcesModel = useAppFakePageResources(resourcesModel)
     const languageModel = useLanguage()
     const pageStoreModel = usePageStore()
 
@@ -23,7 +25,7 @@ export const useAppNavIndexComponentStore =
 
     const items = useState<AppNavComponentItem[]>(`${storeKey}.items`, () => [])
 
-    const languageCode = languageModel.getCurrentLanguage().code
+    const languageCode = computed(() => languageModel.getCurrentLanguage().code)
 
     function createFakeItems(): AppNavComponentItem[] {
       return [
@@ -60,7 +62,7 @@ export const useAppNavIndexComponentStore =
     function createItemForAboutPage(): AppNavComponentItem {
       const text = appAboutPageResourcesModel.getTitle()
 
-      const key = appAboutPageService.createPageKey(languageCode)
+      const key = appAboutPageService.createPageKey(languageCode.value)
 
       const url = usePageUrl(appAboutPageService.createPageUrlOptions())
 
@@ -68,12 +70,17 @@ export const useAppNavIndexComponentStore =
     }
 
     function createItemForFakePage(
-      text: string,
+      id: string,
       children: AppNavComponentItem[] = [],
     ): AppNavComponentItem {
-      const dataQuery = { id: text, pageNumber: 1 } as AppFakePageApiDataQuery
+      const text = appFakePageResourcesModel.getTitle(id, 1)
 
-      const key = appFakePageService.createPageKey(dataQuery, languageCode)
+      const dataQuery = { id: id, pageNumber: 1 } as AppFakePageApiDataQuery
+
+      const key = appFakePageService.createPageKey(
+        dataQuery,
+        languageCode.value,
+      )
 
       const url = usePageUrl(appFakePageService.createPageUrlOptions(dataQuery))
 
@@ -84,11 +91,19 @@ export const useAppNavIndexComponentStore =
       dataQuery: AppFakePageApiDataQuery,
       children: AppNavComponentItem[] = [],
     ): AppNavComponentItem {
-      const key = appFakePageService.createPageKey(dataQuery, languageCode)
+      const text = appFakePageResourcesModel.getTitle(
+        dataQuery.id,
+        dataQuery.pageNumber,
+      )
+
+      const key = appFakePageService.createPageKey(
+        dataQuery,
+        languageCode.value,
+      )
 
       const url = usePageUrl(appFakePageService.createPageUrlOptions(dataQuery))
 
-      return createItem(key, url, key, children)
+      return createItem(key, url, text, children)
     }
 
     function createItem(
@@ -99,27 +114,17 @@ export const useAppNavIndexComponentStore =
     ): AppNavComponentItem {
       return {
         key,
-        text,
-        url,
-        children,
-        selected: key === pageStoreModel.pageKey.value,
-      } as AppNavComponentItem
+        text: ref(text),
+        url: ref(url),
+        children: ref(children),
+        selected: computed(() => key === pageStoreModel.pageKey.value),
+      } as unknown as AppNavComponentItem
     }
-
-    // function selectItem(pageKey: string, items: AppNavComponentItem[]) {
-    //   items.forEach(item => {
-    //     item.selected = item.key === pageKey
-
-    //     if (item.children.length > 0) {
-    //       selectItem(pageKey, item.children)
-    //     }
-    //   });
-    // }
 
     return {
-      items: readonly(items) as Readonly<Ref<AppNavComponentItem[]>>,
-      load():void {
+      items: readonly(items),
+      load(): void {
         items.value = createFakeItems()
       },
-    }
+    } as AppNavIndexComponentStoreModel
   }

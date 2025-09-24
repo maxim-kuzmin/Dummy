@@ -2,7 +2,10 @@ import type { EventHandlerRequest, H3Event } from 'h3'
 import type { RouteLocationNormalizedGeneric } from 'vue-router'
 import { HttpHeaderNames } from '~/utils/shared/http/http.types'
 import { AppFakePageParameters } from '../app-fake-page.types'
-import type { AppFakePageApiDataOptions, AppFakePageApiDataQuery } from './app-fake-page-api.types'
+import type {
+  AppFakePageApiDataOptions,
+  AppFakePageApiDataQuery,
+} from './app-fake-page-api.types'
 
 export class AppFakePageApiService {
   createFetchOptions(
@@ -22,7 +25,7 @@ export class AppFakePageApiService {
     }
   }
 
-  getDataQueryFromH3Event(
+  getDataQueryFromRequest(
     event: H3Event<EventHandlerRequest>,
   ): AppFakePageApiDataQuery {
     const queryParams = getQuery(event)
@@ -39,11 +42,11 @@ export class AppFakePageApiService {
     }
   }
 
-  getDataQueryFromRouteLocation(
-    routeLocation: RouteLocationNormalizedGeneric,
+  getDataQueryFromRoute(
+    route: RouteLocationNormalizedGeneric,
   ): AppFakePageApiDataQuery {
-    const routeParams = routeLocation.params
-    const queryParams = routeLocation.query
+    const routeParams = route.params
+    const queryParams = route.query
 
     return {
       id: String(

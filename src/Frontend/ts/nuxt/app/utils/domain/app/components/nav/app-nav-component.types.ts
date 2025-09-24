@@ -1,7 +1,7 @@
 export interface AppNavComponentItem {
-  children: AppNavComponentItem[];
+  children: Ref<AppNavComponentItem[]>;
   key: string;
-  selected: boolean;
-  text: string;
-  url: string;
+  selected: Ref<boolean>;
+  text: Ref<string>;
+  url: Ref<string>;
 }

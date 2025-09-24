@@ -7,7 +7,11 @@ export interface AppLanguageComponentStoreData {
   readonly title: Readonly<Ref<string>>
 }
 
+export interface AppLanguageComponentStoreDataQuery {
+  readonly isMenuOpen: boolean
+}
+
 export interface AppLanguageComponentStoreModel
   extends AppLanguageComponentStoreData {
-  load(isMenuOpen: boolean): void
+  load(dataQuery: AppLanguageComponentStoreDataQuery): void
 }

@@ -11,7 +11,7 @@ import {
 } from '~/utils/shared/language/language.types'
 
 export class LanguageService {
-  getLanguageCodeFromH3Event(
+  getLanguageCodeFromRequest(
     event: H3Event<EventHandlerRequest>,
   ): LanguageCode {
     const query = tryQueryLocale(event, {

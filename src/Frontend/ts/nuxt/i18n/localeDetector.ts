@@ -3,5 +3,5 @@ import { getLanguageService } from "~/utils/infrastructure/language/language.ser
 export default defineI18nLocaleDetector((event) => {
   const languageService = getLanguageService()
 
-  return languageService.getLanguageCodeFromH3Event(event)
+  return languageService.getLanguageCodeFromRequest(event)
 })
