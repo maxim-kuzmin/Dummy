@@ -13,7 +13,3 @@ export const HttpParameterNames = {
   locale: 'locale',
   pageNumber: 'pn',
 } as const;
-
-export interface HttpRequestOptions {
-  locale: LanguageCode;
-}

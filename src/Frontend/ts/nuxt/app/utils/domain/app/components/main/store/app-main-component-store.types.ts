@@ -1,7 +1,4 @@
-export interface AppMainComponentStoreData {
+export interface AppMainComponentStoreModel {
   readonly title: Readonly<Ref<string>>
-}
-
-export interface AppMainComponentStoreModel extends AppMainComponentStoreData {
   load(): void
 }

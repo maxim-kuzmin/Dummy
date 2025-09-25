@@ -1,8 +1,7 @@
 import { useLanguage } from '~/utils/infrastructure/language/language.composable'
-import type { AppLanguageComponentModel } from './app-language-component.types'
 import { useAppLanguageComponentStore } from './store/app-language-component-store.composable'
 
-export const useAppLanguageComponent = (): AppLanguageComponentModel => {
+export const useAppLanguageComponent = (): void => {
   const appLanguageComponentStoreModel = useAppLanguageComponentStore()
   const languageModel = useLanguage()
 
@@ -47,6 +46,4 @@ export const useAppLanguageComponent = (): AppLanguageComponentModel => {
       isMenuOpen.value = false
     }
   }
-
-  return { ...appLanguageComponentStoreModel }
 }

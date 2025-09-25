@@ -5,9 +5,12 @@ import { ResourcesService } from '~/utils/infrastructure/resources/resources.ser
   providedIn: 'root',
 })
 export class AppFakePageResourcesService {
-  private readonly resourcesService = inject(ResourcesService)
+  private readonly resourcesService = inject(ResourcesService);
 
-  getTitle(id: string) {
-    return this.resourcesService.translate('app.pages.app-fake-page.title', {id: `{${id}}`});
+  getTitle(id: string, pageNumber: number): string {
+    return this.resourcesService.translate('app.pages.app-fake-page.title', {
+      id: `{${id}}`,
+      pageNumber,
+    });
   }
 }

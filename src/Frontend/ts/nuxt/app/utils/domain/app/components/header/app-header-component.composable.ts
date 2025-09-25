@@ -1,8 +1,7 @@
 import { useLanguage } from '~/utils/infrastructure/language/language.composable'
 import { useAppHeaderComponentStore } from './store/app-header-component-store.composable'
-import type { AppHeaderComponentModel } from './app-header-component.types'
 
-export const useAppHeaderComponent = (): AppHeaderComponentModel => {
+export const useAppHeaderComponent = (): void => {
   const appHeaderComponentStoreModel = useAppHeaderComponentStore()
   const languageModel = useLanguage()
 
@@ -15,6 +14,4 @@ export const useAppHeaderComponent = (): AppHeaderComponentModel => {
     },
     { immediate: true },
   )
-
-  return { ...appHeaderComponentStoreModel }
 }

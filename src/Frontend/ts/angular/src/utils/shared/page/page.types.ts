@@ -1,9 +1,7 @@
-import { LanguageCode } from "../language/language.types";
-
-export interface PageDataQuery {
-  readonly locale: LanguageCode
+export interface PageData {
+  readonly pageTitle: string;
 }
 
 export class PageParameter<TDefaultValue> {
-  constructor(public name: string, public defaultValue: TDefaultValue){}
+  constructor(public name: string, public defaultValue: TDefaultValue) {}
 }

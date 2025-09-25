@@ -1,21 +1,14 @@
 import { inject } from '@angular/core';
-import { PageStoreService } from '~/utils/infrastructure/page/store/page-store.service';
-import { AppAboutPageResourcesService } from './resources/app-about-page-resources.service';
-import { AppAboutPageService } from './app-about-page.service';
+import { LanguageService } from '~/utils/infrastructure/language/language.service';
+import { AppAboutPageStoreService } from './store/app-about-page-store.service';
 
 export class AppAboutPageModel {
-  private readonly appAboutPageResourcesService = inject(
-    AppAboutPageResourcesService
-  );
-
-  private readonly appAboutPageService = inject(AppAboutPageService);
-  private readonly pageStoreService = inject(PageStoreService);
+  private readonly appAboutPageStoreService = inject(AppAboutPageStoreService);
+  private readonly languageService = inject(LanguageService);
 
   load(): void {
-    this.pageStoreService.pageKey.set(this.appAboutPageService.createPageKey());
+    const locale = this.languageService.getCurrentLanguage().code;
 
-    this.pageStoreService.pageTitle.set(
-      this.appAboutPageResourcesService.getTitle()
-    );
+    this.appAboutPageStoreService.load({ locale });
   }
 }

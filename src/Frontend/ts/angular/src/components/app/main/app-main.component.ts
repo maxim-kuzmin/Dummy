@@ -1,4 +1,5 @@
 import { Component, effect, inject } from '@angular/core';
+import { AppMainComponentStoreService } from '~/utils/domain/app/components/main/store/app-main-component-store.service';
 import { AppMainComponentModel } from '~/utils/domain/app/components/main/app-main-component.model';
 
 @Component({
@@ -7,15 +8,20 @@ import { AppMainComponentModel } from '~/utils/domain/app/components/main/app-ma
   providers: [AppMainComponentModel],
 })
 export class AppMain {
-  private readonly model = inject(AppMainComponentModel, { self: true });
+  private readonly appMainComponentModel = inject(AppMainComponentModel, {
+    self: true,
+  });
+  private readonly appMainComponentStoreService = inject(
+    AppMainComponentStoreService
+  );
 
   protected get title(): string {
-    return this.model.title();
+    return this.appMainComponentStoreService.title();
   }
 
   constructor() {
     effect(() => {
-      this.model.load();
+      this.appMainComponentModel.load();
     });
   }
 }

@@ -1,26 +1,28 @@
 import { Injectable } from '@angular/core';
 import {
-  AppFakePageDataQuery,
-  appFakePageParameters,
-} from './app-fake-page.types';
-import {
   PageUrlOptions,
   PageUrlQueryParams,
 } from '~/utils/infrastructure/page/url/page-url.types';
+import { LanguageCode } from '~/utils/shared/language/language.types';
+import { AppFakePageParameters } from './app-fake-page.types';
+import { AppFakePageApiDataQuery } from './api/app-fake-page-api.types';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AppFakePageService {
-  createPageKey(dataQuery: AppFakePageDataQuery): string {
-    return `Fake:${dataQuery.locale},${dataQuery.id},${dataQuery.pageNumber}`;
+  createPageKey(
+    dataQuery: AppFakePageApiDataQuery,
+    languageCode: LanguageCode
+  ): string {
+    return `Fake:${languageCode},${dataQuery.id},${dataQuery.pageNumber}`;
   }
 
-  createPageUrlOptions(dataQuery: AppFakePageDataQuery): PageUrlOptions {
+  createPageUrlOptions(dataQuery: AppFakePageApiDataQuery): PageUrlOptions {
     const queryParams = {} as PageUrlQueryParams;
 
-    if (dataQuery.pageNumber > appFakePageParameters.pageNumber.defaultValue) {
-      queryParams[appFakePageParameters.pageNumber.name] = dataQuery.pageNumber;
+    if (dataQuery.pageNumber > AppFakePageParameters.pageNumber.defaultValue) {
+      queryParams[AppFakePageParameters.pageNumber.name] = dataQuery.pageNumber;
     }
 
     return {

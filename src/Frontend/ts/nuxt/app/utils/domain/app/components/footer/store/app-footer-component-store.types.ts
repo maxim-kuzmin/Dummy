@@ -1,7 +1,4 @@
-export interface AppFooterComponentStoreData {
+export interface AppFooterComponentStoreModel {
   readonly title: Readonly<Ref<string>>
-}
-
-export interface AppFooterComponentStoreModel extends AppFooterComponentStoreData {
   load(): void
 }

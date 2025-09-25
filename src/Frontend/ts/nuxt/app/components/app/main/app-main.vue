@@ -1,7 +1,10 @@
 <script setup lang="ts">
-import { useAppMainComponent } from '~/utils/domain/app/components/main/app-main-component.composable';
+  import { useAppMainComponentStore } from '~/utils/domain/app/components/main/store/app-main-component-store.composable'
+  import { useAppMainComponent } from '~/utils/domain/app/components/main/app-main-component.composable'
 
-const { title } = useAppMainComponent();
+  useAppMainComponent()
+
+  const { title } = useAppMainComponentStore()
 </script>
 
 <template>

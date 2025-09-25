@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
+import { LanguageCode } from '~/utils/shared/language/language.types';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AppNotFoundPageService {
-  createPageKey(): string {
-    return 'NotFound';
+  createPageKey(languageCode: LanguageCode): string {
+    return `NotFound:${languageCode}`
   }
 }

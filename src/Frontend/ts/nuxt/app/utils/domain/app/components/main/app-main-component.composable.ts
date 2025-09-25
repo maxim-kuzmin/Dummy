@@ -1,8 +1,7 @@
 import { usePageStore } from '~/utils/infrastructure/page/store/page-store.composable'
 import { useAppMainComponentStore } from './store/app-main-component-store.composable'
-import type { AppMainComponentModel } from './app-main-component.types'
 
-export const useAppMainComponent = (): AppMainComponentModel => {
+export const useAppMainComponent = (): void => {
   const appMainComponentStoreModel = useAppMainComponentStore()
   const pageStoreModel = usePageStore()
 
@@ -13,6 +12,4 @@ export const useAppMainComponent = (): AppMainComponentModel => {
     },
     { immediate: true },
   )
-
-  return { ...appMainComponentStoreModel }
 }

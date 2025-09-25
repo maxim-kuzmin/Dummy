@@ -7,11 +7,13 @@ import { AppNotFoundPageModel } from '~/utils/domain/app/pages/not-found/app-not
   providers: [AppNotFoundPageModel],
 })
 export class AppNotFoundPage {
-  private model = inject(AppNotFoundPageModel, { self: true });
+  private readonly appNotFoundPageModel = inject(AppNotFoundPageModel, {
+    self: true,
+  });
 
   constructor() {
     effect(() => {
-      this.model.load();
+      this.appNotFoundPageModel.load();
     });
   }
 }

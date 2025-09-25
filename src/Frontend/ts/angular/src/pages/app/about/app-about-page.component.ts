@@ -7,11 +7,13 @@ import { AppAboutPageModel } from '~/utils/domain/app/pages/about/app-about-page
   providers: [AppAboutPageModel],
 })
 export class AppAboutPage {
-  private model = inject(AppAboutPageModel, { self: true });
+  private readonly appAboutPageModel = inject(AppAboutPageModel, {
+    self: true,
+  });
 
   constructor() {
     effect(() => {
-      this.model.load();
+      this.appAboutPageModel.load();
     });
   }
 }

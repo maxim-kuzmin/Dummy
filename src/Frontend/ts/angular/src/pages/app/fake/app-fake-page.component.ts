@@ -1,4 +1,5 @@
 import { Component, effect, inject } from '@angular/core';
+import { AppFakePageStoreService } from '~/utils/domain/app/pages/fake/store/app-fake-page-store.service';
 import { AppFakePageModel } from '~/utils/domain/app/pages/fake/app-fake-page.model';
 
 @Component({
@@ -7,23 +8,24 @@ import { AppFakePageModel } from '~/utils/domain/app/pages/fake/app-fake-page.mo
   providers: [AppFakePageModel],
 })
 export class AppFakePage {
-  private model = inject(AppFakePageModel, { self: true });
+  private readonly appFakePageModel = inject(AppFakePageModel, { self: true });
+  private readonly appFakePageStoreService = inject(AppFakePageStoreService);
 
   protected get clickCount(): number {
-    return this.model.clickCount();
+    return this.appFakePageStoreService.clickCount();
   }
 
   protected get pageKey(): string {
-    return this.model.pageKey();
+    return this.appFakePageStoreService.pageKey();
   }
 
   protected click(): void {
-    this.model.click();
+    this.appFakePageStoreService.incrementClickCount();
   }
 
   constructor() {
     effect(() => {
-      this.model.load();
+      this.appFakePageModel.load();
     });
   }
 }

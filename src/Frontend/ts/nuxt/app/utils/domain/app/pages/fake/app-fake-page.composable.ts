@@ -5,7 +5,6 @@ export const useAppFakePage = (): AppFakePageModel => {
   const appFakePageStoreModel = useAppFakePageStore()
 
   return {
-    ...appFakePageStoreModel,
     click(): void {
       appFakePageStoreModel.incrementClickCount()
     },

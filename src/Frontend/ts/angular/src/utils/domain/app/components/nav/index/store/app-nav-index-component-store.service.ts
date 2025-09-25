@@ -1,34 +1,47 @@
-import { inject, signal } from '@angular/core';
+import { inject, Injectable, Signal, signal } from '@angular/core';
 import { UrlTree } from '@angular/router';
+import { AppAboutPageResourcesService } from '~/utils/domain/app/pages/about/resources/app-about-page-resources.service';
+import { AppAboutPageService } from '~/utils/domain/app/pages/about/app-about-page.service';
+import { AppFakePageApiDataQuery } from '~/utils/domain/app/pages/fake/api/app-fake-page-api.types';
+import { AppFakePageResourcesService } from '~/utils/domain/app/pages/fake/resources/app-fake-page-resources.service';
+import { AppFakePageService } from '~/utils/domain/app/pages/fake/app-fake-page.service';
+import { LanguageService } from '~/utils/infrastructure/language/language.service';
 import { PageStoreService } from '~/utils/infrastructure/page/store/page-store.service';
 import { PageUrlService } from '~/utils/infrastructure/page/url/page-url.service';
-import { LanguageService } from '~/utils/infrastructure/language/language.service';
-import { AppAboutPageService } from '~/utils/domain/app/pages/about/app-about-page.service';
-import { AppFakePageService } from '~/utils/domain/app/pages/fake/app-fake-page.service';
-import { AppFakePageDataQuery } from '~/utils/domain/app/pages/fake/app-fake-page.types';
-import { AppNavComponentItem } from './app-nav-component.types';
+import { AppNavComponentItem } from '../../app-nav-component.types';
 
-export class AppNavComponentModel {
+@Injectable({
+  providedIn: 'root',
+})
+export class AppNavIndexComponentStoreService {
+  private readonly appAboutPageResourcesService = inject(
+    AppAboutPageResourcesService
+  );
   private readonly appAboutPageService = inject(AppAboutPageService);
+  private readonly appFakePageResourcesService = inject(
+    AppFakePageResourcesService
+  );
   private readonly appFakePageService = inject(AppFakePageService);
   private readonly languageService = inject(LanguageService);
   private readonly pageStoreService = inject(PageStoreService);
   private readonly pageUrlService = inject(PageUrlService);
 
-  readonly items = signal<AppNavComponentItem[]>([]);
+  private readonly _items = signal<AppNavComponentItem[]>([]);
+
+  get items(): Signal<AppNavComponentItem[]> {
+    return this._items;
+  }
 
   load(): void {
-    this.items.set(this.createFakeItems());
+    this._items.set(this.createFakeItems());
   }
 
   private createFakeItems(): AppNavComponentItem[] {
-    const locale = this.languageService.getCurrentLanguage().code;
-
     return [
       this.createItemForAboutPage(),
-      this.createItemForFakePageByDataQuery({ id: '1', locale, pageNumber: 1 }),
-      this.createItemForFakePageByDataQuery({ id: '1', locale, pageNumber: 2 }),
-      this.createItemForFakePageByDataQuery({ id: '2', locale, pageNumber: 1 }),
+      this.createItemForFakePageByDataQuery({ id: '1', pageNumber: 1 }),
+      this.createItemForFakePageByDataQuery({ id: '1', pageNumber: 2 }),
+      this.createItemForFakePageByDataQuery({ id: '2', pageNumber: 1 }),
       this.createItemForFakePage('11111', [
         this.createItemForFakePage('11111-1'),
         this.createItemForFakePage('11111-2'),
@@ -56,9 +69,11 @@ export class AppNavComponentModel {
   }
 
   private createItemForAboutPage(): AppNavComponentItem {
-    const text = $localize`:@@app.pages.app-about-page.title:@@`;
+    const text = this.appAboutPageResourcesService.getTitle();
 
-    const key = this.appAboutPageService.createPageKey();
+    const languageCode = this.languageService.getCurrentLanguage().code;
+
+    const key = this.appAboutPageService.createPageKey(languageCode);
 
     const urlTree = this.pageUrlService.createUrlTree(
       this.appAboutPageService.createPageUrlOptions()
@@ -68,18 +83,16 @@ export class AppNavComponentModel {
   }
 
   private createItemForFakePage(
-    text: string,
+    id: string,
     children: AppNavComponentItem[] = []
   ): AppNavComponentItem {
-    const locale = this.languageService.getCurrentLanguage().code;
+    const text = this.appFakePageResourcesService.getTitle(id, 1);
 
-    const dataQuery = {
-      id: text,
-      locale,
-      pageNumber: 1,
-    } as AppFakePageDataQuery;
+    const languageCode = this.languageService.getCurrentLanguage().code;
 
-    const key = this.appFakePageService.createPageKey(dataQuery);
+    const dataQuery = { id: id, pageNumber: 1 } as AppFakePageApiDataQuery;
+
+    const key = this.appFakePageService.createPageKey(dataQuery, languageCode);
 
     const urlTree = this.pageUrlService.createUrlTree(
       this.appFakePageService.createPageUrlOptions(dataQuery)
@@ -89,15 +102,23 @@ export class AppNavComponentModel {
   }
 
   private createItemForFakePageByDataQuery(
-    dataQuery: AppFakePageDataQuery,
+    dataQuery: AppFakePageApiDataQuery,
     children: AppNavComponentItem[] = []
   ): AppNavComponentItem {
-    const key = this.appFakePageService.createPageKey(dataQuery);
+    const text = this.appFakePageResourcesService.getTitle(
+      dataQuery.id,
+      dataQuery.pageNumber
+    );
+
+    const languageCode = this.languageService.getCurrentLanguage().code;
+
+    const key = this.appFakePageService.createPageKey(dataQuery, languageCode);
+
     const urlTree = this.pageUrlService.createUrlTree(
       this.appFakePageService.createPageUrlOptions(dataQuery)
     );
 
-    return this.createItem(key, urlTree, key, children);
+    return this.createItem(key, urlTree, text, children);
   }
 
   private createItem(

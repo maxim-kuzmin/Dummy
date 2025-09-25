@@ -1,8 +1,7 @@
 import { usePageStore } from '~/utils/infrastructure/page/store/page-store.composable'
 import { useAppNavIndexComponentStore } from './store/app-nav-index-component-store.composable'
-import type { AppNavIndexComponentModel } from './app-nav-index-component.types'
 
-export const useAppNavIndexComponent = (): AppNavIndexComponentModel => {
+export const useAppNavIndexComponent = (): void => {
   const appNavIndexComponentStoreModel = useAppNavIndexComponentStore()
   const pageStoreModel = usePageStore()
 
@@ -13,6 +12,4 @@ export const useAppNavIndexComponent = (): AppNavIndexComponentModel => {
     },
     { immediate: true },
   )
-
-  return { ...appNavIndexComponentStoreModel }
 }

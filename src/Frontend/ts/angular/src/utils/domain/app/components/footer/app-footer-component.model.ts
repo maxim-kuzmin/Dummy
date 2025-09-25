@@ -1,14 +1,12 @@
 import { inject } from '@angular/core';
-import { AppFooterComponentResourcesService } from './resources/app-footer-component-resources.service';
+import { AppFooterComponentStoreService } from './store/app-footer-component-store.service';
 
 export class AppFooterComponentModel {
-  private readonly appFooterComponentResourcesService = inject(
-    AppFooterComponentResourcesService
+  private readonly appFooterComponentStoreService = inject(
+    AppFooterComponentStoreService
   );
 
-  title = '';
-
-  load() {
-    this.title = this.appFooterComponentResourcesService.getTitle();
+  load(): void {
+    this.appFooterComponentStoreService.load();
   }
 }

@@ -7,11 +7,13 @@ import { AppIndexPageModel } from '~/utils/domain/app/pages/index/app-index-page
   providers: [AppIndexPageModel],
 })
 export class AppIndexPage {
-  private model = inject(AppIndexPageModel, { self: true });
+  private readonly appIndexPageModel = inject(AppIndexPageModel, {
+    self: true,
+  });
 
   constructor() {
     effect(() => {
-      this.model.load();
+      this.appIndexPageModel.load();
     });
   }
 }

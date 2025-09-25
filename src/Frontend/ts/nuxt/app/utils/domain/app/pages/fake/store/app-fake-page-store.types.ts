@@ -3,12 +3,9 @@ import type {
   AppFakePageApiDataQuery,
 } from '../api/app-fake-page-api.types'
 
-export interface AppFakePageStoreData {
+export interface AppFakePageStoreModel {
   readonly clickCount: Readonly<Ref<number>>
   readonly pageKey: Readonly<Ref<string>>
-}
-
-export interface AppFakePageStoreModel extends AppFakePageStoreData {
   incrementClickCount(): void
   load(
     dataQuery: AppFakePageApiDataQuery,

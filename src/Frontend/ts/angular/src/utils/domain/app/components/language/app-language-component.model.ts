@@ -1,12 +1,12 @@
 import { computed, ElementRef, inject, Signal, signal } from '@angular/core';
-import { LanguageService } from '~/utils/infrastructure/language/language.service';
-import { AppLanguageComponentItem, AppLanguageComponentMenuStyle } from './app-language-component.types';
 import { NavigationEnd, Router } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { languages } from '~/utils/shared/language/language.types';
+import { AppLanguageComponentStoreService } from './store/app-language-component-store.service';
 
 export class AppLanguageComponentModel {
-  private readonly languageService = inject(LanguageService);
+  private readonly appLanguageComponentStoreService = inject(
+    AppLanguageComponentStoreService
+  );
   private readonly router = inject(Router);
 
   private readonly isMenuOpen = signal(false);
@@ -23,10 +23,6 @@ export class AppLanguageComponentModel {
       ? routerEvent.url
       : '/';
   });
-
-  readonly items = signal<AppLanguageComponentItem[]>([]);
-  readonly menuStyle = signal<AppLanguageComponentMenuStyle>({ visibility: 'hidden' });
-  title = '';
 
   constructor() {
     this.handleWindowClick = this.handleWindowClick.bind(this);
@@ -53,29 +49,10 @@ export class AppLanguageComponentModel {
   }
 
   load(): void {
-    const currentLanguage = this.languageService.getCurrentLanguage();
-    const currentUrl = this.currentUrl();
-
-    this.items.set(
-      [languages.russian, languages.english].map(
-        (language) =>
-          ({
-            code: language.code,
-            name: language.name,
-            selected: language.code === currentLanguage.code,
-            url: this.languageService.createLocalizedUrl(
-              language.code,
-              currentUrl
-            ),
-          } as AppLanguageComponentItem)
-      )
-    );
-
-    this.menuStyle.set({
-      visibility: this.isMenuOpen() ? 'visible' : 'hidden',
+    this.appLanguageComponentStoreService.load({
+      currentUrl: this.currentUrl(),
+      isMenuOpen: this.isMenuOpen(),
     });
-
-    this.title = currentLanguage.name;
   }
 
   private handleWindowClick(ev: MouseEvent): void {

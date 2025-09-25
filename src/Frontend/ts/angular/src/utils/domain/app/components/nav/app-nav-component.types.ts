@@ -1,4 +1,4 @@
-import { UrlTree } from "@angular/router";
+import { UrlTree } from '@angular/router';
 
 export interface AppNavComponentItem {
   children: AppNavComponentItem[];

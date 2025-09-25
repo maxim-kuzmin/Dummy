@@ -1,4 +1,5 @@
 import { Component, effect, inject } from '@angular/core';
+import { AppFooterComponentStoreService } from '~/utils/domain/app/components/footer/store/app-footer-component-store.service';
 import { AppFooterComponentModel } from '~/utils/domain/app/components/footer/app-footer-component.model';
 
 @Component({
@@ -7,15 +8,20 @@ import { AppFooterComponentModel } from '~/utils/domain/app/components/footer/ap
   providers: [AppFooterComponentModel],
 })
 export class AppFooter {
-  private readonly model = inject(AppFooterComponentModel, { self: true });
+  private readonly appFooterComponentModel = inject(AppFooterComponentModel, {
+    self: true,
+  });
+  private readonly appFooterComponentStoreService = inject(
+    AppFooterComponentStoreService
+  );
 
   protected get title(): string {
-    return this.model.title;
+    return this.appFooterComponentStoreService.title();
   }
 
   constructor() {
     effect(() => {
-      this.model.load();
+      this.appFooterComponentModel.load();
     });
   }
 }

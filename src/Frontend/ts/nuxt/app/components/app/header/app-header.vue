@@ -1,7 +1,10 @@
 <script setup lang="ts">
+  import { useAppHeaderComponentStore } from '~/utils/domain/app/components/header/store/app-header-component-store.composable'
   import { useAppHeaderComponent } from '~/utils/domain/app/components/header/app-header-component.composable'
 
-  const { indexPageName, indexPageUrl } = useAppHeaderComponent()
+  useAppHeaderComponent()
+
+  const { indexPageName, indexPageUrl } = useAppHeaderComponentStore()
 </script>
 
 <template>

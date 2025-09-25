@@ -1,19 +1,14 @@
 import { inject } from '@angular/core';
-import { PageStoreService } from '~/utils/infrastructure/page/store/page-store.service';
-import { AppNotFoundPageResourcesService } from './resources/app-not-found-page-resources.service';
-import { AppNotFoundPageService } from './app-not-found-page.service';
+import { LanguageService } from '~/utils/infrastructure/language/language.service';
+import { AppNotFoundPageStoreService } from './store/app-not-found-page-store.service';
 
 export class AppNotFoundPageModel {
-  private readonly appNotFoundPageResourcesService = inject(
-    AppNotFoundPageResourcesService
-  );
-
-  private readonly appNotFoundPageService = inject(AppNotFoundPageService);
-  private readonly pageStoreService = inject(PageStoreService);
+  private readonly appNotFoundPageStoreService = inject(AppNotFoundPageStoreService);
+  private readonly languageService = inject(LanguageService);
 
   load(): void {
-    this.pageStoreService.pageKey.set(this.appNotFoundPageService.createPageKey());
+    const locale = this.languageService.getCurrentLanguage().code;
 
-    this.pageStoreService.pageTitle.set(this.appNotFoundPageResourcesService.getTitle());
+    this.appNotFoundPageStoreService.load({ locale });
   }
 }

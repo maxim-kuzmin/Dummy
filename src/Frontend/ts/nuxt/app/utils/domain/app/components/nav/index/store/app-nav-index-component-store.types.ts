@@ -1,9 +1,6 @@
-import type { AppNavComponentItem } from "../../app-nav-component.types";
+import type { AppNavComponentItem } from '../../app-nav-component.types'
 
-export interface AppNavIndexComponentStoreData {
+export interface AppNavIndexComponentStoreModel {
   readonly items: Readonly<Ref<AppNavComponentItem[]>>
-}
-
-export interface AppNavIndexComponentStoreModel extends AppNavIndexComponentStoreData {
   load(): void
 }
