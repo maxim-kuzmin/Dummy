@@ -6,7 +6,7 @@
     & ul {
       & li {
         @apply font-normal
-        pt-[1rem];
+          pt-[1rem];
         & ul {
           @apply ml-[1rem];
         }
