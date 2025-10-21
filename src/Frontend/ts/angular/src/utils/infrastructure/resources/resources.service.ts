@@ -17,7 +17,7 @@ export class ResourcesService implements ResourcesModel {
         const id = this.getParameter('id', 0, parameters);
         const pageNumber = this.getParameter('pageNumber', 1, parameters);
 
-        return `${$localize`:@@app.pages.app-fake-page.title[0]:@@`} ${id} - ${pageNumber}`;
+        return $localize`:@@app.pages.app-fake-page.title:@@${id}${pageNumber}`;
       }
       case 'app.pages.app-index-page.title':
         return $localize`:@@app.pages.app-index-page.title:@@`;

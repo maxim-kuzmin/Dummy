@@ -4,7 +4,7 @@
     "app.components.app-footer-component.title": "Footer",
     "app.components.app-header-component.title": "Go to index page",
     "app.pages.app-about-page.title": "About",
-    "app.pages.app-fake-page.title[0]": "Fake",
+    "app.pages.app-fake-page.title": "Fake {$PH} - {$PH_1}",
     "app.pages.app-index-page.title": "Index",
     "app.pages.app-not-found-page.title": "Not found"
   }
