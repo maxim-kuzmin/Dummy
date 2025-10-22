@@ -1,9 +1,0 @@
-{
-  "semi": false,
-  "trailingComma": "all",
-  "useTabs": false,
-  "singleQuote": true,
-  "tabWidth": 2,
-  "vueIndentScriptAndStyle": true,
-  "tailwindStylesheet": "./src/assets/styles/styles.css"
-}

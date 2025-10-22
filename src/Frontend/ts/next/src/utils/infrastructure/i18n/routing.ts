@@ -1,8 +1,8 @@
-import { defineRouting } from 'next-intl/routing'
+import { defineRouting } from 'next-intl/routing';
 import {
   languages,
   defaultLanguage,
-} from '~/utils/shared/language/language.types'
+} from '~/utils/shared/language/language.types';
 
 export const routing = defineRouting({
   locales: [languages.russian.code, languages.english.code],
@@ -10,4 +10,4 @@ export const routing = defineRouting({
   localePrefix: 'as-needed',
   localeCookie: false,
   localeDetection: false,
-})
+});
