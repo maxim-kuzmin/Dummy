@@ -8,6 +8,6 @@ export class AppIndexPageResourcesService {
   private readonly resourcesService = inject(ResourcesService)
 
   getTitle() {
-    return this.resourcesService.translate('app.pages.app-index-page.title');
+    return this.resourcesService.translate('app_pages_app-index-page_title');
   }
 }

@@ -5,9 +5,11 @@ import { ResourcesService } from '~/utils/infrastructure/resources/resources.ser
   providedIn: 'root',
 })
 export class AppFooterComponentResourcesService {
-  private readonly resourcesService = inject(ResourcesService)
+  private readonly resourcesService = inject(ResourcesService);
 
   getTitle() {
-    return this.resourcesService.translate('app.components.app-footer-component.title');
+    return this.resourcesService.translate(
+      'app_components_app-footer-component_title'
+    );
   }
 }

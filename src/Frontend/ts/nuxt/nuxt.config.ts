@@ -1,5 +1,10 @@
 import tailwindcss from '@tailwindcss/vite'
-import { languages, defaultLanguage } from './app/utils/shared/language/language.types'
+import type { LocaleObject } from '@nuxtjs/i18n'
+import {
+  languages,
+  defaultLanguage,
+  type Language,
+} from './app/utils/shared/language/language.types'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -21,21 +26,18 @@ export default defineNuxtConfig({
   },
   i18n: {
     defaultLocale: defaultLanguage.code,
-    locales: [
-      {
-        code: languages.russian.code,
-        name: languages.russian.name,
-        file: 'ru.json',
-      },
-      {
-        code: languages.english.code,
-        name: languages.english.name,
-        file: 'en.json',
-      },
-    ],
+    locales: [createLocale(languages.russian), createLocale(languages.english)],
     detectBrowserLanguage: false,
     experimental: {
       localeDetector: 'localeDetector.ts',
     },
   },
 })
+
+function createLocale(language: Language): LocaleObject<string> {
+  return {
+    code: language.code,
+    name: language.name,
+    file: `${language.code}.json`,
+  }
+}

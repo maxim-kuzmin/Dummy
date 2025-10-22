@@ -8,6 +8,6 @@ export class AppHeaderComponentResourcesService {
   private readonly resourcesService = inject(ResourcesService)
 
   getTitle() {
-    return this.resourcesService.translate('app.components.app-header-component.title');
+    return this.resourcesService.translate('app_components_app-header-component_title');
   }
 }

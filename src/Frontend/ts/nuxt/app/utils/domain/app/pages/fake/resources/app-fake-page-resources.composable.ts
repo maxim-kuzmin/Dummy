@@ -8,7 +8,7 @@ export const useAppFakePageResources = (
 
   return {
     getTitle(id: string, pageNumber: number): string {
-      return translate('app.pages.app-fake-page.title', {
+      return translate('app_pages_app-fake-page_title', {
         id: `{${id}}`,
         pageNumber,
       })

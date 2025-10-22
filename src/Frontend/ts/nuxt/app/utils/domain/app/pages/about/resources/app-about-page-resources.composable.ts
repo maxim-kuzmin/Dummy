@@ -8,7 +8,7 @@ export const useAppAboutPageResources = (
 
   return {
     getTitle(): string {
-      return translate('app.pages.app-about-page.title')
+      return translate('app_pages_app-about-page_title')
     },
   }
 }

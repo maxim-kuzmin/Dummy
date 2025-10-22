@@ -8,7 +8,7 @@ export const useAppFooterComponentResources = (
 
   return {
     getTitle(): string {
-      return translate('app.components.app-footer-component.title')
+      return translate('app_components_app-footer-component_title')
     },
   }
 }

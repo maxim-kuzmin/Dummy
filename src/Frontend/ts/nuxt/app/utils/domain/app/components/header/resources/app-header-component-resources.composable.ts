@@ -8,7 +8,7 @@ export const useAppHeaderComponentResources = (
 
   return {
     getTitle(): string {
-      return translate('app.components.app-header-component.title')
+      return translate('app_components_app-header-component_title')
     },
   }
 }

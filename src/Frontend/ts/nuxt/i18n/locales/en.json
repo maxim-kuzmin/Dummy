@@ -1,8 +1,8 @@
 {
-  "app.components.app-footer-component.title": "Footer",
-  "app.components.app-header-component.title": "Header",
-  "app.pages.app-about-page.title": "About",
-  "app.pages.app-fake-page.title": "Fake {id} - {pageNumber}",
-  "app.pages.app-index-page.title": "Index",
-  "app.pages.app-not-found-page.title": "Not found"
+  "app_components_app-footer-component_title": "Footer",
+  "app_components_app-header-component_title": "Header",
+  "app_pages_app-about-page_title": "About",
+  "app_pages_app-fake-page_title": "Fake {id} - {pageNumber}",
+  "app_pages_app-index-page_title": "Index",
+  "app_pages_app-not-found-page_title": "Not found"
 }

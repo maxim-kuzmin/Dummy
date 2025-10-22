@@ -8,7 +8,7 @@ export const useAppNotFoundPageResources = (
 
   return {
     getTitle(): string {
-      return translate('app.pages.app-not-found-page.title')
+      return translate('app_pages_app-not-found-page_title')
     },
   }
 }

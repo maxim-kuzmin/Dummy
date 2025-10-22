@@ -1,0 +1,11 @@
+{
+  "locale": "ru",
+  "translations": {
+    "app_components_app-footer-component_title": "Подвал",
+    "app_components_app-header-component_title": "Шапка",
+    "app_pages_app-about-page_title": "О нас",
+    "app_pages_app-fake-page_title": "Фальшивка {$PH} - {$PH_1}",
+    "app_pages_app-index-page_title": "Главное",
+    "app_pages_app-not-found-page_title": "Не найдено"
+  }
+}

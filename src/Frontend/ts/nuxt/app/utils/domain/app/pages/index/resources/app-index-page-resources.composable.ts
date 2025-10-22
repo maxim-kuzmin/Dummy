@@ -8,7 +8,7 @@ export const useAppIndexPageResources = (
 
   return {
     getTitle(): string {
-      return translate('app.pages.app-index-page.title')
+      return translate('app_pages_app-index-page_title')
     },
   }
 }

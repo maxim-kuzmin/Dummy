@@ -8,6 +8,6 @@ export class AppNotFoundPageResourcesService {
   private readonly resourcesService = inject(ResourcesService)
 
   getTitle() {
-    return this.resourcesService.translate('app.pages.app-not-found-page.title');
+    return this.resourcesService.translate('app_pages_app-not-found-page_title');
   }
 }

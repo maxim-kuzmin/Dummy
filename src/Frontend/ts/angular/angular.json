@@ -108,11 +108,11 @@
         "sourceLocale": "en-x-source",
         "locales": {
           "ru": {
-            "translation": "src/locale/ru.json",
+            "translation": "i18n/locales/ru.json",
             "subPath": ""
           },
           "en": {
-            "translation": "src/locale/en.json",
+            "translation": "i18n/locales/en.json",
             "subPath": "en"
           }
         }
