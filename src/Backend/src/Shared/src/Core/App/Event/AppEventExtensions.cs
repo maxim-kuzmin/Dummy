@@ -20,12 +20,12 @@ public static class AppEventExtensions
   /// </summary>
   /// <param name="payload">Полезная нагрузка.</param>
   /// <returns>Полезная нагрузка события приложения с данными в виде словаря.</returns>
-  public static AppEventPayloadWithDataAsDictionary ToAppEventPayloadWithDataAsDictionary(
-    this AppEventPayloadWithDataAsString payload)
+  public static AppEventDictionaryPayload ToAppEventPayloadWithDataAsDictionary(
+    this AppEventStringPayload payload)
   {
     var data = payload.Data.ToAppEventPayloadDataAsDictionary();
 
-    AppEventPayloadWithDataAsDictionary result = new(data);
+    AppEventDictionaryPayload result = new(data);
 
     Copy(payload, result);
 
@@ -38,11 +38,11 @@ public static class AppEventExtensions
   /// <param name="payload">Полезная нагрузка.</param>
   /// <param name="position">Позиция.</param>
   /// <returns>Полезная нагрузка события приложения с данными в виде строки.</returns>
-  public static AppEventPayloadWithDataAsString ToAppEventPayloadWithDataAsString(
-    this AppEventPayloadWithDataAsDictionary payload,
+  public static AppEventStringPayload ToAppEventPayloadWithDataAsString(
+    this AppEventDictionaryPayload payload,
     int position = 0)
   {
-    var result = new AppEventPayloadWithDataAsString(
+    var result = new AppEventStringPayload(
       payload.Data.Count > 0 ? JsonSerializer.Serialize(payload.Data) : null);
 
     Copy(payload, result);

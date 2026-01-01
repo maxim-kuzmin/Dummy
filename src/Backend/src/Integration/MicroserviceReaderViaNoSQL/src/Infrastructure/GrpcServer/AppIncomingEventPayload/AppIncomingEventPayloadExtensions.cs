@@ -134,7 +134,7 @@ public static class AppIncomingEventPayloadExtensions
   public static AppIncomingEventPayloadSaveActionCommand ToAppIncomingEventPayloadSaveActionRequest(
     this AppIncomingEventPayloadCreateGrpcRequest request)
   {
-    AppEventPayloadWithDataAsString payload = new(request.Data)
+    AppEventStringPayload payload = new(request.Data)
     {
       EntityConcurrencyTokenToDelete = request.EntityConcurrencyTokenToDelete,
       EntityConcurrencyTokenToInsert = request.EntityConcurrencyTokenToInsert,
@@ -162,7 +162,7 @@ public static class AppIncomingEventPayloadExtensions
   public static AppIncomingEventPayloadSaveActionCommand ToAppIncomingEventPayloadSaveActionRequest(
     this AppIncomingEventPayloadUpdateGrpcRequest request)
   {
-    AppEventPayloadWithDataAsString payload = new(request.Data)
+    AppEventStringPayload payload = new(request.Data)
     {
       EntityConcurrencyTokenToDelete = request.EntityConcurrencyTokenToDelete,
       EntityConcurrencyTokenToInsert = request.EntityConcurrencyTokenToInsert,

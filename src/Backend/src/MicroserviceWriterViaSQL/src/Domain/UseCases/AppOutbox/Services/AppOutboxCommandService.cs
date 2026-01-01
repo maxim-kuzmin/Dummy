@@ -79,7 +79,7 @@ public class AppOutboxCommandService(
     AppOutboxSaveCommand command,
     CancellationToken cancellationToken)
   {
-    List<AppEventPayloadWithDataAsDictionary> payloads = [];
+    List<AppEventDictionaryPayload> payloads = [];
 
     async Task FuncToExecute(CancellationToken cancellationToken)
     {

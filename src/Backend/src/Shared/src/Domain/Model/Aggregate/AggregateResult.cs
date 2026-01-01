@@ -9,7 +9,7 @@
 /// <param name="Errors">Ошибки.</param>
 public record AggregateResult<TEntity>(
   TEntity? Entity,
-  AppEventPayloadWithDataAsDictionary? Payload,
+  AppEventDictionaryPayload? Payload,
   HashSet<AppError>? Errors = null)
   where TEntity : class
 {

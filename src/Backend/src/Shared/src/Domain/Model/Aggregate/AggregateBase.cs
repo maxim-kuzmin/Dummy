@@ -11,7 +11,7 @@ public abstract class AggregateBase<TEntity, TPrimaryKey>
 {
   private readonly TEntity? _entityToChange;
 
-  private readonly AppEventPayloadWithDataAsDictionary _payload;
+  private readonly AppEventDictionaryPayload _payload;
 
   private TEntity? _entityToUpdate;
 

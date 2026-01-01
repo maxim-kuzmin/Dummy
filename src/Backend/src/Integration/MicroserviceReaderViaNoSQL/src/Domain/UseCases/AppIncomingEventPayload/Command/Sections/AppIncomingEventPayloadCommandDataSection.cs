@@ -9,4 +9,4 @@
 public record AppIncomingEventPayloadCommandDataSection(
   string AppIncomingEventObjectId,
   string EventPayloadId,
-  AppEventPayloadWithDataAsString Payload);
+  AppEventStringPayload Payload);

@@ -9,4 +9,4 @@
 public record AppIncomingEventPayloadCreateEndpointRequest(
   string AppIncomingEventObjectId,
   string EventPayloadId,
-  AppEventPayloadWithDataAsString Payload);
+  AppEventStringPayload Payload);

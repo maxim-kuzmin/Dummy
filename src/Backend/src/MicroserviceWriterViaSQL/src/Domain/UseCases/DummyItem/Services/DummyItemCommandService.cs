@@ -64,7 +64,7 @@ public class DummyItemCommandService(
 
   /// <inheritdoc/>
   public Task<AppCommandResultWithoutValue> OnEntityChanged(
-    IEnumerable<AppEventPayloadWithDataAsDictionary> payloads,
+    IEnumerable<AppEventDictionaryPayload> payloads,
     CancellationToken cancellationToken)
   {
     var command = AppEventNameEnum.DummyItemChanged.ToAppOutboxSaveCommand(payloads);

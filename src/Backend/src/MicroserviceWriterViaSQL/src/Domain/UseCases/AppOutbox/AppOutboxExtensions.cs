@@ -13,7 +13,7 @@ public static class AppOutboxExtensions
   /// <returns>Команда.</returns>
   public static AppOutboxSaveCommand ToAppOutboxSaveCommand(
     this AppEventNameEnum appEventName,
-    IEnumerable<AppEventPayloadWithDataAsDictionary> payloads)
+    IEnumerable<AppEventDictionaryPayload> payloads)
   {
     return new(
       EventName: appEventName.ToString(),
@@ -40,7 +40,7 @@ public static class AppOutboxExtensions
   /// <param name="appOutgoingEventId">Идентификатор исходящего события приложения.</param>
   /// <returns>Команда.</returns>
   public static AppOutgoingEventPayloadSaveCommand ToAppOutgoingEventPayloadSaveCommand(
-    this AppEventPayloadWithDataAsString payload,
+    this AppEventStringPayload payload,
     long appOutgoingEventId)
   {
     return new(

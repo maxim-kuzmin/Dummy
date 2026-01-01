@@ -8,5 +8,5 @@ public record AppCommandResult
   /// <summary>
   /// Полезные нагрузки.
   /// </summary>
-  public List<AppEventPayloadWithDataAsDictionary> Payloads { get; } = [];
+  public List<AppEventDictionaryPayload> Payloads { get; } = [];
 }

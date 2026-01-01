@@ -22,7 +22,7 @@ public interface IDummyItemCommandService
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Результат.</returns>
   Task<AppCommandResultWithoutValue> OnEntityChanged(
-    IEnumerable<AppEventPayloadWithDataAsDictionary> payloads,
+    IEnumerable<AppEventDictionaryPayload> payloads,
     CancellationToken cancellationToken);
 
   /// <summary>

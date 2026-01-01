@@ -1,9 +1,9 @@
 ﻿namespace Makc.Dummy.Shared.Core.App.Event.Payloads;
 
 /// <summary>
-/// Полезная нагрузка события приложения с данными виде словаря.
+/// Словарная полезная нагрузка события приложения.
 /// </summary>
-public record AppEventPayloadWithDataAsDictionary : AppEventPayload
+public record AppEventDictionaryPayload : AppEventPayload
 {
   /// <summary>
   /// Данные.
@@ -13,7 +13,7 @@ public record AppEventPayloadWithDataAsDictionary : AppEventPayload
   /// <summary>
   /// Конструктор.
   /// </summary>
-  public AppEventPayloadWithDataAsDictionary() : this([])
+  public AppEventDictionaryPayload() : this([])
   {
   }
 
@@ -21,7 +21,7 @@ public record AppEventPayloadWithDataAsDictionary : AppEventPayload
   /// Клнструктор.
   /// </summary>
   /// <param name="data">Данные.</param>
-  public AppEventPayloadWithDataAsDictionary(Dictionary<string, string?>? data)
+  public AppEventDictionaryPayload(Dictionary<string, string?>? data)
   {
     Data = data ?? [];
   }

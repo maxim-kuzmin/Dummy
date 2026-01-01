@@ -9,4 +9,4 @@
 public record AppOutgoingEventPayloadUpdateEndpointRequest(
   long Id,
   long AppOutgoingEventId,
-  AppEventPayloadWithDataAsString Payload);
+  AppEventStringPayload Payload);

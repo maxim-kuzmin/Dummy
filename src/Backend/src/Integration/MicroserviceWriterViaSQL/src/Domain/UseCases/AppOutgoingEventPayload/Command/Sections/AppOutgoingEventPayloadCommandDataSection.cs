@@ -8,4 +8,4 @@
 /// <param name="Payload">Полезная нагрузка.</param>
 public record AppOutgoingEventPayloadCommandDataSection(
   long AppOutgoingEventId,
-  AppEventPayloadWithDataAsString Payload);
+  AppEventStringPayload Payload);

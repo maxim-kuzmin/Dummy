@@ -35,7 +35,7 @@ public static class AppInboxExtensions
     string appIncomingEventObjectId
     )
   {
-    AppEventPayloadWithDataAsString payload = new(dto.Data)
+    AppEventStringPayload payload = new(dto.Data)
     {
       EntityId = dto.EntityId,
       EntityConcurrencyTokenToDelete = dto.EntityConcurrencyTokenToDelete,

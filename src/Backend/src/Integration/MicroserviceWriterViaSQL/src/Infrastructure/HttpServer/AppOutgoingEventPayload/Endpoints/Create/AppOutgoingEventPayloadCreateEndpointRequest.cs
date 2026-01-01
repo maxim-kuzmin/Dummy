@@ -7,4 +7,4 @@
 /// <param name="Payload">Полезная нагрузка.</param>
 public record AppOutgoingEventPayloadCreateEndpointRequest(
   long AppOutgoingEventId,
-  AppEventPayloadWithDataAsString Payload);
+  AppEventStringPayload Payload);

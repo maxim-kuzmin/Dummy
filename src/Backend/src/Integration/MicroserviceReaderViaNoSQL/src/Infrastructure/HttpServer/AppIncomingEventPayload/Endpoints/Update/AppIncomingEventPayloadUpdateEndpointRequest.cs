@@ -11,4 +11,4 @@ public record AppIncomingEventPayloadUpdateEndpointRequest(
   string ObjectId,
   string AppIncomingEventObjectId,
   string EventPayloadId,
-  AppEventPayloadWithDataAsString Payload);
+  AppEventStringPayload Payload);
