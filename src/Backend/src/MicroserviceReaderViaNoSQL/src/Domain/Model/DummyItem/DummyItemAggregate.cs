@@ -12,11 +12,11 @@ public class DummyItemAggregate(
   DummyItemEntitySettings _settings) : AggregateBase<DummyItemEntity, string>(entityToChange)
 {
   /// <inheritdoc/>
-  public sealed override AggregateResult<DummyItemEntity> GetResultToUpdate()
+  public sealed override AggregateResult<DummyItemEntity> GetResultForUpdate()
   {
-    var result = base.GetResultToUpdate();
+    var result = base.GetResultForUpdate();
 
-    if (IsInvalidToUpdate(result))
+    if (result.IsInvalidForUpdate)
     {
       return result;
     }

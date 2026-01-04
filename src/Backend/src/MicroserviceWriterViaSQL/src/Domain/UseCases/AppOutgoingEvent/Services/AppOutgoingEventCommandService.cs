@@ -138,7 +138,7 @@ public class AppOutgoingEventCommandService(
   {
     var aggregate = _factory.CreateAggregate(entity);
 
-    return aggregate.GetResultToDelete();
+    return aggregate.GetResultForDelete();
   }
 
   private AggregateResult<AppOutgoingEventEntity> GetAggregateResultToSave(
@@ -150,6 +150,6 @@ public class AppOutgoingEventCommandService(
     aggregate.UpdateName(data.Name);
     aggregate.UpdatePublishedAt(data.PublishedAt);
 
-    return entity != null ? aggregate.GetResultToUpdate() : aggregate.GetResultToCreate();
+    return entity != null ? aggregate.GetResultForUpdate() : aggregate.GetResultForInsert();
   }
 }

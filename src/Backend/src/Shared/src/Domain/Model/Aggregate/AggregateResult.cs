@@ -28,6 +28,18 @@ public record AggregateResult<TEntity>(
   public bool IsInvalid => Entity == null || Errors?.Count > 0;
 
   /// <summary>
+  /// Недействителен ли для обновления?
+  /// </summary>
+  /// <param name="aggregateResult">Результат агрегата.</param>
+  /// <returns>Если недействителен для обновления, то true, иначе - false.</returns>
+  public bool IsInvalidForUpdate =>  
+      IsInvalid
+      ||
+      Payload?.EntityConcurrencyTokenToDelete == null
+      ||
+      Payload?.EntityConcurrencyTokenToInsert == null;  
+
+  /// <summary>
   /// Преобразовать к ошибкам валидации.
   /// </summary>
   /// <param name="funcToGetIdentifierByCode">Функция для получения идентификатора по коду.</param>

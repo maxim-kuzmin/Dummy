@@ -1,8 +1,4 @@
 ﻿global using Ardalis.SharedKernel;
-global using Makc.Dummy.Shared.Core.App;
-global using Makc.Dummy.Shared.Domain.Model.Aggregate;
-global using Makc.Dummy.Shared.Domain.Model.Entity;
-global using Makc.Dummy.Shared.Domain.Model.Entity.EntityBases;
 global using Makc.Dummy.MicroserviceWriterViaSQL.Domain.Model.App.Db.SQL.Settings;
 global using Makc.Dummy.MicroserviceWriterViaSQL.Domain.Model.AppOutgoingEvent;
 global using Makc.Dummy.MicroserviceWriterViaSQL.Domain.Model.AppOutgoingEvent.Entity;
@@ -16,5 +12,9 @@ global using Makc.Dummy.MicroserviceWriterViaSQL.Domain.Model.DummyItem;
 global using Makc.Dummy.MicroserviceWriterViaSQL.Domain.Model.DummyItem.Entity;
 global using Makc.Dummy.MicroserviceWriterViaSQL.Domain.Model.DummyItem.Entity.Db.SQL;
 global using Makc.Dummy.MicroserviceWriterViaSQL.Domain.Model.DummyItem.Enums;
+global using Makc.Dummy.Shared.Core;
+global using Makc.Dummy.Shared.Core.App;
+global using Makc.Dummy.Shared.Domain.Model.Aggregate;
+global using Makc.Dummy.Shared.Domain.Model.Entity.EntityBases;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Logging;

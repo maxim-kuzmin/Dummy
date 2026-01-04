@@ -12,6 +12,7 @@ global using Makc.Dummy.MicroserviceReaderViaNoSQL.Domain.Model.DummyItem;
 global using Makc.Dummy.MicroserviceReaderViaNoSQL.Domain.Model.DummyItem.Entity;
 global using Makc.Dummy.MicroserviceReaderViaNoSQL.Domain.Model.DummyItem.Entity.Db.NoSQL;
 global using Makc.Dummy.MicroserviceReaderViaNoSQL.Domain.Model.DummyItem.Enums;
+global using Makc.Dummy.Shared.Core;
 global using Makc.Dummy.Shared.Core.App;
 global using Makc.Dummy.Shared.Domain.Model.Aggregate;
 global using Makc.Dummy.Shared.Domain.Model.Entity.EntityBases;

@@ -141,7 +141,7 @@ public class DummyItemCommandService(
   {
     var aggregate = _factory.CreateAggregate(entity);
 
-    return aggregate.GetResultToDelete();
+    return aggregate.GetResultForDelete();
   }
 
   private AggregateResult<DummyItemEntity> GetAggregateResultToSave(
@@ -152,6 +152,6 @@ public class DummyItemCommandService(
 
     aggregate.UpdateName(data.Name);
 
-    return entity != null ? aggregate.GetResultToUpdate() : aggregate.GetResultToCreate();
+    return entity != null ? aggregate.GetResultForUpdate() : aggregate.GetResultForInsert();
   }
 }

@@ -126,7 +126,7 @@ public class AppOutgoingEventPayloadCommandService(
   {
     var aggregate = _factory.CreateAggregate(entity);
 
-    return aggregate.GetResultToDelete();
+    return aggregate.GetResultForDelete();
   }
 
   private AggregateResult<AppOutgoingEventPayloadEntity> GetAggregateResultToSave(
@@ -145,6 +145,6 @@ public class AppOutgoingEventPayloadCommandService(
     aggregate.UpdateEntityName(payload.EntityName);
     aggregate.UpdatePosition(payload.Position);
 
-    return entity != null ? aggregate.GetResultToUpdate() : aggregate.GetResultToCreate();
+    return entity != null ? aggregate.GetResultForUpdate() : aggregate.GetResultForInsert();
   }
 }

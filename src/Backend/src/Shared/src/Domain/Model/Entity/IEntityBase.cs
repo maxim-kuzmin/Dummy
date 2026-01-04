@@ -19,8 +19,8 @@ public interface IEntityBase<TPrimaryKey> where TPrimaryKey : IEquatable<TPrimar
   string GetPrimaryKeyAsString();
 
   /// <summary>
-  /// Содержит ли некорректный первичный ключ?
+  /// Содержит ли недействительный первичный ключ?
   /// </summary>
-  /// <returns>Если некорректен, то true, иначе - false.</returns>
+  /// <returns>Если недействителен, то true, иначе - false.</returns>
   public bool HasInvalidPrimaryKey();
 }

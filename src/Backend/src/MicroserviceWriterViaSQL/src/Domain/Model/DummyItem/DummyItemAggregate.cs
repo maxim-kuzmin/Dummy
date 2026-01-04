@@ -12,11 +12,11 @@ public class DummyItemAggregate(
   DummyItemEntitySettings _settings) : AggregateBase<DummyItemEntity, long>(entityToChange)
 {
   /// <inheritdoc/>
-  public sealed override AggregateResult<DummyItemEntity> GetResultToUpdate()
+  public sealed override AggregateResult<DummyItemEntity> GetResultForUpdate()
   {
-    var result = base.GetResultToUpdate();
+    var result = base.GetResultForUpdate();
 
-    if (IsInvalidToUpdate(result))
+    if (result.IsInvalidForUpdate)
     {
       return result;
     }
@@ -83,19 +83,14 @@ public class DummyItemAggregate(
   }
 
   /// <inheritdoc/>
-  protected sealed override void OnGetResultToCreate(DummyItemEntity entity)
+  protected sealed override void OnGetResultForInsert(DummyItemEntity entity)
   {
-    RefreshConcurrencyToken(entity);
+    entity.ConcurrencyToken = Concurrency.CreateToken();
   }
 
   /// <inheritdoc/>
-  protected sealed override void OnGetResultToUpdate(DummyItemEntity entity)
+  protected sealed override void OnGetResultForUpdate(DummyItemEntity entity)
   {
-    RefreshConcurrencyToken(entity);
-  }
-
-  private static void RefreshConcurrencyToken(DummyItemEntity entity)
-  {
-    entity.ConcurrencyToken = Guid.NewGuid().ToString();
+    entity.ConcurrencyToken = Concurrency.CreateToken();
   }
 }

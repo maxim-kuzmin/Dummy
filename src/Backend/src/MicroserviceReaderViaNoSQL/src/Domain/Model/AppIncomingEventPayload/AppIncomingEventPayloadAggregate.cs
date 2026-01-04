@@ -12,11 +12,11 @@ public class AppIncomingEventPayloadAggregate(
   AppIncomingEventPayloadEntitySettings _settings) : AggregateBase<AppIncomingEventPayloadEntity, string>(entityToChange)
 {
   /// <inheritdoc/>
-  public sealed override AggregateResult<AppIncomingEventPayloadEntity> GetResultToUpdate()
+  public sealed override AggregateResult<AppIncomingEventPayloadEntity> GetResultForUpdate()
   {
-    var result = base.GetResultToUpdate();
+    var result = base.GetResultForUpdate();
 
-    if (IsInvalidToUpdate(result))
+    if (result.IsInvalidForUpdate)
     {
       return result;
     }
@@ -330,21 +330,16 @@ public class AppIncomingEventPayloadAggregate(
   }
 
   /// <inheritdoc/>
-  protected sealed override void OnGetResultToCreate(AppIncomingEventPayloadEntity entity)
+  protected sealed override void OnGetResultForInsert(AppIncomingEventPayloadEntity entity)
   {
-    RefreshConcurrencyToken(entity);
+    entity.ConcurrencyToken = Concurrency.CreateToken();
 
     entity.CreatedAt = DateTimeOffset.Now;
   }
   
   /// <inheritdoc/>
-  protected sealed override void OnGetResultToUpdate(AppIncomingEventPayloadEntity entity)
+  protected sealed override void OnGetResultForUpdate(AppIncomingEventPayloadEntity entity)
   {
-    RefreshConcurrencyToken(entity);
-  }
-
-  private static void RefreshConcurrencyToken(AppIncomingEventPayloadEntity entity)
-  {
-    entity.ConcurrencyToken = Guid.NewGuid().ToString();
+    entity.ConcurrencyToken = Concurrency.CreateToken();
   }
 }

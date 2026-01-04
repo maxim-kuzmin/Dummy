@@ -45,35 +45,17 @@ public abstract class AggregateBase<TEntity, TPrimaryKey>
   }
 
   /// <summary>
-  /// Получить результат для создания.
-  /// </summary>
-  /// <returns>Результат для создания.</returns>
-  public virtual AggregateResult<TEntity> GetResultToCreate()
-  {
-    if (_entityToUpdate == null)
-    {
-      return AggregateResult<TEntity>.CreateDefault();
-    }
-
-    OnGetResultToCreate(_entityToUpdate);
-
-    _payload.EntityConcurrencyTokenToInsert = _entityToUpdate.GetConcurrencyToken();
-
-    return new AggregateResult<TEntity>(_entityToUpdate, _payload, UpdateErrors);
-  }
-
-  /// <summary>
   /// Получить результат для удаления.
   /// </summary>
   /// <returns>Результат для удаления.</returns>
-  public virtual AggregateResult<TEntity> GetResultToDelete()
+  public virtual AggregateResult<TEntity> GetResultForDelete()
   {
     if (_entityToChange == null || _entityToChange.HasInvalidPrimaryKey())
     {
       return AggregateResult<TEntity>.CreateDefault();
     }
 
-    OnGetResultToDelete(_entityToChange);
+    OnGetResultForDelete(_entityToChange);
 
     _payload.EntityId = _entityToChange.GetPrimaryKeyAsString();
 
@@ -83,10 +65,28 @@ public abstract class AggregateBase<TEntity, TPrimaryKey>
   }
 
   /// <summary>
+  /// Получить результат для вставки.
+  /// </summary>
+  /// <returns>Результат для вставки.</returns>
+  public virtual AggregateResult<TEntity> GetResultForInsert()
+  {
+    if (_entityToUpdate == null)
+    {
+      return AggregateResult<TEntity>.CreateDefault();
+    }
+
+    OnGetResultForInsert(_entityToUpdate);
+
+    _payload.EntityConcurrencyTokenToInsert = _entityToUpdate.GetConcurrencyToken();
+
+    return new AggregateResult<TEntity>(_entityToUpdate, _payload, UpdateErrors);
+  }
+
+  /// <summary>
   /// Получить результат для обновления.
   /// </summary>
   /// <returns>Результат для обновления.</returns>
-  public virtual AggregateResult<TEntity> GetResultToUpdate()
+  public virtual AggregateResult<TEntity> GetResultForUpdate()
   {
     if (_entityToChange == null || _entityToChange.HasInvalidPrimaryKey())
     {
@@ -97,7 +97,7 @@ public abstract class AggregateBase<TEntity, TPrimaryKey>
 
     _payload.EntityConcurrencyTokenToDelete = _entityToChange.GetConcurrencyToken();
 
-    OnGetResultToUpdate(_entityToChange);
+    OnGetResultForUpdate(_entityToChange);
     
     _payload.EntityConcurrencyTokenToInsert = _entityToChange.GetConcurrencyToken();
 
@@ -122,20 +122,6 @@ public abstract class AggregateBase<TEntity, TPrimaryKey>
   }
 
   /// <summary>
-  /// Недействителен ли для обновления?
-  /// </summary>
-  /// <param name="aggregateResult">Результат агрегата.</param>
-  /// <returns>Если недействителен для обновления, то true, иначе - false.</returns>
-  protected bool IsInvalidToUpdate(AggregateResult<TEntity> aggregateResult)
-  {
-    return aggregateResult.IsInvalid
-      ||
-      aggregateResult.Payload?.EntityConcurrencyTokenToDelete == null
-      ||
-      aggregateResult.Payload?.EntityConcurrencyTokenToInsert == null;
-  }
-
-  /// <summary>
   /// Есть ли изменённые свойства?
   /// </summary>
   /// <returns>Если есть изменённые свойства, то true, иначе - false.</returns>
@@ -143,30 +129,20 @@ public abstract class AggregateBase<TEntity, TPrimaryKey>
   {
     return _payload.Data.Count > 0;
   }
-
-  /// <summary>
-  /// Есть ли изменённое свойство?
-  /// </summary>
-  /// <param name="propertyName">Имя свойства.</param>
-  /// <returns>Если значение свойства изменилось, то true, иначе - false.</returns>
-  protected bool HasChangedProperty(string propertyName)
-  {
-    return _payload.Data.ContainsKey(propertyName);
-  }
-
-  /// <summary>
-  /// Обработать событие получения результата для создания.
-  /// </summary>
-  /// <param name="entity">Обновляемая сущность.</param>
-  protected virtual void OnGetResultToCreate(TEntity entity)
-  {
-  }
-
+  
   /// <summary>
   /// Обработать событие получения результата для удаления.
   /// </summary>
   /// <param name="entity">Удаляемая сущность.</param>
-  protected virtual void OnGetResultToDelete(TEntity entity)
+  protected virtual void OnGetResultForDelete(TEntity entity)
+  {
+  }
+
+  /// <summary>
+  /// Обработать событие получения результата для вставки.
+  /// </summary>
+  /// <param name="entity">Вставляемая сущность.</param>
+  protected virtual void OnGetResultForInsert(TEntity entity)
   {
   }
 
@@ -174,7 +150,7 @@ public abstract class AggregateBase<TEntity, TPrimaryKey>
   /// Обработать событие получения результата для обновления.
   /// </summary>
   /// <param name="entity">Обновляемая сущность.</param>
-  protected virtual void OnGetResultToUpdate(TEntity entity)
+  protected virtual void OnGetResultForUpdate(TEntity entity)
   {
   }
 
@@ -187,14 +163,14 @@ public abstract class AggregateBase<TEntity, TPrimaryKey>
   /// <returns>Если свойство обновилось, то true, иначе - false.</returns>
   protected bool PrepareChangedPropertyToUpdate(string propertyName, Func<bool> funcToCompare, Action actionToUpdate)
   {
-    if (!HasChangedProperty(propertyName))
+    if (!_payload.Data.ContainsKey(propertyName))
     {
       return false;
     }
 
     if (!funcToCompare.Invoke())
     {
-      RemoveChangedProperty(propertyName);
+      _payload.Data.Remove(propertyName);
 
       return false;
     }
@@ -202,14 +178,5 @@ public abstract class AggregateBase<TEntity, TPrimaryKey>
     actionToUpdate.Invoke();
 
     return true;
-  }
-
-  /// <summary>
-  /// Удалить изменённое свойство.
-  /// </summary>
-  /// <param name="propertyName">Имя свойства.</param>
-  protected void RemoveChangedProperty(string propertyName)
-  {
-    _payload.Data.Remove(propertyName);
   }
 }
