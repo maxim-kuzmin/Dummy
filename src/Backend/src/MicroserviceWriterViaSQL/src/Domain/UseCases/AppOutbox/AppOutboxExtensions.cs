@@ -17,7 +17,7 @@ public static class AppOutboxExtensions
   {
     return new(
       EventName: appEventName.ToString(),
-      Payloads: [..payloads.Select((x, i) => x.ToAppEventPayloadWithDataAsString(++i))]);
+      Payloads: [..payloads.Select((x, i) => x.ToAppEventStringPayload(++i))]);
   }
 
   /// <summary>

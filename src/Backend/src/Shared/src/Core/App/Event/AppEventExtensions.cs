@@ -6,24 +6,24 @@
 public static class AppEventExtensions
 {
   /// <summary>
-  /// Преобразовать к данным полезной нагрузки события приложения в виде словаря.
+  /// Преобразовать к данным словарной полезной нагрузки события приложения.
   /// </summary>
   /// <param name="payload">Полезная нагрузка.</param>
-  /// <returns>Полезная нагрузка события приложения с данными виде словаря.</returns>
-  public static Dictionary<string, string?>? ToAppEventPayloadDataAsDictionary(this string? data)
+  /// <returns>Данные словарной полезной нагрузки события приложения.</returns>
+  public static Dictionary<string, string?>? ToToAppEventDictionaryPayloadData(this string? data)
   {
     return data != null ? JsonSerializer.Deserialize<Dictionary<string, string?>>(data) : null;
   }
 
   /// <summary>
-  /// Преобразовать к полезной нагрузке события приложения с данными в виде словаря.
+  /// Преобразовать к словарной полезной нагрузке события приложения .
   /// </summary>
   /// <param name="payload">Полезная нагрузка.</param>
-  /// <returns>Полезная нагрузка события приложения с данными в виде словаря.</returns>
-  public static AppEventDictionaryPayload ToAppEventPayloadWithDataAsDictionary(
+  /// <returns>Словарная полезная нагрузка события приложения.</returns>
+  public static AppEventDictionaryPayload ToAppEventDictionaryPayload(
     this AppEventStringPayload payload)
   {
-    var data = payload.Data.ToAppEventPayloadDataAsDictionary();
+    var data = payload.Data.ToToAppEventDictionaryPayloadData();
 
     AppEventDictionaryPayload result = new(data);
 
@@ -33,12 +33,12 @@ public static class AppEventExtensions
   }
 
   /// <summary>
-  /// Преобразовать к полезной нагрузке события приложения с данными в виде строки.
+  /// Преобразовать к строковой полезной нагрузке события приложения.
   /// </summary>
   /// <param name="payload">Полезная нагрузка.</param>
   /// <param name="position">Позиция.</param>
-  /// <returns>Полезная нагрузка события приложения с данными в виде строки.</returns>
-  public static AppEventStringPayload ToAppEventPayloadWithDataAsString(
+  /// <returns>Строковая полезная нагрузка события приложения.</returns>
+  public static AppEventStringPayload ToAppEventStringPayload(
     this AppEventDictionaryPayload payload,
     int position = 0)
   {

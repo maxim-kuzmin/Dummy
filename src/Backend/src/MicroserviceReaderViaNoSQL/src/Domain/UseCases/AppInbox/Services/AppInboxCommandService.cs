@@ -413,7 +413,7 @@ public class AppInboxCommandService(
       return null;
     }
 
-    var data = eventPayloadDTO.Data.ToAppEventPayloadDataAsDictionary();
+    var data = eventPayloadDTO.Data.ToToAppEventDictionaryPayloadData();
 
     if (data == null)
     {
