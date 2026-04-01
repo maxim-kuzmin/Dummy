@@ -20,11 +20,16 @@ export class AppFakePageModel {
   });
 
   load(): void {
+    // fetch('https://localhost:44344/api/view/page').then(function (resp) {
+    //   resp.json().then(function (json) {
+    //     console.log(json);
+    //   })
+    // })
     const dataQuery = {
       id: String(this.routeParams()[AppFakePageParameters.id.name]),
       pageNumber: Number(
         this.queryParams()[AppFakePageParameters.pageNumber.name] ??
-          AppFakePageParameters.pageNumber.defaultValue
+        AppFakePageParameters.pageNumber.defaultValue
       ),
     } as AppFakePageApiDataQuery;
 
