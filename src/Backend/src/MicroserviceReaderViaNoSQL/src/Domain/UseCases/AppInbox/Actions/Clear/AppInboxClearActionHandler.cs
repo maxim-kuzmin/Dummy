@@ -5,10 +5,10 @@
 /// </summary>
 /// <param name="_service">Сервис.</param>
 public class AppInboxClearActionHandler(IAppInboxCommandService _service) :
-  ICommandHandler<AppInboxClearActionRequest, Result>
+  IRequestHandler<AppInboxClearActionRequest, Result>
 {
   /// <inheritdoc/>
-  public async Task<Result> Handle(AppInboxClearActionRequest request, CancellationToken cancellationToken)
+  public async ValueTask<Result> Handle(AppInboxClearActionRequest request, CancellationToken cancellationToken)
   {
     await _service.Clear(request.Command, cancellationToken).ConfigureAwait(false);
 

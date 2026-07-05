@@ -5,10 +5,10 @@
 /// </summary>
 /// <param name="_service">Сервис.</param>
 public class AppOutgoingEventPayloadGetPageActionHandler(IAppOutgoingEventPayloadQueryService _service) :
-  IQueryHandler<AppOutgoingEventPayloadGetPageActionRequest, Result<AppOutgoingEventPayloadPageDTO>>
+  IRequestHandler<AppOutgoingEventPayloadGetPageActionRequest, Result<AppOutgoingEventPayloadPageDTO>>
 {
   /// <inheritdoc/>
-  public async Task<Result<AppOutgoingEventPayloadPageDTO>> Handle(
+  public async ValueTask<Result<AppOutgoingEventPayloadPageDTO>> Handle(
     AppOutgoingEventPayloadGetPageActionRequest request,
     CancellationToken cancellationToken)
   {

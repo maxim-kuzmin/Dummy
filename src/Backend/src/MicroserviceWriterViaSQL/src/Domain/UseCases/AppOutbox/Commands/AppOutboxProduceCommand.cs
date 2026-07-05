@@ -4,4 +4,4 @@
 /// Команда выдачи исходящего сообщения приложения.
 /// </summary>
 /// <param name="EventMaxCountToPublish">Максимальное количество сообщений для публикации.</param>
-public record AppOutboxProduceCommand(int EventMaxCountToPublish) : ICommand<Result>;
+public record AppOutboxProduceCommand(int EventMaxCountToPublish) : IRequest<Result>;

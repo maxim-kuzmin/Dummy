@@ -4,4 +4,4 @@
 /// Запрос действия по очистке входящих сообщений приложения
 /// </summary>
 /// <param name="Command">Команда.</param>
-public record AppInboxClearActionRequest(AppInboxClearCommand Command) : ICommand<Result>;
+public record AppInboxClearActionRequest(AppInboxClearCommand Command) : IRequest<Result>;

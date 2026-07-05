@@ -5,13 +5,13 @@
 /// </summary>
 /// <param name="_service">Сервис.</param>
 public class AppOutgoingEventPayloadSaveActionHandler(IAppOutgoingEventPayloadCommandService _service) :
-  ICommandHandler<AppOutgoingEventPayloadSaveActionRequest, Result<AppOutgoingEventPayloadSingleDTO>>
+  IRequestHandler<AppOutgoingEventPayloadSaveActionRequest, Result<AppOutgoingEventPayloadSingleDTO>>
 {
   /// <inheritdoc/>
-  public Task<Result<AppOutgoingEventPayloadSingleDTO>> Handle(
+  public ValueTask<Result<AppOutgoingEventPayloadSingleDTO>> Handle(
     AppOutgoingEventPayloadSaveActionRequest request,
     CancellationToken cancellationToken)
   {
-    return _service.Save(request.Command, cancellationToken);
+    return new ValueTask<Result<AppOutgoingEventPayloadSingleDTO>>(_service.Save(request.Command, cancellationToken));
   }
 }

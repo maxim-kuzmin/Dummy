@@ -1,4 +1,6 @@
-﻿namespace Makc.Dummy.MicroserviceWriterViaSQL.Infrastructure.EntityFramework.App.Db;
+﻿using Ardalis.Result;
+
+namespace Makc.Dummy.MicroserviceWriterViaSQL.Infrastructure.EntityFramework.App.Db;
 
 /// <summary>
 /// Расширения базы данных.
@@ -67,7 +69,10 @@ public static class AppDbExtensions
     {
       var actionResult = await mediator.Send(request, cancellationToken).ConfigureAwait(false);
 
-      result.Add(actionResult.Value);
+      if (actionResult != null)
+      {
+        result.Add(((Result<DummyItemSingleDTO>)actionResult).Value);
+      }      
     }
 
     return result;

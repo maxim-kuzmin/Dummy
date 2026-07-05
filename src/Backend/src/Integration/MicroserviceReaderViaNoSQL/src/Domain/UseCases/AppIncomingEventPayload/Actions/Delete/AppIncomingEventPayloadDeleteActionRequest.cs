@@ -5,4 +5,4 @@
 /// </summary>
 /// <param name="Command">Команда.</param>
 public record AppIncomingEventPayloadDeleteActionRequest(AppIncomingEventPayloadDeleteCommand Command) :
-  ICommand<Result>;
+  IRequest<Result>;

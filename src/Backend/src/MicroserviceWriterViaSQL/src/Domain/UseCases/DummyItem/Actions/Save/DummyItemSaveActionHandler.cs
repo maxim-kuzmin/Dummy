@@ -8,10 +8,10 @@
 public class DummyItemSaveActionHandler(
   IAppDbSQLExecutionContext _appDbExecutionContext,
   IDummyItemCommandService _service) :
-  ICommandHandler<DummyItemSaveActionRequest, Result<DummyItemSingleDTO>>
+  IRequestHandler<DummyItemSaveActionRequest, Result<DummyItemSingleDTO>>
 {
   /// <inheritdoc/>
-  public async Task<Result<DummyItemSingleDTO>> Handle(
+  public async ValueTask<Result<DummyItemSingleDTO>> Handle(
     DummyItemSaveActionRequest request,
     CancellationToken cancellationToken)
   {

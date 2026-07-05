@@ -5,4 +5,4 @@
 /// </summary>
 /// <param name="Command">Команда.</param>
 public record AppOutgoingEventPayloadSaveActionRequest(AppOutgoingEventPayloadSaveCommand Command) :
-  ICommand<Result<AppOutgoingEventPayloadSingleDTO>>;
+  IRequest<Result<AppOutgoingEventPayloadSingleDTO>>;

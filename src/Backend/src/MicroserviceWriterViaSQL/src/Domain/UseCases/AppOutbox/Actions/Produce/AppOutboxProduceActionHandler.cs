@@ -5,10 +5,10 @@
 /// </summary>
 /// <param name="_service">Сервис.</param>
 public class AppOutboxProduceActionHandler(IAppOutboxCommandService _service) :
-  ICommandHandler<AppOutboxProduceActionRequest, Result>
+  IRequestHandler<AppOutboxProduceActionRequest, Result>
 {
   /// <inheritdoc/>
-  public async Task<Result> Handle(AppOutboxProduceActionRequest request, CancellationToken cancellationToken)
+  public async ValueTask<Result> Handle(AppOutboxProduceActionRequest request, CancellationToken cancellationToken)
   {
     await _service.Produce(request.Command, cancellationToken).ConfigureAwait(false);
 

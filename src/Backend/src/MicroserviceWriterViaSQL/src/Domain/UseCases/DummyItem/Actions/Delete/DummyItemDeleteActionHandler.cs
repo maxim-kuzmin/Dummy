@@ -8,10 +8,10 @@
 public class DummyItemDeleteActionHandler(
   IAppDbSQLExecutionContext _appDbExecutionContext,
   IDummyItemCommandService _service) :
-  ICommandHandler<DummyItemDeleteActionRequest, Result>
+  IRequestHandler<DummyItemDeleteActionRequest, Result>
 {
   /// <inheritdoc/>
-  public async Task<Result> Handle(DummyItemDeleteActionRequest request, CancellationToken cancellationToken)
+  public async ValueTask<Result> Handle(DummyItemDeleteActionRequest request, CancellationToken cancellationToken)
   {
     Result result = null!;
 

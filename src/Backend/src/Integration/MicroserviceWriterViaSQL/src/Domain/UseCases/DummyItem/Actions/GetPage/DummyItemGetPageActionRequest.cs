@@ -5,4 +5,4 @@
 /// </summary>
 /// <param name="Query">Запрос.</param>
 public record DummyItemGetPageActionRequest(DummyItemPageQuery Query) :
-  IQuery<Result<DummyItemPageDTO>>;
+  IRequest<Result<DummyItemPageDTO>>;

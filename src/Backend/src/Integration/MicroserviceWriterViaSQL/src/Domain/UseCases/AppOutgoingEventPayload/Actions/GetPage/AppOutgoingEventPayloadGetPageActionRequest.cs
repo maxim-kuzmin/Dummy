@@ -5,4 +5,4 @@
 /// </summary>
 /// <param name="Query">Запрос.</param>
 public record AppOutgoingEventPayloadGetPageActionRequest(AppOutgoingEventPayloadPageQuery Query) :
-  IQuery<Result<AppOutgoingEventPayloadPageDTO>>;
+  IRequest<Result<AppOutgoingEventPayloadPageDTO>>;

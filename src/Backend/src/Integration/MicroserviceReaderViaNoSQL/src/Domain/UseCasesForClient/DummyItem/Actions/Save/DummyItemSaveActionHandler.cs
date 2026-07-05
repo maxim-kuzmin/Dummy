@@ -5,13 +5,13 @@
 /// </summary>
 /// <param name="_service">Сервис.</param>
 public class DummyItemSaveActionHandler(IDummyItemCommandService _service) :
-  ICommandHandler<DummyItemSaveActionRequest, Result<DummyItemSingleDTO>>
+  IRequestHandler<DummyItemSaveActionRequest, Result<DummyItemSingleDTO>>
 {
   /// <inheritdoc/>
-  public Task<Result<DummyItemSingleDTO>> Handle(
+  public ValueTask<Result<DummyItemSingleDTO>> Handle(
     DummyItemSaveActionRequest request,
     CancellationToken cancellationToken)
   {
-    return _service.Save(request.Command, cancellationToken);
+    return new ValueTask<Result<DummyItemSingleDTO>>(_service.Save(request.Command, cancellationToken));
   }
 }

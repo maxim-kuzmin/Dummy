@@ -4,4 +4,4 @@
 /// Запрос действия по сохранению исходящего сообщения приложения.
 /// </summary>
 /// <param name="Command">Команда.</param>
-public record AppOutboxSaveActionRequest(AppOutboxSaveCommand Command) : ICommand<Result>;
+public record AppOutboxSaveActionRequest(AppOutboxSaveCommand Command) : IRequest<Result>;

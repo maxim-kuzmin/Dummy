@@ -51,4 +51,4 @@ global using Makc.Dummy.Integration.MicroserviceWriterViaSQL.Infrastructure.Http
 global using Makc.Dummy.Integration.MicroserviceWriterViaSQL.Infrastructure.HttpServer.DummyItem.Endpoints.GetPage;
 global using Makc.Dummy.Integration.MicroserviceWriterViaSQL.Infrastructure.HttpServer.DummyItem.Endpoints.Update;
 global using Makc.Dummy.Shared.Core.App.Event.Payloads;
-global using MediatR;
+global using Mediator;

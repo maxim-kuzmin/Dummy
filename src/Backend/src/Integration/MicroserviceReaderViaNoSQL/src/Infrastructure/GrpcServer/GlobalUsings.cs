@@ -32,7 +32,7 @@ global using Makc.Dummy.Integration.MicroserviceReaderViaNoSQL.Infrastructure.Gr
 global using Makc.Dummy.Integration.MicroserviceReaderViaNoSQL.Infrastructure.GrpcServer.DummyItem;
 global using Makc.Dummy.Shared.Core.App.Event.Payloads;
 global using Makc.Dummy.Shared.Infrastructure.Grpc;
-global using MediatR;
+global using Mediator;
 global using Microsoft.AspNetCore.Builder;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Logging;

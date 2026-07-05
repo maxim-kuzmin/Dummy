@@ -5,13 +5,13 @@
 /// </summary>
 /// <param name="_service">Сервис.</param>
 public class DummyItemGetPageActionHandler(IDummyItemQueryService _service) :
-  IQueryHandler<DummyItemGetPageActionRequest, Result<DummyItemPageDTO>>
+  IRequestHandler<DummyItemGetPageActionRequest, Result<DummyItemPageDTO>>
 {
   /// <inheritdoc/>
-  public Task<Result<DummyItemPageDTO>> Handle(
+  public ValueTask<Result<DummyItemPageDTO>> Handle(
     DummyItemGetPageActionRequest request,
     CancellationToken cancellationToken)
   {
-    return _service.GetPage(request.Query, cancellationToken);
+    return new ValueTask<Result<DummyItemPageDTO>>(_service.GetPage(request.Query, cancellationToken));
   }
 }

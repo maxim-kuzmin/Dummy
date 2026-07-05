@@ -10,10 +10,10 @@ public class DummyItemGetListActionHandler(
   AppSession _appSession,
   ILogger<DummyItemGetListActionHandler> _logger,
   IDummyItemQueryService _service) :
-  IQueryHandler<DummyItemGetListActionRequest, Result<List<DummyItemSingleDTO>>>
+  IRequestHandler<DummyItemGetListActionRequest, Result<List<DummyItemSingleDTO>>>
 {
   /// <inheritdoc/>
-  public async Task<Result<List<DummyItemSingleDTO>>> Handle(
+  public async ValueTask<Result<List<DummyItemSingleDTO>>> Handle(
     DummyItemGetListActionRequest request,
     CancellationToken cancellationToken)
   {

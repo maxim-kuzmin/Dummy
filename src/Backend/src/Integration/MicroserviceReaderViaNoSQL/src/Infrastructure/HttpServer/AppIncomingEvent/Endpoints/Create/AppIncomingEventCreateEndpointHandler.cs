@@ -23,6 +23,6 @@ public class AppIncomingEventCreateEndpointHandler(IMediator _mediator) :
 
     var result = await task.ConfigureAwait(false);
 
-    await SendResultAsync(result.ToMinimalApiResult()).ConfigureAwait(false);
+    await Send.ResultAsync(result.ToMinimalApiResult()).ConfigureAwait(false);
   }
 }

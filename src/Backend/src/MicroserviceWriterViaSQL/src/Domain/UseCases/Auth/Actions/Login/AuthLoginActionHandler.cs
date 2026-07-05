@@ -5,11 +5,11 @@
 /// </summary>
 /// <param name="_service">Сервис.</param>
 public class AuthLoginActionHandler(IAuthCommandService _service) :
-  ICommandHandler<AuthLoginActionRequest, Result<AuthLoginDTO>>
+  IRequestHandler<AuthLoginActionRequest, Result<AuthLoginDTO>>
 {
   /// <inheritdoc/>
-  public Task<Result<AuthLoginDTO>> Handle(AuthLoginActionRequest request, CancellationToken cancellationToken)
+  public ValueTask<Result<AuthLoginDTO>> Handle(AuthLoginActionRequest request, CancellationToken cancellationToken)
   {
-    return _service.Login(request.Command, cancellationToken);
+    return new ValueTask<Result<AuthLoginDTO>>(_service.Login(request.Command, cancellationToken));
   }
 }

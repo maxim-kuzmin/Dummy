@@ -1,5 +1,4 @@
 ﻿global using Ardalis.Result;
-global using Ardalis.SharedKernel;
 global using Makc.Dummy.Integration.MicroserviceWriterViaSQL.Domain.UseCases.AppOutgoingEvent.Command.Sections;
 global using Makc.Dummy.Integration.MicroserviceWriterViaSQL.Domain.UseCases.AppOutgoingEvent.Commands;
 global using Makc.Dummy.Integration.MicroserviceWriterViaSQL.Domain.UseCases.AppOutgoingEvent.DTOs;
@@ -21,3 +20,4 @@ global using Makc.Dummy.Shared.Core.App.Event;
 global using Makc.Dummy.Shared.Core.App.Event.Payloads;
 global using Makc.Dummy.Shared.Domain.UseCases.DTOs;
 global using Makc.Dummy.Shared.Domain.UseCases.Query.Sections;
+global using Mediator;

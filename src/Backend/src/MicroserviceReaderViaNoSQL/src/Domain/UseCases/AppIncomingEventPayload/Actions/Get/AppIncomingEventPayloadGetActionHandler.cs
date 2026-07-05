@@ -5,10 +5,10 @@
 /// </summary>
 /// <param name="_service">Сервис.</param>
 public class AppIncomingEventPayloadGetActionHandler(IAppIncomingEventPayloadQueryService _service) :
-  IQueryHandler<AppIncomingEventPayloadGetActionRequest, Result<AppIncomingEventPayloadSingleDTO>>
+  IRequestHandler<AppIncomingEventPayloadGetActionRequest, Result<AppIncomingEventPayloadSingleDTO>>
 {
   /// <inheritdoc/>
-  public async Task<Result<AppIncomingEventPayloadSingleDTO>> Handle(
+  public async ValueTask<Result<AppIncomingEventPayloadSingleDTO>> Handle(
     AppIncomingEventPayloadGetActionRequest request,
     CancellationToken cancellationToken)
   {

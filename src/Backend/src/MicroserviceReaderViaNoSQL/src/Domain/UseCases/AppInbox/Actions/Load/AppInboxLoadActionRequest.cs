@@ -4,4 +4,4 @@
 /// Запрос действия по загрузке входящих сообщений приложения.
 /// </summary>
 /// <param name="Command">Команда.</param>
-public record AppInboxLoadActionRequest(AppInboxLoadCommand Command) : ICommand<Result>;
+public record AppInboxLoadActionRequest(AppInboxLoadCommand Command) : IRequest<Result>;

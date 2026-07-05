@@ -42,16 +42,21 @@ public abstract class SymmetricCryptoService(SymmetricCryptoOptions _options) : 
   /// <returns>Трансформированные байты.</returns>
   protected byte[] Transform(byte[] bytes, Func<Aes, ICryptoTransform> funcToGetCryptoTransform)
   {
-    using var passwordBytes = new Rfc2898DeriveBytes(
+    using var algorithm = Aes.Create();
+
+    algorithm.Key = Rfc2898DeriveBytes.Pbkdf2(
       _options.Password,
       _salt,
       _options.Iterations,
-      HashAlgorithmName.SHA256);
-
-    using var algorithm = Aes.Create();
-
-    algorithm.Key = passwordBytes.GetBytes(32);
-    algorithm.IV = passwordBytes.GetBytes(16);
+      HashAlgorithmName.SHA256,
+      32);
+    
+    algorithm.IV = Rfc2898DeriveBytes.Pbkdf2(
+      _options.Password,
+      _salt,
+      _options.Iterations,
+      HashAlgorithmName.SHA256,
+      16);
 
     using var ms = new MemoryStream();
 

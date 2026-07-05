@@ -4,4 +4,4 @@
 /// Запрос действия по удалению входящего события приложения.
 /// </summary>
 /// <param name="Command">Команда.</param>
-public record AppIncomingEventDeleteActionRequest(AppIncomingEventDeleteCommand Command) : ICommand<Result>;
+public record AppIncomingEventDeleteActionRequest(AppIncomingEventDeleteCommand Command) : IRequest<Result>;

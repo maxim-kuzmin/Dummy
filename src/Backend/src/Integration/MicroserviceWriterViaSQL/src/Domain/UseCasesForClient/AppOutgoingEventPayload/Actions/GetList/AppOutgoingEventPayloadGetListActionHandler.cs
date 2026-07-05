@@ -5,13 +5,13 @@
 /// </summary>
 /// <param name="_service">Сервис.</param>
 public class AppOutgoingEventPayloadGetListActionHandler(IAppOutgoingEventPayloadQueryService _service) :
-  IQueryHandler<AppOutgoingEventPayloadGetListActionRequest, Result<List<AppOutgoingEventPayloadSingleDTO>>>
+  IRequestHandler<AppOutgoingEventPayloadGetListActionRequest, Result<List<AppOutgoingEventPayloadSingleDTO>>>
 {
   /// <inheritdoc/>
-  public Task<Result<List<AppOutgoingEventPayloadSingleDTO>>> Handle(
+  public ValueTask<Result<List<AppOutgoingEventPayloadSingleDTO>>> Handle(
     AppOutgoingEventPayloadGetListActionRequest request,
     CancellationToken cancellationToken)
   {
-    return _service.GetList(request.Query, cancellationToken);
+    return new ValueTask<Result<List<AppOutgoingEventPayloadSingleDTO>>>(_service.GetList(request.Query, cancellationToken));
   }
 }

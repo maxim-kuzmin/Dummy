@@ -37,7 +37,7 @@ global using Makc.Dummy.Integration.MicroserviceWriterViaSQL.Infrastructure.Grpc
 global using Makc.Dummy.Integration.MicroserviceWriterViaSQL.Infrastructure.GrpcServer.DummyItem;
 global using Makc.Dummy.Shared.Core.App.Event.Payloads;
 global using Makc.Dummy.Shared.Infrastructure.Grpc;
-global using MediatR;
+global using Mediator;
 global using Microsoft.AspNetCore.Builder;
 global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.DependencyInjection;

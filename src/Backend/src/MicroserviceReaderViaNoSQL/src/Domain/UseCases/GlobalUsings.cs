@@ -60,7 +60,7 @@ global using Makc.Dummy.Shared.Domain.UseCases.Db.SQL;
 global using Makc.Dummy.Shared.Domain.UseCases.Query;
 global using Makc.Dummy.Shared.Domain.UseCases.Query.Sections;
 global using Makc.Dummy.Shared.Domain.UseCases.Repositories;
-global using MediatR;
+global using Mediator;
 global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.DependencyInjection.Extensions;

@@ -4,4 +4,4 @@
 /// Команда действия по потреблению входящих сообщений приложения.
 /// </summary>
 /// <param name="Command">Команда.</param>
-public record AppInboxConsumeActionRequest(AppInboxConsumeCommand Command) : ICommand<Result>;
+public record AppInboxConsumeActionRequest(AppInboxConsumeCommand Command) : IRequest<Result>;

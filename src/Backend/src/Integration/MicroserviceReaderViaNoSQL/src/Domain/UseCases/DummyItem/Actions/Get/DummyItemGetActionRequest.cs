@@ -4,4 +4,4 @@
 /// Запрос действия по получению фиктивного предмета.
 /// </summary>
 /// <param name="Query">Запрос.</param>
-public record DummyItemGetActionRequest(DummyItemSingleQuery Query) : IQuery<Result<DummyItemSingleDTO>>;
+public record DummyItemGetActionRequest(DummyItemSingleQuery Query) : IRequest<Result<DummyItemSingleDTO>>;

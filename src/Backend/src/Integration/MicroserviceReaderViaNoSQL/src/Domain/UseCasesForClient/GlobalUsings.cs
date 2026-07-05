@@ -28,6 +28,6 @@ global using Makc.Dummy.Integration.MicroserviceReaderViaNoSQL.Domain.UseCases.D
 global using Makc.Dummy.Integration.MicroserviceReaderViaNoSQL.Domain.UseCasesForClient.AppIncomingEvent.Services;
 global using Makc.Dummy.Integration.MicroserviceReaderViaNoSQL.Domain.UseCasesForClient.AppIncomingEventPayload.Services;
 global using Makc.Dummy.Integration.MicroserviceReaderViaNoSQL.Domain.UseCasesForClient.DummyItem.Services;
-global using MediatR;
+global using Mediator;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Logging;

@@ -5,11 +5,11 @@
 /// </summary>
 /// <param name="_service">Сервис.</param>
 public class AppIncomingEventDeleteActionHandler(IAppIncomingEventCommandService _service) :
-  ICommandHandler<AppIncomingEventDeleteActionRequest, Result>
+  IRequestHandler<AppIncomingEventDeleteActionRequest, Result>
 {
   /// <inheritdoc/>
-  public Task<Result> Handle(AppIncomingEventDeleteActionRequest request, CancellationToken cancellationToken)
+  public ValueTask<Result> Handle(AppIncomingEventDeleteActionRequest request, CancellationToken cancellationToken)
   {
-    return _service.Delete(request.Command, cancellationToken);
+    return new ValueTask<Result>(_service.Delete(request.Command, cancellationToken));
   }
 }

@@ -9,4 +9,4 @@
 public record AppInboxClearCommand(
   int EventMaxCountToClear,
   int ProcessedEventsLifetimeInMinutes,
-  int TimeoutInMillisecondsToGetEvents) : ICommand<Result>;
+  int TimeoutInMillisecondsToGetEvents) : IRequest<Result>;

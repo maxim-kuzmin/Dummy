@@ -9,10 +9,10 @@
 public class DummyItemGetPageActionHandler(
   AppSession _appSession,
   ILogger<DummyItemGetPageActionHandler> _logger,
-  IDummyItemQueryService _service) : IQueryHandler<DummyItemGetPageActionRequest, Result<DummyItemPageDTO>>
+  IDummyItemQueryService _service) : IRequestHandler<DummyItemGetPageActionRequest, Result<DummyItemPageDTO>>
 {
   /// <inheritdoc/>
-  public async Task<Result<DummyItemPageDTO>> Handle(
+  public async ValueTask<Result<DummyItemPageDTO>> Handle(
     DummyItemGetPageActionRequest request,
     CancellationToken cancellationToken)
   {

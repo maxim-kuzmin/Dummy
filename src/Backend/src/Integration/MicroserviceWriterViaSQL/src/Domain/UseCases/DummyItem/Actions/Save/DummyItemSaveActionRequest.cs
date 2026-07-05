@@ -5,4 +5,4 @@
 /// </summary>
 /// <param name="Command">Команда.</param>
 public record DummyItemSaveActionRequest(DummyItemSaveCommand Command) :
-  ICommand<Result<DummyItemSingleDTO>>;
+  IRequest<Result<DummyItemSingleDTO>>;

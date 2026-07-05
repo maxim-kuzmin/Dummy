@@ -4,4 +4,4 @@
 /// Запрос действия по входу для аутентификации.
 /// </summary>
 /// <param name="Command">Команда.</param>
-public record AuthLoginActionRequest(AuthLoginCommand Command) : ICommand<Result<AuthLoginDTO>>;
+public record AuthLoginActionRequest(AuthLoginCommand Command) : IRequest<Result<AuthLoginDTO>>;

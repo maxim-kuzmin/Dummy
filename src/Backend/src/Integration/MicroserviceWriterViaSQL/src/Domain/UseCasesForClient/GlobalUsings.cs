@@ -33,7 +33,7 @@ global using Makc.Dummy.Integration.MicroserviceWriterViaSQL.Domain.UseCasesForC
 global using Makc.Dummy.Integration.MicroserviceWriterViaSQL.Domain.UseCasesForClient.Auth.Services;
 global using Makc.Dummy.Integration.MicroserviceWriterViaSQL.Domain.UseCasesForClient.Auth.Stubs;
 global using Makc.Dummy.Integration.MicroserviceWriterViaSQL.Domain.UseCasesForClient.DummyItem.Services;
-global using MediatR;
+global using Mediator;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.DependencyInjection.Extensions;
 global using Microsoft.Extensions.Logging;

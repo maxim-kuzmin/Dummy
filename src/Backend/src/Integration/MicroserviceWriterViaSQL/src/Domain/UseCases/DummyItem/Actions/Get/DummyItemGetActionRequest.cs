@@ -5,4 +5,4 @@
 /// </summary>
 /// <param name="Query">Запрос.</param>
 public record DummyItemGetActionRequest(DummyItemSingleQuery Query) :
-  IQuery<Result<DummyItemSingleDTO>>;
+  IRequest<Result<DummyItemSingleDTO>>;
